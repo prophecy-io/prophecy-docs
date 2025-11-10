@@ -3,9 +3,9 @@
   "theme": "aspen",
   "name": "Prophecy Documentation",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#4c4ddc",
+    "light": "#a7b5f6",
+    "dark": "#30317c"
   },
   "favicon": "/favicon.svg",
   "navigation": {
