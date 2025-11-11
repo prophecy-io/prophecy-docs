@@ -106,6 +106,22 @@
                         ]
                       }
                     ]
+                  },
+                  {
+                    "group": "Orchestration",
+                    "pages": [
+                      "data-engineering/orchestration/databricks-jobs",
+                      "data-engineering/orchestration/multi-jobs-trigger",
+                      "data-engineering/orchestration/alternative-schedulers",
+                      {
+                        "group": "Pipeline Monitoring",
+                        "pages": [
+                          "data-engineering/orchestration/pipeline-monitoring/pipeline-monitoring",
+                          "data-engineering/orchestration/pipeline-monitoring/enable-pipeline-monitoring",
+                          "data-engineering/orchestration/pipeline-monitoring/use-pipeline-monitoring"
+                        ]
+                      }
+                    ]
                   }
                 ]
               }
