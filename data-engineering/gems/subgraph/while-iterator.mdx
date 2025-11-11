@@ -33,18 +33,19 @@ The input of the WhileIterator can be any dataset. Importantly, the output schem
 ## Configuration
 
 <Info>
-Before setting the WhileIterator configuration, make sure you are familiar with [pipeline configurations](/engineers/configurations).
+  Before setting the WhileIterator configuration, make sure you are familiar with [pipeline
+  configurations](/engineers/configurations).
 </Info>
 
 Once you have a WhileIterator subgraph on your canvas, set configurations by opening the subgraph and clicking on **Configuration**. The following table describes the parameters you need to set.
 
-| Parameter | Tab | Description |
+| Parameter                                                | Tab           | Description                                                                                                                                                                                                                          |
 | -------------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Max iterations | Settings | The maximum number of loops that will be performed. |
-| Populate iteration number in config variable | Settings | A checkbox to enable if you want to keep track of iteration numbers in a variable. |
-| Select config variable name to populate iteration number | Settings | The name of the config variable that will store the iteration number. |
-| Schema | Configuration | A table where you define configuration variables. You can **Copy Pipeline Configs** to inherit these from your pipeline. If you want to populate the iteration number in a config variable, make sure to include that variable here. |
-| Config | Configuration | An area where you can define default values for variables in one or more configurations. |
+| Max iterations                                           | Settings      | The maximum number of loops that will be performed.                                                                                                                                                                                  |
+| Populate iteration number in config variable             | Settings      | A checkbox to enable if you want to keep track of iteration numbers in a variable.                                                                                                                                                   |
+| Select config variable name to populate iteration number | Settings      | The name of the config variable that will store the iteration number.                                                                                                                                                                |
+| Schema                                                   | Configuration | A table where you define configuration variables. You can **Copy Pipeline Configs** to inherit these from your pipeline. If you want to populate the iteration number in a config variable, make sure to include that variable here. |
+| Config                                                   | Configuration | An area where you can define default values for variables in one or more configurations.                                                                                                                                             |
 
 ## Subgraph
 
@@ -83,7 +84,7 @@ For this example, the input of the WhileIterator will be a simple table that des
 
 | year | principal | interest_rate |
 | ---- | --------- | ------------- |
-| 0 | 1000 | 0.05 |
+| 0    | 1000      | 0.05          |
 
 </div>
 
@@ -96,11 +97,11 @@ Now, let's use a Reformat gem in the WhileIterator subgraph to update the **Year
 1. Connect the Reformat gem to the WhileIterator_Output.
 1. Configure the **Expressions** table as it is shown below.
 
- | Target Column | Expression |
- | ------------- | -------------------------------------- |
- | year | year + 1 |
- | principal | principal + principal \* interest_rate |
- | interest_rate | interest_rate |
+| Target Column | Expression                             |
+| ------------- | -------------------------------------- |
+| year          | year + 1                               |
+| principal     | principal + principal \* interest_rate |
+| interest_rate | interest_rate                          |
 
 ### Terminate loop
 
@@ -122,22 +123,22 @@ Below is an example **out1** dataset. This lets you project how your principal w
 
 <div class="table-example">
 
-| year | principal | interest_rate |
+| year | principal      | interest_rate |
 | ---- | -------------- | ------------- |
-| 1 | 1050 | 0.05 |
-| 2 | 1102.5 | 0.05 |
-| 3 | 1157.625 | 0.05 |
-| 4 | 1215.50625 | 0.05 |
-| 5 | 1276.2815625 | 0.05 |
-| 6 | 1340.095640625 | 0.05 |
-| 7 | 1407.100422656 | 0.05 |
-| 8 | 1477.455443789 | 0.05 |
-| 9 | 1551.328215978 | 0.05 |
-| 10 | 1628.894626777 | 0.05 |
-| 11 | 1710.339358116 | 0.05 |
-| 12 | 1795.856326022 | 0.05 |
-| 13 | 1885.649142323 | 0.05 |
-| 14 | 1979.931599439 | 0.05 |
-| 15 | 2078.928179411 | 0.05 |
+| 1    | 1050           | 0.05          |
+| 2    | 1102.5         | 0.05          |
+| 3    | 1157.625       | 0.05          |
+| 4    | 1215.50625     | 0.05          |
+| 5    | 1276.2815625   | 0.05          |
+| 6    | 1340.095640625 | 0.05          |
+| 7    | 1407.100422656 | 0.05          |
+| 8    | 1477.455443789 | 0.05          |
+| 9    | 1551.328215978 | 0.05          |
+| 10   | 1628.894626777 | 0.05          |
+| 11   | 1710.339358116 | 0.05          |
+| 12   | 1795.856326022 | 0.05          |
+| 13   | 1885.649142323 | 0.05          |
+| 14   | 1979.931599439 | 0.05          |
+| 15   | 2078.928179411 | 0.05          |
 
 </div>
