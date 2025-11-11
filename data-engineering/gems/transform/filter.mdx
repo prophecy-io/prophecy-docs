@@ -1,0 +1,80 @@
+---
+title: Filter
+description: Filter your data based on a custom filter condition
+---
+
+<Panel>
+<Info>
+Dependencies:
+
+- ProphecySparkBasicsPython 0.0.1+
+- ProphecySparkBasicsScala 0.0.1+
+
+</Info>
+
+<Info>
+
+Cluster requirements:
+
+- UC dedicated clusters 14.3+ supported
+- UC standard clusters 14.3+ supported
+- Livy clusters 3.0.1+ supported
+
+</Info>
+</Panel>
+
+Filters a DataFrame based on the provided filter condition.
+
+## Parameters
+
+| Parameter | Description | Required |
+| :--------------- | :------------------------------------------------------------------------------------ | :------- |
+| DataFrame | Input DataFrame on which the filter condition will be applied. | True |
+| Filter Condition | BooleanType column or boolean expression. Supports SQL, Python and Scala expressions. | True |
+
+<Note>
+Use the [visual language syntax](/engineers/configurations#syntax-for-different-languages) to call configuration variables in the Filter gem.
+</Note>
+
+## Example
+
+In this example, the Filter gem is used to return only marketing orders that are either finished or approved, while excluding any orders that have been discounted.
+
+![Example usage of Filter](./img/filter_eg_1.png)
+
+<Info>
+The Filter gem configuration translates into the Spark code shown below, which applies the same filtering logic.
+</Info>
+
+## Spark code
+
+<CodeGroup>
+
+```python example.py
+def Filter_Orders(spark: SparkSession, in0: DataFrame) -> DataFrame:
+ return in0.filter(
+ (
+ ((col("order_category") == lit("Marketing"))
+ & ((col("order_status") == lit("Finished")) | (col("order_status") == lit("Approved"))))
+ & ~ col("is_discounted")
+ )
+ )
+```
+
+```scala example.scala
+object Filter_Orders {
+
+ def apply(spark: SparkSession, in: DataFrame): DataFrame =
+ in.filter(
+ (
+ col("order_category") === lit("Marketing"))
+ .and(
+ (col("order_status") === lit("Finished"))
+ .or(col("order_status") === lit("Approved"))
+ )
+ .and(!col("is_discounted"))
+ )
+}
+```
+
+</CodeGroup>
