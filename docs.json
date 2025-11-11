@@ -61,7 +61,7 @@
         "icon": "code",
         "tabs": [
           {
-            "tab": "Guides",
+            "tab": "Documentation",
             "groups": [
               {
                 "group": "Getting started",
@@ -71,8 +71,205 @@
                 ]
               },
               {
-                "group": "CI/CD",
-                "pages": ["data-engineering/ci-cd/git"]
+                "group": "Development",
+                "pages": [
+                  {
+                    "group": "Pipelines",
+                    "pages": [
+                      "data-engineering/development/pipelines/pipelines",
+                      "data-engineering/development/pipelines/configuration",
+                      "data-engineering/development/pipelines/pipeline-settings",
+                      "data-engineering/development/pipelines/secrets-configs"
+                    ]
+                  },
+                  "data-engineering/development/dataset",
+                  {
+                    "group": "Runs",
+                    "pages": [
+                      "data-engineering/development/runs/execution",
+                      "data-engineering/development/runs/data-sampling",
+                      "data-engineering/development/runs/conditional-execution"
+                    ]
+                  },
+                  {
+                    "group": "Explore",
+                    "pages": [
+                      "data-engineering/development/data-explorer/data-explorer",
+                      "data-engineering/development/data-explorer/data-profile"
+                    ]
+                  },
+                  "data-engineering/development/copilot/copilot",
+                  {
+                    "group": "Functions",
+                    "pages": [
+                      "data-engineering/development/functions/user-defined-functions",
+                      "data-engineering/development/functions/business-rules-engine/business-rules-engine"
+                    ]
+                  },
+                  {
+                    "group": "Streaming",
+                    "pages": [
+                      "data-engineering/development/spark-streaming/spark-streaming",
+                      "data-engineering/development/spark-streaming/streaming-transformations",
+                      {
+                        "group": "Streaming sources and targets",
+                        "pages": [
+                          "data-engineering/development/spark-streaming/streaming-sources-and-targets/streaming-file-gem",
+                          "data-engineering/development/spark-streaming/streaming-sources-and-targets/streaming-warehouse-gem",
+                          "data-engineering/development/spark-streaming/streaming-sources-and-targets/streaming-event-gem"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Models",
+                    "pages": [
+                      "data-engineering/development/models/models",
+                      "data-engineering/development/models/configuration",
+                      {
+                        "group": "Sources and targets",
+                        "pages": [
+                          "data-engineering/development/models/sources-target/sources-target",
+                          "data-engineering/development/models/sources-target/location"
+                        ]
+                      },
+                      {
+                        "group": "Target platforms",
+                        "pages": [
+                          "data-engineering/development/models/target-platforms/bigquery-target",
+                          "data-engineering/development/models/target-platforms/databricks-target",
+                          "data-engineering/development/models/target-platforms/snowflake-target"
+                        ]
+                      }
+                    ]
+                  },
+                  "data-engineering/development/best-practices"
+                ]
+              },
+              {
+                "group": "Production",
+                "pages": [
+                  {
+                    "group": "CI/CD",
+                    "pages": [
+                      "data-engineering/ci-cd/reliable-ci-cd",
+                      "data-engineering/ci-cd/tests",
+                      "data-engineering/ci-cd/data-diff",
+                      {
+                        "group": "Deployment",
+                        "pages": [
+                          "data-engineering/ci-cd/deployment/deployment",
+                          "data-engineering/ci-cd/deployment/deploy-project",
+                          "data-engineering/ci-cd/deployment/use-external-release-tags"
+                        ]
+                      },
+                      {
+                        "group": "Git",
+                        "pages": [
+                          "data-engineering/ci-cd/git/git",
+                          "data-engineering/ci-cd/git/git-workflow",
+                          "data-engineering/ci-cd/git/git-resolve",
+                          "data-engineering/ci-cd/git/pull-request-templates",
+                          "data-engineering/ci-cd/git/best-practices"
+                        ]
+                      },
+                      {
+                        "group": "Prophecy Build Tool",
+                        "pages": [
+                          "data-engineering/ci-cd/prophecy-build-tool/prophecy-build-tool",
+                          "data-engineering/ci-cd/prophecy-build-tool/pbt-github-actions",
+                          "data-engineering/ci-cd/prophecy-build-tool/pbt-jenkins"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Orchestration",
+                    "pages": [
+                      "data-engineering/orchestration/databricks-jobs",
+                      "data-engineering/orchestration/multi-jobs-trigger",
+                      "data-engineering/orchestration/alternative-schedulers",
+                      {
+                        "group": "Pipeline Monitoring",
+                        "pages": [
+                          "data-engineering/orchestration/pipeline-monitoring/pipeline-monitoring",
+                          "data-engineering/orchestration/pipeline-monitoring/enable-pipeline-monitoring",
+                          "data-engineering/orchestration/pipeline-monitoring/use-pipeline-monitoring"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Lineage",
+                    "pages": [
+                      "data-engineering/lineage/lineage",
+                      "data-engineering/lineage/lineage-extractor",
+                      "data-engineering/lineage/lineage-run-and-diagnose"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Execution",
+                "pages": [
+                  {
+                    "group": "Fabrics",
+                    "pages": [
+                      {
+                        "group": "Databricks",
+                        "pages": [
+                          "data-engineering/fabrics/databricks/databricks",
+                          "data-engineering/fabrics/databricks/databricks-serverless",
+                          "data-engineering/fabrics/databricks/databricks-policies",
+                          "data-engineering/fabrics/databricks/UCShared",
+                          "data-engineering/fabrics/databricks/volumns-plibs",
+                          "data-engineering/fabrics/databricks/whitelist-plibs"
+                        ]
+                      },
+                      {
+                        "group": "Amazon EMR",
+                        "pages": [
+                          "data-engineering/fabrics/emr",
+                          "data-engineering/fabrics/emr-job-sizes"
+                        ]
+                      },
+                      "data-engineering/fabrics/dataproc",
+                      "data-engineering/fabrics/synapsefabric",
+                      "data-engineering/fabrics/livy",
+                      "data-engineering/fabrics/prophecy-managed"
+                    ]
+                  },
+                  "data-engineering/fabrics/execution-metrics"
+                ]
+              },
+              {
+                "group": "Extensibility",
+                "pages": [
+                  {
+                    "group": "Dependencies",
+                    "pages": [
+                      "data-engineering/extensibility/dependencies/prophecy-libs",
+                      "data-engineering/extensibility/dependencies/spark-dependencies"
+                    ]
+                  },
+                  {
+                    "group": "Package Hub",
+                    "pages": [
+                      "data-engineering/extensibility/package-hub/package-hub",
+                      "data-engineering/extensibility/package-hub/template-hub",
+                      "data-engineering/extensibility/package-hub/use-imported-package"
+                    ]
+                  },
+                  {
+                    "group": "Gem Builder",
+                    "pages": [
+                      "data-engineering/extensibility/gem-builder/spark-gem-builder",
+                      "data-engineering/extensibility/gem-builder/gem-builder-reference",
+                      "data-engineering/extensibility/gem-builder/gem-builder-ui",
+                      "data-engineering/extensibility/gem-builder/optimization-functions"
+                    ]
+                  }
+                ]
               }
             ]
           },
