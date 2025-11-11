@@ -1,0 +1,56 @@
+---
+title: OrderBy gem
+description: Sort your data based on one or more columns
+---
+
+<Panel>
+<Info>
+Dependencies:
+
+- ProphecySparkBasicsPython 0.0.1+
+- ProphecySparkBasicsScala 0.0.1+
+
+</Info>
+
+<Info>
+
+Cluster requirements:
+
+- UC dedicated clusters 14.3+ supported
+- UC standard clusters 14.3+ supported
+- Livy clusters 3.0.1+ supported
+
+</Info>
+</Panel>
+
+Sorts a DataFrame on one or more columns in ascending or descending order.
+
+## Parameters
+
+| Parameter | Description | Required |
+| ------------- | ------------------------------------------ | -------- |
+| DataFrame | Input DataFrame to be sorted | True |
+| Order columns | Columns to sort DataFrame by | True |
+| Sort | Order of sorting - ascending or descending | True |
+
+## Example
+
+![Example usage of OrderBy](./img/orderby_eg_0.png)
+
+## Spark Code
+
+<CodeGroup>
+
+```python example.py
+def Sort(spark: SparkSession, in0: DataFrame) -> DataFrame:
+ return in0.orderBy(col("name").asc(), col("updated_at").desc())
+```
+
+```scala example.scala
+object Sort {
+ def apply(spark: SparkSession, in: DataFrame): DataFrame =
+ in.orderBy(col("updated_at").desc, col("name").asc)
+}
+```
+
+</CodeGroup>

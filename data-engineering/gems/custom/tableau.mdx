@@ -1,0 +1,41 @@
+---
+title: Tableau gem
+description: Send data from your Spark pipeline to Tableau
+---
+
+<Panel>
+<Info>
+Dependencies:
+
+- ProphecyWebAppPython 0.1.2+
+- ProphecyLibsPython 1.9.42+
+
+</Info>
+
+<Info>
+
+Cluster requirements:
+
+- UC dedicated clusters 14.3+ supported
+- UC standard clusters 14.3+ supported
+- Livy clusters not supported
+
+</Info>
+</Panel>
+
+Use the Tableau gem to send data from your Spark pipeline to Tableau Server as an extract. This lets you automate data delivery to Tableau for dashboards or reporting. To connect, provide your server URL, site and project IDs, and a personal access token.
+
+## Prerequisite
+
+This gem only runs on machines with an x86-64 CPU architecture.
+
+## Parameters
+
+| Parameter | Description |
+| -------------------- | ---------------------------------------------------------------------- |
+| Tableau server url | URL of your Tableau Server. Example: `https://tableau.example.com` |
+| Tableau token name | Name of your Tableau personal access token |
+| Tableau token | Your Tableau personal access token |
+| Tableau site id | Name of the Tableau site you're connecting to |
+| Tableau project id | Name of the project where you want to send data |
+| Tableau Extract Name | Name of the Tableau extract |

@@ -1,0 +1,218 @@
+---
+title: Deduplicate gem
+description: Remove rows with duplicate values of specified columns
+---
+
+<Panel>
+<Info>
+Dependencies:
+
+- ProphecySparkBasicsPython 0.0.1+
+- ProphecySparkBasicsScala 0.0.1+
+
+</Info>
+
+<Info>
+
+Cluster requirements:
+
+- UC dedicated clusters 14.3+ supported
+- UC standard clusters 14.3+ supported
+- Livy clusters 3.0.1+ supported
+
+</Info>
+</Panel>
+
+Removes rows with duplicate values of specified columns.
+
+## Parameters
+
+| Parameter | Description |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| DataFrame | Input DataFrame |
+| Row to keep | <ul style="margin:0;padding:0 1rem"><li>Any (Default): Keeps any one row among duplicates. Uses underlying `dropDuplicates` construct. </li><li>First: Keeps first occurrence of the duplicate row. </li><li>Last: Keeps last occurrence of the duplicate row.</li><li>Unique Only: Keeps rows that don't have duplicates. </li><li>Distinct Rows: Keeps all distinct rows. This is equivalent to performing a `df.distinct()` operation.</li></ul> |
+| Deduplicate columns | Columns to consider while removing duplicate rows (not required for `Distinct Rows`) |
+| Order columns | Columns to sort DataFrame on before de-duping in case of `First` and `Last` rows to keep |
+
+## Examples
+
+### Rows to keep: `Any`
+
+![Example usage of Deduplicate](./img/deduplicate_eg_1.png)
+
+<CodeGroup>
+
+```python example.py
+def dedup(spark: SparkSession, in0: DataFrame) -> DataFrame:
+ return in0.dropDuplicates(["tran_id"])
+```
+
+```scala example.scala
+object dedup {
+ def apply(spark: SparkSession, in: DataFrame): DataFrame = {
+ in.dropDuplicates(List("tran_id"))
+ }
+}
+```
+
+</CodeGroup>
+
+---
+
+### Rows to keep: `First`
+
+![Example usage of Deduplicate - First](./img/dedup_eg_first.png)
+
+<CodeGroup>
+
+```python example.py
+def earliest_cust_order(spark: SparkSession, in0: DataFrame) -> DataFrame:
+ return in0\
+ .withColumn(
+ "row_number",
+ row_number()\
+ .over(Window\
+ .partitionBy("customer_id")\
+ .orderBy(col("order_dt").asc())
+ )\
+ .filter(col("row_number") == lit(1))\
+ .drop("row_number")
+```
+
+```scala example.scala
+object earliest_cust_order {
+ def apply(spark: SparkSession, in: DataFrame): DataFrame = {
+ import org.apache.spark.sql.expressions.Window
+ in.withColumn(
+ "row_number",
+ row_number().over(
+ Window
+ .partitionBy("customer_id")
+ .orderBy(col("order_date").asc)
+ )
+ )
+ .filter(col("row_number") === lit(1))
+ .drop("row_number")
+ }
+}
+```
+
+</CodeGroup>
+
+---
+
+### Rows to keep: `Last`
+
+![Example usage of Deduplicate - Last](./img/dedup_eg_last.png)
+
+<CodeGroup>
+
+```python example.py
+def latest_cust_order(spark: SparkSession, in0: DataFrame) -> DataFrame:
+ return in0\
+ .withColumn(
+ "row_number",
+ row_number()\
+ .over(Window\
+ .partitionBy("customer_id")\
+ .orderBy(col("order_dt").asc())
+ )\
+ .withColumn(
+ "count",
+ count("*")\
+ .over(Window\
+ .partitionBy("customer_id")
+ )\
+ .filter(col("row_number") == col("count"))\
+ .drop("row_number")\
+ .drop("count")
+```
+
+```scala example.scala
+object latest_cust_order {
+ def apply(spark: SparkSession, in: DataFrame): DataFrame = {
+ import org.apache.spark.sql.expressions.Window
+ in.withColumn(
+ "row_number",
+ row_number().over(
+ Window
+ .partitionBy("customer_id")
+ .orderBy(col("order_date").asc)
+ )
+ )
+ .withColumn(
+ "count",
+ count("*").over(
+ Window
+ .partitionBy("customer_id")
+ )
+ )
+ .filter(col("row_number") === col("count"))
+ .drop("row_number")
+ .drop("count")
+ }
+}
+```
+
+</CodeGroup>
+
+### Rows to keep: `Unique Only`
+
+![Example usage of Deduplicate - Unique](./img/dedup_eg_unique.png)
+
+<CodeGroup>
+
+```python example.py
+def single_order_customers(spark: SparkSession, in0: DataFrame) -> DataFrame:
+ return in0\
+ .withColumn(
+ "count",
+ count("*")\
+ .over(Window\
+ .partitionBy("customer_id")
+ )\
+ .filter(col("count") == lit(1))\
+ .drop("count")
+```
+
+```scala example.scala
+object single_order_customers {
+ def apply(spark: SparkSession, in: DataFrame): DataFrame = {
+ import org.apache.spark.sql.expressions.Window
+ in.withColumn(
+ "count",
+ count("*").over(
+ Window
+ .partitionBy("customer_id")
+ )
+ )
+ .filter(col("count") === lit(1))
+ .drop("count")
+ }
+
+}
+```
+
+</CodeGroup>
+
+### Rows to keep: `Distinct Rows`
+
+![Example usage of Deduplicate - Distinct](./img/dedup_eg_distinct.png)
+
+<CodeGroup>
+
+```python example.py
+def single_order_customers(spark: SparkSession, in0: DataFrame) -> DataFrame:
+ return in0.distinct()
+```
+
+```scala example.scala
+object single_order_customers {
+ def apply(spark: SparkSession, in: DataFrame): DataFrame = {
+ in.distinct()
+ }
+
+}
+```
+
+</CodeGroup>

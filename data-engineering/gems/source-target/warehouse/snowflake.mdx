@@ -1,0 +1,177 @@
+---
+title: Snowflake
+description: Parameters and properties to read from and write to the Snowflake warehouse.
+---
+
+<Panel>
+<Info>
+Dependencies:
+
+- ProphecyWarehousePython 0.0.1+
+- ProphecyWarehouseScala 0.0.1+
+
+</Info>
+
+<Info>
+
+Cluster requirements:
+
+- UC dedicated clusters 14.3+ supported
+- UC standard clusters 14.3+ supported
+- Livy clusters not supported
+
+</Info>
+</Panel>
+
+You can read from and write to Snowflake.
+
+## Parameters
+
+| Parameter | Tab | Description |
+| ---------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Authentication Type | Location | How you want to authenticate. Possible values are: `Username & Password`, or `Key Pair Authentication`. To configure key pair authentication on Snowflake, see [Configuring key-pair authentication](https://docs.snowflake.com/en/user-guide/key-pair-auth#configuring-key-pair-authentication). |
+| Username | Location | Username of the Snowflake user if you selected `Username & Password` for the authentication type. |
+| Password | Location | Password for the Snowflake user if you selected `Username & Password` for the authentication type. |
+| Private key filepath | Location | Location of your private key filepath in PKCS8 format if you selected `Key Pair Authentication` for the authentication type. |
+| Private key passphrase | Location | Passphrase of your private key file if you selected `Key Pair Authentication` for the authentication type. |
+| Snowflake URL | Location | Hostname for your account in the format: `<account_identifier>.snowflakecomputing.com` For example: `https://DJ07623.ap-south-1.aws.snowflakecomputing.com` |
+| Database | Location | Database to use for the session. |
+| Schema | Location | Schema to use for the session. |
+| Warehouse | Location | Default virtual warehouse to use for the session. |
+| Role | Location | Default security role to use for the session. |
+| Data Source | Location | Strategy to read data. Possible values are: `DB Table` or `SQL Query`. |
+| Table | Location | Name of the table to be read. |
+| SQL Query | Location | SQL query that contains a`SELECT` statement to run. |
+
+## Source
+
+The Source gem reads data from Snowflake and allows you to optionally specify the following additional property.
+
+### Source properties
+
+| Properties | Description | Default |
+| ----------- | ---------------------------- | ------- |
+| Description | Description of your dataset. | None |
+
+### Compiled code
+
+<Tip>
+To see the compiled code of your project, [switch to the Code view](/engineers/pipelines#project-editor) in the project header.
+</Tip>
+
+<CodeGroup>
+
+```python example.py
+def sf_customer(spark: SparkSession) -> DataFrame:
+ from pyspark.dbutils import DBUtils
+
+ return spark.read\
+ .format("snowflake")\
+ .options(
+ **{
+ "sfUrl": "https://DJ07623.ap-south-1.aws.snowflakecomputing.com",
+ "sfUser": "anshuman",
+ "sfPassword": "*******",
+ "sfDatabase": "SNOWFLAKE_SAMPLE_DATA",
+ "sfSchema": "TPCDS_SF100TCL",
+ "sfWarehouse": "COMPUTE_WH"
+ }
+ )\
+ .option("dbtable", "CUSTOMER")\
+ .load()
+```
+
+```scala example.scala
+object customer_snow_src {
+ def apply(spark: SparkSession): DataFrame = {
+ import com.databricks.dbutils_v1.DBUtilsHolder.dbutils
+ var reader = context.spark.read
+ .format("snowflake")
+ .options(
+ Map(
+ "sfUrl" → "https://DJ07623.ap-south-1.aws.snowflakecomputing.com",
+ "sfUser" → "anshuman",
+ "sfPassword" → "******",
+ "sfDatabase" → "SNOWFLAKE_SAMPLE_DATA",
+ "sfSchema" → "TPCDS_SF100TCL",
+ "sfWarehouse" → "COMPUTE_WH"
+ )
+ )
+ reader = reader.option("dbtable", "CUSTOMER")
+ reader.load()
+ }
+}
+```
+
+</CodeGroup>
+
+---
+
+## Target
+
+The Target gem writes data to Snowflake and allows you to optionally specify the following additional properties.
+
+### Target properties
+
+| Property | Description | Default |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| Description | Description of your dataset. | None |
+| Write Mode | How to handle existing data. For a list of the possible values, see [Supported write modes](#supported-write-modes). | `overwrite` |
+| Run post-script SQL | DDL and DML SQL statements to execute before the Target gem writes data. This is intended for statements that do not return a result set, such as DDL statements like `CREATE TABLE` and DML statements like `INSERT, UPDATE, and DELETE`. | None |
+
+### Supported write modes
+
+| Write mode | Description |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| error | If the data already exists, throw an exception. |
+| overwrite | If the data already exists, overwrite the data with the contents of the `DataFrame`. |
+| append | If the data already exists, append the contents of the `DataFrame`. |
+| ignore | If the data already exists, do nothing with the contents of the `DataFrame`. This is similar to the `CREATE TABLE IF NOT EXISTS` clause in SQL. |
+
+### Compiled code
+
+<Tip>
+To see the compiled code of your project, [switch to the Code view](/engineers/pipelines#project-editor) in the project header.
+</Tip>
+
+<CodeGroup>
+
+```python example.py
+def customer_snow_tg(spark: SparkSession, in0: DataFrame):
+ from pyspark.dbutils import DBUtils
+ options = {
+ "sfUrl": "https://DJ07623.ap-south-1.aws.snowflakecomputing.com",
+ "sfUser": "anshuman",
+ "sfPassword": "******",
+ "sfDatabase": "SNOWFLAKE_SAMPLE_DATA",
+ "sfSchema": "TPCDS_SF100TCL",
+ "sfWarehouse": "COMPUTE_WH"
+ }
+ writer = in0.write.format("snowflake").options(**options)
+ writer = writer.option("dbtable", "CUSTOMERS")
+ writer = writer.mode("overwrite")
+ writer.save()
+```
+
+```scala example.scala
+object customer_snow_tg {
+ def apply(spark: SparkSession, in: DataFrame): Unit = {
+
+ import net.snowflake.spark.snowflake.Utils
+ import com.databricks.dbutils_v1.DBUtilsHolder.dbutils
+ val options = Map("sfUrl" → "https://DJ07623.ap-south-1.aws.snowflakecomputing.com",
+ "sfUser" → "anshuman",
+ "sfPassword" → "******",
+ "sfDatabase" → "SNOWFLAKE_SAMPLE_DATA",
+ "sfSchema" → "TPCDS_SF100TCL",
+ "sfWarehouse" → "COMPUTE_WH"
+ )
+ var writer = in.write.format("snowflake").options(options)
+ writer = writer.option("dbtable", "test_table")
+ writer = writer.mode("overwrite")
+ writer.save()
+ }
+}
+```
+
+</CodeGroup>

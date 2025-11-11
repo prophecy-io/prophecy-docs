@@ -1,0 +1,157 @@
+---
+title: Repartition gem
+description: Repartition or coalesce a DataFrame
+---
+
+<Panel>
+<Info>
+Dependencies:
+
+- ProphecySparkBasicsPython 0.0.1+
+- ProphecySparkBasicsScala 0.0.1+
+
+</Info>
+
+<Info>
+
+Cluster requirements:
+
+- UC dedicated clusters 14.3+ supported
+- UC standard clusters 14.3+ supported
+- Livy clusters 3.0.1+ supported
+
+</Info>
+</Panel>
+
+This will repartition or coalesce the input DataFrame based on the specified configuration. There are four different repartitioning options:
+
+## Hash Repartitoning
+
+Repartitions the data evenly across various partitions based on the hash value of the specified key.
+
+### Parameters
+
+| Parameter | Description | Required |
+| ---------------------------- | --------------------------------------------- | -------- |
+| DataFrame | Input DataFrame | True |
+| Overwrite default partitions | Flag to overwrite default partitions | False |
+| Number of partitions | Integer value specifying number of partitions | False |
+| Repartition expression(s) | List of expressions to repartition by | True |
+
+### Compiled code
+
+<CodeGroup>
+
+```python example.py
+def hashRepartition(spark: SparkSession, in0: DataFrame) -> DataFrame:
+ return in0.repartition(5, col("customer_id"))
+```
+
+```scala example.scala
+object hashRepartition {
+
+ def apply(spark: SparkSession, in: DataFrame): DataFrame =
+ in.repartition(5, col("customer_id"))
+
+}
+```
+
+</CodeGroup>
+
+## Random Repartitioning
+
+Repartitions without data distribution defined.
+
+### Parameters
+
+| Parameter | Description | Required |
+| :------------------- | :-------------------------------------------- | :------- |
+| DataFrame | Input DataFrame | True |
+| Number of partitions | Integer value specifying number of partitions | True |
+
+### Compiled code
+
+<CodeGroup>
+
+```python example.py
+def randomRepartition(spark: SparkSession, in0: DataFrame) -> DataFrame:
+ return in0.repartition(5)
+```
+
+```scala example.scala
+object randomRepartition {
+
+ def apply(spark: SparkSession, in: DataFrame): DataFrame =
+ in.repartition(5)
+
+}
+```
+
+</CodeGroup>
+
+## Range Repartitoning
+
+Repartitions the data with tuples having keys within the same range on the same worker.
+
+### Parameters
+
+| Parameter | Description | Required |
+| -------------------------------------- | ---------------------------------------------------------------------- | -------- |
+| DataFrame | Input DataFrame | True |
+| Overwrite default partitions | Flag to overwrite default partitions | False |
+| Number of partitions | Integer value specifying number of partitions | False |
+| Repartition expression(s) with sorting | List of expressions to repartition by with corresponding sorting order | True |
+
+### Compiled code
+
+<CodeGroup>
+
+```python example.py
+def RepartitionByRange(spark: SparkSession, in0: DataFrame) -> DataFrame:
+ return in0.repartitionByRange(5, col("customer_id").asc())
+```
+
+```scala example.scala
+object RepartitionByRange {
+
+ def apply(spark: SparkSession, in: DataFrame): DataFrame =
+ in.repartitionByRange(5, col("customer_id").asc())
+
+}
+```
+
+</CodeGroup>
+
+## Coalesce
+
+Reduces the number of partitions without shuffling the dataset.
+
+### Parameters
+
+| Parameter | Description | Required |
+| :------------------- | :-------------------------------------------- | :------- |
+| DataFrame | Input DataFrame | True |
+| Number of partitions | Integer value specifying number of partitions | True |
+
+### Compiled code
+
+<CodeGroup>
+
+```python example.py
+def Coalesce(spark: SparkSession, in0: DataFrame) -> DataFrame:
+ return in0.coalesce(5)
+```
+
+```scala example.scala
+object Coalesce {
+
+ def apply(spark: SparkSession, in: DataFrame): DataFrame =
+ in.coalesce(5)
+
+}
+```
+
+</CodeGroup>
+
+## Video demo
+
