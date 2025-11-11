@@ -1,0 +1,102 @@
+---
+title: 'Get pipeline run status'
+openapi: 'GET https://app.prophecy.io/api/trigger/pipeline/{runId}'
+---
+
+Get the status of a triggered pipeline run, including an error message if the pipeline run fails.
+
+## Endpoint
+
+```
+https://app.prophecy.io/api/trigger/pipeline/{runId}
+```
+
+<Info>
+  Replace the base URL with your environment URL for Dedicated SaaS deployments.
+</Info>
+
+
+## Headers
+
+---
+
+<ResponseField name="X-AUTH-TOKEN" type="string" required>
+  Prophecy access token
+</ResponseField>
+
+## Query Parameters
+
+---
+
+<ResponseField name="runId" type="string" required>
+  Pipeline run ID
+</ResponseField>
+
+## Response
+
+---
+
+<ResponseField name="success" type="boolean">
+  Indicates whether the request to retrieve the pipeline run status was successful. It does not
+  reflect the success of the run.
+</ResponseField>
+
+<ResponseField name="runId" type="string">
+  Unique identifier of the pipeline run.
+</ResponseField>
+
+<ResponseField name="createdAt" type="string">
+  Timestamp when the pipeline run record was created. Returns ISO 8601 format, including
+  microseconds.
+</ResponseField>
+
+<ResponseField name="updatedAt" type="string">
+  Timestamp when the pipeline run record was last updated. Returns ISO 8601 format, including
+  microseconds.
+</ResponseField>
+
+<ResponseField name="projectId" type="string">
+  ID of the project associated with this pipeline run.
+</ResponseField>
+
+<ResponseField name="pipelineName" type="string">
+  Name of the pipeline associated with this run.
+</ResponseField>
+
+<ResponseField name="fabricId" type="string">
+  ID of the fabric where the pipeline resides.
+</ResponseField>
+
+<ResponseField name="runStatus" type="string">
+  Execution status of the pipeline run. Possible values include `RUNNING`, `ERROR`, or `SUCCEEDED`.
+</ResponseField>
+
+<ResponseField name="errorMessage" type="string">
+  Descriptive error message if the runStatus is `ERROR`.
+</ResponseField>
+
+<RequestExample>
+
+```bash Request
+curl --location 'https://app.prophecy.io/api/trigger/pipeline/MDAw-xZGYzYzc3LTYzdsSdfx--LTQ3NTQ1ZYjI2Mw==' \
+--header 'X-AUTH-TOKEN: <prophecy-pat>'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "success": true,
+  "runId": "MDAw-xZGYzYzc3LTYzdsSdfx--LTQ3NTQ1ZYjI2Mw==",
+  "createdAt": "2025-06-17T18:01:49.275359",
+  "updatedAt": "2025-06-17T18:02:41.712486",
+  "projectId": "41459",
+  "pipelineName": "bakehouse",
+  "fabricId": "33290",
+  "runStatus": "SUCCEEDED"
+}
+```
+
+</ResponseExample>
