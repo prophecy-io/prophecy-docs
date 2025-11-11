@@ -122,6 +122,43 @@
                         ]
                       }
                     ]
+                  },
+                  {
+                    "group": "Lineage",
+                    "pages": [
+                      "data-engineering/lineage/lineage",
+                      "data-engineering/lineage/lineage-extractor",
+                      "data-engineering/lineage/lineage-run-and-diagnose"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Extensibility",
+                "pages": [
+                  {
+                    "group": "Dependencies",
+                    "pages": [
+                      "data-engineering/extensibility/dependencies/prophecy-libs",
+                      "data-engineering/extensibility/dependencies/spark-dependencies"
+                    ]
+                  },
+                  {
+                    "group": "Package Hub",
+                    "pages": [
+                      "data-engineering/extensibility/package-hub/package-hub",
+                      "data-engineering/extensibility/package-hub/template-hub",
+                      "data-engineering/extensibility/package-hub/use-imported-package"
+                    ]
+                  },
+                  {
+                    "group": "Gem Builder",
+                    "pages": [
+                      "data-engineering/extensibility/gem-builder/spark-gem-builder",
+                      "data-engineering/extensibility/gem-builder/gem-builder-reference",
+                      "data-engineering/extensibility/gem-builder/gem-builder-ui",
+                      "data-engineering/extensibility/gem-builder/optimization-functions"
+                    ]
                   }
                 ]
               }
