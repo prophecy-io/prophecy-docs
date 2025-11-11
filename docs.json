@@ -22,8 +22,9 @@
                 "group": "Getting started",
                 "pages": [
                   "index",
+                  "data-analytics/getting-started/concepts",
                   "data-analytics/getting-started/quick-start",
-                  "data-analytics/getting-started/concepts"
+                  "data-analytics/getting-started/create-project"
                 ]
               },
               {
