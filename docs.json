@@ -134,6 +134,39 @@
                 ]
               },
               {
+                "group": "Execution",
+                "pages": [
+                  {
+                    "group": "Fabrics",
+                    "pages": [
+                      {
+                        "group": "Databricks",
+                        "pages": [
+                          "data-engineering/fabrics/databricks/databricks",
+                          "data-engineering/fabrics/databricks/databricks-serverless",
+                          "data-engineering/fabrics/databricks/databricks-policies",
+                          "data-engineering/fabrics/databricks/UCShared",
+                          "data-engineering/fabrics/databricks/volumns-plibs",
+                          "data-engineering/fabrics/databricks/whitelist-plibs"
+                        ]
+                      },
+                      {
+                        "group": "Amazon EMR",
+                        "pages": [
+                          "data-engineering/fabrics/emr",
+                          "data-engineering/fabrics/emr-job-sizes"
+                        ]
+                      },
+                      "data-engineering/fabrics/dataproc",
+                      "data-engineering/fabrics/synapsefabric",
+                      "data-engineering/fabrics/livy",
+                      "data-engineering/fabrics/prophecy-managed"
+                    ]
+                  },
+                  "data-engineering/fabrics/execution-metrics"
+                ]
+              },
+              {
                 "group": "Extensibility",
                 "pages": [
                   {
