@@ -30,10 +30,10 @@ Use the DynamicSelect gem to dynamically filter columns of your dataset based on
 
 There are two ways to configure the DynamicSelect.
 
-| Configuration | Description |
+| Configuration         | Description                                                                                   |
 | --------------------- | --------------------------------------------------------------------------------------------- |
-| Select field types | Choose one or more types of columns to keep in the dataset, such as string, decimal, or date. |
-| Select via expression | Create an expression that limits the type of columns to keep in the dataset. |
+| Select field types    | Choose one or more types of columns to keep in the dataset, such as string, decimal, or date. |
+| Select via expression | Create an expression that limits the type of columns to keep in the dataset.                  |
 
 ## Examples
 
@@ -47,4 +47,4 @@ Assume you would like to remove irrelevant date and timestamp columns from your 
 
 ### Remove date columns with an expression
 
-Using the same example, you can accomplish the same task with the **Select via expression** method by inputting the the expression `column_type NOT IN ('date', 'timestamp')`.
+Using the same example, you can accomplish the same task with the **Select via expression** method by inputting the expression `column_type NOT IN ('date', 'timestamp')`.
