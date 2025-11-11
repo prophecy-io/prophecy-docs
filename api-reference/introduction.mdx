@@ -1,33 +1,37 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: 'API reference'
+description: 'Use APIs to interact with your Prophecy deployment'
 ---
 
+The Prophecy API provides programmatic access to your Prophecy deployment through REST endpoints. These endpoints accept JSON payloads and return structured responses, enabling integration with CI/CD pipelines, monitoring systems, and custom automation scripts. All requests require authentication via a Personal Access Token in the request headers.
+
+<Info>
+  Prophecy has an additional set of APIs that you can request through Prophecy Support. Reach out to
+  Support to learn more.
+</Info>
+
+## Access tokens
+
+Prophecy uses your Personal Access Token (PAT) for authentication with our API servers. To manage your access tokens:
+
+1. Open your Prophecy environment.
+2. At the bottom of the left sidebar, click the **...** menu.
+3. Click the gear icon to open Settings.
+4. Navigate to the **Access Tokens** tab.
+
+Here, you will see any PATs you have previously created. You can also find information such as creation date, expiration status, and time of last use.
+
 <Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
+  Access tokens are per user. Therefore, API permissions are scoped to your user permissions.
 </Note>
 
-## Welcome
+### Generate an access token
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+To generate a new access token:
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
-
-## Authentication
-
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
-
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
-```
+1. Open the **Access Tokens** tab in Settings.
+2. Click **Generate Token**.
+3. Name your token.
+4. Choose an expiration date from the dropdown menu.
+5. Click **Create**.
+6. Copy your newly-generated token before closing the dialog. You will not be able to access the token value again.
