@@ -1,5 +1,36 @@
 ---
 title: 'Concepts'
-description: 'Core concepts and fundamentals of data engineering'
+description: 'Core concepts for data engineers working with Prophecy'
 ---
 
+<Note>
+  This page describes core concepts for data engineering using Spark (PySpark and Scala). Prophecy
+  also supports data engineering using SQL (using dbt). Learn more about that in the Models section
+  of the documentation.
+</Note>
+
+The following concepts are fundamental to understanding how to use Prophecy for data engineering.
+
+## Fabrics
+
+Fabrics define your Spark execution environment. Prophecy supports running pipelines on your own Spark clusters in Databricks, Amazon EMR, Azure Synapse, and other external Spark engines.
+
+## Projects
+
+Projects organize your pipelines, datasets, jobs, and other project entities. When creating your project, you'll decide to compile your visual project component into PySpark or Scala code. Projects can be packaged and deployed in your chosen Spark environment when you're ready to push to production. Pipeline dependencies such as packages depend of the language you choose when you create your project.
+
+## Pipelines
+
+Pipelines are groups of data transformations that you can build from a **visual** or **code** interface. When using the visual interface, each component of a pipeline is automatically compiled into code that you can reuse and customize.
+
+## Gems
+
+Gems are the building blocks of pipelines. They represent a single data transformation or action. Gems can be configured to read from a dataset, write to a dataset, or perform a transformation on the data.
+
+## Datasets
+
+Datasets are reusable configurations of dataset locations and properties in your connected Spark environment. Once you create a dataset in your project, you can reuse it in multiple pipelines. You'll also be able to share the dataset with other projects if you publish your project to the Package Hub.
+
+## Version control
+
+All projects in Prophecy are stored in their own Git repository. This allows you to track changes to your project over time and collaborate with other data engineers. It also makes it possible to integrate with your existing Git and CI/CD workflows. You can either connect your project to an external Git repository, or you can use a Prophecy-managed repository.

@@ -121,6 +121,28 @@
                       }
                     ]
                   },
+                  {
+                    "group": "Models",
+                    "pages": [
+                      "data-engineering/development/models/models",
+                      "data-engineering/development/models/configuration",
+                      {
+                        "group": "Sources and targets",
+                        "pages": [
+                          "data-engineering/development/models/sources-target/sources-target",
+                          "data-engineering/development/models/sources-target/location"
+                        ]
+                      },
+                      {
+                        "group": "Target platforms",
+                        "pages": [
+                          "data-engineering/development/models/target-platforms/bigquery-target",
+                          "data-engineering/development/models/target-platforms/databricks-target",
+                          "data-engineering/development/models/target-platforms/snowflake-target"
+                        ]
+                      }
+                    ]
+                  },
                   "data-engineering/development/best-practices"
                 ]
               },
