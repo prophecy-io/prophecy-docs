@@ -61,7 +61,7 @@
         "icon": "code",
         "tabs": [
           {
-            "tab": "Guides",
+            "tab": "Documentation",
             "groups": [
               {
                 "group": "Getting started",
@@ -71,8 +71,43 @@
                 ]
               },
               {
-                "group": "CI/CD",
-                "pages": ["data-engineering/ci-cd/git"]
+                "group": "Production",
+                "pages": [
+                  {
+                    "group": "CI/CD",
+                    "pages": [
+                      "data-engineering/ci-cd/reliable-ci-cd",
+                      "data-engineering/ci-cd/tests",
+                      "data-engineering/ci-cd/data-diff",
+                      {
+                        "group": "Deployment",
+                        "pages": [
+                          "data-engineering/ci-cd/deployment/deployment",
+                          "data-engineering/ci-cd/deployment/deploy-project",
+                          "data-engineering/ci-cd/deployment/use-external-release-tags"
+                        ]
+                      },
+                      {
+                        "group": "Git",
+                        "pages": [
+                          "data-engineering/ci-cd/git/git",
+                          "data-engineering/ci-cd/git/git-workflow",
+                          "data-engineering/ci-cd/git/git-resolve",
+                          "data-engineering/ci-cd/git/pull-request-templates",
+                          "data-engineering/ci-cd/git/best-practices"
+                        ]
+                      },
+                      {
+                        "group": "Prophecy Build Tool",
+                        "pages": [
+                          "data-engineering/ci-cd/prophecy-build-tool/prophecy-build-tool",
+                          "data-engineering/ci-cd/prophecy-build-tool/pbt-github-actions",
+                          "data-engineering/ci-cd/prophecy-build-tool/pbt-jenkins"
+                        ]
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           },
