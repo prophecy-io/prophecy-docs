@@ -135,73 +135,79 @@
                 ]
               },
               {
-                "group": "Transform",
+                "group": "Data processing",
                 "pages": [
-                  "data-engineering/gems/transform/transform",
-                  "data-engineering/gems/transform/aggregate",
-                  "data-engineering/gems/transform/bulk-column-expressions",
-                  "data-engineering/gems/transform/bulk-column-rename",
-                  "data-engineering/gems/transform/column-parser",
-                  "data-engineering/gems/transform/data-cleansing",
-                  "data-engineering/gems/transform/data-quality-check",
-                  "data-engineering/gems/transform/deduplicate",
-                  "data-engineering/gems/transform/dynamic-replace",
-                  "data-engineering/gems/transform/dynamic-select",
-                  "data-engineering/gems/transform/filter",
-                  "data-engineering/gems/transform/flattenschema",
-                  "data-engineering/gems/transform/fuzzy-match",
-                  "data-engineering/gems/transform/limit",
-                  "data-engineering/gems/transform/order-by",
-                  "data-engineering/gems/transform/reformat",
-                  "data-engineering/gems/transform/sample-rows",
-                  "data-engineering/gems/transform/schema-transform",
-                  "data-engineering/gems/transform/set-operation",
-                  "data-engineering/gems/transform/unpivot",
-                  "data-engineering/gems/transform/window-function"
+                  {
+                    "group": "Transform",
+                    "pages": [
+                      "data-engineering/gems/transform/aggregate",
+                      "data-engineering/gems/transform/bulk-column-expressions",
+                      "data-engineering/gems/transform/bulk-column-rename",
+                      "data-engineering/gems/transform/column-parser",
+                      "data-engineering/gems/transform/data-cleansing",
+                      "data-engineering/gems/transform/data-quality-check",
+                      "data-engineering/gems/transform/deduplicate",
+                      "data-engineering/gems/transform/dynamic-replace",
+                      "data-engineering/gems/transform/dynamic-select",
+                      "data-engineering/gems/transform/filter",
+                      "data-engineering/gems/transform/flattenschema",
+                      "data-engineering/gems/transform/fuzzy-match",
+                      "data-engineering/gems/transform/limit",
+                      "data-engineering/gems/transform/order-by",
+                      "data-engineering/gems/transform/reformat",
+                      "data-engineering/gems/transform/sample-rows",
+                      "data-engineering/gems/transform/schema-transform",
+                      "data-engineering/gems/transform/set-operation",
+                      "data-engineering/gems/transform/unpivot",
+                      "data-engineering/gems/transform/window-function"
+                    ]
+                  },
+                  {
+                    "group": "Join/Split",
+                    "pages": [
+                      "data-engineering/gems/join-split/join",
+                      "data-engineering/gems/join-split/repartition",
+                      "data-engineering/gems/join-split/row-distributor",
+                      "data-engineering/gems/join-split/compare-columns"
+                    ]
+                  }
                 ]
               },
               {
-                "group": "Join/Split",
+                "group": "Advanced",
                 "pages": [
-                  "data-engineering/gems/join-split/join-split",
-                  "data-engineering/gems/join-split/join",
-                  "data-engineering/gems/join-split/repartition",
-                  "data-engineering/gems/join-split/row-distributor",
-                  "data-engineering/gems/join-split/compare-columns"
-                ]
-              },
-              {
-                "group": "Custom",
-                "pages": [
-                  "data-engineering/gems/custom/custom",
-                  "data-engineering/gems/custom/delta-table-operations",
-                  "data-engineering/gems/custom/directory",
-                  "data-engineering/gems/custom/email",
-                  "data-engineering/gems/custom/email-data",
-                  "data-engineering/gems/custom/file-operation",
-                  "data-engineering/gems/custom/rest-api-enrich",
-                  "data-engineering/gems/custom/script",
-                  "data-engineering/gems/custom/sql-statement",
-                  "data-engineering/gems/custom/tableau"
-                ]
-              },
-              {
-                "group": "Machine Learning",
-                "pages": [
-                  "data-engineering/gems/machine-learning/machine-learning",
-                  "data-engineering/gems/machine-learning/genaichatbot",
-                  "data-engineering/gems/machine-learning/ml-openai",
-                  "data-engineering/gems/machine-learning/ml-pinecone-lookup",
-                  "data-engineering/gems/machine-learning/ml-text-processing"
-                ]
-              },
-              {
-                "group": "Subgraph",
-                "pages": [
-                  "data-engineering/gems/subgraph/subgraph",
-                  "data-engineering/gems/subgraph/basicSubgraph",
-                  "data-engineering/gems/subgraph/tableIterator",
-                  "data-engineering/gems/subgraph/while-iterator"
+                  {
+                    "group": "Custom",
+                    "pages": [
+                      "data-engineering/gems/custom/delta-table-operations",
+                      "data-engineering/gems/custom/directory",
+                      "data-engineering/gems/custom/email",
+                      "data-engineering/gems/custom/email-data",
+                      "data-engineering/gems/custom/file-operation",
+                      "data-engineering/gems/custom/rest-api-enrich",
+                      "data-engineering/gems/custom/script",
+                      "data-engineering/gems/custom/sql-statement",
+                      "data-engineering/gems/custom/tableau"
+                    ]
+                  },
+                  {
+                    "group": "Machine Learning",
+                    "pages": [
+                      "data-engineering/gems/machine-learning/genaichatbot",
+                      "data-engineering/gems/machine-learning/ml-openai",
+                      "data-engineering/gems/machine-learning/ml-pinecone-lookup",
+                      "data-engineering/gems/machine-learning/ml-text-processing"
+                    ]
+                  },
+                  {
+                    "group": "Subgraph",
+                    "pages": [
+                      "data-engineering/gems/subgraph/subgraph",
+                      "data-engineering/gems/subgraph/basicSubgraph",
+                      "data-engineering/gems/subgraph/tableIterator",
+                      "data-engineering/gems/subgraph/while-iterator"
+                    ]
+                  }
                 ]
               }
             ]
