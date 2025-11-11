@@ -3,10 +3,15 @@ title: Databricks policies
 description: Review the impact of Databricks policies in Prophecy
 ---
 
+<Callout icon="/images/icon.png" color="#FFC107">
+  Available for [Enterprise Edition](/getting-started/editions/) only.
+</Callout>
+
 Review the following guidelines regarding [compute policies in Databricks](https://docs.databricks.com/aws/en/admin/clusters/policy-families) and their compatibility with Prophecy functionality.
 
 <Info>
-Databricks policies differ from cluster access modes. View [UC cluster compatibility](UCShared.mdx) for more information on standard vs. dedicated cluster capabilities.
+  Databricks policies differ from cluster access modes. View [UC cluster
+  compatibility](UCShared.mdx) for more information on standard vs. dedicated cluster capabilities.
 </Info>
 
 ## Overview
@@ -27,4 +32,3 @@ Assigning the Power User policy to clusters in Databricks provide the following 
 - When you assign the power user policy to a cluster, multiple users can share the cluster permissions, resources, and object access. If one team member leaves, the team retains access, and work continuity is preserved.
 
 The team that you create in Prophecy with access to this cluster via a fabric should mirror your team in Databricks that has access to this cluster. When you assign the cluster a policy in Databricks, Prophecy automatically inherits the policy restrictions using the credentials used to connect to Databricks.
-

@@ -71,6 +71,60 @@
                 ]
               },
               {
+                "group": "Development",
+                "pages": [
+                  {
+                    "group": "Pipelines",
+                    "pages": [
+                      "data-engineering/development/pipelines/pipelines",
+                      "data-engineering/development/pipelines/configuration",
+                      "data-engineering/development/pipelines/pipeline-settings",
+                      "data-engineering/development/pipelines/secrets-configs"
+                    ]
+                  },
+                  "data-engineering/development/dataset",
+                  {
+                    "group": "Runs",
+                    "pages": [
+                      "data-engineering/development/runs/execution",
+                      "data-engineering/development/runs/data-sampling",
+                      "data-engineering/development/runs/conditional-execution"
+                    ]
+                  },
+                  {
+                    "group": "Explore",
+                    "pages": [
+                      "data-engineering/development/data-explorer/data-explorer",
+                      "data-engineering/development/data-explorer/data-profile"
+                    ]
+                  },
+                  "data-engineering/development/copilot/copilot",
+                  {
+                    "group": "Functions",
+                    "pages": [
+                      "data-engineering/development/functions/user-defined-functions",
+                      "data-engineering/development/functions/business-rules-engine/business-rules-engine"
+                    ]
+                  },
+                  {
+                    "group": "Streaming",
+                    "pages": [
+                      "data-engineering/development/spark-streaming/spark-streaming",
+                      "data-engineering/development/spark-streaming/streaming-transformations",
+                      {
+                        "group": "Streaming sources and targets",
+                        "pages": [
+                          "data-engineering/development/spark-streaming/streaming-sources-and-targets/streaming-file-gem",
+                          "data-engineering/development/spark-streaming/streaming-sources-and-targets/streaming-warehouse-gem",
+                          "data-engineering/development/spark-streaming/streaming-sources-and-targets/streaming-event-gem"
+                        ]
+                      }
+                    ]
+                  },
+                  "data-engineering/development/best-practices"
+                ]
+              },
+              {
                 "group": "Production",
                 "pages": [
                   {
