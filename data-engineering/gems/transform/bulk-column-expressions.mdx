@@ -1,0 +1,87 @@
+---
+title: BulkColumnExpressions
+description: Change the data type of multiple columns at once
+---
+
+<Panel>
+<Info>
+Dependencies:
+
+- ProphecySparkBasicsScala 0.1.9+
+
+</Info>
+<Info>
+
+Cluster requirements:
+
+- UC dedicated clusters 14.3+ supported
+- UC standard clusters 14.3+ supported
+- Livy clusters 3.0.1+ supported
+
+</Info>
+</Panel>
+
+The BulkColumnExpressions gem primarily lets you cast or change the data type of multiple columns at once. It provides additional functionality, including:
+
+- Adding a prefix or suffix to selected columns.
+- Applying a custom expression to selected columns.
+
+## Parameters
+
+| Parameter                                    | Description                                                                                                                                                              |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Data Type of the columns to do operations on | The data type of columns to select.                                                                                                                                      |
+| Selected Columns                             | The columns on which to apply transformations.                                                                                                                           |
+| Change output column name                    | An option to add a prefix or suffix to the selected column names.                                                                                                        |
+| Change output column type                    | The data type that the columns will be transformed into.                                                                                                                 |
+| Output Expression                            | A Spark SQL expression that can be applied to the selected columns. This field is required. If you only want to select the column, use `column_value` as the expression. |
+
+## Example
+
+Assume you have some columns in a table that represent zero-based indices and are stored as long data types. You want them to represent one-based indices and be stored as integers to optimize memory use.
+
+Using the BulkColumnExpressions gem, you can:
+
+- Filter your columns by long data types.
+- Select the columns you wish to transform.
+- Cast the output column(s) to be integers.
+- Include `column_value + 1` in the expression field to shift the indices.
+
+## Example code
+
+<Tip>
+  To see the compiled code of your project, [switch to the Code
+  view](/engineers/pipelines#project-editor) in the project header.
+</Tip>
+
+<CodeGroup>
+
+```python example.py
+def bulk_column_casting(spark: SparkSession, in0: DataFrame) -> DataFrame:
+ return in0.select(
+ *(
+ [expr("`customer_id`").alias("str_customer_id").cast(StringType())]
+ + [col("`" + colName + "`") for colName in sorted(set(in0.columns) - {"customer_id"})]
+ + []
+ )
+ )
+```
+
+```scala example.scala
+object bulk_column_expressions {
+ def apply(context: Context, in: DataFrame): DataFrame = {
+ var allExpressions = List(
+ expr(
+ "column_value"
+ .replace("column_value", "`status`")
+ .replace("column_name", "'status'")
+ ).as("status").cast(StringType)
+ ) ++ (in.columns.toSet -- List("status").toSet).map(columnName =>
+ col("`" + columnName + "`")
+ )
+ in.select(allExpressions: _*)
+ }
+}
+```
+
+</CodeGroup>

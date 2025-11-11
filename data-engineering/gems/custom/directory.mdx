@@ -1,0 +1,89 @@
+---
+title: Directory
+description: Return a listing of all the files in a specified directory
+---
+
+<Panel>
+<Info>
+Dependencies:
+
+- ProphecySparkBasicsPython 0.2.27+
+- ProphecyLibsPython 1.9.42+
+- ProphecyLibsScala 8.2.1+
+
+</Info>
+
+<Info>
+
+Cluster requirements:
+
+- UC dedicated clusters 14.3+ supported
+- UC standard clusters 14.3+ supported
+- Livy clusters not supported
+
+</Info>
+</Panel>
+
+The Directory gem returns a listing of all the files in a specified directory including file metadata such as file creation time, type, size, path, and more.
+
+## Parameters
+
+| Parameters | Description |
+| ---------------------- | ------------------------------------------------------------------------------------- |
+| Location | The location of the directory that you want to return |
+| Include Subdirectories | A checkbox you can enable to return all of the subdirectories in the defined location |
+| File Specification | A regex filter to help you find your files in the file browser |
+
+## Sample output
+
+Below is an example output of a Directory gem. It includes seven columns:
+
+- name
+- path
+- size
+- creation_time
+- modification_time
+- parent_directory
+- file_type
+
+![Directory output](img/directory-output.png)
+
+## Example code
+
+<Tip>
+To see the compiled code of your project, [switch to the Code view](/engineers/pipelines#project-editor) in the project header.
+</Tip>
+
+<CodeGroup>
+
+```python example.py
+def directory_listing(spark: SparkSession) -> DataFrame:
+ from prophecy.libs.utils import directory_listing
+
+ return directory_listing(spark, "dbfs:/source_file.txt", False, "*.*")
+```
+
+</CodeGroup>
+
+<Panel>
+
+<Info>
+Dependencies:
+
+- ProphecySparkBasicsPython 0.2.27+
+- ProphecyLibsPython 1.9.42+
+- ProphecyLibsScala 8.2.1+
+
+</Info>
+
+<Info>
+
+Cluster requirements:
+
+- UC dedicated clusters 14.3+ supported
+- UC standard clusters 14.3+ supported
+- Livy clusters not supported
+
+</Info>
+
+</Panel>
