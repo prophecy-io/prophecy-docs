@@ -15,8 +15,8 @@ Dependencies:
 
 Cluster requirements:
 
-- UC dedicated clusters Not Supported supported
-- UC standard clusters Not Supported supported
+- UC dedicated clusters not supported
+- UC standard clusters not supported
 - Livy clusters not supported
 
 </Info>
@@ -41,15 +41,15 @@ To run the gem, add the following Maven dependency to your cluster: `com.springm
 
 ## Parameters
 
-| Parameter | Tab | Description |
-| ----------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Credentials | Location | How to provide your credentials. You can select: `Databricks Secrets`, `Username & Password`, or `Environment variables` |
-| User Name | Location | Salesforce Wave username. This user must have privileges to upload datasets or execute SAQL or SOQL. |
-| Password | Location | Salesforce Wave Password. **Append your security token along with password.** To reset your Salesforce security token, see [Reset Your Security Token](https://help.salesforce.com/s/articleView?id=xcloud.user_security_token.htm&language=en_US&type=5). |
-| Login URL | Location | Salesforce Login URL. Default: `https://login.salesforce.com.` |
-| Data Source | Location | Strategy to read data in the Source gem. Possible values are: `SAQL`, or `SOQL`. |
-| SAQL Query | Location | If you select `SAQL` as the **Data Source**, SAQL query to use to query Salesforce Wave. |
-| SOQL Query | Location | If you select `SOQL` as the **Data Source**, SOQL query to used to query Salesforce Object. |
+| Parameter   | Tab      | Description                                                                                                                                                                                                                                                |
+| ----------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Credentials | Location | How to provide your credentials. You can select: `Databricks Secrets`, `Username & Password`, or `Environment variables`                                                                                                                                   |
+| User Name   | Location | Salesforce Wave username. This user must have privileges to upload datasets or execute SAQL or SOQL.                                                                                                                                                       |
+| Password    | Location | Salesforce Wave Password. **Append your security token along with password.** To reset your Salesforce security token, see [Reset Your Security Token](https://help.salesforce.com/s/articleView?id=xcloud.user_security_token.htm&language=en_US&type=5). |
+| Login URL   | Location | Salesforce Login URL. Default: `https://login.salesforce.com.`                                                                                                                                                                                             |
+| Data Source | Location | Strategy to read data in the Source gem. Possible values are: `SAQL`, or `SOQL`.                                                                                                                                                                           |
+| SAQL Query  | Location | If you select `SAQL` as the **Data Source**, SAQL query to use to query Salesforce Wave.                                                                                                                                                                   |
+| SOQL Query  | Location | If you select `SOQL` as the **Data Source**, SOQL query to used to query Salesforce Object.                                                                                                                                                                |
 
 ## Source
 
@@ -57,19 +57,19 @@ The Source gem reads data from Salesforce objects and allows you to optionally s
 
 ### Source properties
 
-| Properties | Description | Default |
-| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
-| Description | Description of your dataset. | None |
-| Primary key chunking (Optional) | Whether to enable automatic primary key chunking for bulk query job. This splits bulk queries into separate batches of the size defined by **Chunk size** property. | `100000` |
-| Chunk size | Number of records to include in each batch. You can only use this property when you enable **Primary key chunking**. Maximum size is `250000`. | `100000` |
-| Timeout | Maximum time spent polling for the completion of bulk query job. You can only use this property when you **enable bulk query**. | false |
-| Max Length of column (Optional) | Maximum length of a column. You can only use this property when you **enable bulk query**. | `4096` |
-| External ID field name for Salesforce Object (Optional) | Name of the external ID field in a Salesforce object. | `Id` |
-| Enable bulk query (Optional) | Whether to enable bulk query. This is the preferred method when loading large sets of data. Salesforce processes batches in the background. | false |
-| Retrieve deleted and archived records (Optional) | Whether to retrieve deleted and archived records for SOQL queries. | false |
-| Infer Schema | Whether to infer schema from the query results. The Source gem takes sample rows to find the datatype. | false |
-| Date Format | String that indicates the format for `java.text.SimpleDateFormat` to follow when reading timestamps. This applies to `TimestampType`. | null |
-| Salesforce API Version (Optional) | Version of the Salesforce API to use. | `35.0` |
+| Properties                                              | Description                                                                                                                                                         | Default  |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| Description                                             | Description of your dataset.                                                                                                                                        | None     |
+| Primary key chunking (Optional)                         | Whether to enable automatic primary key chunking for bulk query job. This splits bulk queries into separate batches of the size defined by **Chunk size** property. | `100000` |
+| Chunk size                                              | Number of records to include in each batch. You can only use this property when you enable **Primary key chunking**. Maximum size is `250000`.                      | `100000` |
+| Timeout                                                 | Maximum time spent polling for the completion of bulk query job. You can only use this property when you **enable bulk query**.                                     | false    |
+| Max Length of column (Optional)                         | Maximum length of a column. You can only use this property when you **enable bulk query**.                                                                          | `4096`   |
+| External ID field name for Salesforce Object (Optional) | Name of the external ID field in a Salesforce object.                                                                                                               | `Id`     |
+| Enable bulk query (Optional)                            | Whether to enable bulk query. This is the preferred method when loading large sets of data. Salesforce processes batches in the background.                         | false    |
+| Retrieve deleted and archived records (Optional)        | Whether to retrieve deleted and archived records for SOQL queries.                                                                                                  | false    |
+| Infer Schema                                            | Whether to infer schema from the query results. The Source gem takes sample rows to find the datatype.                                                              | false    |
+| Date Format                                             | String that indicates the format for `java.text.SimpleDateFormat` to follow when reading timestamps. This applies to `TimestampType`.                               | null     |
+| Salesforce API Version (Optional)                       | Version of the Salesforce API to use.                                                                                                                               | `35.0`   |
 
 ### Example
 
@@ -78,7 +78,8 @@ The following example uses a `SOQL` query to query our leads dataset on the sale
 ### Compiled code
 
 <Tip>
-To see the compiled code of your project, [switch to the Code view](/engineers/pipelines#project-editor) in the project header.
+  To see the compiled code of your project, [switch to the Code
+  view](/engineers/pipelines#project-editor) in the project header.
 </Tip>
 
 <CodeGroup>
@@ -103,19 +104,20 @@ The Target gem writes data to Salesforce objects and allows you to optionally sp
 
 ### Target properties
 
-| Property | Description | Default |
-| ------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| Description | Description of your dataset. | None |
-| SF object to be updated (Optional) | Salesforce object to update when you enable **bulk query**. | false |
-| Name of the dataset to be created in Salesforce Wave | Name of the Dataset to create in Salesforce Wave. | None |
-| Metadata configuration in json (Optional) | JSON formatted metadata configuration to construct a [Salesforce Wave Dataset Metadata](https://resources.docs.salesforce.com/sfdc/pdf/bi_dev_guide_ext_data_format.pdf). | None |
-| External ID field name for Salesforce Object (Optional) | Name of the external ID field in a Salesforce object when the Target gem updates or upserts into Salesforce. | `Id` |
-| Flag to upsert data to Salesforce (Optional) | Whether to upsert data to Salesforce. This property performs an insert or update operation using the `externalIdFieldName` as the primary ID. The Target gem does not update existing fields that are not in the `DataFrame` being pushed. | false |
+| Property                                                | Description                                                                                                                                                                                                                                | Default |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
+| Description                                             | Description of your dataset.                                                                                                                                                                                                               | None    |
+| SF object to be updated (Optional)                      | Salesforce object to update when you enable **bulk query**.                                                                                                                                                                                | false   |
+| Name of the dataset to be created in Salesforce Wave    | Name of the Dataset to create in Salesforce Wave.                                                                                                                                                                                          | None    |
+| Metadata configuration in json (Optional)               | JSON formatted metadata configuration to construct a [Salesforce Wave Dataset Metadata](https://resources.docs.salesforce.com/sfdc/pdf/bi_dev_guide_ext_data_format.pdf).                                                                  | None    |
+| External ID field name for Salesforce Object (Optional) | Name of the external ID field in a Salesforce object when the Target gem updates or upserts into Salesforce.                                                                                                                               | `Id`    |
+| Flag to upsert data to Salesforce (Optional)            | Whether to upsert data to Salesforce. This property performs an insert or update operation using the `externalIdFieldName` as the primary ID. The Target gem does not update existing fields that are not in the `DataFrame` being pushed. | false   |
 
 ### Compiled code
 
 <Tip>
-To see the compiled code of your project, [switch to the Code view](/engineers/pipelines#project-editor) in the project header.
+  To see the compiled code of your project, [switch to the Code
+  view](/engineers/pipelines#project-editor) in the project header.
 </Tip>
 
 <CodeGroup>

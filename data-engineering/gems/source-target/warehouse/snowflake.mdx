@@ -27,21 +27,21 @@ You can read from and write to Snowflake.
 
 ## Parameters
 
-| Parameter | Tab | Description |
-| ---------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Authentication Type | Location | How you want to authenticate. Possible values are: `Username & Password`, or `Key Pair Authentication`. To configure key pair authentication on Snowflake, see [Configuring key-pair authentication](https://docs.snowflake.com/en/user-guide/key-pair-auth#configuring-key-pair-authentication). |
-| Username | Location | Username of the Snowflake user if you selected `Username & Password` for the authentication type. |
-| Password | Location | Password for the Snowflake user if you selected `Username & Password` for the authentication type. |
-| Private key filepath | Location | Location of your private key filepath in PKCS8 format if you selected `Key Pair Authentication` for the authentication type. |
-| Private key passphrase | Location | Passphrase of your private key file if you selected `Key Pair Authentication` for the authentication type. |
-| Snowflake URL | Location | Hostname for your account in the format: `<account_identifier>.snowflakecomputing.com` For example: `https://DJ07623.ap-south-1.aws.snowflakecomputing.com` |
-| Database | Location | Database to use for the session. |
-| Schema | Location | Schema to use for the session. |
-| Warehouse | Location | Default virtual warehouse to use for the session. |
-| Role | Location | Default security role to use for the session. |
-| Data Source | Location | Strategy to read data. Possible values are: `DB Table` or `SQL Query`. |
-| Table | Location | Name of the table to be read. |
-| SQL Query | Location | SQL query that contains a`SELECT` statement to run. |
+| Parameter              | Tab      | Description                                                                                                                                                                                                                                                                                       |
+| ---------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Authentication Type    | Location | How you want to authenticate. Possible values are: `Username & Password`, or `Key Pair Authentication`. To configure key pair authentication on Snowflake, see [Configuring key-pair authentication](https://docs.snowflake.com/en/user-guide/key-pair-auth#configuring-key-pair-authentication). |
+| Username               | Location | Username of the Snowflake user if you selected `Username & Password` for the authentication type.                                                                                                                                                                                                 |
+| Password               | Location | Password for the Snowflake user if you selected `Username & Password` for the authentication type.                                                                                                                                                                                                |
+| Private key filepath   | Location | Location of your private key filepath in PKCS8 format if you selected `Key Pair Authentication` for the authentication type.                                                                                                                                                                      |
+| Private key passphrase | Location | Passphrase of your private key file if you selected `Key Pair Authentication` for the authentication type.                                                                                                                                                                                        |
+| Snowflake URL          | Location | Hostname for your account in the format: `<account_identifier>.snowflakecomputing.com` For example: `https://DJ07623.ap-south-1.aws.snowflakecomputing.com`                                                                                                                                       |
+| Database               | Location | Database to use for the session.                                                                                                                                                                                                                                                                  |
+| Schema                 | Location | Schema to use for the session.                                                                                                                                                                                                                                                                    |
+| Warehouse              | Location | Default virtual warehouse to use for the session.                                                                                                                                                                                                                                                 |
+| Role                   | Location | Default security role to use for the session.                                                                                                                                                                                                                                                     |
+| Data Source            | Location | Strategy to read data. Possible values are: `DB Table` or `SQL Query`.                                                                                                                                                                                                                            |
+| Table                  | Location | Name of the table to be read.                                                                                                                                                                                                                                                                     |
+| SQL Query              | Location | SQL query that contains a`SELECT` statement to run.                                                                                                                                                                                                                                               |
 
 ## Source
 
@@ -49,14 +49,15 @@ The Source gem reads data from Snowflake and allows you to optionally specify th
 
 ### Source properties
 
-| Properties | Description | Default |
+| Properties  | Description                  | Default |
 | ----------- | ---------------------------- | ------- |
-| Description | Description of your dataset. | None |
+| Description | Description of your dataset. | None    |
 
 ### Compiled code
 
 <Tip>
-To see the compiled code of your project, [switch to the Code view](/engineers/pipelines#project-editor) in the project header.
+  To see the compiled code of your project, [switch to the Code
+  view](/engineers/pipelines#project-editor) in the project header.
 </Tip>
 
 <CodeGroup>
@@ -113,25 +114,26 @@ The Target gem writes data to Snowflake and allows you to optionally specify the
 
 ### Target properties
 
-| Property | Description | Default |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| Description | Description of your dataset. | None |
-| Write Mode | How to handle existing data. For a list of the possible values, see [Supported write modes](#supported-write-modes). | `overwrite` |
-| Run post-script SQL | DDL and DML SQL statements to execute before the Target gem writes data. This is intended for statements that do not return a result set, such as DDL statements like `CREATE TABLE` and DML statements like `INSERT, UPDATE, and DELETE`. | None |
+| Property            | Description                                                                                                                                                                                                                                | Default     |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- |
+| Description         | Description of your dataset.                                                                                                                                                                                                               | None        |
+| Write Mode          | How to handle existing data. For a list of the possible values, see [Supported write modes](#supported-write-modes).                                                                                                                       | `overwrite` |
+| Run post-script SQL | DDL and DML SQL statements to execute before the Target gem writes data. This is intended for statements that do not return a result set, such as DDL statements like `CREATE TABLE` and DML statements like `INSERT, UPDATE, and DELETE`. | None        |
 
 ### Supported write modes
 
-| Write mode | Description |
-| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| error | If the data already exists, throw an exception. |
-| overwrite | If the data already exists, overwrite the data with the contents of the `DataFrame`. |
-| append | If the data already exists, append the contents of the `DataFrame`. |
-| ignore | If the data already exists, do nothing with the contents of the `DataFrame`. This is similar to the `CREATE TABLE IF NOT EXISTS` clause in SQL. |
+| Write mode | Description                                                                                                                                     |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| error      | If the data already exists, throw an exception.                                                                                                 |
+| overwrite  | If the data already exists, overwrite the data with the contents of the `DataFrame`.                                                            |
+| append     | If the data already exists, append the contents of the `DataFrame`.                                                                             |
+| ignore     | If the data already exists, do nothing with the contents of the `DataFrame`. This is similar to the `CREATE TABLE IF NOT EXISTS` clause in SQL. |
 
 ### Compiled code
 
 <Tip>
-To see the compiled code of your project, [switch to the Code view](/engineers/pipelines#project-editor) in the project header.
+  To see the compiled code of your project, [switch to the Code
+  view](/engineers/pipelines#project-editor) in the project header.
 </Tip>
 
 <CodeGroup>

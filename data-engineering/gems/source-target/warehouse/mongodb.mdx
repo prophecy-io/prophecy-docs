@@ -16,32 +16,32 @@ Dependencies:
 
 Cluster requirements:
 
-- UC dedicated clusters Not Supported supported
-- UC standard clusters Not Supported supported
+- UC dedicated clusters not supported
+- UC standard clusters not supported
 - Livy clusters not supported
 
 </Info>
 </Panel>
 
 <Info>
-**Built on**
 
-Built on [MongoDB Spark Connector](https://www.mongodb.com/docs/spark-connector/v10.0/#mongodb-connector-for-spark) v10.0. 
+This gem uses the [MongoDB Spark Connector](https://www.mongodb.com/docs/spark-connector/v10.0/#mongodb-connector-for-spark) v10.0.
 To add `mongodb-spark-connector` jar as a dependency, see [Spark dependencies](/engineers/dependencies).
+
 </Info>
 
 You can read from and write to MongoDB.
 
 ## Parameters
 
-| Parameter | Tab | Description |
-| ------------------------------ | -------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| Username | Location | Username of your MongoDB instance. |
-| Password | Location | Password of your MongoDB instance. |
-| Driver | Location | Driver string for your mongodb connection. Possible values are: `mongodb`, or `mongodb+srv` |
+| Parameter                      | Tab      | Description                                                                                                                   |
+| ------------------------------ | -------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| Username                       | Location | Username of your MongoDB instance.                                                                                            |
+| Password                       | Location | Password of your MongoDB instance.                                                                                            |
+| Driver                         | Location | Driver string for your mongodb connection. Possible values are: `mongodb`, or `mongodb+srv`                                   |
 | Cluster IP Address and Options | Location | Cluster IP and options for your MongoDB connection. For example: `cluster0.prophecy.mongodb.xyz/?retryWrites=true&w=majority` |
-| Database | Location | Database where you want to read from and write to. |
-| Collection | Location | Collection where you want to read from and write to. |
+| Database                       | Location | Database where you want to read from and write to.                                                                            |
+| Collection                     | Location | Collection where you want to read from and write to.                                                                          |
 
 ## Source
 
@@ -49,19 +49,19 @@ The Source gem reads data from MongoDB and allows you to optionally specify the 
 
 ### Source properties
 
-| Properties | Description | Default |
-| ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| Description | Description of your dataset. | None |
-| Mongo client factory | MongoClientFactory configuration key. To specify a custom implementation, implement the `com.mongodb.spark.sql.connector.connection.MongoClientFactory` interface. | `com.mongodb.spark.sql` `.connector.connection.` `DefaultMongoClientFactory` |
-| partitioner class name | Partitioner full class name. To specify a custom implementation, implement the `com.mongodb.spark.sql.connector.read.partitioner.Partitioner` interface. | `com.mongodb.spark.sql.` `.connector.read.partitioner.` `SamplePartitioner` |
-| Partition field | Unique field to use for partitioning. | `_id` |
-| Partition size | Size in MB for each partition. Smaller partition sizes create more partitions that contain fewer documents. | `64` |
-| Number of samples per partition | Number of samples to take per partition. The total number of samples taken is: `samples per partition * ( count / number of documents per partition)` | `10` |
-| Minimum no. of Docs for Schema inference | Number of documents to sample from the collection when inferring the schema. | `1000` |
-| Enable Map types when inferring schema | Whether to enable Map types when inferring the schema. If you enable this, the Source gem infers large compatible `struct` types to a `MapType` instead. | `true` |
-| Minimum no. of a StructType for MapType inference | Minimum size of a `StructType` before inferring it as a `MapType`. | `250` |
-| Pipeline aggregation | Custom aggregation pipeline to apply to the collection before sending the data to Spark. The value must be an extended JSON single document or list of documents. A single document should resemble the following: `{"$match": {"closed": false}}` A list of documents should resemble the following: `[{"$match": {"closed": false}}, {"$project": {"status": 1, "name": 1, "description": 1}}]` | `{"$match": {"closed": false}}` |
-| Enable AllowDiskUse aggregation | Whether to enable `AllowDiskUse` aggregation. | false |
+| Properties                                        | Description                                                                                                                                                                                                                                                                                                                                                                                       | Default                                                                      |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Description                                       | Description of your dataset.                                                                                                                                                                                                                                                                                                                                                                      | None                                                                         |
+| Mongo client factory                              | MongoClientFactory configuration key. To specify a custom implementation, implement the `com.mongodb.spark.sql.connector.connection.MongoClientFactory` interface.                                                                                                                                                                                                                                | `com.mongodb.spark.sql` `.connector.connection.` `DefaultMongoClientFactory` |
+| partitioner class name                            | Partitioner full class name. To specify a custom implementation, implement the `com.mongodb.spark.sql.connector.read.partitioner.Partitioner` interface.                                                                                                                                                                                                                                          | `com.mongodb.spark.sql.` `.connector.read.partitioner.` `SamplePartitioner`  |
+| Partition field                                   | Unique field to use for partitioning.                                                                                                                                                                                                                                                                                                                                                             | `_id`                                                                        |
+| Partition size                                    | Size in MB for each partition. Smaller partition sizes create more partitions that contain fewer documents.                                                                                                                                                                                                                                                                                       | `64`                                                                         |
+| Number of samples per partition                   | Number of samples to take per partition. The total number of samples taken is: `samples per partition * ( count / number of documents per partition)`                                                                                                                                                                                                                                             | `10`                                                                         |
+| Minimum no. of Docs for Schema inference          | Number of documents to sample from the collection when inferring the schema.                                                                                                                                                                                                                                                                                                                      | `1000`                                                                       |
+| Enable Map types when inferring schema            | Whether to enable Map types when inferring the schema. If you enable this, the Source gem infers large compatible `struct` types to a `MapType` instead.                                                                                                                                                                                                                                          | `true`                                                                       |
+| Minimum no. of a StructType for MapType inference | Minimum size of a `StructType` before inferring it as a `MapType`.                                                                                                                                                                                                                                                                                                                                | `250`                                                                        |
+| Pipeline aggregation                              | Custom aggregation pipeline to apply to the collection before sending the data to Spark. The value must be an extended JSON single document or list of documents. A single document should resemble the following: `{"$match": {"closed": false}}` A list of documents should resemble the following: `[{"$match": {"closed": false}}, {"$project": {"status": 1, "name": 1, "description": 1}}]` | `{"$match": {"closed": false}}`                                              |
+| Enable AllowDiskUse aggregation                   | Whether to enable `AllowDiskUse` aggregation.                                                                                                                                                                                                                                                                                                                                                     | false                                                                        |
 
 ### Example
 
@@ -71,7 +71,8 @@ After you configure the Source gem, view schema by clicking `Infer Schema` in th
 ### Compiled code
 
 <Tip>
-To see the compiled code of your project, [switch to the Code view](/engineers/pipelines#project-editor) in the project header.
+  To see the compiled code of your project, [switch to the Code
+  view](/engineers/pipelines#project-editor) in the project header.
 </Tip>
 
 <CodeGroup>
@@ -104,25 +105,25 @@ The Target gem writes data to MongoDB and allows you to optionally specify the f
 
 ### Target properties
 
-| Property | Description | Default |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
-| Description | Description of your dataset. | None |
-| Write Mode | How to handle existing data. For a list of the possible values, see [Supported write modes](#supported-write-modes). | `overwrite` |
-| Mongo client factory | MongoClientFactory configuration key. To specify a custom implementation, implement the `com.mongodb.spark.sql.connector.connection.MongoClientFactory` interface. | `com.mongodb.spark.sql.` `connector.connection.` `DefaultMongoClientFactory` |
-| Maximum batch size | Maximum number of operations to batch in bulk operations. | `512` |
-| ordered | Whether to perform ordered bulk operations. | true |
-| operationType | Type of write operation to perform. Possible values are: `insert`, `replace` or `update` | `replace` |
-| List of id fields | Field or list of fields to organize the data. To specify more than one field, separate them using a comma. For example: `"fieldName1,fieldName2"` | `_id` |
-| writeConcern.w | Write concern option to acknowledge the level the change propagated in the MongoDB replica set. Possible values are: `MAJORITY`, `W1`, `W2`, `W3`, `ACKNOWLEDGED` or `UNACKNOWLEDGED` | `ACKNOWLEDGED` |
-| Enable Write journal | Whether to enable request for acknowledgment that the data is confirmed on the on-disk journal for the criteria specified in the w option. | false |
-| Write timeout in MSec | Non-negative number of milliseconds to wait before returning an error when a write operation. | `0` |
+| Property              | Description                                                                                                                                                                           | Default                                                                      |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Description           | Description of your dataset.                                                                                                                                                          | None                                                                         |
+| Write Mode            | How to handle existing data. For a list of the possible values, see [Supported write modes](#supported-write-modes).                                                                  | `overwrite`                                                                  |
+| Mongo client factory  | MongoClientFactory configuration key. To specify a custom implementation, implement the `com.mongodb.spark.sql.connector.connection.MongoClientFactory` interface.                    | `com.mongodb.spark.sql.` `connector.connection.` `DefaultMongoClientFactory` |
+| Maximum batch size    | Maximum number of operations to batch in bulk operations.                                                                                                                             | `512`                                                                        |
+| ordered               | Whether to perform ordered bulk operations.                                                                                                                                           | true                                                                         |
+| operationType         | Type of write operation to perform. Possible values are: `insert`, `replace` or `update`                                                                                              | `replace`                                                                    |
+| List of id fields     | Field or list of fields to organize the data. To specify more than one field, separate them using a comma. For example: `"fieldName1,fieldName2"`                                     | `_id`                                                                        |
+| writeConcern.w        | Write concern option to acknowledge the level the change propagated in the MongoDB replica set. Possible values are: `MAJORITY`, `W1`, `W2`, `W3`, `ACKNOWLEDGED` or `UNACKNOWLEDGED` | `ACKNOWLEDGED`                                                               |
+| Enable Write journal  | Whether to enable request for acknowledgment that the data is confirmed on the on-disk journal for the criteria specified in the w option.                                            | false                                                                        |
+| Write timeout in MSec | Non-negative number of milliseconds to wait before returning an error when a write operation.                                                                                         | `0`                                                                          |
 
 ### Supported write modes
 
-| Write mode | Description |
+| Write mode | Description                                                                          |
 | ---------- | ------------------------------------------------------------------------------------ |
-| overwrite | If the data already exists, overwrite the data with the contents of the `DataFrame`. |
-| append | If the data already exists, append the contents of the `DataFrame`. |
+| overwrite  | If the data already exists, overwrite the data with the contents of the `DataFrame`. |
+| append     | If the data already exists, append the contents of the `DataFrame`.                  |
 
 ### Example
 
@@ -131,7 +132,8 @@ The following example configures a Target gem to write data to the `sample_airbn
 ### Compiled code
 
 <Tip>
-To see the compiled code of your project, [switch to the Code view](/engineers/pipelines#project-editor) in the project header.
+  To see the compiled code of your project, [switch to the Code
+  view](/engineers/pipelines#project-editor) in the project header.
 </Tip>
 
 <CodeGroup>

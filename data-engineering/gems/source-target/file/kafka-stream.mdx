@@ -8,6 +8,7 @@ description: Parameters and properties to read from and write to Kafka files
 Dependencies:
 
 - ProphecySparkBasicsPython 0.2.49+
+- ProphecySparkBasicsScala 0.0.1+
 - ProphecyLibsPython 1.9.24+
 
 </Info>
@@ -16,7 +17,7 @@ Dependencies:
 
 Cluster requirements:
 
-- UC dedicated clusters Not Supported supported
+- UC dedicated clusters not supported
 - UC standard clusters 14.3+ supported
 - Livy clusters not supported
 
@@ -31,26 +32,26 @@ The Source gem reads data from Kafka stream in batch mode and allows you to opti
 
 ### Source location
 
-| Parameter | Description |
-| ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| Bootstrap Server/Broker List | Comma separated list of Kafka brokers. |
-| Group Id (Optional) | Kafka consumer group ID. Used to identify the consumer group for offset management. |
-| Session timeout (in ms) | Session timeout for Kafka consumer. Default: `6000` |
-| Security Protocol | Security protocol for Kafka. Default value is `NO_AUTH`. |
-| SASL Mechanisms | SASL Mechanism for authentication. Default value is `NO_AUTH`. |
-| Credentials | How to provide your credentials. You can select: `Databricks Secrets`, `Username & Password`, `Environment variables`, or `None` |
-| Kafka topic | Comma separated list of Kafka topics. |
-| Store offsets read per partition in Delta table | Whether to store offsets read per partition in Delta table. Default: false |
-| Metadata Table | Delta table to store offsets for each topic and partition. |
-| Use SSL Trust Store | Enable SSL trust store configuration. |
-| Trust Store Location | Path to the SSL trust store file. Required when SSL Trust Store is enabled. |
-| Trust Store Password | Password for the SSL trust store file. Required when SSL Trust Store is enabled. |
+| Parameter                                       | Description                                                                                                                      |
+| ----------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Bootstrap Server/Broker List                    | Comma separated list of Kafka brokers.                                                                                           |
+| Group Id (Optional)                             | Kafka consumer group ID. Used to identify the consumer group for offset management.                                              |
+| Session timeout (in ms)                         | Session timeout for Kafka consumer. Default: `6000`                                                                              |
+| Security Protocol                               | Security protocol for Kafka. Default value is `NO_AUTH`.                                                                         |
+| SASL Mechanisms                                 | SASL Mechanism for authentication. Default value is `NO_AUTH`.                                                                   |
+| Credentials                                     | How to provide your credentials. You can select: `Databricks Secrets`, `Username & Password`, `Environment variables`, or `None` |
+| Kafka topic                                     | Comma separated list of Kafka topics.                                                                                            |
+| Store offsets read per partition in Delta table | Whether to store offsets read per partition in Delta table. Default: false                                                       |
+| Metadata Table                                  | Delta table to store offsets for each topic and partition.                                                                       |
+| Use SSL Trust Store                             | Enable SSL trust store configuration.                                                                                            |
+| Trust Store Location                            | Path to the SSL trust store file. Required when SSL Trust Store is enabled.                                                      |
+| Trust Store Password                            | Password for the SSL trust store file. Required when SSL Trust Store is enabled.                                                 |
 
 ### Source properties
 
-| Property name | Description | Default |
+| Property name                        | Description                                    | Default |
 | ------------------------------------ | ---------------------------------------------- | ------- |
-| Kerberos service name for Kafka SASL | Name of your Kerberos service to use in Kafka. | None |
+| Kerberos service name for Kafka SASL | Name of your Kerberos service to use in Kafka. | None    |
 
 ### Example
 
@@ -59,7 +60,8 @@ The Source gem reads data from Kafka stream in batch mode and allows you to opti
 ### Compiled code
 
 <Tip>
-To see the compiled code of your project, [switch to the Code view](/engineers/pipelines#project-editor) in the project header.
+  To see the compiled code of your project, [switch to the Code
+  view](/engineers/pipelines#project-editor) in the project header.
 </Tip>
 
 <CodeGroup>
@@ -67,7 +69,7 @@ To see the compiled code of your project, [switch to the Code view](/engineers/p
 ```python example.py
 def KafkaSource(spark: SparkSession) -> DataFrame:
  from delta.tables import DeltaTable
- 
+
  if spark.catalog._jcatalog.tableExists(f"metadata.kafka_offsets"):
  offset_dict = {}
 
@@ -125,23 +127,23 @@ The Target gem writes data to each row from the `Dataframe` to a Kafka topic as 
 
 ### Target location
 
-| Parameter | Description |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| Bootstrap Server/Broker List | Comma separated list of Kafka brokers. |
-| Security Protocol | Security protocol for Kafka. Default value is `NO_AUTH`. |
-| SASL Mechanisms | SASL Mechanism for authentication. Default value is `NO_AUTH`. |
-| Credentials | How to provide your credentials. You can select: `Databricks Secrets`, `Username & Password`, `Environment variables`, or `None` |
-| Kafka topic | Comma separated list of Kafka topics. |
-| Message Unique Key (Optional) | Key to help determine which partition to write the data to. Used for message partitioning. |
-| Use SSL Trust Store | Enable SSL trust store configuration. When enabled, requires Trust Store Location and Trust Store Password. |
-| Trust Store Location | Path to the SSL trust store file. Required when SSL Trust Store is enabled. |
-| Trust Store Password | Password for the SSL trust store file. Required when SSL Trust Store is enabled. |
+| Parameter                     | Description                                                                                                                      |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Bootstrap Server/Broker List  | Comma separated list of Kafka brokers.                                                                                           |
+| Security Protocol             | Security protocol for Kafka. Default value is `NO_AUTH`.                                                                         |
+| SASL Mechanisms               | SASL Mechanism for authentication. Default value is `NO_AUTH`.                                                                   |
+| Credentials                   | How to provide your credentials. You can select: `Databricks Secrets`, `Username & Password`, `Environment variables`, or `None` |
+| Kafka topic                   | Comma separated list of Kafka topics.                                                                                            |
+| Message Unique Key (Optional) | Key to help determine which partition to write the data to. Used for message partitioning.                                       |
+| Use SSL Trust Store           | Enable SSL trust store configuration. When enabled, requires Trust Store Location and Trust Store Password.                      |
+| Trust Store Location          | Path to the SSL trust store file. Required when SSL Trust Store is enabled.                                                      |
+| Trust Store Password          | Password for the SSL trust store file. Required when SSL Trust Store is enabled.                                                 |
 
 ### Target properties
 
-| Property name | Description | Default |
+| Property name                        | Description                                    | Default |
 | ------------------------------------ | ---------------------------------------------- | ------- |
-| Kerberos service name for Kafka SASL | Name of your Kerberos service to use in Kafka. | None |
+| Kerberos service name for Kafka SASL | Name of your Kerberos service to use in Kafka. | None    |
 
 ### Example
 
@@ -150,7 +152,8 @@ The Target gem writes data to each row from the `Dataframe` to a Kafka topic as 
 ### Compiled code
 
 <Tip>
-To see the compiled code of your project, [switch to the Code view](/engineers/pipelines#project-editor) in the project header.
+  To see the compiled code of your project, [switch to the Code
+  view](/engineers/pipelines#project-editor) in the project header.
 </Tip>
 
 <CodeGroup>
@@ -187,7 +190,8 @@ In this example, you read JSON messages from Kafka, parse them, remove any null 
 ![Example usage of Filter](./img/kafka_pipeline_eg.gif)
 
 <Tip>
-To see the compiled code of your project, [switch to the Code view](/engineers/pipelines#project-editor) in the project header.
+  To see the compiled code of your project, [switch to the Code
+  view](/engineers/pipelines#project-editor) in the project header.
 </Tip>
 
 #### Metadata Table
@@ -196,12 +200,12 @@ To avoid reprocessing messages on subsequent pipeline runs, update a table with 
 
 In this example, you update `metadata.kafka_offsets`, which has the following structure:
 
-| topic | partition | max_offset |
+| topic           | partition | max_offset |
 | :-------------- | :-------- | :--------- |
-| my_first_topic | 0 | 10 |
-| my_first_topic | 1 | 5 |
-| my_second_topic | 0 | 10 |
-| my_second_topic | 1 | 5 |
+| my_first_topic  | 0         | 10         |
+| my_first_topic  | 1         | 5          |
+| my_second_topic | 0         | 10         |
+| my_second_topic | 1         | 5          |
 
 Taking this approach provides you the with following benefits:
 
@@ -210,13 +214,16 @@ Taking this approach provides you the with following benefits:
 3. You can replay old messages by modifying the Metadata table.
 
 <Note>
-For production workflows the [phase](/engineers/gems#gem-phase) for the `Script` gem that updates the offsets should be greater than the phase of the Target gem. This ensures that offsets only update in the table after Prophecy safely persists the data to the Target.
+  For production workflows the [phase](/engineers/gems#gem-phase) for the `Script` gem that updates
+  the offsets should be greater than the phase of the Target gem. This ensures that offsets only
+  update in the table after Prophecy safely persists the data to the Target.
 </Note>
 
 #### Spark Code used for script component
 
 <Tip>
-To see the compiled code of your project, [switch to the Code view](/engineers/pipelines#project-editor) in the project header.
+  To see the compiled code of your project, [switch to the Code
+  view](/engineers/pipelines#project-editor) in the project header.
 </Tip>
 
 <CodeGroup>

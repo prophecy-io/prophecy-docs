@@ -118,13 +118,10 @@
                     "pages": [
                       "data-engineering/gems/source-target/warehouse/bigquery",
                       "data-engineering/gems/source-target/warehouse/cosmos",
-                      "data-engineering/gems/source-target/warehouse/db2",
                       "data-engineering/gems/source-target/warehouse/jdbc",
                       "data-engineering/gems/source-target/warehouse/mongodb",
-                      "data-engineering/gems/source-target/warehouse/oracle",
                       "data-engineering/gems/source-target/warehouse/redshift",
-                      "data-engineering/gems/source-target/warehouse/snowflake",
-                      "data-engineering/gems/source-target/warehouse/teradata"
+                      "data-engineering/gems/source-target/warehouse/snowflake"
                     ]
                   },
                   {
