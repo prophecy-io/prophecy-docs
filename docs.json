@@ -58,11 +58,11 @@
             "groups": [
               {
                 "group": "Releases",
-                "pages": ["releases/2025"]
+                "pages": ["data-analytics/releases/2025"]
               },
               {
                 "group": "Reference",
-                "pages": ["releases/version-chart", "releases/version-support"]
+                "pages": ["data-analytics/releases/version-chart", "data-analytics/releases/version-support"]
               }
             ]
           }
@@ -418,6 +418,19 @@
                     ]
                   }
                 ]
+              }
+            ]
+          },
+          {
+            "tab": "Releases",
+            "groups": [
+              {
+                "group": "Releases",
+                "pages": ["data-engineering/releases/2025"]
+              },
+              {
+                "group": "Reference",
+                "pages": ["data-engineering/releases/version-chart", "data-engineering/releases/version-support"]
               }
             ]
           }
