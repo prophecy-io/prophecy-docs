@@ -9,9 +9,9 @@
   },
   "favicon": "/favicon.png",
   "navigation": {
-    "products": [
+    "dropdowns": [
       {
-        "product": "Data Analytics",
+        "dropdown": "Data Analytics",
         "description": "Prepare data for BI and reporting",
         "icon": "/images/pipeline.svg",
         "tabs": [
@@ -57,7 +57,7 @@
         ]
       },
       {
-        "product": "Data Engineering",
+        "dropdown": "Data Engineering",
         "description": "Build data pipelines using Spark",
         "icon": "code",
         "tabs": [
