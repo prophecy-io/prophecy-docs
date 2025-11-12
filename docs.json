@@ -12,7 +12,6 @@
     "dropdowns": [
       {
         "dropdown": "Data Analytics",
-        "description": "Prepare data for BI and reporting",
         "icon": "/images/pipeline.svg",
         "tabs": [
           {
@@ -53,12 +52,24 @@
                 ]
               }
             ]
+          },
+          {
+            "tab": "Releases",
+            "groups": [
+              {
+                "group": "Releases",
+                "pages": ["releases/2025"]
+              },
+              {
+                "group": "Reference",
+                "pages": ["releases/version-chart", "releases/version-support"]
+              }
+            ]
           }
         ]
       },
       {
         "dropdown": "Data Engineering",
-        "description": "Build data pipelines using Spark",
         "icon": "code",
         "tabs": [
           {

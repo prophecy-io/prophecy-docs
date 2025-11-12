@@ -1,0 +1,39 @@
+---
+title: Version chart
+description: View a list of all Prophecy versions and their corresponding library versions
+---
+
+## Release cadence
+
+| Version type                      | Example       | Frequency (approx.) | End-of-support   |
+| --------------------------------- | ------------- | ------------------- | ---------------- |
+| Extended Maintenance (EM) release | `v3.4.1.0 EM` | Every four months   | After one year   |
+| Major                             | `v3.4.0.0`    | Every four months   | After six months |
+| Minor                             | `v3.3.11.0`   | Every three weeks   | After six months |
+| Patch                             | `v3.3.11.7`   | When needed         | After six months |
+
+## Version chart
+
+The version chart shows an up-to-date list of all Prophecy versions and the corresponding Prophecy library versions that are released with the Prophecy version.
+
+Prophecy versions that are labeled with `EM` are Extended Maintenance releases. For more information, see [Version support lifecycle](/releases/version-support).
+
+<Note>
+
+- In most cases, libraries are backwards compatible. You won't always have to update your library
+  dependencies when you upgrade to a new Prophecy version.
+- If you update your Prophecy Scala
+  library dependencies, you might need to update the Spark and Scala versions of your cluster to
+  match the new library versions.
+
+</Note>
+
+<Tip>
+
+You can query this table using the following API and your Prophecy personal access token:
+
+```bash
+curl  --header 'X-Auth-Token: $PROPHECY_PAT' --location https://app.prophecy.io/api/editor/plibVersions
+```
+
+</Tip>
