@@ -1,0 +1,59 @@
+---
+title: 'Create a project'
+description: 'How to create a new project in Prophecy'
+---
+
+To get started with Prophecy, you need to create a new project. This is where you will build your pipelines.
+
+1. Click on the **Create Entity** button in the left navigation bar.
+1. Hover over the **Project** tile and select **Create**.
+1. Give your project a name.
+1. Under **Team**, select a team.
+
+   <Info>
+     We recommending using your personal team (matching your email address) for your first project,
+     so that only you will have access to the project.
+   </Info>
+
+1. Under **Select Template**, choose **Prophecy for Analysts**.
+1. Click **Complete**.
+
+Prophecy will open the project editor and automatically attach to a fabric. If you do not have any existing fabrics, you'll need to create one.
+
+## Common questions
+
+<AccordionGroup>
+  <Accordion title="Can I host the project in my own Git repository?">
+    Yes, you can host the project in your own Git repository. To do so, create a new project using the following steps:
+
+    <Steps>
+      <Step title="Create a project">
+        - Click on the **Create Entity** button in the left navigation bar.
+        - Hover over the **Project** tile and select **Create**.
+        - Give your project a name.
+        - Under **Team**, select your personal team.
+        - Under **Select Template**, choose **Custom**. **This differs from the above steps.**
+      </Step>
+      <Step title="Configure Git repository">
+        - Click **Continue** to open the **Git Repository** tab.
+        - Choose existing Git credentials or connect new Git credentials.
+        - Under **Repository**, specify the repository to store the project code. The repository must be empty.
+        - Under **Default Branch**, select the branch that will be the production branch.
+        - Optional: Under **Path**, specify a path in the repository to store the project code. The directory must be empty.
+        - Under **Development Branch**, select the branch that will contain all working changes.
+        - Click **Continue** to complete the project creation.
+      </Step>
+    </Steps>
+
+    <Note>
+      In the Free and Professional Editions, Prophecy only supports GitHub as an external Git provider.
+    </Note>
+
+  </Accordion>
+
+  <Accordion title="What is a Prophecy for Analysts project?">
+    Prophecy for Analysts is a project creation template designed specifically for data analysts. When you select this template, Prophecy automatically configures your project with Prophecy-managed Git in Simple mode and initializes it for a Databricks SQL warehouse. 
+    
+    This template provides the most streamlined experience for users who primarily work with SQL and prefer visual interfaces over complex Git workflows.
+  </Accordion>
+</AccordionGroup>
