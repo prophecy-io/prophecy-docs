@@ -42,7 +42,35 @@
                       "data-analytics/development/studio/containers"
                     ]
                   },
-                  "data-analytics/development/runs"
+                  {
+                    "group": "Runs",
+                    "pages": [
+                      "data-analytics/development/runs/runs",
+                      "data-analytics/development/runs/execution",
+                      "data-analytics/development/runs/runtime-logs",
+                      {
+                        "group": "Data Explorer",
+                        "pages": [
+                          "data-analytics/development/runs/data-explorer/data-explorer",
+                          "data-analytics/development/runs/data-explorer/data-profile",
+                          {
+                            "group": "Charts",
+                            "pages": [
+                              "data-analytics/development/runs/data-explorer/charts/charts",
+                              "data-analytics/development/runs/data-explorer/charts/area-chart",
+                              "data-analytics/development/runs/data-explorer/charts/bar-chart",
+                              "data-analytics/development/runs/data-explorer/charts/candlestick-chart",
+                              "data-analytics/development/runs/data-explorer/charts/line-chart",
+                              "data-analytics/development/runs/data-explorer/charts/map-chart",
+                              "data-analytics/development/runs/data-explorer/charts/pie-chart",
+                              "data-analytics/development/runs/data-explorer/charts/scatter-chart"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "data-analytics/development/pipeline-params"
                 ]
               }
             ]
