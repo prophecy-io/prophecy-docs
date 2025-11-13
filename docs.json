@@ -70,7 +70,17 @@
                       }
                     ]
                   },
-                  "data-analytics/development/pipeline-params"
+                  "data-analytics/development/pipeline-params",
+                  {
+                    "group": "Versioning",
+                    "pages": [
+                      "data-analytics/development/versioning/version-control",
+                      "data-analytics/development/versioning/collaboration-modes",
+                      "data-analytics/development/versioning/clone-projects",
+                      "data-analytics/development/versioning/import-projects",
+                      "data-analytics/development/versioning/migrate-managed"
+                    ]
+                  }
                 ]
               },
               {
@@ -110,6 +120,42 @@
                     ]
                   },
                   "data-analytics/environment/secrets/secrets"
+                ]
+              },
+              {
+                "group": "Collaboration",
+                "pages": [
+                  "data-analytics/collaboration/project-sharing",
+                  "data-analytics/collaboration/project-replays",
+                  {
+                    "group": "Prophecy Apps",
+                    "pages": [
+                      "data-analytics/collaboration/prophecy-apps/apps",
+                      "data-analytics/collaboration/prophecy-apps/app-builder",
+                      "data-analytics/collaboration/prophecy-apps/app-components",
+                      "data-analytics/collaboration/prophecy-apps/app-creation",
+                      "data-analytics/collaboration/prophecy-apps/app-settings",
+                      "data-analytics/collaboration/prophecy-apps/run-apps"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Production",
+                "pages": [
+                  {
+                  "group": "Scheduling",
+                  "pages": [
+                    "data-analytics/production/scheduling/scheduling",
+                    "data-analytics/production/scheduling/schedule-setup",
+                    "data-analytics/production/scheduling/triggers",
+                    "data-analytics/production/scheduling/alerts",
+                    "data-analytics/production/scheduling/pipeline-trigger-gem"
+                  ]
+                },
+                  "data-analytics/production/publication",
+                  "data-analytics/production/monitoring"
+                  
                 ]
               }
             ]
