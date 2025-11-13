@@ -32,7 +32,18 @@
               },
               {
                 "group": "Development",
-                "pages": ["data-analytics/development/canvas", "data-analytics/development/runs"]
+                "pages": [
+                  {
+                    "group": "Studio",
+                    "pages": [
+                      "data-analytics/development/studio/studio",
+                      "data-analytics/development/studio/folders",
+                      "data-analytics/development/studio/canvas-annotations",
+                      "data-analytics/development/studio/containers"
+                    ]
+                  },
+                  "data-analytics/development/runs"
+                ]
               }
             ]
           },
