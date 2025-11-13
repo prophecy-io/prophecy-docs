@@ -117,7 +117,8 @@
                       "data-analytics/administration/management/usage-billing/usage-billing",
                       "data-analytics/administration/management/usage-billing/credits"
                     ]
-                  }
+                  },
+                  "data-analytics/administration/management/audit-logs"
                 ]
               }
             ]
@@ -553,7 +554,8 @@
                       "data-engineering/administration/management/usage-billing/usage-billing",
                       "data-engineering/administration/management/usage-billing/credits"
                     ]
-                  }
+                  },
+                  "data-engineering/administration/management/audit-logs"
                 ]
               }
             ]

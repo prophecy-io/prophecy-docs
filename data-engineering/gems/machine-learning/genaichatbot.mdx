@@ -42,7 +42,7 @@ Below are some platform recommendations. Like all Prophecy projects the code gen
 1. [**Prophecy Data Transformation Copilot**](https://www.prophecy.io/) (version 3.1 and above) - for building the data pipelines. A free account is available.
 2. [**Databricks**](https://Databricks.com/) (DBR 12.2 ML and above) - for running the data pipelines. There are some free/low-cost options available or you can use the compute that comes with Prophecy's free trial.
 
-## Step 1: Setup
+## 1. Setup
 
 We'll start by forking our existing sample repository. This will leave you with your own copy that you can modify however you want.
 
@@ -128,7 +128,7 @@ The `play` button runs the pipeline and offers data previews between gems. This 
 
 Now that we've had a brief introduction to the Prophecy pipeline editor, let's dig into the pipelines specific to the Generative AI Chatbot. The pipelines accomplish two goals: (a) build a Knowledge Warehouse full of vectorized web documentation, and (b) a streaming inference pipeline to read messages from Slack, query an LLM to formulate answers, and send them back to Slack. Notice most of the data manipulations are standard transformations to help construct a prompt for the OpenAI model (or the model of your choice).
 
-## Step 2: Build a Knowledge Warehouse
+## 2. Build a Knowledge Warehouse
 
 ### 2a. Web Ingest pipeline
 
@@ -153,7 +153,7 @@ Once the document chunks have each been assigned a vector, these â€œembeddingsâ€
 1. Verify the Vectorize OpenAI gem is configured with Databricks scope `open_ai` and Databricks key `api_key`.
 2. Verify the vector_db Target gem is configured with the Databricks scope `pinecone` and Databricks key `token`.
 
-## Step 3: Live Inference
+## 3. Live Inference
 
 ### 3a. Chatbot Live pipeline
 

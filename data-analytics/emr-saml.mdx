@@ -24,7 +24,7 @@ To configure an EMR fabric that authenticates users with SAML, you need:
 - Permission to set environment variables in your Prophecy deployment, usually associated with the [Prophecy cluster admin](/administration/rbac) role.
 - Ability to create or edit an EMR fabric in Prophecy.
 
-## Step 1: Create an Okta SAML application
+## 1. Create an Okta SAML application
 
 To begin, create a new Okta SAML application:
 
@@ -85,7 +85,7 @@ Next, save the metadata from this app to upload to AWS.
 
 1. Save the copied information as a file called `metadata.xml`.
 
-## Step 2: Create an AWS Identity Provider
+## 2.  Create an AWS Identity Provider
 
 Now, create a new Identity Provider in AWS.
 
@@ -113,7 +113,7 @@ Now, create a new Identity Provider in AWS.
 
 1. Note the SSO service location, which you will add to Prophecy via environment variables.
 
-## Step 3: Create an AWS role for SAML authentication
+## 3. Create an AWS role for SAML authentication
 
 Then, create a role that will be assigned to all users who attach to the EMR fabric.
 
@@ -144,7 +144,7 @@ Then, create a role that will be assigned to all users who attach to the EMR fab
 
    For example: `arn:aws:iam::<account_id>:role/prophecy-emr-okta-login-role`
 
-## Step 4: Update the Okta SAML application
+## 4. Update the Okta SAML application
 
 In this step, add information from AWS into your Okta application.
 
@@ -164,7 +164,7 @@ In this step, add information from AWS into your Okta application.
 
 1. Click **Next**, then **Finish**.
 
-## Step 5: Configure Prophecy to enable SAML for EMR
+## 5. Configure Prophecy to enable SAML for EMR
 
 ### Set environment variables
 
