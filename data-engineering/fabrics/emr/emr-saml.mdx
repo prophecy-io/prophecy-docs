@@ -1,7 +1,10 @@
+---
+title: Configure EMR SAML authentication with Okta
+description: Set up AWS EMR authentication using Okta
+---
+
 <Callout icon="/images/icon.png" color="#FFC107">
-
   Available for [Enterprise Edition](/getting-started/editions/) only.
-
 </Callout>
 
 This guide describes how to configure AWS EMR Serverless authentication using Okta as the identity provider (IdP) with SAML 2.0. After setup, users in the configured Okta application can sign in to Prophecy EMR fabrics using their Okta credentials.
@@ -42,7 +45,7 @@ To begin, create a new Okta SAML application:
 
    Then, copy the provided URL under **Login URL** and paste this into the Okta field.
 
-   ![img/emr-saml-setup.png](/snippets/administration/management/authentication/Prophecy EMR Fabric)
+   ![Prophecy EMR Fabric](img/emr-saml-setup.png)
 
 1. Below the URL, select the **Use this for Recipient URL and Destination URL** checkbox.
 
@@ -81,11 +84,11 @@ Next, save the metadata from this app to upload to AWS.
 
 1. Copy the **Metadata URL** details.
 
-   ![img/okta-metadata.png](/snippets/administration/management/authentication/Okta metadata)
+   ![Okta metadata](img/okta-metadata.png)
 
 1. Save the copied information as a file called `metadata.xml`.
 
-## 2.  Create an AWS Identity Provider
+## 2. Create an AWS Identity Provider
 
 Now, create a new Identity Provider in AWS.
 
@@ -101,7 +104,7 @@ Now, create a new Identity Provider in AWS.
 
 1. For **Metadata document**, upload the `metadata.xml` file you downloaded earlier.
 
-   ![img/aws-new-idp.png](/snippets/administration/management/authentication/AWS provider)
+   ![AWS provider](img/aws-new-idp.png)
 
 1. Click **Add Provider**.
 
@@ -121,7 +124,7 @@ Then, create a role that will be assigned to all users who attach to the EMR fab
 
 1. For **Trusted entity type**, select **SAML 2.0 federation**.
 
-1. For **SAML 2.0–based provider**, choose the provider created in the previous section.
+1. For **SAML 2.0-based provider**, choose the provider created in the previous section.
 
 1. For **Access to be allowed**, select **Allow programmatic access only**.
 

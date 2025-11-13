@@ -32,7 +32,148 @@
               },
               {
                 "group": "Development",
-                "pages": ["data-analytics/development/canvas", "data-analytics/development/runs"]
+                "pages": [
+                  {
+                    "group": "Studio",
+                    "pages": [
+                      "data-analytics/development/studio/studio",
+                      "data-analytics/development/studio/folders",
+                      "data-analytics/development/studio/canvas-annotations",
+                      "data-analytics/development/studio/containers"
+                    ]
+                  },
+                  {
+                    "group": "Runs",
+                    "pages": [
+                      "data-analytics/development/runs/runs",
+                      "data-analytics/development/runs/execution",
+                      "data-analytics/development/runs/runtime-logs",
+                      {
+                        "group": "Data Explorer",
+                        "pages": [
+                          "data-analytics/development/runs/data-explorer/data-explorer",
+                          "data-analytics/development/runs/data-explorer/data-profile",
+                          {
+                            "group": "Charts",
+                            "pages": [
+                              "data-analytics/development/runs/data-explorer/charts/charts",
+                              "data-analytics/development/runs/data-explorer/charts/area-chart",
+                              "data-analytics/development/runs/data-explorer/charts/bar-chart",
+                              "data-analytics/development/runs/data-explorer/charts/candlestick-chart",
+                              "data-analytics/development/runs/data-explorer/charts/line-chart",
+                              "data-analytics/development/runs/data-explorer/charts/map-chart",
+                              "data-analytics/development/runs/data-explorer/charts/pie-chart",
+                              "data-analytics/development/runs/data-explorer/charts/scatter-chart"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "data-analytics/development/pipeline-params",
+                  {
+                    "group": "Versioning",
+                    "pages": [
+                      "data-analytics/development/versioning/version-control",
+                      "data-analytics/development/versioning/collaboration-modes",
+                      "data-analytics/development/versioning/clone-projects",
+                      "data-analytics/development/versioning/import-projects",
+                      "data-analytics/development/versioning/migrate-managed"
+                    ]
+                  },
+                  {
+                    "group": "Tests",
+                    "pages": [
+                      "data-analytics/development/tests/data-tests",
+                      "data-analytics/development/tests/use-project-tests",
+                      "data-analytics/development/tests/use-model-tests"
+                    ]
+                  },
+                  {
+                    "group": "Extensibility",
+                    "pages": [
+                      "data-analytics/development/extensibility/functions",
+                      "data-analytics/development/extensibility/dependencies",
+                      "data-analytics/development/extensibility/stored-procedure",
+                      "data-analytics/development/extensibility/sql-gem-builder"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Environment",
+                "pages": [
+                  {
+                    "group": "Fabrics",
+                    "pages": [
+                      "data-analytics/environment/fabrics/prophecy-fabrics",
+                      "data-analytics/environment/fabrics/create-fabric"
+                    ]
+                  },
+                  {
+                    "group": "Connections",
+                    "pages": [
+                      "data-analytics/environment/connections/connections",
+                      "data-analytics/environment/connections/bigquery",
+                      "data-analytics/environment/connections/databricks",
+                      "data-analytics/environment/connections/gcs",
+                      "data-analytics/environment/connections/hana",
+                      "data-analytics/environment/connections/mongodb",
+                      "data-analytics/environment/connections/mssql",
+                      "data-analytics/environment/connections/onedrive",
+                      "data-analytics/environment/connections/oracle",
+                      "data-analytics/environment/connections/power-bi",
+                      "data-analytics/environment/connections/prophecy-managed",
+                      "data-analytics/environment/connections/redshift",
+                      "data-analytics/environment/connections/s3",
+                      "data-analytics/environment/connections/salesforce",
+                      "data-analytics/environment/connections/sftp",
+                      "data-analytics/environment/connections/sharepoint",
+                      "data-analytics/environment/connections/smartsheet",
+                      "data-analytics/environment/connections/smtp",
+                      "data-analytics/environment/connections/snowflake",
+                      "data-analytics/environment/connections/synapse",
+                      "data-analytics/environment/connections/tableau"
+                    ]
+                  },
+                  "data-analytics/environment/secrets/secrets"
+                ]
+              },
+              {
+                "group": "Collaboration",
+                "pages": [
+                  "data-analytics/collaboration/project-sharing",
+                  "data-analytics/collaboration/project-replays",
+                  {
+                    "group": "Prophecy Apps",
+                    "pages": [
+                      "data-analytics/collaboration/prophecy-apps/apps",
+                      "data-analytics/collaboration/prophecy-apps/app-builder",
+                      "data-analytics/collaboration/prophecy-apps/app-components",
+                      "data-analytics/collaboration/prophecy-apps/app-creation",
+                      "data-analytics/collaboration/prophecy-apps/app-settings",
+                      "data-analytics/collaboration/prophecy-apps/run-apps"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Production",
+                "pages": [
+                  {
+                  "group": "Scheduling",
+                  "pages": [
+                    "data-analytics/production/scheduling/scheduling",
+                    "data-analytics/production/scheduling/schedule-setup",
+                    "data-analytics/production/scheduling/triggers",
+                    "data-analytics/production/scheduling/alerts",
+                    "data-analytics/production/scheduling/pipeline-trigger-gem"
+                  ]
+                },
+                  "data-analytics/production/publication",
+                  "data-analytics/production/monitoring"
+                  
+                ]
               }
             ]
           },
@@ -323,8 +464,9 @@
                       {
                         "group": "Amazon EMR",
                         "pages": [
-                          "data-engineering/fabrics/emr",
-                          "data-engineering/fabrics/emr-job-sizes"
+                          "data-engineering/fabrics/emr/emr",
+                          "data-engineering/fabrics/emr/emr-job-sizes",
+                          "data-engineering/fabrics/emr/emr-saml"
                         ]
                       },
                       "data-engineering/fabrics/dataproc",
