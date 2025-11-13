@@ -72,6 +72,45 @@
                   },
                   "data-analytics/development/pipeline-params"
                 ]
+              },
+              {
+                "group": "Environment",
+                "pages": [
+                  {
+                    "group": "Fabrics",
+                    "pages": [
+                      "data-analytics/environment/fabrics/prophecy-fabrics",
+                      "data-analytics/environment/fabrics/create-fabric"
+                    ]
+                  },
+                  {
+                    "group": "Connections",
+                    "pages": [
+                      "data-analytics/environment/connections/connections",
+                      "data-analytics/environment/connections/bigquery",
+                      "data-analytics/environment/connections/databricks",
+                      "data-analytics/environment/connections/gcs",
+                      "data-analytics/environment/connections/hana",
+                      "data-analytics/environment/connections/mongodb",
+                      "data-analytics/environment/connections/mssql",
+                      "data-analytics/environment/connections/onedrive",
+                      "data-analytics/environment/connections/oracle",
+                      "data-analytics/environment/connections/power-bi",
+                      "data-analytics/environment/connections/prophecy-managed",
+                      "data-analytics/environment/connections/redshift",
+                      "data-analytics/environment/connections/s3",
+                      "data-analytics/environment/connections/salesforce",
+                      "data-analytics/environment/connections/sftp",
+                      "data-analytics/environment/connections/sharepoint",
+                      "data-analytics/environment/connections/smartsheet",
+                      "data-analytics/environment/connections/smtp",
+                      "data-analytics/environment/connections/snowflake",
+                      "data-analytics/environment/connections/synapse",
+                      "data-analytics/environment/connections/tableau"
+                    ]
+                  },
+                  "data-analytics/environment/secrets/secrets"
+                ]
               }
             ]
           },
@@ -362,8 +401,9 @@
                       {
                         "group": "Amazon EMR",
                         "pages": [
-                          "data-engineering/fabrics/emr",
-                          "data-engineering/fabrics/emr-job-sizes"
+                          "data-engineering/fabrics/emr/emr",
+                          "data-engineering/fabrics/emr/emr-job-sizes",
+                          "data-engineering/fabrics/emr/emr-saml"
                         ]
                       },
                       "data-engineering/fabrics/dataproc",

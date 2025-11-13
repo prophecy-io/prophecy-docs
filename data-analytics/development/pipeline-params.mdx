@@ -68,7 +68,7 @@ You can use Jinja syntax to add pipeline parameters as configuration variables i
 
 By default, the pipeline parameter's value will be used for the expression, though this value can be overwritten in both pipeline gems and Prophecy Apps.
 
-> Example: If you create a parameter called `start_date` with a value of _2025-09-01_, you can use it in a Filter gem to include only rows where `order_date` >= `start_date`. When the pipeline runs, it injects the parameter’s value into the filter expression.
+> Example: If you create a parameter called `start_date` with a value of _2025-09-01_, you can use it in a Filter gem to include only rows where `order_date` >= `start_date`. When the pipeline runs, it injects the parameter's value into the filter expression.
 
 ## Use parameters in Prophecy Apps
 
@@ -93,7 +93,7 @@ This example uses a dataset with a column called `region`. You can use an **Arra
 
 #### Use the Array parameter in a Filter gem
 
-Next, you’ll filter your dataset to only include rows where the `region` column matches a value in `region_list`.
+Next, you'll filter your dataset to only include rows where the `region` column matches a value in `region_list`.
 
 1. Add a **Filter** gem.
 1. Remove the default `true` expression.
@@ -140,7 +140,7 @@ This example uses a dataset with timestamped sales data. You can use two **Date*
 1. Add a **Filter** gem to your pipeline.
 1. Remove the default `true` expression.
 1. Click **Select expression**.
-1. Select **Column** and select `sales_date` (or your dataset’s date column).
+1. Select **Column** and select `sales_date` (or your dataset's date column).
 1. Choose the **between** operator.
 1. For both `start_date` and `end_date`, click **Select expression > Configuration Variable** and select corresponding pipeline parameters.
 1. Add a Target table gem called `snapshot_by_date` and connect it to the Filter gem.
@@ -175,7 +175,7 @@ This example uses a dataset with a column called `customer_category` with values
 
 #### Use the String parameter in a Filter gem
 
-Next, you’ll filter your dataset based on the `customer_type` parameter.
+Next, you'll filter your dataset based on the `customer_type` parameter.
 
 1. Add a **Filter** gem.
 1. Remove the default `true` expression.
@@ -330,7 +330,7 @@ This example uses dataset of sensor data with a column called `sensor_temp`. You
 
 #### Use the Float parameter in a Filter gem
 
-Next, you’ll use the `temperature_threshold` parameter to filter your data.
+Next, you'll use the `temperature_threshold` parameter to filter your data.
 
 1. Add a **Filter** gem.
 1. Remove the default `true` expression.
