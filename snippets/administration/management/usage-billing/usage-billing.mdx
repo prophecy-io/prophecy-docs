@@ -1,5 +1,3 @@
-import Mermaid from '@theme/Mermaid';
-
 Prophecy billing is determined by edition. Self-serve billing is available for Free and Professional Editions. Express and Enterprise Editions are managed through external purchase channels.
 
 | Edition      | Billing           |
@@ -36,8 +34,8 @@ This model ensures that users can have separate personal teams with independent 
 
 The flow is illustrated below:
 
-<Mermaid
-value={`graph TD
+```mermaid
+graph TD
 %% Users and their teams
 
 UserA[User A] --> TeamA[Professional Edition Plan<br />Team A<br />2 users]
@@ -57,9 +55,7 @@ UserB --> TeamB[Free Edition Plan<br />Team B<br />1 user]
     class UserA,UserB user
     class TeamA,TeamB team
     class FabricA,FabricB other
-
-`}
-/>
+```
 
 ### Usage & Billing dashboard
 

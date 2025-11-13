@@ -1,5 +1,3 @@
-import Mermaid from '@theme/Mermaid';
-
 <Callout icon="/images/icon.png" color="#FFC107">
 
   Credits apply to the [Free and Professional Editions](/getting-started/editions/) only.
@@ -38,8 +36,7 @@ The Prophecy warehouse is powered by DuckDB. Advanced users can update the DuckD
 
 The following diagram shows how credit consumption actions relate to plans, teams, and fabrics.
 
-<Mermaid
-value={`
+```mermaid
 flowchart LR
 A[Plan] --> B[Team]
 B --> C[Fabric / Prophecy Warehouse]
@@ -66,5 +63,4 @@ classDef cluster fill:transparent,stroke:#bdbdbd,stroke-width:1px
 
 class A,B,C entity
 class E,F,G,H,I metric
-`}
-/>
+```
