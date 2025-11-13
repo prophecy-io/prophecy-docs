@@ -43,9 +43,9 @@ The following table lists all parameters of the RestAPIEnrich gem.
 | timeout | How many seconds to wait for the server to send data before giving up, as a float, eg: `0.5` or a (connect timeout, read timeout) tuple. eg: `0.5:0.25` | false | |
 | allow redirects | Enable/disable `GET/OPTIONS/POST/PUT/PATCH/DELETE/HEAD redirection`. eg: `true` or `false` | false | true |
 | proxies | Dictionary mapping protocol to the URL of the proxy. eg: `{"https" : "https://1.1.0.1:80"}` | false | |
-| verify | Either a boolean, in which case it controls whether we verify the server’s TLS certificate eg: `true` or `false` or a string, in which case it must be a path to a CA bundle to use. Defaults to True. eg: `dbfs:/path-to-file` | false | true |
+| verify | Either a boolean, in which case it controls whether we verify the server's TLS certificate eg: `true` or `false` or a string, in which case it must be a path to a CA bundle to use. Defaults to True. eg: `dbfs:/path-to-file` | false | true |
 | stream | if False, the response content will be immediately downloaded. eg: `true` or `false` | false | |
-| cert | if String, path to SSL client cert file (.pem). eg. `dbfs:/path-to-file`. If Tuple, (‘cert’, ‘key’) pair. eg: `cert:key`. | false | |
+| cert | if String, path to SSL client cert file (.pem). eg. `dbfs:/path-to-file`. If Tuple, (‘cert', ‘key') pair. eg: `cert:key`. | false | |
 | parse content | Parse content as JSON (to make the schema available, enable `custom schema`, and click `infer from cluster` at the bottom left in the output tab) | false | false |
 
 <Tip>

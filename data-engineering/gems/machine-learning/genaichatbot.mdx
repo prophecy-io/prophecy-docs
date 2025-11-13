@@ -122,11 +122,11 @@ For Databricks Unity Catalog, the `setup_Databricks.sh` script has already creat
 
 ![Explore the interface](img/genai_low_code_interface.png)
 
-When you open any Prophecy pipeline, you’ll see lots of features accessible. From the Environment browser, browse available datasets and tables in the linked data catalog. See a variety of gems available out-of-the-box by clicking for example the Transformation or Join/Split headers. The visually designed pipeline is translated to actual Spark code written in Scala, pySpark, or SQL. Just click at the top of the canvas to switch from the visual editor to the code editor. At the very bottom notice there’s a button to commit local changes to Git. Prophecy pipelines are committed to the user’s Git repository and therefore offer the best software development practices: code review, versioning, proper releases, etc.
+When you open any Prophecy pipeline, you'll see lots of features accessible. From the Environment browser, browse available datasets and tables in the linked data catalog. See a variety of gems available out-of-the-box by clicking for example the Transformation or Join/Split headers. The visually designed pipeline is translated to actual Spark code written in Scala, pySpark, or SQL. Just click at the top of the canvas to switch from the visual editor to the code editor. At the very bottom notice there's a button to commit local changes to Git. Prophecy pipelines are committed to the user's Git repository and therefore offer the best software development practices: code review, versioning, proper releases, etc.
 
 The `play` button runs the pipeline and offers data previews between gems. This interactive feature is super handy to see how each gem manipulates the data and to quickly check that the data is produced as expected. The project runs entirely on Spark and will scale for any data volume, big and small.
 
-Now that we’ve had a brief introduction to the Prophecy pipeline editor, let’s dig into the pipelines specific to the Generative AI Chatbot. The pipelines accomplish two goals: (a) build a Knowledge Warehouse full of vectorized web documentation, and (b) a streaming inference pipeline to read messages from Slack, query an LLM to formulate answers, and send them back to Slack. Notice most of the data manipulations are standard transformations to help construct a prompt for the OpenAI model (or the model of your choice).
+Now that we've had a brief introduction to the Prophecy pipeline editor, let's dig into the pipelines specific to the Generative AI Chatbot. The pipelines accomplish two goals: (a) build a Knowledge Warehouse full of vectorized web documentation, and (b) a streaming inference pipeline to read messages from Slack, query an LLM to formulate answers, and send them back to Slack. Notice most of the data manipulations are standard transformations to help construct a prompt for the OpenAI model (or the model of your choice).
 
 ## Step 2: Build a Knowledge Warehouse
 
@@ -142,7 +142,7 @@ The series of data transformations culminates with nicely formatted web Document
 
 ### 2b. Web Vectorize pipeline
 
-Continuing with the goal of ingesting and vectorizing our web content, here we have the Web Vectorize pipeline. We want to assign each document a number sequence, or vector, to map the similarity and relationships between those documents. Here we selected OpenAI [ada-002](https://openai.com/blog/new-and-improved-embedding-model) model based on performance and cost. As some of the documents are very long, we split them into smaller chunks. Each chunk is sent to OpenAI’s ada model. Run the pipeline using the “Play” button and data preview buttons appear between gems. Open the data preview following the OpenAI gem and see the schema now includes a vector (or “embedding”) provided by the OpenAI model for each text chunk.
+Continuing with the goal of ingesting and vectorizing our web content, here we have the Web Vectorize pipeline. We want to assign each document a number sequence, or vector, to map the similarity and relationships between those documents. Here we selected OpenAI [ada-002](https://openai.com/blog/new-and-improved-embedding-model) model based on performance and cost. As some of the documents are very long, we split them into smaller chunks. Each chunk is sent to OpenAI's ada model. Run the pipeline using the “Play” button and data preview buttons appear between gems. Open the data preview following the OpenAI gem and see the schema now includes a vector (or “embedding”) provided by the OpenAI model for each text chunk.
 
 ![Web Vectorize pipeline](img/genai_web_vectorize.png)
 
@@ -175,7 +175,7 @@ After ingesting the Slack question message and doing some transformation steps, 
 
 ![A GenerativeAI Chatbot](img/genai_intro_video.gif)
 
-And that’s it! Congratulations on running the Generative AI Chatbot with Prophecy on Spark! You can check out the end result in the [video here](https://www.loom.com/share/a89ee52de80e41abb9b5647c1da73e18?sid=6fcf0298-79e8-412b-8e48-f58c9d6d7f3b) and a longer version [here](https://www.youtube.com/watch?v=1exLfT-b-GM&t=1090s). Don't forget, all of these visually developed pipelines are converted to Spark code behind the scenes. Toggle to the code editor to see the code. This code is available in your forked GitHub repository when you commit, merge, and release your changes via the Prophecy UI. Now your Spark project can be run on any Spark cluster via the Prophecy interface or using your favorite build and deploy toolset. You may notice a Chatbot Batch pipeline available in the project for those who wish to explore it. We won’t go into detail on Chatbot Batch because the steps are similar to those in the Chatbot Live (streaming) pipeline.
+And that's it! Congratulations on running the Generative AI Chatbot with Prophecy on Spark! You can check out the end result in the [video here](https://www.loom.com/share/a89ee52de80e41abb9b5647c1da73e18?sid=6fcf0298-79e8-412b-8e48-f58c9d6d7f3b) and a longer version [here](https://www.youtube.com/watch?v=1exLfT-b-GM&t=1090s). Don't forget, all of these visually developed pipelines are converted to Spark code behind the scenes. Toggle to the code editor to see the code. This code is available in your forked GitHub repository when you commit, merge, and release your changes via the Prophecy UI. Now your Spark project can be run on any Spark cluster via the Prophecy interface or using your favorite build and deploy toolset. You may notice a Chatbot Batch pipeline available in the project for those who wish to explore it. We won't go into detail on Chatbot Batch because the steps are similar to those in the Chatbot Live (streaming) pipeline.
 
 ## Summary
 
@@ -191,4 +191,4 @@ Stay tuned for support for additional models beyond those provided by OpenAI. Al
 
 **Exactly which content is sent to OpenAI in the Chatbot Live pipeline?**
 
-For this to work, you’re sending the scraped web data (here we use Prophecy documentation) to OpenAI for the vectorization pipeline and again to answer the question.
+For this to work, you're sending the scraped web data (here we use Prophecy documentation) to OpenAI for the vectorization pipeline and again to answer the question.
