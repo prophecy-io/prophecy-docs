@@ -1,0 +1,107 @@
+## Prophecy-specific vocabulary
+
+Prophecy
+prophecy
+
+# Data Engineering Terms
+PySpark
+pyspark
+Scala
+scala
+DataFrame
+DataFrames
+
+# Platform Names
+Databricks
+EMR
+Synapse
+BigQuery
+Snowflake
+Redshift
+MongoDB
+Cosmos
+Livy
+Okta
+Dataproc
+Serverless
+serverless 
+Splunk
+Smartsheet
+Crealytics
+Kerberos
+Alteryx
+
+# Prophecy Concepts
+Subgraph
+subgraph
+subgraphs
+Configs
+Config
+configs
+config
+
+# Technical Terms
+dbt
+Jinja
+SparkSQL
+Kafka
+Delta
+Parquet
+Avro
+ORC
+JDBC
+ODBC
+
+# Prophecy Tools
+PBT
+
+# AI/ML Terms
+OpenAI
+LLM
+LLMs
+chatbot
+Pinecone
+Vectorize
+vectorize
+vectorization
+
+# CI/CD Terms
+GitLab
+GitHub
+Bitbucket
+rebase
+Rebase
+rebasing
+
+# Other Technical Terms
+UCShared
+volumns
+plibs
+whitelist
+upsert
+interims
+CPUs
+UDFs
+artifactory
+polylines 
+polyline
+unpivot
+subquery
+lakehouse
+deduplicate
+datetime
+namespace
+Namespace
+hotfixes
+hotfix 
+Hotfixes 
+runtime 
+runtimes
+Runtime 
+Runtimes 
+
+
+## Gems 
+
+Unpivot
+Deduplicate
