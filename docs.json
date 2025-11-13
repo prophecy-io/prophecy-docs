@@ -59,8 +59,8 @@
               {
                 "group": "Platform",
                 "pages": [
-                  "data-analytics/administration/platform/architecture",
                   "data-analytics/administration/platform/editions",
+                  "data-analytics/administration/platform/architecture",
                   "data-analytics/administration/platform/prophecy-deployment",
                   "data-analytics/administration/platform/security"
                 ]
@@ -68,15 +68,29 @@
               {
                 "group": "Setup",
                 "pages": [
-                  "data-analytics/administration/setup/databricks-partner-connect",
                   "data-analytics/administration/setup/prophecy-express-guide",
-                  "data-analytics/administration/setup/prophecy-enterprise-guide"
+                  "data-analytics/administration/setup/prophecy-enterprise-guide",
+                  "data-analytics/administration/setup/databricks-partner-connect"
                 ]
               },
               {
                 "group": "Management",
                 "pages": [
                   "data-analytics/administration/teams",
+                  {
+                    "group": "Users",
+                    "pages": [
+                      "data-analytics/administration/management/users/team-user-provisioning",
+                      "data-analytics/administration/management/users/account-settings",
+                      {
+                        "group": "Access control",
+                        "pages": [
+                          "data-analytics/administration/management/users/access/role-based-access",
+                          "data-analytics/administration/management/users/access/team-based-access"
+                        ]
+                      }
+                    ]
+                  },
                   {
                     "group": "Authentication",
                     "pages": [
@@ -85,32 +99,18 @@
                       "data-analytics/administration/management/authentication/azure-ad",
                       "data-analytics/administration/management/authentication/google-sso",
                       "data-analytics/administration/management/authentication/ldap",
-                      "data-analytics/administration/management/authentication/emr-saml",
                       "data-analytics/administration/management/authentication/group-team-mapping"
                     ]
                   },
                   {
-                    "group": "Cluster Admin Settings",
+                    "group": "Cluster admin settings",
                     "pages": [
                       "data-analytics/administration/management/cluster-admin-settings/cluster-admin-settings",
                       "data-analytics/administration/management/cluster-admin-settings/oauth-setup",
                       "data-analytics/administration/management/cluster-admin-settings/copilot-settings"
                     ]
                   },
-                  {
-                    "group": "Users",
-                    "pages": [
-                      "data-analytics/administration/management/users/team-user-provisioning",
-                      "data-analytics/administration/management/users/account-settings",
-                      {
-                        "group": "Access Control",
-                        "pages": [
-                          "data-analytics/administration/management/users/access/role-based-access",
-                          "data-analytics/administration/management/users/access/team-based-access"
-                        ]
-                      }
-                    ]
-                  },
+                  
                   {
                     "group": "Usage and billing",
                     "pages": [
@@ -506,8 +506,7 @@
                 "group": "Setup",
                 "pages": [
                   "data-engineering/administration/setup/prophecy-express-guide",
-                  "data-engineering/administration/setup/prophecy-enterprise-guide",
-                  "data-engineering/administration/setup/databricks-partner-connect"
+                  "data-engineering/administration/setup/prophecy-enterprise-guide"
                 ]
               },
               {
@@ -520,7 +519,7 @@
                       "data-engineering/administration/management/users/team-user-provisioning",
                       "data-engineering/administration/management/users/account-settings",
                       {
-                        "group": "Access Control",
+                        "group": "Access control",
                         "pages": [
                           "data-engineering/administration/management/users/access/role-based-access",
                           "data-engineering/administration/management/users/access/team-based-access"
@@ -536,12 +535,11 @@
                       "data-engineering/administration/management/authentication/azure-ad",
                       "data-engineering/administration/management/authentication/google-sso",
                       "data-engineering/administration/management/authentication/ldap",
-                      "data-engineering/administration/management/authentication/emr-saml",
                       "data-engineering/administration/management/authentication/group-team-mapping"
                     ]
                   },
                   {
-                    "group": "Cluster Admin Settings",
+                    "group": "Cluster admin settings",
                     "pages": [
                       "data-engineering/administration/management/cluster-admin-settings/cluster-admin-settings",
                       "data-engineering/administration/management/cluster-admin-settings/oauth-setup",

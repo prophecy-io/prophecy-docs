@@ -1,6 +1,6 @@
 In Prophecy, access to resources is based on team associations with resources. Projects and fabrics are the fundamental resources to which teams are assigned. Users who belong to a team can access all projects and fabrics assigned to that team.
 
-![img/project-fabric-team.png](/snippets/administration/management/users/access/Relationship between users, teams, projects, and fabrics)
+![Relationship between users, teams, projects, and fabrics](/snippets/administration/management/users/access/img/project-fabric-team.png)
 
 This guide provides comprehensive best practices for implementing and managing team-based access to optimize collaboration while maintaining appropriate security boundaries.
 
@@ -73,7 +73,7 @@ Development fabrics should be configured to facilitate collaborative work and al
 
 Here is one example of how you may configure a [Prophecy fabric](docs/administration/fabrics/prophecy-fabrics/prophecy-fabrics.md) for development.
 
-![img/fabric-dev.png](/snippets/administration/management/users/access/Development fabric)
+![Development fabric](/snippets/administration/management/users/access/img/fabric-dev.png)
 
 ### Production fabrics
 
@@ -88,7 +88,7 @@ Using service principals for production fabrics ensures that scheduled jobs cont
 
 Here is one example of how you may configure a [Prophecy fabric](docs/administration/fabrics/prophecy-fabrics/prophecy-fabrics.md) for production.
 
-![img/fabric-prod.png](/snippets/administration/management/users/access/Production fabric)
+![Production fabric](/snippets/administration/management/users/access/img/fabric-prod.png)
 
 ## Project management
 
@@ -132,7 +132,7 @@ A key aspect of this relationship is that project and fabric team assignments op
 
 For example, a business analyst in the development team can develop and test a project using a development fabric. When ready for production, a platform engineer in both the development team and production team can attach a production fabric to the project.
 
-![img/project-fabric-attachment.png](/snippets/administration/management/users/access/Attach different fabrics to a project)
+![Attach different fabrics to a project](/snippets/administration/management/users/access/img/project-fabric-attachment.png)
 
 <Info>
 To accomplish the scenario above, you must ensure that at least one user is a member of both the project's team and the target fabric's team. This way, someone will be able to publish or deploy a project to production environments.

@@ -48,7 +48,7 @@ To set up SAML authentication in Prophecy:
 
 1. Click **Save** at the bottom of the page to save your changes.
 
-![./img/sso-scim.png](/snippets/administration/management/authentication/SSO settings for SAML and SCIM configurations)
+![SSO settings for SAML and SCIM configurations](/snippets/administration/management/authentication/img/sso-scim.png)
 
 ### Set up SCIM
 
@@ -101,7 +101,7 @@ In the **SAML certificates** section, download `Certificate (Base64)` file to be
 
 In the **Set up ProphecyAzureADApp** section, copy `Login URL` and `Azure AD Identifier` to be used while configuring SSO in Prophecy UI.
 
-![./img/azure_enterpriseapp_sso.png](/snippets/administration/management/authentication/AzureAD config example)
+![AzureAD config example](/snippets/administration/management/authentication/img/azure_enterpriseapp_sso.png)
 
 #### Configure provisioning
 
@@ -144,7 +144,7 @@ Configure SAML for Okta and enable SCIM provisioning
 10. For **Application Username**, select **Email**.
 11. Under **Attribute Statements**, add two attributes **name** and **email**.
 
-![./img/okta_example.png](/snippets/administration/management/authentication/Okta config example)
+![Okta config example](/snippets/administration/management/authentication/img/okta_example.png)
 
 12. Click **Next**.
 13. Choose **I'm an Okta customer adding an internal app**.
@@ -156,7 +156,7 @@ Configure SAML for Okta and enable SCIM provisioning
 2. Locate the **SAML Signing Certificates** section.
 3. Click the download button, as shown in the example below, to download the certificate:
 
-![./img/okta_dl_cert.png](/snippets/administration/management/authentication/Download Okta Cert)
+![Download Okta Cert](/snippets/administration/management/authentication/img/okta_dl_cert.png)
 
 #### SSO URL
 
@@ -164,7 +164,7 @@ Configure SAML for Okta and enable SCIM provisioning
 2. This action opens an XML file in a new browser tab.
 3. Copy the red-highlighted text in the **Location** section of the XML file and use it as the **SSO URL** in Prophecy IDE.
 
-![./img/okta_idp_metadata_xml.png](/snippets/administration/management/authentication/IdP Metadata)
+![IdP Metadata](/snippets/administration/management/authentication/img/okta_idp_metadata_xml.png)
 
 #### Entity and SSO Issuer
 
@@ -174,7 +174,7 @@ Configure SAML for Okta and enable SCIM provisioning
 4. This opens a new browser tab.
 5. Copy the highlighted information from the preview and use it as the **Entity Issuer** and **SSO Issuer** in Prophecy IDE.
 
-![./img/okta_xml.png](/snippets/administration/management/authentication/SAML Assertion)
+![SAML Assertion](/snippets/administration/management/authentication/img/okta_xml.png)
 
 #### Enable SCIM provisioning
 
