@@ -50,7 +50,7 @@ To learn more about the relationship between fabrics, projects, and teams, visit
 
 Here is an example pipeline development workflow for teams that leverage multiple environments.
 
-### Step 1: Create a project
+### 1. Create a project
 
 Start by creating a new project in Prophecy. The project should have its own dedicated Git repository, which helps maintain a clean version history and enables collaboration across teams. The project should be assigned to a team that includes every user who will need to access this project throughout its lifecycle. This is possible because the project team can differ from the fabric team, which should be more restrictive.
 
@@ -59,15 +59,15 @@ Start by creating a new project in Prophecy. The project should have its own ded
   not recommended.
 </Note>
 
-### Step 2: Develop and test
+### 2. Develop and test
 
 Develop pipelines in the development environment using the `dev` branch. This stage involves building pipelines and configuring pipeline parameters to handle different runtime scenarios or environment-specific values. Execute pipelines interactively during development and inspect runtime logs to debug and validate pipeline behavior. During development, you can also create jobs that will automate pipeline execution after deployment.
 
-### Step 3: Deploy to QA
+### 3. Deploy to QA
 
 Once development and initial validation are complete, the QA team can begin validating the pipelines by running them interactively in the QA environment. Then, changes to the project can be merged to the `main` branch and deployed in the QA environment to test if scheduled pipelines run as expected. This stage ensures that your pipelines and jobs function as expected in a controlled, production-like setting before they are released to live systems.
 
-### Step 4: Deploy to production
+### 4. Deploy to production
 
 After the QA team has validated the project, the project can be deployed to production. Typically, a small, designated platform team is responsible for this step. The project is deployed to the production fabric, where jobs operate on real production data and run at scale. Jobs in production should ideally execute using a service principal rather than a user identity, since it is an unattended operation.
 

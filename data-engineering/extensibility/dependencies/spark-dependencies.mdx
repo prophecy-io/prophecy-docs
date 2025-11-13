@@ -40,7 +40,7 @@ The table below describes the fields available when you select **Add Dependency*
 | Type                        | The dependency is either from the Package Hub, Scala (Maven) or Python (PyPI).                                                                                                                                                                                                           |
 | Name                        | This will identify the dependency.                                                                                                                                                                                                                                                       |
 | Version/Package/Coordinates | For Package Hub dependencies, input the package version. <br />For Scala, use the Maven coordinates in the `groupId:artifcatId:version` format. <br />For Python, use the package and the version number.                                                                                  |
-| Repository (Advanced)       | If you'd like to use an external repository (like your organization’s repository), you can specify the link to it in this field.                                                                                                                                                         |
+| Repository (Advanced)       | If you'd like to use an external repository (like your organization's repository), you can specify the link to it in this field.                                                                                                                                                         |
 | Exclusion (Advanced)        | **Scala only** — This is an optional list of `groupId:artifactId` pairs of dependencies you'd like to exclude. Learn more about dependency exclusion [here](https://maven.apache.org/guides/introduction/introduction-to-optional-and-excludes-dependencies.html#dependency-exclusions). |
 
 Once you save a new dependency, Prophecy will validate it to make sure the dependency coordinates are valid and accessible. If
@@ -71,7 +71,7 @@ Connecting a Prophecy project to a Spark cluster with a different dependency ver
 
 When you connect a pipeline to a cluster, dependencies are automatically installed on that cluster. However, there are two cases that can prevent automatic installation:
 
-- **Dependency on the cluster's Spark and Scala versions.** A few dependencies depend on your cluster’s Spark and Scala versions. You can usually find these version requirements in the respective repositories. For example, take a look at the [Spark Excel](https://mvnrepository.com/artifact/com.crealytics/spark-excel) page in the Maven Repository.
+- **Dependency on the cluster's Spark and Scala versions.** A few dependencies depend on your cluster's Spark and Scala versions. You can usually find these version requirements in the respective repositories. For example, take a look at the [Spark Excel](https://mvnrepository.com/artifact/com.crealytics/spark-excel) page in the Maven Repository.
 - **Required manual installation on cluster**. Additionally, certain dependencies must be installed directly on your cluster. This is documented per dependency.
 
 ![Update Spark cluster](./img/synth_0_1_requirements.png)
