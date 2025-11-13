@@ -29,14 +29,8 @@ The PR template URL requires two variables which are used to build a URL string.
 
 ### Template examples
 
-````mdx-code-block
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 <Tabs>
-
-<TabItem value="github" label="GitHub">
-
+<Tab title="GitHub">
 Using this template:
 
 ```shell
@@ -49,10 +43,9 @@ to branch `main` would look like:
 ```shell
 https://github.com/exampleOrg/exampleRepo/compare/main...feature?expand=1
 ```
+</Tab>
 
-</TabItem>
-<TabItem value="bitbucket" label="Bitbucket">
-
+<Tab title="Bitbucket">
 Using this template:
 
 ```shell
@@ -65,11 +58,8 @@ to branch `main` would look like:
 ```shell
 https://bitbucket.org/exampleOrg/exampleRepo/pull-requests/new?source=feature/1&dest=main
 ```
-
-</TabItem>
+</Tab>
 </Tabs>
-
-````
 
 ## Open pull request in Prophecy
 
