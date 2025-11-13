@@ -80,6 +80,23 @@
                       "data-analytics/development/versioning/import-projects",
                       "data-analytics/development/versioning/migrate-managed"
                     ]
+                  },
+                  {
+                    "group": "Tests",
+                    "pages": [
+                      "data-analytics/development/tests/data-tests",
+                      "data-analytics/development/tests/use-project-tests",
+                      "data-analytics/development/tests/use-model-tests"
+                    ]
+                  },
+                  {
+                    "group": "Extensibility",
+                    "pages": [
+                      "data-analytics/development/extensibility/functions",
+                      "data-analytics/development/extensibility/dependencies",
+                      "data-analytics/development/extensibility/stored-procedure",
+                      "data-analytics/development/extensibility/sql-gem-builder"
+                    ]
                   }
                 ]
               },
