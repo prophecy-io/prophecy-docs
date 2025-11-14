@@ -3,19 +3,20 @@ title: Heatmap
 description: Generate spatial heatmaps from geo point data using hexagons
 ---
 
-import MySnippet from '/snippets/interactive-gem.mdx';
-
 import Execution from '/snippets/gem-execution-engine.mdx';
+import MySnippet from '/snippets/interactive-gem.mdx';
 
 <Execution execution_engine="the SQL warehouse" />
 
-## Prerequisites
+## Overview
 
-- Add the `ProphecyDatabricksSqlSpatial` package version 0.0.3 or higher to your project.
-
-The **HeatMap** gem transforms latitude and longitude point data into a spatial heatmap using hexagonal tiling. It's useful for identifying clusters of activity or density within a geographic region.
+The HeatMap gem transforms latitude and longitude point data into a spatial heatmap using hexagonal tiling. It's useful for identifying clusters of activity or density within a geographic region.
 
 <MySnippet gemName="Heatmap" />
+
+## Prerequisites
+
+- Add `ProphecyDatabricksSqlSpatial` version 0.0.3 or higher to your project.
 
 ## Input and Output
 

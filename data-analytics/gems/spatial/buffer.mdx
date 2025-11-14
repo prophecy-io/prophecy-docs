@@ -3,11 +3,12 @@ title: Buffer
 description: Expand or contracts the boundaries of a polygon or line
 ---
 
+import Execution from '/snippets/gem-execution-engine.mdx';
 import MySnippet from '/snippets/interactive-gem.mdx';
 
-import Execution from '/snippets/gem-execution-engine.mdx';
-
 <Execution execution_engine="the SQL warehouse" />
+
+## Overview
 
 Use the Buffer gem to take any polygon or line and expand or contract its boundaries. This can be useful for spatial analysis tasks like creating safety zones around hazardous areas, expanding service coverage areas, and analyzing proximity impacts.
 
@@ -15,7 +16,7 @@ Use the Buffer gem to take any polygon or line and expand or contract its bounda
 
 ## Prerequisites
 
-- Add the `ProphecyDatabricksSqlSpatial` package version 0.0.3 or higher to your project.
+- Add `ProphecyDatabricksSqlSpatial` version 0.0.3 or higher to your project.
 - Run Databricks Runtime 17.1 or higher. (This requirement is due to the use of Databricks' [ST geospatial functions](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-st-geospatial-functions).)
 
   Other SQL warehouse providers are not supported for this gem.

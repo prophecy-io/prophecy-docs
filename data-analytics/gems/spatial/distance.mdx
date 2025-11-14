@@ -3,30 +3,31 @@ title: Distance
 description: Calculate the distance between two points
 ---
 
-import MySnippet from '/snippets/interactive-gem.mdx';
-
 import Execution from '/snippets/gem-execution-engine.mdx';
+import MySnippet from '/snippets/interactive-gem.mdx';
 
 <Execution execution_engine="the SQL warehouse" />
 
-## Prerequisites
-
-- Add the `ProphecyDatabricksSqlSpatial` package version 0.0.1 or higher to your project.
+## Overview
 
 Use the Distance gem to calculate the distance between two geographic points.
 
 <MySnippet gemName="Distance" />
 
-<Tip>
-  Geographic points must be in Well-known Text
-  ([WKT](https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry)) format. Use the
-  [CreatePoint](/analysts/create-point) gem to convert longitude and latitude coordinates to WKT
-  format.
-</Tip>
+## Prerequisites
+
+- Add `ProphecyDatabricksSqlSpatial` version 0.0.1 or higher to your project.
 
 ## Parameters
 
 Configure the Distance gem using the following parameters.
+
+<Note>
+  Geographic points must be in Well-known Text
+  ([WKT](https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry)) format. Use the
+  [CreatePoint](/analysts/create-point) gem to convert longitude and latitude coordinates to WKT
+  format.
+</Note>
 
 ### Spatial Object Fields
 
@@ -59,13 +60,13 @@ Assume you have the following airline route table, and you would like to calcula
 
 <div class="table-example">
 
-| start_city | destination_city | source_point             | dest_point                |
-| ---------- | ---------------- | ------------------------ | ------------------------- |
-| New York   | Los Angeles      | POINT (-74.0060 40.7128) | POINT (-118.2437 34.0522) |
-| London     | Paris            | POINT (-0.1278 51.5074)  | POINT (2.3522 48.8566)    |
-| Tokyo      | Sydney           | POINT (139.6917 35.6895) | POINT (151.2093 -33.8688) |
-| Toronto    | Chicago          | POINT (-79.3470 43.6511) | POINT (-87.6298 41.8781)  |
-| Dubai      | Mumbai           | POINT (55.2962 25.2760)  | POINT (72.8777 19.0760)   |
+| start    | destination | src_point                | dst_point                 |
+| -------- | ----------- | ------------------------ | ------------------------- |
+| New York | Los Angeles | POINT (-74.0060 40.7128) | POINT (-118.2437 34.0522) |
+| London   | Paris       | POINT (-0.1278 51.5074)  | POINT (2.3522 48.8566)    |
+| Tokyo    | Sydney      | POINT (139.6917 35.6895) | POINT (151.2093 -33.8688) |
+| Toronto  | Chicago     | POINT (-79.3470 43.6511) | POINT (-87.6298 41.8781)  |
+| Dubai    | Mumbai      | POINT (55.2962 25.2760)  | POINT (72.8777 19.0760)   |
 
 </div>
 
@@ -74,11 +75,11 @@ To find the distance and direction between cities, set the following gem configu
 1. Set source and destination:
    1. Set **Source Type** to **Point**.
 
-   1. Set **Source Column** to `start_city`.
+   1. Set **Source Column** to `start`.
 
    1. Set **Destination Type** to **Point**.
 
-   1. Set **Destination Column** to `destination_city`.
+   1. Set **Destination Column** to `destination`.
 
 1. Set output options:
    1. Select the **Output Distance** checkbox.
@@ -95,14 +96,10 @@ To find the distance and direction between cities, set the following gem configu
 
 The resulting table will have three new columns: `distance_kilometers`, `cardinal_direction`, and `direction_degrees`.
 
-<div class="table-example">
-
-| start_city | destination_city | source_point             | dest_point                | distance_kilometers | cardinal_direction | direction_degrees |
-| ---------- | ---------------- | ------------------------ | ------------------------- | ------------------- | ------------------ | ----------------- |
-| New York   | Los Angeles      | POINT (-74.0060 40.7128) | POINT (-118.2437 34.0522) | 3944.42             | W                  | 273.7             |
-| London     | Paris            | POINT (-0.1278 51.5074)  | POINT (2.3522 48.8566)    | 343.92              | SE                 | 148.1             |
-| Tokyo      | Sydney           | POINT (139.6917 35.6895) | POINT (151.2093 -33.8688) | 7792.96             | S                  | 169.9             |
-| Toronto    | Chicago          | POINT (-79.3470 43.6511) | POINT (-87.6298 41.8781)  | 705.64              | W                  | 256.6             |
-| Dubai      | Mumbai           | POINT (55.2962 25.2760)  | POINT (72.8777 19.0760)   | 1936.68             | E                  | 107.3             |
-
-</div>
+| start    | destination | src_point                | dst_point                 | distance_kilometers | cardinal_direction | direction_degrees |
+| -------- | ----------- | ------------------------ | ------------------------- | ------------------- | ------------------ | ----------------- |
+| New York | Los Angeles | POINT (-74.0060 40.7128) | POINT (-118.2437 34.0522) | 3944.42             | W                  | 273.7             |
+| London   | Paris       | POINT (-0.1278 51.5074)  | POINT (2.3522 48.8566)    | 343.92              | SE                 | 148.1             |
+| Tokyo    | Sydney      | POINT (139.6917 35.6895) | POINT (151.2093 -33.8688) | 7792.96             | S                  | 169.9             |
+| Toronto  | Chicago     | POINT (-79.3470 43.6511) | POINT (-87.6298 41.8781)  | 705.64              | W                  | 256.6             |
+| Dubai    | Mumbai      | POINT (55.2962 25.2760)  | POINT (72.8777 19.0760)   | 1936.68             | E                  | 107.3             |

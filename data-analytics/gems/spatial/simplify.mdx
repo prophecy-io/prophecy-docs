@@ -3,33 +3,25 @@ title: Simplify
 description: Decrease the number of nodes that make up a polygon or polyline
 ---
 
-import MySnippet from '/snippets/interactive-gem.mdx';
-
 import Execution from '/snippets/gem-execution-engine.mdx';
+import MySnippet from '/snippets/interactive-gem.mdx';
 
 <Execution execution_engine="the SQL warehouse" />
 
-## Prerequisites
-
-- Add the `ProphecyDatabricksSqlSpatial` package version 0.0.4 or higher to your project.
+## Overview
 
 The Simplify gem reduces the number of vertices in polygons and polylines while preserving their overall shape. This is useful for reducing file sizes, improving rendering performance, and simplifying complex geometries for analysis or visualization.
 
+The gem uses the [Ramer-Douglas-Peucker
+algorithm](https://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm), which
+removes vertices based on their perpendicular distance from line segments. You can control the
+level of simplification by adjusting the distance threshold.
+
 <MySnippet gemName="Simplify" />
 
-<Tip>
-  Input geometries must be in
-  [WKT](https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry) format. Use the
-  [PolyBuild](/analysts/polybuild) gem to convert longitude and latitude coordinates into polygons
-  or polylines in WKT format.
-</Tip>
+## Prerequisites
 
-<Info>
-  The gem uses the [Ramer–Douglas–Peucker
-  algorithm](https://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm), which
-  removes vertices based on their perpendicular distance from line segments. You can control the
-  level of simplification by adjusting the distance threshold.
-</Info>
+- Add `ProphecyDatabricksSqlSpatial` version 0.0.4 or higher to your project.
 
 ## Input and Output
 
@@ -39,6 +31,13 @@ The Simplify gem accepts the following input and output.
 | ------- | ------------------------------------------------------------------------------ |
 | **in0** | Source dataset containing a column with lines or polygons.                     |
 | **out** | Output dataset containing a new column with the transformed lines or polygons. |
+
+<Note>
+  Input geometries must be in
+  [WKT](https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry) format. Use the
+  [PolyBuild](/analysts/polybuild) gem to convert longitude and latitude coordinates into polygons
+  or polylines in WKT format.
+</Note>
 
 ## Parameters
 

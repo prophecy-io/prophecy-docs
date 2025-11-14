@@ -3,22 +3,20 @@ title: PolyBuild
 description: Create a polygon or polyline from a set of coordinates
 ---
 
-import MySnippet from '/snippets/interactive-gem.mdx';
-
 import Execution from '/snippets/gem-execution-engine.mdx';
+import MySnippet from '/snippets/interactive-gem.mdx';
 
 <Execution execution_engine="the SQL warehouse" />
 
-## Prerequisites
-
-- Add the `ProphecyDatabricksSqlSpatial` package version 0.0.3 or higher to your project.
+## Overview
 
 Build spatial shapes from coordinate data by grouping and ordering points into either polygons (closed shapes) or polylines (open lines). Use this gem to convert raw latitude/longitude values into structured spatial geometries for mapping, analysis, or downstream geospatial operations.
 
 <MySnippet gemName="PolyBuild" />
 
-- Polygon: Uses the `POLYGON()` format to create a closed shape.
-- Polyline: Uses the `LINESTRING()` format to create an open path.
+## Prerequisites
+
+- Add `ProphecyDatabricksSqlSpatial` version 0.0.3 or higher to your project.
 
 ## Input and Output
 
@@ -33,13 +31,20 @@ The PolyBuild gem accepts the following input and output.
 
 Configure the PolyBuild gem using the following parameters.
 
-| **Parameter**         | **Description**                                                                                                                                                                                                                      |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Build Method          | Select the type of spatial geometry to create from your coordinate data:<br/>• Select **Sequence Polygon** for closed areas, such as boundaries or zones<br/>• Select **Sequence Polyline** for open paths, such as routes or trails |
-| Longitude Column Name | Column containing longitude values. Must be in decimal degrees (e.g., `-122.4194`).                                                                                                                                                  |
-| Latitude Column Name  | Column containing latitude values. Must be in decimal degrees (e.g., `37.7749`).                                                                                                                                                     |
-| Group Field           | Column used to divide coordinates into distinct shapes. <br/>Example: Use the `state_name` column to identify polygons for each state border.<br/>_Only one column is supported for grouping._                                       |
-| Sequence Field        | Column that defines the drawing order of points within each group. <br/>This column can be any sortable type (e.g., integers, timestamps, strings). <br/>The points will be connected in ascending order.                            |
+| **Parameter**         | **Description**                                                                                                                                                                                                                                   |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Build Method          | Select the type of spatial geometry to create from your coordinate data:<ul><li>Select **Sequence Polygon** for closed areas, such as boundaries or zones</li><li>Select **Sequence Polyline** for open paths, such as routes or trails</li></ul> |
+| Longitude Column Name | Column containing longitude values. Must be in decimal degrees (e.g., `-122.4194`).                                                                                                                                                               |
+| Latitude Column Name  | Column containing latitude values. Must be in decimal degrees (e.g., `37.7749`).                                                                                                                                                                  |
+| Group Field           | Column used to divide coordinates into distinct shapes. <br />Example: Use the `state_name` column to identify polygons for each state border.<br />_Only one column is supported for grouping._                                                  |
+| Sequence Field        | Column that defines the drawing order of points within each group. <br/>This column can be any sortable type (e.g., integers, timestamps, strings). <br />The points will be connected in ascending order.                                        |
+
+<Note>
+
+- Sequence Polygon: Uses the `POLYGON()` format to create a closed shape.
+- Sequence Polyline: Uses the `LINESTRING()` format to create an open path.
+
+</Note>
 
 ## Example
 

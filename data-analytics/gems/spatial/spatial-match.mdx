@@ -3,15 +3,12 @@ title: SpatialMatch
 description: Find relationships between geographic features
 ---
 
-import MySnippet from '/snippets/interactive-gem.mdx';
-
 import Execution from '/snippets/gem-execution-engine.mdx';
+import MySnippet from '/snippets/interactive-gem.mdx';
 
 <Execution execution_engine="the SQL warehouse" />
 
-## Prerequisites
-
-- Add the `ProphecyDatabricksSqlSpatial` package version 0.0.3 or higher to your project.
+## Overview
 
 Use the SpatialMatch gem to find relationships between geometries from two different datasets. Common use cases include:
 
@@ -23,38 +20,40 @@ The gem uses spatial joins to compare geometries and returns only the pairs that
 
 <MySnippet gemName="SpatialMatch" />
 
-<Tip>
-Use the following gems to create correctly formatted geometries in a dataset:
+## Prerequisites
 
-- [CreatePoint](/analysts/create-point) gem for points
-- [PolyBuild](/analysts/polybuild) gem for lines and polygons
-
-</Tip>
+- Add `ProphecyDatabricksSqlSpatial` version 0.0.3 or higher to your project.
 
 ## Input and Output
 
 The SpatialMatch gem accepts the following inputs and output.
 
-| Port    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **in0** | Dataset containing geometries (points, lines, or polygons) in WKT format. This is the "left" dataset in the spatial join operation.                                                                                                                                                                                                                                                                                                                                                                                                     |
-| **in1** | Dataset containing geometries (points, lines, or polygons) in WKT format. This is the "right" dataset in the spatial join operation.                                                                                                                                                                                                                                                                                                                                                                                                    |
-| **out** | Output dataset containing **matched pairs** of geometries along with all additional columns from both input datasets. Each row represents a source geometry and target geometry that satisfy the selected spatial relationship. Unmatched geometries are excluded from the output. <br/><br/>The output includes the following columns: <ul><li>The source geometry column</li><li>All other `in0` columns</li><li>The target geometry column prefixed with `target_`</li><li>All other `in1` columns prefixed with `target_`</li></ul> |
+| Port    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **in0** | Dataset containing geometries (points, lines, or polygons) in WKT format. This is the "left" dataset in the spatial join operation.                                                                                                                                                                                                                                                                                                                                                                                                       |
+| **in1** | Dataset containing geometries (points, lines, or polygons) in WKT format. This is the "right" dataset in the spatial join operation.                                                                                                                                                                                                                                                                                                                                                                                                      |
+| **out** | Output dataset containing **matched pairs** of geometries along with all additional columns from both input datasets. Each row represents a source geometry and target geometry that satisfy the selected spatial relationship. Unmatched geometries are excluded from the output. <br /><br />The output includes the following columns: <ul><li>The source geometry column</li><li>All other `in0` columns</li><li>The target geometry column prefixed with `target_`</li><li>All other `in1` columns prefixed with `target_`</li></ul> |
 
-<Tip>
-  You can use the same source for both in0 and in1 if you want to match geometries from the same
-  dataset (self-join).
-</Tip>
+You can use the same source for both in0 and in1 if you want to match geometries from the same
+dataset (self-join).
+
+<Note>
+Use the following gems to create correctly formatted geometries in a dataset:
+
+- [CreatePoint](/analysts/create-point) gem for points
+- [PolyBuild](/analysts/polybuild) gem for lines and polygons
+
+</Note>
 
 ## Parameters
 
 Configure the SpatialMatch gem using the following parameters.
 
-| Parameter         | Description                                                                                                                                       |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Source Column     | Select the column from `in0` that contains one set of geometric data.                                                                             |
-| Target Column     | Select the column from `in1` that contains another set of geometric data.                                                                         |
-| Select Match Type | Choose the spatial relationship that determines when a source geometry matches a target geometry. <br/>Learn more in [Match types](#match-types). |
+| Parameter         | Description                                                                                                                                        |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Source Column     | Select the column from `in0` that contains one set of geometric data.                                                                              |
+| Target Column     | Select the column from `in1` that contains another set of geometric data.                                                                          |
+| Select Match Type | Choose the spatial relationship that determines when a source geometry matches a target geometry. <br />Learn more in [Match types](#match-types). |
 
 ### Match types
 
@@ -73,11 +72,7 @@ Review the following to understand the criteria to satisfy different match types
 
 The following diagram includes visualizations for each match type.
 
-<img
-  src={require('./img/match-types.jpg').default}
-  alt="Match types diagram"
-  className="no-border-radius"
-/>
+![Match types diagram](./img/match-types.jpg)
 
 ## Example: Find stores within delivery zones
 
