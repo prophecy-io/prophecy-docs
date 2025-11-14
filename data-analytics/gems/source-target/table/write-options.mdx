@@ -1,9 +1,6 @@
 ---
-title: Write Options
-id: write-options
-slug: /table-write-options
+title: Write strategies
 description: Determine how to store processed data and handle changes over time
-tags: []
 ---
 
 When writing data to a table, there are multiple ways to determine how the data will be written. When you configure a target table or target model, the **Write Options** tab lets you determine how you will store your processed data and handle changes to the data over time. The choice of write mode depends on your specific use case.
@@ -14,13 +11,13 @@ The following table describes the write modes that Prophecy supports by SQL ware
 
 | Write mode                                  | Databricks table | Databricks model | BigQuery table | BigQuery model | Snowflake model |
 | ------------------------------------------- | ---------------- | ---------------- | -------------- | -------------- | --------------- |
-| Wipe and Replace Table                      | ✔                | ✔                | ✔              | ✔              | ✔               |
-| Append Row                                  | ✔                | ✔                | ✔              |                | ✔               |
-| Merge - Upsert Row                          | ✔                | ✔                | ✔              | ✔              | ✔               |
-| Merge - Wipe and Replace Partitions         | ✔                | ✔                | ✔              | ✔              |                 |
-| Merge - SCD2                                | ✔                | ✔                | ✔              | ✔              | ✔               |
-| Merge - Wipe and Replace Rows Per Predicate | ✔                | ✔                |                |                |                 |
-| Merge - Delete and Insert                   |                  |                  |                |                | ✔               |
+| Wipe and Replace Table                      | ✔               | ✔               | ✔             | ✔             | ✔              |
+| Append Row                                  | ✔               | ✔               | ✔             |                | ✔              |
+| Merge - Upsert Row                          | ✔               | ✔               | ✔             | ✔             | ✔              |
+| Merge - Wipe and Replace Partitions         | ✔               | ✔               | ✔             | ✔             |                 |
+| Merge - SCD2                                | ✔               | ✔               | ✔             | ✔             | ✔              |
+| Merge - Wipe and Replace Rows Per Predicate | ✔               | ✔               |                |                |                 |
+| Merge - Delete and Insert                   |                  |                  |                |                | ✔              |
 
 ## Write modes
 
@@ -28,9 +25,7 @@ The following table describes the write modes that Prophecy supports by SQL ware
 
 Replaces all existing data with new data on each run. This is the simplest approach and ensures your target table always reflects the latest state of your source data.
 
-<Info>
-The incoming table must have the same schema as the existing table.
-</Info>
+<Info>The incoming table must have the same schema as the existing table.</Info>
 
 #### Example: Replace vehicle registry
 
@@ -75,7 +70,8 @@ The following partitioning parameters are available for the **Wipe and Replace T
 | Partition Range          | Applicable only to `int64` data type. <br/>Specify a numeric range for partitioning using a **start**, **end**, and **interval** value (e.g., start=`0`, end=`1000`, interval=`10`).<br/>You must define an interval value so that Prophecy knows at what intervals to create the partitions. |
 
 <Info>
-Only BigQuery tables can be partitioned at the table level. To learn more about partitioning, jump to [Partitioning](#partitioning).
+  Only BigQuery tables can be partitioned at the table level. To learn more about partitioning, jump
+  to [Partitioning](#partitioning).
 </Info>
 
 ---
@@ -85,7 +81,8 @@ Only BigQuery tables can be partitioned at the table level. To learn more about 
 Adds new rows to the existing table without modifying existing data. No deduplication is performed, so you may end up with duplicate records.
 
 <Info>
-This strategy is best used when unique keys aren't required. For key-based updates, use one of the Merge options instead.
+  This strategy is best used when unique keys aren't required. For key-based updates, use one of the
+  Merge options instead.
 </Info>
 
 #### Example: Add daily trips
@@ -345,7 +342,8 @@ Notice that ALL trips from January 5th onwards (`201`, `203`, and `204`) were dr
 For rows in the target table that have keys that match rows in the incoming dataset, deletes matching rows from the existing table and replaces them. For incoming rows with new keys, inserts these normally. This ensures that updated records are fully replaced instead of partially updated.
 
 <Note>
-This strategy helps when your unique key is not truly unique (multiple rows per key need to be fully refreshed).
+  This strategy helps when your unique key is not truly unique (multiple rows per key need to be
+  fully refreshed).
 </Note>
 
 <div class="fixed-table">

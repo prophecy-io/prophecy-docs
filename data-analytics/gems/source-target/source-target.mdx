@@ -1,5 +1,5 @@
 ---
-title: Sources and target types
+title: Source and target types
 description: Read data into and write data out of your pipelines
 ---
 
@@ -18,11 +18,15 @@ Prophecy supports different gem types for reading from and writing to data sourc
 | Target gem | External system | Represents data (tables or files) stored in external platforms outside the SQL warehouse. Target gems consume output from a pipeline.                                                                                                   |
 
 <Note>
-Source and target gems cannot serve as intermediate steps in a pipeline. Source gems only have output ports, and Target gems only have input ports.
+  Source and target gems cannot serve as intermediate steps in a pipeline. Source gems only have
+  output ports, and Target gems only have input ports.
 </Note>
 
 <Warning>
-Pipeline performance depends on how your connections are configured. Processing native tables within the warehouse is more efficient than accessing external sources. Avoid setting up an external connection that points to the same warehouse defined in your fabric. This redundancy can lead to slower performance.
+  Pipeline performance depends on how your connections are configured. Processing native tables
+  within the warehouse is more efficient than accessing external sources. Avoid setting up an
+  external connection that points to the same warehouse defined in your fabric. This redundancy can
+  lead to slower performance.
 </Warning>
 
 ## Data formats
@@ -34,14 +38,3 @@ Prophecy supports the following data formats:
 - Files from external systems. These are accessed with Source and Target gems.
 
 To use external systems, you need to set up corresponding [connections](docs/analysts/development/connections.md).
-
-## What's next
-
-View the complete set of sources and targets in the following sections.
-
-```mdx-code-block
-import DocCardList from '@theme/DocCardList';
-import {useCurrentSidebarCategory} from '@docusaurus/theme-common';
-
-<DocCardList items={useCurrentSidebarCategory().items}/>
-```

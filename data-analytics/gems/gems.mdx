@@ -1,13 +1,13 @@
 ---
-title: 'Overview'
-description: 'Overview of gems functionality and capabilities'
+title: 'Gems'
+description: 'Building blocks of your data pipelines'
 ---
-
 
 [Gems](/docs/getting-started/concepts/gems.md) are functional units in a pipeline that perform tasks such as reading, transforming, writing, or handling other data operations. When you build pipelines in a SQL project, some gems will be powered by [Prophecy Automate](/administration/architecture), and some gems will be powered by SQL dbt.
 
 <Tip title="AI agent">
-Prophecy's AI agent can help you build, refine, and explain gems throughout your pipeline. To learn more, see [AI & agents](/analysts/ai-features).
+  Prophecy's AI agent can help you build, refine, and explain gems throughout your pipeline. To
+  learn more, see [AI & agents](/analysts/ai-features).
 </Tip>
 
 ## Categories
@@ -23,7 +23,6 @@ Prophecy's AI agent can help you build, refine, and explain gems throughout your
 | **Custom**        | Enhance and extend Prophecy's functionality.                        |
 | **Spatial**       | Work with geographic data, such as locations, distances, and areas. |
 
-
 ## Interactive gem examples
 
 To test a gem hands-on, you can try the **interactive example** of the gem. If you search for a gem in the project sidebar, you can open the associated example and run the preconfigured pipeline!
@@ -35,7 +34,9 @@ To test a gem hands-on, you can try the **interactive example** of the gem. If y
 Many gems include expression components where you can implement custom or complex logic. You can either [build expressions visually](/analysts/visual-expression-builder), or use SQL syntax to write expression in code. Prophecy will automatically convert visual expressions to code expressions, and vice versa.
 
 <Note>
-The SQL dialect for expressions depends on the SQL warehouse connection of your fabric. Project code must match the requirements of the execution environment. As a result, expressions can differ between projects that run on Databricks, Snowflake, or other platforms.
+  The SQL dialect for expressions depends on the SQL warehouse connection of your fabric. Project
+  code must match the requirements of the execution environment. As a result, expressions can differ
+  between projects that run on Databricks, Snowflake, or other platforms.
 </Note>
 
 ## Gem instance
@@ -57,7 +58,9 @@ When you click on a gem from the gem drawer, an instance of that gem gets added 
 |    9    | Warning       | Indicator that the gem contains errors to be fixed.                                                         |
 
 <Tip>
-If you select one or more gems, you can copy and paste them within the same pipeline or across pipelines. However, you cannot paste across projects that use different languages (for example, from SQL to Scala).
+  If you select one or more gems, you can copy and paste them within the same pipeline or across
+  pipelines. However, you cannot paste across projects that use different languages (for example,
+  from SQL to Scala).
 </Tip>
 
 ## Gem configuration
