@@ -3,19 +3,20 @@ title: UnionByName
 description: Combine datasets by aligning columns with the same name
 ---
 
-import MySnippet from '/snippets/interactive-gem.mdx';
-
 import Execution from '/snippets/gem-execution-engine.mdx';
+import GemExample from '/snippets/interactive-gem.mdx';
 
 <Execution execution_engine="the SQL warehouse" />
+
+## Overview
+
+Use the UnionByName gem to combine rows from multiple datasets by matching column names. This can help when working with data from different sources where schemas might vary slightly in order or structure, but the column names are consistent.
+
+<GemExample gemName="UnionByName" />
 
 ## Prerequisites
 
 - Add `prophecy_basics` package version 1.0.0 or higher to your project.
-
-Use the UnionByName gem to combine rows from multiple datasets by matching column names. This can help when working with data from different sources where schemas might vary slightly in order or structure, but the column names are consistent.
-
-<MySnippet gemName="UnionByName" />
 
 ## Input and Output
 

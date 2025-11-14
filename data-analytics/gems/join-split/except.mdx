@@ -3,15 +3,16 @@ title: Except
 description: Return rows from the first dataset that do not appear in any of the others
 ---
 
-import MySnippet from '/snippets/interactive-gem.mdx';
-
 import Execution from '/snippets/gem-execution-engine.mdx';
+import GemExample from '/snippets/interactive-gem.mdx';
 
 <Execution execution_engine="the SQL warehouse" />
 
+## Overview
+
 Use the Except gem to extract rows that are present in the **first table** but **absent** from all subsequent tables. This is useful for identifying gaps, such as missing orders, unprocessed records, or customers who haven't returned.
 
-<MySnippet gemName="Except" />
+<GemExample gemName="Except" />
 
 ## Input and Output
 

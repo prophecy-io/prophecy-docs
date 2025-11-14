@@ -299,8 +299,7 @@
                       "data-analytics/gems/join-split/union",
                       "data-analytics/gems/join-split/union-by-name",
                       "data-analytics/gems/join-split/intersect",
-                      "data-analytics/gems/join-split/except",
-                      "data-analytics/gems/join-split/dynamic-replace"
+                      "data-analytics/gems/join-split/except"
                     ]
                   },
                   {
