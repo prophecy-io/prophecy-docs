@@ -3,7 +3,9 @@ title: Smartsheet
 description: Use Smartsheet as a file source or target in a gem
 ---
 
-This gem runs in Prophecy Automate.
+import Execution from '/snippets/gem-execution-engine.mdx';
+
+<Execution execution_engine="Prophecy Automate" />
 
 Use a Source and Target gem to read from or write to Smartsheet locations in Prophecy pipelines. This page covers supported file formats, how to create the gem, and how to configure connection details and paths for both Source and Target gems.
 
@@ -22,15 +24,11 @@ To create a Smartsheet Source or Target gem in your pipeline:
 1. In the **Type** tab, select **Smartsheet**.
 1. In the **Location** tab, choose your [file format](#supported-file-formats) and location.
 
-   <Info>
-   For more information on how to configure this screen, jump to [Location](#location).
-   </Info>
+   <Info>For more information on how to configure this screen, jump to [Location](#location).</Info>
 
 1. In the **Properties** tab, set the file properties. These vary based on the file type that you are working with.
 
-   </Info>
-   See the list of properties per [file type](/analysts/file-types).
-   </Info>
+   <Info>See the list of properties per [file type](/analysts/file-types).</Info>
 
 1. (Source only) In the **Preview** tab, load a sample of the data and verify that it looks correct.
 

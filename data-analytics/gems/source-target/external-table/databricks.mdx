@@ -3,12 +3,15 @@ title: Databricks
 description: Read and write catalog tables in Databricks
 ---
 
-This gem runs in Prophecy Automate.
+import Execution from '/snippets/gem-execution-engine.mdx';
+
+<Execution execution_engine="Prophecy Automate" />
 
 This page describes how to use Databricks external Source and Target gems to read from or write to tables. Only use an external Source and Target gem when Databricks is not the configured [SQL warehouse connection](docs/administration/fabrics/prophecy-fabrics/create-fabric.md#connections). Otherwise, use the [Table gem](/analysts/bigquery-table).
 
 <Info>
-If you're working with file types like CSV or Parquet from Databricks file storage, see [File types](/analysts/file-types) for guidance. This page focuses only on catalog tables.
+  If you're working with file types like CSV or Parquet from Databricks file storage, see [File
+  types](/analysts/file-types) for guidance. This page focuses only on catalog tables.
 </Info>
 
 ## Configuration tabs
@@ -62,5 +65,8 @@ If your fabric uses Databricks as the SQL warehouse, you can't select Databricks
 To work with tables from a different Databricks workspace, use [Delta Sharing](https://docs.databricks.com/aws/en/delta-sharing/). Delta Sharing lets you access data across workspaces without creating additional Databricks connections.
 
 <Info>
-Prophecy implements this guardrail to avoid using external connections when the data can be made available in your warehouse. External connections introduce an extra data transfer step, which slows down pipeline execution and adds unnecessary complexity. For best performance, Prophecy always prefers reading and writing directly within the warehouse.
+  Prophecy implements this guardrail to avoid using external connections when the data can be made
+  available in your warehouse. External connections introduce an extra data transfer step, which
+  slows down pipeline execution and adds unnecessary complexity. For best performance, Prophecy
+  always prefers reading and writing directly within the warehouse.
 </Info>

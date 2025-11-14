@@ -5,7 +5,9 @@ description: Call APIs from your pipeline
 
 import MySnippet from '/snippets/interactive-gem.mdx';
 
-This gem runs in Prophecy Automate.
+import Execution from '/snippets/gem-execution-engine.mdx';
+
+<Execution execution_engine="Prophecy Automate" />
 
 Use the RestAPI gem to make API calls from your pipeline.
 
@@ -33,8 +35,9 @@ The RestAPI gem uses the following input and output ports.
 By default, the RestAPI gem does not include an input port. To add a port, click the `+` button next to **Ports**. Alternatively, connect a previous gem to the RestAPI gem directly to add a new input port.
 
 <Info>
-The number of inputs and outputs can be changed as needed by clicking the `+` button on the respective tab in the left panel.
-To learn more about adding and removing ports, see [Gem ports](/analysts/gems#gem-ports).
+  The number of inputs and outputs can be changed as needed by clicking the `+` button on the
+  respective tab in the left panel. To learn more about adding and removing ports, see [Gem
+  ports](/analysts/gems#gem-ports).
 </Info>
 
 ## Parameters
@@ -56,6 +59,7 @@ Configure the RestAPI gem using the following parameters.
 You can populate these parameters with hard-coded values, or you can reference columns. To reference a column, use curly brackets. You can reference columns in any field.
 
 For example, if your dataset has a column named `AccountID`, you can call an API like this:
+
 <br/>`https://api.company.com/users/{{AccountID}}`
 </Tip>
 
@@ -76,7 +80,8 @@ When JSON parsing is enabled:
 This feature is enabled by default for new gems using the `GET` method. Changing the method will disable it, but you can always re-enable the checkbox.
 
 <Note>
-JSON parsing requires the API to return valid JSON responses. If the response format is inconsistent or not JSON, disable this option and parse the response manually in subsequent gems.
+  JSON parsing requires the API to return valid JSON responses. If the response format is
+  inconsistent or not JSON, disable this option and parse the response manually in subsequent gems.
 </Note>
 
 ### Authentication methods

@@ -3,7 +3,9 @@ title: Salesforce
 description: Read and write from Salesforce
 ---
 
-This gem runs in Prophecy Automate.
+import Execution from '/snippets/gem-execution-engine.mdx';
+
+<Execution execution_engine="Prophecy Automate" />
 
 The Salesforce gem enables you to read data from Salesforce directly into your Prophecy pipelines. The gem supports both SOQL (Salesforce Object Query Language) for querying standard Salesforce objects and SAQL (Salesforce Analytics Query Language) for accessing analytical datasets.
 
@@ -49,7 +51,8 @@ SELECT Id, Name, Industry, CreatedDate FROM Account WHERE CreatedDate >= LAST_N_
 ```
 
 <Info>
-When using the `FIELDS(ALL)` keyword, the response is [limited to 200 rows per call](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql_select_fields.htm#limiting_result_rows).
+  When using the `FIELDS(ALL)` keyword, the response is [limited to 200 rows per
+  call](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql_select_fields.htm#limiting_result_rows).
 </Info>
 
 #### Salesforce Objects
@@ -70,7 +73,8 @@ The following properties are available for the Salesforce Source gem. These prop
 Use these settings to configure a Salesforce Target gem for writing data.
 
 <Info>
-The Salesforce Target gem only supports writing to Salesforce Objects. You cannot write to CRM Analytics datasets.
+  The Salesforce Target gem only supports writing to Salesforce Objects. You cannot write to CRM
+  Analytics datasets.
 </Info>
 
 ### Target location

@@ -3,7 +3,9 @@ title: Google BigQuery
 description: Read and write catalog tables in BigQuery
 ---
 
-This gem runs in Prophecy Automate.
+import Execution from '/snippets/gem-execution-engine.mdx';
+
+<Execution execution_engine="Prophecy Automate" />
 
 This page describes how to use BigQuery external Source and Target gems to read from or write to tables. Only use an external Source and Target gem when BigQuery is not the configured [SQL warehouse connection](docs/administration/fabrics/prophecy-fabrics/create-fabric.md#connections). Otherwise, use the [Table gem](/analysts/bigquery-table).
 
@@ -60,5 +62,8 @@ If your fabric uses BigQuery as the SQL warehouse, you can't select BigQuery in 
 To work with tables from a different BigQuery workspace, use [BigQuery sharing](https://cloud.google.com/bigquery/docs/analytics-hub-introduction). This lets you access shared resources without creating additional BigQuery connections.
 
 <Info>
-Prophecy implements this guardrail to avoid using external connections when the data can be made available in your warehouse. External connections introduce an extra data transfer step, which slows down pipeline execution and adds unnecessary complexity. For best performance, Prophecy always prefers reading and writing directly within the warehouse.
+  Prophecy implements this guardrail to avoid using external connections when the data can be made
+  available in your warehouse. External connections introduce an extra data transfer step, which
+  slows down pipeline execution and adds unnecessary complexity. For best performance, Prophecy
+  always prefers reading and writing directly within the warehouse.
 </Info>

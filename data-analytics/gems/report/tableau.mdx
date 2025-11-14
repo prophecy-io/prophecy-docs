@@ -3,7 +3,9 @@ title: TableauWrite
 description: Send data to automatically update your Tableau dashboards
 ---
 
-This gem runs in Prophecy Automate.
+import Execution from '/snippets/gem-execution-engine.mdx';
+
+<Execution execution_engine="Prophecy Automate" />
 
 The TableauWrite gem lets you send data that updates the data sources that are utilized by Tableau dashboards.
 
@@ -19,10 +21,10 @@ No output table will be written to your data warehouse.
 
 ## Parameters
 
-| Parameter                   | Description                                                                                                                                 |
-| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| Select or create connection | Defines which [Tableau connection](docs/administration/fabrics/prophecy-fabrics/connections/tableau.md) to use for the gem.                 |
-| Project name                | The name of your Tableau project that contains the data source to update.                                                                   |
+| Parameter                   | Description                                                                                                                                  |
+| --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Select or create connection | Defines which [Tableau connection](docs/administration/fabrics/prophecy-fabrics/connections/tableau.md) to use for the gem.                  |
+| Project name                | The name of your Tableau project that contains the data source to update.                                                                    |
 | Data source                 | The data source you want to update in Tableau.<br />A data source is a connection to data that you are using for analysis and visualization. |
 
 ![Tableau Gem configuration](img/tableau-gem.png)
