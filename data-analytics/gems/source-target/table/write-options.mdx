@@ -395,15 +395,7 @@ Notice that vehicle `201`'s old record was completely replaced with the new data
 
 Prophecy simplifies data transformation by providing intuitive write mode options that abstract away the complexity of underlying SQL operations. Behind the scenes, Prophecy generates dbt models that implement these write strategies using SQL warehouse-specific commands.
 
-| Write mode              | Concept in dbt                                                                                                                                                                                                        |
-| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Wipe and Replace Tables | Maps to dbt's `materialized: 'table'` strategy, which creates a new table on each run.                                                                                                                                |
-| Append Rows             | Maps to dbt's `materialized: 'table'` with append-only logic, adding new rows without modifying existing data.                                                                                                        |
-| Merge options           | Maps to dbt's `materialized: 'incremental'` [strategy](https://docs.getdbt.com/docs/build/incremental-models-overview), which updates tables by only transforming and loading new or changed data since the last run. |
-
 When you select a write mode in a Table gem, Prophecy automatically generates the appropriate dbt configuration and SQL logic. This means you can focus on your data transformation logic rather than learning dbt's materialization strategies or writing complex SQL merge statements.
-
-<Note>
 
 To understand exactly what happens when Prophecy runs these write operations, switch to the **Code** view of your project and inspect the generated dbt model files. These files contain the SQL statements and dbt configuration (like `materialized: 'incremental'`) that dbt uses to execute the write operation. To learn more about the specific configuration options available for each SQL warehouse, visit the dbt documentation links below.
 
@@ -411,40 +403,48 @@ To understand exactly what happens when Prophecy runs these write operations, sw
 - [Databricks configurations](https://docs.getdbt.com/reference/resource-configs/databricks-configs)
 - [Snowflake configurations](https://docs.getdbt.com/reference/resource-configs/snowflake-configs)
 
-</Note>
-
 ## Partitioning
 
-Depending on the SQL warehouse you use to write tables, partitioning can have different behavior. Let's examine the differences between partitioning in Google BigQuery and Databricks.
+Depending on the SQL warehouse you use to write tables, partitioning can have different behavior. Let's examine the difference between partitioning in Google BigQuery and Databricks.
 
-1. **BigQuery**: Partitioning is a table property.
+<Tabs>
+<Tab title="BigQuery">
 
-   In BigQuery, partitioning is defined at the table schema level (time, integer range, or column value). Because it is a part of the table architecture, the physical storage in BigQuery is optimized by partitioning automatically.
+In Google BigQuery, partitioning is a table property.
 
-   Once a table is partitioned, every write to that table, full or incremental, respects the partitioning. That means even when you drop and create an entirely new table, BigQuery creates the table with partitions in an optimized way.
+Partitioning is defined at the table schema level (time, integer range, or column value). Because it is a part of the table architecture, the physical storage in BigQuery is optimized by partitioning automatically.
 
-2. **Databricks**: Partitioning is a write strategy.
+Once a table is partitioned, every write to that table, full or incremental, respects the partitioning. That means even when you drop and create an entirely new table, Google BigQuery creates the table with partitions in an optimized way.
 
-   Databricks organizes data in folders by column values. Partitioning only makes sense when you're using the **Wipe and Replace Partitions** write mode because it allows you to overwrite specific directories (partitions) without rewriting the whole table.
+</Tab>
 
-   For the **Wipe and Replace Table** option, the table is dropped and completely recreated. Partitioning doesn't add any runtime benefit here, so this is not an option for Databricks.
+<Tab title="Databricks">
+
+In Databricks, partitioning is a write strategy.
+
+Databricks organizes data in folders by column values. Partitioning only makes sense when you're using the **Wipe and Replace Partitions** write mode because it allows you to overwrite specific directories (partitions) without rewriting the whole table.
+
+For the **Wipe and Replace Table** option, the table is dropped and completely recreated. Partitioning doesn't add any runtime benefit here, so this is not an option for Databricks.
+
+</Tab>
+</Tabs>
 
 ## Troubleshooting
 
-<details>
-<summary>Schema mismatch errors</summary>
+<AccordionGroup>
+<Accordion title="You see schema mismatch errors">
 
-**Problem**: Incoming and existing schemas don't align.
+This happens when the incoming and existing schemas don't align.
 
-**Solution**: Use the "On Schema Change" setting to set behavior or ensure schema compatibility.
+To solve this, use the "On Schema Change" setting to set behavior or ensure schema compatibility.
 
-</details>
+</Accordion>
 
-<details>
-<summary>Duplicate data</summary>
+<Accordion title="You see unexpected duplicate data in the target table">
 
-**Problem**: Unexpected duplicate records appear in the written table.
+This happens mainly when using the **Append Rows** write mode.
 
-**Solution**: Consider using merge modes instead of append.
+To solve this, consider using one of the merge modes instead of append.
 
-</details>
+</Accordion>
+</AccordionGroup>
