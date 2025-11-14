@@ -7,30 +7,32 @@ import Execution from '/snippets/gem-execution-engine.mdx';
 
 <Execution execution_engine="Prophecy Automate" />
 
-The Hana Source and Target gems let you connect Prophecy pipelines to SAP HANA tables for reading and writing data. This page outlines how to configure Hana sources and targets using the appropriate connections, locations, and properties.
+## Overview
+
+The SAP HANA Source and Target gems let you connect Prophecy pipelines to SAP HANA tables for reading and writing data. This page outlines how to configure SAP HANA sources and targets using the appropriate connections, locations, and properties.
 
 ## Configuration tabs
 
 When you create a new external Source or Target gem, the gem dialog contains the following tabs.
 
-- **Type**: Select the Hana table option.
-- **Source/Target location**: Choose the [connection](/administration/fabrics/prophecy-fabrics/connections/) and define the location where you will read/write tables in Hana.
+- **Type**: Select the SAP HANA table option.
+- **Source/Target location**: Choose the [connection](/data-analytics/environment/connections/hana) and define the location where you will read/write tables in SAP HANA.
 - **Properties**: Infer or manually specify the schema, and optionally add properties that influence table behavior.
 - **Preview**: Load a preview of the dataset reflecting your configurations.
 
 ## Source configuration
 
-Use these settings to configure a Hana Source gem for reading data.
+Use these settings to configure a SAP HANA Source gem for reading data.
 
 ### Source location
 
 | Parameter                   | Description                                                                                                                                             |
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Format type                 | Table format for the source. For Hana tables, set to `hana`.                                                                                            |
-| Select or create connection | Select or create a new [Hana connection](/administration/fabrics/prophecy-fabrics/connections/hana) in the Prophecy fabric you will use.                |
+| Format type                 | Table format for the source. For SAP HANA tables, set to `hana`.                                                                                        |
+| Select or create connection | Select or create a new [SAP HANA connection](/data-analytics/environment/connections/hana) in the Prophecy fabric you will use.                         |
 | Read Using                  | How to define the table location.<ul><li>**Table**: Provide the schema and table name.</li><li>**Query**: Select the table using a SQL query.</li></ul> |
-| Schema (Table only)         | Schema in Hana where the table is located.                                                                                                              |
-| Name (Table only)           | Name of the Hana table to read data from.                                                                                                               |
+| Schema (Table only)         | Schema in SAP HANA where the table is located.                                                                                                          |
+| Name (Table only)           | Name of the SAP HANA table to read data from.                                                                                                           |
 | Query (Query only)          | SQL query used to retrieve a table.                                                                                                                     |
 
 ### Source properties
@@ -39,16 +41,16 @@ Infer or manually configure the schema of your Source gem. Optionally, add a des
 
 ## Target configuration
 
-Use these settings to configure a Hana Target gem for writing data.
+Use these settings to configure a SAP HANA Target gem for writing data.
 
 ### Target location
 
-| Parameter                   | Description                                                                                                                                                                                                   |
-| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Format type                 | Table format for the source. For Hana tables, set to `Hana`.                                                                                                                                                  |
-| Select or create connection | Select or create a new [Hana connection](/administration/fabrics/prophecy-fabrics/connections/hana) in the Prophecy fabric you will use.                                                                      |
-| Schema                      | Schema in Hana where the target table resides or will be created. Select the **+** sign on the field to use a configuration variable or secret in your schema definition.                                     |
-| Name                        | Name of the Hana table to write data to. Select the **+** sign on the field to use a configuration variable or secret in your table definition. If the table doesn't exist, it will be created automatically. |
+| Parameter                   | Description                                                                                                                                                                                                       |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Format type                 | Table format for the source. For SAP HANA tables, set to `Hana`.                                                                                                                                                  |
+| Select or create connection | Select or create a new [SAP HANA connection](/data-analytics/environment/connections/hana) in the Prophecy fabric you will use.                                                                                   |
+| Schema                      | Schema in SAP HANA where the target table resides or will be created. Select the **+** sign on the field to use a configuration variable or secret in your schema definition.                                     |
+| Name                        | Name of the SAP HANA table to write data to. Select the **+** sign on the field to use a configuration variable or secret in your table definition. If the table doesn't exist, it will be created automatically. |
 
 ### Target properties
 
@@ -65,12 +67,12 @@ Control how data is written into the target table during each run of the pipelin
 | Mode                                           | Description                                                                      |
 | ---------------------------------------------- | -------------------------------------------------------------------------------- |
 | Wipe & Replace Table                           | Deletes the existing table and creates a new one with the incoming data.         |
-| Write Fresh Table; Error if exists             | Creates a new table, and fails if a table with the same name already exists.     |
+| Write Fresh Table; Error if Exists             | Creates a new table, and fails if a table with the same name already exists.     |
 | Append Row                                     | Inserts all incoming rows to the existing table without modifying existing data. |
 | Merge - Upsert Row                             | Update if keys match, insert if not.                                             |
 | Merge - Update Row                             | Only update columns where key matches.                                           |
 | Merge - Delete Row                             | Delete rows where key matches.                                                   |
-| Merge - Delete row if exists; otherwise insert | Delete rows where key matches, otherwise insert a new row.                       |
+| Merge - Delete Row if Exists; Otherwise Insert | Delete rows where key matches, otherwise insert a new row.                       |
 
 #### Advanced options
 
