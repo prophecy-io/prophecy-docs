@@ -9,18 +9,24 @@ This gem runs in SQL Warehouse.
 
 ## Prerequisites
 
-- Add the ProphecyDatabricksSqlSpatial 0.0.4+ package to your project.
+- Add the `ProphecyDatabricksSqlSpatial` package version 0.0.4 or higher to your project.
 
 The Simplify gem reduces the number of vertices in polygons and polylines while preserving their overall shape. This is useful for reducing file sizes, improving rendering performance, and simplifying complex geometries for analysis or visualization.
 
 <MySnippet gemName="Simplify" />
 
 <Tip>
-Input geometries must be in [WKT](https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry) format. Use the [PolyBuild](/analysts/polybuild) gem to convert longitude and latitude coordinates into polygons or polylines in WKT format.
+  Input geometries must be in
+  [WKT](https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry) format. Use the
+  [PolyBuild](/analysts/polybuild) gem to convert longitude and latitude coordinates into polygons
+  or polylines in WKT format.
 </Tip>
 
 <Info>
-The gem uses the [Ramer–Douglas–Peucker algorithm](https://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm), which removes vertices based on their perpendicular distance from line segments. You can control the level of simplification by adjusting the distance threshold.
+  The gem uses the [Ramer–Douglas–Peucker
+  algorithm](https://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm), which
+  removes vertices based on their perpendicular distance from line segments. You can control the
+  level of simplification by adjusting the distance threshold.
 </Info>
 
 ## Input and Output

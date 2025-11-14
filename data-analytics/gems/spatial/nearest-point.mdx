@@ -9,14 +9,17 @@ This gem runs in SQL Warehouse.
 
 ## Prerequisites
 
-- Add the ProphecyDatabricksSqlSpatial 0.0.3+ package to your project.
+- Add the `ProphecyDatabricksSqlSpatial` package version 0.0.3 or higher to your project.
 
 Find the closest spatial point(s) between two datasets based on geographic distance. This gem compares each point in the first dataset to all points in the second dataset and returns the nearest matches.
 
 <MySnippet gemName="FindNearest" />
 
 <Tip>
-Geographic points must be in Well-known Text ([WKT](https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry)) format. Use the [CreatePoint](/analysts/create-point) gem to convert longitude and latitude coordinates to WKT format.
+  Geographic points must be in Well-known Text
+  ([WKT](https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry)) format. Use the
+  [CreatePoint](/analysts/create-point) gem to convert longitude and latitude coordinates to WKT
+  format.
 </Tip>
 
 ## Input and Output

@@ -9,7 +9,7 @@ This gem runs in SQL Warehouse.
 
 ## Prerequisites
 
-- Add the ProphecyDatabricksSqlSpatial 0.0.1+ package to your project.
+- Add the `ProphecyDatabricksSqlSpatial` package version 0.0.1 or higher to your project.
 
 Use the CreatePoint gem to convert longitude and latitude coordinates into geographic points.
 
@@ -55,7 +55,6 @@ Assume you have the following airline route table.
 To convert the start and destination coordinates into geographic points:
 
 1. Create the first column pairing:
-
    1. Click **Add a Point**.
 
    1. For **Longitude Column Name**, select the `start_long` column.
@@ -65,7 +64,6 @@ To convert the start and destination coordinates into geographic points:
    1. For the **Target Column Name**, type `source_point`.
 
 1. Create another column pairing:
-
    1. Click **Add a Point**.
 
    1. For **Longitude Column Name**, select the `destination_long` column.

@@ -9,14 +9,17 @@ This gem runs in SQL Warehouse.
 
 ## Prerequisites
 
-- Add the ProphecyDatabricksSqlSpatial 0.0.1+ package to your project.
+- Add the `ProphecyDatabricksSqlSpatial` package version 0.0.1 or higher to your project.
 
 Use the Distance gem to calculate the distance between two geographic points.
 
 <MySnippet gemName="Distance" />
 
 <Tip>
-Geographic points must be in Well-known Text ([WKT](https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry)) format. Use the [CreatePoint](/analysts/create-point) gem to convert longitude and latitude coordinates to WKT format.
+  Geographic points must be in Well-known Text
+  ([WKT](https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry)) format. Use the
+  [CreatePoint](/analysts/create-point) gem to convert longitude and latitude coordinates to WKT
+  format.
 </Tip>
 
 ## Parameters
@@ -45,7 +48,7 @@ Use the checkboxes defined below to choose which output columns the Distance gem
 | Output Direction in Degrees | Return a column that includes the direction in degrees from the source point to the destination point |
 
 <Note>
-You can select zero, one, or multiple checkboxes. All checkboxes are disabled by default.
+  You can select zero, one, or multiple checkboxes. All checkboxes are disabled by default.
 </Note>
 
 ## Example
@@ -67,7 +70,6 @@ Assume you have the following airline route table, and you would like to calcula
 To find the distance and direction between cities, set the following gem configurations.
 
 1. Set source and destination:
-
    1. Set **Source Type** to **Point**.
 
    1. Set **Source Column** to `start_city`.
@@ -77,7 +79,6 @@ To find the distance and direction between cities, set the following gem configu
    1. Set **Destination Column** to `destination_city`.
 
 1. Set output options:
-
    1. Select the **Output Distance** checkbox.
 
    1. From the **Units** dropdown, select **Kilometers**.
