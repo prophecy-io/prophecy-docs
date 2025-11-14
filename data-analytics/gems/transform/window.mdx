@@ -3,11 +3,12 @@ title: WindowFunction
 description: Create moving aggregations and transformation
 ---
 
-import MySnippet from '/snippets/interactive-gem.mdx';
-
 import Execution from '/snippets/gem-execution-engine.mdx';
+import GemExample from '/snippets/interactive-gem.mdx';
 
 <Execution execution_engine="the SQL warehouse" />
+
+## Overview
 
 The **WindowFunction** gem lets you perform calculations for individual records across a defined window of rows. This enables transformations such as moving averages, rankings, lead/lag comparisons, and cumulative metrics.
 
@@ -15,7 +16,7 @@ Unlike regular aggregations, window functions retain the original row structure 
 
 This page explains how to configure partitions, sort data, and choose frames to achieve the intended behavior.
 
-<MySnippet gemName="WindowFunction" />
+<GemExample gemName="WindowFunction" />
 
 ## Use cases
 

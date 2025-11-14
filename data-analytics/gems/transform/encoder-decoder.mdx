@@ -3,19 +3,20 @@ title: DataEncoderDecoder
 description: Encode and decode data using different techniques
 ---
 
-import MySnippet from '/snippets/interactive-gem.mdx';
-
 import Execution from '/snippets/gem-execution-engine.mdx';
+import GemExample from '/snippets/interactive-gem.mdx';
 
 <Execution execution_engine="the SQL warehouse" />
+
+## Overview
+
+The DataEncoderDecoder gem allows you to encode or decode data in selected columns using a variety of standard techniques, including Base64, Hex, and AES encryption. You can transform values in-place or create new output columns with a prefix or suffix.
+
+<GemExample gemName="DataEncoderDecoder" />
 
 ## Prerequisites
 
 - Add `prophecy_basics` package version 1.0.0 or higher to your project.
-
-The DataEncoderDecoder gem allows you to encode or decode data in selected columns using a variety of standard techniques, including Base64, Hex, and AES encryption. You can transform values in-place or create new output columns with a prefix or suffix.
-
-<MySnippet gemName="DataEncoderDecoder" />
 
 ## Input and Output
 

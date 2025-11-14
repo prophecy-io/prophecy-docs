@@ -3,26 +3,27 @@ title: FuzzyMatch
 description: Match records that are not exactly identical
 ---
 
-import MySnippet from '/snippets/interactive-gem.mdx';
-
 import Execution from '/snippets/gem-execution-engine.mdx';
+import GemExample from '/snippets/interactive-gem.mdx';
 
 <Execution execution_engine="the SQL warehouse" />
+
+## Overview
+
+Use the FuzzyMatch gem to identify non-identical duplicates in your data.
+
+<GemExample gemName="FuzzyMatch" />
 
 ## Prerequisites
 
 - Add `prophecy_basics` package version 1.0.0 or higher to your project.
 
-Use the FuzzyMatch gem to identify non-identical duplicates in your data.
-
-<MySnippet gemName="FuzzyMatch" />
-
 ## Input and Output
 
-| Table   | Description                                                                                              |
-| ------- | -------------------------------------------------------------------------------------------------------- |
-| **in0** | Includes the table on which duplicates will be checked. <br/>**Note: FuzzyMatch only allows one input.** |
-| **out** | Generates one record per fuzzy match.                                                                    |
+| Table   | Description                                                                                          |
+| ------- | ---------------------------------------------------------------------------------------------------- |
+| **in0** | Includes the table on which duplicates will be checked. <br/>Note: FuzzyMatch only allows one input. |
+| **out** | Generates one record per fuzzy match.                                                                |
 
 ## Parameters
 

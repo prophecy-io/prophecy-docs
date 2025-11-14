@@ -263,13 +263,11 @@
                   {
                     "group": "Transform",
                     "pages": [
-                      "data-analytics/gems/transform/transform",
                       "data-analytics/gems/transform/aggregate",
                       "data-analytics/gems/transform/count-records",
                       "data-analytics/gems/transform/window",
                       "data-analytics/gems/transform/pivot",
                       "data-analytics/gems/transform/unpivot",
-                      "data-analytics/gems/transform/transpose",
                       "data-analytics/gems/transform/dynamic-select",
                       "data-analytics/gems/transform/encoder-decoder",
                       "data-analytics/gems/transform/fuzzy-match"
