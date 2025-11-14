@@ -5,7 +5,9 @@ description: Join two or more datasets
 
 import MySnippet from '/snippets/interactive-gem.mdx';
 
-This gem runs in SQL Warehouse.
+import Execution from '/snippets/gem-execution-engine.mdx';
+
+<Execution execution_engine="SQL warehouse" />
 
 Use the Join gem to combine data from two or more tables based on a shared column value. This helps you link related information, such as customer details and purchase history, or user activity logs and account records.
 
@@ -36,7 +38,8 @@ You can add one or more join conditions to the gem depending on the number of in
 | Join condition | The condition that matches rows between tables.                                                                       |
 
 <Info>
-If you want to use a type of join that is available in your SQL warehouse, you can type the name of that join directly in Prophecy.
+  If you want to use a type of join that is available in your SQL warehouse, you can type the name
+  of that join directly in Prophecy.
 </Info>
 
 ### Expressions

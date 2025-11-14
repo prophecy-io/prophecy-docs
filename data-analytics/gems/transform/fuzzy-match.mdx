@@ -5,7 +5,9 @@ description: Match records that are not exactly identical
 
 import MySnippet from '/snippets/interactive-gem.mdx';
 
-This gem runs in SQL Warehouse.
+import Execution from '/snippets/gem-execution-engine.mdx';
+
+<Execution execution_engine="SQL warehouse" />
 
 ## Prerequisites
 
@@ -79,9 +81,11 @@ The output includes the Record IDs of the records with fuzzy matches above the d
 </div>
 
 <Info>
-Depending on your SQL provider, you might see different similarity scores based on the algorithm that runs under the hood.
+  Depending on your SQL provider, you might see different similarity scores based on the algorithm
+  that runs under the hood.
 </Info>
 
 <Tip>
-To view the names per record, [join](/analysts/join) the FuzzyMatch output with the original dataset.
+  To view the names per record, [join](/analysts/join) the FuzzyMatch output with the original
+  dataset.
 </Tip>

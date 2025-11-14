@@ -3,7 +3,9 @@ title: Databricks
 description: Process Databricks tables in the SQL warehouse
 ---
 
-This gem runs in SQL Warehouse.
+import Execution from '/snippets/gem-execution-engine.mdx';
+
+<Execution execution_engine="SQL warehouse" />
 
 In Prophecy, datasets stored in the [SQL Warehouse Connection](docs/administration/fabrics/prophecy-fabrics/create-fabric.md#connections) defined in your fabric are accessed using Table gems. Unlike Source and Target gems, Table gems run directly within the data warehouse, eliminating extra orchestration steps and improving performance.
 
@@ -20,7 +22,9 @@ The following table types are supported for Databricks connections.
 | Seed  | Small CSV-format files that you can write directly in Prophecy.                                               | **Source only**  |
 
 <Info>
-For more information, visit the Databricks documentation on [Tables](https://docs.databricks.com/aws/en/tables/table-overview) and [Views](https://docs.databricks.com/aws/en/views/).
+  For more information, visit the Databricks documentation on
+  [Tables](https://docs.databricks.com/aws/en/tables/table-overview) and
+  [Views](https://docs.databricks.com/aws/en/views/).
 </Info>
 
 ## Gem configuration
@@ -66,7 +70,9 @@ Views are virtual tables recomputed at runtime from a query.
 | Preview    | Load a preview of the resulting view.                                             |
 
 <Note>
-Every time the pipeline runs, the target is overwritten. This is because the view is recomputed from scratch based on the underlying logic, and any previously materialized results are discarded. No additional write modes are supported.
+  Every time the pipeline runs, the target is overwritten. This is because the view is recomputed
+  from scratch based on the underlying logic, and any previously materialized results are discarded.
+  No additional write modes are supported.
 </Note>
 
 ### Seeds
@@ -79,7 +85,11 @@ Seeds are lightweight CSV datasets defined in your project. Seeds are source-onl
 | Preview    | Load a preview of your seed in table format.                                                                           |
 
 <Note>
-Seeds are implemented as [dbt seeds](https://docs.getdbt.com/docs/build/seeds) under the hood. The CSV data you define is stored in your Prophecy project files and materialized as a table in your data warehouse. This table is created in the [default target schema](/administration/fabrics/prophecy-fabrics/connections/databricks#connection-parameters) specified in your Databricks connection.
+  Seeds are implemented as [dbt seeds](https://docs.getdbt.com/docs/build/seeds) under the hood. The
+  CSV data you define is stored in your Prophecy project files and materialized as a table in your
+  data warehouse. This table is created in the [default target
+  schema](/administration/fabrics/prophecy-fabrics/connections/databricks#connection-parameters)
+  specified in your Databricks connection.
 </Note>
 
 ### Properties
@@ -93,7 +103,10 @@ If your fabric uses Databricks as the SQL warehouse, you can't select Databricks
 To work with tables from a different Databricks workspace, use [Delta Sharing](https://docs.databricks.com/aws/en/delta-sharing/). Delta Sharing lets you access data across workspaces without creating additional Databricks connections.
 
 <Info>
-Prophecy implements this guardrail to avoid using external connections when the data can be made available in your warehouse. External connections introduce an extra data transfer step, which slows down pipeline execution and adds unnecessary complexity. For best performance, Prophecy always prefers reading and writing directly within the warehouse.
+  Prophecy implements this guardrail to avoid using external connections when the data can be made
+  available in your warehouse. External connections introduce an extra data transfer step, which
+  slows down pipeline execution and adds unnecessary complexity. For best performance, Prophecy
+  always prefers reading and writing directly within the warehouse.
 </Info>
 
 ## Reusing and sharing tables

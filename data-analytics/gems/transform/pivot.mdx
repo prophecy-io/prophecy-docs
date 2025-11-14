@@ -5,7 +5,9 @@ description: Convert your table from long to wide format
 
 import MySnippet from '/snippets/interactive-gem.mdx';
 
-This gem runs in SQL Warehouse.
+import Execution from '/snippets/gem-execution-engine.mdx';
+
+<Execution execution_engine="SQL warehouse" />
 
 The Pivot gem reshapes your data by transforming unique row values from a selected column into new columns, allowing you to summarize and analyze your data from a different perspective. The pivot operation transforms data from long to wide format.
 
@@ -49,7 +51,9 @@ For each aggregation, you can define an optional **Column Alias** that gets appe
 > Example: If your pivot column values are dates and you're calculating averages, you might use `AVG_Sales` as the alias, resulting in column names like `2025-01-01_AVG_Sales` and `2025-02-01_AVG_Sales`.
 
 <Info>
-When using the `CONCAT` aggregation method, the **Separator** parameter specifies the character or string used to separate the values that are being concatenated together. Common separators include commas, semicolons, and pipes.
+  When using the `CONCAT` aggregation method, the **Separator** parameter specifies the character or
+  string used to separate the values that are being concatenated together. Common separators include
+  commas, semicolons, and pipes.
 </Info>
 
 ## Example: Energy consumption

@@ -5,7 +5,9 @@ description: Create a placeholder gem in your pipeline
 
 import MySnippet from '/snippets/interactive-gem.mdx';
 
-This gem runs in SQL Warehouse.
+import Execution from '/snippets/gem-execution-engine.mdx';
+
+<Execution execution_engine="SQL warehouse" />
 
 ## Prerequisites
 
@@ -14,7 +16,8 @@ This gem runs in SQL Warehouse.
 The ToDo gem lets you create a placeholder in your pipeline for a future gem.
 
 <Info>
-Prophecy may insert ToDo gems automatically during migration from another tool when certain logic can't be translated. [Reach out](mailto:support@prophecy.io) to learn more about migration.
+  Prophecy may insert ToDo gems automatically during migration from another tool when certain logic
+  can't be translated. [Reach out](mailto:support@prophecy.io) to learn more about migration.
 </Info>
 
 <MySnippet gemName="ToDo" />

@@ -3,7 +3,9 @@ title: Google BigQuery
 description: Process BigQuery tables in the SQL warehouse
 ---
 
-This gem runs in SQL Warehouse.
+import Execution from '/snippets/gem-execution-engine.mdx';
+
+<Execution execution_engine="SQL warehouse" />
 
 In Prophecy, datasets stored in the [SQL Warehouse Connection](docs/administration/fabrics/prophecy-fabrics/create-fabric.md#connections) defined in your fabric are accessed using Table gems. Unlike Source and Target gems, Table gems run directly within the data warehouse, eliminating extra orchestration steps and improving performance.
 
@@ -62,7 +64,9 @@ Views are virtual tables recomputed at runtime from a query.
 | Preview    | Load a preview of the resulting view.                                             |
 
 <Note>
-Every time the pipeline runs, the target is overwritten. This is because the view is recomputed from scratch based on the underlying logic, and any previously materialized results are discarded. No additional write modes are supported.
+  Every time the pipeline runs, the target is overwritten. This is because the view is recomputed
+  from scratch based on the underlying logic, and any previously materialized results are discarded.
+  No additional write modes are supported.
 </Note>
 
 ### Seeds
@@ -75,7 +79,11 @@ Seeds are lightweight CSV datasets defined in your project. Seeds are source-onl
 | Preview    | Load a preview of your seed in table format.                                                                           |
 
 <Note>
-Seeds are implemented as [dbt seeds](https://docs.getdbt.com/docs/build/seeds) under the hood. The CSV data you define is stored in your Prophecy project files and materialized as a table in your data warehouse. This table is created in the [default target dataset](/administration/fabrics/prophecy-fabrics/connections/bigquery#connection-parameters) specified in your BigQuery connection.
+  Seeds are implemented as [dbt seeds](https://docs.getdbt.com/docs/build/seeds) under the hood. The
+  CSV data you define is stored in your Prophecy project files and materialized as a table in your
+  data warehouse. This table is created in the [default target
+  dataset](/administration/fabrics/prophecy-fabrics/connections/bigquery#connection-parameters)
+  specified in your BigQuery connection.
 </Note>
 
 ## Reusing and sharing tables

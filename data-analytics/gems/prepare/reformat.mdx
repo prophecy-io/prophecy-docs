@@ -5,7 +5,9 @@ description: Use expressions to reformat column names and values
 
 import MySnippet from '/snippets/interactive-gem.mdx';
 
-This gem runs in SQL Warehouse.
+import Execution from '/snippets/gem-execution-engine.mdx';
+
+<Execution execution_engine="SQL warehouse" />
 
 Transforms one or more column names or values by using expressions and/or functions. It's useful when we need to extract only the required columns or make changes column-wise.
 
@@ -19,6 +21,4 @@ Transforms one or more column names or values by using expressions and/or functi
 | Target column | Output column name                         | False                                    |
 | Expression    | Expression to compute target column        | Required if a `Target column` is present |
 
-<Info>
-If no columns are selected, then all columns are passed through to the output.
-</Info>
+<Info>If no columns are selected, then all columns are passed through to the output.</Info>

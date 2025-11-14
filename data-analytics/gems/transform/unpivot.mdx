@@ -3,14 +3,18 @@ title: Unpivot
 description: Convert your table from wide to long format
 ---
 
-This gem runs in SQL Warehouse.
+import Execution from '/snippets/gem-execution-engine.mdx';
+
+<Execution execution_engine="SQL warehouse" />
 
 The Unpivot gem is a data transformation tool designed to reshape datasets from a wide to a long format. This operation consolidates multiple columns containing similar data into two new columns: one representing the original column names, and another holding their corresponding values.
 
 This transformation is fundamental for various use cases, particularly for machine learning data preparation.
 
 <Info>
-This functionality was previously available through the Transpose gem. While existing pipelines utilizing the Transpose gem will continue to operate, we recommend migrating to the Unpivot gem for new implementations.
+  This functionality was previously available through the Transpose gem. While existing pipelines
+  utilizing the Transpose gem will continue to operate, we recommend migrating to the Unpivot gem
+  for new implementations.
 </Info>
 
 ## Input and Output

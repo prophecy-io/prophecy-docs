@@ -5,7 +5,9 @@ description: Dynamically filter columns of your dataset based on a set of condit
 
 import MySnippet from '/snippets/interactive-gem.mdx';
 
-This gem runs in SQL Warehouse.
+import Execution from '/snippets/gem-execution-engine.mdx';
+
+<Execution execution_engine="SQL warehouse" />
 
 ## Prerequisites
 
@@ -45,7 +47,8 @@ Assume you would like to remove irrelevant float and string columns from your da
 Using the same example, you can accomplish the same task with the **Select via expression** method by inputting the the expression `column_type NOT IN ('Float', 'String')`.
 
 <Note>
-Be aware that column types are case sensitive. Use the same format shown in the input table schemas in the gem configuration.
+  Be aware that column types are case sensitive. Use the same format shown in the input table
+  schemas in the gem configuration.
 </Note>
 
 ### Result

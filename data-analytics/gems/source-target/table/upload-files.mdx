@@ -3,7 +3,9 @@ title: Upload files
 description: Upload files to your data warehouse from the visual canvas
 ---
 
-This gem runs in SQL Warehouse.
+import Execution from '/snippets/gem-execution-engine.mdx';
+
+<Execution execution_engine="SQL warehouse" />
 
 You can add a source table to your primary SQL warehouse by uploading a file directly onto the visual canvas. This gives you greater control over your data and how you incorporate it into your model transformation.
 
@@ -17,9 +19,7 @@ Supported file types:
 
 When you upload your file through Prophecy, it's added directly to your SQL warehouse as a [table](/analysts/source-target).
 
-<Note>
-The recommended maximum file size is 100&nbsp;MB.
-</Note>
+<Note>The recommended maximum file size is 100&nbsp;MB.</Note>
 
 ## File upload
 
@@ -51,7 +51,7 @@ Now, set the location where the table will be stored in the primary SQL warehous
 ![Select the table location](img/upload-file-location.png)
 
 <Warning>
-If you select an existing table, Prophecy deletes and recreates the table with your uploaded file.
+  If you select an existing table, Prophecy deletes and recreates the table with your uploaded file.
 </Warning>
 
 ## Properties

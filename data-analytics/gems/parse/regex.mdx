@@ -3,7 +3,9 @@ title: Regex
 description: Pattern matching and text extraction using regular expressions
 ---
 
-This gem runs in SQL Warehouse.
+import Execution from '/snippets/gem-execution-engine.mdx';
+
+<Execution execution_engine="SQL warehouse" />
 
 ## Prerequisites
 
@@ -131,7 +133,8 @@ The **Parse** method extracts capture groups from regex matches and outputs each
 | Regex Expression | View the capture group that will populate the column.<br/>If you edit this value, Prophecy will automatically revert it to the original value. |
 
 <Info>
-Rows in the **Parse Configuration** table are determined by the number of capture groups in the **Regex** field. You cannot add additional rows to or remove rows from this table.
+  Rows in the **Parse Configuration** table are determined by the number of capture groups in the
+  **Regex** field. You cannot add additional rows to or remove rows from this table.
 </Info>
 
 #### Example

@@ -5,7 +5,9 @@ description: Combine datasets by aligning columns with the same name
 
 import MySnippet from '/snippets/interactive-gem.mdx';
 
-This gem runs in SQL Warehouse.
+import Execution from '/snippets/gem-execution-engine.mdx';
+
+<Execution execution_engine="SQL warehouse" />
 
 ## Prerequisites
 
@@ -88,5 +90,6 @@ Since **Table B** doesn't have the `amount` column, Prophecy fills in null value
 </div>
 
 <Warning>
-This example will fail if you select **No Missing Columns** in the gem settings, since **Table B** is missing a column in **Table A**.
+  This example will fail if you select **No Missing Columns** in the gem settings, since **Table B**
+  is missing a column in **Table A**.
 </Warning>

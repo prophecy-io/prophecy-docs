@@ -5,7 +5,9 @@ description: Create moving aggregations and transformation
 
 import MySnippet from '/snippets/interactive-gem.mdx';
 
-This gem runs in SQL Warehouse.
+import Execution from '/snippets/gem-execution-engine.mdx';
+
+<Execution execution_engine="SQL warehouse" />
 
 The **WindowFunction** gem lets you perform calculations for individual records across a defined window of rows. This enables transformations such as moving averages, rankings, lead/lag comparisons, and cumulative metrics.
 
@@ -35,9 +37,7 @@ The WindowFunction gem uses the following input and output ports.
 | **in0** | The input dataset containing the columns you want to analyze using window functions.                            |
 | **out** | The output dataset, which includes all columns from `in0` and new columns from [window functions](#window-use). |
 
-<Note>
-This gem only supports a single input and output port.
-</Note>
+<Note>This gem only supports a single input and output port.</Note>
 
 ## Parameters
 
@@ -59,9 +59,7 @@ You can sort by column types including numeric, string, date, or timestamp. You 
 
 > Example: To calculate a rolling average by date, order by a date column in ascending order.
 
-<Note>
-You must define an Order By column to use a [range frame](#range-frame) window frame.
-</Note>
+<Note>You must define an Order By column to use a [range frame](#range-frame) window frame.</Note>
 
 ### Window Frame
 
@@ -121,5 +119,7 @@ You can apply functions such as:
 You can add multiple window functions within a single WindowFunction gem. However, all these functions will share the same partitioning and ordering configuration. If you need different partition or order columns for different window calculations, use multiple WindowFunction gems sequentially.
 
 <Info>
-For a full list of available functions, visit the [Window functions](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-window-functions#parameters) page of the Databricks documentation.
+  For a full list of available functions, visit the [Window
+  functions](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-window-functions#parameters)
+  page of the Databricks documentation.
 </Info>
