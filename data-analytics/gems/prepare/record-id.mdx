@@ -1,21 +1,25 @@
 ---
 title: RecordID
-description: Assign each row a unique ID
+description: Assign each row of a table a unique ID
 ---
 
-import MySnippet from '/snippets/interactive-gem.mdx';
-
 import Execution from '/snippets/gem-execution-engine.mdx';
+import GemExample from '/snippets/interactive-gem.mdx';
 
 <Execution execution_engine="the SQL warehouse" />
+
+Assigning unique identifiers to each row in a dataset is a common requirement for data preparation. The RecordID gem allows you to easily generate row-level IDs using two methods:
+
+- UUID for randomly generated values
+- Incremental ID for ordered, sequential values
+
+You can customize how IDs are added, including naming the column, setting the data type and format, and specifying where the column appears in the output schema.
+
+<GemExample gemName="RecordID" />
 
 ## Prerequisites
 
 - Add `prophecy_basics` package version 1.0.0 or higher to your project.
-
-Assigning unique identifiers to each row in a dataset is a common requirement for data preparation. The RecordID gem allows you to easily generate row-level IDs using two methods: UUID for randomly generated values, and Incremental ID for ordered, sequential values. You can customize how IDs are added, including naming the column, setting the data type and format, and specifying where the column appears in the output schema.
-
-<MySnippet gemName="RecordID" />
 
 ## Input and Output
 

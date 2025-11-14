@@ -4,17 +4,19 @@ description: Return rows that match a certain count
 ---
 
 import Execution from '/snippets/gem-execution-engine.mdx';
-import MySnippet from '/snippets/interactive-gem.mdx';
+import GemExample from '/snippets/interactive-gem.mdx';
 
 <Execution execution_engine="the SQL warehouse" />
+
+## Overview
+
+The FindDuplicates gem filters rows in a dataset based on how frequently they appear. You can configure the gem to return the first occurrence of each unique group, identify groups that have duplicates, or apply custom filters based on group frequency or row position within groups.
+
+<GemExample gemName="FindDuplicates" />
 
 ## Prerequisites
 
 - Add `prophecy_basics` package version 1.0.0 or higher to your project.
-
-The FindDuplicates gem filters rows in a dataset based on how frequently they appear. You can configure the gem to return the first occurrence of each unique group, identify groups that have duplicates, or apply custom filters based on group frequency or row position within groups.
-
-<MySnippet gemName="FindDuplicates" />
 
 ## Input and Output
 

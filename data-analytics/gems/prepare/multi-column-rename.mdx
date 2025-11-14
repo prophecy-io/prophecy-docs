@@ -1,21 +1,22 @@
 ---
 title: MultiColumnRename
-description: Rename multiple columns in your dataset in a systematic way
+description: Quickly standardize column names using a consistent naming pattern
 ---
 
-import MySnippet from '/snippets/interactive-gem.mdx';
-
 import Execution from '/snippets/gem-execution-engine.mdx';
+import GemExample from '/snippets/interactive-gem.mdx';
 
 <Execution execution_engine="the SQL warehouse" />
+
+## Overview
+
+Use the MultiColumnRename gem to efficiently rename several columns in your dataset at the same time. This gem allows you to apply a consistent naming pattern by adding a prefix or suffix to selected columns, or perform advanced renaming using custom SQL expressions.
+
+<GemExample gemName="MultiColumnRename" />
 
 ## Prerequisites
 
 - Add `prophecy_basics` package version 1.0.0 or higher to your project.
-
-The MultiColumnRename gem can be used to systematically rename multiple columns at once.
-
-<MySnippet gemName="MultiColumnRename" />
 
 ## Parameters
 

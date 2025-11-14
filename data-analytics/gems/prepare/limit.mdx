@@ -3,19 +3,20 @@ title: Limit
 description: Limit the number of columns processed
 ---
 
-import MySnippet from '/snippets/interactive-gem.mdx';
-
 import Execution from '/snippets/gem-execution-engine.mdx';
+import GemExample from '/snippets/interactive-gem.mdx';
 
 <Execution execution_engine="the SQL warehouse" />
 
+## Overview
+
 Limits the number of rows in the output.
 
-<MySnippet gemName="Limit" />
+<GemExample gemName="Limit" />
 
 ### Parameters
 
-| Parameter | Description                                                               | Required |
-| :-------- | :------------------------------------------------------------------------ | :------- |
-| Model     | Input Source                                                              | True     |
-| Limit     | Number of rows required in output (Allowed range: [0, 2<sup>31</sup> -1]) | True     |
+| Parameter | Description                                                                        | Required |
+| :-------- | :--------------------------------------------------------------------------------- | :------- |
+| Input     | The dataset to limit.                                                              | True     |
+| Limit     | Number of rows required in output. <br />**Allowed range**: [0, 2<sup>31</sup> -1] | True     |
