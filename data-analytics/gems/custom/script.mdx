@@ -1,21 +1,11 @@
 ---
 title: Script
-description: Leverage a Python script in your pipeline
+description: Embed a custom Python script in your pipeline
 ---
 
-Use the Script gem to embed a custom Python script in your pipeline.
+import MySnippet from '/snippets/interactive-gem.mdx';
 
 <MySnippet gemName="Script" />
-
-## Parameters
-
-| Parameter | Description                             |
-| --------- | --------------------------------------- |
-| Script    | Where you will write your Python script |
-
-<Info>
-Number of inputs and outputs can be changed as needed by clicking the `+` button on the respective tab.
-</Info>
 
 ## Where the script runs
 
@@ -28,6 +18,17 @@ The execution environment for the Script gem depends on the [SQL warehouse](/adm
 | BigQuery               | Prophecy Automate     |
 
 This ensures your Python logic runs in an environment optimized for your data platform.
+
+## Parameters
+
+| Parameter | Description                             |
+| --------- | --------------------------------------- |
+| Script    | Where you will write your Python script |
+
+<Info>
+  Number of inputs and outputs can be changed as needed by clicking the `+` button on the respective
+  tab.
+</Info>
 
 ## Troubleshooting
 
@@ -50,5 +51,6 @@ GRANT SELECT ON ANY FILE TO <your_service_principal_uuid>;
 ```
 
 <Warning>
-Granting `SELECT ON ANY FILE` provides broad read access to the file system. Consider the security implications for your environment before implementing this workaround.
+  Granting `SELECT ON ANY FILE` provides broad read access to the file system. Consider the security
+  implications for your environment before implementing this workaround.
 </Warning>
