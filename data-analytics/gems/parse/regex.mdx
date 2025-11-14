@@ -1,13 +1,6 @@
 ---
-title: Regex gem
-sidebar_label: Regex
-id: regex
-slug: /analysts/regex
+title: Regex
 description: Pattern matching and text extraction using regular expressions
-tags:
-  - gems
-  - analyst
-  - transform
 ---
 
 This gem runs in SQL Warehouse.
@@ -51,7 +44,7 @@ The **Replace** method substitutes matched portions of text with specified repla
 | Replacement Text              | Specify replacement text or use capture group references.                   |
 | Copy Unmatched Text to Output | When enabled, non-matching text is preserved in the appended output column. |
 
-#### Example {#example-replace}
+#### Example
 
 Use this method to standardize phone number formats from `555-123-4567` to `(555) 123-4567`.
 
@@ -95,7 +88,7 @@ The **Tokenize** method splits text into tokens based on regex patterns and capt
 | For Extra Columns (Split to columns only)  | Define how to handle cases where there are more tokens than columns. <ul><li>**Drop Extra with Warning**: Skip writing excess tokens and log a warning message to indicate this.</li><li>**Drop Extra without Warning**: Skip writing excess tokens silently without generating warnings.</li><li>**Error**: Stop processing and raise an error when the number of tokens exceeds the defined number of columns.</li></ul> |
 | Output Root Name                           | Base name for the new column(s) containing the tokens.                                                                                                                                                                                                                                                                                                                                                                     |
 
-#### Example {#example-tokenize}
+#### Example
 
 Use this method to parse email addresses into username and domain components.
 
@@ -141,7 +134,7 @@ The **Parse** method extracts capture groups from regex matches and outputs each
 Rows in the **Parse Configuration** table are determined by the number of capture groups in the **Regex** field. You cannot add additional rows to or remove rows from this table.
 </Info>
 
-#### Example {#example-parse}
+#### Example
 
 Use this method to parse phone numbers into `area_code`, `exchange`, and `number` columns.
 
@@ -186,7 +179,7 @@ The **Match** method determines whether text matches the specified regex pattern
 | Column name for match status | Specify the name for the new column containing match results.                                               |
 | Error if not Matched         | Enable to raise an error when no match is found. When disabled, non-matching rows will receive a `0` value. |
 
-#### Example {#example-match}
+#### Example
 
 Use this method to validate email addresses and create a binary match column.
 

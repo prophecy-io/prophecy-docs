@@ -1,13 +1,6 @@
 ---
-title: FlattenSchema gem
-sidebar_label: FlattenSchema
-id: flatten-schema
-slug: /analysts/flatten-schema
+title: FlattenSchema
 description: Flatten nested columns
-tags:
-  - gems
-  - analyst
-  - prepare
 ---
 
 import MySnippet from '/snippets/interactive-gem.mdx';
@@ -21,7 +14,10 @@ This page describes how to use this gem according to your SQL warehouse provider
 <MySnippet gemName="FlattenSchema" />
 
 <Info>
-When you import tables with variant data into Prophecy, you'll see one or more nested columns in your dataset schema. These will appear as a [variant data type](/analysts/variant-schema), which is an array of values with more than one data type. Variant types can be flattened. This data type is specific to Databricks and Snowflake.
+  When you import tables with variant data into Prophecy, you'll see one or more nested columns in
+  your dataset schema. These will appear as a [variant data type](/analysts/variant-schema), which
+  is an array of values with more than one data type. Variant types can be flattened. This data type
+  is specific to Databricks and Snowflake.
 </Info>
 
 ## Parameters
@@ -37,12 +33,8 @@ Configure the following parameters for the FlattenSchema gem.
 
 Assume you have the following JSON file that includes data you would like to flatten. The data includes information about multiple businesses with nested contact information for each business.
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 <Tabs>
-
-<TabItem value="Databricks" label="Databricks">
+<Tab title="Databricks">
 
 Databricks accepts JSON files with a top-level array of JSON objects.
 
@@ -91,9 +83,9 @@ Databricks accepts JSON files with a top-level array of JSON objects.
 ]
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="Snowflake" label="Snowflake">
+<Tab title="Snowflake">
 
 Snowflake accepts JSON files with a top-level array of JSON objects.
 
@@ -142,9 +134,9 @@ Snowflake accepts JSON files with a top-level array of JSON objects.
 ]
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="bigquery" label="BigQuery">
+<Tab title="BigQuery">
 
 BigQuery expects newline-delimited JSON format. This means it expects one JSON object per line, without a surrounding array.
 
@@ -153,8 +145,7 @@ BigQuery expects newline-delimited JSON format. This means it expects one JSON o
 {"first_name":"Penny","last_name":"John","age":"57","business":[{"address":[{"manager":"Bobby Frank","name":"PJ Enterprises","contact":[{"content":"pjohn@example.com","type":"email"},{"content":"8203-512-49","type":"phone"}],"is_still_active":true}]}]}
 ```
 
-</TabItem>
-
+</Tab>
 </Tabs>
 
 ### Expressions

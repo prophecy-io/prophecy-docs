@@ -1,13 +1,8 @@
 ---
 title: Fixed-width
-id: fixed-width
-slug: /analysts/fixed-width
 description: Read fixed-width files
-tags: []
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 This page describes the **Fixed-width-specific properties** that appear in the **Properties** tab of Source gems. These settings are the same for fixed-width files regardless of which connection type is configured in the gem (for example, S3, SFTP, or SharePoint).
 
@@ -50,7 +45,7 @@ Hover over a row in the Schema table to reveal a dropdown arrow next to the Meta
 The tables below list metadata fields specific to certain data types per SQL warehouse provider:
 
 <Tabs>
-<TabItem value="Databricks" label="Databricks">
+<Tab title="Databricks">
 
 | Data type | Specific metadata fields                                                                               | Required |
 | --------- | ------------------------------------------------------------------------------------------------------ | -------- |
@@ -60,8 +55,8 @@ The tables below list metadata fields specific to certain data types per SQL war
 | Time      | **Format**: Expected format of the time that can override the global default at the column level.      | No       |
 | Timestamp | **Format**: Expected format of the timestamp that can override the global default at the column level. | No       |
 
-  </TabItem>
-  <TabItem value="BigQuery" label="BigQuery">
+  </Tab>
+  <Tab title="BigQuery">
 
 | Data type  | Specific metadata fields                                                                               | Required |
 | ---------- | ------------------------------------------------------------------------------------------------------ | -------- |
@@ -73,7 +68,7 @@ The tables below list metadata fields specific to certain data types per SQL war
 | Date       | **Format**: Expected format of the date that can override the global default at the column level.      | No       |
 | Timestamp  | **Format**: Expected format of the timestamp that can override the global default at the column level. | No       |
 
-  </TabItem>
+  </Tab>
 </Tabs>
 
 <Note>
