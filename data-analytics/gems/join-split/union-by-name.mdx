@@ -7,14 +7,13 @@ description: Combine datasets by aligning columns with the same name
 tags: []
 ---
 
-import SQLRequirements from '@site/src/components/sql-gem-requirements';
 import MySnippet from '/snippets/interactive-gem.mdx';
 
-<SQLRequirements
-  execution_engine="SQL Warehouse"
-  sql_package_name="ProphecyDatabricksSqlBasics"
-  sql_package_version="0.0.4+"
-/>
+This gem runs in SQL Warehouse.
+
+## Prerequisites
+
+- Add the ProphecyDatabricksSqlBasics 0.0.4+ package to your project.
 
 Use the UnionByName gem to combine rows from multiple datasets by matching column names. This can help when working with data from different sources where schemas might vary slightly in order or structure, but the column names are consistent.
 

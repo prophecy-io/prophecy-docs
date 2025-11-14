@@ -6,13 +6,7 @@ description: Process BigQuery tables in the SQL warehouse
 tags: []
 ---
 
-import SQLRequirements from '@site/src/components/sql-gem-requirements';
-
-<SQLRequirements
-  execution_engine="SQL Warehouse"
-  sql_package_name=""
-  sql_package_version=""
-/>
+This gem runs in SQL Warehouse.
 
 In Prophecy, datasets stored in the [SQL Warehouse Connection](docs/administration/fabrics/prophecy-fabrics/create-fabric.md#connections) defined in your fabric are accessed using Table gems. Unlike Source and Target gems, Table gems run directly within the data warehouse, eliminating extra orchestration steps and improving performance.
 
