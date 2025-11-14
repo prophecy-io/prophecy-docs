@@ -7,13 +7,9 @@ import Execution from '/snippets/gem-execution-engine.mdx';
 
 <Execution execution_engine="Prophecy Automate" />
 
-The PowerBIWrite gem lets you publish pipeline results directly to Power BI tables. This gem supports fine-grained options like write modes and schema management to control how tables are written. You can configure the gem to either write tables to new datasets or existing ones in a specified Power BI workspace.
+## Overview
 
-<Info>
-  Datasets in the PowerBIWrite gem refer to the _semantic model_ content type in Power BI. For more
-  information, visit [New name for Power BI
-  datasets](https://learn.microsoft.com/en-us/power-bi/connect-data/service-datasets-rename).
-</Info>
+The PowerBIWrite gem lets you publish pipeline results directly to Power BI tables. This gem supports fine-grained options like write modes and schema management to control how tables are written. You can configure the gem to either write tables to new datasets or existing ones in a specified Power BI workspace.
 
 ## Inputs
 
@@ -35,6 +31,12 @@ Use the following parameters to configure the PowerBIWrite gem.
 | Select or create connection        | Power BI [connection](/administration/fabrics/prophecy-fabrics/connections/power-bi) to use for the gem.                                                                                                                     |
 | Workspace Name                     | Power BI [workspace](https://learn.microsoft.com/en-us/power-bi/collaborate-share/service-new-workspaces) that contains or will contain the dataset.                                                                         |
 | Create New or Use Existing Dataset | Choose **Dataset Name** to create a new dataset in the workspace. <br />Choose **Dataset ID** to push tables to an existing dataset in the workspace. <br />These options are described in detail in the following sections. |
+
+<Info>
+  **Datasets** in the PowerBIWrite gem refer to the _semantic model_ content type in Power BI. For
+  more information, visit [New name for Power BI
+  datasets](https://learn.microsoft.com/en-us/power-bi/connect-data/service-datasets-rename).
+</Info>
 
 ### Dataset Name
 

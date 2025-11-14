@@ -7,6 +7,8 @@ import Execution from '/snippets/gem-execution-engine.mdx';
 
 <Execution execution_engine="Prophecy Automate" />
 
+## Overview
+
 Use the Email gem to send output tables from your pipeline to others via email. You can configure static values for recipients, subject, and body, or dynamically populate these fields from columns in your input dataset using the **Use column** option.
 
 ## Input
@@ -38,7 +40,9 @@ Parameters can be set manually or configured dynamically using the **Use column*
 
 Suppose you have a dataset that you want to sent to different recipients.
 
-- **Input port 1**: Email parameters
+- **Input port 1**: Email parameters dataset
+
+  <div class="table-example">
 
   | Recipients          | Body                                          |
   | ------------------- | --------------------------------------------- |
@@ -46,7 +50,9 @@ Suppose you have a dataset that you want to sent to different recipients.
   | `team2@example.com` | Hello Team 2, please see the attached report. |
   | `team3@example.com` | Hello Team 3, please see the attached report. |
 
-- **Input port 2**: Attachment data
+  </div>
+
+- **Input port 2**: Attachment dataset
 
 To send the attachment data to the recipients in the table:
 
