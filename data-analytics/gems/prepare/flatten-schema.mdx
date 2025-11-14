@@ -3,22 +3,25 @@ title: FlattenSchema
 description: Flatten nested columns
 ---
 
-import MySnippet from '/snippets/interactive-gem.mdx';
+import Execution from '/snippets/gem-execution-engine.mdx';
+import GemExample from '/snippets/interactive-gem.mdx';
 
-This gem runs in SQL Warehouse.
+<Execution execution_engine="SQL warehouse" />
+
+## Overview
 
 Flattening a dataset schema helps you simplify complex, hierarchical data. Use the FlattenSchema gem to convert arrays or other nested data types into flat or lateral columns.
 
 This page describes how to use this gem according to your SQL warehouse provider.
 
-<MySnippet gemName="FlattenSchema" />
+<GemExample gemName="FlattenSchema" />
 
-<Info>
-  When you import tables with variant data into Prophecy, you'll see one or more nested columns in
-  your dataset schema. These will appear as a [variant data type](/analysts/variant-schema), which
-  is an array of values with more than one data type. Variant types can be flattened. This data type
-  is specific to Databricks and Snowflake.
-</Info>
+## Variant data
+
+When you import tables with variant data into Prophecy, you'll see one or more nested columns in
+your dataset schema. These will appear as a [variant data type](/analysts/variant-schema), which
+is an array of values with more than one data type. Variant types can be flattened. This data type
+is specific to Databricks and Snowflake.
 
 ## Parameters
 
