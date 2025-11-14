@@ -1,0 +1,67 @@
+/* Example data table style - distinct from reference tables */
+
+.table-example {
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.table-example [data-table-wrapper='true'] {
+  overflow: hidden !important;
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+.table-example [data-table-wrapper='true'] > div {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+.table-example table {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  table-layout: auto;
+  border: 1px solid #d1d5db;
+  border-collapse: collapse;
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.table-example table td,
+.table-example table th {
+  min-width: 0 !important;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.table-example thead {
+  background-color: #f9fafb;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.table-example thead th {
+  padding: 8px 12px;
+  font-weight: 600;
+  text-align: left;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.table-example tbody {
+  font-family: monospace;
+}
+
+.table-example tbody td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.table-example tbody tr:nth-child(even) {
+  font-family: monospace;
+  background-color: #f9fafb;
+}
+
+.table-example tbody tr:last-child td {
+  border-bottom: none;
+}
