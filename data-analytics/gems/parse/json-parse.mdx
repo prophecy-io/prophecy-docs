@@ -1,0 +1,28 @@
+---
+title: JSONParse
+description: Extract and parse JSON from a column
+---
+
+import Execution from '/snippets/gem-execution-engine.mdx';
+import MySnippet from '/snippets/interactive-gem.mdx';
+
+<Execution execution_engine="the SQL warehouse" />
+
+## Overview
+
+Use the JSONParse gem to extract and parse JSON from a column within your table using configurable schema detection methods for structured, usable output.
+
+<MySnippet gemName="JSONParse" />
+
+## Parameters
+
+| Parameter              | Description                                                                                                                                                                                                                                                                                  |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Select column to parse | Specifies the input column containing the JSON data to be parsed.                                                                                                                                                                                                                            |
+| Parsing method         | Determines how Prophecy derives the schema used to parse the JSON structure.<ul><li>**Parse from sample record**. Prophecy uses the schema from the sample record you provide.</li><li>**Parse from schema**. Prophecy uses the schema you provide in the form of a schema struct.</li></ul> |
+
+## Output
+
+The output schema of the JSONParse gem includes all of the input columns and the parsed content as a **struct** data type.
+
+![JSONParse Output](img/json-parse.png)

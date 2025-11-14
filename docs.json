@@ -161,18 +161,197 @@
                 "group": "Production",
                 "pages": [
                   {
-                  "group": "Scheduling",
-                  "pages": [
-                    "data-analytics/production/scheduling/scheduling",
-                    "data-analytics/production/scheduling/schedule-setup",
-                    "data-analytics/production/scheduling/triggers",
-                    "data-analytics/production/scheduling/alerts",
-                    "data-analytics/production/scheduling/pipeline-trigger-gem"
-                  ]
-                },
+                    "group": "Scheduling",
+                    "pages": [
+                      "data-analytics/production/scheduling/scheduling",
+                      "data-analytics/production/scheduling/schedule-setup",
+                      "data-analytics/production/scheduling/triggers",
+                      "data-analytics/production/scheduling/alerts",
+                      "data-analytics/production/scheduling/pipeline-trigger-gem"
+                    ]
+                  },
                   "data-analytics/production/publication",
                   "data-analytics/production/monitoring"
-                  
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Gem reference",
+            "groups": [
+              {
+                "group": "Overview",
+                "pages": [
+                  "data-analytics/gems/gems",
+                  "data-analytics/gems/data-types",
+                  {
+                    "group": "Visual expressions",
+                    "pages": [
+                      "data-analytics/gems/visual-expression-builder/visual-expression-builder",
+                      "data-analytics/gems/visual-expression-builder/use-the-visual-expression-builder",
+                      "data-analytics/gems/visual-expression-builder/visual-expression-builder-reference",
+                      "data-analytics/gems/visual-expression-builder/variant-schema"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Sources and targets",
+                "pages": [
+                  "data-analytics/gems/source-target/source-target",
+                  {
+                    "group": "Tables (Warehouse)",
+                    "pages": [
+                      "data-analytics/gems/source-target/table/bigquery",
+                      "data-analytics/gems/source-target/table/databricks",
+                      "data-analytics/gems/source-target/table/prophecy-warehouse",
+                      "data-analytics/gems/source-target/table/upload-files",
+                      "data-analytics/gems/source-target/table/write-options"
+                    ]
+                  },
+                  {
+                    "group": "Tables (External systems)",
+                    "pages": [
+                      "data-analytics/gems/source-target/external-table/bigquery",
+                      "data-analytics/gems/source-target/external-table/databricks",
+                      "data-analytics/gems/source-target/external-table/mssql",
+                      "data-analytics/gems/source-target/external-table/mongodb",
+                      "data-analytics/gems/source-target/external-table/oracle",
+                      "data-analytics/gems/source-target/external-table/redshift",
+                      "data-analytics/gems/source-target/external-table/salesforce",
+                      "data-analytics/gems/source-target/external-table/snowflake",
+                      "data-analytics/gems/source-target/external-table/synapse",
+                      {
+                        "group": "SAP HANA",
+                        "pages": [
+                          "data-analytics/gems/source-target/external-table/hana/hana",
+                          "data-analytics/gems/source-target/external-table/hana/identity-columns"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "File storage systems",
+                    "pages": [
+                      "data-analytics/gems/source-target/file/s3",
+                      "data-analytics/gems/source-target/file/gcs",
+                      "data-analytics/gems/source-target/file/databricks-volumes",
+                      "data-analytics/gems/source-target/file/sftp",
+                      "data-analytics/gems/source-target/file/onedrive",
+                      "data-analytics/gems/source-target/file/sharepoint",
+                      "data-analytics/gems/source-target/file/smartsheet",
+                      {
+                        "group": "File types",
+                        "pages": [
+                          "data-analytics/gems/source-target/file/file-types/csv",
+                          "data-analytics/gems/source-target/file/file-types/excel",
+                          "data-analytics/gems/source-target/file/file-types/parquet",
+                          "data-analytics/gems/source-target/file/file-types/json",
+                          "data-analytics/gems/source-target/file/file-types/xml",
+                          "data-analytics/gems/source-target/file/file-types/text",
+                          "data-analytics/gems/source-target/file/file-types/fixed-width"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Data processing",
+                "pages": [
+                  {
+                    "group": "Transform",
+                    "pages": [
+                      "data-analytics/gems/transform/aggregate",
+                      "data-analytics/gems/transform/count-records",
+                      "data-analytics/gems/transform/window",
+                      "data-analytics/gems/transform/pivot",
+                      "data-analytics/gems/transform/unpivot",
+                      "data-analytics/gems/transform/dynamic-select",
+                      "data-analytics/gems/transform/encoder-decoder",
+                      "data-analytics/gems/transform/fuzzy-match"
+                    ]
+                  },
+                  {
+                    "group": "Prepare",
+                    "pages": [
+                      "data-analytics/gems/prepare/filter",
+                      "data-analytics/gems/prepare/limit",
+                      "data-analytics/gems/prepare/order-by",
+                      "data-analytics/gems/prepare/deduplicate",
+                      "data-analytics/gems/prepare/find-duplicates",
+                      "data-analytics/gems/prepare/data-cleansing",
+                      "data-analytics/gems/prepare/masking",
+                      "data-analytics/gems/prepare/flatten-schema",
+                      "data-analytics/gems/prepare/reformat",
+                      "data-analytics/gems/prepare/multi-column-edit",
+                      "data-analytics/gems/prepare/multi-column-rename",
+                      "data-analytics/gems/prepare/record-id"
+                    ]
+                  },
+                  {
+                    "group": "Join",
+                    "pages": [
+                      "data-analytics/gems/join-split/join",
+                      "data-analytics/gems/join-split/union",
+                      "data-analytics/gems/join-split/union-by-name",
+                      "data-analytics/gems/join-split/intersect",
+                      "data-analytics/gems/join-split/except"
+                    ]
+                  },
+                  {
+                    "group": "Spatial",
+                    "pages": [
+                      "data-analytics/gems/spatial/buffer",
+                      "data-analytics/gems/spatial/create-point",
+                      "data-analytics/gems/spatial/heatmap",
+                      "data-analytics/gems/spatial/nearest-point",
+                      "data-analytics/gems/spatial/simplify",
+                      "data-analytics/gems/spatial/spatial-match",
+                      "data-analytics/gems/spatial/distance",
+                      "data-analytics/gems/spatial/polybuild"
+                    ]
+                  },
+                  {
+                    "group": "Parse",
+                    "pages": [
+                      "data-analytics/gems/parse/json-parse",
+                      "data-analytics/gems/parse/regex",
+                      "data-analytics/gems/parse/text-to-column",
+                      "data-analytics/gems/parse/xml-parse"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Reporting",
+                "pages": [
+                  {
+                    "group": "Report",
+                    "pages": [
+                      "data-analytics/gems/report/email",
+                      "data-analytics/gems/report/power-bi",
+                      "data-analytics/gems/report/tableau"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Advanced",
+                "pages": [
+                  {
+                    "group": "Custom",
+                    "pages": [
+                      "data-analytics/gems/custom/todo-gem",
+                      "data-analytics/gems/custom/directory",
+                      "data-analytics/gems/custom/dynamic-input",
+                      "data-analytics/gems/custom/macro",
+                      "data-analytics/gems/custom/rest-api",
+                      "data-analytics/gems/custom/sql-statement",
+                      "data-analytics/gems/custom/stored-procedure",
+                      "data-analytics/gems/custom/script"
+                    ]
+                  }
                 ]
               }
             ]
@@ -251,7 +430,7 @@
                       "data-analytics/administration/management/cluster-admin-settings/copilot-settings"
                     ]
                   },
-                  
+
                   {
                     "group": "Usage and billing",
                     "pages": [
@@ -285,7 +464,10 @@
               },
               {
                 "group": "Reference",
-                "pages": ["data-analytics/releases/version-chart", "data-analytics/releases/version-support"]
+                "pages": [
+                  "data-analytics/releases/version-chart",
+                  "data-analytics/releases/version-support"
+                ]
               }
             ]
           }
@@ -701,7 +883,7 @@
                       "data-engineering/administration/management/cluster-admin-settings/copilot-settings"
                     ]
                   },
-                  
+
                   {
                     "group": "Usage and billing",
                     "pages": [
@@ -735,7 +917,10 @@
               },
               {
                 "group": "Reference",
-                "pages": ["data-engineering/releases/version-chart", "data-engineering/releases/version-support"]
+                "pages": [
+                  "data-engineering/releases/version-chart",
+                  "data-engineering/releases/version-support"
+                ]
               }
             ]
           }
