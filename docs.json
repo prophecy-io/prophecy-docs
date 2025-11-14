@@ -243,7 +243,6 @@
                       {
                         "group": "File types",
                         "pages": [
-                          "data-analytics/gems/source-target/file/file-types/file-properties",
                           "data-analytics/gems/source-target/file/file-types/csv",
                           "data-analytics/gems/source-target/file/file-types/excel",
                           "data-analytics/gems/source-target/file/file-types/parquet",

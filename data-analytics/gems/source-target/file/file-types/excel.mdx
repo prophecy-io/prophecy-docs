@@ -7,15 +7,17 @@ This page describes the **Excel-specific properties** that appear in the **Prope
 
 If you need details on configuring a Source or Target gem end to end (including all tabs such as **Location**), see the documentation for the specific file storage connection:
 
-- [Amazon S3](/analysts/s3-gem)
-- [Databricks](/analysts/databricks-volumes-gem)
-- [Microsoft OneDrive](/analysts/onedrive-gem)
-- [SFTP](/analysts/sftp-gem)
-- [SharePoint](/analysts/sharepoint-gem)
-- [Smartsheet](/analysts/smartsheet-gem)
+- [Amazon S3](/data-analytics/gems/source-target/file/s3)
+- [Databricks](/data-analytics/gems/source-target/file/databricks-volumes)
+- [Microsoft OneDrive](/data-analytics/gems/source-target/file/onedrive)
+- [SFTP](/data-analytics/gems/source-target/file/sftp)
+- [SharePoint](/data-analytics/gems/source-target/file/sharepoint)
+- [Smartsheet](/data-analytics/gems/source-target/file/smartsheet)
 
 <Info>
-You can also use the [upload file](docs/analysts/development/gems/source-target/table/upload-files.md) feature to use Excel files. These will be stored in the SQL warehouse configured in your fabric.
+  You can also use the [upload
+  file](docs/analysts/development/gems/source-target/table/upload-files.md) feature to use Excel
+  files. These will be stored in the SQL warehouse configured in your fabric.
 </Info>
 
 ## Properties
@@ -61,9 +63,7 @@ For this option, Prophecy reads the data from each of the sheets that you specif
 | Filter Value             | Provide the value used to evaluate the filter condition.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | Output Sheet Column Name | Provide the name of the column to append to the output table that contains the original sheet name for each row.                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 
-<Info>
-The union operation will only succeed if each sheet has the same schema.
-</Info>
+<Info>The union operation will only succeed if each sheet has the same schema.</Info>
 
 ## Target properties
 

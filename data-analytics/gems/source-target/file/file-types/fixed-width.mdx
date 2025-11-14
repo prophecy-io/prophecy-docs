@@ -3,20 +3,17 @@ title: Fixed-width
 description: Read fixed-width files
 ---
 
-
 This page describes the **Fixed-width-specific properties** that appear in the **Properties** tab of Source gems. These settings are the same for fixed-width files regardless of which connection type is configured in the gem (for example, S3, SFTP, or SharePoint).
 
-<Info>
-Writing fixed-width files using a Target gem is not supported.
-</Info>
+<Info>Writing fixed-width files using a Target gem is not supported.</Info>
 
 If you need details on configuring a Source gem end to end (including all tabs such as **Location**), see the documentation for the specific file storage connection:
 
-- [Amazon S3](/analysts/s3-gem)
-- [Databricks](/analysts/databricks-volumes-gem)
-- [Microsoft OneDrive](/analysts/onedrive-gem)
-- [SFTP](/analysts/sftp-gem)
-- [SharePoint](/analysts/sharepoint-gem)
+- [Amazon S3](/data-analytics/gems/source-target/file/s3)
+- [Databricks](/data-analytics/gems/source-target/file/databricks-volumes)
+- [Microsoft OneDrive](/data-analytics/gems/source-target/file/onedrive)
+- [SFTP](/data-analytics/gems/source-target/file/sftp)
+- [SharePoint](/data-analytics/gems/source-target/file/sharepoint)
 
 ## Properties
 
@@ -25,7 +22,7 @@ If you need details on configuring a Source gem end to end (including all tabs s
 Define the schema of your dataset in the **Properties** tab of the gem. This determines the structure of your dataset.
 
 <Info>
-You must define the schema manually for fixed-width files. Schema inference isn't supported.
+  You must define the schema manually for fixed-width files. Schema inference isn't supported.
 </Info>
 
 Each row in the **Schema** table corresponds to a fixed-width column in the file and includes the following attributes:
@@ -72,7 +69,8 @@ The tables below list metadata fields specific to certain data types per SQL war
 </Tabs>
 
 <Note>
-For a complete list of supported data types, visit [Supported data types](/analysts/data-types/).
+  For a complete list of supported data types, visit [Supported data
+  types](/data-analytics/gems/data-types).
 </Note>
 
 ## Source properties
