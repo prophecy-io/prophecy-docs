@@ -1,7 +1,36 @@
-### Restore previous versions
+---
+title: 'Checkpoints'
+description: 'Restore your pipeline to previous states using checkpoints created by Agent transformations'
+---
 
-To revert changes or try different transformations:
+Each Agent response that modifies your pipeline creates a checkpoint in the [project version history](/data-analytics/development/versioning/version-control). Use checkpoints to revert to previous pipeline states.
 
-- Select **Restore** from any chat response.
-- The pipeline returns to that previous state.
-- All changes are saved in the [project version history](/analysts/versioning).
+## How checkpoints work
+
+When the Agent applies transformations to your pipeline, each response that creates or modifies gems becomes a checkpoint. In Git terms, this is a commit. The commit capture the complete state of your project (code) at that moment.
+
+Because Prophecy uses Git, checkpoints follow standard DevOps practices and allow you to revert to previous states of the project without losing any history.
+
+## Restore from a checkpoint
+
+Each chat response that creates a checkpoint displays a **Restore** button. Use this button to return your pipeline to the state captured by that checkpoint.
+
+<Steps>
+<Step title="Locate the checkpoint">
+Find the chat response containing the transformation you want to restore to. Responses that created checkpoints display a **Restore** button.
+</Step>
+
+<Step title="Restore the checkpoint">
+  Click **Restore** on the chat response. The pipeline returns to the exact state it was in when
+  that transformation was applied.
+</Step>
+
+<Step title="Verify the restoration">
+Review the pipeline canvas to confirm it matches the expected state. All gems and configurations from that checkpoint are restored.
+</Step>
+</Steps>
+
+Restoring a checkpoint does not affect:
+
+- Chat conversation history. Your chat messages remain visible.
+- Project version history. All checkpoints remain available for future restoration.

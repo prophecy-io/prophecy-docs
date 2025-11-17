@@ -1,13 +1,76 @@
 ---
 title: 'Upload files'
-description: 'Add local files to the SQL warehouse'
+description: 'Add local files to the SQL warehouse for Agent use'
 ---
 
-If you want the Agent to incorporate a certain file into your pipeline, you can upload it directly into the chat. Uploaded files are stored in the SQL warehouse configured in your fabric.
+Upload local files directly into the Agent chat to incorporate them into your pipeline. Uploaded files are converted to tables in the SQL warehouse configured in your fabric, making them available for the Agent to read and use in transformations.
 
-1. Click the paperclip icon in the chat footer.
-1. Configure where the file should be stored.
-1. Save the file.
-1. The file will be converted to a table in the SQL warehouse.
+## Supported file types
 
-The Agent will use the Table gem to read the file into your pipeline.
+You can upload the following file formats:
+
+- CSV
+- Excel (XLS, XLSX)
+- JSON
+- Parquet
+- XML
+
+<Note>The recommended maximum file size is 100 MB.</Note>
+
+## Upload a file
+
+<Steps>
+<Step title="Start the upload">
+Click the **paperclip** icon in the chat footer to open the file upload dialog.
+</Step>
+
+<Step title="Select your file">
+  Choose the file you want to upload from your local filesystem. The upload dialog opens
+  automatically.
+</Step>
+
+<Step title="Configure storage location">
+Set where the file should be stored in the SQL warehouse:
+
+- Choose the database.
+- Choose the schema.
+- Choose the table name. You can select an existing table or create a new one.
+
+Click **Next** to continue.
+
+<Warning>
+If you select an existing table, Prophecy deletes and recreates the table with your uploaded file data.
+</Warning>
+</Step>
+
+<Step title="Review and update schema">
+Review the inferred schema (column names and data types):
+
+- Keep the auto-detected schema, or modify column names and data types as needed.
+- Select any table properties you want to configure.
+- Click **Next** to proceed.
+
+</Step>
+
+<Step title="Preview and complete">
+Review the table preview to verify the data structure and content. If the preview looks correct, click **Done** to complete the upload.
+
+The file is converted to a table in your SQL warehouse.
+
+</Step>
+</Steps>
+
+## Make the table available to the Agent
+
+After uploading a file, reindex the [knowledge graph](/data-analytics/ai/knowledge-graph/indexer) so the Agent can discover and use the new table.
+
+1. Open the **Environment** tab in the left sidebar.
+1. Below your connections, locate the **Missing Tables?** callout.
+1. Click **Refresh** to trigger the knowledge graph indexer.
+
+<Warning>
+  The Agent relies on the knowledge graph to find tables. If you skip reindexing, the Agent won't be
+  able to locate your uploaded file table.
+</Warning>
+
+Once indexed, the Agent can reference the table using `@` mentions or discover it through natural language queries. The Agent will use the [Table gem](/data-analytics/gems/source-target/table) to read the file into your pipeline.
