@@ -1,0 +1,79 @@
+---
+title: 'Supported LLMs'
+description: 'List of LLM providers and model families that Prophecy supports'
+---
+
+Prophecy integrates with multiple LLM providers and model families. This gives you flexibility in choosing the right models depending on your deployment type and performance needs.
+
+SaaS uses a Prophecy-managed OpenAI subscription with GPT-4o and GPT-4o mini. Meanwhile, Dedicated SaaS deployments are expected to connect to customer-managed endpoints.
+
+Each AI endpoint configuration requires two models:
+
+- Smart LLM for complex tasks, such as `gpt-4o`.
+- Fast LLM for lightweight tasks, such as `gpt-4o-mini`.
+
+<Info>
+  For Dedicated SaaS deployments, see [Copilot
+  settings](/administration/management/cluster-admin-settings/copilot-settings) to learn how to
+  connect Prophecy to your LLM.
+</Info>
+
+## Supported providers
+
+Prophecy supports model families from the following providers:
+
+- OpenAI
+- Azure OpenAI
+- Google Gemini
+- Vertex AI
+- Anthropic
+
+```mermaid
+flowchart LR
+subgraph L1["Application Layer"]
+P["Prophecy"]
+end
+
+subgraph L2["Model Providers"]
+DOA["Direct OpenAI API"]
+EOA["Enterprise OpenAI API"]
+AOA["Azure OpenAI"]
+DGA["Direct Gemini API"]
+VA["Vertex AI"]
+DAA["Direct Anthropic API"]
+end
+
+subgraph L3["Model Families"]
+GPT["OpenAI GPT models"]
+GEM["Google Gemini models"]
+CLAUDE["Anthropic Claude models"]
+end
+
+P --> DOA
+P --> EOA
+P --> AOA
+P --> DGA
+P --> VA
+P --> DAA
+
+DOA --> GPT
+EOA --> GPT
+AOA --> GPT
+DGA --> GEM
+VA --> GEM
+DAA --> CLAUDE
+
+%% Remove background styling from subgraphs
+classDef subgraphStyle fill:transparent,stroke:#333,stroke-width:1px
+class L1,L2,L3 subgraphStyle
+class DOA,EOA,AOA,DGA,VA,DAA nodeStyle
+```
+
+## Supported models
+
+While Prophecy can connect to all providers shown in the diagram, the following models are officially tested and supported:
+
+- `gpt-4o`
+- `gpt-4o-mini`
+- `gemini-2.5-flash`
+- `gemini-2.5-flash-lite`

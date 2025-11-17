@@ -1,6 +1,6 @@
 ---
-title: "Project sharing"
-description: "Collaborate by sharing projects for development or viewing"
+title: 'Project sharing'
+description: 'Collaborate by sharing projects for development or viewing'
 ---
 
 Share your Prophecy projects with team members or external stakeholders. You can grant full editing access through team membership or provide read-only access via public links.
@@ -12,7 +12,8 @@ Give users project access by adding them to the team that owns the project. Team
 ### Add users from the project
 
 <Callout icon="/images/icon.png" color="#FFC107">
-  You can add users from a project in [Free and Professional Editions](/getting-started/editions/) only.
+  You can add users from a project in [Free and Professional Editions](/getting-started/editions/)
+  only.
 </Callout>
 
 To invite team members directly from your project:
@@ -48,7 +49,9 @@ Prophecy sends an invitation link to each email address. When clicked, Prophecy 
 Share your project with anyone using a public link. This provides read-only access without requiring authentication, making it ideal for demos, training, or stakeholder reviews.
 
 <Warning>
-  Public links expose metadata from your fabric, including schema names, table lists, connection details, and data previews. Only share projects publicly when this information can be safely disclosed.
+  Public links expose metadata from your fabric, including schema names, table lists, connection
+  details, and data previews. Only share projects publicly when this information can be safely
+  disclosed.
 </Warning>
 
 ### Enable public sharing
@@ -59,7 +62,6 @@ To create a public share link to a Prophecy project:
 1. Select **Share Project & Replays**. This opens the sharing dialog.
 1. Click on the **Public Share** tab.
 1. Choose your sharing method:
-
    - Copy the link to share manually
    - Enter email addresses to send the link automatically
 
@@ -72,12 +74,12 @@ Users with the public link can:
 - View pipeline structure and gem configurations.
 - Run pipelines and see execution results.
 - Inspect interim data samples between pipeline steps.
-- Use the AI agent to ask questions about data and logic.
+- Use the Agent to ask questions about data and logic.
 
 Users cannot:
 
 - Edit pipeline components or configurations.
-- Use the AI agent to modify the pipeline.
+- Use the Agent to modify the pipeline.
 
 ### Cloning shared projects
 
@@ -90,4 +92,3 @@ When you click **Edit** while in read-only mode:
 When you clone a project, the data ingress/egress gems (Source, Target, and Table) retain their original [connection](/analysts/connections) configurations from the original team's fabric. If you don't have access to that fabric, you'll need to update these gems to use connections available in your personal team's fabric instead.
 
 For example, if the original pipeline has a gem that reads from Snowflake using a connection called `Snowflake_Prod_Data`, you can either replace this connection with one from your personal fabric or request access to the original fabric.
-

@@ -1,6 +1,6 @@
 <Callout icon="/images/icon.png" color="#FFC107">
 
-  Credits apply to the [Free and Professional Editions](/getting-started/editions/) only.
+Credits apply to the [Free and Professional Editions](/getting-started/editions/) only.
 
 </Callout>
 
@@ -13,23 +13,25 @@ Plans, teams, and fabrics define how billing and credit consumption are organize
 - A [fabric](/administration/fabrics/prophecy-fabrics/) points to a dedicated Prophecy warehouse database and compute resources.
 
 <Info>
-To learn about monitoring credit usage and buying additional credits, see [Usage and billing](/administration/usage-billing/).
+  To learn about monitoring credit usage and buying additional credits, see [Usage and
+  billing](/administration/usage-billing/).
 </Info>
 
 ## How credits are charged
 
 The following actions consume the corresponding number of credits.
 
-| Action            | Description                                                 | Credits Consumed |
-| ----------------- | ----------------------------------------------------------- | ---------------- |
-| **Team Members**  | Number of users allowed on your plan                        | 20 / user        |
-| **AI Requests**   | Each time you click on Copilot or interact with an AI agent | 0.04 / request   |
-| **Compute**       | Processing required when running a gem or pipeline          | 3 / CPU hour     |
-| **Data Egressed** | Data sent outside the Prophecy warehouse                    | 0.045 / GB       |
-| **Data Storage**  | Data stored in the Prophecy warehouse                       | 0.02 / GB        |
+| Action            | Description                                              | Credits Consumed |
+| ----------------- | -------------------------------------------------------- | ---------------- |
+| **Team Members**  | Number of users allowed on your plan                     | 20 / user        |
+| **AI Requests**   | Each time you click on Copilot or interact with an Agent | 0.04 / request   |
+| **Compute**       | Processing required when running a gem or pipeline       | 3 / CPU hour     |
+| **Data Egressed** | Data sent outside the Prophecy warehouse                 | 0.045 / GB       |
+| **Data Storage**  | Data stored in the Prophecy warehouse                    | 0.02 / GB        |
 
 <Note>
-The Prophecy warehouse is powered by DuckDB. Advanced users can update the DuckDB SQL queries in the **Code** view of their project to optimize computation and reduce credit consumption.
+  The Prophecy warehouse is powered by DuckDB. Advanced users can update the DuckDB SQL queries in
+  the **Code** view of their project to optimize computation and reduce credit consumption.
 </Note>
 
 ## Relationship diagram
