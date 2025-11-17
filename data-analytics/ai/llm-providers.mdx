@@ -20,13 +20,21 @@ Each AI endpoint configuration requires two models:
 
 ## Supported providers
 
+Prophecy supports model families from the following providers:
+
+- OpenAI
+- Azure OpenAI
+- Google Gemini
+- Vertex AI
+- Anthropic
+
 ```mermaid
 flowchart LR
-subgraph L1["Layer 1 — Application"]
+subgraph L1["Application Layer"]
 P["Prophecy"]
 end
 
-subgraph L2["Layer 2 — Model Providers"]
+subgraph L2["Model Providers"]
 DOA["Direct OpenAI API"]
 EOA["Enterprise OpenAI API"]
 AOA["Azure OpenAI"]
@@ -35,7 +43,7 @@ VA["Vertex AI"]
 DAA["Direct Anthropic API"]
 end
 
-subgraph L3["Layer 3 — Model Families"]
+subgraph L3["Model Families"]
 GPT["OpenAI GPT models"]
 GEM["Google Gemini models"]
 CLAUDE["Anthropic Claude models"]
@@ -58,6 +66,7 @@ DAA --> CLAUDE
 %% Remove background styling from subgraphs
 classDef subgraphStyle fill:transparent,stroke:#333,stroke-width:1px
 class L1,L2,L3 subgraphStyle
+class DOA,EOA,AOA,DGA,VA,DAA nodeStyle
 ```
 
 ## Supported models

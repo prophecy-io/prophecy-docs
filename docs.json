@@ -28,7 +28,50 @@
               },
               {
                 "group": "AI",
-                "pages": ["data-analytics/ai/agent", "data-analytics/ai/knowledge-graph"]
+                "pages": [
+                  {
+                    "group": "Agent",
+                    "pages": [
+                      "data-analytics/ai/agent/agent",
+                      {
+                        "group": "Chat",
+                        "pages": [
+                          "data-analytics/ai/agent/chat/mentions",
+                          "data-analytics/ai/agent/chat/modes",
+                          "data-analytics/ai/agent/chat/upload-files",
+                          "data-analytics/ai/agent/chat/reset",
+                          "data-analytics/ai/agent/chat/revert",
+                          "data-analytics/ai/agent/chat/export"
+                        ]
+                      },
+                      "data-analytics/ai/agent/explore",
+                      "data-analytics/ai/agent/transform",
+                      {
+                        "group": "Documentation",
+                        "pages": [
+                          "data-analytics/ai/agent/documentation/documentation",
+                          "data-analytics/ai/agent/documentation/ctl-reference"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Copilot",
+                    "pages": [
+                      "data-analytics/ai/copilot/gem-expressions",
+                      "data-analytics/ai/copilot/gem-fixes",
+                      "data-analytics/ai/copilot/auto-documentation"
+                    ]
+                  },
+                  {
+                    "group": "Knowledge graph",
+                    "pages": [
+                      "data-analytics/ai/knowledge-graph/knowledge-graph",
+                      "data-analytics/ai/knowledge-graph/indexer"
+                    ]
+                  },
+                  "data-analytics/ai/llm-providers"
+                ]
               },
               {
                 "group": "Development",
