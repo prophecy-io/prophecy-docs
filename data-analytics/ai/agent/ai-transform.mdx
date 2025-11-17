@@ -44,12 +44,18 @@ To revert changes or try another transformation from a previous state, select **
 
 After adding various data transformations in your pipeline, ask the agent to save the result as a table. The agent writes the data to the default database and schema in your connected fabric. This allows you to persist results and reuse them in downstream workflows.
 
+<Warning>
+  If you have multiple pipelines or pipeline branches that do not terminate with tables, the agent
+  will not be able to create an output table.
+</Warning>
+
 ## Project history
 
 All changes made by the agent are saved in the project [version history](/analysts/versioning). Commits will be clearly marked as authored by the agent.
 
 <Note>
-If you did not save your project before interacting with the AI agent, Prophecy will automatically save your changes before the agent proceeds.
+  If you did not save your project before interacting with the AI agent, Prophecy will automatically
+  save your changes before the agent proceeds.
 </Note>
 
 ## Sample prompts
@@ -64,4 +70,3 @@ Here are some sample prompts that can produce transformations in your pipeline.
 | Aggregate data     | "Group by region and calculate average sales"          | Aggregate gem     |
 | Rename columns     | "Rename cust_id to customer_id and amt to amount"      | Reformat gem      |
 | Save output tables | "Show me and save the final output of the pipeline"    | Table gem         |
-
