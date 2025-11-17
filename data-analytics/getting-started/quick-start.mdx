@@ -1,4 +1,410 @@
 ---
-title: 'Quick start'
-description: 'Quick start guide for data analytics'
+title: 'Quickstart'
+description: 'Use the Agent to develop a simple pipeline'
 ---
+
+_Estimated time: 30 minutes_
+
+Build a data pipeline using Prophecy Agent. This tutorial walks you through exploring data, creating visualizations, and building transformations using natural language prompts. Follow the steps below to build a patient analytics pipeline.
+
+## Prerequisites
+
+To complete this quickstart, you need a [Prophecy fabric](/data-analytics/environment/fabrics/prophecy-fabrics) that uses Prophecy In Memory or Databricks as the compute engine.
+
+<Note>
+  Prophecy automatically creates a compatible fabric for Free and Professional Edition users. If you
+  do not have any existing fabrics, [you'll need to create
+  one](/data-analytics/environment/fabrics/create-fabric).
+</Note>
+
+## Set up a new project
+
+First, you need to create the project where you will build your pipeline. You'll also need to add data to the project for this quickstart.
+
+<Steps>
+<Step title="Create a project">
+
+1. Click on the **Create Entity** button in the left navigation bar.
+1. Hover over the **Project** tile and click **Create**.
+1. Give your project a **Name**.
+1. Under **Team**, select your personal team.
+
+   (It will match your user email.)
+
+1. Under **Select Template**, choose **Prophecy for Analysts**.
+1. Click **Complete**.
+
+Prophecy will open the your new project in the [Studio](/data-analytics/development/studio/studio). Your project will automatically attach to a fabric in the top right corner of the canvas.
+
+</Step>
+<Step title="Add a new pipeline">
+
+1. On the project landing page, click **Create Pipeline**.
+1. For the **Pipeline Name**, enter `patients_analytics`.
+1. Leave the default **Directory Path** of `pipelines`. Prophecy saves your compiled pipeline code in this folder of the project repository.
+1. Click **Create**.
+
+This opens the pipeline canvas for your new pipeline.
+
+</Step>
+</Steps>
+
+## Add data to your project
+
+Next, you'll add some data to the project so the Agent find and transform it.
+
+<Steps>
+<Step title="Create the seed data file">
+
+Load some data into the project as a <Tooltip tip="Seeds are CSV files that are loaded into the project as a table. Prophecy uses dbt seeds behind the scenes to load this data." cta="Learn about dbt seeds" href="https://docs.getdbt.com/docs/build/seeds">Seed</Tooltip>:
+
+1. Open the **Source/Target** gem category.
+1. Click **Table**. This adds a new [Table gem](/data-analytics/gems/source-target/source-target) to the canvas.
+1. Hover over the gem and click **Open**.
+1. Select **+ New Table**.
+1. For the **Type and Format**, choose **Seed**.
+1. Name the seed `patients_raw_data`.
+1. For the **Seed path**, choose **seeds**. Prophecy saves your seed file in this folder of the project repository.
+1. Click **Next**.
+1. In the **Properties** tab, paste the following data.
+
+   ```csv patients_raw_data.csv
+   patient_id,first_name,last_name,city,state,county,age,admission_date,diagnosis,treatment_cost
+   1001,John,Smith,Boston,MA,Suffolk,45,2024-01-15,Hypertension,1250.00
+   1002,Sarah,Johnson,Boston,MA,Suffolk,32,2024-01-18,Diabetes,2100.50
+   1003,Michael,Williams,Cambridge,MA,Middlesex,58,2024-01-20,Heart Disease,3500.75
+   1004,Emily,Brown,Boston,MA,Suffolk,29,2024-01-22,Asthma,850.25
+   1005,David,Jones,Worcester,MA,Worcester,67,2024-01-25,Hypertension,1450.00
+   1006,Jessica,Garcia,Boston,MA,Suffolk,41,2024-02-01,Diabetes,2200.00
+   1007,Christopher,Miller,Springfield,MA,Hampden,53,2024-02-05,Heart Disease,3800.50
+   1008,Amanda,Davis,Boston,MA,Suffolk,35,2024-02-08,Asthma,920.75
+   1009,James,Rodriguez,Cambridge,MA,Middlesex,62,2024-02-10,Hypertension,1320.00
+   1010,Lisa,Martinez,Worcester,MA,Worcester,48,2024-02-12,Diabetes,2150.25
+   ```
+
+1. Click **Next**.
+1. Preview the data in tabular format, then click **Save**.
+
+</Step>
+<Step title="Reindex your connection">
+Reindex your connection so the [knowledge graph](/data-analytics/ai/knowledge-graph/knowledge-graph) includes the new table. This allows the Agent to discover and use the seed data.
+
+1. Open the **Environment** tab in the left sidebar.
+1. Below your connections, you'll see a **Missing Tables?** callout.
+1. Click **Refresh** to trigger the knowledge graph indexer.
+
+You'll see a progress bar in the callout indicating the indexer is running. Once it's complete, the callout will disappear.
+
+<Check>Verify the table was indexed by checking the **Environment** tab in the left sidebar.</Check>
+
+<Warning>
+  The Agent relies on the knowledge graph to find tables. If you skip reindexing, the Agent won't be
+  able to locate your seed data.
+</Warning>
+
+</Step>
+</Steps>
+
+## Build your pipeline
+
+Now, you'll build your pipeline using the Agent. Keep the **Visual** view open (rather than the **Code** view) to see updates in real-time as the Agent adds or modifies gems on the canvas.
+
+<Steps>
+<Step title="Access the Agent">
+
+Locate the **Chat** tab on the left sidebar. This is where you'll interact with the Agent.
+
+</Step>
+
+<Step title="Explore your data">
+
+Ask the Agent to search for the seed data table. Enter the following prompt in the chat:
+
+```
+Find datasets with information pertaining to hospital patients
+```
+
+The agent returns:
+
+- A short list of relevant datasets with descriptions.
+- A full list of matching datasets.
+- The option to add datasets directly to your pipeline on hover.
+
+Click on `patients_raw_data` (the data you uploaded) in the chat to open a detailed preview dialog where you can:
+
+- View the table location.
+- Examine the schema and column structure.
+- Preview sample data.
+- Review data profiles.
+- Open an **Explore** session for dataset-specific queries.
+
+<Note>
+  If the Agent doesn't find your table, verify that the table was indexed by checking the
+  **Environment** tab in the left sidebar. Additionally, if you have other patient data in your
+  warehouse, the Agent may return other datasets that match your query instead.
+</Note>
+
+</Step>
+
+<Step title="Get data samples">
+Request specific data samples to validate your understanding. Enter the following prompt:
+
+```
+Provide sample data from @patients_raw_data showing only patients from Boston
+```
+
+The agent returns:
+
+- A table with the requested data.
+- An option to preview the table for detailed examination.
+- An option to add the table to your pipeline.
+- SQL execution logs showing the query used.
+
+<Check>
+  Verify the results show 4 patients: John Smith, Sarah Johnson, Emily Brown, and Jessica Garcia,
+  all from Boston.
+</Check>
+
+</Step>
+
+<Step title="Create visualizations">
+Generate charts and insights from your data. Enter the following prompt:
+
+```
+Visualize number of patients per city in @patients_raw_data
+```
+
+The agent returns:
+
+- An embedded chart in the chat showing patient counts by city.
+- An option to preview the table for detailed examination.
+- An option to add the table to your pipeline.
+- SQL execution logs showing the query used.
+
+Click **Preview** to access:
+
+- **Visualization tab**: View larger charts and download charts as images.
+- **Data tab**: Examine underlying data and download data as JSON/Excel/CSV.
+
+<Check>
+  The chart should show Boston with 5 patients, Cambridge with 2, Worcester with 2, and Springfield
+  with 1.
+</Check>
+
+</Step>
+
+<Step title="Add source data to pipeline">
+Before building transformations, add the source data to your pipeline. Enter the following prompt:
+
+```
+Add @patients_raw_data to the pipeline
+```
+
+The agent adds a [Table gem](/data-analytics/gems/source-target/source-target) to your pipeline canvas.
+
+<Note>
+  The gem on the canvas will be labeled with a name like `l0_raw_patients` or similar. You'll
+  reference this label in subsequent prompts using @ mentions. You can also [rename the
+  gem](/data-analytics/gems/gems#gem-instance) to have a more descriptive name.
+</Note>
+
+</Step>
+
+<Step title="Build your first transformation">
+Describe the transformation you want to perform. Enter the following prompt:
+
+```
+Transform @l0_raw_patients to show total number of patients per county
+```
+
+Replace `@l0_raw_patients` with the actual gem label from your canvas if it differs.
+
+The agent will:
+
+- Add the appropriate gem(s) to your pipeline canvas. This prompt should produce an [Aggregate](/data-analytics/gems/transform/aggregate) gem.
+- Execute the pipeline, generating data samples that you can review.
+- Provide a description of the changes made.
+- Show options to inspect, preview, or restore changes.
+- Display SQL execution logs.
+
+<Check>
+  The output should show 3 counties: Suffolk with 5 patients, Middlesex with 2, Worcester with 2,
+  and Hampden with 1.
+</Check>
+
+<Note>
+  Each change that the Agent makes can be viewed in the [project version
+  history](/analysts/versioning/#show-version-history). You can revert the changes at any time.
+</Note>
+
+</Step>
+
+<Step title="Inspect pipeline changes">
+To understand what the agent built:
+
+1. Click **Inspect** on the transformation response.
+2. Review the configuration panel starting with the first modified gem (highlighted in yellow).
+3. Use the **Previous** and **Next** buttons to navigate through modified gems.
+4. Examine input and output data to verify the transformation produces expected results.
+
+This helps you:
+
+- Understand the agent's approach.
+- Verify that the transformation logic matches your expectations.
+
+</Step>
+
+<Step title="Add another transformation">
+Build a more complex transformation. Enter the following prompt:
+
+```
+Calculate average treatment cost per county from the previous step
+```
+
+The agent adds another transformation that calculates the average cost. This demonstrates how you can chain transformations together.
+
+<Check>
+  Verify the results show average costs for each county. Suffolk should have an average around
+  `1,544`, Middlesex around `2,410`, Worcester around `1,800`, and Hampden `3,800.50`.
+</Check>
+
+</Step>
+
+<Step title="Save your results">
+After building your pipeline, ask the agent to save the final output. Enter the following prompt:
+
+```
+Save the final output of this pipeline as a table
+```
+
+The agent adds a [Table gem](/data-analytics/gems/source-target/source-target) to the end of your pipeline. When you run the pipeline, the Table gem writes the data to your default database and schema defined in your fabric, allowing you to persist results.
+
+</Step>
+</Steps>
+
+## Explore further
+
+Try these additional tasks to extend your pipeline.
+
+<Steps>
+<Step title="Filter data">
+Enter the following prompt in the chat:
+
+```
+Filter the source data to only include patients over 50 years old
+```
+
+</Step>
+
+<Step title="Join with additional data">
+Create a second CSV file named `county_info.csv` with the following content:
+
+```csv county_info.csv
+county,population,region
+Suffolk,800000,Eastern
+Middlesex,1600000,Eastern
+Worcester,830000,Central
+Hampden,470000,Western
+```
+
+Upload this data as a Seed. Then, prompt the agent:
+
+```
+Join @l0_raw_patients with @county_info on county
+```
+
+<Note>
+The Agent will infer join keys, but you can also specify them explicitly.
+</Note>
+</Step>
+
+<Step title="Calculate derived metrics">
+Enter the following prompt in the chat:
+
+```
+Add a column that calculates days since admission using the current date
+```
+
+</Step>
+</Steps>
+
+## Sample prompts reference
+
+Use these prompts as templates for your own pipelines.
+
+| Task           | Prompt Example                                                                                        |
+| -------------- | ----------------------------------------------------------------------------------------------------- |
+| Find data      | `Find datasets containing customer information`                                                       |
+| Sample data    | `Show me 5 random records from @sales_data`                                                           |
+| Filter data    | `Filter to only include orders from 2024`                                                             |
+| Transform data | `Calculate total revenue as quantity * price`                                                         |
+| Join data      | `Join the orders and customers tables`                                                                |
+| Parse data     | `Extract the fields from json_data as columns` — This works best if you provide a sample JSON object. |
+| Clean data     | `Remove rows where email is null`                                                                     |
+| Aggregate data | `Group by region and calculate average sales`                                                         |
+| Visualize data | `Create a bar chart of monthly sales`                                                                 |
+| Save results   | `Save the final output as a table`                                                                    |
+
+## Tips
+
+<AccordionGroup>
+<Accordion title="Be specific with your requests">
+**How to do it**: Instead of `Clean the data` → Try `Remove duplicate customer records and fill null values in the email column`
+
+**Why it helps**: Reduces ambiguity so the agent applies the correct operations.
+
+</Accordion>
+
+<Accordion title="Use step-by-step instructions">
+**How to do it**: Break complex transformations into smaller requests. For example: `Aggregate orders by customer` → `Join with customers` → `Filter for orders made in 2024`
+
+**Why it helps**: Improves reliability and makes it easier to debug or adjust each step.
+
+</Accordion>
+
+<Accordion title="Review changes before proceeding">
+**How to do it**: After a response, click **Inspect** and use **Previous/Next** to review highlighted gem configuration and output
+
+**Why it helps**: Ensures the transformation matches expectations before you continue.
+
+</Accordion>
+
+<Accordion title="Leverage both the Agent and visual interface">
+**How to do it**: Use chat to scaffold transformations, then switch to the **Visual** canvas to fine-tune or add gems
+
+**Why it helps**: Combines speed (AI) with precision and control (visual editor).
+
+</Accordion>
+</AccordionGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+<Accordion title="Agent can't find tables">
+**Probable cause**: [Knowledge graph](/knowledge-graph) is out of date
+
+**How to fix**: Reindex your Databricks connection so the knowledge graph includes the table
+
+</Accordion>
+
+<Accordion title="Conversation feels stuck or off track">
+**Probable cause**: Chat context isn't relevant anymore
+
+**How to fix**: Click `… > Reset` in the chat interface to start a fresh session
+
+</Accordion>
+
+<Accordion title="Need to report a bad response">
+**Probable cause**: You want to provide feedback to improve results
+
+**How to fix**: Click the thumbs-up or thumbs-down on the agent's message. This helps us improve the agent's behavior.
+
+</Accordion>
+
+<Accordion title="Results don't match expected values">
+**Probable cause**: Seed data wasn't created correctly
+
+**How to fix**: Verify the table exists and contains the expected 10 rows of data
+
+</Accordion>
+</AccordionGroup>

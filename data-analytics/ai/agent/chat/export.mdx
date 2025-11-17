@@ -1,0 +1,61 @@
+---
+title: 'Export chat session info'
+description: 'Export session information from Agent chat for troubleshooting and support'
+---
+
+Export session information from your Agent chat to share with support or engineering teams when troubleshooting issues. The exported data includes session identifiers, environment details, and version information that helps reproduce your chat state.
+
+## Steps
+
+1. Open the **…** (more options) menu in the top right corner of the chat window.
+1. Click **Copy Session Info**.
+1. The session information is copied to your clipboard as JSON.
+
+## Session info structure
+
+The exported session info contains the following fields:
+
+<ResponseField name="sessionId" type="string" required>
+  Unique identifier for the current chat session.
+</ResponseField>
+
+<ResponseField name="chatId" type="string" required>
+  Identifier for the specific chat conversation, formatted as `{type}_{projectId}_{pipelineId}_
+  {environment}_{pipelineName}`.
+</ResponseField>
+
+<ResponseField name="hostname" type="string" required>
+  The Prophecy application hostname where the session is active.
+</ResponseField>
+
+<ResponseField name="commit" type="string" required>
+  The commit hash or version identifier of the Prophecy build running in your environment.
+</ResponseField>
+
+<ResponseField name="timestamp" type="integer" required>
+  Unix timestamp in milliseconds indicating when the session info was exported.
+</ResponseField>
+
+<ResponseField name="version" type="string" required>
+  The Prophecy version number running in your environment.
+</ResponseField>
+
+## Example output
+
+When you export session info, the clipboard contains JSON in this format:
+
+```json
+{
+  "sessionId": "861716af-6414-407d-97d1-d7afa1866558",
+  "chatId": "datatransformation_11083_90964_dev_l2_percentile",
+  "hostname": "app.prophecy.io",
+  "commit": "4.2.1.4",
+  "timestamp": 1763401148947,
+  "version": "4.2.1.4"
+}
+```
+
+<Tip>
+  Paste the exported session info into a support ticket or share it with your engineering team to
+  help diagnose issues specific to your chat session and environment.
+</Tip>

@@ -22,7 +22,8 @@ Enterprise Edition is designed for organizations that require the highest level 
 To get started with the Enterprise Edition, [reach out to Prophecy](mailto:contact.us@prophecy.io).
 
 <Tip>
-To try out Enterprise features, sign up for our [multi-tenant SaaS Enterprise environment](https://app.prophecy.io/).
+  To try out Enterprise features, sign up for our [multi-tenant SaaS Enterprise
+  environment](https://app.prophecy.io/).
 </Tip>
 
 ## Feature matrix
@@ -31,75 +32,73 @@ To try out Enterprise features, sign up for our [multi-tenant SaaS Enterprise en
 
 | Feature                                                             | Free | Professional | Express | Enterprise |
 | ------------------------------------------------------------------- | ---- | ------------ | ------- | ---------- |
-| SaaS (Multi-tenant) deployment model                                | ✔    | ✔            |         |            |
-| Dedicated SaaS (Single-tenant) deployment model                     |      |              | ✔       | ✔          |
-| Platform customization, or the ability to turn feature flags on/off |      |              | ✔       | ✔          |
-| Restriction on maximum number of users                              | ✔    |              | ✔       |            |
-| Usage metered by credits                                            | ✔    | ✔            |         |            |
+| SaaS (Multi-tenant) deployment model                                | ✔   | ✔           |         |            |
+| Dedicated SaaS (Single-tenant) deployment model                     |      |              | ✔      | ✔         |
+| Platform customization, or the ability to turn feature flags on/off |      |              | ✔      | ✔         |
+| Restriction on maximum number of users                              | ✔   |              | ✔      |            |
+| Usage metered by credits                                            | ✔   | ✔           |         |            |
 
 ### Security
 
 | Feature                                                                        | Free | Professional | Express | Enterprise |
 | ------------------------------------------------------------------------------ | ---- | ------------ | ------- | ---------- |
-| IP Whitelisting                                                                | ✔    | ✔            | ✔       | ✔          |
-| PrivateLink                                                                    |      |              | ✔       | ✔          |
-| Google SSO                                                                     | ✔    | ✔            | ✔       | ✔          |
-| Additional [authentication](/administration/authentication/) providers for SSO |      |              | ✔       | ✔          |
-| Automatic team creation using [SCIM](/administration/authentication/saml-scim) |      |              |         | ✔          |
-| Bring Your Own Key (BYOK)                                                      |      |              |         | ✔          |
-| Audit log access                                                               |      |              |         | ✔          |
+| IP Whitelisting                                                                | ✔   | ✔           | ✔      | ✔         |
+| PrivateLink                                                                    |      |              | ✔      | ✔         |
+| Google SSO                                                                     | ✔   | ✔           | ✔      | ✔         |
+| Additional [authentication](/administration/authentication/) providers for SSO |      |              | ✔      | ✔         |
+| Automatic team creation using [SCIM](/administration/authentication/saml-scim) |      |              |         | ✔         |
+| Bring Your Own Key (BYOK)                                                      |      |              |         | ✔         |
+| Audit log access                                                               |      |              |         | ✔         |
 
 ### Compute
 
 | Feature                                                                                                                | Free | Professional | Express | Enterprise |
 | ---------------------------------------------------------------------------------------------------------------------- | ---- | ------------ | ------- | ---------- |
-| [Prophecy Automate](docs/administration/architecture.md)                                                               | ✔    | ✔            | ✔       | ✔          |
-| [Prophecy In Memory](docs/administration/fabrics/prophecy-fabrics/prophecy-fabrics.md)(Prophecy-managed SQL warehouse) | ✔    | ✔            |         |            |
-| Self-managed SQL warehouse                                                                                             |      |              | ✔       | ✔          |
-| Self-managed Spark                                                                                                     |      |              |         | ✔          |
-| Automatic fabric provisioning                                                                                          | ✔    | ✔            |         |            |
-| Manual fabric setup                                                                                                    |      |              | ✔       | ✔          |
+| [Prophecy Automate](docs/administration/architecture.md)                                                               | ✔   | ✔           | ✔      | ✔         |
+| [Prophecy In Memory](docs/administration/fabrics/prophecy-fabrics/prophecy-fabrics.md)(Prophecy-managed SQL warehouse) | ✔   | ✔           |         |            |
+| Self-managed SQL warehouse                                                                                             |      |              | ✔      | ✔         |
+| Self-managed Spark                                                                                                     |      |              |         | ✔         |
+| Automatic fabric provisioning                                                                                          | ✔   | ✔           |         |            |
+| Manual fabric setup                                                                                                    |      |              | ✔      | ✔         |
 
-<Note>
-Usage of the Prophecy-managed SQL warehouse is metered by credits.
-</Note>
+<Note>Usage of the Prophecy-managed SQL warehouse is metered by credits.</Note>
 
 ### AI
 
 | Feature                           | Free | Professional | Express | Enterprise |
 | --------------------------------- | ---- | ------------ | ------- | ---------- |
-| AI Agents                         | ✔    | ✔            | ✔       | ✔          |
-| Copilot                           | ✔    | ✔            | ✔       | ✔          |
-| Prophecy-managed LLM subscription | ✔    | ✔            |         |            |
-| Self-managed LLM subscription     |      |              | ✔       | ✔          |
+| Agents                            | ✔   | ✔           | ✔      | ✔         |
+| Copilot                           | ✔   | ✔           | ✔      | ✔         |
+| Prophecy-managed LLM subscription | ✔   | ✔           |         |            |
+| Self-managed LLM subscription     |      |              | ✔      | ✔         |
 
 ### Platform features
 
 | Feature                                                                 | Free | Professional | Express | Enterprise |
 | ----------------------------------------------------------------------- | ---- | ------------ | ------- | ---------- |
-| Git-hosted projects                                                     | ✔    | ✔            | ✔       | ✔          |
-| Build custom gems                                                       | ✔    | ✔            | ✔       | ✔          |
-| Prophecy Apps                                                           | ✔    | ✔            | ✔       | ✔          |
-| Pipeline run history and monitoring                                     | ✔    | ✔            | ✔       | ✔          |
-| Prophecy-orchestrated pipelines (Prophecy Automate + SQL Warehouse)     | ✔    | ✔            | ✔       | ✔          |
-| Prophecy orchestration (via Prophecy Automate)                          | ✔    | ✔            | ✔       | ✔          |
-| Natively-supported external orchestration (Databricks Jobs and Airflow) |      |              |         | ✔          |
-| Spark pipelines                                                         |      |              |         | ✔          |
-| Models (dbt)                                                            |      |              |         | ✔          |
-| Transpiler                                                              |      |              | ✔       | ✔          |
+| Git-hosted projects                                                     | ✔   | ✔           | ✔      | ✔         |
+| Build custom gems                                                       | ✔   | ✔           | ✔      | ✔         |
+| Prophecy Apps                                                           | ✔   | ✔           | ✔      | ✔         |
+| Pipeline run history and monitoring                                     | ✔   | ✔           | ✔      | ✔         |
+| Prophecy-orchestrated pipelines (Prophecy Automate + SQL Warehouse)     | ✔   | ✔           | ✔      | ✔         |
+| Prophecy orchestration (via Prophecy Automate)                          | ✔   | ✔           | ✔      | ✔         |
+| Natively-supported external orchestration (Databricks Jobs and Airflow) |      |              |         | ✔         |
+| Spark pipelines                                                         |      |              |         | ✔         |
+| Models (dbt)                                                            |      |              |         | ✔         |
+| Transpiler                                                              |      |              | ✔      | ✔         |
 
 ### Project sharing
 
 | Feature                                                              | Free | Professional | Express | Enterprise |
 | -------------------------------------------------------------------- | ---- | ------------ | ------- | ---------- |
-| Share by adding users to the project's team                          | ✔    | ✔            | ✔       | ✔          |
-| Share by sending a public link                                       | ✔    | ✔            |         |            |
-| Share project replays that walk through how pipelines are structured | ✔    | ✔            |         |            |
-| Publish to Package Hub                                               |      |              | ✔       | ✔          |
+| Share by adding users to the project's team                          | ✔   | ✔           | ✔      | ✔         |
+| Share by sending a public link                                       | ✔   | ✔           |         |            |
+| Share project replays that walk through how pipelines are structured | ✔   | ✔           |         |            |
+| Publish to Package Hub                                               |      |              | ✔      | ✔         |
 
 ### Support
 
 | Feature           | Free | Professional | Express | Enterprise |
 | ----------------- | ---- | ------------ | ------- | ---------- |
-| Community forums  | ✔    | ✔            | ✔       | ✔          |
-| Support with SLAs |      |              |         | ✔          |
+| Community forums  | ✔   | ✔           | ✔      | ✔         |
+| Support with SLAs |      |              |         | ✔         |

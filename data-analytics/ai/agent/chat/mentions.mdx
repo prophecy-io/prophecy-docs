@@ -1,0 +1,71 @@
+---
+title: '@ mentions'
+description: 'Use @ mentions to refer to specific entities in your project'
+---
+
+Reference specific entities in your project using `@` mentions. When you type `@` or click the `@` button in the chat footer, Prophecy displays an autocomplete dropdown with matching entities from project.
+
+Use `@` mentions to eliminate ambiguity when your prompt could refer to multiple entities. The
+Agent uses the exact entity you mention rather than inferring from context, which reduces errors
+in complex pipelines.
+
+## How to use @ mentions
+
+<Steps>
+<Step title="Trigger the mention dropdown">
+Type `@` in the chat input field, or click the `@` button in the chat footer. An autocomplete dropdown appears with suggested entities.
+</Step>
+
+<Step title="Search and select an entity">
+  Type additional characters to filter the suggestions, or scroll through the list. Each entity type
+  displays with a distinct icon to help you identify it quickly.
+</Step>
+
+<Step title="Insert the mention">
+Click an entity from the dropdown, or use arrow keys to navigate and press Enter. The `@` mention is inserted into your prompt.
+</Step>
+</Steps>
+
+## Supported entities
+
+The autocomplete dropdown includes entities from your current project.
+
+- Tables: Reference tables in your SQL warehouse using full table names, including database and schema information (for example, `database.schema.table`). This is useful when you want to add a table to your pipeline or ask the Agent to provide sample data from a table.
+
+<Note>
+  Only tables indexed by the knowledge graph appear in the autocomplete suggestions. If a table
+  doesn't appear, ensure it's been indexed through the [knowledge graph
+  indexer](/data-analytics/ai/knowledge-graph/indexer).
+</Note>
+
+- Gems: Reference specific gems in your current pipeline by their label. Use the [gem label](/data-analytics/gems/gems#gem-instance) that identifies the instance, not the gem type. This is useful when you want to add a transformation to your pipeline or ask the Agent to provide sample data from a gem.
+
+- Documentation templates: Reference documentation templates in your project when generating documentation. Templates must exist in your project to appear in suggestions. Use with prompts like `Generate pipeline documentation using @custom_template`.
+
+## Examples
+
+### Reference tables
+
+```
+How many records are in the @transactions table?
+```
+
+```
+Show me the schema for @energy_production_metrics
+```
+
+### Reference gems
+
+```
+Aggregate the @orders_cleaned gem to show sum of order quantity per month
+```
+
+```
+Add a filter after @last_aggregation_gem to show only records from 2024
+```
+
+### Reference documentation templates
+
+```
+Generate pipeline documentation using @custom_template
+```
