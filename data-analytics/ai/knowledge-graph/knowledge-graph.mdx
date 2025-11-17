@@ -1,0 +1,27 @@
+---
+title: 'Knowledge graph'
+description: 'Metadata index that powers AI features in Prophecy'
+---
+
+Prophecy uses **knowledge graphs** to understand your [SQL warehouse structure](/administration/fabrics/prophecy-fabrics/#fabric-architecture) for AI capabilities, including Agents and Copilot.
+
+A [knowledge graph](/knowledge-graph) is an internal index that maps your data environment. The knowledge graph contains metadata about tables, schemas, columns, and data types—not your actual data. When you interact with AI, Prophecy uses a knowledge graph to add context to your prompts. This context helps the Large Language Model (LLM) generate accurate SQL code that references the correct tables and columns in your warehouse.
+
+## How knowledge graphs work
+
+When you interact with AI in Prophecy, the system enriches your prompt with context from the knowledge graph before sending it to the Large Language Model (LLM). This enrichment step adds metadata about your project's datasets, schemas, and other entities, which helps the LLM understand what you're referring to. The LLM then generates SQL code based on this enhanced context.
+
+## Knowledge graph generation
+
+Prophecy generates one knowledge graph per fabric. Each knowledge graph indexes metadata from the connected SQL warehouse for that fabric.
+
+The indexer crawls your warehouse using either your identity or a separately configured identity. You can schedule automatic refreshes or trigger manual indexing to keep the knowledge graph current.
+
+<Note>
+  Prophecy uses the knowledge graph of the fabric attached to your project. If you attach to a
+  different fabric, AI features will use that fabric's knowledge graph.
+</Note>
+
+## What's next
+
+Configure the [knowledge graph indexer](/knowledge-graph/indexer) to schedule automatic indexing or set up separate authentication credentials.

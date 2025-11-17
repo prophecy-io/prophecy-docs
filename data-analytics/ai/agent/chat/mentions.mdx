@@ -1,0 +1,29 @@
+---
+title: '@ mentions'
+description: 'Use @ mentions to refer to specific entities in your project'
+---
+
+As you write your prompt, you can refer to specific entities in your project using `@` mentions. When you type `@`, Prophecy suggests a list of matching entities to choose from.
+
+## Supported entities
+
+Use `@` mentions to refer to:
+
+- Specific tables in your environment. (Tables will only appear if indexed by the [knowledge graph](/knowledge-graph).)
+- Specific gems in your pipeline.
+- Specific documentation templates in your project.
+
+<Note>
+  When referencing gems, refer to the gem label that identifies the instance of the gem, rather than
+  the gem type (Aggregate, Join, etc).
+</Note>
+
+## Examples
+
+```
+// Example 1
+How many records are in the @transactions table?
+
+// Example 2
+Aggregate the @orders_cleaned gem to show sum of order quantity per month
+```
