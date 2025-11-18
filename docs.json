@@ -88,7 +88,6 @@
                   {
                     "group": "Runs",
                     "pages": [
-                      "data-analytics/development/runs/runs",
                       "data-analytics/development/runs/execution",
                       "data-analytics/development/runs/runtime-logs",
                       {
