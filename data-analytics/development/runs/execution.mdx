@@ -1,41 +1,34 @@
 ---
-title: Pipeline execution
-description: Run a set of defined operations in a pipeline
+title: Pipeline runs
+description: Different ways you can run Prophecy pipelines
 ---
 
-While SQL projects leverage [dbt](https://docs.getdbt.com/docs/build/models) for data transformations, pipeline execution is a hybrid process. This page describes how Prophecy executes pipelines in different scenarios.
+The pipeline lifecycle consists of different stages, including development, production, and reporting. You can run your pipelines in different ways during each stage of the lifecycle.
 
-## Execution environment
+- **Development**: Press play in the canvas to run your pipeline and validate transformations by previewing data at each step.
+- **Production**: Use scheduled runs to automate pipeline execution at defined intervals.
+- **Reporting**: Use Prophecy Apps to provide form-based interfaces for non-technical users to trigger pipeline runs that generate reports.
 
-The execution environment defined in a [Prophecy fabric](/administration/fabrics/prophecy-fabrics/) consists of multiple compute engines.
+This page explores these different run types in detail.
 
-- **SQL warehouse**: Your own external SQL environment used to store tables, create tables, and execute queries. Transformations that run in the SQL warehouse are converted to dbt models under the hood. Learn more in [Models](/engineers/models).
-- **Prophecy Automate**: Runtime that handles orchestration and the flow of external data from systems like Salesforce and Tableau in and out of the pipeline. To learn more, jump to [External data handling](#external-data-handling).
+## Interactive runs in the canvas
 
-<Info>
-To find more information about the relationship between these components, visit [Architecture](docs/administration/architecture.md).
-</Info>
-
-## Methods of pipeline execution
-
-### Interactive runs in the canvas
-
-Prophecy lets you interactively run your pipeline in the pipeline canvas and preview data transformations at every step. This helps you understand and validate your data transformations during development. There are two ways to start an interactive run:
+Prophecy lets you interactively run your pipeline in the pipeline canvas and preview data between each gem. This way, you can ensure that gems produce the expected output. There are two ways to start an interactive run:
 
 - **Click the large play button on the bottom of the pipeline canvas.** The whole pipeline runs.
-- **Click the play button on a gem.** All gems up to and including that gem run. This is a partial pipeline run.
+- **Click the play button on a gem.** All gems up to and including that gem run. This lets you test a small part of the pipeline, without consuming resources to run the whole pipeline.
 
-As gems run in your pipeline, sample outputs will appear after those gems. When you click on a data sample, Prophecy loads the data and opens the [Data Explorer](/analysts/data-explorer). The Data Explorer lets you sort, filter, and search through the gem output.
+As gems run in your pipeline, sample outputs will appear after those gems. When you click on a data sample, Prophecy loads the data and opens the [Data Explorer](/data-analytics/development/runs/data-explorer/data-explorer). The Data Explorer lets you sort, filter, and search through the gem output.
 
-### Scheduled runs
+## Scheduled runs
 
 Scheduling allows you to automate your data pipelines at predefined intervals. For each pipeline in your project, you can configure independent schedules that specify how often a pipeline runs and whether to send alerts during the automated runs. The execution environment of the scheduled run is determined during project publication.
 
-To learn more about deploying projects to specific execution environments, see [Versioning](/analysts/versioning) and [Scheduling](/analysts/scheduling).
+To learn more about deploying projects to specific execution environments, see [Versioning](/data-analytics/production/publication) and [Scheduling](/data-analytics/production/scheduling/scheduling).
 
-### Executing pipelines via apps
+## Executing pipelines via apps
 
-You can also run pipelines with [Prophecy Apps](/analysts/business-applications) in Prophecy. These apps enable non-technical users to run data pipelines through intuitive, form-based interfaces. By restricting access to pipelines themselves, you can provide proper guardrails for pipeline execution via Prophecy Apps.
+You can also run pipelines with [Prophecy Apps](/data-analytics/collaboration/prophecy-apps/apps) in Prophecy. These apps enable non-technical users to run data pipelines through intuitive, form-based interfaces. By restricting access to pipelines themselves, you can provide proper guardrails for pipeline execution via Prophecy Apps.
 
 ## External data handling
 
@@ -44,3 +37,12 @@ Prophecy supports external sources and targets through [connections](/analysts/c
 Temporary tables act as intermediaries that allow external data to be processed using SQL logic. In other words, they enable dbt and SQL to transform external data as if it were native to the warehouse.
 
 These tables use ephemeral materialization, which means they exist only during query execution and do not appear in your warehouse or pipeline canvas.
+
+## Where pipelines run
+
+All pipeline runs—whether interactive, scheduled, or triggered through apps—execute using:
+
+- **SQL warehouse**: Processes SQL transformations using [dbt](https://docs.getdbt.com/docs/build/models)
+- **Prophecy Automate**: Extends SQL warehouse capabilities by providing orchestration and ingress/egress features
+
+Different components of the same pipeline can run in different places. SQL transformations execute in your SQL warehouse, while orchestration, data ingestion, and data egress operations run through Prophecy Automate. Your [Prophecy fabric](/data-analytics/environment/fabrics/prophecy-fabrics/) configuration determines the compute resources, connection details, and runtime settings that apply to all run types.

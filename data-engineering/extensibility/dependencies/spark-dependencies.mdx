@@ -1,16 +1,10 @@
 ---
 title: Spark dependencies
-id: spark-dependencies
-slug: /engineers/spark-dependencies
 description: Reuse Spark dependencies in pipelines and jobs
-tags:
-  - dependencies
-  - maven
-  - extensibility
 ---
 
 <Callout icon="/images/icon.png" color="#FFC107">
-Available for [Enterprise Edition](/getting-started/editions/) only.
+  Available for [Enterprise Edition](/getting-started/editions/) only.
 </Callout>
 
 Dependencies allow you to make use of a variety of packages in your data pipelines and jobs. There are three types of dependencies for Spark projects:
@@ -39,7 +33,7 @@ The table below describes the fields available when you select **Add Dependency*
 | Scope                       | The dependency is enabled at the project level or the pipeline level.                                                                                                                                                                                                                    |
 | Type                        | The dependency is either from the Package Hub, Scala (Maven) or Python (PyPI).                                                                                                                                                                                                           |
 | Name                        | This will identify the dependency.                                                                                                                                                                                                                                                       |
-| Version/Package/Coordinates | For Package Hub dependencies, input the package version. <br />For Scala, use the Maven coordinates in the `groupId:artifcatId:version` format. <br />For Python, use the package and the version number.                                                                                  |
+| Version/Package/Coordinates | For Package Hub dependencies, input the package version. <br />For Scala, use the Maven coordinates in the `groupId:artifcatId:version` format. <br />For Python, use the package and the version number.                                                                                |
 | Repository (Advanced)       | If you'd like to use an external repository (like your organization's repository), you can specify the link to it in this field.                                                                                                                                                         |
 | Exclusion (Advanced)        | **Scala only** — This is an optional list of `groupId:artifactId` pairs of dependencies you'd like to exclude. Learn more about dependency exclusion [here](https://maven.apache.org/guides/introduction/introduction-to-optional-and-excludes-dependencies.html#dependency-exclusions). |
 
@@ -47,9 +41,9 @@ Once you save a new dependency, Prophecy will validate it to make sure the depen
 that fails, you should see an **invalid coordinates** error.
 
 <Info>
-In rare cases, your dependency might be only accessible to the Spark cluster or the build system, but not to Prophecy
-itself. If you're confident that the dependency is correct, but the validation error shows up, it's safe to press **Save
-Anyways** to ignore that warning.
+  In rare cases, your dependency might be only accessible to the Spark cluster or the build system,
+  but not to Prophecy itself. If you're confident that the dependency is correct, but the validation
+  error shows up, it's safe to press **Save Anyways** to ignore that warning.
 </Info>
 
 ### Update dependencies
@@ -64,7 +58,8 @@ Spark projects often have multiple dependencies. To simultaneously update all de
 ![Update dependencies](img/update-all-dependencies.png)
 
 <Warning>
-Connecting a Prophecy project to a Spark cluster with a different dependency version will prompt a cluster restart.
+  Connecting a Prophecy project to a Spark cluster with a different dependency version will prompt a
+  cluster restart.
 </Warning>
 
 ## Install dependencies on a Spark cluster
@@ -88,7 +83,8 @@ Dependencies are natively saved within your build system files. For example, if 
 The **Build System** template in the Settings tab of a project defines how build files are generated for all pipelines within a project. You can edit the template to include specific items you need during the build process—for example, adding the JaCoCo plugin to enable coverage report generation.
 
 <Info>
-For any help required to enable the template for older projects, please reach out to the Prophecy support team.
+  For any help required to enable the template for older projects, please reach out to the Prophecy
+  support team.
 </Info>
 
 ### Jobs support
@@ -116,9 +112,9 @@ To add the `io.github.etspaceman:scalacheck-faker_2.12:7.0.0` dependency, edit t
 ### Managing dependencies for WHL format deployments
 
 <Info>
-Special consideration for Scala dependencies in Pyspark projects must be given when deploying WHL files outside of PBT.
-If you do not create jobs in the Prophecy editor or use the `pbt deploy` or `pbt deploy-v2` commands, then this
-section will help track those Scala dependencies.
+  Special consideration for Scala dependencies in Pyspark projects must be given when deploying WHL
+  files outside of PBT. If you do not create jobs in the Prophecy editor or use the `pbt deploy` or
+  `pbt deploy-v2` commands, then this section will help track those Scala dependencies.
 </Info>
 
 When manually deploying pipelines using WHL format, you need to account for dependencies in both Python and Scala.

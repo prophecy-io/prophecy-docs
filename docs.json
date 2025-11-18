@@ -88,7 +88,6 @@
                   {
                     "group": "Runs",
                     "pages": [
-                      "data-analytics/development/runs/runs",
                       "data-analytics/development/runs/execution",
                       "data-analytics/development/runs/runtime-logs",
                       {
@@ -135,6 +134,8 @@
                   {
                     "group": "Extensibility",
                     "pages": [
+                      "data-analytics/development/extensibility/package-hub/package-hub",
+                      "data-analytics/development/extensibility/package-hub/template-hub",
                       "data-analytics/development/extensibility/functions",
                       "data-analytics/development/extensibility/dependencies",
                       "data-analytics/development/extensibility/stored-procedure",
@@ -157,6 +158,7 @@
                     "group": "Connections",
                     "pages": [
                       "data-analytics/environment/connections/connections",
+                      "data-analytics/environment/connections/adls",
                       "data-analytics/environment/connections/bigquery",
                       "data-analytics/environment/connections/databricks",
                       "data-analytics/environment/connections/gcs",
@@ -276,6 +278,7 @@
                   {
                     "group": "File storage systems",
                     "pages": [
+                      "data-analytics/gems/source-target/file/adls",
                       "data-analytics/gems/source-target/file/s3",
                       "data-analytics/gems/source-target/file/gcs",
                       "data-analytics/gems/source-target/file/databricks-volumes",
@@ -307,39 +310,40 @@
                     "pages": [
                       "data-analytics/gems/transform/aggregate",
                       "data-analytics/gems/transform/count-records",
-                      "data-analytics/gems/transform/window",
-                      "data-analytics/gems/transform/pivot",
-                      "data-analytics/gems/transform/unpivot",
                       "data-analytics/gems/transform/dynamic-select",
                       "data-analytics/gems/transform/encoder-decoder",
-                      "data-analytics/gems/transform/fuzzy-match"
+                      "data-analytics/gems/transform/fuzzy-match",
+                      "data-analytics/gems/transform/pivot",
+                      "data-analytics/gems/transform/unpivot",
+                      "data-analytics/gems/transform/window"
                     ]
                   },
                   {
                     "group": "Prepare",
                     "pages": [
-                      "data-analytics/gems/prepare/filter",
-                      "data-analytics/gems/prepare/limit",
-                      "data-analytics/gems/prepare/order-by",
-                      "data-analytics/gems/prepare/deduplicate",
-                      "data-analytics/gems/prepare/find-duplicates",
                       "data-analytics/gems/prepare/data-cleansing",
-                      "data-analytics/gems/prepare/masking",
+                      "data-analytics/gems/prepare/deduplicate",
+                      "data-analytics/gems/prepare/filter",
+                      "data-analytics/gems/prepare/find-duplicates",
                       "data-analytics/gems/prepare/flatten-schema",
-                      "data-analytics/gems/prepare/reformat",
+                      "data-analytics/gems/prepare/generate-rows",
+                      "data-analytics/gems/prepare/limit",
+                      "data-analytics/gems/prepare/masking",
                       "data-analytics/gems/prepare/multi-column-edit",
                       "data-analytics/gems/prepare/multi-column-rename",
-                      "data-analytics/gems/prepare/record-id"
+                      "data-analytics/gems/prepare/order-by",
+                      "data-analytics/gems/prepare/record-id",
+                      "data-analytics/gems/prepare/reformat"
                     ]
                   },
                   {
                     "group": "Join",
                     "pages": [
+                      "data-analytics/gems/join-split/except",
+                      "data-analytics/gems/join-split/intersect",
                       "data-analytics/gems/join-split/join",
                       "data-analytics/gems/join-split/union",
-                      "data-analytics/gems/join-split/union-by-name",
-                      "data-analytics/gems/join-split/intersect",
-                      "data-analytics/gems/join-split/except"
+                      "data-analytics/gems/join-split/union-by-name"
                     ]
                   },
                   {
@@ -347,12 +351,12 @@
                     "pages": [
                       "data-analytics/gems/spatial/buffer",
                       "data-analytics/gems/spatial/create-point",
+                      "data-analytics/gems/spatial/distance",
                       "data-analytics/gems/spatial/heatmap",
                       "data-analytics/gems/spatial/nearest-point",
+                      "data-analytics/gems/spatial/polybuild",
                       "data-analytics/gems/spatial/simplify",
-                      "data-analytics/gems/spatial/spatial-match",
-                      "data-analytics/gems/spatial/distance",
-                      "data-analytics/gems/spatial/polybuild"
+                      "data-analytics/gems/spatial/spatial-match"
                     ]
                   },
                   {
@@ -717,7 +721,6 @@
                     "group": "Package Hub",
                     "pages": [
                       "data-engineering/extensibility/package-hub/package-hub",
-                      "data-engineering/extensibility/package-hub/template-hub",
                       "data-engineering/extensibility/package-hub/use-imported-package"
                     ]
                   },

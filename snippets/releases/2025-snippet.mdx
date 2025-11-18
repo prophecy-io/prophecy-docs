@@ -1,3 +1,38 @@
+<Update label="Prophecy 4.2.2" description="November 17, 2025" tags={["Data Analytics"]}>
+
+## Agent documentation templates
+
+Create custom templates for AI pipeline documentation generation using [Copilot Template Language (CTL)](/data-analytics/ai/agent/documentation/ctl-reference). CTL extends Markdown with special markers that generate interactive components like question forms, visual pipeline diagrams, and dynamic content that automatically updates based on your pipeline structure.
+
+## Azure Data Lake Storage (ADLS) Source and Target gems
+
+Use Azure Data Lake Storage (ADLS) as a source and target in your pipelines with the [ADLS gem](/data-analytics/gems/source-target/file/adls). The gem supports reading and writing CSV, JSON, Parquet, XLSX, and XML files. Source gems can read from specific file paths or from a file arrival/change trigger. Target gems can write to specific file paths.
+
+## Knowledge graph indexer
+
+You can now schedule automated indexing for the [knowledge graph indexer](/data-analytics/ai/knowledge-graph/indexer) to run hourly, daily, or weekly. The schedule supports custom timezone configuration, with the default timezone matching your Prophecy access location.
+
+You can also configure separate authentication credentials for the [knowledge graph indexer](/data-analytics/ai/knowledge-graph/indexer#add-separate-authentication-for-the-indexer), independent from pipeline execution credentials. Use Service Principal OAuth for production environments where credentials don't expire, or User OAuth for development scenarios.
+
+</Update>
+
+<Update label="Prophecy 4.2.2" description="November 17, 2025" tags={["Administration"]}>
+
+## LLM configuration
+
+We've added the ability to configure LLM provider credentials and model specifications directly from the Prophecy UI in [Copilot Settings](/administration/management/cluster-admin-settings/copilot-settings). Add credentials for multiple LLM providers, define smart and fast models for different task types, and configure speech-to-text and text-to-speech models. Sensitive credential values are automatically masked after saving.
+
+</Update>
+
+<Update label="Prophecy 4.2.2" description="November 17, 2025" tags={["Data Engineering"]}>
+
+## Prophecy Library versions
+
+- ProphecyLibsPython 2.1.5
+- ProphecyLibsScala 8.14.0
+
+</Update>
+
 <Update label="Prophecy 4.2.1 Extended Maintenance" description="October 25, 2025" tags={["Data Analytics"]}>
 
 ## Free and Professional Editions
@@ -15,15 +50,16 @@ You can now use the Prophecy Agent to [generate pipeline documentation](docs/ana
 
 ## New gems
 
-- [Regex](/analysts/regex): Enables pattern matching and text extraction using regular expressions.
-- [GCS Source and Target](/analysts/gcs-gem): Read from or write to Google Cloud Storage (GCS) buckets.
-- [Salesforce Target](/analysts/salesforce): Supports writing to Salesforce Objects (CRM Analytics datasets not supported for targets).
+- [Regex](/data-analytics/gems/parse/regex): Enables pattern matching and text extraction using regular expressions.
+- [GenerateRows](/data-analytics/gems/prepare/generate-rows): Create new rows of data using iterative expressions.
+- [GCS Source and Target](/data-analytics/gems/source-target/file/gcs): Read from or write to Google Cloud Storage (GCS) buckets.
+- [Salesforce Target](/data-analytics/gems/target/salesforce): Supports writing to Salesforce Objects (CRM Analytics datasets not supported for targets).
 
 ## Gem improvements
 
-- The [Email gem](/analysts/email) now supports a **Use column** option for several parameters, including **To**, **Cc**, **Bc**, **Subject**, and **Body**. When enabled, these fields can be dynamically populated from columns in your input dataset. Each row in your dataset can specify a different recipient and/or custom message while sending the same attachment to all recipients.
+- The [Email gem](/data-analytics/gems/report/email) now supports a **Use column** option for several parameters, including **To**, **Cc**, **Bc**, **Subject**, and **Body**. When enabled, these fields can be dynamically populated from columns in your input dataset. Each row in your dataset can specify a different recipient and/or custom message while sending the same attachment to all recipients.
 
-- The [RestAPI gem](/analysts/rest-api) has been updated in the following ways:
+- The [RestAPI gem](/data-analytics/gems/report/rest-api) has been updated in the following ways:
   - The gem now supports parsing JSON responses into multiple output columns.
 
   - There are two new authentication methods — **Basic Auth** and **Bearer Token** — that automatically send credentials to APIs using new [Prophecy secret types](/analysts/secrets).
@@ -32,13 +68,13 @@ You can now use the Prophecy Agent to [generate pipeline documentation](docs/ana
   - Read from multiple sheets in a single Excel file and union all rows into one output table.
   - Write to multiple sheets by providing a column whose values are target sheet names. Sheets are created if they don't exist.
 
-- We have added an option to the [Directory gem](/analysts/directory) that enables you to list all the sheet names in XLSX files detected in a specified directory.
+- We have added an option to the [Directory gem](/data-analytics/gems/custom/directory) that enables you to list all the sheet names in XLSX files detected in a specified directory.
 
-- You can now use the [DynamicInput gem](/analysts/dynamic-input) to union data from files defined in a column of file paths. Schemas are matched based on column names.
+- You can now use the [DynamicInput gem](/data-analytics/gems/custom/dynamic-input) to union data from files defined in a column of file paths. Schemas are matched based on column names.
 
 ## Automatic package upgrades
 
-When configuring [Prophecy project dependencies](/analysts/dependencies#prophecy-project), you can now enable automatic package upgrades. When enabled, the dependency will automatically upgrade to the latest version available.
+When configuring [Prophecy project dependencies](/data-analytics/development/extensibility/dependencies), you can now enable automatic package upgrades. When enabled, the dependency will automatically upgrade to the latest version available.
 
 </Update>
 
@@ -46,22 +82,22 @@ When configuring [Prophecy project dependencies](/analysts/dependencies#prophecy
 
 ## EMR fabric improvements
 
-- You can use [Selective](/engineers/data-sampling#selective-sampling) data sampling mode when running pipelines on EMR and EMR Serverless clusters.
+- You can use [Selective](/data-engineering/development/data-sampling#selective-sampling) data sampling mode when running pipelines on EMR and EMR Serverless clusters.
 
-- When using EMR [SAML authentication](/administration/authentication/emr-saml) with Okta, you will see updated job size [configurations](docs/administration/fabrics/Spark-fabrics/emr-job-sizes.md) in EMR fabrics.
+- When using EMR [SAML authentication](/administration/authentication/emr-saml) with Okta, you will see updated job size [configurations](/data-engineering/fabrics/emr/emr-job-sizes) in EMR fabrics.
 
 ## Gem improvements
 
 You can now run the following gems in Databricks Serverless:
 
-| Gem                                       | Requirements                                                                                                               |
-| ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| [XLSX Source and Target](/engineers/xlsx) | ProphecySparkBasicsPython >= 0.2.5<br/>ProphecyLibsPython >= 2.1.5<br/>Pandas Library Type only (Crealytics not supported) |
-| [Text Source and Target](/engineers/text) | ProphecySparkBasicsPython >= 0.2.5                                                                                         |
+| Gem                                                                      | Requirements                                                                                                               |
+| ------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------- |
+| [XLSX Source and Target](/data-engineering/gems/source-target/file/xlsx) | ProphecySparkBasicsPython >= 0.2.5<br/>ProphecyLibsPython >= 2.1.5<br/>Pandas Library Type only (Crealytics not supported) |
+| [Text Source and Target](/data-engineering/gems/source-target/file/text) | ProphecySparkBasicsPython >= 0.2.5                                                                                         |
 
 ## Databricks jobs
 
-For [Databricks Jobs](/engineers/databricks-jobs), we have expanded configuration options and improved integration with Prophecy orchestration.
+For [Databricks Jobs](/data-engineering/orchestration/databricks-jobs), we have expanded configuration options and improved integration with Prophecy orchestration.
 
 - **Email notifications**: Now includes a duration threshold, providing email alerts when jobs exceed expected runtimes.
 - **If Else gem**: Implement conditional branching within a job to control execution flow between two paths.
