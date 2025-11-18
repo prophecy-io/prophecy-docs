@@ -157,6 +157,7 @@
                     "group": "Connections",
                     "pages": [
                       "data-analytics/environment/connections/connections",
+                      "data-analytics/environment/connections/adls",
                       "data-analytics/environment/connections/bigquery",
                       "data-analytics/environment/connections/databricks",
                       "data-analytics/environment/connections/gcs",
@@ -276,6 +277,7 @@
                   {
                     "group": "File storage systems",
                     "pages": [
+                      "data-analytics/gems/source-target/file/adls",
                       "data-analytics/gems/source-target/file/s3",
                       "data-analytics/gems/source-target/file/gcs",
                       "data-analytics/gems/source-target/file/databricks-volumes",
@@ -318,18 +320,19 @@
                   {
                     "group": "Prepare",
                     "pages": [
-                      "data-analytics/gems/prepare/filter",
-                      "data-analytics/gems/prepare/limit",
-                      "data-analytics/gems/prepare/order-by",
-                      "data-analytics/gems/prepare/deduplicate",
-                      "data-analytics/gems/prepare/find-duplicates",
                       "data-analytics/gems/prepare/data-cleansing",
-                      "data-analytics/gems/prepare/masking",
+                      "data-analytics/gems/prepare/deduplicate",
+                      "data-analytics/gems/prepare/filter",
+                      "data-analytics/gems/prepare/find-duplicates",
                       "data-analytics/gems/prepare/flatten-schema",
-                      "data-analytics/gems/prepare/reformat",
+                      "data-analytics/gems/prepare/generate-rows",
+                      "data-analytics/gems/prepare/limit",
+                      "data-analytics/gems/prepare/masking",
                       "data-analytics/gems/prepare/multi-column-edit",
                       "data-analytics/gems/prepare/multi-column-rename",
-                      "data-analytics/gems/prepare/record-id"
+                      "data-analytics/gems/prepare/order-by",
+                      "data-analytics/gems/prepare/record-id",
+                      "data-analytics/gems/prepare/reformat"
                     ]
                   },
                   {
