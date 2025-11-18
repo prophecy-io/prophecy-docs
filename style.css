@@ -65,3 +65,9 @@
 .table-example tbody tr:last-child td {
   border-bottom: none;
 }
+
+/* Fix Callout icon aspect ratio */
+
+[data-component-part='callout-icon'] img {
+  height: auto !important;
+}
