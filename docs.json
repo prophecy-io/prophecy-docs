@@ -134,6 +134,8 @@
                   {
                     "group": "Extensibility",
                     "pages": [
+                      "data-analytics/development/extensibility/package-hub/package-hub",
+                      "data-analytics/development/extensibility/package-hub/template-hub",
                       "data-analytics/development/extensibility/functions",
                       "data-analytics/development/extensibility/dependencies",
                       "data-analytics/development/extensibility/stored-procedure",
@@ -719,7 +721,6 @@
                     "group": "Package Hub",
                     "pages": [
                       "data-engineering/extensibility/package-hub/package-hub",
-                      "data-engineering/extensibility/package-hub/template-hub",
                       "data-engineering/extensibility/package-hub/use-imported-package"
                     ]
                   },
