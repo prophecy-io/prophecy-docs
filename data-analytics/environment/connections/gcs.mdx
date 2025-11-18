@@ -56,9 +56,3 @@ To manage this securely, consider creating a dedicated fabric and team for high-
 </Warning>
 
 
-## Fetching data
-
-Prophecy fetches data from GCS connections in the following ways:
-
-- When you browse a GCS connection in the [Environment browser](/analysts/pipelines), Prophecy fetches data on demand as you expand folders. You can manually refresh the Environment browser to see updated files.
-- When a pipeline runs, Source gems will read the latest available version of the data. If the schema of the data stored in GCS changes, you will need to re-infer the schema in Prophecy.
