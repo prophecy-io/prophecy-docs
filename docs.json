@@ -309,12 +309,12 @@
                     "pages": [
                       "data-analytics/gems/transform/aggregate",
                       "data-analytics/gems/transform/count-records",
-                      "data-analytics/gems/transform/window",
-                      "data-analytics/gems/transform/pivot",
-                      "data-analytics/gems/transform/unpivot",
                       "data-analytics/gems/transform/dynamic-select",
                       "data-analytics/gems/transform/encoder-decoder",
-                      "data-analytics/gems/transform/fuzzy-match"
+                      "data-analytics/gems/transform/fuzzy-match",
+                      "data-analytics/gems/transform/pivot",
+                      "data-analytics/gems/transform/unpivot",
+                      "data-analytics/gems/transform/window"
                     ]
                   },
                   {
@@ -338,11 +338,11 @@
                   {
                     "group": "Join",
                     "pages": [
+                      "data-analytics/gems/join-split/except",
+                      "data-analytics/gems/join-split/intersect",
                       "data-analytics/gems/join-split/join",
                       "data-analytics/gems/join-split/union",
-                      "data-analytics/gems/join-split/union-by-name",
-                      "data-analytics/gems/join-split/intersect",
-                      "data-analytics/gems/join-split/except"
+                      "data-analytics/gems/join-split/union-by-name"
                     ]
                   },
                   {
@@ -350,12 +350,12 @@
                     "pages": [
                       "data-analytics/gems/spatial/buffer",
                       "data-analytics/gems/spatial/create-point",
+                      "data-analytics/gems/spatial/distance",
                       "data-analytics/gems/spatial/heatmap",
                       "data-analytics/gems/spatial/nearest-point",
+                      "data-analytics/gems/spatial/polybuild",
                       "data-analytics/gems/spatial/simplify",
-                      "data-analytics/gems/spatial/spatial-match",
-                      "data-analytics/gems/spatial/distance",
-                      "data-analytics/gems/spatial/polybuild"
+                      "data-analytics/gems/spatial/spatial-match"
                     ]
                   },
                   {
