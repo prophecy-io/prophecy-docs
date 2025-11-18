@@ -96,7 +96,7 @@ Seeds are lightweight CSV datasets defined in your project. Seeds are source-onl
 
 ### Properties
 
-Tables in pipelines do not support dbt properties, which are only applicable to [model sources and targets](/engineers/model-sources-and-targets).
+Tables in pipelines do not support dbt properties, which are only applicable to [model sources and targets](/data-engineering/development/models/sources-target/sources-target).
 
 ## Cross-workspace access
 
@@ -113,4 +113,4 @@ To work with tables from a different Databricks workspace, use [Delta Sharing](h
 
 ## Reusing and sharing tables
 
-After you create a table in Prophecy, you can reuse its configuration across your entire project. All created tables appear in the [Project](/analysts/project-editor) tab in the left sidebar. To make tables available to other teams, you can share your project as a package in the [Package Hub](/engineers/package-hub). Other users will be able to use the shared table configuration, provided they have the necessary permissions in Databricks to access the underlying data.
+After you create a table in Prophecy, you can reuse its configuration across your entire project. All created tables appear in the [Project](/data-analytics/development/studio/studio) tab in the left sidebar. To make tables available to other teams, you can share your project as a package in the [Package Hub](/data-engineering/extensibility/package-hub/package-hub). Other users will be able to use the shared table configuration, provided they have the necessary permissions in Databricks to access the underlying data.

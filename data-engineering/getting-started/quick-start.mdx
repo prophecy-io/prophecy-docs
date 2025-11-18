@@ -4,7 +4,7 @@ description: Create a Spark pipeline for data engineering
 ---
 
 <Callout icon="/images/icon.png" color="#FFC107">
-  Follow this quickstart on the [Enterprise Edition](/getting-started/editions/) only.
+  Follow this quickstart on the [Enterprise Edition](/data-engineering/administration/platform/editions) only.
 </Callout>
 
 Follow this 15 minute quickstart to learn how to create a Spark pipeline with Prophecy's visual interface.
@@ -26,7 +26,7 @@ To complete this quickstart, you need:
 
 If you need a fabric, you have a few options:
 
-- Create a fabric that connects to [Prophecy-managed Databricks](docs/administration/fabrics/Spark-fabrics/prophecy-managed.md). Free trial users will automatically have this fabric.
+- Create a fabric that connects to [Prophecy-managed Databricks](/data-engineering/fabrics/prophecy-managed). Free trial users will automatically have this fabric.
 - Ask a [team admin](docs/administration/teams-users/teamuser.md) to create a fabric for you that connects to an existing external Spark engine.
 
 ## Create a project
@@ -67,7 +67,7 @@ Prophecy will open the pipeline canvas for your new pipeline in the project edit
 
 ### Add a source
 
-For this quickstart, you'll create a [Seed](/engineers/seed) as the data source.
+For this quickstart, you'll create a [Seed](/data-engineering/gems/source-target/file/seed) as the data source.
 
 1. Open the **Source/Target** gem category.
 1. Click **Source**. This adds a new Source gem to the canvas.
@@ -107,7 +107,7 @@ Now, let's make sure the data is properly loaded. Because the copy-pasted data i
 
 ### Add a reformat transformation
 
-Now, you'll configure your first data transformation using the [Reformat](/engineers/reformat) gem.
+Now, you'll configure your first data transformation using the [Reformat](/data-engineering/gems/transform/reformat) gem.
 
 1. From the **Transform** gem category, add a **Reformat** gem to your canvas.
 1. Drag the Reformat gem near your Table gem to auto-connect them.
@@ -126,7 +126,7 @@ When you add columns to the **Target Columns** of a gem, Prophecy includes the c
 
 ## Generate data previews
 
-At this point, you may be curious to know what your data looks like. Generate [data previews](/engineers/data-explorer) with the following steps:
+At this point, you may be curious to know what your data looks like. Generate [data previews](/data-engineering/development/data-explorer/data-explorer) with the following steps:
 
 1. Click the play button in the bottom right corner of the canvas.
 1. As the pipeline runs, preview icons should appear as gem outputs.
@@ -149,5 +149,5 @@ Now, you'll be able to view this commit in the branch history. Feel free to cont
 Continue your Prophecy learning journey:
 
 - Try our [end-to-end tutorial](docs/getting-started/tutorials/spark-with-databricks.md) on the project lifecycle in Prophecy
-- Discover the different [Spark gems](/engineers/gems) that you can use for data transformation
-- [Reach out to us](docs/getting-help/getting-help.md) if you need additional help or guidance
+- Discover the different [Spark gems](/data-engineering/gems/gems) that you can use for data transformation
+- [Reach out to us](/data-engineering/administration/getting-help/getting-help) if you need additional help or guidance

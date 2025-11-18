@@ -1,4 +1,4 @@
-Prophecy [Express Edition](docs/getting-started/editions/editions.md) is a streamlined version of Prophecy designed for business analysts who need to build and deploy data pipelines quickly. This edition provides essential data transformation capabilities with simplified administration and deployment options.
+Prophecy [Express Edition](/data-engineering/administration/platform/editions) is a streamlined version of Prophecy designed for business analysts who need to build and deploy data pipelines quickly. This edition provides essential data transformation capabilities with simplified administration and deployment options.
 
 ## LLM backend configuration
 
@@ -10,7 +10,7 @@ For more information about AI features and model support, visit [Prophecy AI](/p
 
 Express Edition supports up to 20 users maximum with a cap of five simultaneous users.
 
-Learn how to add teams and users in [Team and user provisioning](/administration/user-management/team-user-provisioning).
+Learn how to add teams and users in [Team and user provisioning](/data-engineering/administration/management/users/team-user-provisioning).
 
 ### Optional: Authentication
 
@@ -31,8 +31,8 @@ Prophecy projects are stored as code in Git repositories. You can use either:
 
 To access external repositories, the corresponding Git credentials must be stored in Prophecy.
 
-- Learn how to [add new Git credentials](/engineers/git#Git-credentials).
-- Learn how to [share Git credentials](/engineers/git#share-credentials) with your team.
+- Learn how to [add new Git credentials](/data-engineering/ci-cd/git/git#Git-credentials).
+- Learn how to [share Git credentials](/data-engineering/ci-cd/git/git#share-credentials) with your team.
 
 When creating a new project, users can select to connect to the Prophecy-managed Git repository or any Git account they have access to in Prophecy. If a user selects a Git account, they can select any empty repository to store the project.
 
@@ -40,9 +40,9 @@ When creating a new project, users can select to connect to the Prophecy-managed
 
 A fabric in Prophecy defines the execution environment for your pipelines. To set up an execution environment:
 
-- Create a [Prophecy fabric](/administration/fabrics/prophecy-fabrics/). You can only create fabrics for teams where you are the [team admin](/administration/rbac).
-- To add SQL warehouse connection in the fabric, set up a [Databricks connection](/administration/fabrics/prophecy-fabrics/connections/databricks).
-- To add data ingress/egress connections in the fabric, [follow the instructions](/administration/fabrics/prophecy-fabrics/connections/) for each type of connection.
+- Create a [Prophecy fabric](/data-analytics/environment/fabrics/prophecy-fabrics). You can only create fabrics for teams where you are the [team admin](/administration/rbac).
+- To add SQL warehouse connection in the fabric, set up a [Databricks connection](/data-analytics/environment/connections/databricks).
+- To add data ingress/egress connections in the fabric, [follow the instructions](/data-analytics/environment/connections/connections) for each type of connection.
 
 You can create individual fabrics for different execution environments (for example, `dev` and `prod`).
 

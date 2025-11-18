@@ -4,14 +4,14 @@ description: Complex pipeline interactions and timing
 ---
 
 <Callout icon="/images/icon.png" color="#FFC107">
-  Available for [Enterprise Edition](/getting-started/editions/) only.
+  Available for [Enterprise Edition](/data-engineering/administration/platform/editions) only.
 </Callout>
 
 To better structure your projects, sometimes you will want to create multiple different jobs that trigger only a specific set of pipelines. For example, when using the [Bronze, Silver, Gold](https://www.prophecy.io/blogs/prophecy-with-delta#bronze-silver-gold-layers) architecture, one might want to have a project for each one of the stages and run each stage sequentially: run _Gold_ after _Silver_ is finished and run _Silver_ after _Bronze_ is finished.
 
 However, this poses a question: How to schedule multiple jobs together?
 
-This page describes how to trigger jobs using the [Script job gem](/engineers/databricks-jobs#script-gem). You can also use the [RunJob job gem](/engineers/databricks-jobs#runjob-gem) to trigger jobs. See [Databricks jobs](/engineers/databricks-jobs) for more information.
+This page describes how to trigger jobs using the [Script job gem](/data-engineering/orchestration/databricks-jobs#script-gem). You can also use the [RunJob job gem](/data-engineering/orchestration/databricks-jobs#runjob-gem) to trigger jobs. See [Databricks jobs](/data-engineering/orchestration/databricks-jobs) for more information.
 
 ## Time-based Approach
 

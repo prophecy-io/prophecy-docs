@@ -30,7 +30,7 @@ The **Providers** tab allows you to configure what type of execution environment
 | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | Provider Type     | Type of fabric. Choose **Prophecy**.                                                                                                                           | Yes      |
 | Provider          | Provider of the primary SQL warehouse. Prophecy supports Databricks and BigQuery.                                                                              | Yes      |
-| Advanced Settings | Option to use Prophecy Automate from a different networking zone (only applicable if [not deployed in Prophecy network](docs/administration/architecture.md)). | No       |
+| Advanced Settings | Option to use Prophecy Automate from a different networking zone (only applicable if [not deployed in Prophecy network](/data-engineering/administration/platform/architecture)). | No       |
 
 ### Connections
 
@@ -39,7 +39,7 @@ The **Connections** tab allows you to store your credentials to various external
 | Parameter                  | Description                                                                                                                                                                                                          | Required |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | SQL Warehouse Connection   | Primary SQL warehouse connection. A connection must be made to the [Provider](#providers) defined in the previous tab. When you use this fabric, all SQL queries will be executed on this warehouse.                 | Yes      |
-| Ingress/Egress Connections | Additional connections to external data providers that can be reused throughout pipelines. For a complete list of supported connections, visit [Connections](/administration/fabrics/prophecy-fabrics/connections/). | No       |
+| Ingress/Egress Connections | Additional connections to external data providers that can be reused throughout pipelines. For a complete list of supported connections, visit [Connections](/data-analytics/environment/connections/connections). | No       |
 
 <Info>
 Your SQL warehouse connection gives Prophecy access to both the execution environment and cloud storage of that connection. Additional ingress/egress connections in your fabric are only used for reading and writing data (not pipeline execution).
@@ -47,7 +47,7 @@ Your SQL warehouse connection gives Prophecy access to both the execution enviro
 
 ### Secrets
 
-The **Secrets** tab lets you encrypt your sensitive data, so you can use values without directly exposing them in your projects or pipelines. Prophecy fabrics leverage [Prophecy secrets](/analysts/secrets) to manage both text-based and binary secrets.
+The **Secrets** tab lets you encrypt your sensitive data, so you can use values without directly exposing them in your projects or pipelines. Prophecy fabrics leverage [Prophecy secrets](/data-analytics/environment/secrets/secrets) to manage both text-based and binary secrets.
 
 | Parameter | Description                                                   | Required                         |
 | --------- | ------------------------------------------------------------- | -------------------------------- |

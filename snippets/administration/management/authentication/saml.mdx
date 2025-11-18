@@ -1,6 +1,6 @@
 <Callout icon="/images/icon.png" color="#FFC107">
 
-  Available for [Express and Enterprise Editions](/getting-started/editions/) only.
+  Available for [Express and Enterprise Editions](/data-engineering/administration/platform/editions) only.
 
 </Callout>
 
@@ -13,8 +13,8 @@ This page describes how to set up SAML and SCIM, which requires configuration in
 Review the following prerequisites.
 
 - To access SSO settings, you must be a [cluster admin](/administration/rbac) for your deployment.
-- SAML is available for [Express and Enterprise Editions](/getting-started/editions/).
-- SCIM is only available for the [Enterprise Edition](/getting-started/editions/). To enable SCIM in your environment, update the `config` in your Prophecy deployment.
+- SAML is available for [Express and Enterprise Editions](/data-engineering/administration/platform/editions).
+- SCIM is only available for the [Enterprise Edition](/data-engineering/administration/platform/editions). To enable SCIM in your environment, update the `config` in your Prophecy deployment.
 
 ## Supported identity providers
 
@@ -58,7 +58,7 @@ SCIM allows Prophecy to automatically provision and deprovision users and teams 
 1. Complete the [SAML configuration](#set-up-saml) described above.
 1. Click **Generate SCIM Token** and copy the value of the token. You will use this in your IdP settings later.
 
-After completing these steps, you'll create users and groups in your IdP directly. See [Group-to-team mapping](docs/administration/authentication/group-team-mapping.md) to learn about group naming conventions.
+After completing these steps, you'll create users and groups in your IdP directly. See [Group-to-team mapping](/data-engineering/administration/management/authentication/group-team-mapping) to learn about group naming conventions.
 
 ## IdP-specific steps
 
@@ -123,7 +123,7 @@ To set up SCIM in Azure:
 
 1. From the left menu of the same provisioning page, navigate to **Manage > Users and groups**.
 
-   - Create groups using Prophecy's [naming conventions](docs/administration/authentication/group-team-mapping.md).
+   - Create groups using Prophecy's [naming conventions](/data-engineering/administration/management/authentication/group-team-mapping).
    - Assign users to those groups.
 
 These users and teams should automatically appear in Prophecy.
@@ -208,7 +208,7 @@ Once SCIM is enabled, two new tabs should appear in the application settings: **
 Now that you have set up the connection, you need to create and activate your group assignments.
 
 1. Open the **Assignments** tab.
-1. Create users and assign them to groups using Prophecy's [naming conventions](docs/administration/authentication/group-team-mapping.md).
+1. Create users and assign them to groups using Prophecy's [naming conventions](/data-engineering/administration/management/authentication/group-team-mapping).
 1. Navigate to the **Push Groups** tab.
 1. Follow the steps in [Enable Group Push](https://help.okta.com/en-us/content/topics/users-groups-profiles/usgp-enable-group-push.htm) in the Okta documentation to activate group provisioning in Prophecy.
 

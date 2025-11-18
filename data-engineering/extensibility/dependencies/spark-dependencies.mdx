@@ -4,7 +4,7 @@ description: Reuse Spark dependencies in pipelines and jobs
 ---
 
 <Callout icon="/images/icon.png" color="#FFC107">
-  Available for [Enterprise Edition](/getting-started/editions/) only.
+  Available for [Enterprise Edition](/data-engineering/administration/platform/editions) only.
 </Callout>
 
 Dependencies allow you to make use of a variety of packages in your data pipelines and jobs. There are three types of dependencies for Spark projects:
@@ -119,7 +119,7 @@ To add the `io.github.etspaceman:scalacheck-faker_2.12:7.0.0` dependency, edit t
 
 When manually deploying pipelines using WHL format, you need to account for dependencies in both Python and Scala.
 WHL files inherently record Python dependencies, which ensures Python-related packages are handled during deployment.
-You can use the following option in [Prophecy Build Tool (PBT)](/engineers/prophecy-build-tool) to
+You can use the following option in [Prophecy Build Tool (PBT)](/data-engineering/ci-cd/prophecy-build-tool/prophecy-build-tool) to
 generate and include Scala dependency metadata in your deployment.
 
 #### Run the PBT command

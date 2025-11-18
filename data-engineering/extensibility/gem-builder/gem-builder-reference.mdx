@@ -4,7 +4,7 @@ description: Detailed explanation of custom gem code structure
 ---
 
 <Callout icon="/images/icon.png" color="#FFC107">
-Available for [Enterprise Edition](/getting-started/editions/) only.
+Available for [Enterprise Edition](/data-engineering/administration/platform/editions) only.
 </Callout>
 
 This page provides information about how gems are written in code. Reference this page when you are building or editing custom gems.
@@ -21,7 +21,7 @@ There are a few different types of gems that you can create. The table below des
 | --------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------- |
 | Transformation                    | Edits intermediate data in the pipeline that is in-memory.                                | Choose the **category** of the transformation gem     |
 | Dataset Format                    | Reads and writes data between storage and memory.                                         | Choose whether the type is **batch** or **streaming** |
-| Custom Subgraph (**Python only**) | Controls the flow of gems. Visit the [Subgraph](/engineers/subgraph) page for an example. | None                                                  |
+| Custom Subgraph (**Python only**) | Controls the flow of gems. Visit the [Subgraph](/data-engineering/gems/subgraph/subgraph) page for an example. | None                                                  |
 
 ## Classes
 
@@ -44,7 +44,7 @@ The following functions can be used to customize Spark gems.
 | Function                    | Purpose                                                                                                                            | Return                                 | Gem Mode                    |
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- | --------------------------- |
 | `optimizeCode`              | Enables the Prophecy optimizer to simplify the gem code when it runs.                                                              | Boolean                                | All                         |
-| `customOutputSchemaEnabled` | Enables the [custom schema](/engineers/gems#output-ports) option by default in the gem. Requires gemLibsVersion 1.1.47+ for Scala. | Boolean                                | Transformation              |
+| `customOutputSchemaEnabled` | Enables the [custom schema](/data-engineering/gems/gems#output-ports) option by default in the gem. Requires gemLibsVersion 1.1.47+ for Scala. | Boolean                                | Transformation              |
 | `dialog`                    | Defines how you want the gem to look like in the visual interface.                                                                 | `Dialog` object                        | Transformation and Subgraph |
 | `sourceDialog`              | Defines how you want the source gem to look like in the visual interface.                                                          | `DatasetDialog` object                 | Dataset and Subgraph        |
 | `targetDialog`              | Defines how you want the target gem to look like in the visual interface.                                                          | `DatasetDialog` object                 | Dataset and Subgraph        |

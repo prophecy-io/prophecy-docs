@@ -16,7 +16,7 @@ Use a Source or Target gem to read from or write to OneDrive in Prophecy pipelin
 | Format                                                           | Read | Write |
 | ---------------------------------------------------------------- | ---- | ----- |
 | [CSV](/data-analytics/gems/source-target/file/file-types/csv)    | Yes  | Yes   |
-| [Fixed width](/analysts/fixed-width)                             | Yes  | No    |
+| [Fixed width](/data-analytics/gems/source-target/file/file-types/fixed-width)                             | Yes  | No    |
 | [JSON](/data-analytics/gems/source-target/file/file-types/json)  | Yes  | Yes   |
 | [XLSX](/data-analytics/gems/source-target/file/file-types/excel) | Yes  | Yes   |
 | [XML](/data-analytics/gems/source-target/file/file-types/xml)    | Yes  | Yes   |
@@ -25,7 +25,7 @@ Use a Source or Target gem to read from or write to OneDrive in Prophecy pipelin
 
 To create a OneDrive Source or Target gem in your pipeline:
 
-1. Set up your [OneDrive connection](/administration/fabrics/prophecy-fabrics/connections/onedrive).
+1. Set up your [OneDrive connection](/data-analytics/environment/connections/onedrive).
 1. Add a new Source or Target gem to your pipeline canvas and open the configuration.
 1. In the **Type** tab, select **OneDrive**.
 1. In the **Location** tab, choose your [file format](#supported-file-formats) and location.
@@ -34,7 +34,7 @@ To create a OneDrive Source or Target gem in your pipeline:
 
 1. In the **Properties** tab, set the file properties. These vary based on the file type that you are working with.
 
-   <Info>See the list of properties per [file type](/analysts/file-types).</Info>
+   <Info>See the list of properties per [file type](/data-analytics/gems/source-target/file).</Info>
 
 1. (Source only) In the **Preview** tab, load a sample of the data and verify that it looks correct.
 
@@ -43,5 +43,5 @@ To create a OneDrive Source or Target gem in your pipeline:
 | Parameter                   | Description                                                                                                                  |
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | Format type                 | Type of file to read or write, such as `csv` or `json`.                                                                      |
-| Select or create connection | Select an existing OneDrive connection or [create a new one](/administration/fabrics/prophecy-fabrics/connections/onedrive). |
+| Select or create connection | Select an existing OneDrive connection or [create a new one](/data-analytics/environment/connections/onedrive). |
 | Filepath                    | Path to the file in OneDrive.                                                                                                |

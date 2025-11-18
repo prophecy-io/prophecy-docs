@@ -71,7 +71,7 @@ To learn more about Delta time travel and its use cases, see [Introducing Delta 
 ### Compiled code
 
 <Tip>
-To see the compiled code of your project, [switch to the Code view](/engineers/pipelines#project-editor) in the project header.
+To see the compiled code of your project, [switch to the Code view](/data-engineering/development/pipelines/pipelines#project-editor) in the project header.
 </Tip>
 
 #### Without filter predicate
@@ -141,8 +141,8 @@ The Target gem writes data to Delta tables and allows you to optionally specify 
 | error | If the data already exists, throw an exception. |
 | append | If the data already exists, append the contents of the `DataFrame`. |
 | ignore | If the data already exists, do nothing with the contents of the `DataFrame`. This is similar to the `CREATE TABLE IF NOT EXISTS` clause in SQL. |
-| merge | Use the Delta `merge` command to insert, delete and update data. For more information, see [Delta MERGE](/engineers/delta/#delta-merge). |
-| scd2 merge | Store and manage the current and historical data over time. For more information, see [Delta MERGE](/engineers/delta/#delta-merge). |
+| merge | Use the Delta `merge` command to insert, delete and update data. For more information, see [Delta MERGE](/data-engineering/delta/#delta-merge). |
+| scd2 merge | Store and manage the current and historical data over time. For more information, see [Delta MERGE](/data-engineering/delta/#delta-merge). |
 
 <Tip>
 These `overwrite`, `append`, `ignore`, and `error` write modes operate the same way as with other native Spark-supported formats such as Parquet.
@@ -153,7 +153,7 @@ These `overwrite`, `append`, `ignore`, and `error` write modes operate the same 
 ### Compiled code
 
 <Tip>
-To see the compiled code of your project, [switch to the Code view](/engineers/pipelines#project-editor) in the project header.
+To see the compiled code of your project, [switch to the Code view](/data-engineering/development/pipelines/pipelines#project-editor) in the project header.
 </Tip>
 
 <CodeGroup>

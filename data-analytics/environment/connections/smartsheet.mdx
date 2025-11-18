@@ -20,10 +20,10 @@ The table below outlines whether the connection supports certain Prophecy featur
 
 | Feature                                                                    | Supported |
 | -------------------------------------------------------------------------- | --------- |
-| Read data with a [Source gem](/analysts/smartsheet-gem)                    | Yes       |
-| Write data with a [Target gem](/analysts/smartsheet-gem)                   | Yes       |
-| Browse data in the [Environment browser](/analysts/project-editor#sidebar) | Yes       |
-| Index files in the [Knowledge Graph](/knowledge-graph)                     | No        |
+| Read data with a [Source gem](/data-analytics/gems/source-target/file/smartsheet)                    | Yes       |
+| Write data with a [Target gem](/data-analytics/gems/source-target/file/smartsheet)                   | Yes       |
+| Browse data in the [Environment browser](/data-analytics/development/studio/studio#sidebar) | Yes       |
+| Index files in the [Knowledge Graph](/data-analytics/ai/knowledge-graph/knowledge-graph)                     | No        |
 
 ## Limitations
 
@@ -46,11 +46,11 @@ To create a connection with Smartsheet, enter the following parameters:
 | Parameter                                                                                         | Description                                                                                                                                   |
 | ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | Connection Name                                                                                   | Unique name for the connection                                                                                                                |
-| Access Token ([Secret required](docs/administration/fabrics/prophecy-fabrics/secrets/secrets.md)) | Your [Smartsheet API access token](https://developers.smartsheet.com/api/smartsheet/guides/basics/authentication#access-token-best-practices) |
+| Access Token ([Secret required](/data-analytics/environment/secrets/secrets)) | Your [Smartsheet API access token](https://developers.smartsheet.com/api/smartsheet/guides/basics/authentication#access-token-best-practices) |
 
 ## Sharing connections within teams
 
-Connections in Prophecy are stored within [fabrics](docs/administration/fabrics/prophecy-fabrics/prophecy-fabrics.md), which are assigned to specific teams. Once a Smartsheet connection is added to a fabric, all team members who have access to the fabric can use the connection in their projects. No additional authentication is required—team members automatically inherit the access and permissions of the stored connection credentials.
+Connections in Prophecy are stored within [fabrics](/data-analytics/environment/fabrics/prophecy-fabrics), which are assigned to specific teams. Once a Smartsheet connection is added to a fabric, all team members who have access to the fabric can use the connection in their projects. No additional authentication is required—team members automatically inherit the access and permissions of the stored connection credentials.
 
 <Warning>
 Be mindful of the access level granted by the stored credentials. Anyone on the team will have the same permissions—including access to sensitive data if allowed.

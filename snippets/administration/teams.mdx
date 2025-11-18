@@ -4,14 +4,14 @@ Teams represent groups of users who collaborate on projects and share access to 
 
 There are two types of teams in Prophecy.
 
-- **Shared teams:** Your [team admin](/administration/rbac#team-admins) typically creates additional team groupings. Team structures will vary across organizations. To learn about best practices for organizing teams, visit [Team-based access](/administration/team-based-access).
+- **Shared teams:** Your [team admin](/administration/rbac#team-admins) typically creates additional team groupings. Team structures will vary across organizations. To learn about best practices for organizing teams, visit [Team-based access](/data-engineering/administration/management/users/access/team-based-access).
 - **Personal teams:** When you start using Prophecy, you are automatically assigned to your own one-person team. You are also the team admin of this team. If you want a project or fabric to be accessible only to yourself, you can assign it to your personal team and keep it private.
 
 ## Team admins
 
 Team admins are responsible for managing the structure and resources of a team. They can:
 
-- [Create and manage](/administration/user-management/team-user-provisioning) teams and team members.
+- [Create and manage](/data-engineering/administration/management/users/team-user-provisioning) teams and team members.
 - Create and configure fabrics for the team.
 - Set up connections and secrets.
 - Manage additional team-level settings.
@@ -42,7 +42,7 @@ The team metadata page includes the following information:
 
 <Callout icon="/images/icon.png" color="#FFC107">
 
-Available for [Enterprise Edition](/getting-started/editions/) only.
+Available for [Enterprise Edition](/data-engineering/administration/platform/editions) only.
 
 </Callout>
 
@@ -50,7 +50,7 @@ The following sections describe each tab within the team's metadata settings.
 
 #### Execution Metrics (Spark only)
 
-In the Execution Metrics tab, you can enable or disable [execution metrics](/engineers/execution-metrics) at the team level. You can also specify in which tables to store execution metrics for each pipeline run.
+In the Execution Metrics tab, you can enable or disable [execution metrics](/data-engineering/fabrics/execution-metrics) at the team level. You can also specify in which tables to store execution metrics for each pipeline run.
 
 #### Code Generation (Spark only)
 

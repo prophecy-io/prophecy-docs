@@ -7,12 +7,12 @@ Subgraph gems let you take multiple different gems and wrap them under a single 
 
 ## Types of subgraphs
 
-There are three types of subgraphs available by default. The [basic](/engineers/basic-subgraph) subgraph is a great introduction to using subgraphs. Use the individual subgraph documentation to learn how to build each type of subgraph.
+There are three types of subgraphs available by default. The [basic](/data-engineering/gems/subgraph/basicSubgraph) subgraph is a great introduction to using subgraphs. Use the individual subgraph documentation to learn how to build each type of subgraph.
 
 | Name                                        | Description                                                                                                                     |
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| [Basic](/engineers/basic-subgraph)          | Captures one or more gems within a pipeline to reuse across other pipelines and projects.                                       |
-| [Table Iterator](/engineers/table-iterator) | Iterates over one or more gems for each row of the first input DataFrame. Table iterator is available for Python projects only. |
+| [Basic](/data-engineering/gems/subgraph/basicSubgraph)          | Captures one or more gems within a pipeline to reuse across other pipelines and projects.                                       |
+| [Table Iterator](/data-engineering/gems/subgraph/tableIterator) | Iterates over one or more gems for each row of the first input DataFrame. Table iterator is available for Python projects only. |
 | [Custom](#build-a-custom-subgraph-type)     | Apply any custom logic to the group of gems present inside the subgraph.                                                        |
 
 ## Reuse subgraphs
@@ -30,8 +30,8 @@ Click on the **(1) Create Gem** button. This will open up the **Create Gem** For
 
 ![Create_subgraph_gem](img/create_subgraph_type.png)
 
-This takes you to the gem code editor with a basic structure of the code generated. Here you can start modifying your gem dialog, validation, and processing logic. Visit the [gem builder documentation](/docs/extensibility/gem-builder/spark-gem-builder.md) for more details.
+This takes you to the gem code editor with a basic structure of the code generated. Here you can start modifying your gem dialog, validation, and processing logic. Visit the [gem builder documentation](/data-engineering/extensibility/gem-builder/spark-gem-builder) for more details.
 
-The newly constructed Subgraph gem appears in the Subgraph section of the project browser and can be utilized within any pipeline of this project. Furthermore, if you publish this project to the [Package Hub](/engineers/package-hub), other projects can utilize the Subgraph gem via a package dependency.
+The newly constructed Subgraph gem appears in the Subgraph section of the project browser and can be utilized within any pipeline of this project. Furthermore, if you publish this project to the [Package Hub](/data-engineering/extensibility/package-hub/package-hub), other projects can utilize the Subgraph gem via a package dependency.
 
 ![Use_subgraph](img/Use_new_subgraph.png)

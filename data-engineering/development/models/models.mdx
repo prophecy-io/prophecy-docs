@@ -4,7 +4,7 @@ description: Models define a single target table or view in a SQL warehouse
 ---
 
 <Callout icon="/images/icon.png" color="#FFC107">
-  Available for [Enterprise Edition](/getting-started/editions/) only.
+  Available for [Enterprise Edition](/data-engineering/administration/platform/editions) only.
 </Callout>
 
 In Prophecy, a model comprises a set of gems that process data into one output. In other words, each model corresponds to a **single table** in your database.
@@ -53,7 +53,7 @@ To open the Advanced Settings:
 
 ## Schedule models
 
-To schedule model execution, set up [Databricks Jobs](/engineers/databricks-jobs) or Apache Airflow DAGs directly within Prophecy. Models can only be scheduled on [Analytics Engineer](/administration/project-types/) projects.
+To schedule model execution, set up [Databricks Jobs](/data-engineering/orchestration/databricks-jobs) or Apache Airflow DAGs directly within Prophecy. Models can only be scheduled on [Analytics Engineer](/administration/project-types/) projects.
 
 ## Models vs pipelines
 
@@ -70,7 +70,7 @@ Models and pipelines are two different SQL project components. The following tab
 
 ### Show underlying models
 
-Many visual transformations in pipelines are compiled into models under the hood. If you are working on a pipeline, you can view and edit the code of [underlying dbt models](/analysts/pipeline-execution#execution-environment) in a pipeline. However, you cannot visually edit these underlying models.
+Many visual transformations in pipelines are compiled into models under the hood. If you are working on a pipeline, you can view and edit the code of [underlying dbt models](/data-analytics/development/runs/execution#execution-environment) in a pipeline. However, you cannot visually edit these underlying models.
 
 To view these models, select **Show Models** from the **...** menu in the left sidebar of a project.
 

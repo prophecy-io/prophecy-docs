@@ -4,7 +4,7 @@ description: View the difference between a target dataset and an expected datase
 ---
 
 <Callout icon="/images/icon.png" color="#FFC107">
-  Available for [Enterprise Edition](/getting-started/editions/) only.
+  Available for [Enterprise Edition](/data-engineering/administration/platform/editions) only.
 </Callout>
 
 Data diffs can help you identify when pipeline outputs do not meet predefined expectations. This can be useful for:
@@ -20,7 +20,7 @@ To compute a data diff, you need:
 
 - **Prophecy 4.0 or later.**
 - **A Prophecy Python project.** Data diffs are not supported for Scala or SQL projects.
-- **ProphecyLibsPython 1.9.37 or later** as a dependency for your project. For more information, see [Prophecy libraries](docs/extensibility/dependencies/prophecy-libs.md).
+- **ProphecyLibsPython 1.9.37 or later** as a dependency for your project. For more information, see [Prophecy libraries](/data-engineering/extensibility/dependencies/prophecy-libs).
 - **An expected dataset**. It must be in Parquet or Databricks Catalog Table format.
 
 <Note>
@@ -30,7 +30,7 @@ To compute a data diff, you need:
 
 ## What is data diff?
 
-Data diffs are outputs of Target gems that show you differences between your target table and an expected table. Similar to a data sample, you can explore the data diff after [interactively running](/engineers/execution) a pipeline.
+Data diffs are outputs of Target gems that show you differences between your target table and an expected table. Similar to a data sample, you can explore the data diff after [interactively running](/data-engineering/development/runs/execution) a pipeline.
 
 The data diff has four views:
 

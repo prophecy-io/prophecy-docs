@@ -4,7 +4,7 @@ description: Control how a pipeline behaves during execution
 ---
 
 <Callout icon="/images/icon.png" color="#FFC107">
-  Available for [Enterprise Edition](/getting-started/editions/) only.
+  Available for [Enterprise Edition](/data-engineering/administration/platform/editions) only.
 </Callout>
 
 A configuration is a set of predefined variables and values that control how a data pipeline behaves during execution. By using configurations, you can dynamically adapt a pipeline to different environments or scenarios without modifying the pipeline itself.
@@ -124,7 +124,7 @@ Jinja syntax is not supported for Source and Target gems.
 
 ### Syntax for different languages
 
-Depending on the Visual Language configured in your [Pipeline Settings](/engineers/pipeline-settings), you can also use that language's syntax to call variables.
+Depending on the Visual Language configured in your [Pipeline Settings](/data-engineering/development/pipelines/pipeline-settings), you can also use that language's syntax to call variables.
 
 | Visual Language | Syntax               | Expression usage           |
 | --------------- | -------------------- | -------------------------- |
@@ -164,7 +164,7 @@ When deploying pipelines to production environments, you typically run them as s
 
 ## Subgraph configurations
 
-[Subgraphs](/engineers/subgraph) can have their own dedicated configurations that control behavior within the subgraph's scope. This allows you to create reusable pipeline components with their own configurable parameters. To add configs to a subgraph:
+[Subgraphs](/data-engineering/gems/subgraph/subgraph) can have their own dedicated configurations that control behavior within the subgraph's scope. This allows you to create reusable pipeline components with their own configurable parameters. To add configs to a subgraph:
 
 1. Open the subgraph.
 1. Click **+ Config**.

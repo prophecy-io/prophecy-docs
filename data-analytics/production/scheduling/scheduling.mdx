@@ -1,28 +1,28 @@
 ---
-title: "Scheduling"
-description: "Automate your pipeline runs using schedules"
+title: 'Scheduling'
+description: 'Automate your pipeline runs using schedules'
 ---
 
 Prophecy supports the following ways to automate pipeline execution.
 
-- **Built-in scheduler**: Use [Prophecy Automate](/administration/architecture/) to orchestrate pipelines directly in the UI.
-- **Pipeline gem**: Configure the [Pipeline gem](/analysts/pipeline-trigger-gem) to start pipeline runs from a gem in the canvas.
+- **Built-in scheduler**: Use [Prophecy Automate](/data-analytics/administration/platform/architecture) to orchestrate pipelines directly in the UI.
+- **Pipeline gem**: Configure the [Pipeline gem](/data-analytics/production/scheduling/pipeline-trigger-gem) to start pipeline runs from a gem in the canvas.
 - **API-based automation**: Call the [Trigger Pipeline API](/api/trigger-pipeline/trigger-pipeline-api) to start pipelines from external systems.
 
 This page describes how to use the **built-in scheduler** in SQL projects.
 
 ## Overview
 
-In Prophecy, a schedule automates the execution of a single pipeline in a project. Scheduled pipelines run in [fabrics](/administration/fabrics/prophecy-fabrics/) (execution environments) that are defined during project publication. Each schedule defines:
+In Prophecy, a schedule automates the execution of a single pipeline in a project. Scheduled pipelines run in [fabrics](/data-analytics/environment/fabrics/prophecy-fabrics) (execution environments) that are defined during project publication. Each schedule defines:
 
-- When the pipeline should run. Prophecy supports time-based or file-based [triggers](/analysts/triggers).
-- Optional [email alerts](/analysts/schedule-email-alerts) to report the outcome of the pipeline run.
+- When the pipeline should run. Prophecy supports time-based or file-based [triggers](/data-analytics/production/scheduling/triggers).
+- Optional [email alerts](/data-analytics/production/scheduling/alerts) to report the outcome of the pipeline run.
 
 To schedule multiple pipelines, create a separate schedule for each one. You can enable or disable schedules individually, but enabling a schedule doesn't activate it. An enabled schedule becomes active only when the parent project is published. Similarly, disabling a schedule also requires republishing the project, since schedule status is part of the deployment configuration.
 
 ## Schedule activation
 
-Enabling a schedule in your project doesn't immediately activate it. For a schedule to take effect, you must first [publish the project](/analysts/project-publication). This is because publishing defines how and where scheduled pipelines are deployed and executed.
+Enabling a schedule in your project doesn't immediately activate it. For a schedule to take effect, you must first [publish the project](/data-analytics/production/publication). This is because publishing defines how and where scheduled pipelines are deployed and executed.
 
 When you publish a project, you do two key things:
 
@@ -36,7 +36,7 @@ When you publish a project, you do two key things:
 
 ## Monitor scheduled pipelines
 
-You and your team members might have many scheduled pipelines in your Prophecy environment. The [Observability](/analysts/monitoring) interface in Prophecy includes the following information:
+You and your team members might have many scheduled pipelines in your Prophecy environment. The [Observability](/data-analytics/production/monitoring) interface in Prophecy includes the following information:
 
 - List of deployed projects
 - List of pipeline schedules per fabric
@@ -60,8 +60,7 @@ To ensure reliable scheduled runs, only deploy to fabrics that use connection cr
 
 To learn more about using the Prophecy-native scheduler, explore the following pages.
 
-- [Set up schedule](/analysts/schedule-setup)
-- [Schedule trigger types](/analysts/triggers)
-- [Email alerts](/analysts/schedule-email-alerts)
-- [Pipeline gem](/analysts/pipeline-trigger-gem)
-
+- [Set up schedule](/data-analytics/production/scheduling/schedule-setup)
+- [Schedule trigger types](/data-analytics/production/scheduling/triggers)
+- [Email alerts](/data-analytics/production/scheduling/alerts)
+- [Pipeline gem](/data-analytics/production/scheduling/pipeline-trigger-gem)

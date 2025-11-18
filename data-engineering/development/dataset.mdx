@@ -4,7 +4,7 @@ description: Use datasets in your Spark project
 ---
 
 <Callout icon="/images/icon.png" color="#FFC107">
-  Available for [Enterprise Edition](/getting-started/editions/) only.
+  Available for [Enterprise Edition](/data-engineering/administration/platform/editions) only.
 </Callout>
 
 In Prophecy, datasets are grouped by [projects](/projects) and rely on the following:
@@ -14,7 +14,7 @@ In Prophecy, datasets are grouped by [projects](/projects) and rely on the follo
 
 ## Create datasets
 
-Datasets are created where they are first used in a [Source or Target gems](/engineers/source-target). A dataset definition includes its:
+Datasets are created where they are first used in a [Source or Target gems](/data-analytics/gems/source-target/source-target). A dataset definition includes its:
 
 - **Type**: The type of data you are reading/writing like CSV, Parquet files or catalog tables.
 - **Location**: The location of your data. It could be a file path for CSV or a table name.
@@ -48,7 +48,7 @@ In the **Relations** tab, there is additional information about where and how th
 | Physical Datasets   | Location of the dataset in relation to a fabric.                                                                            |
 | Pipelines           | A list of pipelines that use this dataset, with the `Relation` column indicating if it is for `Read` or `Write` purposes.   |
 | Jobs                | A list of jobs that use this dataset, with the `Relation` column indicating if it is for `Read` or `Write` purposes.        |
-| Open Lineage Viewer | The option to open this dataset in the [Lineage](/engineers/lineage) viewer, showing column-level lineage for this dataset. |
+| Open Lineage Viewer | The option to open this dataset in the [Lineage](/data-engineering/lineage/lineage) viewer, showing column-level lineage for this dataset. |
 
 ## Publishing and sharing datasets
 

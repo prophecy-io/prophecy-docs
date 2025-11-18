@@ -4,7 +4,7 @@ sidebarTitle: Dependencies
 description: "Make use of external or custom components in your pipelines and models"
 ---
 
-Dependencies allow you to reuse logic in your SQL projects, so you can build on work that's already been tested and versioned. Dependencies are scoped at the project level, and can include [packaged Prophecy projects](/engineers/package-hub), as well as external packages from GitHub or the dbt Hub.
+Dependencies allow you to reuse logic in your SQL projects, so you can build on work that's already been tested and versioned. Dependencies are scoped at the project level, and can include [packaged Prophecy projects](/data-engineering/extensibility/package-hub/package-hub), as well as external packages from GitHub or the dbt Hub.
 
 Because packages can be improved over time, you can update your project dependencies whenever a new version is published. Your project will continue to use the current version until you choose to upgrade.
 
@@ -40,7 +40,7 @@ GitHub dependencies have the following parameters:
 
 ### dbt Hub
 
-Packages in the [dbt Hub](https://hub.getdbt.com/) can be used to extend typical SQL functionality. If the package contains macros, you can use them via the [Macro](data-analytics/development/gems/custom/macro) gem.
+Packages in the [dbt Hub](https://hub.getdbt.com/) can be used to extend typical SQL functionality. If the package contains macros, you can use them via the [Macro](/data-analytics/gems/custom/macro) gem.
 
 dbt Hub dependencies have the following parameters:
 
@@ -73,7 +73,7 @@ To add a dependency to your project:
 ![dbt Hub dependency](img/dbt-dependency.png)
 
 <Tip>
-You can also browse packaged projects in the [Package Hub](/engineers/package-hub) and import them from there.
+You can also browse packaged projects in the [Package Hub](/data-engineering/extensibility/package-hub/package-hub) and import them from there.
 </Tip>
 
 ## Component usage

@@ -4,7 +4,7 @@ description: Prophecy provides small and lightweight utility libraries for Spark
 ---
 
 <Callout icon="/images/icon.png" color="#FFC107">
-  Available for [Enterprise Edition](/getting-started/editions/) only.
+  Available for [Enterprise Edition](/data-engineering/administration/platform/editions) only.
 </Callout>
 
 Prophecy libraries (ProphecyLibs) are small and lightweight utility libraries that offer comprehensive sets of Spark functions tailored for Prophecy customers. They address the most common data transformation use cases, including monitoring, auditing, connectors, and other data processing functions.
@@ -18,9 +18,9 @@ For a list of the latest ProphecyLibs versions, see [Version Chart](/docs/releas
 
 ## Project dependencies
 
-Depending on your project language (Python or Scala), the appropriate Prophecy library will be added as a [dependency](docs/extensibility/dependencies/spark-dependencies.md) in your Prophecy project.
+Depending on your project language (Python or Scala), the appropriate Prophecy library will be added as a [dependency](/data-engineering/extensibility/dependencies/spark-dependencies) in your Prophecy project.
 
-Prophecy libraries are installed in your Databricks cluster when you attach a cluster in your project. The version installed will be the same version defined in your project dependency settings. You can easily [update](/engineers/spark-dependencies#update-dependencies) the ProphecyLibs version of your project if necessary.
+Prophecy libraries are installed in your Databricks cluster when you attach a cluster in your project. The version installed will be the same version defined in your project dependency settings. You can easily [update](/data-engineering/extensibility/dependencies/spark-dependencies#update-dependencies) the ProphecyLibs version of your project if necessary.
 
 ## Functionality
 
@@ -34,7 +34,7 @@ Spark lacks auditing or monitoring capabilities for its pipelines out of the box
   table.
 </Note>
 
-To learn more about Prophecy monitoring capabilities, see [Pipeline Monitoring](/docs/Orchestration/pipeline-monitoring/pipeline-monitoring.md). To learn more about metrics setup, see [Execution Metrics](/docs/Spark/execution/execution-metrics.md).
+To learn more about Prophecy monitoring capabilities, see [Pipeline Monitoring](/data-engineering/orchestration/pipeline-monitoring/pipeline-monitoring). To learn more about metrics setup, see [Execution Metrics](/data-engineering/fabrics/execution-metrics).
 
 ### Utility functions
 
