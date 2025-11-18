@@ -11,7 +11,7 @@
   "navigation": {
     "dropdowns": [
       {
-        "dropdown": "Data Analytics",
+        "dropdown": "Data Analysis",
         "icon": "/images/pipeline.svg",
         "tabs": [
           {
