@@ -38,7 +38,7 @@ Selective data sampling gives you granular control by letting you enable or disa
 
 When Data Preview is disabled for a gem, its output appears pale after pipeline execution, indicating no sample was generated. Click the pale output to load the data sample on demand. The output icon will then display in normal bold colors.
 
-![Selective](img/selective-interims.png)
+![Selective](/data-engineering/development/runs/img/selective-interims.png)
 
 <Tip>
 
@@ -69,19 +69,19 @@ You can adjust data sampling settings for each pipeline through the **Interactiv
 
 This mode will be used when you interactively run the pipeline.
 
-![Interactive run configuration](img/interactive-run-config.png)
+![Interactive run configuration](/data-engineering/development/runs/img/interactive-run-config.png)
 
 ## Cached interims
 
 When you change data sampling settings and re-run a pipeline, some data samples may appear grayed out. These cached samples are from previous runs and may not reflect your current data or pipeline changes.
 
-![Cached interims](img/cached-interims.png)
+![Cached interims](/data-engineering/development/runs/img/cached-interims.png)
 
 ## Fabric settings
 
 In a fabric, you can enable or disable data sampling and override pipeline-level settings when a pipeline runs on that fabric. You can access this option in the **Advanced** tab of a fabric. A common use case is preventing sample data generation in **production** pipelines.
 
-![Create a new model test](./img/limit-data-preview-interims.png)
+![Create a new model test](/data-engineering/development/runs/img/limit-data-preview-interims.png)
 
 By default, only team admins can access the Advanced tab in a fabric. However, there are two flags you can set in your deployment to change this behavior:
 

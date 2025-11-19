@@ -16,7 +16,7 @@ want to be able to test and deploy our pipelines into each of these three worksp
 The release process on GitHub is defined as merging and testing to branches in the following
 order: `feature-branch` > `develop` > `qa` > `prod`
 
-![branch_protection_checks_example.png](img%2Fbranch_protection_checks_example.png)
+![branch_protection_checks_example.png](/data-engineering/ci-cd/prophecy-build-tool/img%2Fbranch_protection_checks_example.png)
 _When PRs are made to a protected branch, the unit tests must pass before the PR can be merged_
 
 Once the PR is merged successfully, we deploy the artifacts and job definitions to Databricks.
@@ -85,7 +85,7 @@ Find the Fabric IDs for your fabrics by navigating to the Metadata page of that 
 
 `Metadata` > `Fabrics` > `<your Fabric>`
 
-![finding_fabric_id.png](img%2Ffinding_fabric_id.png)
+![finding_fabric_id.png](/data-engineering/ci-cd/prophecy-build-tool/img%2Ffinding_fabric_id.png)
 
 ## Testing pipeline
 
@@ -94,21 +94,21 @@ This pipeline uses PBT to validate the pipelines and run all Prophecy unit tests
 ### Testing pipeline - Pipeline Creation
 
 - Create a Jenkins pipeline
-  ![jenkins-pipeline-type.png](img%2Fjenkins-pipeline-type.png)
+  ![jenkins-pipeline-type.png](/data-engineering/ci-cd/prophecy-build-tool/img%2Fjenkins-pipeline-type.png)
 - Configure the GitHub project URL
 - Choose GitHub Pull Request Builder as the trigger type.
 - Provide credentials to GitHub
   - creating a fine-grained Personal Acces Token (PAT) in GitHub. The PAT should be
     scoped to yourself or your Organization, have access to the repository containing the Prophecy project, and
     appropriate permissions:
-    ![github-pat-permissions.png](img%2Fgithub-pat-permissions.png)
+    ![github-pat-permissions.png](/data-engineering/ci-cd/prophecy-build-tool/img%2Fgithub-pat-permissions.png)
 - Choose pipeline Script from SCM
 - Provide the path to our Jenkinsfile within the repo
 
 <details>
 <summary> Refer to this image for all settings. </summary>
 
-![hello-cicd-declarative-test_configure.png](img%2Fhello-cicd-declarative-test_configure.png)
+![hello-cicd-declarative-test_configure.png](/data-engineering/ci-cd/prophecy-build-tool/img%2Fhello-cicd-declarative-test_configure.png)
 
 </details>
 
@@ -123,7 +123,7 @@ create webhooks in GitHub.
 <details>
 <summary> Refer to this image for all settings. </summary>
 
-![hello-cicd-declarative-test_configure-trigger.png](img%2Fhello-cicd-declarative-test_configure-trigger.png)
+![hello-cicd-declarative-test_configure-trigger.png](/data-engineering/ci-cd/prophecy-build-tool/img%2Fhello-cicd-declarative-test_configure-trigger.png)
 
 </details>
 
@@ -210,7 +210,7 @@ This pipeline uses PBT to deploy the Prophecy pipelines to their appropriate fab
 ### Deploy pipeline - Pipeline Creation
 
 - Create a Jenkins Pipeline
-  ![jenkins-pipeline-type.png](img%2Fjenkins-pipeline-type.png)
+  ![jenkins-pipeline-type.png](/data-engineering/ci-cd/prophecy-build-tool/img%2Fjenkins-pipeline-type.png)
 - Choose "GitHub hook for GITScm polling" as the trigger.
 - Choose "Pipeline from SCM" with our GitHub repo as the repository
 - Choose the branches to trigger on (`develop`, `qa`, `prod`)
@@ -219,7 +219,7 @@ This pipeline uses PBT to deploy the Prophecy pipelines to their appropriate fab
 <details>
 <summary> Refer to this image for all settings. </summary>
 
-![hello-cicd-declarative-deploy_configure.png](img%2Fhello-cicd-declarative-deploy_configure.png)
+![hello-cicd-declarative-deploy_configure.png](/data-engineering/ci-cd/prophecy-build-tool/img%2Fhello-cicd-declarative-deploy_configure.png)
 
 </details>
 
@@ -229,7 +229,7 @@ Set up a simple webhook trigger for this job inside of GitHub.
 
 - Navigate to `Settings > Webhooks > Add Webhook`
 - Create a new webhook like this:
-  ![github-push-webhook-config.png](img%2Fgithub-push-webhook-config.png)
+  ![github-push-webhook-config.png](/data-engineering/ci-cd/prophecy-build-tool/img%2Fgithub-push-webhook-config.png)
 
 ### Deploy Pipeline - Pipeline Code
 

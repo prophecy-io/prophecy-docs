@@ -5,7 +5,7 @@ description: Follow the Git workflow in your Prophecy project
 
 You can interact with a project's Git workflow from the project metadata page or within the project editor.
 
-![Git workflow](img/git-workflow.png)
+![Git workflow](/data-engineering/ci-cd/git/img/git-workflow.png)
 
 ## Checkout
 
@@ -13,7 +13,7 @@ In Prophecy, you cannot make edits directly on the `main` branch of your project
 
 Therefore, the Git workflow begins by creating and checking out a new branch.
 
-![Git checkout](img/git-checkout.png)
+![Git checkout](/data-engineering/ci-cd/git/img/git-checkout.png)
 
 When you are selecting a branch to checkout, you might be able to select branches that have been created remotely. Once you checkout a remote branch, it will be cloned locally, and it will no longer show up in the list of remote branches.
 
@@ -21,7 +21,7 @@ When you are selecting a branch to checkout, you might be able to select branche
 
 When you make changes to your pipeline, you need to commit these changes to save them. You can view these changes either visually, or using the **Code changes** view.
 
-![View Git changes](img/git-code-changes.png)
+![View Git changes](/data-engineering/ci-cd/git/img/git-code-changes.png)
 
 | **Feature**          | **View** | **Description**                                                                              |
 | -------------------- | -------- | -------------------------------------------------------------------------------------------- |
@@ -41,7 +41,7 @@ Sometimes, you will be able to go straight from committing your changes to mergi
 1. Pull **remote** changes into the **local** base branch. Note that the base branch will be `main` by default.
 1. Pull changes from the **local** base branch into the **local** current branch. You will not be able to complete this step before pulling remote commits.
 
-![Git pull](img/git-pull.png)
+![Git pull](/data-engineering/ci-cd/git/img/git-pull.png)
 
 Once you complete these steps, you might run into merge conflicts. If that happens, you can [use the Prophecy interface](/data-engineering/ci-cd/git/git-resolve) to resolve them.
 
@@ -54,7 +54,7 @@ Once you complete these steps, you might run into merge conflicts. If that happe
 
 Once you have committed your changes, you have the ability to **merge** them to a different branch. If you merged your branch in your external repository, you can tell Prophecy that you did so.
 
-![Merge branch](img/merge-branch.png)
+![Merge branch](/data-engineering/ci-cd/git/img/merge-branch.png)
 
 ### Pull Requests
 
@@ -73,4 +73,4 @@ If you have changes that you do not want to commit, there are a few ways to disc
 1. Rollback changes to a particular component in the Git workflow.
 1. Rollback to a specific commit in the Git workflow.
 
-![Rollback component](img/git-rollback.png)
+![Rollback component](/data-engineering/ci-cd/git/img/git-rollback.png)

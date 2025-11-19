@@ -14,11 +14,11 @@ Follow along to see how to use the TextProcessing gem. For an example set of pip
 
 Given a column with web URLs, the `Load web URLs` operation will scrape the content from each URL, and output the content as a binary format or as a human readable text format, depending on the operation type selected. The figure below shows the `Load web URL and Extract Text` operation.
 
-![Overview web scrape and extract text](./img/ml-text-proc-scrape-extract-overview.png)
+![Overview web scrape and extract text](/data-engineering/gems/machine-learning/img/ml-text-proc-scrape-extract-overview.png)
 
 #### 1a. Configure web scrape
 
-![Configure to web scrape](./img/ml-text-proc-scrape-configure.png)
+![Configure to web scrape](/data-engineering/gems/machine-learning/img/ml-text-proc-scrape-configure.png)
 
 Configure the **(1) Operation Type** to Load url (web scrape), and optionally extract the text. Specify which input **(2) Column name** contains the web urls. If the `extract text` operation is selected, the text will be converted from binary to human readable format. When would you want to use the binary format? Binary web scraping is useful for downloading content including images or archived documents.
 
@@ -58,13 +58,13 @@ def scrape_pages(spark: SparkSession, in0: DataFrame) -> DataFrame:
 
 Sometimes you'd like to send text data to a foundational model or store in a vector database, but the text is too long. For this case, just split the text into "chunks" of characters.
 
-![Overview Chunkify](./img/ml-text-proc-overview-chunkify.png)
+![Overview Chunkify](/data-engineering/gems/machine-learning/img/ml-text-proc-overview-chunkify.png)
 
 #### 2a. Configure text splitting
 
 Given a text input, the `Split data` operation will separate the input column entries into chunks of specified `size`.
 
-![Configure to Chunkify](./img/ml-text-proc-configure-chunkify.png)
+![Configure to Chunkify](/data-engineering/gems/machine-learning/img/ml-text-proc-configure-chunkify.png)
 
 Select the **(1) Operation type** to split text into equal chunks. Specify which input **(2) Column name** contains the relevant content. Specify an integer chunk **(3) Size** relevant for your generative AI use case.
 

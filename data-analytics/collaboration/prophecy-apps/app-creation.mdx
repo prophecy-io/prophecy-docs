@@ -15,7 +15,7 @@ In this tutorial, you'll learn how to create a Prophecy App where users can:
 - Filter the data based on custom input.
 - Preview and download the output data.
 
-![Run Prophecy App results](img/prophecy-app-run.png)
+![Run Prophecy App results](/data-analytics/collaboration/prophecy-apps/img/prophecy-app-run.png)
 
 ## Prerequisites
 
@@ -39,7 +39,7 @@ Before building a Prophecy App, start by creating the pipeline it will run. You'
 
 This pipeline will include parameters that end users can assign values to through the app interface.
 
-![App pipeline](img/app-pipeline.png)
+![App pipeline](/data-analytics/collaboration/prophecy-apps/img/app-pipeline.png)
 
 ### Create a pipeline parameter
 
@@ -56,7 +56,7 @@ In this section, you'll define a pipeline parameter specifically for use in a Pr
 1. Enter `3000007` as the default value to be used during [interactive pipeline runs](/data-analytics/development/runs/execution). (This is an arbitrary franchise ID.)
 1. Click **Save**.
 
-![Create pipeline parameter dialog](img/pipeline-parameter.png)
+![Create pipeline parameter dialog](/data-analytics/collaboration/prophecy-apps/img/pipeline-parameter.png)
 
 You can choose a new default value when you build the Prophecy App. This overrides the default value assigned in the pipeline parameter settings.
 
@@ -82,7 +82,7 @@ Next, add a Filter gem to the pipeline. To make the filter condition dynamic, yo
   Find your configured pipeline parameters by clicking on the **Configuration Variable** in the visual expression builder.
 </Tip>
 
-![Configure visual expression to use parameter](img/visual-expression-parameter.png)
+![Configure visual expression to use parameter](/data-analytics/collaboration/prophecy-apps/img/visual-expression-parameter.png)
 
 If you switch to the code view, you can use the following expression as the filter condition `franchiseID = {{ var('franchise_id') }}`.
 
@@ -147,7 +147,7 @@ Finally, add a Data Preview component to display a sample of the result of the p
 
 The following image shows the complete Prophecy App template in the App Builder.
 
-![Prophecy App template](img/prophecy-app-template.png)
+![Prophecy App template](/data-analytics/collaboration/prophecy-apps/img/prophecy-app-template.png)
 
 ## Run the app
 
@@ -159,7 +159,7 @@ After building the app, execute it to validate its functionality. This process a
 1. Create a new app configuration. This configuration represents an instance of the app with a set of custom parameter values.
 1. Test the app by uploading various datasets and running the app to observe results.
 
-![Run Prophecy App results](img/prophecy-app-run.png)
+![Run Prophecy App results](/data-analytics/collaboration/prophecy-apps/img/prophecy-app-run.png)
 
 To explore advanced configuration options and scheduling capabilities, refer to the documentation on [running apps](/data-analytics/collaboration/prophecy-apps/run-apps).
 

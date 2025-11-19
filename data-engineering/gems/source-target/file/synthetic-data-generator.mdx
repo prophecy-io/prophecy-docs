@@ -26,7 +26,7 @@ Synthetic data helps you test, validate, and optimize your pipelines performance
 
 You can create a wide range of mock data using any column name and an array of data types. For example, you can generate the following browser history data:
 
-![img](img/data-gen/synth_0_datasample.png)
+![img](/data-engineering/gems/source-target/file/img/data-gen/synth_0_datasample.png)
 
 <Info>The Data Generator gem can only be a **Source** gem. It cannot be a Target gem.</Info>
 
@@ -48,7 +48,7 @@ Open a Prophecy project and upgrade the `ProphecySparkBasicsPython` Dependency t
   Spark cluster to restart.
 </Note>
 
-![img](img/data-gen/synth_0_2_proph_reqiuirements.png)
+![img](/data-engineering/gems/source-target/file/img/data-gen/synth_0_2_proph_reqiuirements.png)
 
 <Warning>
 **Caution**
@@ -70,7 +70,7 @@ The Source gem requires the following properties.
 | Data Type                  | Data type of the output column.                                                                          | `String`      |
 | Null Percentage (Optional) | Percent of values to populate as null in the generated column based on the row count.                    | None          |
 
-![img](img/data-gen/synth_3_properties.png)
+![img](/data-engineering/gems/source-target/file/img/data-gen/synth_3_properties.png)
 
 ### Providers
 
@@ -96,17 +96,17 @@ By default, the Source gem does not save the newly generated data. To save the d
 
 1. Create a Target gem.
 
-   ![img](img/data-gen/synth_4_new_target.png)
+   ![img](/data-engineering/gems/source-target/file/img/data-gen/synth_4_new_target.png)
 
 1. Connect your Source gem to your Target gem.
 
-   ![img](img/data-gen/synth_5_connect_target.png)
+   ![img](/data-engineering/gems/source-target/file/img/data-gen/synth_5_connect_target.png)
 
 1. Configure the `Write Mode` property for the Target gem.
 
    This is **very important** because there is a **new random seed** each time you run the Source gem.
 
-   ![img](img/data-gen/synth_6_write_mode.png)
+   ![img](/data-engineering/gems/source-target/file/img/data-gen/synth_6_write_mode.png)
 
 <Info>
   To see if Prophecy supports this gem in the Unity Catalog standard access mode clusters, see

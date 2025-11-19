@@ -157,7 +157,7 @@ The template consists of the following components:
 1. Select the **Transform** category.
 1. Click **Create Gem**.
 
-![Create gem](img/create-gem.png)
+![Create gem](/data-engineering/extensibility/gem-builder/img/create-gem.png)
 
 Next, we'll add custom code the to code template. The best way to learn how to create new gems is to review the code of existing gems. In this tutorial, we will base our custom gem on the Limit gem. Afterward, you can extend the custom gem logic further.
 
@@ -335,7 +335,7 @@ The dialog function contains code specific to how the gem UI should look to the 
 </Tabs>
 
 The above Dialog function in the limit gem is rendered on the UI like this:
-![UI](img/UI.png)
+![UI](/data-engineering/extensibility/gem-builder/img/UI.png)
 
 There are various UI components that can be defined for custom gems such as scroll boxes, tabs, buttons, etc.
 
@@ -506,7 +506,7 @@ Looking to read or write to a data format beyond the (filetypes, warehouses, and
 
 Let's see how to use the ColumnsLayout UI element in detail:
 
-![8](img/8-gm.png)
+![8](/data-engineering/extensibility/gem-builder/img/8-gm.png)
 Open the **(1) SparkBasics** package dependency for Python or Scala. Explore and scroll to find a gem, e.g. **(2) OrderBy** with the desired visual component, in this case ColumnsLayout. Find the **(3) relevant code** for the visual element and click **(4) Preview** to see how this visual element is rendered. Try it out! Click on the **(5)customer_id and email** columns, and note these columns now **(6) appear** in the Order Columns list.
 
 If you like the column layout, then add the ColumnsLayout element to your custom gem. Each time you edit the code, you can click “Preview” to test the change in the UI.
@@ -516,7 +516,7 @@ If you like the column layout, then add the ColumnsLayout element to your custom
 The ComponentCode contains the actual Spark code that needs to run on your Spark cluster. Functions are supported inside the apply method; just define and call the function.
 
 For example, the existing Filter ComponentCode can be **(1) edited** by adding the withColumn function:
-![9](img/9-gm.png)
+![9](/data-engineering/extensibility/gem-builder/img/9-gm.png)
 Clicking **(2) Preview** will allow you to view the gem's **(3) UI**. Clicking **(4) Preview Code** will allow you to view the gem's **(5) code** together with the **(3) UI**, facilitating iteration. See the code samples below in Scala.
 
 filter ComponentCode:
@@ -556,7 +556,7 @@ filter ComponentCode with the added withColumn function:
 
 If there is an error in your code, your gem preview might not render correctly.
 
-![5](img/5-gm.png)
+![5](/data-engineering/extensibility/gem-builder/img/5-gm.png)
 If there is a **(1) typo / error** in a required method (e.g. dialog1 instead of dialog), Prophecy will direct your attention to a particular line of code.
 
 - Click the **(2) underlined code**.

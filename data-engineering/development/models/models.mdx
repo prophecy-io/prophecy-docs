@@ -45,13 +45,16 @@ To open the Advanced Settings:
 1. Select **Advanced Settings**.
 1. Choose to edit the Project Settings, Folder Settings, or Model Settings.
 
-![Advanced Settings](img/advanced-settings-dbt.png)
+![Advanced Settings](/data-engineering/development/models/img/advanced-settings-dbt.png)
 
 <Note>Folder Settings only apply to directories that contain models.</Note>
 
 ## Schedule models
 
-To schedule model execution, set up [Databricks Jobs](/data-engineering/orchestration/databricks-jobs) or Apache Airflow DAGs directly within Prophecy. Models can only be scheduled on [Analytics Engineer](/administration/project-types/) projects.
+To schedule automated model execution:
+
+- The project must use the [Normal Git Storage Model](/data-engineering/development/versioning/version-control).
+- You need to use an external orchestrator, such as [Databricks Jobs](/data-engineering/orchestration/databricks-jobs) or Apache Airflow DAGs.
 
 ## Models vs pipelines
 
@@ -72,4 +75,4 @@ Many visual transformations in pipelines are compiled into models under the hood
 
 To view these models, select **Show Models** from the **...** menu in the left sidebar of a project.
 
-![Show Models](img/show-models.png)
+![Show Models](/data-engineering/development/models/img/show-models.png)

@@ -21,7 +21,7 @@ The following table describes a few advanced options for the visual expression b
 
 Let's say you want to stratify accounts based on their annual revenues. Each condition we set up is limited to one comparison. This example combines conditional logic with comparison operators.
 
-![Reformat gem using Comparison mode](img/reformat-visual-expression-builder.png)
+![Reformat gem using Comparison mode](/data-analytics/gems/visual-expression-builder/img/reformat-visual-expression-builder.png)
 
 #### Create a new conditional column
 
@@ -61,7 +61,7 @@ Assume you have a dataset where you want to filter for the following:
 - Total amounts that are greater than `100000`
 - Latest closed quarters that equals `2023Q2` or `2024Q2`
 
-![Filter gem using Grouping mode](img/filter-visual-expression-builder.png)
+![Filter gem using Grouping mode](/data-analytics/gems/visual-expression-builder/img/filter-visual-expression-builder.png)
 
 <Tip>
 You can have any number of groups and nestings (a group within a group). You can also always change the grouping conditions between `AND` and `OR`.
@@ -114,7 +114,7 @@ First, you'll set up a `region` parameter, which will be an array of strings tha
 1. Type `APAC` and click **Done**.
 1. Now, click **Save**.
 
-![Create string array](img/array-param.png)
+![Create string array](/data-analytics/gems/visual-expression-builder/img/array-param.png)
 
 #### Use the parameter in an expression
 
@@ -126,7 +126,7 @@ Now, you'll use the parameter in an expression inside a Filter gem.
 1. In the **array** dropdown of the function, click **Configuration Variable** and select the `region` parameter.
 1. In the **value** dropdown of the function, click **Column** and select the order region column.
 
-![Filter using array](img/filter-array.png)
+![Filter using array](/data-analytics/gems/visual-expression-builder/img/filter-array.png)
 
 The output of this gem will only include rows where the order region matches at least one value in the `region` array. When you run the pipeline interactively, it will use the values of the default array that you set up in the previous section.
 

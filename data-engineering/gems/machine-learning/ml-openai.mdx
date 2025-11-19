@@ -21,13 +21,13 @@ Follow along to learn how to interact with the OpenAI API using Prophecy's easy-
 
 Given a question input, the OpenAI gem will return a text embedding by calling the OpenAI [ada-002 model](https://platform.openai.com/docs/guides/embeddings/how-to-get-embeddings). View the input and output from this gem to understand the data formats and sample.
 
-![Overview of the gem showing the input and output for computing a text embedding](./img/openai-intro-compute-text-embeddings.png)
+![Overview of the gem showing the input and output for computing a text embedding](/data-engineering/gems/machine-learning/img/openai-intro-compute-text-embeddings.png)
 
 #### 1a. Configure
 
 Follow the steps below to configure the OpenAI gem to compute text embeddings.
 
-![Configure the gem to compute a text embedding](./img/openai-configure-embedding.png)
+![Configure the gem to compute a text embedding](/data-engineering/gems/machine-learning/img/openai-configure-embedding.png)
 
 Storing the OpenAI API token as a **(1) Databricks Secret** is highly recommended. For instructions click [here.](https://docs.databricks.com/en/security/secrets/index.html) Be sure to use the ** (2) Fabric connection** to the Databricks workspace which contains the Databricks scope and secrets configured in this gem. Contact us to understand the integrations with other secret managers.
 
@@ -88,13 +88,13 @@ def vectorize(spark: SparkSession, question_seed: DataFrame) -> DataFrame:
 
 In addition to computing text embeddings, OpenAI's ada-002 model is also very good at answering questions. The Prophecy interface allows users to input a question (and optionally provide a context) as components of the `prompt` sent to OpenAI. In response, OpenAI's ada-002 model returns an answer(s) to the question. See the input and output data previews before and after the OpenAI gem to understand the operation.
 
-![Overview of the gem showing the input and output for answering a question](./img/openai-intro-answer-question-context.png)
+![Overview of the gem showing the input and output for answering a question](/data-engineering/gems/machine-learning/img/openai-intro-answer-question-context.png)
 
 #### 2a. Configure
 
 Follow the steps below to configure the OpenAI gem to answer a question, and to understand how to provide a context if desired.
 
-![Configure the gem to answer a question with a given context](./img/openai-configure-answer.png)
+![Configure the gem to answer a question with a given context](/data-engineering/gems/machine-learning/img/openai-configure-answer.png)
 
 Storing the OpenAI API token as a **(1) Databricks Secret** is highly recommended. For instructions click [here.](https://docs.databricks.com/en/security/secrets/index.html) Be sure to use the ** (2) Fabric connection** to the Databricks workspace which contains the Databricks scope and secrets configured in this gem.
 

@@ -443,7 +443,20 @@
               {
                 "group": "Management",
                 "pages": [
-                  "data-analytics/administration/teams",
+                  {
+                    "group": "Teams",
+                    "pages": [
+                      "data-analytics/administration/management/teams/teams",
+                      {
+                        "group": "Settings",
+                        "pages": [
+                          "data-analytics/administration/management/teams/settings/ai",
+                          "data-analytics/administration/management/teams/settings/default-dependencies",
+                          "data-analytics/administration/management/teams/settings/project-creation-template"
+                        ]
+                      }
+                    ]
+                  },
                   {
                     "group": "Users",
                     "pages": [
@@ -895,7 +908,21 @@
               {
                 "group": "Management",
                 "pages": [
-                  "data-engineering/administration/teams",
+                  {
+                    "group": "Teams",
+                    "pages": [
+                      "data-engineering/administration/management/teams/teams",
+                      {
+                        "group": "Settings",
+                        "pages": [
+                          "data-engineering/administration/management/teams/settings/ai",
+                          "data-engineering/administration/management/teams/settings/default-dependencies",
+                          "data-engineering/administration/management/teams/settings/spark",
+                          "data-engineering/administration/management/teams/settings/project-creation-template"
+                        ]
+                      }
+                    ]
+                  },
                   {
                     "group": "Users",
                     "pages": [
