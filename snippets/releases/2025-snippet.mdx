@@ -84,7 +84,7 @@ When configuring [Prophecy project dependencies](/data-analytics/development/ext
 
 - You can use [Selective](/data-engineering/development/runs/data-sampling#selective-sampling) data sampling mode when running pipelines on EMR and EMR Serverless clusters.
 
-- When using EMR [SAML authentication](/data-engineering/fabrics/emr/emr-saml) with Okta, you will see updated job size [configurations](/data-engineering/fabrics/emr/emr-job-sizes) in EMR fabrics.
+- When using EMR [SAML authentication](/data-engineering/fabrics/spark-provider/emr/emr-saml) with Okta, you will see updated job size [configurations](/data-engineering/fabrics/spark-provider/emr/emr-job-sizes) in EMR fabrics.
 
 ## Gem improvements
 
@@ -194,7 +194,7 @@ Previously, pipeline configurations were always scoped to the individual pipelin
 
 ## Fabric improvements
 
-- The [Amazon EMR Spark fabric](/data-engineering/fabrics/emr/emr) now [accepts SAML](/data-engineering/fabrics/emr/emr-saml) as an authentication method, using Okta as the identity provider (Added in 4.1.3.3).
+- The [Amazon EMR Spark fabric](/data-engineering/fabrics/spark-provider/emr/emr) now [accepts SAML](/data-engineering/fabrics/spark-provider/emr/emr-saml) as an authentication method, using Okta as the identity provider (Added in 4.1.3.3).
 - When configuring a Databricks job size in Prophecy, you can now set the cluster access mode to **Auto** (Added in 4.1.3.3). This aligns with recent Databricks changes around cluster access modes. Note that pipeline behavior may vary depending on the cluster Databricks allocates.
 
 ## Prophecy Library versions
@@ -264,7 +264,7 @@ You can now define and call [stored procedures](/data-analytics/gems/custom/stor
 
 ## Databricks serverless
 
-PySpark project pipelines can now run on Databricks serverless compute. See supported features and limitations in [Databricks serverless compute for PySpark](/data-engineering/fabrics/databricks/databricks-serverless).
+PySpark project pipelines can now run on Databricks serverless compute. See supported features and limitations in [Databricks serverless compute for PySpark](/data-engineering/fabrics/spark-provider/databricks/databricks-serverless).
 
 ## Version control improvements
 
@@ -281,7 +281,7 @@ The [Catalog Table](/data-engineering/gems/source-target/catalog-table/delta) Ta
 
 ## XLSX support on UC clusters
 
-The XLSX gem now runs on [Databricks UC clusters](/data-engineering/fabrics/databricks/UCShared) configured with standard (formerly shared) access mode. To leverage this capability, choose to read file with Pandas. The `openpyxl` library is needed for Pandas to work. Files can be read from and written to UC volumes only.
+The XLSX gem now runs on [Databricks UC clusters](/data-engineering/fabrics/spark-provider/databricks/UCShared) configured with standard (formerly shared) access mode. To leverage this capability, choose to read file with Pandas. The `openpyxl` library is needed for Pandas to work. Files can be read from and written to UC volumes only.
 
 | Gem                                                    | Package                     | Minimum version |
 | ------------------------------------------------------ | --------------------------- | --------------- |
@@ -414,7 +414,7 @@ While your core business logic is still written in SQL and run using dbt, data i
 ## Gem enhancements
 
 - The CSV Source gem in Python/PySpark projects now includes a property that lets you skip `n` number of first or last lines when reading in a CSV file.
-- More gems in Python/PySpark projects are now compatible with [Databricks UC clusters](/data-engineering/fabrics/databricks/UCShared) configured with standard (formerly shared) access mode. The table below shows the minimum package version required to enable compatibility.
+- More gems in Python/PySpark projects are now compatible with [Databricks UC clusters](/data-engineering/fabrics/spark-provider/databricks/UCShared) configured with standard (formerly shared) access mode. The table below shows the minimum package version required to enable compatibility.
 
   | Gem                                                                                   | Package                     | Minimum version |
   | ------------------------------------------------------------------------------------- | --------------------------- | --------------- |

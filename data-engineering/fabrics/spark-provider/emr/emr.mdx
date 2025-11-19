@@ -19,7 +19,7 @@ In your Amazon EMR service, create a cluster. When doing so:
 
 2. When selecting applications, make sure **Livy** and **Spark** are included in the install.
 
-![EMR create cluster](/data-engineering/fabrics/img/livy.png)
+![EMR create cluster](/data-engineering/fabrics/spark-provider/img/livy.png)
 
 ## Configure network settings
 
@@ -31,7 +31,7 @@ To make sure that EMR can communicate with Prophecy, you need to configure speci
 
 ## Create a fabric
 
-To connect EMR and Prophecy, you must create a fabric. You can either create an EMR fabric (suggested), or a [Livy fabric](/data-engineering/fabrics/livy).
+To connect EMR and Prophecy, you must create a fabric. You can either create an EMR fabric (suggested), or a [Livy fabric](/data-engineering/fabrics/spark-provider/livy/).
 
 <Tabs>
   <Tab title="EMR">
@@ -47,7 +47,7 @@ To connect EMR and Prophecy, you must create a fabric. You can either create an 
 
        - **Static**: Enter your AWS credentials under **Access Key** and **Secret Key**. Then, enter the region that your EMR cluster runs in.
 
-       - **SAML**: Use an Okta application to authenticate the EMR connection. Learn more in [Configure EMR SAML authentication with Okta](/data-engineering/fabrics/emr/emr-saml).
+       - **SAML**: Use an Okta application to authenticate the EMR connection. Learn more in [Configure EMR SAML authentication with Okta](/data-engineering/fabrics/spark-provider/emr/emr-saml).
 
 
     1. Click on **Fetch environments**.
@@ -56,9 +56,9 @@ To connect EMR and Prophecy, you must create a fabric. You can either create an 
 
     1. Enter the S3 path that points to the location where you would like your logs to persist.
 
-       ![EMR dependencies](/data-engineering/fabrics/emr/img/emr-setup.png)
+       ![EMR dependencies](/data-engineering/fabrics/spark-provider/emr/img/emr-setup.png)
 
-    1. Add the job size to your environment by clicking on **Add job Size**. [Configure your job size](/data-engineering/fabrics/emr/emr-job-sizes) and click on **Add**.
+    1. Add the job size to your environment by clicking on **Add job Size**. [Configure your job size](/data-engineering/fabrics/spark-provider/emr/emr-job-sizes) and click on **Add**.
 
     1. Select File System under **Scala Resolution mode** and input `s3://prophecy-public-bucket/prophecy-libs`
 
@@ -81,13 +81,13 @@ To connect EMR and Prophecy, you must create a fabric. You can either create an 
 
        - **Static**: Enter your AWS credentials under **Access Key** and **Secret Key**. Then, enter the region that your EMR cluster runs in.
 
-       - **SAML**: Use an Okta application to authenticate the EMR connection. Learn more in [Configure EMR SAML authentication with Okta](/data-engineering/fabrics/emr/emr-saml).
+       - **SAML**: Use an Okta application to authenticate the EMR connection. Learn more in [Configure EMR SAML authentication with Okta](/data-engineering/fabrics/spark-provider/emr/emr-saml).
 
     1. Click on **Fetch environments**.
 
     1. Under **Spark Environment**, select the EMR serverless cluster that you would like to connect to. From the list of active clusters, you can identify your EMR Serverless cluster by finding `emr-serverless-services` within the Livy URL. This will automatically populate some of the following fields.
 
-       ![EMR Serverless select](/data-engineering/fabrics/emr/img/emr-serverless-dev-select.png)
+       ![EMR Serverless select](/data-engineering/fabrics/spark-provider/emr/img/emr-serverless-dev-select.png)
 
     1. For the **Authentication type**, select `AWS Sig V4`. This is the only option that will work for EMR Serverless.
 
@@ -95,7 +95,7 @@ To connect EMR and Prophecy, you must create a fabric. You can either create an 
 
     1. Enter the S3 path that points to the location where you would like your logs and pipeline artifacts to persist.
 
-    1. Add the job size to your environment by clicking on **Add Job Size**. [Configure your job size](/data-engineering/fabrics/emr/emr-job-sizes) and click on **Add**.
+    1. Add the job size to your environment by clicking on **Add Job Size**. [Configure your job size](/data-engineering/fabrics/spark-provider/emr/emr-job-sizes) and click on **Add**.
 
     1. Note that the Spark and Scala versions are fixed.
 
@@ -133,7 +133,7 @@ To connect EMR and Prophecy, you must create a fabric. You can either create an 
 
     1. For the Prophecy Library configurations, choose the File System Resolution mode and provide the S3 folder names for dependencies.
 
-       ![EMR create cluster](/data-engineering/fabrics/img/library.png)
+       ![EMR create cluster](/data-engineering/fabrics/spark-provider/img/library.png)
 
     1. Click **Complete** to save your new Livy fabric.
 

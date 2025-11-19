@@ -91,7 +91,7 @@ By default, Prophecy includes a single job size that uses [Databricks Runtime 14
 
 To create or update a job size, use the form view or switch to the JSON editor to paste your existing compute configuration from Databricks.
 
-![Job Size configuration](/data-engineering/fabrics/img/dbx-job-size.png)
+![Job Size configuration](/data-engineering/fabrics/spark-provider/img/dbx-job-size.png)
 
 <Note>
   The job size configuration mirrors the compute configuration in Databricks. To learn more about
@@ -100,7 +100,7 @@ To create or update a job size, use the form view or switch to the JSON editor t
 </Note>
 
 <Warning>
-When using Unity Catalog clusters with standard (formerly shared) access mode, note their [particular limitations](https://docs.databricks.com/en/compute/access-mode-limitations.html#shared-access-mode-limitations-on-unity-catalog). You can see all supported Prophecy features in our [UC standard cluster support](/data-engineering/fabrics/databricks/UCShared) documentation.
+When using Unity Catalog clusters with standard (formerly shared) access mode, note their [particular limitations](https://docs.databricks.com/en/compute/access-mode-limitations.html#shared-access-mode-limitations-on-unity-catalog). You can see all supported Prophecy features in our [UC standard cluster support](/data-engineering/fabrics/spark-provider/databricks/UCShared) documentation.
 
 If using **Auto** for the cluster access mode, you may encounter different pipeline behavior in Prophecy depending on the cluster Databricks allocates to you.
 
@@ -119,18 +119,18 @@ Prophecy libraries are Scala and Python libraries that extend the functionality 
 <Info>
   To use Prophecy libraries in Databricks environments that have enabled Unity Catalog, you must
   [whitelist the required Maven coordinates or JAR
-  paths](/data-engineering/fabrics/databricks/whitelist-plibs).
+  paths](/data-engineering/fabrics/spark-provider/databricks/whitelist-plibs).
 </Info>
 
 <Note>
   A full list of public paths can be found in the documentation on [Prophecy
   libraries](/data-engineering/extensibility/dependencies/prophecy-libs#download-prophecy-libraries).
   You also can set up [Prophecy libraries in your Databricks
-  volumes](/data-engineering/fabrics/databricks/volumes-plibs).
+  volumes](/data-engineering/fabrics/spark-provider/databricks/volumes-plibs).
 </Note>
 
 ### Artifacts
 
 Prophecy supports Databricks volumes. When you run a Python or Scala pipeline via a job, you must bundle them as whl/jar artifacts. These artifacts must then be made accessible to the Databricks job in order to use them as a library installed on the cluster. You can designate a path to a volume for uploading the whl/jar files under Artifacts.
 
-![Artifact settings](/data-engineering/fabrics/img/dbx-fabric-settings.png)
+![Artifact settings](/data-engineering/fabrics/spark-provider/img/dbx-fabric-settings.png)

@@ -41,7 +41,7 @@ Follow the instructions to whitelist Prophecy libraries through the Databricks U
 
    Go to **Catalog → Metastore → Allowed JARs/Init Scripts** to add the path or coordinates.
 
-   ![Databricks allow list](/data-engineering/fabrics/img/dbx-allowlist.png)
+   ![Databricks allow list](/data-engineering/fabrics/spark-provider/img/dbx-allowlist.png)
 
 1. (Optional) Add initialization script to pre-configure allowlist behavior.
 
@@ -94,7 +94,7 @@ curl -v --location --request PUT '<databricks-host>/api/2.1/unity-catalog/artifa
 
 ### Volume path for JARs
 
-Run the following in the command line to whitelist a volume path for JARs. This is relevant if you have [set up Prophecy libraries in a Databricks volume](/data-engineering/fabrics/databricks/volumes-plibs).
+Run the following in the command line to whitelist a volume path for JARs. This is relevant if you have [set up Prophecy libraries in a Databricks volume](/data-engineering/fabrics/spark-provider/databricks/volumes-plibs).
 
 ```bash
 curl -v --location --request PUT '<databricks-host>/api/2.1/unity-catalog/artifact-allowlists/LIBRARY_JAR' \

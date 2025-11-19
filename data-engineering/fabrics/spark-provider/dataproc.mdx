@@ -17,7 +17,7 @@ Livy must be installed on your cluster. Prophecy provides a script required to d
 
 1. If you don't already have a private key, create a private key for the service account that you're using.
 
-   ![Dataproc security](/data-engineering/fabrics/img/createkey.png)
+   ![Dataproc security](/data-engineering/fabrics/spark-provider/img/createkey.png)
 
 2. Ensure you have the following permissions configured.
 
@@ -70,27 +70,27 @@ Livy must be installed on your cluster. Prophecy provides a script required to d
 
 1. Create a fabric and select **Dataproc**.
 
-   ![select dataproc](/data-engineering/fabrics/img/selectdataproc.png)
+   ![select dataproc](/data-engineering/fabrics/spark-provider/img/selectdataproc.png)
 
 2. Fill out your **Project Name** and **Region**, and upload the **Private Key**.
 
-   ![configure dataproc](/data-engineering/fabrics/img/configuredataproc.png)
+   ![configure dataproc](/data-engineering/fabrics/spark-provider/img/configuredataproc.png)
 
 3. Click on **Fetch environments** and select the Dataproc **cluster** that you created earlier.
 
-   ![select cluster](/data-engineering/fabrics/img/selectenv.png)
+   ![select cluster](/data-engineering/fabrics/spark-provider/img/selectenv.png)
 
 4. Leave everything as default and provide the **Livy URL**. Locate the **External IP** of your cluster instance. Optionally, you may configure the DNS instead of using the IP. The URL is `http://<external-ip>:8998`.
 
-   ![livy ip](/data-engineering/fabrics/img/externalip.png)
+   ![livy ip](/data-engineering/fabrics/spark-provider/img/externalip.png)
 
 5. Configure the bucket associated with your cluster.
 
-   ![bucket location](/data-engineering/fabrics/img/bucketloc.png)
+   ![bucket location](/data-engineering/fabrics/spark-provider/img/bucketloc.png)
 
 6. Add the **Job Size**.
 
-   ![Job Size](/data-engineering/fabrics/img/procjobsize.png)
+   ![Job Size](/data-engineering/fabrics/spark-provider/img/procjobsize.png)
 
 7. Configure Scala Library Path.  
    `gs://prophecy-public-gcp/prophecy-scala-libs/`.
@@ -98,7 +98,7 @@ Livy must be installed on your cluster. Prophecy provides a script required to d
 8. Configure Python Library Path.  
    `gs://prophecy-public-gcp/prophecy-python-libs/`.
 
-   ![dependencies](/data-engineering/fabrics/img/proclib.png)
+   ![dependencies](/data-engineering/fabrics/spark-provider/img/proclib.png)
 
 9. Click on **Complete**.
 
