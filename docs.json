@@ -686,7 +686,7 @@
                           "data-engineering/fabrics/databricks/databricks-serverless",
                           "data-engineering/fabrics/databricks/databricks-policies",
                           "data-engineering/fabrics/databricks/UCShared",
-                          "data-engineering/fabrics/databricks/volumns-plibs",
+                          "data-engineering/fabrics/databricks/volumes-plibs",
                           "data-engineering/fabrics/databricks/whitelist-plibs"
                         ]
                       },

@@ -5,10 +5,10 @@ description: Text processing to prepare data to submit to a foundational model A
 
 The TextProcessing gem enables text data preparation for machine learning in two different ways:
 
-1. [Load](/data-engineering/text-processing/#1-load-web-urls-and-extract-text) web URLs and extract text.
-2. [Split](/data-engineering/text-processing/#2-split-text-data-into-equal-chunks) text data into equal chunks.
+1. [Load](#1-load-web-urls-and-extract-text) web URLs and extract text.
+2. [Split](#2-split-text-data-into-equal-chunks) text data into equal chunks.
 
-Follow along to see how to use the TextProcessing gem. For an example set of pipelines that uses this gem to create a Generative AI Chatbot, see this [guide](/data-engineering/generative-ai-chatbot).
+Follow along to see how to use the TextProcessing gem. For an example set of pipelines that uses this gem to create a Generative AI Chatbot, see this [guide](/data-engineering/gems/machine-learning/genaichatbot).
 
 ### 1. Load web URLs and Extract Text
 
@@ -24,15 +24,15 @@ Configure the **(1) Operation Type** to Load url (web scrape), and optionally ex
 
 #### 1b. Input
 
-| Parameter | Description | Required |
+| Parameter                      | Description                                                      | Required |
 | ------------------------------ | ---------------------------------------------------------------- | -------- |
-| Column name (string with urls) | string - the input column which contains the strings of web URLs | True |
+| Column name (string with urls) | string - the input column which contains the strings of web URLs | True     |
 
 #### 1c. Output
 
-| Parameter | Description |
+| Parameter                                               | Description                                                                          |
 | ------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| Result content `Load url (web scrape)` | binary - the contents of each web page |
+| Result content `Load url (web scrape)`                  | binary - the contents of each web page                                               |
 | Result content `Load url (web scrape) and extract text` | string - the contents of each web page, converted from binary to human readable text |
 
 #### 1d. Generated Code
@@ -70,14 +70,14 @@ Select the **(1) Operation type** to split text into equal chunks. Specify which
 
 #### 2b. Input
 
-| Parameter | Description | Required |
+| Parameter   | Description                                                             | Required |
 | ----------- | ----------------------------------------------------------------------- | -------- |
-| Column name | string - the text content which should be split into equal chunks | True |
-| Size | integer - the size of each chunk, number of characters. Example: `1000` | True |
+| Column name | string - the text content which should be split into equal chunks       | True     |
+| Size        | integer - the size of each chunk, number of characters. Example: `1000` | True     |
 
 #### 2c. Output
 
-| Parameter | Description |
+| Parameter     | Description                                                                                             |
 | ------------- | ------------------------------------------------------------------------------------------------------- |
 | result_chunks | array(string) - an array of text strings, each string representing one chunk of the larger text content |
 

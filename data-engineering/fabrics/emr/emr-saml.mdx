@@ -24,7 +24,7 @@ To configure an EMR fabric that authenticates users with SAML, you need:
 
 - Access to EMR or EMR Serverless compute
 - Administrator access to AWS and Okta
-- Permission to set environment variables in your Prophecy deployment, usually associated with the [Prophecy cluster admin](/administration/rbac) role.
+- Permission to set environment variables in your Prophecy deployment, usually associated with the [Prophecy cluster admin](/data-engineering/administration/management/users/access/role-based-access) role.
 - Ability to create or edit an EMR fabric in Prophecy.
 
 ## 1. Create an Okta SAML application
@@ -66,7 +66,6 @@ When you assign users/groups in the Okta application, you determine who is allow
 1. In Okta, navigate to your application: **Applications > Applications**, then select the `Prophecy SAML App`.
 1. Go to the **Assignments** tab.
 1. Click **Assign** to see the following options:
-
    - **Assign to People**: Select individual users who should have access.
 
    - **Assign to Groups**: Select entire Okta groups to simplify management for multiple users.

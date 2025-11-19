@@ -56,7 +56,8 @@ Each property maps to a certain dbt configuration that may be generic to dbt or 
 | Time Ingestion Partitioning | Enables partitioning based on when data is ingested into the table, using [BigQuery's](https://cloud.google.com/bigquery/docs/partitioned-tables#ingestion_time) `_PARTITIONTIME` column. | BigQuery    |
 
 <Info>
-For more detailed information, see the [dbt reference documentation](https://docs.getdbt.com/reference/references-overview).
+  For more detailed information, see the [dbt reference
+  documentation](https://docs.getdbt.com/reference/references-overview).
 </Info>
 
 ## SQL Query
@@ -67,9 +68,8 @@ You can reference any column present in the list of input ports beside the SQL q
 
 ## Write Options
 
-For a complete guide to defining how to write target tables, visit [Write Options](/table-write-options).
+For a complete guide to defining how to write target tables, visit [Write Options](/data-analytics/gems/source-target/table/write-options).
 
 ## Data Tests
 
 A data test is an assertion you define about a dataset in your project. Data tests are run on target models to ensure the quality and integrity of the final data that gets written to the warehouse. Learn how to build tests in [Data tests](/data-analytics/development/tests/data-tests).
-

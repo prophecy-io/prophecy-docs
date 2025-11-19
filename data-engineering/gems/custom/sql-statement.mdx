@@ -29,18 +29,20 @@ One notable difference involves `createOrReplaceTempView` operations. In Spark C
 Always test your SQL queries on your target cluster type to ensure they behave as expected.
 
 <Note>
-To learn more about how Databricks clusters impact Prophecy development, see [Feature compatibility with UC clusters](/administration/fabrics/Spark-fabrics/databricks/ucshared).
+  To learn more about how Databricks clusters impact Prophecy development, see [Feature
+  compatibility with UC clusters](/data-engineering/fabrics/databricks/UCShared).
 </Note>
 
 ## Parameters
 
-| Parameter | Meaning | Required |
+| Parameter    | Meaning                       | Required |
 | :----------- | :---------------------------- | :------- |
-| DataFrame(s) | Input DataFrame(s) | True |
-| SQL Queries | SQL Query for each output tab | True |
+| DataFrame(s) | Input DataFrame(s)            | True     |
+| SQL Queries  | SQL Query for each output tab | True     |
 
 <Info>
-Number of inputs and outputs can be changed as needed by clicking the `+` button on the respective tab.
+  Number of inputs and outputs can be changed as needed by clicking the `+` button on the respective
+  tab.
 </Info>
 
 ## Example: SELECT statement

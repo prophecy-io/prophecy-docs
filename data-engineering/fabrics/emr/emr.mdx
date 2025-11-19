@@ -31,7 +31,7 @@ To make sure that EMR can communicate with Prophecy, you need to configure speci
 
 ## Create a fabric
 
-To connect EMR and Prophecy, you must create a fabric. You can either create an EMR fabric (suggested), or a [Livy fabric](livy.mdx).
+To connect EMR and Prophecy, you must create a fabric. You can either create an EMR fabric (suggested), or a [Livy fabric](/data-engineering/fabrics/livy).
 
 <Tabs>
   <Tab title="EMR">
@@ -58,7 +58,7 @@ To connect EMR and Prophecy, you must create a fabric. You can either create an 
 
        ![EMR dependencies](./img/emr-setup.png)
 
-    1. Add the job size to your environment by clicking on **Add job Size**. [Configure your job size](emr-job-sizes.mdx) and click on **Add**.
+    1. Add the job size to your environment by clicking on **Add job Size**. [Configure your job size](/data-engineering/fabrics/emr/emr-job-sizes) and click on **Add**.
 
     1. Select File System under **Scala Resolution mode** and input `s3://prophecy-public-bucket/prophecy-libs`
 
@@ -95,7 +95,7 @@ To connect EMR and Prophecy, you must create a fabric. You can either create an 
 
     1. Enter the S3 path that points to the location where you would like your logs and pipeline artifacts to persist.
 
-    1. Add the job size to your environment by clicking on **Add Job Size**. [Configure your job size](emr-job-sizes.mdx) and click on **Add**.
+    1. Add the job size to your environment by clicking on **Add Job Size**. [Configure your job size](/data-engineering/fabrics/emr/emr-job-sizes) and click on **Add**.
 
     1. Note that the Spark and Scala versions are fixed.
 

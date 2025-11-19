@@ -33,8 +33,6 @@ This opens a new model canvas that is prepopulated with a target model. Note tha
 
 Each gem in a model maps to a SQL statement. As you configure gems on the visual canvas, Prophecy automatically generates the corresponding SQL, determines whether to use a CTE or subquery for each step, and integrates your changes into the overall model.
 
-Models run exclusively in your SQL warehouse and can only use gems supported in that environment. Gems that can run in SQL are marked with the following badge: <a href="https://docs.prophecy.io/administration/fabrics/prophecy-fabrics/"><span className="badge badge-runtime">SQL Warehouse</span></a>
-
 ## Advanced settings
 
 The **Advanced Settings** dialog lets you set dbt configurations at the project, folder, or model level. Each setting corresponds to standard dbt configurations, typically defined in a dbt project [YAML file](https://docs.getdbt.com/docs/build/projects#project-configuration). They cover properties such as materialization behavior, physical storage, metadata, and access controls.
@@ -70,7 +68,7 @@ Models and pipelines are two different SQL project components. The following tab
 
 ### Show underlying models
 
-Many visual transformations in pipelines are compiled into models under the hood. If you are working on a pipeline, you can view and edit the code of [underlying dbt models](/data-analytics/development/runs/execution#execution-environment) in a pipeline. However, you cannot visually edit these underlying models.
+Many visual transformations in pipelines are compiled into models under the hood. If you are working on a pipeline, you can view and edit the code of underlying dbt models in a pipeline. However, you cannot visually edit these underlying models.
 
 To view these models, select **Show Models** from the **...** menu in the left sidebar of a project.
 

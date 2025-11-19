@@ -73,7 +73,7 @@ This section walks you through automating the extraction of lineage reports from
 
 - A Prophecy project hosted in an external GitHub or GitLab repository.
 - Access to the repository and permissions to set up CI/CD pipelines.
-- A Prophecy [Personal Access Token](/api) (PAT).
+- A Prophecy [Personal Access Token](/api-reference/introduction) (PAT).
 - (Optional) To enable email reports, you must have SMTP credentials.
 
 ### Set environment variables and secrets
@@ -97,7 +97,7 @@ To configure lineage extraction behavior related to authentication, email delive
 
 | Variable/Secret    | Description                                                                                                                                  |
 | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| `PROPHECY_PAT`     | [Personal Access Token](/api/#access-tokens) used to authenticate with Prophecy.                                                             |
+| `PROPHECY_PAT`     | [Personal Access Token](/api-reference/introduction#access-tokens) used to authenticate with Prophecy.                                       |
 | `SMTP_USERNAME`    | Username for the email account used to send reports.                                                                                         |
 | `SMTP_PASSWORD`    | Password needed for the email account.                                                                                                       |
 | `MONITOR_TIME_ENV` | Duration of the monitoring window in minutes (default: `150`).                                                                               |

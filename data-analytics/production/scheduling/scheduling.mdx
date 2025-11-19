@@ -7,7 +7,7 @@ Prophecy supports the following ways to automate pipeline execution.
 
 - **Built-in scheduler**: Use [Prophecy Automate](/data-analytics/administration/platform/architecture) to orchestrate pipelines directly in the UI.
 - **Pipeline gem**: Configure the [Pipeline gem](/data-analytics/production/scheduling/pipeline-trigger-gem) to start pipeline runs from a gem in the canvas.
-- **API-based automation**: Call the [Trigger Pipeline API](/api/trigger-pipeline/trigger-pipeline-api) to start pipelines from external systems.
+- **API-based automation**: Call the [Trigger Pipeline API](/api-reference/endpoint/trigger-run) to start pipelines from external systems.
 
 This page describes how to use the **built-in scheduler** in SQL projects.
 
@@ -54,7 +54,7 @@ This risk increases in complex environments where:
 - The same schedule is deployed across multiple fabrics.
 - Fabrics store different credentials for the same connection.
 
-To ensure reliable scheduled runs, only deploy to fabrics that use connection credentials that won't expire unexpectedly. For Databricks connections, [consider using a service principal](/administration/fabrics/prophecy-fabrics/connections/databricks#authentication-methods) for authentication. Service principals are designed for authorizing access to Databricks resources when running unattended processes.
+To ensure reliable scheduled runs, only deploy to fabrics that use connection credentials that won't expire unexpectedly. For Databricks connections, [consider using a service principal](/data-analytics/environment/connections/databricks#authentication-methods) for authentication. Service principals are designed for authorizing access to Databricks resources when running unattended processes.
 
 ## What's next
 

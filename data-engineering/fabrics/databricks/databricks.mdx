@@ -78,8 +78,9 @@ When you configure a Databricks fabric and select OAuth, the OAuth method is **a
 
 <Info>
   To leverage OAuth for a Databricks Spark fabric, you or an admin must first create a corresponding
-  [app registration](/data-engineering/administration/management/cluster-admin-settings/oauth-setup). The fabric will always use the default Databricks app
-  registration.
+  [app
+  registration](/data-engineering/administration/management/cluster-admin-settings/oauth-setup). The
+  fabric will always use the default Databricks app registration.
 </Info>
 
 ### Job Sizes
@@ -99,7 +100,7 @@ To create or update a job size, use the form view or switch to the JSON editor t
 </Note>
 
 <Warning>
-When using Unity Catalog clusters with standard (formerly shared) access mode, note their [particular limitations](https://docs.databricks.com/en/compute/access-mode-limitations.html#shared-access-mode-limitations-on-unity-catalog). You can see all supported Prophecy features in our [UC standard cluster support](./UCShared.mdx) documentation.
+When using Unity Catalog clusters with standard (formerly shared) access mode, note their [particular limitations](https://docs.databricks.com/en/compute/access-mode-limitations.html#shared-access-mode-limitations-on-unity-catalog). You can see all supported Prophecy features in our [UC standard cluster support](/data-engineering/fabrics/databricks/UCShared) documentation.
 
 If using **Auto** for the cluster access mode, you may encounter different pipeline behavior in Prophecy depending on the cluster Databricks allocates to you.
 
@@ -117,14 +118,15 @@ Prophecy libraries are Scala and Python libraries that extend the functionality 
 
 <Info>
   To use Prophecy libraries in Databricks environments that have enabled Unity Catalog, you must
-  whitelist the required Maven coordinates or JAR paths. Find instructions
-  [here](/admin/dbx-whitelist-plibs).
+  [whitelist the required Maven coordinates or JAR
+  paths](/data-engineering/fabrics/databricks/whitelist-plibs).
 </Info>
 
 <Note>
-
-A full list of public paths can be found in the documentation on [Prophecy libraries](/data-engineering/extensibility/dependencies/prophecy-libs#download-prophecy-libraries). You also can set up [Prophecy libraries in your Databricks volumes](volumns-plibs.mdx).
-
+  A full list of public paths can be found in the documentation on [Prophecy
+  libraries](/data-engineering/extensibility/dependencies/prophecy-libs#download-prophecy-libraries).
+  You also can set up [Prophecy libraries in your Databricks
+  volumes](/data-engineering/fabrics/databricks/volumes-plibs).
 </Note>
 
 ### Artifacts

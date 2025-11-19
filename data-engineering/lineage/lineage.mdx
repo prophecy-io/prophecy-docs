@@ -20,12 +20,11 @@ Understanding data lineage delivers multiple benefits for your engineering team:
 | Governance        | Maintain compliance with data policies          |
 
 <Tip>
-Lineage is computed on-demand directly from Git code. This means you can experiment in branches and immediately see how changes affect overall lineage before committing.
+  Lineage is computed on-demand directly from Git code. This means you can experiment in branches
+  and immediately see how changes affect overall lineage before committing.
 </Tip>
 
-<Note>
-Prophecy supports lineage for Python/PySpark and Scala [projects](/projects).
-</Note>
+<Note>Prophecy supports lineage for Python/PySpark and Scala projects.</Note>
 
 ## Accessing lineage
 
@@ -54,7 +53,9 @@ The **Summary** tab visually illustrates the flow of data through pipelines, mod
 ![Browse Datasets](img/lineage-browse-dataset.png)
 
 <Info>
-When you open a project in the project editor, you will see the project's dataset and pipeline lineage. However, you cannot drill-down into lineage details unless you navigate to the lineage view described here.
+  When you open a project in the project editor, you will see the project's dataset and pipeline
+  lineage. However, you cannot drill-down into lineage details unless you navigate to the lineage
+  view described here.
 </Info>
 
 ### Column-level lineage
@@ -82,4 +83,3 @@ For pipelines, you can see code-level information about each component present i
 For datasets, you can find information around all the upstream and downstream transformations (if any) for all the columns of the selected dataset.
 
 ![Dataset zoom-in](img/lineage-dataset-zoom-in.png)
-

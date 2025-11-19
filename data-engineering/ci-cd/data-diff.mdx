@@ -25,7 +25,7 @@ To compute a data diff, you need:
 
 <Note>
   Data diff cannot be computed on [Databricks
-  Serverless](docs/administration/fabrics/Spark-fabrics/databricks/databricks-serverless.md).
+  Serverless](/data-engineering/fabrics/databricks/databricks-serverless).
 </Note>
 
 ## What is data diff?
@@ -63,14 +63,14 @@ The following table provide in-depth descriptions of each statistic in the Overv
 
 Prophecy only calculates the data diff on rows with unique primary keys. Why is that?
 
-Assume you have a the following table, where `first_name` and *last_name` are the primary keys:
+Assume you have a the following table, where `first_name` and \*last_name` are the primary keys:
 
 | `first_name` | `last_name` | `cust_id` |
-| ---------- | --------- | ------- |
-| John       | Smith     | 23542   |
-| John       | Smith     | 49203   |
-| Jane       | Doe       | 43291   |
-| Jane       | Brown     | 09312   |
+| ------------ | ----------- | --------- |
+| John         | Smith       | 23542     |
+| John         | Smith       | 49203     |
+| Jane         | Doe         | 43291     |
+| Jane         | Brown       | 09312     |
 
 If you try to compute the data diff **John Smith**, how will you know which row is the correct match? It is impossible to match the rows with 100% confidence. Because of this ambiguity, **Prophecy ignores rows with duplicated primary keys in the data diff.**
 

@@ -1,6 +1,6 @@
 ---
-title: "Version control"
-description: "Save and view project history"
+title: 'Version control'
+description: 'Save and view project history'
 ---
 
 Versioning in Prophecy helps teams track changes, collaborate efficiently, and roll back when needed. It also supports auditing and compliance by keeping a clear, versioned history of all updates. This page details the different types of version control in Prophecy, the stages of the visual workflow, and its relationship to [Git](#powered-by-git).
@@ -20,7 +20,8 @@ When you create a SQL project in Prophecy, you will have the option to select th
 The following sections demonstrate the **visual workflow** for projects that use the Simple Git Storage Model. To view the workflow for normal Git, visit the section on [Git](/data-engineering/ci-cd/git/git) in the documentation.
 
 <Note>
-  The way you use Git will also influence how you collaborate in Prophecy. To learn more, visit [Real-time collaboration](/data-analytics/development/versioning/collaboration-modes).
+  The way you use Git will also influence how you collaborate in Prophecy. To learn more, visit
+  [Real-time collaboration](/data-analytics/development/versioning/collaboration-modes).
 </Note>
 
 ## Workflow
@@ -41,14 +42,14 @@ As you develop your project, Prophecy automatically preserves your changes. In a
 When you publish a project, the new version becomes available for:
 
 - [Scheduled pipeline runs](/data-analytics/production/scheduling/scheduling) (depending on the fabric)
-- [Package Hub](/data-engineering/extensibility/package-hub/package-hub) packages
+- [Package Hub](/data-analytics/development/extensibility/package-hub/package-hub) packages
 - [App Browser](/data-analytics/collaboration/prophecy-apps/apps) applications
 
 To learn more, visit our page on [project publication](/data-analytics/production/publication).
 
 ### Show version history
 
-Prophecy tracks different versions of your project that you save and publish. You can access the version history from the project editor or within the [project metadata](/projects#project-metadata).
+Prophecy tracks different versions of your project that you save and publish. You can access the version history from the project editor or within the project metadata.
 
 From the version history, you can:
 
@@ -81,4 +82,3 @@ The table below reiterates the diagram.
 | Save to draft            | <ul><li>Pull changes from the remote `dev` branch</li><li>Pull changes from the local `main` branch</li><li>Commit changes to local `dev`</li><li>Push changes to remote `dev`</li></ul> |
 | Publish                  | <ul><li>Merge changes into local `main`</li><li>Add a Git Tag with the published version number</li><li>Push changes to remote `main`</li></ul>                                          |
 | Restore previous version | <ul><li>Run `git reset --soft`</li><li>Commit the changes to revert in `dev`</li><li>Push changes to remote `dev` branch</li></ul> (Publish the project to merge to `main`)              |
-

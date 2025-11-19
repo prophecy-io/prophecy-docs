@@ -25,7 +25,7 @@ Follow the instructions to whitelist Prophecy libraries through the Databricks U
 
 1. Check your Prophecy Library version.
 
-   Find your project's Prophecy library version by checking the ProphecyLibs dependency in your [project metadata](/projects#project-metadata).
+   Find your project's Prophecy library version by checking the ProphecyLibs dependency in your project metadata.
 
 1. Note your Databricks cluster's Spark version.
 
@@ -94,7 +94,7 @@ curl -v --location --request PUT '<databricks-host>/api/2.1/unity-catalog/artifa
 
 ### Volume path for JARs
 
-Run the following in the command line to whitelist a volume path for JARs. This is relevant if you have [set up Prophecy libraries in a Databricks volume](volumns-plibs.mdx).
+Run the following in the command line to whitelist a volume path for JARs. This is relevant if you have [set up Prophecy libraries in a Databricks volume](/data-engineering/fabrics/databricks/volumes-plibs).
 
 ```bash
 curl -v --location --request PUT '<databricks-host>/api/2.1/unity-catalog/artifact-allowlists/LIBRARY_JAR' \

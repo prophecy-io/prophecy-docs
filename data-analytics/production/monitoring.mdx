@@ -1,9 +1,9 @@
 ---
-title: "Monitoring"
-description: "View deployed projects, scheduled pipelines, run history, and cost and performance"
+title: 'Monitoring'
+description: 'View deployed projects, scheduled pipelines, run history, and cost and performance'
 ---
 
-The **Observability** interface in Prophecy lets you monitor your deployed projects, review scheduled pipelines, and audit run history. You'll be able to view all projects and pipelines that your teams own. 
+The **Observability** interface in Prophecy lets you monitor your deployed projects, review scheduled pipelines, and audit run history. You'll be able to view all projects and pipelines that your teams own.
 
 ## Deployed Projects
 
@@ -28,7 +28,9 @@ For each project deployment, Prophecy provides the following information.
 | **Last Run Status** | Success or failure of the last run.                                               |
 
 <Info>
-  When a project is published to multiple fabrics, an individual project deployment is created for each fabric. You will see all of these deployments in the Deployed Projects page. You cannot revert or delete a project deployment.
+  When a project is published to multiple fabrics, an individual project deployment is created for
+  each fabric. You will see all of these deployments in the Deployed Projects page. You cannot
+  revert or delete a project deployment.
 </Info>
 
 ## Scheduled Pipelines
@@ -54,7 +56,8 @@ For each scheduled pipeline, Prophecy provides the following information.
 | **Last 5 Runs** | Status of the 5 most recent runs. To find the history of all pipeline runs, open the Run History tab. |
 
 <Info>
-  You may see multiple rows for the same pipeline if the parent project is deployed to multiple fabrics.
+  You may see multiple rows for the same pipeline if the parent project is deployed to multiple
+  fabrics.
 </Info>
 
 ## Run History
@@ -72,15 +75,14 @@ Use the following filters to narrow the results.
 
 For each historical pipeline run, Prophecy provides the following information.
 
-| Column         | Description                                                                                                                                                                                                                           |
-| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **ID**         | Hover the **#** sign to view the full unique pipeline run ID. <br />You can reference this value in the [Trigger Pipeline API](/api/trigger-pipeline/trigger-pipeline-api#get-pipeline-run-status).                                    |
-| **Fabric**     | Name of the fabric used to execute the pipeline run.                                                                                                                                                                                  |
-| **Pipeline**   | Name of the pipeline that was executed.                                                                                                                                                                                               |
-| **Project**    | Name of the project containing the pipeline.                                                                                                                                                                                          |
+| Column         | Description                                                                                                                                                                                                                             |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **ID**         | Hover the **#** sign to view the full unique pipeline run ID. <br />You can reference this value in the [Trigger Pipeline API](/api-reference/endpoint/trigger-run#get-pipeline-run-status).                                            |
+| **Fabric**     | Name of the fabric used to execute the pipeline run.                                                                                                                                                                                    |
+| **Pipeline**   | Name of the pipeline that was executed.                                                                                                                                                                                                 |
+| **Project**    | Name of the project containing the pipeline.                                                                                                                                                                                            |
 | **Run Type**   | How the run was triggered. <br />This includes by interactive runs, pipeline schedules, APIs, Prophecy Apps, and app schedules. <br />Any scheduled runs will include additional information about the schedule that triggered the run. |
-| **Start Time** | Timestamp when the run started.                                                                                                                                                                                                       |
-| **End Time**   | Timestamp when the run completed.                                                                                                                                                                                                     |
-| **Duration**   | Elapsed time of the run.                                                                                                                                                                                                              |
-| **Result**     | Status of the run: `Success` (green) or `Failed` (red).                                                                                                                                                                               |
-
+| **Start Time** | Timestamp when the run started.                                                                                                                                                                                                         |
+| **End Time**   | Timestamp when the run completed.                                                                                                                                                                                                       |
+| **Duration**   | Elapsed time of the run.                                                                                                                                                                                                                |
+| **Result**     | Status of the run: `Success` (green) or `Failed` (red).                                                                                                                                                                                 |

@@ -1,6 +1,6 @@
 ---
-title: "Real-time collaboration"
-description: "Work together on projects simultaneously"
+title: 'Real-time collaboration'
+description: 'Work together on projects simultaneously'
 ---
 
 Prophecy provides mechanisms to manage concurrent edits and prevent conflicts when multiple users work on the same project. The specific collaboration workflow is dictated by the project's Git mode, a setting established when the project is initially created. Depending on the chosen mode, Prophecy employs either:
@@ -21,7 +21,9 @@ The following project settings dictate a project's collaboration workflow.
 | Normal or Fork    | External Git     | Users who are comfortable with typical Git branching and merging strategies who can manage CI/CD in Git.                 |
 
 <Info>
-  All projects that utilize the **Prophecy for Analysts** [project creation template](/administration/project-types/project-creation-template) operate with Simple, Prophecy-managed Git.
+  All projects that utilize the **Prophecy for Analysts** [project creation
+  template](/data-analytics/administration/management/administration/platform/project-creation-template)
+  operate with Simple, Prophecy-managed Git.
 </Info>
 
 ## Simple/Prophecy-managed
@@ -50,4 +52,3 @@ To learn how to resolve merge conflicts from the Prophecy interface, visit [Reso
 ## Normal/External Git
 
 When you create a project that uses Normal Git mode, you will use a normal Git workflow for collaboration instead. In a normal Git workflow, you cannot make edits directly on the main branch of the project. Instead, each team member creates their own local development branch to work on new features or fixes independently without affecting others' work. The best practice is to give branches representative names so colleagues can quickly identify which changes are on which branch. To learn more about using the Git workflow, visit the [Git](/data-engineering/ci-cd/git/git) section of the documentation.
-

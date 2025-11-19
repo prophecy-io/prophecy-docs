@@ -13,7 +13,7 @@ You can Release and Deploy via Prophecy UI or you can use [Prophecy Build Tool](
 
 ## Requirements
 
-You must be a [team admin](/administration/rbac) to release and deploy a project.
+You must be a [team admin](/data-engineering/administration/management/users/access/role-based-access) to release and deploy a project.
 
 ## Overview
 
@@ -34,9 +34,7 @@ The deploy step builds all the pipelines and gems, uploads the artifacts, and sc
 - Gems (including custom gems) are built and uploaded to an internal artifactory. They aren't directly copied to your environments, as they are used in generating code for the pipelines, not during job/pipeline execution. Note, the code for gems do get committed to your Git repo as part of the project.
 - Depending on the type of job (Databricks or Airflow), jobs are copied to their respective environments as JSON files for Databricks jobs and as Python DAGs for Airflow.
 
-<Note>
-There are no specific deployment steps needed for other project entities.
-</Note>
+<Note>There are no specific deployment steps needed for other project entities.</Note>
 
 ## Advanced Settings
 
@@ -75,4 +73,3 @@ The page includes the following subtabs.
 ## What's next
 
 Follow the tutorial [Develop and deploy a project](/data-engineering/ci-cd/deployment/deployment) to try to deploy a project yourself!
-

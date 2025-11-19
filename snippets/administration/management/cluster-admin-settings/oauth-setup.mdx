@@ -1,6 +1,6 @@
 <Callout icon="/images/icon.png" color="#FFC107">
 
-  Available on the [Enterprise Edition](/data-engineering/administration/platform/editions) only.
+Available on the [Enterprise Edition](/data-engineering/administration/platform/editions) only.
 
 </Callout>
 
@@ -26,10 +26,10 @@ Prophecy supports OAuth authentication with the following providers:
 
 If you create multiple app registrations for a certain provider, the selection behavior varies based on the fabric type.
 
-| Fabric type                                                                          | Description                                                                                                                                                       | Example                                                                                                                                                     |
-| ------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Fabric type                                                              | Description                                                                                                                                                       | Example                                                                                                                                                     |
+| ------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Prophecy fabrics](/data-analytics/environment/fabrics/prophecy-fabrics) | You can select which app registration to use from a dropdown in the fabric connection settings. If multiple app registrations exist, you can toggle between them. | If you create a Prophecy fabric and configure a Databricks connection, and you have multiple Databricks app registrations, you can select which one to use. |
-| [Spark fabrics](docs/administration/fabrics/Spark-fabrics/fabrics.md)                | The default app registration for the provider is **always** used automatically. You cannot change which app registration is used at the fabric level.             | If you create a Spark fabric and select Databricks as the provider, the fabric will always use the default Databricks app registration.                     |
+| [Spark fabrics](/data-engineering/fabrics/databricks/databricks)         | The default app registration for the provider is **always** used automatically. You cannot change which app registration is used at the fabric level.             | If you create a Spark fabric and select Databricks as the provider, the fabric will always use the default Databricks app registration.                     |
 
 ## Create an app registration
 
@@ -78,7 +78,6 @@ First, a Databricks [account admin](https://docs.databricks.com/en/admin/index.h
 
 1. On Databricks, navigate to **Account Settings > App connections** in your account console.
 1. [Create a new App connection](https://docs.databricks.com/en/integrations/enable-disable-oauth.html#enable-custom-oauth-applications-using-the-databricks-ui) for Prophecy. Ensure that:
-
    - Access scopes are set to **ALL APIs**.
    - The redirect URL contains the following URLs:
 

@@ -17,40 +17,40 @@ Prophecy connects to Databricks using the credentials you provide. These credent
 
 ## Connection type
 
-Prophecy supports Databricks as both a SQL Warehouse connection and an Ingress/Egress connection. To learn more about these different connection types, visit [Prophecy fabrics](docs/administration/fabrics/prophecy-fabrics/create-fabric.md#connections).
+Prophecy supports Databricks as both a SQL Warehouse connection and an Ingress/Egress connection. To learn more about these different connection types, visit [Prophecy fabrics](/data-analytics/environment/fabrics/prophecy-fabrics).
 
 ## Feature support
 
 The table below outlines whether the connection supports certain Prophecy features.
 
-| Feature                                                                    | Supported                           |
-| -------------------------------------------------------------------------- | ----------------------------------- |
-| Run SQL queries                                                            | Yes — SQL Warehouse Connection only |
-| Read and write data with a [Table gem](/data-analytics/gems/source-target/table/databricks)         | Yes — SQL Warehouse Connection only |
-| Read data with a [Source gem](/data-analytics/gems/source-target/external-table/databricks)                        | Yes                                 |
-| Write data with a [Target gem](/data-analytics/gems/source-target/external-table/databricks)                       | Yes                                 |
-| Browse data in the [Environment browser](/data-analytics/development/studio/studio#sidebar) | Yes                                 |
-| Index tables in the [Knowledge Graph](/data-analytics/ai/knowledge-graph/knowledge-graph)                    | Yes                                 |
+| Feature                                                                                      | Supported                           |
+| -------------------------------------------------------------------------------------------- | ----------------------------------- |
+| Run SQL queries                                                                              | Yes — SQL Warehouse Connection only |
+| Read and write data with a [Table gem](/data-analytics/gems/source-target/table/databricks)  | Yes — SQL Warehouse Connection only |
+| Read data with a [Source gem](/data-analytics/gems/source-target/external-table/databricks)  | Yes                                 |
+| Write data with a [Target gem](/data-analytics/gems/source-target/external-table/databricks) | Yes                                 |
+| Browse data in the [Environment browser](/data-analytics/development/studio/studio#sidebar)  | Yes                                 |
+| Index tables in the [Knowledge Graph](/data-analytics/ai/knowledge-graph/knowledge-graph)    | Yes                                 |
 
 ## Connection parameters
 
 To create a connection with Databricks, enter the following parameters.
 
-| Parameter                             | Description                                                                                                                                                                                                                                                                                               |
-| ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Connection Name                       | Name to identify your connection.                                                                                                                                                                                                                                                                         |
-| JDBC URL                              | URL to connect to your SQL warehouse. For example: `jdbc:databricks://<databricks-instance>:443/default;transportMode=http;ssl=1;AuthMech=3;httpPath=/sql/1.0/warehouses/<warehouse-id>`                                                                                                                  |
-| Catalog                               | Default write location for target tables.                                                                                                                                                                                                                                                                 |
-| Schema                                | Default write location for target tables.                                                                                                                                                                                                                                                                 |
-| Authentication method                 | How you want to authenticate your Databricks account. Learn more in [Authentication methods](#authentication-methods).                                                                                                                                                                                    |
+| Parameter                             | Description                                                                                                                                                                                                                                                                                                                 |
+| ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Connection Name                       | Name to identify your connection.                                                                                                                                                                                                                                                                                           |
+| JDBC URL                              | URL to connect to your SQL warehouse. For example: `jdbc:databricks://<databricks-instance>:443/default;transportMode=http;ssl=1;AuthMech=3;httpPath=/sql/1.0/warehouses/<warehouse-id>`                                                                                                                                    |
+| Catalog                               | Default write location for target tables.                                                                                                                                                                                                                                                                                   |
+| Schema                                | Default write location for target tables.                                                                                                                                                                                                                                                                                   |
+| Authentication method                 | How you want to authenticate your Databricks account. Learn more in [Authentication methods](#authentication-methods).                                                                                                                                                                                                      |
 | Select a cluster to run the script on | Cluster where [Script gems](/data-analytics/gems/custom/script) run. Specify a cluster if you want to install libraries on your cluster to use in your scripts.<br />The dropdown will only display running clusters (inactive clusters will not appear). <br />If not specified, Script gems run on Databricks Serverless. |
 
 <Info>
   When you use Databricks as your primary SQL warehouse, Prophecy also uses the catalog and schema
   you define in the connection to store temporary tables during [pipeline
-  execution](/data-analytics/development/runs/execution#external-data-handling). Therefore, you must have write
-  access to the schema in Databricks. To avoid conflicts, define distinct catalog and schema
-  locations for each fabric.
+  execution](/data-analytics/development/runs/execution#external-data-handling). Therefore, you must
+  have write access to the schema in Databricks. To avoid conflicts, define distinct catalog and
+  schema locations for each fabric.
 </Info>
 
 ## Authentication methods
@@ -61,10 +61,10 @@ You can configure your Databricks connection using the following authentication 
 
 When you select OAuth as your authentication method for the connection, Prophecy can authenticate using either user-based (U2M) or service principal-based (M2M) OAuth. A single fabric cannot use both methods for the same connection. To use both U2M and M2M, create separate fabrics.
 
-| OAuth Type                  | Authentication                | Requirements                                                    | Token Expiry                        | Best For                   |
-| --------------------------- | ----------------------------- | --------------------------------------------------------------- | ----------------------------------- | -------------------------- |
-| **User-based (U2M)**        | Individual user accounts      | [App Registration](/data-engineering/administration/management/cluster-admin-settings/oauth-setup)                                | Periodic re-authentication required | Interactive development    |
-| **Service Principal (M2M)** | Service principal credentials | Service Principal Client ID and Service Principal Client Secret | No expiration                       | Scheduled jobs, automation |
+| OAuth Type                  | Authentication                | Requirements                                                                                     | Token Expiry                        | Best For                   |
+| --------------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------ | ----------------------------------- | -------------------------- |
+| **User-based (U2M)**        | Individual user accounts      | [App Registration](/data-analytics/administration/management/cluster-admin-settings/oauth-setup) | Periodic re-authentication required | Interactive development    |
+| **Service Principal (M2M)** | Service principal credentials | Service Principal Client ID and Service Principal Client Secret                                  | No expiration                       | Scheduled jobs, automation |
 
 You can schedule pipelines with user-based OAuth, but you'll need to re-authenticate periodically. Prophecy estimates token expiry based on Databricks' response and prompts you when re-authentication is needed. To avoid interruptions, switch to service principal-based OAuth for production workloads.
 

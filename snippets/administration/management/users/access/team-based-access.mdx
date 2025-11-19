@@ -5,7 +5,10 @@ In Prophecy, access to resources is based on team associations with resources. P
 This guide provides comprehensive best practices for implementing and managing team-based access to optimize collaboration while maintaining appropriate security boundaries.
 
 <Note>
-[Team admins](/administration/rbac#team-admins) have special privileges for managing team membership and team fabric creation, but the core access model remains focused on the team-to-resource relationship. Each team can be assigned to many projects and fabrics, but importantly, each project and fabric can only be assigned to one team.
+  [Team admins](/data-engineering/administration/management/users/access/role-based-access) have
+  special privileges for managing team membership and team fabric creation, but the core access
+  model remains focused on the team-to-resource relationship. Each team can be assigned to many
+  projects and fabrics, but importantly, each project and fabric can only be assigned to one team.
 </Note>
 
 ## Team structure
@@ -59,7 +62,9 @@ As organizations scale, they often benefit from more granular team structures al
 Fabrics are the bridge between Prophecy and your execution environment. They encapsulate connection details and access credentials, making them a critical component of your security architecture. Thoughtfully configured fabrics ensure that the right people have the right level of access to your data processing resources.
 
 <Note>
-Authentication capabilities vary between different connection types across fabrics. Visit individual connection documentation to learn about the specific authentication strategies available for that connection.
+  Authentication capabilities vary between different connection types across fabrics. Visit
+  individual connection documentation to learn about the specific authentication strategies
+  available for that connection.
 </Note>
 
 ### Development fabrics
@@ -114,9 +119,7 @@ Projects can be shared with other teams to extend access. When a project is shar
 
 This model encourages the creation of reusable components that can be leveraged across teams without duplication. When a team creates a high-quality transformation or dataset definition, other teams can incorporate it into their workflows without risk of breaking the original implementation.
 
-<Note>
-Prophecy Apps are only available for SQL projects at this time.
-</Note>
+<Note>Prophecy Apps are only available for SQL projects at this time.</Note>
 
 ## Project and fabric relationships
 
@@ -135,7 +138,9 @@ For example, a business analyst in the development team can develop and test a p
 ![Attach different fabrics to a project](/snippets/administration/management/users/access/img/project-fabric-attachment.png)
 
 <Info>
-To accomplish the scenario above, you must ensure that at least one user is a member of both the project's team and the target fabric's team. This way, someone will be able to publish or deploy a project to production environments.
+  To accomplish the scenario above, you must ensure that at least one user is a member of both the
+  project's team and the target fabric's team. This way, someone will be able to publish or deploy a
+  project to production environments.
 </Info>
 
 ### Provider compatibility
@@ -146,5 +151,6 @@ While cross-team connections provide flexibility, there are technical constraint
 - Snowflake projects can only connect to Snowflake fabrics.
 
 <Note>
-Python and Scala projects do not specify "providers" at creation. These projects can connect to any Spark fabric.
+  Python and Scala projects do not specify "providers" at creation. These projects can connect to
+  any Spark fabric.
 </Note>

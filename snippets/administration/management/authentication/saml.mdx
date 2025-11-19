@@ -1,6 +1,6 @@
 <Callout icon="/images/icon.png" color="#FFC107">
 
-  Available for [Express and Enterprise Editions](/data-engineering/administration/platform/editions) only.
+Available for [Express and Enterprise Editions](/data-engineering/administration/platform/editions) only.
 
 </Callout>
 
@@ -12,7 +12,7 @@ This page describes how to set up SAML and SCIM, which requires configuration in
 
 Review the following prerequisites.
 
-- To access SSO settings, you must be a [cluster admin](/administration/rbac) for your deployment.
+- To access SSO settings, you must be a [cluster admin](/data-engineering/administration/management/users/access/role-based-access) for your deployment.
 - SAML is available for [Express and Enterprise Editions](/data-engineering/administration/platform/editions).
 - SCIM is only available for the [Enterprise Edition](/data-engineering/administration/platform/editions). To enable SCIM in your environment, update the `config` in your Prophecy deployment.
 
@@ -110,19 +110,16 @@ To set up SCIM in Azure:
 1. Open the Enterprise Application you just configured.
 1. From the left menu of the application, click **Manage > Provisioning**.
 1. From the left menu of the provisioning page, click **Manage > Connectivity**.
-
    - Under **Select authentication method**, select **Bearer authentication**.
    - For the **Tenant URL** field, use the value `https://<your-deployment-name>.prophecy.io/proscim`
    - For **Secret token**, use the Prophecy-generated token that you copied in the [Set up SCIM](#set-up-scim) steps.
    - Click **Test connection**. Once the test succeeds, you can save the connection.
 
 1. From the left menu of the same provisioning page, navigate to **Manage > Provisioning**.
-
    - Set the **Provisioning Mode** to **Automatic**.
    - Ensure that the **Provisioning Status** toggle is set to **On**.
 
 1. From the left menu of the same provisioning page, navigate to **Manage > Users and groups**.
-
    - Create groups using Prophecy's [naming conventions](/data-engineering/administration/management/authentication/group-team-mapping).
    - Assign users to those groups.
 
@@ -187,7 +184,6 @@ Once SCIM is enabled, two new tabs should appear in the application settings: **
 
 1. Navigate to the **Provisioning** tab.
 1. In the **To App** subtab, enable the following:
-
    - **Create Users**
    - **Update User Attributes**
    - **Deactivate Users**
@@ -195,7 +191,6 @@ Once SCIM is enabled, two new tabs should appear in the application settings: **
    This allows Okta to perform the enabled actions in Prophecy.
 
 1. In the **Integration** subtab:
-
    - Set the **SCIM version** to `2.0`.
    - For the **SCIM connector base URL**, use the value `https://<your-deployment-name>.prophecy.io/proscim`
    - For the **Unique identifier field for users**, type `userName`. This is an Okta-specific value.

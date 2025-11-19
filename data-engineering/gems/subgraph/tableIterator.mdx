@@ -29,7 +29,7 @@ Let's see how to create a Basic Loop which loops over a Metadata Table, and for 
 
 ## Creating a TableIterator gem
 
-First add the Input gem on which you want to Iterate over. For this, simply use an existing dataset or create a new [Source gem](/data-analytics/gems/source-target/source-target) pointing to your Metadata table.
+First add the Input gem on which you want to Iterate over. For this, simply use an existing dataset or create a new Source gem pointing to your Metadata table.
 You can run this Source gem to see the data your loop would be running for.
 
 Now, Drag and Drop the **(1) TableIterator** gem from the Subgraph menu, and connect it to the above created Source gem.
@@ -62,8 +62,9 @@ This will show all the configurations created for this Subgraph as shown below.
 You can add default values for any of these by switching to the **(1) Config Tab**, as shown above. You can also add more configurations in case you want to use in your subgraph.
 
 <Info>
-Note, the configurations associated with a source column will have different values for each iteration based on the input data's current row value for that column.
-The configs which are not mapped to a source column, will have a fixed value for each Iteration provided in the Config tab.
+  Note, the configurations associated with a source column will have different values for each
+  iteration based on the input data's current row value for that column. The configs which are not
+  mapped to a source column, will have a fixed value for each Iteration provided in the Config tab.
 </Info>
 
 Once done, click on **(2) Save**, to save the Iterator configurations.

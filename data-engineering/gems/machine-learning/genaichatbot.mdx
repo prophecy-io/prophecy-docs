@@ -6,8 +6,8 @@ description: Build a generative AI application that answers questions in Slack b
 This guide showcases how easy it is to build a live chatbot application using your internal datasets on Spark. Here is a summary of the steps you'll take to set up and explore the Generative AI Chatbot pipelines:
 
 1. **Setup**: You'll configure the dependencies, define credential secrets and load the pipelines from a Git repository.
-2. **Build a Knowledge Warehouse**: You'll explore a set of Spark pipelines to [(a)ingest](/data-engineering/generative-ai-chatbot/#2a-web-ingest-pipeline) unstructured data from your applications, pre-process, and [(b)vectorize](/data-engineering/generative-ai-chatbot/#2b-web-vectorize-pipeline) and store the data within your vector database of choice.
-3. **Run a Live Inference Pipeline**: You'll run a Spark streaming [Chatbot](/data-engineering/generative-ai-chatbot/#step-3-live-inference) pipeline that reads messages from Slack and answers them live using information from your new Knowledge Warehouse.
+2. **Build a Knowledge Warehouse**: You'll explore a set of Spark pipelines to [(a)ingest](/data-engineering/gems/machine-learning/genaichatbot/#2a-web-ingest-pipeline) unstructured data from your applications, pre-process, and [(b)vectorize](/data-engineering/gems/machine-learning/genaichatbot/#2b-web-vectorize-pipeline) and store the data within your vector database of choice.
+3. **Run a Live Inference Pipeline**: You'll run a Spark streaming [Chatbot](/data-engineering/gems/machine-learning/genaichatbot/#step-3-live-inference) pipeline that reads messages from Slack and answers them live using information from your new Knowledge Warehouse.
 
 ![Architecture Diagram](img/genai_architecture.png)
 
@@ -81,7 +81,7 @@ Here are the steps to set up the Slack bot. If you prefer a video walkthrough, [
 
 ### 1b. Databricks Secrets and Schemas
 
-The Databricks CLI is a command line tool that lets you interact with your Databricks workspace. Use the Databricks CLI here to store the tokens created in [Step 1a](/data-engineering/generative-ai-chatbot#1a-dependencies) safely as Databricks `secrets`. Also, use the Databricks CLI to create catalog tables and schemas. Follow the steps below and for more details about the Databricks CLI read [here.](https://docs.databricks.com/en/archive/dev-tools/cli/index.html)
+The Databricks CLI is a command line tool that lets you interact with your Databricks workspace. Use the Databricks CLI here to store the tokens created in [Step 1a](/data-engineering/gems/machine-learning/genaichatbot#1a-dependencies) safely as Databricks `secrets`. Also, use the Databricks CLI to create catalog tables and schemas. Follow the steps below and for more details about the Databricks CLI read [here.](https://docs.databricks.com/en/archive/dev-tools/cli/index.html)
 
 Find `setup_Databricks.sh` [here](https://github.com/prophecy-samples/gen-ai-chatbot-template/blob/main/setup_databricks.sh).
 
@@ -108,7 +108,7 @@ databricks secrets list --scope slack
 ### 1c. Load the Git repository
 
 1. **Login** to [Prophecy](https://app.prophecy.io/metadata/auth/signup)
-2. **Import** a new Prophecy [project](/projects).
+2. **Import** a new Prophecy project.
 3. **Load the forked Git repository** to the Prophecy project as shown in this 30-second [video.](https://github.com/prophecy-samples/gen-ai-chatbot-template/assets/3248329/dcdfabaf-4870-421d-9f92-4ab028c5db5a), pointing to your fork at `https://github.com/<your_username>/gen-ai-chatbot-template`
 4. **Connect** to your Spark cluster by creating a fabric following [these steps.](/data-engineering/fabrics/databricks/databricks)
 
@@ -167,7 +167,7 @@ After ingesting the Slack question message and doing some transformation steps, 
 
 1. Verify the `slack_chat` Source gem is configured with Databricks scope `slack` and Databricks Key `app_token`. While this token begins with `xapp-`, be sure not to use the plaintext value, as using the Databricks secret is a much more secure approach.
 2. Update the `only_user_msgs` Filter gem with the Slack app member ID:
- ![Slack App Member ID](img/genai_memberId.png)
+   ![Slack App Member ID](img/genai_memberId.png)
 3. Verify the `bot_message` Target gem is configured with Databricks scope `slack` and Databricks Key `token`. While this bot user OAuth token begins with `xoxb-`, be sure not to enter the plaintext value.
 4. Run the streaming pipeline using the big `play` button rather than the individual gem `play` buttons
 5. Type a question into the Slack channel and check the pipeline to see if the question is ingested and processed. Use the interims (as described above) to watch your message travel through the pipeline. Error messages are visible in the data preview samples.

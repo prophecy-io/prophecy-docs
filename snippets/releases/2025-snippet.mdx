@@ -46,7 +46,7 @@ We have released two new editions of Prophecy for analysts: Free and Professiona
 
 ## Agent-generated pipeline documentation
 
-You can now use the Prophecy Agent to [generate pipeline documentation](/data-analytics/development/ai-agent/ai-documentation.mdanalysts). Instead of writing documentation manually, this lets you create detailed specifications automatically.
+You can now use the Prophecy Agent to [generate pipeline documentation](/data-analytics/ai/agent/documentation/documentation). Instead of writing documentation manually, this lets you create detailed specifications automatically.
 
 ## New gems
 
@@ -82,7 +82,7 @@ When configuring [Prophecy project dependencies](/data-analytics/development/ext
 
 ## EMR fabric improvements
 
-- You can use [Selective](/data-engineering/development/data-sampling#selective-sampling) data sampling mode when running pipelines on EMR and EMR Serverless clusters.
+- You can use [Selective](/data-engineering/development/runs/data-sampling#selective-sampling) data sampling mode when running pipelines on EMR and EMR Serverless clusters.
 
 - When using EMR [SAML authentication](/data-engineering/fabrics/emr/emr-saml) with Okta, you will see updated job size [configurations](/data-engineering/fabrics/emr/emr-job-sizes) in EMR fabrics.
 
@@ -118,11 +118,11 @@ For [Databricks Jobs](/data-engineering/orchestration/databricks-jobs), we have 
 
 ## Automatic team creation
 
-You can now enable automatic team creation when using Microsoft Entra ID (Azure Active Directory) [SSO](/administration/authentication/azure-ad#step-2-optional-enable-automatic-team-creation).
+You can now enable automatic team creation when using Microsoft Entra ID (Azure Active Directory) [SSO](/data-analytics/administration/management/authentication/azure-ad#step-2-optional-enable-automatic-team-creation).
 
 ## Team-level Copilot
 
-We've added the ability to [enable or disable Copilot](/administration/teams-users/teams-users#advanced) at the team level.
+We've added the ability to [enable or disable Copilot](/data-analytics/administration/teams) at the team level.
 
 </Update>
 
@@ -176,7 +176,7 @@ You can now [move projects](/data-analytics/development/versioning/migrate-manag
 
 - You can now enable or disable [auto-run](/data-analytics/collaboration/prophecy-apps/app-settings) for Prophecy Apps in the app settings.
 - When you open a gem, you can now collapse the **Ports** panel of the gem configuration dialog.
-- [Write options](/table-write-options) for Table gems have been renamed. However, they are still mapped to the same dbt configs under the hood (Changed in 4.1.3.9).
+- [Write options](/data-analytics/gems/source-target/table/write-options) for Table gems have been renamed. However, they are still mapped to the same dbt configs under the hood (Changed in 4.1.3.9).
 - We've enhanced the [lineage extractor](/data-engineering/lineage/lineage-extractor) Python tool to be able to extract lineage from pipelines in SQL projects in Excel and OpenLineage format (Added in 4.1.3.10).
 
 </Update>
@@ -269,11 +269,11 @@ PySpark project pipelines can now run on Databricks serverless compute. See supp
 ## Version control improvements
 
 - We have improved the release flow for protected branches. When a branch like `main` is protected, direct commits to it are not allowed. Our previous release process required a direct commit to `main`, which caused issues in these scenarios. We now provide an option on the Open Pull Request screen to bump the version of the source branch before merging into main. To learn more, visit [Pull requests](/data-engineering/ci-cd/git/git).
-- You can now merge from the default branch (e.g., `main`) into another branch. Previously, the merge UI only allowed merging into the default branch. This enhancement is available in both the [Git workflow dialog](/data-engineering/ci-cd/git/git-workflow) within the project editor and the Commits tab on the [project metadata](/projects#project-metadata) page.
+- You can now merge from the default branch (e.g., `main`) into another branch. Previously, the merge UI only allowed merging into the default branch. This enhancement is available in both the [Git workflow dialog](/data-engineering/ci-cd/git/git-workflow) within the project editor and the Commits tab on the project metadata page.
 
 ## Catalog table improvements
 
-The [Catalog Table](/data-engineering/delta-table/) Target gem includes the following enhancements. Update the `ProphecySparkBasicsPython` package to version 0.2.47 to access these updates.
+The [Catalog Table](/data-engineering/gems/source-target/catalog-table/delta) Target gem includes the following enhancements. Update the `ProphecySparkBasicsPython` package to version 0.2.47 to access these updates.
 
 - Soft Delete for SCD Type 2 (SCD2) Merge: You can now enable soft delete behavior during SCD2 merges. When the source system deletes a record, the target table retains its history by updating the record's end-time. This treats the deletion as a Type 2 change instead of removing the row.
 
@@ -281,10 +281,10 @@ The [Catalog Table](/data-engineering/delta-table/) Target gem includes the foll
 
 ## XLSX support on UC clusters
 
-The XLSX gem now runs on [Databricks UC clusters](/administration/fabrics/Spark-fabrics/databricks/ucshared) configured with standard (formerly shared) access mode. To leverage this capability, choose to read file with Pandas. The `openpyxl` library is needed for Pandas to work. Files can be read from and written to UC volumes only.
+The XLSX gem now runs on [Databricks UC clusters](/data-engineering/fabrics/databricks/UCShared) configured with standard (formerly shared) access mode. To leverage this capability, choose to read file with Pandas. The `openpyxl` library is needed for Pandas to work. Files can be read from and written to UC volumes only.
 
-| Gem                      | Package                     | Minimum version |
-| ------------------------ | --------------------------- | --------------- |
+| Gem                                                    | Package                     | Minimum version |
+| ------------------------------------------------------ | --------------------------- | --------------- |
 | [XLSX](/data-engineering/gems/source-target/file/xlsx) | `ProphecySparkBasicsPython` | `0.2.47`        |
 
 ## Prophecy Library versions
@@ -414,14 +414,14 @@ While your core business logic is still written in SQL and run using dbt, data i
 ## Gem enhancements
 
 - The CSV Source gem in Python/PySpark projects now includes a property that lets you skip `n` number of first or last lines when reading in a CSV file.
-- More gems in Python/PySpark projects are now compatible with [Databricks UC clusters](/administration/fabrics/Spark-fabrics/databricks/ucshared) configured with standard (formerly shared) access mode. The table below shows the minimum package version required to enable compatibility.
+- More gems in Python/PySpark projects are now compatible with [Databricks UC clusters](/data-engineering/fabrics/databricks/UCShared) configured with standard (formerly shared) access mode. The table below shows the minimum package version required to enable compatibility.
 
-  | Gem                                               | Package                     | Minimum version |
-  | ------------------------------------------------- | --------------------------- | --------------- |
-  | [CSV Source](/data-engineering/gems/source-target/file/csv)                      | `ProphecySparkBasicsPython` | `0.2.44`        |
+  | Gem                                                                                   | Package                     | Minimum version |
+  | ------------------------------------------------------------------------------------- | --------------------------- | --------------- |
+  | [CSV Source](/data-engineering/gems/source-target/file/csv)                           | `ProphecySparkBasicsPython` | `0.2.44`        |
   | [BigQuery Source and Target](/data-engineering/gems/source-target/warehouse/bigquery) | `ProphecyWarehousePython`   | `0.0.9`         |
-  | [EmailData](/data-engineering/gems/custom/email-data)                | `ProphecyWebAppPython`      | `0.1.2`         |
-  | [Seed Source](/data-engineering/gems/source-target/file/seed)                    | `ProphecySparkBasicsPython` | `0.2.39`        |
+  | [EmailData](/data-engineering/gems/custom/email-data)                                 | `ProphecyWebAppPython`      | `0.1.2`         |
+  | [Seed Source](/data-engineering/gems/source-target/file/seed)                         | `ProphecySparkBasicsPython` | `0.2.39`        |
 
 ## Data diff
 
