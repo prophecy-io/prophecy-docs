@@ -2,4 +2,48 @@
   Applicable to the [Enterprise Edition](/data-analytics/administration/platform/editions) only.
 </Callout>
 
-- **Default projects:** Manage default project dependencies that are automatically imported into new projects. You can select any project from the Package Hub to include here.
+Default projects are project dependencies that are automatically imported into new projects created within the team. This makes sense if your team frequently creates projects that use the same packages.
+
+<Info>Only team admins can access and modify default project dependencies for their team.</Info>
+
+## Accessing default projects
+
+To configure default projects for a team:
+
+1. Open the **Metadata** icon in the left navigation bar.
+1. Select the **Teams** tab in the page header.
+1. Click on the team to open its metadata page.
+1. Click the **Settings** tab.
+1. Navigate to the **Advanced** subtab.
+
+The Default Projects section displays all projects currently configured as defaults for the team.
+
+## Default projects table
+
+The Default Projects table shows all projects that will be automatically imported into new projects. Each entry displays:
+
+- **Project**: The project name from Package Hub.
+- **Description**: Optional description of the project's purpose.
+- **Version**: The specific version of the project that will be imported.
+
+New projects will automatically import the latest version of the default projects.
+
+## Managing default projects
+
+### Adding default projects
+
+To add projects to the default list:
+
+1. Open the **Add projects** dropdown.
+1. Select projects from the Package Hub that you want to include as defaults.
+1. The selected projects appear in the table.
+
+You can select any project from the Package Hub to include as a default dependency. If you add default dependencies written in different languages, Prophecy will only automatically import the dependencies written in the same language as the project.
+
+### Removing default projects
+
+To remove a default project:
+
+1. Locate the project in the Default Projects table.
+1. Hover the project you want to remove.
+1. Click the **trash** icon.

@@ -2,5 +2,32 @@
   Applicable to the [Enterprise Edition](/data-analytics/administration/platform/editions) only.
 </Callout>
 
-- **Enable Copilot**: Use this toggle to enable or disable AI features for specific teams.
-- **Data context in copilot:** When enabled, sample data from interim runs will be used to improve Copilot suggestion quality. Note that this data is not used to improve the Agent.
+## Accessing Copilot settings
+
+To configure Copilot settings for a team:
+
+1. Open the **Metadata** icon in the left navigation bar.
+1. Select the **Teams** tab in the page header.
+1. Click on the team to open its metadata page.
+1. Click the **Settings** tab.
+1. Navigate to the **Advanced** subtab.
+
+<Info>Only team admins can access and modify AI settings for their team.</Info>
+
+## Copilot settings
+
+The Copilot settings section contains two configuration options.
+
+### Enable Copilot
+
+Toggle Copilot features (including Copilot and Agents) on or off for the team.
+
+- **Enabled**: Copilot features are available to all team members.
+- **Disabled**: Copilot features are not available to team members.
+
+### Use data context in copilot
+
+When enabled, sample data from pipeline runs is used to improve Copilot suggestion quality. The Copilot analyzes actual data patterns and schemas from your runs to provide more relevant suggestions.
+
+- **Enabled**: Sample data from runs improves Copilot suggestion quality.
+- **Disabled**: Copilot suggestions are based on general patterns without data context.
