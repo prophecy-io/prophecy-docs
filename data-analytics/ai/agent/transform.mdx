@@ -62,11 +62,11 @@ All changes made by the agent are saved in the project [version history](/data-a
 
 Here are some sample prompts that can produce transformations in your pipeline.
 
-| Scenario           | Prompt                                                 | Expected output   |
-| ------------------ | ------------------------------------------------------ | ----------------- |
-| Filter records     | "Filter to only include customers from California"     | Filter gem        |
-| Add transformation | "Calculate the total order value as quantity \* price" | Reformat gem      |
-| Clean data         | "Remove rows where email is null"                      | DataCleansing gem |
-| Aggregate data     | "Group by region and calculate average sales"          | Aggregate gem     |
-| Rename columns     | "Rename cust_id to customer_id and amt to amount"      | Reformat gem      |
-| Save output tables | "Show me and save the final output of the pipeline"    | Table gem         |
+| Scenario           | Prompt                                                    | Expected output   |
+| ------------------ | --------------------------------------------------------- | ----------------- |
+| Filter records     | "Filter to only include customers from California"        | Filter gem        |
+| Add transformation | "Calculate the total order value as `quantity * price`"   | Reformat gem      |
+| Clean data         | "Remove rows where email is null"                         | DataCleansing gem |
+| Aggregate data     | "Group by region and calculate average sales"             | Aggregate gem     |
+| Rename columns     | "Rename `cust_id` to `customer_id` and `amt` to `amount`" | Reformat gem      |
+| Save output tables | "Show me and save the final output of the pipeline"       | Table gem         |
