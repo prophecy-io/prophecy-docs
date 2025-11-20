@@ -1,64 +1,60 @@
 ---
 title: Create a fabric
-description: Define the execution environment for your SQL project
+description: Define an execution environment for your project
 ---
+
+<Callout icon="/images/icon.png" color="#FFC107">
+  [Free and Professional Editions](/data-analytics/administration/platform/editions) do not support
+  creating new fabrics.
+</Callout>
 
 Use the following instructions to create a Prophecy fabric.
 
-## Create entity
+## Create a new fabric
+
+Begin by creating a new fabric entity in Prophecy.
 
 1. From the left sidebar, click the **+** sign.
 1. On the Create Entity page, select **Fabric**.
 
-Each of the following sections corresponds to a tab of the fabric settings.
-
-### Basic Info
+### 1. Fill in the Basic Info tab
 
 The **Basic Info** tab lets you define the key identifiers of the fabric.
 
-| Parameter   | Description                                                                               | Required |
-| ----------- | ----------------------------------------------------------------------------------------- | -------- |
-| Name        | Name of the fabric.                                                                       | Yes      |
-| Description | Description of the fabric.                                                                | No       |
-| Team        | [Team](/data-analytics/administration/management/teams/teams) that can access the fabric. | Yes      |
+1. Provide a name for the fabric.
+1. (Optional) Provide a description for the fabric.
+1. Select a [team](/data-analytics/administration/management/teams/teams) that can access the fabric.
+1. Click **Continue**.
 
-### Providers
+### 2. Fill in the Providers tab
 
 The **Providers** tab allows you to configure what type of execution environment you would like to create.
 
-| Parameter         | Description                                                                                                                                                                     | Required |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| Provider Type     | Type of fabric. Choose **Prophecy**.                                                                                                                                            | Yes      |
-| Provider          | Provider of the primary SQL warehouse. Prophecy supports Databricks and BigQuery.                                                                                               | Yes      |
-| Advanced Settings | Option to use Prophecy Automate from a different networking zone (only applicable if [not deployed in Prophecy network](/data-analytics/administration/platform/architecture)). | No       |
+1. Under **Provider Type**, select **Prophecy**.
+1. For the **Provider**, select the SQL warehouse provider you want to use.
+1. Click **Continue**.
 
-### Connections
+<Info>You cannot edit the fabric provider after you create the fabric.</Info>
+
+### 3. Fill in the Connections tab
 
 The **Connections** tab allows you to store your credentials to various external data providers for reuse while attached to the fabric.
 
-| Parameter                  | Description                                                                                                                                                                                                        | Required |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
-| SQL Warehouse Connection   | Primary SQL warehouse connection. A connection must be made to the [Provider](#providers) defined in the previous tab. When you use this fabric, all SQL queries will be executed on this warehouse.               | Yes      |
-| Ingress/Egress Connections | Additional connections to external data providers that can be reused throughout pipelines. For a complete list of supported connections, visit [Connections](/data-analytics/environment/connections/connections). | No       |
+1. Under **SQL Warehouse Connection**, click **+ Connect SQL Warehouse**.
+1. Configure connection details for the SQL warehouse provider you selected in the previous step. To understand the how to set up a connection for a specific provider, see [Connections](/data-analytics/environment/connections/connections).
+1. Click **Complete**. Prophecy saves the fabric.
 
-<Info>
-  Your SQL warehouse connection gives Prophecy access to both the execution environment and cloud
-  storage of that connection. Additional ingress/egress connections in your fabric are only used for
-  reading and writing data (not pipeline execution).
-</Info>
+You can add **Ingress/Egress Connections** to your fabric if you want, but these are not required.
 
-### Secrets
+<Note>
+  If you want to add [secrets](/data-analytics/environment/secrets/secrets) to your fabric, you need
+  to save the fabric first. Then, you can add secrets to the created fabric.
+</Note>
 
-The **Secrets** tab lets you encrypt your sensitive data, so you can use values without directly exposing them in your projects or pipelines. Prophecy fabrics leverage [Prophecy secrets](/data-analytics/environment/secrets/secrets) to manage both text-based and binary secrets.
+## Edit an existing fabric
 
-| Parameter | Description                                                   | Required                         |
-| --------- | ------------------------------------------------------------- | -------------------------------- |
-| Secrets   | Encrypted data that can be used by anyone in the fabric team. | Required for certain connections |
+To edit an existing fabric:
 
-## Save the fabric
-
-Once you have configured these parameters:
-
-1. Prophecy will test the connection for you.
-1. If the connection fails, Prophecy will provide an error to help you troubleshoot the connection.
-1. If the connection succeeds, you can **Save** the connection.
+1. From the left sidebar, click the **Metadata** page.
+1. Open the fabric you want to edit.
+1. Update the fabric. Prophecy automatically saves your changes.
