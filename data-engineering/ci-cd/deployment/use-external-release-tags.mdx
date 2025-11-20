@@ -4,7 +4,7 @@ description: Use external release tags for deployment and dependency in Prophecy
 ---
 
 <Callout icon="/images/icon.png" color="#FFC107">
-  Available for [Enterprise Edition](/getting-started/editions/) only.
+  Available for [Enterprise Edition](/data-engineering/administration/platform/editions) only.
 </Callout>
 
 If you use external CI-CD tools to merge and release your projects, you can use [release tags](https://git-scm.com/book/en/v2/Git-Basics-Tagging) from those tools within Prophecy for deployment and dependencies.
@@ -15,7 +15,7 @@ Once you've deployed an external tag in Prophecy, you can add that release as a 
 
 Any externally created release tag that you pull into Prophecy is visible on the **Releases & Deployments** tab of your project metadata.
 
-![External_tags_list](img/external_release_tag_list.png)
+![External_tags_list](/data-engineering/ci-cd/deployment/img/external_release_tag_list.png)
 
 Tags that are created externally are labeled with an **(1) External** tag. If your latest tags aren't showing, click on the **(2) Refresh** button to refresh the list of tags.
 
@@ -25,11 +25,11 @@ To deploy an existing tag, follow these steps:
 
 1. From `...` in the top right corner, select **(1) Deploy**. This opens the Deploy dialog.
 
-   ![Deploy_button](img/external_release_tag_deploy.png)
+   ![Deploy_button](/data-engineering/ci-cd/deployment/img/external_release_tag_deploy.png)
 
 2. Select a release version you wish to deploy by using the **(1) Choose a release** dropdown. Once you select a version, the table below shows the jobs that are going to be modified (there might not be any jobs). Click **(2) Deploy** to start the deployment.
 
-   ![Deploy_start](img/external_release_tag_deploy_start.png)
+   ![Deploy_start](/data-engineering/ci-cd/deployment/img/external_release_tag_deploy_start.png)
 
    <Info>
 
@@ -45,7 +45,7 @@ Once you've deployed a tag, you can use the release as a dependency in a project
 
 First, navigate to the **(1) Dependencies** tab of the relevant project and click **(2) + Add Dependency**.
 
-![Add_dependency](img/external_release_tag_dependency.png)
+![Add_dependency](/data-engineering/ci-cd/deployment/img/external_release_tag_dependency.png)
 
 Next, in the **Create Dependency** dialog:
 
@@ -54,7 +54,7 @@ Next, in the **Create Dependency** dialog:
 1. For **Version**, select the option that matches your external release tag.
 1. Click **Create Dependency**.
 
-![Add_dependency_2](img/external_release_tag_create_dependency.png)
+![Add_dependency_2](/data-engineering/ci-cd/deployment/img/external_release_tag_create_dependency.png)
 
 You can also edit a dependency and update its version to an externally released version.
 

@@ -9,13 +9,13 @@ The following sections describe the ways you can interact with the agent for dat
 
 ## Find tables in your SQL warehouse
 
-Ask the agent to search for tables in your [primary SQL warehouse](docs/administration/fabrics/prophecy-fabrics/prophecy-fabrics.md). Based on your query, it returns:
+Ask the agent to search for tables in your [primary SQL warehouse](/data-analytics/environment/fabrics/prophecy-fabrics). Based on your query, it returns:
 
 - A short list of relevant datasets and their descriptions.
 - A full list of datasets that match your criteria.
 
 <Tip>
-  You can add a dataset to the pipeline as a [Table gem](/analysts/source-target) directly from the
+  You can add a dataset to the pipeline as a [Table gem](/data-analytics/gems/source-target/source-target) directly from the
   chat.
 </Tip>
 
@@ -29,7 +29,7 @@ To learn more about a dataset, you can click on it inside the chat. This opens a
 1. Review the data profile of the sample.
 1. Open **Explore** to chat with an agent that limits responses to the context of the dataset.
 
-![Preview dataset UI](img/agent-explore.png)
+![Preview dataset UI](/data-analytics/ai/agent/img/agent-explore.png)
 
 This helps you validate that your data is correct without having to manually browse through your data catalogs.
 
@@ -57,7 +57,7 @@ The agent returns:
 
 If the dataset isn't already part of your pipeline, you'll also see an option to add it as a Table gem on the canvas.
 
-![Data sample response](img/agent-sql-logs-sample.png)
+![Data sample response](/data-analytics/ai/agent/img/agent-sql-logs-sample.png)
 
 ### Table preview
 
@@ -77,7 +77,7 @@ You can also ask the agent to generate charts for data visualization. The agent 
 
 If the chart is based on a dataset that isn't yet in your pipeline, you'll see an option to add it as a Table gem.
 
-![Chart generation response](img/agent-sql-logs-charts.png)
+![Chart generation response](/data-analytics/ai/agent/img/agent-sql-logs-charts.png)
 
 ### Chart preview
 
@@ -88,7 +88,7 @@ To see a larger version of the chart, click **Preview**. This opens the data vis
 | Visualization | <ul><li>View a larger version of the chart</li><li>Download the chart as an image</li><li>Copy the chart as an image</li></ul>  |
 | Data          | <ul><li>View the underlying data</li><li>Download the data as a JSON, Excel, or CSV file</li><li>Show or hide columns</li></ul> |
 
-<Info>To learn more about data visualization, see [Charts](/analysts/charts).</Info>
+<Info>To learn more about data visualization, see [Charts](/data-analytics/development/runs/data-explorer/charts/charts).</Info>
 
 ## Sample prompts
 

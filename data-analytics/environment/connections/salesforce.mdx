@@ -17,10 +17,10 @@ The table below outlines whether the connection supports certain Prophecy featur
 
 | Feature                                                                    | Supported |
 | -------------------------------------------------------------------------- | --------- |
-| Read data with a [Source gem](/analysts/salesforce)                        | Yes       |
+| Read data with a [Source gem](/data-analytics/gems/source-target/external-table/salesforce)                        | Yes       |
 | Write data with a Target gem                                               | No        |
-| Browse data in the [Environment browser](/analysts/project-editor#sidebar) | Yes       |
-| Index tables in the [Knowledge Graph](/knowledge-graph)                    | No        |
+| Browse data in the [Environment browser](/data-analytics/development/studio/studio#sidebar) | Yes       |
+| Index tables in the [Knowledge Graph](/data-analytics/ai/knowledge-graph/knowledge-graph)                    | No        |
 
 ## Limitations
 
@@ -34,14 +34,14 @@ To create a connection with Salesforce, enter the following parameters:
 | ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Connection Name                                                                                   | Unique name for the connection                                                                                                                            |
 | Salesforce URL                                                                                    | The base URL for your Salesforce instance. <br />Example: `https://yourcompany.my.salesforce.com`                                                          |
-| Username ([Secret required](docs/administration/fabrics/prophecy-fabrics/secrets/secrets.md))     | Your Salesforce username used for authentication                                                                                                          |
-| Password ([Secret required](docs/administration/fabrics/prophecy-fabrics/secrets/secrets.md))     | Your Salesforce password used for authentication                                                                                                          |
-| Access Token ([Secret required](docs/administration/fabrics/prophecy-fabrics/secrets/secrets.md)) | The [Salesforce API access token](https://help.salesforce.com/s/articleView?id=xcloud.remoteaccess_access_tokens.htm&type=5) associated with your account |
+| Username ([Secret required](/data-analytics/environment/secrets/secrets))     | Your Salesforce username used for authentication                                                                                                          |
+| Password ([Secret required](/data-analytics/environment/secrets/secrets))     | Your Salesforce password used for authentication                                                                                                          |
+| Access Token ([Secret required](/data-analytics/environment/secrets/secrets)) | The [Salesforce API access token](https://help.salesforce.com/s/articleView?id=xcloud.remoteaccess_access_tokens.htm&type=5) associated with your account |
 | Salesforce API Version                                                                            | The version of the Salesforce API to use                                                                                                                  |
 
 ## Sharing connections within teams
 
-Connections in Prophecy are stored within [fabrics](docs/administration/fabrics/prophecy-fabrics/prophecy-fabrics.md), which are assigned to specific teams. Once a Salesforce connection is added to a fabric, all team members who have access to the fabric can use the connection in their projects. No additional authentication is required—team members automatically inherit the access and permissions of the stored connection credentials.
+Connections in Prophecy are stored within [fabrics](/data-analytics/environment/fabrics/prophecy-fabrics), which are assigned to specific teams. Once a Salesforce connection is added to a fabric, all team members who have access to the fabric can use the connection in their projects. No additional authentication is required—team members automatically inherit the access and permissions of the stored connection credentials.
 
 <Warning>
 Be mindful of the access level granted by the stored credentials. Anyone on the team will have the same permissions—including access to sensitive data if allowed.

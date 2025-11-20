@@ -35,7 +35,7 @@ Configure the DynamicInput gem using the following parameters.
 | Parameter                   | Description                                                                                                        |
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------ |
 | Select Read Options         | The **Modify SQL Query** option denotes that the gem reads data using a dynamically modified SQL query.            |
-| Table Connection Type       | Select the type of [data ingress/egress connection](/administration/fabrics/prophecy-fabrics/connections/) to use. |
+| Table Connection Type       | Select the type of [data ingress/egress connection](/data-analytics/environment/connections/connections) to use. |
 | Select or create connection | Choose an existing connection or create a new one for the selected source.                                         |
 | Table or Query              | Write a SQL query template that will be used to retrieve data. Can include placeholders for dynamic replacement.   |
 | Pass fields to the Output   | Select specific columns that contain the data you will use to replace strings.                                     |
@@ -47,7 +47,7 @@ This example demonstrates how to filter rows from an Oracle table by replacing p
 
 1. Under **Select Read Options**, select **Modify SQL Query**.
 1. Under **Table Connection Type**, select **Oracle**.
-1. Select an existing connection or [create a new one](/administration/fabrics/prophecy-fabrics/connections/oracle).
+1. Select an existing connection or [create a new one](/data-analytics/environment/connections/oracle).
 1. In **Table or Query**, enter:
 
    ```
@@ -85,7 +85,7 @@ Configure the DynamicInput gem using the following parameters.
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Select Read Options         | Select **Dynamically read data from multiple files** to enable reading and combining XLSX files at runtime.                                                                                                                                                                                                                     |
 | Select output mode          | Choose how to process the XLSX files.<ul><li>**Union sheet data by column name**: Read and combine data from all XLSX files in the provided file paths. Empty or non-XLSX files are skipped.</li><li>**Retrieve sheet names**: Extract only the sheet names from each file and append them as values in a new column.</li></ul> |
-| File Connection Type        | Select the file storage [connection](/administration/fabrics/prophecy-fabrics/connections/) type to use.                                                                                                                                                                                                                        |
+| File Connection Type        | Select the file storage [connection](/data-analytics/environment/connections/connections) type to use.                                                                                                                                                                                                                        |
 | Select or create connection | Choose an existing connection or create a new one for the selected connection type.                                                                                                                                                                                                                                             |
 | File Path Column            | Specify the column in the input dataset that contains the file paths to read from.                                                                                                                                                                                                                                              |
 | Password                    | (Optional) Provide a password to access password-protected XLSX files.                                                                                                                                                                                                                                                          |

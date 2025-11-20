@@ -20,7 +20,7 @@ You can also configure separate authentication credentials for the [knowledge gr
 
 ## LLM configuration
 
-We've added the ability to configure LLM provider credentials and model specifications directly from the Prophecy UI in [Copilot Settings](/administration/management/cluster-admin-settings/copilot-settings). Add credentials for multiple LLM providers, define smart and fast models for different task types, and configure speech-to-text and text-to-speech models. Sensitive credential values are automatically masked after saving.
+We've added the ability to configure LLM provider credentials and model specifications directly from the Prophecy UI in [Copilot Settings](/data-engineering/administration/management/cluster-admin-settings/copilot-settings). Add credentials for multiple LLM providers, define smart and fast models for different task types, and configure speech-to-text and text-to-speech models. Sensitive credential values are automatically masked after saving.
 
 </Update>
 
@@ -40,29 +40,29 @@ We've added the ability to configure LLM provider credentials and model specific
 We have released two new editions of Prophecy for analysts: Free and Professional Edition. Free and Professional Editions are designed for data analysts who want to collaborate without managing infrastructure. Both editions provide Prophecy-managed resources that are metered by credits.
 
 <Note>
-  Review the [Prophecy Editions](docs/getting-started/editions/editions.md) page for a full
+  Review the [Prophecy Editions](/data-engineering/administration/platform/editions) page for a full
   comparison between Free, Professional, and Enterprise Editions of Prophecy.
 </Note>
 
 ## Agent-generated pipeline documentation
 
-You can now use the Prophecy Agent to [generate pipeline documentation](docs/analysts/development/ai-agent/ai-documentation.md). Instead of writing documentation manually, this lets you create detailed specifications automatically.
+You can now use the Prophecy Agent to [generate pipeline documentation](/data-analytics/ai/agent/documentation/documentation). Instead of writing documentation manually, this lets you create detailed specifications automatically.
 
 ## New gems
 
 - [Regex](/data-analytics/gems/parse/regex): Enables pattern matching and text extraction using regular expressions.
 - [GenerateRows](/data-analytics/gems/prepare/generate-rows): Create new rows of data using iterative expressions.
 - [GCS Source and Target](/data-analytics/gems/source-target/file/gcs): Read from or write to Google Cloud Storage (GCS) buckets.
-- [Salesforce Target](/data-analytics/gems/target/salesforce): Supports writing to Salesforce Objects (CRM Analytics datasets not supported for targets).
+- [Salesforce Target](/data-analytics/gems/source-target/external-table/salesforce): Supports writing to Salesforce Objects (CRM Analytics datasets not supported for targets).
 
 ## Gem improvements
 
 - The [Email gem](/data-analytics/gems/report/email) now supports a **Use column** option for several parameters, including **To**, **Cc**, **Bc**, **Subject**, and **Body**. When enabled, these fields can be dynamically populated from columns in your input dataset. Each row in your dataset can specify a different recipient and/or custom message while sending the same attachment to all recipients.
 
-- The [RestAPI gem](/data-analytics/gems/report/rest-api) has been updated in the following ways:
+- The [RestAPI gem](/data-analytics/gems/custom/rest-api) has been updated in the following ways:
   - The gem now supports parsing JSON responses into multiple output columns.
 
-  - There are two new authentication methods — **Basic Auth** and **Bearer Token** — that automatically send credentials to APIs using new [Prophecy secret types](/analysts/secrets).
+  - There are two new authentication methods — **Basic Auth** and **Bearer Token** — that automatically send credentials to APIs using new [Prophecy secret types](/data-analytics/environment/secrets/secrets).
 
 - XLSX (Excel) Source and Target gems have been enhanced:
   - Read from multiple sheets in a single Excel file and union all rows into one output table.
@@ -82,9 +82,9 @@ When configuring [Prophecy project dependencies](/data-analytics/development/ext
 
 ## EMR fabric improvements
 
-- You can use [Selective](/data-engineering/development/data-sampling#selective-sampling) data sampling mode when running pipelines on EMR and EMR Serverless clusters.
+- You can use [Selective](/data-engineering/development/runs/data-sampling#selective-sampling) data sampling mode when running pipelines on EMR and EMR Serverless clusters.
 
-- When using EMR [SAML authentication](/administration/authentication/emr-saml) with Okta, you will see updated job size [configurations](/data-engineering/fabrics/emr/emr-job-sizes) in EMR fabrics.
+- When using EMR [SAML authentication](/data-engineering/fabrics/spark-provider/emr/emr-saml) with Okta, you will see updated job size [configurations](/data-engineering/fabrics/spark-provider/emr/emr-job-sizes) in EMR fabrics.
 
 ## Gem improvements
 
@@ -118,11 +118,11 @@ For [Databricks Jobs](/data-engineering/orchestration/databricks-jobs), we have 
 
 ## Automatic team creation
 
-You can now enable automatic team creation when using Microsoft Entra ID (Azure Active Directory) [SSO](/administration/authentication/azure-ad#step-2-optional-enable-automatic-team-creation).
+You can now enable automatic team creation when using Microsoft Entra ID (Azure Active Directory) [SSO](/data-analytics/administration/management/authentication/azure-ad#step-2-optional-enable-automatic-team-creation).
 
 ## Team-level Copilot
 
-We've added the ability to [enable or disable Copilot](/administration/teams-users/teams-users#advanced) at the team level.
+We've added the ability to [enable or disable Copilot](/data-analytics/administration/management/teams/teams) at the team level.
 
 </Update>
 
@@ -136,48 +136,48 @@ We've added the ability to [enable or disable Copilot](/administration/teams-use
 
 ## Pipeline gem
 
-The [Pipeline gem](/analysts/pipeline-trigger-gem) lets you trigger another pipeline from within the current pipeline. You can use trigger conditions, pass parameters, and receive metadata for each run. Each gem execution can trigger the target pipeline multiple times, running sequentially until all runs finish.
+The [Pipeline gem](/data-analytics/production/scheduling/pipeline-trigger-gem) lets you trigger another pipeline from within the current pipeline. You can use trigger conditions, pass parameters, and receive metadata for each run. Each gem execution can trigger the target pipeline multiple times, running sequentially until all runs finish.
 
 ## Data processing gems
 
-- [CountRecords](/analysts/count-records): Count the number of rows in a dataset using different methods.
-- [Directory](/analysts/directory): List files and folders of a specified directory from a data ingress/egress connection.
-- [DataMasking](/analysts/data-masking): Obfuscate sensitive string data in one or more columns.
-- [DataEncoderDecoder](/analysts/encode-decode): Encode or decode data in selected columns using a variety of techniques.
-- [FindDuplicates](/analysts/find-duplicates): Filters rows in a dataset based on how frequently they appear.
-- [RecordID](/analysts/record-id): Generate row-level IDs using UUIDs for randomly generated values or incremental IDs for sequential values.
-- [DynamicInput](/analysts/dynamic-input): Run SQL queries that update automatically based on your incoming data.
+- [CountRecords](/data-analytics/gems/transform/count-records): Count the number of rows in a dataset using different methods.
+- [Directory](/data-analytics/gems/custom/directory): List files and folders of a specified directory from a data ingress/egress connection.
+- [DataMasking](/data-analytics/gems/prepare/masking): Obfuscate sensitive string data in one or more columns.
+- [DataEncoderDecoder](/data-analytics/gems/transform/encoder-decoder): Encode or decode data in selected columns using a variety of techniques.
+- [FindDuplicates](/data-analytics/gems/prepare/find-duplicates): Filters rows in a dataset based on how frequently they appear.
+- [RecordID](/data-analytics/gems/prepare/record-id): Generate row-level IDs using UUIDs for randomly generated values or incremental IDs for sequential values.
+- [DynamicInput](/data-analytics/gems/custom/dynamic-input): Run SQL queries that update automatically based on your incoming data.
 
 ## Connections and source/target gems
 
 The following are new connections and source/target gems:
 
-- [Fixed-width Source](/analysts/fixed-width): Read fixed-width files from various file storage accessed from connections.
-- [Azure Synapse Source](/analysts/synapse): Using the new Azure Synapse [connection](/administration/fabrics/prophecy-fabrics/connections/synapse), you can read data from Microsoft SQL Server hosted on Azure Synapse dedicated SQL pools.
-- [Hana Source and Target](/analysts/hana-gem): Using the new HANA connection, you can read and write to an SAP HANA database (Added in 4.1.3.3).
+- [Fixed-width Source](/data-analytics/gems/source-target/file/file-types/fixed-width): Read fixed-width files from various file storage accessed from connections.
+- [Azure Synapse Source](/data-analytics/gems/source-target/external-table/synapse): Using the new Azure Synapse [connection](/data-analytics/environment/connections/synapse), you can read data from Microsoft SQL Server hosted on Azure Synapse dedicated SQL pools.
+- [Hana Source and Target](/data-analytics/gems/source-target/external-table/hana/hana): Using the new HANA connection, you can read and write to an SAP HANA database (Added in 4.1.3.3).
 
 Additionally, the following enhancements have been made to existing gems:
 
-- We've added a **File Encoding** property to [CSV Source and Target](/analysts/csv) gems. This lets you decode CSV files when reading and encode CSV files when writing.
-- [SFTP](/analysts/sftp-gem) and [S3](/analysts/s3-gem) Source gems have the following enhancements that allow you to (Added in 4.1.3.3):
+- We've added a **File Encoding** property to [CSV Source and Target](/data-analytics/gems/source-target/file/file-types/csv) gems. This lets you decode CSV files when reading and encode CSV files when writing.
+- [SFTP](/data-analytics/gems/source-target/file/sftp) and [S3](/data-analytics/gems/source-target/file/s3) Source gems have the following enhancements that allow you to (Added in 4.1.3.3):
   - Use wildcard patterns in file paths.
   - Move or delete files after they are successfully read.
   - Dynamically read files provided by file arrival/change triggers through the new Configuration mode.
 
 ## Visual containers
 
-We've added a feature that lets you divide your pipeline into logical sections using [visual containers](/analysts/containers) for canvas organization.
+We've added a feature that lets you divide your pipeline into logical sections using [visual containers](/data-analytics/development/studio/containers) for canvas organization.
 
 ## Version control improvements
 
-You can now [move projects](/analysts/migrate-managed-projects) hosted in a Prophecy-managed Git repository into an external repository without having to clone the project.
+You can now [move projects](/data-analytics/development/versioning/migrate-managed) hosted in a Prophecy-managed Git repository into an external repository without having to clone the project.
 
 ## Enhancements
 
-- You can now enable or disable [auto-run](/analysts/app-settings) for Prophecy Apps in the app settings.
+- You can now enable or disable [auto-run](/data-analytics/collaboration/prophecy-apps/app-settings) for Prophecy Apps in the app settings.
 - When you open a gem, you can now collapse the **Ports** panel of the gem configuration dialog.
-- [Write options](/table-write-options) for Table gems have been renamed. However, they are still mapped to the same dbt configs under the hood (Changed in 4.1.3.9).
-- We've enhanced the [lineage extractor](docs/lineage/lineage-extractor.md) Python tool to be able to extract lineage from pipelines in SQL projects in Excel and OpenLineage format (Added in 4.1.3.10).
+- [Write options](/data-analytics/gems/source-target/table/write-options) for Table gems have been renamed. However, they are still mapped to the same dbt configs under the hood (Changed in 4.1.3.9).
+- We've enhanced the [lineage extractor](/data-engineering/lineage/lineage-extractor) Python tool to be able to extract lineage from pipelines in SQL projects in Excel and OpenLineage format (Added in 4.1.3.10).
 
 </Update>
 
@@ -185,16 +185,16 @@ You can now [move projects](/analysts/migrate-managed-projects) hosted in a Prop
 
 ## Project-level configurations
 
-Previously, pipeline configurations were always scoped to the individual pipeline. You can now define [project-level configurations](/engineers/configurations) that are shared across all pipelines within a project.
+Previously, pipeline configurations were always scoped to the individual pipeline. You can now define [project-level configurations](/data-engineering/development/pipelines/configuration) that are shared across all pipelines within a project.
 
 ## Data sampling improvements
 
-- The **Vanilla** [data sampling](/engineers/data-sampling) mode has been removed from the UI. Pipelines that currently use Vanilla will continue to run as expected; however, once the sampling mode is changed, you won't be able to switch back to Vanilla. We recommend updating all pipelines from Vanilla to Selective mode.
-- Prophecy can now capture [execution metrics](/engineers/execution-metrics/) for pipelines that run using Selective [data sampling](/engineers/data-sampling) mode.
+- The **Vanilla** [data sampling](/data-engineering/development/runs/data-sampling) mode has been removed from the UI. Pipelines that currently use Vanilla will continue to run as expected; however, once the sampling mode is changed, you won't be able to switch back to Vanilla. We recommend updating all pipelines from Vanilla to Selective mode.
+- Prophecy can now capture [execution metrics](/data-engineering/fabrics/execution-metrics) for pipelines that run using Selective [data sampling](/data-engineering/development/runs/data-sampling) mode.
 
 ## Fabric improvements
 
-- The [Amazon EMR Spark fabric](/administration/fabrics/Spark-fabrics/emr) now [accepts SAML](/administration/authentication/emr-saml) as an authentication method, using Okta as the identity provider (Added in 4.1.3.3).
+- The [Amazon EMR Spark fabric](/data-engineering/fabrics/spark-provider/emr/emr) now [accepts SAML](/data-engineering/fabrics/spark-provider/emr/emr-saml) as an authentication method, using Okta as the identity provider (Added in 4.1.3.3).
 - When configuring a Databricks job size in Prophecy, you can now set the cluster access mode to **Auto** (Added in 4.1.3.3). This aligns with recent Databricks changes around cluster access modes. Note that pipeline behavior may vary depending on the cluster Databricks allocates.
 
 ## Prophecy Library versions
@@ -224,39 +224,39 @@ Prophecy uses external LLMs for Copilot and Agents. We've added support for addi
 
 ## BigQuery warehouse
 
-Prophecy now supports running SQL transformations in your BigQuery warehouse. Learn how to configure a [BigQuery connection](/administration/fabrics/prophecy-fabrics/connections/bigquery) in fabrics to leverage this capability.
+Prophecy now supports running SQL transformations in your BigQuery warehouse. Learn how to configure a [BigQuery connection](/data-analytics/environment/connections/bigquery) in fabrics to leverage this capability.
 
 ## Spatial gems
 
-- [Buffer](/analysts/buffer): Take any polygon or line and expand or contract its boundaries.
-- [FindNearest](/analysts/find-nearest): Find the closest spatial point(s) between two datasets based on geographic distance.
-- [Simplify](/analysts/simplify): Reduce the number of vertices in polygons and polylines while preserving overall shape.
-- [HeatMap](/analysts/heatmap): Transform latitude and longitude point data into a spatial heatmap using hexagonal tiling.
-- [PolyBuild](/analysts/polybuild): Build spatial shapes from coordinate data by grouping and ordering points into either polygons or polylines.
-- [SpatialMatch](/analysts/spatial-match): Compare geometries and return only the pairs that have the spatial relationship you specify.
+- [Buffer](/data-analytics/gems/spatial/buffer): Take any polygon or line and expand or contract its boundaries.
+- [FindNearest](/data-analytics/gems/spatial/nearest-point): Find the closest spatial point(s) between two datasets based on geographic distance.
+- [Simplify](/data-analytics/gems/spatial/simplify): Reduce the number of vertices in polygons and polylines while preserving overall shape.
+- [HeatMap](/data-analytics/gems/spatial/heatmap): Transform latitude and longitude point data into a spatial heatmap using hexagonal tiling.
+- [PolyBuild](/data-analytics/gems/spatial/polybuild): Build spatial shapes from coordinate data by grouping and ordering points into either polygons or polylines.
+- [SpatialMatch](/data-analytics/gems/spatial/spatial-match): Compare geometries and return only the pairs that have the spatial relationship you specify.
 
 ## Transformation gems
 
-- [Pivot](/analysts/pivot): Reshape your data by transforming unique row values from one column into new columns.
-- [Unpivot](/analysts/unpivot): Convert multiple columns into row-level key-value pairs to simplify columnar data.
+- [Pivot](/data-analytics/gems/transform/pivot): Reshape your data by transforming unique row values from one column into new columns.
+- [Unpivot](/data-analytics/gems/transform/unpivot): Convert multiple columns into row-level key-value pairs to simplify columnar data.
 
 ## Connections and source/target gems
 
-- Connect to [Salesforce](/analysts/salesforce/) and read data into your pipelines.
-- Prophecy now supports uploading [Parquet](/analysts/parquet) files to Databricks connections.
+- Connect to [Salesforce](/data-analytics/gems/source-target/external-table/salesforce) and read data into your pipelines.
+- Prophecy now supports uploading [Parquet](/data-analytics/gems/source-target/file/file-types/parquet) files to Databricks connections.
 
 ## File arrival trigger
 
-Pipeline schedules can now be triggered by [file arrivals or changes](/analysts/triggers#file-arrival-or-change-trigger) in a specified SFTP or S3 location.
+Pipeline schedules can now be triggered by [file arrivals or changes](/data-analytics/production/scheduling/triggers#file-arrival-or-change-trigger) in a specified SFTP or S3 location.
 
 ## Stored procedures
 
-You can now define and call [stored procedures](/analysts/stored-procedure) within SQL projects running on BigQuery. This is particularly useful when migrating workflows from other systems.
+You can now define and call [stored procedures](/data-analytics/gems/custom/stored-procedure) within SQL projects running on BigQuery. This is particularly useful when migrating workflows from other systems.
 
 ## Enhancements
 
 - Prophecy uses temporary tables to process data from external systems in a SQL warehouse. Previously, these tables were written and then removed, which meant you could briefly see them in your warehouse. Now, they use **ephemeral materialization**, so they only exist during execution and no longer appear in your warehouse.
-- You can now overwrite a Table gem using the [File Upload component](/analysts/business-application-components#file-upload) in a Prophecy App. Previously, you could only overwrite Source gems. (Added in 4.1.2.2).
+- You can now overwrite a Table gem using the [File Upload component](/data-analytics/collaboration/prophecy-apps/app-components#file-upload) in a Prophecy App. Previously, you could only overwrite Source gems. (Added in 4.1.2.2).
 
 </Update>
 
@@ -264,16 +264,16 @@ You can now define and call [stored procedures](/analysts/stored-procedure) with
 
 ## Databricks serverless
 
-PySpark project pipelines can now run on Databricks serverless compute. See supported features and limitations in [Databricks serverless compute for PySpark](/administration/fabrics/Spark-fabrics/databricks/databricks-serverless).
+PySpark project pipelines can now run on Databricks serverless compute. See supported features and limitations in [Databricks serverless compute for PySpark](/data-engineering/fabrics/spark-provider/databricks/databricks-serverless).
 
 ## Version control improvements
 
-- We have improved the release flow for protected branches. When a branch like `main` is protected, direct commits to it are not allowed. Our previous release process required a direct commit to `main`, which caused issues in these scenarios. We now provide an option on the Open Pull Request screen to bump the version of the source branch before merging into main. To learn more, visit [Pull requests](/engineers/git-pull-requests).
-- You can now merge from the default branch (e.g., `main`) into another branch. Previously, the merge UI only allowed merging into the default branch. This enhancement is available in both the [Git workflow dialog](/engineers/git-workflow) within the project editor and the Commits tab on the [project metadata](/projects#project-metadata) page.
+- We have improved the release flow for protected branches. When a branch like `main` is protected, direct commits to it are not allowed. Our previous release process required a direct commit to `main`, which caused issues in these scenarios. We now provide an option on the Open Pull Request screen to bump the version of the source branch before merging into main. To learn more, visit [Pull requests](/data-engineering/ci-cd/git/git).
+- You can now merge from the default branch (e.g., `main`) into another branch. Previously, the merge UI only allowed merging into the default branch. This enhancement is available in both the [Git workflow dialog](/data-engineering/ci-cd/git/git-workflow) within the project editor and the Commits tab on the project metadata page.
 
 ## Catalog table improvements
 
-The [Catalog Table](/engineers/delta-table/) Target gem includes the following enhancements. Update the `ProphecySparkBasicsPython` package to version 0.2.47 to access these updates.
+The [Catalog Table](/data-engineering/gems/source-target/catalog-table/delta) Target gem includes the following enhancements. Update the `ProphecySparkBasicsPython` package to version 0.2.47 to access these updates.
 
 - Soft Delete for SCD Type 2 (SCD2) Merge: You can now enable soft delete behavior during SCD2 merges. When the source system deletes a record, the target table retains its history by updating the record's end-time. This treats the deletion as a Type 2 change instead of removing the row.
 
@@ -281,11 +281,11 @@ The [Catalog Table](/engineers/delta-table/) Target gem includes the following e
 
 ## XLSX support on UC clusters
 
-The XLSX gem now runs on [Databricks UC clusters](/administration/fabrics/Spark-fabrics/databricks/ucshared) configured with standard (formerly shared) access mode. To leverage this capability, choose to read file with Pandas. The `openpyxl` library is needed for Pandas to work. Files can be read from and written to UC volumes only.
+The XLSX gem now runs on [Databricks UC clusters](/data-engineering/fabrics/spark-provider/databricks/UCShared) configured with standard (formerly shared) access mode. To leverage this capability, choose to read file with Pandas. The `openpyxl` library is needed for Pandas to work. Files can be read from and written to UC volumes only.
 
-| Gem                      | Package                     | Minimum version |
-| ------------------------ | --------------------------- | --------------- |
-| [XLSX](/engineers/xlsx/) | `ProphecySparkBasicsPython` | `0.2.47`        |
+| Gem                                                    | Package                     | Minimum version |
+| ------------------------------------------------------ | --------------------------- | --------------- |
+| [XLSX](/data-engineering/gems/source-target/file/xlsx) | `ProphecySparkBasicsPython` | `0.2.47`        |
 
 ## Prophecy Library versions
 
@@ -306,7 +306,7 @@ You can now enable auditing for file downloads from Prophecy. When this feature 
 
 ## Service principal OAuth
 
-Databricks connections in Prophecy fabrics now accept [service principal](https://docs.databricks.com/aws/en/admin/users-groups/service-principals) credentials for OAuth. Now you can deploy scheduled pipelines using the service principal credentials. To learn more, visit the [Databricks connection](/administration/fabrics/prophecy-fabrics/connections/databricks) documentation.
+Databricks connections in Prophecy fabrics now accept [service principal](https://docs.databricks.com/aws/en/admin/users-groups/service-principals) credentials for OAuth. Now you can deploy scheduled pipelines using the service principal credentials. To learn more, visit the [Databricks connection](/data-analytics/environment/connections/databricks) documentation.
 
 ## Run history improvement
 
@@ -318,7 +318,7 @@ We've added the ability to reindex your SQL warehouse for the knowledge graph. T
 
 ## Reporting connection and gem
 
-The new [Power BI connection](/administration/fabrics/prophecy-fabrics/connections/power-bi) and [PowerBIWrite gem](/analysts/power-bi-write) allow you to you publish pipeline results directly to Power BI tables (Added in 4.1.1.5).
+The new [Power BI connection](/data-analytics/environment/connections/power-bi) and [PowerBIWrite gem](/data-analytics/gems/report/power-bi) allow you to you publish pipeline results directly to Power BI tables (Added in 4.1.1.5).
 
 </Update>
 
@@ -414,14 +414,14 @@ While your core business logic is still written in SQL and run using dbt, data i
 ## Gem enhancements
 
 - The CSV Source gem in Python/PySpark projects now includes a property that lets you skip `n` number of first or last lines when reading in a CSV file.
-- More gems in Python/PySpark projects are now compatible with [Databricks UC clusters](/administration/fabrics/Spark-fabrics/databricks/ucshared) configured with standard (formerly shared) access mode. The table below shows the minimum package version required to enable compatibility.
+- More gems in Python/PySpark projects are now compatible with [Databricks UC clusters](/data-engineering/fabrics/spark-provider/databricks/UCShared) configured with standard (formerly shared) access mode. The table below shows the minimum package version required to enable compatibility.
 
-  | Gem                                               | Package                     | Minimum version |
-  | ------------------------------------------------- | --------------------------- | --------------- |
-  | [CSV Source](/engineers/csv)                      | `ProphecySparkBasicsPython` | `0.2.44`        |
-  | [BigQuery Source and Target](/engineers/bigquery) | `ProphecyWarehousePython`   | `0.0.9`         |
-  | [EmailData](/engineers/email-data)                | `ProphecyWebAppPython`      | `0.1.2`         |
-  | [Seed Source](/engineers/seed)                    | `ProphecySparkBasicsPython` | `0.2.39`        |
+  | Gem                                                                                   | Package                     | Minimum version |
+  | ------------------------------------------------------------------------------------- | --------------------------- | --------------- |
+  | [CSV Source](/data-engineering/gems/source-target/file/csv)                           | `ProphecySparkBasicsPython` | `0.2.44`        |
+  | [BigQuery Source and Target](/data-engineering/gems/source-target/warehouse/bigquery) | `ProphecyWarehousePython`   | `0.0.9`         |
+  | [EmailData](/data-engineering/gems/custom/email-data)                                 | `ProphecyWebAppPython`      | `0.1.2`         |
+  | [Seed Source](/data-engineering/gems/source-target/file/seed)                         | `ProphecySparkBasicsPython` | `0.2.39`        |
 
 ## Data diff
 

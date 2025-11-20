@@ -3,7 +3,7 @@ title: 'Knowledge graph indexer'
 description: 'Configure automatic indexing and authentication for the knowledge graph'
 ---
 
-The [knowledge graph](/knowledge-graph) indexer scans your SQL warehouse to build and maintain the metadata index that powers AI features. Prophecy automatically indexes your data environment when you create a fabric using your default credentials. After the initial run, configure indexing behavior to control when and how the indexer runs.
+The [knowledge graph](/data-analytics/ai/knowledge-graph/knowledge-graph) indexer scans your SQL warehouse to build and maintain the metadata index that powers AI features. Prophecy automatically indexes your data environment when you create a fabric using your default credentials. After the initial run, configure indexing behavior to control when and how the indexer runs.
 
 This page covers:
 
@@ -70,7 +70,7 @@ You may need to manually trigger indexing if you know that certain tables are mi
 1. Scroll to the **Knowledge Graph Indexing Status** tile in the connection dialog.
 1. Click **Start** to reindex the tables and track its progress. You'll be able to view the progress of processed schemas and directories.
 
-If more convenient, you can also start this process from the [Environment tab](/analysts/connections#environment-browser) in your project:
+If more convenient, you can also start this process from the [Environment tab](/data-analytics/environment/connections/connections#environment-browser) in your project:
 
 1. Open a project in the project editor.
 1. Attach to the fabric that you wish to reindex.
@@ -80,7 +80,7 @@ If more convenient, you can also start this process from the [Environment tab](/
 
 <Tip>
   You might be prompted to manually trigger indexing if the
-  [agent](/analysts/ai-explore#troubleshooting) can't locate a table during a conversation.
+  [agent](/data-analytics/ai/agent/explore#troubleshooting) can't locate a table during a conversation.
 </Tip>
 
 ## Add separate authentication for the indexer
@@ -97,7 +97,7 @@ If you don't add separate authentication for the indexer, it will use the pipeli
 <Note>
   The knowledge graph indexer always uses the same identity as the pipeline development identity if
   the pipeline development authentication strategy is [Personal Access
-  Token](/environment/connections/databricks#personal-access-token-pat) (rather than OAuth). This
+  Token](/data-analytics/environment/connections/databricks#personal-access-token-pat) (rather than OAuth). This
   section is not applicable if you use the PAT authentication method.
 </Note>
 
@@ -106,7 +106,7 @@ If you don't add separate authentication for the indexer, it will use the pipeli
 Before configuring dedicated credentials for the knowledge graph indexer, you must:
 
 - Upgrade to Prophecy 4.2.2 or later.
-- Configure your SQL warehouse connection with a [Databricks connection](/environment/connections/databricks). Other SQL warehouses are not supported.
+- Configure your SQL warehouse connection with a [Databricks connection](/data-analytics/environment/connections/databricks). Other SQL warehouses are not supported.
 - Be a Prophecy administrator. Though there are no role-based restrictions for configuring the knowledge graph indexer, you need to understand how authentication works in Prophecy.
 - Be a Databricks administrator. This lets you assign appropriate permissions to the identity that will be used to run the indexer. The identity must have `MANAGE` access on the assets that you wish to index in the knowledge graph.
 

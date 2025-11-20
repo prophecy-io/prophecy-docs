@@ -35,14 +35,14 @@ Before you specify parameters and properties, select the Delta table type:
 
 ## Parameters
 
-| Parameter | Tab | Description |
-| ----------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Use Unity Catalog | Location | Whether to use a Unity catalog. |
-| Catalog | Location | If you use a unity catalog, specify which catalog to use. |
-| Database | Location | Name of the database to connect to. |
-| Table | Location | Name of the table to connect to. |
-| Use file path | Location | Whether to use a custom file path to store underlying files in the Target gem. |
-| Schema | Properties | Schema to apply on the loaded data. In the Source gem, you can define or edit the schema visually or in JSON code. In the Target gem, you can view the schema visually or as JSON code. |
+| Parameter         | Tab        | Description                                                                                                                                                                             |
+| ----------------- | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Use Unity Catalog | Location   | Whether to use a Unity catalog.                                                                                                                                                         |
+| Catalog           | Location   | If you use a unity catalog, specify which catalog to use.                                                                                                                               |
+| Database          | Location   | Name of the database to connect to.                                                                                                                                                     |
+| Table             | Location   | Name of the table to connect to.                                                                                                                                                        |
+| Use file path     | Location   | Whether to use a custom file path to store underlying files in the Target gem.                                                                                                          |
+| Schema            | Properties | Schema to apply on the loaded data. In the Source gem, you can define or edit the schema visually or in JSON code. In the Target gem, you can view the schema visually or as JSON code. |
 
 ## Source
 
@@ -50,18 +50,19 @@ The Source gem reads data from Delta tables and allows you to optionally specify
 
 ### Source properties
 
-| Properties | Description | Default |
-| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| Description | Description of your dataset. | None |
-| Provider | Provider to use. **You must set this to `delta`.** | `delta` |
-| Filter Predicate | Where clause to filter the table by. | None |
-| Read timestamp | Time travel in milliseconds to a specific timestamp. This value should be between the first commit timestamp and the latest commit timestamp in the table. | None |
-| Read version | Time travel to a specific version of the table. | None |
+| Properties       | Description                                                                                                                                                | Default |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| Description      | Description of your dataset.                                                                                                                               | None    |
+| Provider         | Provider to use. **You must set this to `delta`.**                                                                                                         | `delta` |
+| Filter Predicate | Where clause to filter the table by.                                                                                                                       | None    |
+| Read timestamp   | Time travel in milliseconds to a specific timestamp. This value should be between the first commit timestamp and the latest commit timestamp in the table. | None    |
+| Read version     | Time travel to a specific version of the table.                                                                                                            | None    |
 
 <Note>
 You can only select `Read Timestamp` or `Read Version`, not both.
 
 If you don't use a time travel option, the Source gem fetches the most recent version of each row by default.
+
 </Note>
 
 To learn more about Delta time travel and its use cases, see [Introducing Delta Time Travel for Large Scale Data Lakes](https://databricks.com/blog/2019/02/04/introducing-delta-time-travel-for-large-scale-data-lakes.html).
@@ -71,7 +72,8 @@ To learn more about Delta time travel and its use cases, see [Introducing Delta 
 ### Compiled code
 
 <Tip>
-To see the compiled code of your project, [switch to the Code view](/engineers/pipelines#project-editor) in the project header.
+  To see the compiled code of your project, [switch to the Code
+  view](/data-engineering/development/pipelines/pipelines#project-editor) in the project header.
 </Tip>
 
 #### Without filter predicate
@@ -121,31 +123,32 @@ The Target gem writes data to Delta tables and allows you to optionally specify 
 
 ### Target properties
 
-| Property | Description | Default |
+| Property                                 | Description                                                                                                                                                   | Default |
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| Description | Description of your dataset. | None |
-| Provider | Provider to use. **You must set this to `delta`.** | `delta` |
-| Write Mode | How to handle existing data. For a list of the possible values, see [Supported write modes](#supported-write-modes). | `error` |
-| Use insert into | Whether to use the `insertInto()` method to write instead of the `save()` method. | false |
-| Overwrite table schema | Whether to overwrite the schema of the Delta table. | false |
-| Merge DataFrame schema into table schema | Whether to automatically add columns that are present in the `DataFrame` but not in the Target table to the end of the schema as part of a write transaction. | false |
-| Partition Columns | List of columns to partition the Delta table table by. | None |
-| Overwrite partition predicate | Selectively overwrite only the data that satisfies the given where clause expression. | None |
-| Optimize write | Whether to optimize Spark partition sizes based on the actual data. | false |
+| Description                              | Description of your dataset.                                                                                                                                  | None    |
+| Provider                                 | Provider to use. **You must set this to `delta`.**                                                                                                            | `delta` |
+| Write Mode                               | How to handle existing data. For a list of the possible values, see [Supported write modes](#supported-write-modes).                                          | `error` |
+| Use insert into                          | Whether to use the `insertInto()` method to write instead of the `save()` method.                                                                             | false   |
+| Overwrite table schema                   | Whether to overwrite the schema of the Delta table.                                                                                                           | false   |
+| Merge DataFrame schema into table schema | Whether to automatically add columns that are present in the `DataFrame` but not in the Target table to the end of the schema as part of a write transaction. | false   |
+| Partition Columns                        | List of columns to partition the Delta table table by.                                                                                                        | None    |
+| Overwrite partition predicate            | Selectively overwrite only the data that satisfies the given where clause expression.                                                                         | None    |
+| Optimize write                           | Whether to optimize Spark partition sizes based on the actual data.                                                                                           | false   |
 
 ### Supported write modes
 
-| Write mode | Description |
-| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| overwrite | If the data already exists, overwrite the data with the contents of the `DataFrame`. |
-| error | If the data already exists, throw an exception. |
-| append | If the data already exists, append the contents of the `DataFrame`. |
-| ignore | If the data already exists, do nothing with the contents of the `DataFrame`. This is similar to the `CREATE TABLE IF NOT EXISTS` clause in SQL. |
-| merge | Use the Delta `merge` command to insert, delete and update data. For more information, see [Delta MERGE](/engineers/delta/#delta-merge). |
-| scd2 merge | Store and manage the current and historical data over time. For more information, see [Delta MERGE](/engineers/delta/#delta-merge). |
+| Write mode | Description                                                                                                                                                            |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| overwrite  | If the data already exists, overwrite the data with the contents of the `DataFrame`.                                                                                   |
+| error      | If the data already exists, throw an exception.                                                                                                                        |
+| append     | If the data already exists, append the contents of the `DataFrame`.                                                                                                    |
+| ignore     | If the data already exists, do nothing with the contents of the `DataFrame`. This is similar to the `CREATE TABLE IF NOT EXISTS` clause in SQL.                        |
+| merge      | Use the Delta `merge` command to insert, delete and update data. For more information, see [Delta MERGE](/data-engineering/gems/source-target/file/delta#delta-merge). |
+| scd2 merge | Store and manage the current and historical data over time. For more information, see [Delta MERGE](/data-engineering/gems/source-target/file/delta#delta-merge).      |
 
 <Tip>
-These `overwrite`, `append`, `ignore`, and `error` write modes operate the same way as with other native Spark-supported formats such as Parquet.
+  These `overwrite`, `append`, `ignore`, and `error` write modes operate the same way as with other
+  native Spark-supported formats such as Parquet.
 </Tip>
 
 ### Target example
@@ -153,7 +156,8 @@ These `overwrite`, `append`, `ignore`, and `error` write modes operate the same 
 ### Compiled code
 
 <Tip>
-To see the compiled code of your project, [switch to the Code view](/engineers/pipelines#project-editor) in the project header.
+  To see the compiled code of your project, [switch to the Code
+  view](/data-engineering/development/pipelines/pipelines#project-editor) in the project header.
 </Tip>
 
 <CodeGroup>

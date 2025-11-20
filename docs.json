@@ -443,7 +443,20 @@
               {
                 "group": "Management",
                 "pages": [
-                  "data-analytics/administration/teams",
+                  {
+                    "group": "Teams",
+                    "pages": [
+                      "data-analytics/administration/management/teams/teams",
+                      {
+                        "group": "Settings",
+                        "pages": [
+                          "data-analytics/administration/management/teams/settings/ai",
+                          "data-analytics/administration/management/teams/settings/default-dependencies",
+                          "data-analytics/administration/management/teams/settings/project-creation-template"
+                        ]
+                      }
+                    ]
+                  },
                   {
                     "group": "Users",
                     "pages": [
@@ -680,28 +693,42 @@
                     "group": "Fabrics",
                     "pages": [
                       {
-                        "group": "Databricks",
+                        "group": "Spark providers",
                         "pages": [
-                          "data-engineering/fabrics/databricks/databricks",
-                          "data-engineering/fabrics/databricks/databricks-serverless",
-                          "data-engineering/fabrics/databricks/databricks-policies",
-                          "data-engineering/fabrics/databricks/UCShared",
-                          "data-engineering/fabrics/databricks/volumns-plibs",
-                          "data-engineering/fabrics/databricks/whitelist-plibs"
+                          {
+                            "group": "Databricks",
+                            "pages": [
+                              "data-engineering/fabrics/spark-provider/databricks/databricks",
+                              "data-engineering/fabrics/spark-provider/databricks/databricks-serverless",
+                              "data-engineering/fabrics/spark-provider/databricks/databricks-policies",
+                              "data-engineering/fabrics/spark-provider/databricks/UCShared",
+                              "data-engineering/fabrics/spark-provider/databricks/volumes-plibs",
+                              "data-engineering/fabrics/spark-provider/databricks/whitelist-plibs"
+                            ]
+                          },
+                          {
+                            "group": "Amazon EMR",
+                            "pages": [
+                              "data-engineering/fabrics/spark-provider/emr/emr",
+                              "data-engineering/fabrics/spark-provider/emr/emr-job-sizes",
+                              "data-engineering/fabrics/spark-provider/emr/emr-saml"
+                            ]
+                          },
+                          "data-engineering/fabrics/spark-provider/dataproc",
+                          "data-engineering/fabrics/spark-provider/synapsefabric",
+                          "data-engineering/fabrics/spark-provider/livy",
+                          "data-engineering/fabrics/spark-provider/prophecy-managed"
                         ]
                       },
                       {
-                        "group": "Amazon EMR",
+                        "group": "SQL providers",
                         "pages": [
-                          "data-engineering/fabrics/emr/emr",
-                          "data-engineering/fabrics/emr/emr-job-sizes",
-                          "data-engineering/fabrics/emr/emr-saml"
+                          "data-engineering/fabrics/sql-provider/snowflake",
+                          "data-engineering/fabrics/sql-provider/databricks",
+                          "data-engineering/fabrics/sql-provider/bigquery"
                         ]
                       },
-                      "data-engineering/fabrics/dataproc",
-                      "data-engineering/fabrics/synapsefabric",
-                      "data-engineering/fabrics/livy",
-                      "data-engineering/fabrics/prophecy-managed"
+                      "data-engineering/fabrics/secret-providers"
                     ]
                   },
                   "data-engineering/fabrics/execution-metrics"
@@ -895,7 +922,21 @@
               {
                 "group": "Management",
                 "pages": [
-                  "data-engineering/administration/teams",
+                  {
+                    "group": "Teams",
+                    "pages": [
+                      "data-engineering/administration/management/teams/teams",
+                      {
+                        "group": "Settings",
+                        "pages": [
+                          "data-engineering/administration/management/teams/settings/ai",
+                          "data-engineering/administration/management/teams/settings/default-dependencies",
+                          "data-engineering/administration/management/teams/settings/spark",
+                          "data-engineering/administration/management/teams/settings/project-creation-template"
+                        ]
+                      }
+                    ]
+                  },
                   {
                     "group": "Users",
                     "pages": [

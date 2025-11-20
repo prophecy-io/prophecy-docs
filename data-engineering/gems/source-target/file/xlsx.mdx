@@ -30,7 +30,7 @@ The XLSX (Excel) file gem can read from or write to the file storage (Databricks
 The XLSX gem has various requirements depending on its configuration.
 
 <Info>
-  See [Spark dependencies](docs/extensibility/dependencies/spark-dependencies.md) for information on
+  See [Spark dependencies](/data-engineering/extensibility/dependencies/spark-dependencies) for information on
   adding pipeline dependencies.
 </Info>
 
@@ -150,11 +150,11 @@ If you want the Target gem to output a single file:
 
 1. Add a Repartition gem in **Coalesce** mode with the **Partition Count** set to `1`.
 
-   ![Coalesce using Repartition](img/xlsx_tgt_5.5.png)
+   ![Coalesce using Repartition](/data-engineering/gems/source-target/file/img/xlsx_tgt_5.5.png)
 
 2. Connect the Repartition gem between your second-to-last transformation and the `Target` gem.
 
-   ![Attach coalesce before desired target](img/xlsx_tgt_6.png)
+   ![Attach coalesce before desired target](/data-engineering/gems/source-target/file/img/xlsx_tgt_6.png)
 
 3. Run your pipeline.
 
@@ -164,7 +164,7 @@ After you run your pipeline, your output is still a directory, but this time it 
 
 <Tip>
   To see the compiled code of your project, [switch to the Code
-  view](/engineers/pipelines#project-editor) in the project header.
+  view](/data-engineering/development/pipelines/pipelines#project-editor) in the project header.
 </Tip>
 
 <CodeGroup>

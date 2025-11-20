@@ -1,18 +1,16 @@
 ---
-title: "SQL gem builder"
+title: 'SQL gem builder'
 sidebarTitle: Gem builder
-description: "Build custom gems for SQL models and pipelines"
+description: 'Build custom gems for SQL models and pipelines'
 ---
 
 <Callout icon="/images/icon.png" color="#FFC107">
-  Available for [Enterprise Edition](/getting-started/editions/) only.
+  Available for [Enterprise Edition](/data-analytics/administration/platform/editions) only.
 </Callout>
 
-[Gems](/docs/getting-started/concepts/gems.md) handle individual data processing tasks in a pipeline or model. While Prophecy offers dozens of gems out-of-the-box, you might want to create your own gems.
+[Gems](/data-analytics/gems/gems) handle individual data processing tasks in a pipeline or model. While Prophecy offers dozens of gems out-of-the-box, you might want to create your own gems.
 
 The SQL Gem Builder lets you create and publish your own custom gems for SQL projects. Be sure to develop your gem code using the SQL dialect of your warehouse.
-
-
 
 ## Gem language
 
@@ -33,7 +31,7 @@ Get started creating your own gem:
 1. Verify the **Directory Path** where your gem SQL query will be stored.
 1. Click **Create**. This will open the files you will need to edit to define your custom gem.
 
-![Gem builder new gem](img/gem-builder-new.png)
+![Gem builder new gem](/data-analytics/development/extensibility/img/gem-builder-new.png)
 
 ## Steps
 
@@ -51,7 +49,7 @@ First, you'll define the SQL query using a new or existing macro. You'll then ne
 
 Prophecy gems are powered by macros. Therefore, you can either define a new macro or leverage an existing one for your custom gem.
 
-![Gem builder create SQL query](img/gem-builder-sql-query.png)
+![Gem builder create SQL query](/data-analytics/development/extensibility/img/gem-builder-sql-query.png)
 
 Existing dbt macros can help define table-to-table transformations. Consider using them to complete your SQL Query. See the [dbt utils source code](https://github.com/dbt-labs/dbt-utils/tree/main/macros/sql) for macro definitions.
 
@@ -59,7 +57,7 @@ Existing dbt macros can help define table-to-table transformations. Consider usi
 
 Customizing your gem involves editing the code for specific classes, functions, and methods.
 
-![Gem builder customize interface](img/gem-builder-interface.png)
+![Gem builder customize interface](/data-analytics/development/extensibility/img/gem-builder-interface.png)
 
 The code starts with a list of imports from the Prophecy codebase to help get you started.
 
@@ -146,7 +144,7 @@ The `dialog` function contains code specific to how the gem UI should look to th
 
 After defining a gem in the code editor, you can preview and test it. This feature directly renders the interface for the selected gem using a dummy schema, enabling you to configure and experiment with the gem's UI components. You can then finalize them by previewing the generated SQL code.
 
-![Gem builder preview](img/gem-builder-preview.png)
+![Gem builder preview](/data-analytics/development/extensibility/img/gem-builder-preview.png)
 
 There are various UI components that can be defined for custom gems such as scroll boxes, tabs, and buttons. These UI components can be grouped together in various types of panels to create a custom user experience when using the gem.
 
@@ -247,7 +245,7 @@ Similarly the opposite case where this enhanced UX is not available due to some 
 
 You can preview the component in the gem builder to see how it looks. You can modify the properties and then save it to preview the generated code which will eventually run on your cluster.
 
-![Gem builder preview](img/gem-builder-preview.png)
+![Gem builder preview](/data-analytics/development/extensibility/img/gem-builder-preview.png)
 
 Certain gems may generate SQL code that isn't compatible with a specific fabric provider, rendering the gem unusable and guaranteeing failure if attempted. This issue arises because some dbt macros are designed to support only specific warehouse types.
 
@@ -374,4 +372,3 @@ class Deduplicate(MacroSpec):
             partitionBy=parametersMap.get('partition_by')
         )
 ```
-

@@ -15,7 +15,7 @@ There are two ways to use a pipeline template.
 
 - **Read-only mode**: If you click on a pipeline from the Template Hub, this opens the pipeline in read-only mode. You can explore all project configurations and run any pipeline in the project, but no changes you make will be saved.
 
-- **Edit mode**: If you click **Edit** on a pipeline in the Template Hub, a copy of the project is created in your [personal team](/administration/teams-users/teams-users). This project is editable because it is completely separate from the original pipeline template. You can always open the original from the Template Hub to reference a working pipeline.
+- **Edit mode**: If you click **Edit** on a pipeline in the Template Hub, a copy of the project is created in your [personal team](/data-analytics/administration/management/teams/teams). This project is editable because it is completely separate from the original pipeline template. You can always open the original from the Template Hub to reference a working pipeline.
 
 <Note>
   Prophecy provides a Databricks compute environment for pipeline templates. This means that you
@@ -35,7 +35,7 @@ The following lists the SQL pipelines available in each category.
 
 Computes the airport-level delay metrics using flight data from the past 30 days. It aggregates departure and arrival delays, cancellation rates, and overall on-time performance for both origin and destination airports.
 
-**Gems used**: [Table](/analysts/source-target), [Join](/analysts/join), [Filter](/analysts/filter), [Aggregate](/analysts/aggregate), [OrderBy](/analysts/order-by)
+**Gems used**: [Table](/data-analytics/gems/source-target/source-target), [Join](/data-analytics/gems/join-split/join), [Filter](/data-analytics/gems/prepare/filter), [Aggregate](/data-analytics/gems/transform/aggregate), [OrderBy](/data-analytics/gems/prepare/order-by)
 
 ### Healthcare
 
@@ -45,7 +45,7 @@ Computes the airport-level delay metrics using flight data from the past 30 days
 
 Cleans up clinical trial data by filtering out malformed records, transforming nested data into tabular format, and removing leading and trailing whitespaces from column values.
 
-**Gems used**: [Table](/analysts/source-target), [Filter](/analysts/filter), [FlattenSchema](/analysts/flatten-schema), [DataCleansing](/analysts/data-cleansing)
+**Gems used**: [Table](/data-analytics/gems/source-target/source-target), [Filter](/data-analytics/gems/prepare/filter), [FlattenSchema](/data-analytics/gems/prepare/flatten-schema), [DataCleansing](/data-analytics/gems/prepare/data-cleansing)
 
 ---
 
@@ -53,7 +53,7 @@ Cleans up clinical trial data by filtering out malformed records, transforming n
 
 Makes the patient ID, age, and ZIP code HIPAA compliant.
 
-**Gems used**: [Table](/analysts/source-target), [Reformat](/analysts/reformat)
+**Gems used**: [Table](/data-analytics/gems/source-target/source-target), [Reformat](/data-analytics/gems/prepare/reformat)
 
 ---
 
@@ -61,7 +61,7 @@ Makes the patient ID, age, and ZIP code HIPAA compliant.
 
 Performs a gap analysis to determine the cost of each diagnosis without clinical trials.
 
-**Gems used**: [Table](/analysts/source-target), [Filter](/analysts/filter), [Aggregate](/analysts/aggregate), [OrderBy](/analysts/order-by), [DataCleansing](/analysts/data-cleansing), [Join](/analysts/join)
+**Gems used**: [Table](/data-analytics/gems/source-target/source-target), [Filter](/data-analytics/gems/prepare/filter), [Aggregate](/data-analytics/gems/transform/aggregate), [OrderBy](/data-analytics/gems/prepare/order-by), [DataCleansing](/data-analytics/gems/prepare/data-cleansing), [Join](/data-analytics/gems/join-split/join)
 
 ---
 
@@ -69,7 +69,7 @@ Performs a gap analysis to determine the cost of each diagnosis without clinical
 
 Determines the daily total billing based on patients per provider.
 
-**Gems used**: [Table](/analysts/source-target), [Reformat](/analysts/reformat), [Filter](/analysts/filter), [Aggregate](/analysts/aggregate)
+**Gems used**: [Table](/data-analytics/gems/source-target/source-target), [Reformat](/data-analytics/gems/prepare/reformat), [Filter](/data-analytics/gems/prepare/filter), [Aggregate](/data-analytics/gems/transform/aggregate)
 
 ### Manufacturing
 
@@ -79,7 +79,7 @@ Determines the daily total billing based on patients per provider.
 
 Analyzes production job defect rates by calculating the defect rate per job for each production line and month, then ranks these rates into percentiles to identify how jobs compare within the same line and time period.
 
-**Gems used**: [Table](/analysts/source-target), [Reformat](/analysts/reformat), [WindowFunction](/analysts/window)
+**Gems used**: [Table](/data-analytics/gems/source-target/source-target), [Reformat](/data-analytics/gems/prepare/reformat), [WindowFunction](/data-analytics/gems/transform/window)
 
 ---
 
@@ -87,7 +87,7 @@ Analyzes production job defect rates by calculating the defect rate per job for 
 
 Calculates the average, median, minimum, and maximum for manufacturing parts by measuring the hours taken to start and complete events for each part number.
 
-**Gems used**: [Table](/analysts/source-target), [Aggregate](/analysts/aggregate), [Join](/analysts/join), [Reformat](/analysts/reformat)
+**Gems used**: [Table](/data-analytics/gems/source-target/source-target), [Aggregate](/data-analytics/gems/transform/aggregate), [Join](/data-analytics/gems/join-split/join), [Reformat](/data-analytics/gems/prepare/reformat)
 
 ### Finance
 
@@ -97,7 +97,7 @@ Calculates the average, median, minimum, and maximum for manufacturing parts by 
 
 Creates a detailed customer financial profile while masking sensitive information by combining raw data from various source tables and summarizing each customer's account activity, loan details, credit score history, and transaction spending.
 
-**Gems used**: [Table](/analysts/source-target), [Reformat](/analysts/reformat), [OrderBy](/analysts/order-by), [Aggregate](/analysts/aggregate), [Join](/analysts/join)
+**Gems used**: [Table](/data-analytics/gems/source-target/source-target), [Reformat](/data-analytics/gems/prepare/reformat), [OrderBy](/data-analytics/gems/prepare/order-by), [Aggregate](/data-analytics/gems/transform/aggregate), [Join](/data-analytics/gems/join-split/join)
 
 ### Retail
 
@@ -107,7 +107,7 @@ Creates a detailed customer financial profile while masking sensitive informatio
 
 Calculates campaign-level return on investment (ROI), summarizes total earnings and costs per product, and computes ROI as the percentage gain relative to marketing spend.
 
-**Gems used**: [Table](/analysts/source-target), [Aggregate](/analysts/aggregate), [Join](/analysts/join), [Filter](/analysts/filter), [FlattenSchema](/analysts/flatten-schema), [Reformat](/analysts/reformat)
+**Gems used**: [Table](/data-analytics/gems/source-target/source-target), [Aggregate](/data-analytics/gems/transform/aggregate), [Join](/data-analytics/gems/join-split/join), [Filter](/data-analytics/gems/prepare/filter), [FlattenSchema](/data-analytics/gems/prepare/flatten-schema), [Reformat](/data-analytics/gems/prepare/reformat)
 
 ### Energy
 
@@ -117,4 +117,4 @@ Calculates campaign-level return on investment (ROI), summarizes total earnings 
 
 Calculates the percentile rank of each energy asset based on its monthly energy production and benchmarks asset performance across dimensions such as state, region, and asset type.
 
-**Gems used**: [Table](/analysts/source-target), [Reformat](/analysts/reformat), [Aggregate](/analysts/aggregate), [WindowFunction](/analysts/window), [Join](/analysts/join), [Reformat](/analysts/reformat), [Union](/analysts/union), [OrderBy](/analysts/order-by)
+**Gems used**: [Table](/data-analytics/gems/source-target/source-target), [Reformat](/data-analytics/gems/prepare/reformat), [Aggregate](/data-analytics/gems/transform/aggregate), [WindowFunction](/data-analytics/gems/transform/window), [Join](/data-analytics/gems/join-split/join), [Reformat](/data-analytics/gems/prepare/reformat), [Union](/data-analytics/gems/join-split/union), [OrderBy](/data-analytics/gems/prepare/order-by)

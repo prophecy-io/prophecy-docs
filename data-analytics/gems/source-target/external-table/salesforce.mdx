@@ -16,7 +16,7 @@ The Salesforce gem enables you to read data from Salesforce directly into your P
 When you create a new external Source gem, the gem dialog contains the following tabs.
 
 - **Type**: Select the Salesforce table option.
-- **Source location**: Choose the [connection](/administration/fabrics/prophecy-fabrics/connections/) and define the location where you will read tables in Salesforce.
+- **Source location**: Choose the [connection](/data-analytics/environment/connections/connections) and define the location where you will read tables in Salesforce.
 - **Properties**: Infer or manually specify the table schema, and optionally add properties that influence table behavior.
 - **Preview**: Load a preview of the dataset reflecting your configurations.
 
@@ -29,7 +29,7 @@ Use these settings to configure a Salesforce Source gem for reading data.
 | Parameter                   | Description                                                                                                                                          |
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Format type                 | Table format for the source. For Salesforce tables, set to `salesforce`.                                                                             |
-| Select or create connection | Select or create a new [Salesforce connection](/administration/fabrics/prophecy-fabrics/connections/salesforce) in the Prophecy fabric you will use. |
+| Select or create connection | Select or create a new [Salesforce connection](/data-analytics/environment/connections/salesforce) in the Prophecy fabric you will use. |
 | Query Mode                  | Specify the table you would like to read using a query. Learn more in [Query modes](#query-modes).                                                   |
 
 ### Query modes
@@ -86,7 +86,7 @@ Use the following parameters to define the write location.
 | Parameter                   | Description                                                                                                                                          |
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Format type                 | Table format for the source. For Salesforce tables, set to `salesforce`.                                                                             |
-| Select or create connection | Select or create a new [Salesforce connection](/administration/fabrics/prophecy-fabrics/connections/salesforce) in the Prophecy fabric you will use. |
+| Select or create connection | Select or create a new [Salesforce connection](/data-analytics/environment/connections/salesforce) in the Prophecy fabric you will use. |
 | Object Name                 | Name of the Salesforce Object to write to. If the object doesn't exist, it will be created automatically.                                            |
 
 ### Target properties

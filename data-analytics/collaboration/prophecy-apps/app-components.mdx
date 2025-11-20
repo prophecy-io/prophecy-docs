@@ -11,7 +11,7 @@ Components are the building blocks of your Prophecy Apps. You can add, configure
 
 ## Interactive
 
-Interactive components make pipelines dynamic by letting users assign values to [pipeline parameters](/analysts/pipeline-parameters). These values can influence the behavior of each run and change the pipeline output.
+Interactive components make pipelines dynamic by letting users assign values to [pipeline parameters](/data-analytics/development/pipeline-params). These values can influence the behavior of each run and change the pipeline output.
 
 If the end user leaves an interactive field blank:
 
@@ -164,7 +164,7 @@ Data integration components help users interact with the data that flows into an
 
 ### File Upload
 
-Let the user upload their own file to replace the data of a Source gem or Table gem in the pipeline. When a user uploads a file to the Prophecy App, they will have to configure the file and write it to the primary SQL warehouse of the attached fabric. This is the same mechanism that the [upload file](docs/analysts/development/gems/source-target/table/upload-files.md) feature uses.
+Let the user upload their own file to replace the data of a Source gem or Table gem in the pipeline. When a user uploads a file to the Prophecy App, they will have to configure the file and write it to the primary SQL warehouse of the attached fabric. This is the same mechanism that the [upload file](/data-analytics/gems/source-target/table/upload-files) feature uses.
 
 | Setting     | Description                                                                                                                                         | Required |
 | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
@@ -179,7 +179,7 @@ Let the user view sample data of a table in the pipeline.
 
 | Setting    | Description                                                   | Required |
 | ---------- | ------------------------------------------------------------- | -------- |
-| Data table | [Table](/analysts/source-target) that will appear in the app. | True     |
+| Data table | [Table](/data-analytics/gems/source-target/source-target) that will appear in the app. | True     |
 | Label      | Label to describe the data preview.                           | True     |
 
 ### Charts
@@ -188,10 +188,10 @@ Display a visualization of a table from the pipeline. Prophecy provides multiple
 
 | Setting             | Description                                                                                                            | Required |
 | ------------------- | ---------------------------------------------------------------------------------------------------------------------- | -------- |
-| Data table          | [Table](/analysts/source-target) that contains data to visualize.                                                      | True     |
+| Data table          | [Table](/data-analytics/gems/source-target/source-target) that contains data to visualize.                                                      | True     |
 | Label               | Label to describe the chart.                                                                                           | True     |
 | Chart type          | Type of chart you wish to display (for example, bar chart or line chart).                                              | True     |
-| Chart configuration | Configure how the chart appears. To view information about each chart configuration, visit [Charts](/analysts/charts). | True     |
+| Chart configuration | Configure how the chart appears. To view information about each chart configuration, visit [Charts](/data-analytics/development/runs/data-explorer/charts/charts). | True     |
 
 ## Content
 

@@ -13,18 +13,18 @@ Use a Source and Target gem to read from or write to [Azure Data Lake Storage](h
 
 | Format                               | Read | Write |
 | ------------------------------------ | ---- | ----- |
-| [CSV](/analysts/csv)                 | Yes  | Yes   |
-| [Fixed width](/analysts/fixed-width) | Yes  | No    |
-| [JSON](/analysts/json)               | Yes  | Yes   |
-| [Parquet](/analysts/parquet)         | Yes  | Yes   |
-| [XLSX](/analysts/excel)              | Yes  | Yes   |
-| [XML](/analysts/xml)                 | Yes  | Yes   |
+| [CSV](/data-analytics/gems/source-target/file/file-types/csv)                 | Yes  | Yes   |
+| [Fixed width](/data-analytics/gems/source-target/file/file-types/fixed-width) | Yes  | No    |
+| [JSON](/data-analytics/gems/source-target/file/file-types/json)               | Yes  | Yes   |
+| [Parquet](/data-analytics/gems/source-target/file/file-types/parquet)         | Yes  | Yes   |
+| [XLSX](/data-analytics/gems/source-target/file/file-types/excel)              | Yes  | Yes   |
+| [XML](/data-analytics/gems/source-target/file/file-types/xml)                 | Yes  | Yes   |
 
 ## Create an ADLS gem
 
 To create an ADLS Source or Target gem in your pipeline:
 
-1. Set up your [ADLS connection](/administration/fabrics/prophecy-fabrics/connections/adls).
+1. Set up your [ADLS connection](/data-analytics/environment/connections/adls).
 
 2. Add a new Source or Target gem to your pipeline canvas and open the configuration.
 
@@ -41,17 +41,17 @@ To create an ADLS Source or Target gem in your pipeline:
 When setting up an ADLS Source gem, you need to decide how Prophecy should locate files at runtime. There are two modes:
 
 - **Filepath**: Always read from a specific file path. You can use wildcards in your path definition. If multiple files match, they are unioned into a single output table.
-- **Configuration**: Dynamically read files provided by a [file arrival/change trigger](/analysts/triggers) in the pipeline's schedule. When new or updated files are detected in the monitored directory, the trigger starts the pipeline and passes those files to the ADLS Source gem, which unions them into a single output table.
+- **Configuration**: Dynamically read files provided by a [file arrival/change trigger](/data-analytics/production/scheduling/triggers) in the pipeline's schedule. When new or updated files are detected in the monitored directory, the trigger starts the pipeline and passes those files to the ADLS Source gem, which unions them into a single output table.
 
 Use the table below to understand how to configure each option.
 
 | Parameter                                            | Description                                                                                                                                                                                                                       |
 | ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Format type                                          | Type of file to read, such as csv or json.                                                                                                                                                                                        |
-| Select or create connection                          | Select an existing ADLS connection or [create a new one](/administration/fabrics/prophecy-fabrics/connections/adls).                                                                                                              |
-| Choose Path or Configuration                         | Choose between the following options.<ul><li>**Filepath**: Read one file from a specified file path.</li><li>**Configuration**: Dynamically read files provided by a [file arrival/change trigger](/analysts/triggers).</li></ul> |
+| Select or create connection                          | Select an existing ADLS connection or [create a new one](/data-analytics/environment/connections/adls).                                                                                                              |
+| Choose Path or Configuration                         | Choose between the following options.<ul><li>**Filepath**: Read one file from a specified file path.</li><li>**Configuration**: Dynamically read files provided by a [file arrival/change trigger](/data-analytics/production/scheduling/triggers).</li></ul> |
 | Filepath<br/>_Filepath option only_                  | Path to the file in the ADLS container. Supports wildcards. <br/>Example: `abfss://container-name@account-name.dfs.core.windows.net/temp/dir/*.csv`                                                                               |
-| Select Configuration<br/>_Configuration option only_ | File arrival/change trigger [configuration](/analysts/triggers#trigger-configuration) that provides the added or modified files for that run.                                                                                     |
+| Select Configuration<br/>_Configuration option only_ | File arrival/change trigger [configuration](/data-analytics/production/scheduling/triggers#trigger-configuration) that provides the added or modified files for that run.                                                                                     |
 | Include filename Column                              | Appends a column containing the source filename for each row in the output table.                                                                                                                                                 |
 | Delete files after successfully processed            | Deletes objects after they are successfully read.                                                                                                                                                                                 |
 | Move files after successfully processed              | Moves objects to a specified directory after they are successfully read.                                                                                                                                                          |

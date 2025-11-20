@@ -21,10 +21,10 @@ The table below outlines whether the connection supports certain Prophecy featur
 
 | Feature                                                                                                     | Supported |
 | ----------------------------------------------------------------------------------------------------------- | --------- |
-| Read data with a [Source gem](/analysts/adls-gem)                                                           | Yes       |
-| Write data with a [Target gem](/analysts/adls-gem)                                                          | Yes       |
-| Browse data in the [Environment browser](/analysts/project-editor#sidebar)                                  | Yes       |
-| Trigger scheduled pipeline upon [file arrival or change](/analysts/triggers#file-arrival-or-change-trigger) | Yes       |
+| Read data with a [Source gem](/data-analytics/gems/source-target/file/adls)                                                           | Yes       |
+| Write data with a [Target gem](/data-analytics/gems/source-target/file/adls)                                                          | Yes       |
+| Browse data in the [Environment browser](/data-analytics/development/studio/studio#sidebar)                                  | Yes       |
+| Trigger scheduled pipeline upon [file arrival or change](/data-analytics/production/scheduling/triggers#file-arrival-or-change-trigger) | Yes       |
 
 ## Connection parameters
 
@@ -35,6 +35,6 @@ To create a connection with your ADLS account, enter the following parameters:
 | Connection Name                                                                                    | Unique name for the connection.                                                                                                                      |
 | Client ID                                                                                          | Your Microsoft Entra app client ID                                                                                                                   |
 | Tenant ID                                                                                          | Your Microsoft Entra [tenant ID](https://learn.microsoft.com/en-us/entra/fundamentals/how-to-find-tenant)                                            |
-| Client Secret ([Secret required](docs/administration/fabrics/prophecy-fabrics/secrets/secrets.md)) | Your Microsoft Entra app client secret                                                                                                               |
+| Client Secret ([Secret required](/data-analytics/environment/secrets/secrets)) | Your Microsoft Entra app client secret                                                                                                               |
 | Account Name                                                                                       | Name of your ADLS [storage account](https://learn.microsoft.com/en-us/azure/storage/blobs/create-data-lake-storage-account) that hosts the container |
 | Container Name                                                                                     | Name of the [container](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction#containers) within the storage account      |

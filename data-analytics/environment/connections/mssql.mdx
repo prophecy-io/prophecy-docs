@@ -18,10 +18,10 @@ The table below outlines whether the connection supports certain Prophecy featur
 
 | Feature                                                                    | Supported |
 | -------------------------------------------------------------------------- | --------- |
-| Read data with a [Source gem](/analysts/mssql)                             | Yes       |
-| Write data with a [Target gem](/analysts/mssql)                            | Yes       |
-| Browse data in the [Environment browser](/analysts/project-editor#sidebar) | Yes       |
-| Index tables in the [Knowledge Graph](/knowledge-graph)                    | No        |
+| Read data with a [Source gem](/data-analytics/gems/source-target/external-table/mssql)                             | Yes       |
+| Write data with a [Target gem](/data-analytics/gems/source-target/external-table/mssql)                            | Yes       |
+| Browse data in the [Environment browser](/data-analytics/development/studio/studio#sidebar) | Yes       |
+| Index tables in the [Knowledge Graph](/data-analytics/ai/knowledge-graph/knowledge-graph)                    | No        |
 
 ## Connection parameters
 
@@ -33,7 +33,7 @@ To create a connection with Microsoft SQL Server, enter the following parameters
 | Server                                                                                        | Address of the server to connect to     |
 | Port                                                                                          | Port to use for the connection          |
 | Username                                                                                      | Username for your MSSQL Server instance |
-| Password ([Secret required](docs/administration/fabrics/prophecy-fabrics/secrets/secrets.md)) | Password for your MSSQL Server instance |
+| Password ([Secret required](/data-analytics/environment/secrets/secrets)) | Password for your MSSQL Server instance |
 
 ## Data type mapping
 
@@ -75,12 +75,12 @@ When Prophecy processes data from Microsoft SQL Server (MSSQL) using SQL warehou
 | hierarchyid      | BINARY<br />Alias: Binary       | BYTES<br />Alias: Bytes         |
 
 <Info>
-Learn more in [Supported data types](/analysts/data-types).
+Learn more in [Supported data types](/data-analytics/gems/data-types).
 </Info>
 
 ## Sharing connections within teams
 
-Connections in Prophecy are stored within [fabrics](docs/administration/fabrics/prophecy-fabrics/prophecy-fabrics.md), which are assigned to specific teams. Once a MSSQL connection is added to a fabric, all team members who have access to the fabric can use the connection in their projects. No additional authentication is required—team members automatically inherit the access and permissions of the stored connection credentials.
+Connections in Prophecy are stored within [fabrics](/data-analytics/environment/fabrics/prophecy-fabrics), which are assigned to specific teams. Once a MSSQL connection is added to a fabric, all team members who have access to the fabric can use the connection in their projects. No additional authentication is required—team members automatically inherit the access and permissions of the stored connection credentials.
 
 <Warning>
 Be mindful of the access level granted by the stored credentials. Anyone on the team will have the same permissions—including access to sensitive data if allowed.

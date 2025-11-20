@@ -4,7 +4,7 @@ description: Models define a single target table or view in a SQL warehouse
 ---
 
 <Callout icon="/images/icon.png" color="#FFC107">
-  Available for [Enterprise Edition](/getting-started/editions/) only.
+  Available for [Enterprise Edition](/data-engineering/administration/platform/editions) only.
 </Callout>
 
 In Prophecy, a model comprises a set of gems that process data into one output. In other words, each model corresponds to a **single table** in your database.
@@ -33,8 +33,6 @@ This opens a new model canvas that is prepopulated with a target model. Note tha
 
 Each gem in a model maps to a SQL statement. As you configure gems on the visual canvas, Prophecy automatically generates the corresponding SQL, determines whether to use a CTE or subquery for each step, and integrates your changes into the overall model.
 
-Models run exclusively in your SQL warehouse and can only use gems supported in that environment. Gems that can run in SQL are marked with the following badge: <a href="https://docs.prophecy.io/administration/fabrics/prophecy-fabrics/"><span className="badge badge-runtime">SQL Warehouse</span></a>
-
 ## Advanced settings
 
 The **Advanced Settings** dialog lets you set dbt configurations at the project, folder, or model level. Each setting corresponds to standard dbt configurations, typically defined in a dbt project [YAML file](https://docs.getdbt.com/docs/build/projects#project-configuration). They cover properties such as materialization behavior, physical storage, metadata, and access controls.
@@ -47,13 +45,16 @@ To open the Advanced Settings:
 1. Select **Advanced Settings**.
 1. Choose to edit the Project Settings, Folder Settings, or Model Settings.
 
-![Advanced Settings](img/advanced-settings-dbt.png)
+![Advanced Settings](/data-engineering/development/models/img/advanced-settings-dbt.png)
 
 <Note>Folder Settings only apply to directories that contain models.</Note>
 
 ## Schedule models
 
-To schedule model execution, set up [Databricks Jobs](/engineers/databricks-jobs) or Apache Airflow DAGs directly within Prophecy. Models can only be scheduled on [Analytics Engineer](/administration/project-types/) projects.
+To schedule automated model execution:
+
+- The project must use the [Normal Git Storage Model](/data-analytics/development/versioning/version-control).
+- You need to use an external orchestrator, such as [Databricks Jobs](/data-engineering/orchestration/databricks-jobs) or Apache Airflow DAGs.
 
 ## Models vs pipelines
 
@@ -70,8 +71,8 @@ Models and pipelines are two different SQL project components. The following tab
 
 ### Show underlying models
 
-Many visual transformations in pipelines are compiled into models under the hood. If you are working on a pipeline, you can view and edit the code of [underlying dbt models](/analysts/pipeline-execution#execution-environment) in a pipeline. However, you cannot visually edit these underlying models.
+Many visual transformations in pipelines are compiled into models under the hood. If you are working on a pipeline, you can view and edit the code of underlying dbt models in a pipeline. However, you cannot visually edit these underlying models.
 
 To view these models, select **Show Models** from the **...** menu in the left sidebar of a project.
 
-![Show Models](img/show-models.png)
+![Show Models](/data-engineering/development/models/img/show-models.png)

@@ -16,7 +16,7 @@ This is useful for building orchestrated workflows directly in the visual canvas
 The Pipeline gem has the following limitations:
 
 - It can trigger only pipelines within the same project.
-- The [Monitoring](/analysts/monitoring) page doesn't show the parent pipeline that triggered a run using the Pipeline gem.
+- The [Monitoring](/data-analytics/production/monitoring) page doesn't show the parent pipeline that triggered a run using the Pipeline gem.
 
 ## Input and Output
 
@@ -72,7 +72,7 @@ The Pipeline gem accepts the following parameters.
 | Pipeline to run                     | Select a pipeline to trigger in the list of pipelines from the same project.                                                                                                                                                                                                                |
 | Trigger only if                     | Choose a [condition](#trigger-conditions) to control when the trigger fires based on the `status` column of the input dataset (if present). If the condition is not met, the Pipeline gem runs, but no pipelines are triggered. The output will show that all pipeline runs were `skipped`. |
 | Maximum number of pipeline triggers | Set a maximum number of times the child pipeline runs per Pipeline gem execution. Maximum is `10,000`.                                                                                                                                                                                      |
-| Set pipeline parameters             | Set values for the [pipeline parameters](/analysts/pipeline-parameters) defined in the child pipeline. You can specify constants, expressions, or column values for each parameter. If you don't specify a value, the child pipeline uses its default parameter value.                      |
+| Set pipeline parameters             | Set values for the [pipeline parameters](/data-analytics/development/pipeline-params) defined in the child pipeline. You can specify constants, expressions, or column values for each parameter. If you don't specify a value, the child pipeline uses its default parameter value.                      |
 
 <Tip>
   Use multiple input rows to launch runs of the same pipeline with different sets of parameter values.
@@ -100,7 +100,7 @@ Prophecy supports the following execution behaviors when running a Pipeline gem.
 
 - **Sequential execution**: When one Pipeline gem triggers a target pipeline multiple times, pipeline instances run sequentially. The Pipeline gem does not finish running until all instances of the target pipeline finish running.
 
-- **Sequential triggering**: Pipeline gems wait for upstream pipelines to finish running when multiple Pipeline gems are configured sequentially or are configured with sequential [gem phases](/analysts/gems/#gem-phase).
+- **Sequential triggering**: Pipeline gems wait for upstream pipelines to finish running when multiple Pipeline gems are configured sequentially or are configured with sequential [gem phases](/data-analytics/gems/#gem-phase).
 
 - **Parallel triggering**: The gem supports parallel execution when separate pipeline branches have the same gem phase.
 

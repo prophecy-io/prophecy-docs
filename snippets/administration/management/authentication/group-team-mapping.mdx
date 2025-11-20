@@ -1,10 +1,10 @@
 <Callout icon="/images/icon.png" color="#FFC107">
 
-  Available for [Express and Enterprise Editions](/getting-started/editions/) only.
+Available for [Express and Enterprise Editions](/data-engineering/administration/platform/editions) only.
 
 </Callout>
 
-Prophecy supports automatic team creation and user role assignment based on identity provider groups using either SCIM or LDAP. To learn about roles in Prophecy, visit [Role-based access](/administration/rbac).
+Prophecy supports automatic team creation and user role assignment based on identity provider groups using either SCIM or LDAP. To learn about roles in Prophecy, visit [Role-based access](/data-engineering/administration/management/users/access/role-based-access).
 
 ## Overview
 
@@ -44,9 +44,7 @@ Prophecy will automatically strip the `<prefix>` and `<suffix>` from group names
 
 To enable automatic team creation using custom naming schemes, you must configure the following environment variables for your deployment.
 
-<Info>
-Please reach out to us to set up these configurations.
-</Info>
+<Info>Please reach out to us to set up these configurations.</Info>
 
 ### For LDAP
 
@@ -68,6 +66,4 @@ PROPHECY_IDP_TEAMNAME_STRIP_REGEX: "prefix-"
 
 Replace `prefix-` with your actual prefix (for example, `corp-`, `info-`, etc.). Prophecy will strip this from group names before creating or matching teams.
 
-<Tip>
-You can use regular expressions for the prefix value.
-</Tip>
+<Tip>You can use regular expressions for the prefix value.</Tip>

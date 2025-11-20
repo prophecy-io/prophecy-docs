@@ -4,7 +4,7 @@ description: Different ways you can run Prophecy pipeliens
 ---
 
 <Callout icon="/images/icon.png" color="#FFC107">
-  Applicable to the [Enterprise Edition](/getting-started/editions/) only.
+  Applicable to the [Enterprise Edition](/data-engineering/administration/platform/editions) only.
 </Callout>
 
 Prophecy executes pipelines based on the type of Spark cluster and the operation being performed. You can run pipelines interactively, schedule them, or execute them using the built-in Spark shell. Each execution provides information through logs and metrics to help you manage and monitor data transformations.
@@ -16,11 +16,11 @@ When you run a pipeline in the pipeline canvas, Prophecy generates interim **dat
 - **Click the large play button on bottom of the pipeline canvas.** The whole pipeline runs.
 - **Click the play button on a gem.** All gems up to and including that gem run. This is a partial pipeline run.
 
-![Interactive run options](img/interactive-execution-play-options.png)
+![Interactive run options](/data-engineering/development/runs/img/interactive-execution-play-options.png)
 
 <Info title="Data Samples">
 
-After you run your pipeline interactively in the canvas, data samples will appear between gems. These previews are temporarily cached. Learn about how these [data samples](docs/Spark/execution/data-sampling.md) are generated or discover the [Data Explorer](/engineers/data-explorer).
+After you run your pipeline interactively in the canvas, data samples will appear between gems. These previews are temporarily cached. Learn about how these [data samples](/data-engineering/development/runs/data-sampling) are generated or discover the [Data Explorer](/data-engineering/development/data-explorer/data-explorer).
 
 </Info>
 
@@ -45,7 +45,7 @@ In this example, each step executes completely before the next one begins:
 - Step 3 (Join) waits for both previous steps to be complete
 - Steps 4, 5, and 6 continue this sequential pattern
 
-The order that you see in the Code view can be changed by manually setting [gem phases](/engineers/gems#gem-phase).
+The order that you see in the Code view can be changed by manually setting [gem phases](/data-engineering/gems/gems#gem-phase).
 
 <Note>
 
@@ -55,33 +55,33 @@ Gems running on Spark are limited to sequential execution. Conversely, when gems
 
 ## Scheduled execution
 
-When you create [jobs](docs/Orchestration/Orchestration.md) in Prophecy, you schedule when certain pipelines will run. Prophecy executes pipelines based on the [fabric](docs/getting-started/concepts/fabrics.md) defined in the pipeline's job settings. Prophecy will automatically run jobs once relevant projects are released and deployed.
+When you create [jobs](/data-engineering/orchestration/databricks-jobs) in Prophecy, you schedule when certain pipelines will run. Prophecy executes pipelines based on the [fabric](/data-engineering/fabrics/spark-provider/databricks/databricks) defined in the pipeline's job settings. Prophecy will automatically run jobs once relevant projects are released and deployed.
 
 ## Shell execution
 
 Prophecy comes with an built-in interactive Spark shell that supports both Python and Scala. The shell is an easy way to quickly analyze data or test Spark commands. The Spark context and session are available within the shell as variables `sc` and `spark` respectively.
 
-![Interactive execution](./img/int_exc_1.png)
+![Interactive execution](/data-engineering/development/runs/img/int_exc_1.png)
 
 ## Execution information
 
 Once you run a pipeline, there are several ways for you to better understand the execution.
 
-| Callout | Information                                                    | Description                                                                                                             |
-| ------- | -------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| **1**   | Problems                                                       | Errors from your pipeline execution that will be shown in a dialog window, as well as in the canvas footer.             |
-| **2**   | Runtime logs                                                   | The progress with timestamps of your pipeline runs and any errors.                                                      |
-| **3**   | Execution code                                                 | The code Prophecy runs to execute your pipeline. You can copy and paste this code elsewhere for debugging.              |
-| **4**   | Runtime metrics                                                | Various Spark metrics collected during runtime.                                                                         |
-| **5**   | [Execution metrics](docs/Spark/execution/execution-metrics.md) | Metrics that can be found in the **Metadata** of a pipeline, or from the **Run History** button under the **...** menu. |
+| Callout | Information                                                      | Description                                                                                                             |
+| ------- | ---------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| **1**   | Problems                                                         | Errors from your pipeline execution that will be shown in a dialog window, as well as in the canvas footer.             |
+| **2**   | Runtime logs                                                     | The progress with timestamps of your pipeline runs and any errors.                                                      |
+| **3**   | Execution code                                                   | The code Prophecy runs to execute your pipeline. You can copy and paste this code elsewhere for debugging.              |
+| **4**   | Runtime metrics                                                  | Various Spark metrics collected during runtime.                                                                         |
+| **5**   | [Execution metrics](/data-engineering/fabrics/execution-metrics) | Metrics that can be found in the **Metadata** of a pipeline, or from the **Run History** button under the **...** menu. |
 
 Use the image below to help you find the relevant information.
 
-![Execution information](./img/run-info.png)
+![Execution information](/data-engineering/development/runs/img/run-info.png)
 
 ## Execution on Databricks
 
-Databricks clusters come with various [Access Modes](https://docs.databricks.com/clusters/create-cluster.html#what-is-cluster-access-mode). To use Unity Catalog Shared clusters, check for feature support [here](docs/administration/fabrics/Spark-fabrics/databricks/UCShared.md).
+Databricks clusters come with various [Access Modes](https://docs.databricks.com/clusters/create-cluster.html#what-is-cluster-access-mode). To use Unity Catalog Shared clusters, check for feature support [here](/data-engineering/fabrics/spark-provider/databricks/UCShared).
 
 <Info>
 

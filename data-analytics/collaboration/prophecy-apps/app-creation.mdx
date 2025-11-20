@@ -5,7 +5,7 @@ description: "Follow this tutorial to build your first Prophecy App"
 
 Prophecy Apps enable teams to create interactive and reusable workflows that simplify data processing. These applications allow users to parameterize pipelines, interact with data, and schedule pipeline runs without modifying the underlying pipeline logic.
 
-When creating a Prophecy App, structure it using [pipeline parameters](docs/analysts/development/pipelines/pipeline-params.md). Pipeline parameters allow applications to dynamically adjust values during execution. By adding [interactive components](/analysts/business-application-components) to your apps, users can define parameter values while keeping the rest of the pipeline unchanged.
+When creating a Prophecy App, structure it using [pipeline parameters](/data-analytics/development/pipeline-params). Pipeline parameters allow applications to dynamically adjust values during execution. By adding [interactive components](/data-analytics/collaboration/prophecy-apps/app-components) to your apps, users can define parameter values while keeping the rest of the pipeline unchanged.
 
 ## Objectives
 
@@ -15,7 +15,7 @@ In this tutorial, you'll learn how to create a Prophecy App where users can:
 - Filter the data based on custom input.
 - Preview and download the output data.
 
-![Run Prophecy App results](img/prophecy-app-run.png)
+![Run Prophecy App results](/data-analytics/collaboration/prophecy-apps/img/prophecy-app-run.png)
 
 ## Prerequisites
 
@@ -39,11 +39,11 @@ Before building a Prophecy App, start by creating the pipeline it will run. You'
 
 This pipeline will include parameters that end users can assign values to through the app interface.
 
-![App pipeline](img/app-pipeline.png)
+![App pipeline](/data-analytics/collaboration/prophecy-apps/img/app-pipeline.png)
 
 ### Create a pipeline parameter
 
-[Pipeline parameters](docs/analysts/development/pipelines/pipeline-params.md) enable dynamic behavior in pipelines by allowing values to be set at runtime. In this case, these values can be driven by inputs from external sources, including user input through a Prophecy App.
+[Pipeline parameters](/data-analytics/development/pipeline-params) enable dynamic behavior in pipelines by allowing values to be set at runtime. In this case, these values can be driven by inputs from external sources, including user input through a Prophecy App.
 
 In this section, you'll define a pipeline parameter specifically for use in a Prophecy App. The parameter will capture the franchise ID that the user selects, allowing the pipeline to filter reviews based on the franchise they want to see.
 
@@ -53,10 +53,10 @@ In this section, you'll define a pipeline parameter specifically for use in a Pr
 1. Name the parameter `franchise_id`.
 1. Set the parameter type to `int`.
 1. Click **Select expression > Value**.
-1. Enter `3000007` as the default value to be used during [interactive pipeline runs](docs/analysts/development/pipelines/execution.md). (This is an arbitrary franchise ID.)
+1. Enter `3000007` as the default value to be used during [interactive pipeline runs](/data-analytics/development/runs/execution). (This is an arbitrary franchise ID.)
 1. Click **Save**.
 
-![Create pipeline parameter dialog](img/pipeline-parameter.png)
+![Create pipeline parameter dialog](/data-analytics/collaboration/prophecy-apps/img/pipeline-parameter.png)
 
 You can choose a new default value when you build the Prophecy App. This overrides the default value assigned in the pipeline parameter settings.
 
@@ -82,7 +82,7 @@ Next, add a Filter gem to the pipeline. To make the filter condition dynamic, yo
   Find your configured pipeline parameters by clicking on the **Configuration Variable** in the visual expression builder.
 </Tip>
 
-![Configure visual expression to use parameter](img/visual-expression-parameter.png)
+![Configure visual expression to use parameter](/data-analytics/collaboration/prophecy-apps/img/visual-expression-parameter.png)
 
 If you switch to the code view, you can use the following expression as the filter condition `franchiseID = {{ var('franchise_id') }}`.
 
@@ -147,7 +147,7 @@ Finally, add a Data Preview component to display a sample of the result of the p
 
 The following image shows the complete Prophecy App template in the App Builder.
 
-![Prophecy App template](img/prophecy-app-template.png)
+![Prophecy App template](/data-analytics/collaboration/prophecy-apps/img/prophecy-app-template.png)
 
 ## Run the app
 
@@ -159,9 +159,9 @@ After building the app, execute it to validate its functionality. This process a
 1. Create a new app configuration. This configuration represents an instance of the app with a set of custom parameter values.
 1. Test the app by uploading various datasets and running the app to observe results.
 
-![Run Prophecy App results](img/prophecy-app-run.png)
+![Run Prophecy App results](/data-analytics/collaboration/prophecy-apps/img/prophecy-app-run.png)
 
-To explore advanced configuration options and scheduling capabilities, refer to the documentation on [running apps](/analysts/run-apps).
+To explore advanced configuration options and scheduling capabilities, refer to the documentation on [running apps](/data-analytics/collaboration/prophecy-apps/run-apps).
 
 <Warning>
   When you run a Prophecy App, the entire underlying pipeline is executed—not just the components visible in the app. This means any additional transformations, tables, or other components included in the pipeline will also run, even if they're not exposed in the app interface. Be mindful of how you design the pipeline to ensure app users only trigger the intended logic.
@@ -169,7 +169,7 @@ To explore advanced configuration options and scheduling capabilities, refer to 
 
 ## What's next
 
-To address your specific business requirements, leverage more complex [components](/analysts/business-application-components) to construct robust Prophecy Apps.
+To address your specific business requirements, leverage more complex [components](/data-analytics/collaboration/prophecy-apps/app-components) to construct robust Prophecy Apps.
 
 {/* ## Publish
 

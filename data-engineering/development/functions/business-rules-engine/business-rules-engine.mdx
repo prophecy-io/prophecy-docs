@@ -4,7 +4,7 @@ description: Use business rules to automate business decisions
 ---
 
 <Callout icon="/images/icon.png" color="#FFC107">
-  Available for [Enterprise Edition](/getting-started/editions/) only.
+  Available for [Enterprise Edition](/data-engineering/administration/platform/editions) only.
 </Callout>
 
 Business rules empower organizations to model, manage, and automate repeatable business decisions throughout the enterprise.
@@ -14,8 +14,8 @@ Business rules empower organizations to model, manage, and automate repeatable b
 The business rules engine in Prophecy lets you incorporate business logic in your Pipelines. Often, different users will interact with business rules at various stages of Pipeline development. One common workflow is as follows:
 
 1. Business users create business rules using predefined enterprise logic.
-1. These business rules are deployed and become available as [dependencies](docs/extensibility/dependencies/spark-dependencies.md) in the [Package Hub](/engineers/package-hub).
-1. Data engineers and others working on Pipelines can incorporate these rules using the [SchemaTransform gem](/engineers/schema-transform).
+1. These business rules are deployed and become available as [dependencies](/data-engineering/extensibility/dependencies/spark-dependencies) in the [Package Hub](/data-engineering/extensibility/package-hub/package-hub).
+1. Data engineers and others working on Pipelines can incorporate these rules using the [SchemaTransform gem](/data-engineering/gems/transform/schema-transform).
 
 These stages are explained in more detail below.
 
@@ -36,7 +36,7 @@ To create a new business rule:
 1. In the project browser, click the **+** icon next to **Functions**.
 1. Name the Rule and choose **Business Rule** as the **Function Type**. Then, click **OK**.
 
-![Create business rule](./img/create-bre.png)
+![Create business rule](/data-engineering/development/functions/business-rules-engine/img/create-bre.png)
 
 Next, you need to define the rule parameters.
 
@@ -44,7 +44,7 @@ Next, you need to define the rule parameters.
 1. Define columns in the **Output Columns** table with an optional description.
 1. Each column in these tables will automatically be added to the **Rules** table.
 
-![Rule Parameters](./img/rule-parameters.png)
+![Rule Parameters](/data-engineering/development/functions/business-rules-engine/img/rule-parameters.png)
 
 Each row in the Rules table corresponds to one rule condition. To add a rule condition:
 
@@ -62,7 +62,7 @@ Prophecy will generate an error if there is conflicting logic in your conditions
 
 Take a look at the business rule in the following image.
 
-![IdentifyHighSpendingCustomer Rule](./img/high-spending-rule.png)
+![IdentifyHighSpendingCustomer Rule](/data-engineering/development/functions/business-rules-engine/img/high-spending-rule.png)
 
 In this example, we created an **IdentifyHighSpendingCustomer** business rule. This rule represents the following statement:
 
@@ -89,22 +89,22 @@ Let's say you want to create a PromoCodeRule that will be used in various other 
 1. Add the business rule to the project.
 1. Commit your changes to the project.
 1. Merge the changes to the main branch.
-1. [Release and deploy](/engineers/deployment) the project.
+1. [Release and deploy](/data-engineering/ci-cd/deployment/deployment) the project.
 
 Then, you must give other users access to your project.
 
 1. In your project metadata, open the **Access** tab.
 1. Toggle-on the option to **Publish to Package Hub**. This will make the Package available to others.
 
-When someone adds the Package as a [dependency](docs/extensibility/dependencies/spark-dependencies.md) in their project, they will be able to see the rule definition. However, they will not be able to edit the fields.
+When someone adds the Package as a [dependency](/data-engineering/extensibility/dependencies/spark-dependencies) in their project, they will be able to see the rule definition. However, they will not be able to edit the fields.
 
-![PromoCodeRule](./img/promo-code-rule.png)
+![PromoCodeRule](/data-engineering/development/functions/business-rules-engine/img/promo-code-rule.png)
 
 This example rule includes a set of conditions to determine the type of promotions that a customer is eligible for.
 
 ## Use business rules in your Pipeline
 
-To use a business rule in your Pipeline, you can use the [SchemaTransform gem](/engineers/schema-transform).
+To use a business rule in your Pipeline, you can use the [SchemaTransform gem](/data-engineering/gems/transform/schema-transform).
 
 1. Add a SchemaTransform gem to the Pipeline.
 1. Open the gem and add the appropriate input.
@@ -131,4 +131,4 @@ Prophecy automatically compiles visually-developed business rules into code.
 
 Business rules are stored in the **functions** folder of your pipeline's code. This is true for both Python and Scala projects. Note that you can also see the imported business rules in the code view.
 
-![Business rules in Python and Scala](./img/bre-code.png)
+![Business rules in Python and Scala](/data-engineering/development/functions/business-rules-engine/img/bre-code.png)

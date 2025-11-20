@@ -21,10 +21,10 @@ The table below outlines whether the connection supports certain Prophecy featur
 
 | Feature                                                                    | Supported |
 | -------------------------------------------------------------------------- | --------- |
-| Read data with a [Source gem](/analysts/onedrive-gem)                      | Yes       |
-| Write data with a [Target gem](/analysts/onedrive-gem)                     | Yes       |
-| Browse data in the [Environment browser](/analysts/project-editor#sidebar) | Yes       |
-| Index files in the [Knowledge Graph](/knowledge-graph)                     | No        |
+| Read data with a [Source gem](/data-analytics/gems/source-target/file/onedrive)                      | Yes       |
+| Write data with a [Target gem](/data-analytics/gems/source-target/file/onedrive)                     | Yes       |
+| Browse data in the [Environment browser](/data-analytics/development/studio/studio#sidebar) | Yes       |
+| Index files in the [Knowledge Graph](/data-analytics/ai/knowledge-graph/knowledge-graph)                     | No        |
 
 ## Connection parameters
 
@@ -35,12 +35,12 @@ To create a connection with OneDrive, enter the following parameters. You can fi
 | Connection Name                                                                                    | Name to identify your connection                                                                          |
 | Tenant ID                                                                                          | Your Microsoft Entra [tenant ID](https://learn.microsoft.com/en-us/entra/fundamentals/how-to-find-tenant) |
 | Client ID                                                                                          | Your Microsoft Entra app Client ID                                                                        |
-| Client Secret ([Secret required](docs/administration/fabrics/prophecy-fabrics/secrets/secrets.md)) | Your Microsoft Entra app Client Secret                                                                    |
+| Client Secret ([Secret required](/data-analytics/environment/secrets/secrets)) | Your Microsoft Entra app Client Secret                                                                    |
 | User Principal Name                                                                                | Email you use to sign into Microsoft                                                                      |
 
 ## Sharing connections within teams
 
-Connections in Prophecy are stored within [fabrics](docs/administration/fabrics/prophecy-fabrics/prophecy-fabrics.md), which are assigned to specific teams. Once a OneDrive connection is added to a fabric, all team members who have access to the fabric can use the connection in their projects. No additional authentication is required—team members automatically inherit the access and permissions of the stored connection credentials.
+Connections in Prophecy are stored within [fabrics](/data-analytics/environment/fabrics/prophecy-fabrics), which are assigned to specific teams. Once a OneDrive connection is added to a fabric, all team members who have access to the fabric can use the connection in their projects. No additional authentication is required—team members automatically inherit the access and permissions of the stored connection credentials.
 
 <Warning>
 Be mindful of the access level granted by the stored credentials. Anyone on the team will have the same permissions—including access to sensitive data if allowed.

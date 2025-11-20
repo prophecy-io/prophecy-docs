@@ -4,10 +4,10 @@ description: Build Spark gems in Python or Scala
 ---
 
 <Callout icon="/images/icon.png" color="#FFC107">
-Available for [Enterprise Edition](/getting-started/editions/) only.
+  Available for [Enterprise Edition](/data-engineering/administration/platform/editions) only.
 </Callout>
 
-[Gems](docs/getting-started/concepts/gems.md) are visually-packaged parcels of code that perform specific operations on data. While Prophecy provides many gems out of the box, Prophecy also lets you create your own gems! Not only can you create new gems, but you can also share them in the [Package Hub](/engineers/package-hub) or with selected teams.
+[Gems](/data-engineering/gems/gems) are visually-packaged parcels of code that perform specific operations on data. While Prophecy provides many gems out of the box, Prophecy also lets you create your own gems! Not only can you create new gems, but you can also share them in the [Package Hub](/data-engineering/extensibility/package-hub/package-hub) or with selected teams.
 
 ## Overview
 
@@ -21,7 +21,8 @@ Let's learn how to create a Spark gem. At a high level, this involves the follow
 1. Fill in some values and review the generated code.
 
 <Note>
-If you plan to share these gems in a package, be aware that everything in the project (pipelines, subgraphs, jobs, etc.) will be part of the package, too.
+  If you plan to share these gems in a package, be aware that everything in the project (pipelines,
+  subgraphs, jobs, etc.) will be part of the package, too.
 </Note>
 
 Next, we will review these steps in greater detail.
@@ -134,16 +135,16 @@ class CustomLimit extends ComponentSpec {
 
 The template consists of the following components:
 
-| Component                                       | Description                                                                                 |
-| ----------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| Parent class                                    | Extends a parent class from which it inherits the representation of the overall gem.        |
-| Optimize function                               | Enable or disable [code optimization](/engineers/optimization-functions).                   |
-| Properties class                                | Contains a list of the properties to be made available to the user for this particular gem. |
-| Dialog function                                 | Contains code specific to how the gem UI should look to the user.                           |
-| Serialize/deserialize function (**Scala only**) | Persists objects or exchanges data between different parts of a system                      |
-| Validate function                               | Recognizes errors with any inputs provided by the user.                                     |
-| State change function                           | Defines UI state transformations.                                                           |
-| Component code class                            | Contains the Spark code that needs to run on your Spark cluster.                            |
+| Component                                       | Description                                                                                                |
+| ----------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Parent class                                    | Extends a parent class from which it inherits the representation of the overall gem.                       |
+| Optimize function                               | Enable or disable [code optimization](/data-engineering/extensibility/gem-builder/optimization-functions). |
+| Properties class                                | Contains a list of the properties to be made available to the user for this particular gem.                |
+| Dialog function                                 | Contains code specific to how the gem UI should look to the user.                                          |
+| Serialize/deserialize function (**Scala only**) | Persists objects or exchanges data between different parts of a system                                     |
+| Validate function                               | Recognizes errors with any inputs provided by the user.                                                    |
+| State change function                           | Defines UI state transformations.                                                                          |
+| Component code class                            | Contains the Spark code that needs to run on your Spark cluster.                                           |
 
 ## Tutorial
 
@@ -152,11 +153,11 @@ The template consists of the following components:
 1. Create a Spark project in Python. The gem will inherit the project-level language.
 1. Click on the **+** in the gems section of the project sidebar. This will appear on hover.
 1. In the **Gem Name** field, write `CustomLimit`.
-1. Choose **Transformation Gem** [mode](/engineers/gem-builder-reference/#mode).
+1. Choose **Transformation Gem** [mode](/data-engineering/extensibility/gem-builder/gem-builder-reference#mode).
 1. Select the **Transform** category.
 1. Click **Create Gem**.
 
-![Create gem](img/create-gem.png)
+![Create gem](/data-engineering/extensibility/gem-builder/img/create-gem.png)
 
 Next, we'll add custom code the to code template. The best way to learn how to create new gems is to review the code of existing gems. In this tutorial, we will base our custom gem on the Limit gem. Afterward, you can extend the custom gem logic further.
 
@@ -334,7 +335,7 @@ The dialog function contains code specific to how the gem UI should look to the 
 </Tabs>
 
 The above Dialog function in the limit gem is rendered on the UI like this:
-![UI](img/UI.png)
+![UI](/data-engineering/extensibility/gem-builder/img/UI.png)
 
 There are various UI components that can be defined for custom gems such as scroll boxes, tabs, buttons, etc.
 
@@ -444,6 +445,7 @@ Serialize and deserialize methods in Scala are now open source and exposed to th
 For Scala, this snippet binds the UI Properties to the case class:
 
 `(props: testProperties): String = Json.toJson(props).toString()`
+
 </Note>
 
 ### Define Spark logic
@@ -486,7 +488,8 @@ You can go ahead and preview the component to see how it looks. Note some gem ex
 That's all the code for our example Transformation, the Limit gem. We walked through the package and import statements, parent class, and properties class. We explored the required methods dialog, validation, onChange, (de)serializeProperty. Finally we saw the Limit gem's component code. Now we have a basic understanding of the components needed for any Transformation gem.
 
 <Info>
-If you are using an existing gem as a guide to creating your new gem, you will need to change the following at a minimum: ComponentSpec, ComponentProperties, and ComponentCode.
+  If you are using an existing gem as a guide to creating your new gem, you will need to change the
+  following at a minimum: ComponentSpec, ComponentProperties, and ComponentCode.
 </Info>
 
 ## Extend functionality
@@ -503,7 +506,7 @@ Looking to read or write to a data format beyond the (filetypes, warehouses, and
 
 Let's see how to use the ColumnsLayout UI element in detail:
 
-![8](img/8-gm.png)
+![8](/data-engineering/extensibility/gem-builder/img/8-gm.png)
 Open the **(1) SparkBasics** package dependency for Python or Scala. Explore and scroll to find a gem, e.g. **(2) OrderBy** with the desired visual component, in this case ColumnsLayout. Find the **(3) relevant code** for the visual element and click **(4) Preview** to see how this visual element is rendered. Try it out! Click on the **(5)customer_id and email** columns, and note these columns now **(6) appear** in the Order Columns list.
 
 If you like the column layout, then add the ColumnsLayout element to your custom gem. Each time you edit the code, you can click “Preview” to test the change in the UI.
@@ -513,7 +516,7 @@ If you like the column layout, then add the ColumnsLayout element to your custom
 The ComponentCode contains the actual Spark code that needs to run on your Spark cluster. Functions are supported inside the apply method; just define and call the function.
 
 For example, the existing Filter ComponentCode can be **(1) edited** by adding the withColumn function:
-![9](img/9-gm.png)
+![9](/data-engineering/extensibility/gem-builder/img/9-gm.png)
 Clicking **(2) Preview** will allow you to view the gem's **(3) UI**. Clicking **(4) Preview Code** will allow you to view the gem's **(5) code** together with the **(3) UI**, facilitating iteration. See the code samples below in Scala.
 
 filter ComponentCode:
@@ -553,7 +556,7 @@ filter ComponentCode with the added withColumn function:
 
 If there is an error in your code, your gem preview might not render correctly.
 
-![5](img/5-gm.png)
+![5](/data-engineering/extensibility/gem-builder/img/5-gm.png)
 If there is a **(1) typo / error** in a required method (e.g. dialog1 instead of dialog), Prophecy will direct your attention to a particular line of code.
 
 - Click the **(2) underlined code**.
@@ -573,7 +576,3 @@ If there is a **(1) typo / error** in a required method (e.g. dialog1 instead of
 When possible, use the `set()` operation, and avoid `for` loops. `set()` operations typically have a better average computational complexity than a `list`, which makes them more efficient.
 
 This is especially helpful when you operate on the _columns_ of wide tables, as this scenario can slow down the Prophecy UI.
-
-## What's next
-
-Now that you know how to create Spark gems, have a look at how to [create custom SQL gems](/analysts/gem-builder).

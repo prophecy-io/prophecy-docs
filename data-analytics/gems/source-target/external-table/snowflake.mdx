@@ -16,7 +16,7 @@ The Snowflake Source and Target gems let you connect Prophecy pipelines to Snowf
 When you create a new external Source or Target gem, the gem dialog contains the following tabs.
 
 - **Type**: Select the Snowflake table option.
-- **Source/Target location**: Choose the [connection](/administration/fabrics/prophecy-fabrics/connections/) and define the location where you will read/write tables in Snowflake.
+- **Source/Target location**: Choose the [connection](/data-analytics/environment/connections/connections) and define the location where you will read/write tables in Snowflake.
 - **Properties**: Infer or manually specify the schema, and optionally add properties that influence table behavior.
 - **Preview**: Load a preview of the dataset reflecting your configurations.
 
@@ -29,7 +29,7 @@ Use these settings to configure a Snowflake Source gem for reading data.
 | Parameter                   | Description                                                                                                                                    |
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | Format type                 | Table format for the source. For Snowflake tables, set to `snowflake`.                                                                         |
-| Select or create connection | Choose or create a [Snowflake connection](/administration/fabrics/prophecy-fabrics/connections/snowflake) in the Prophecy fabric you will use. |
+| Select or create connection | Choose or create a [Snowflake connection](/data-analytics/environment/connections/snowflake) in the Prophecy fabric you will use. |
 | Database                    | Snowflake database containing the table you want to read from.                                                                                 |
 | Schema                      | Schema within the database where the table is located.                                                                                         |
 | Name                        | Exact name of the Snowflake table to read data from.                                                                                           |
@@ -47,7 +47,7 @@ Use these settings to configure a Snowflake Target gem for writing data.
 | Parameter                   | Description                                                                                                                                    |
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | Format type                 | Table format for the target. For Snowflake tables, set to `snowflake`.                                                                         |
-| Select or create connection | Choose or create a [Snowflake connection](/administration/fabrics/prophecy-fabrics/connections/snowflake) in the Prophecy fabric you will use. |
+| Select or create connection | Choose or create a [Snowflake connection](/data-analytics/environment/connections/snowflake) in the Prophecy fabric you will use. |
 | Database                    | Snowflake database where the target table will be created or updated.                                                                          |
 | Schema                      | Schema within the database where the target table resides or will be created.                                                                  |
 | Name                        | Name of the Snowflake table to write data to. If the table doesn't exist, it will be created automatically.                                    |

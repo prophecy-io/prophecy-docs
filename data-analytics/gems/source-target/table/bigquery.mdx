@@ -39,11 +39,11 @@ Tables are persistent, indexed storage objects optimized for frequent access.
 
 #### Target parameters
 
-| Parameter     | Description                                                                                                                                  |
-| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| Location      | Choose the location where the table will be stored. You can create a new table by writing a new table name.                                  |
-| Properties    | Define certain properties of the table. The schema cannot be changed for targets.                                                            |
-| Write Options | Select how you want the data to be written each time you run the pipeline (Table only). Learn more in [Write Options](/table-write-options). |
+| Parameter     | Description                                                                                                                                                                    |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Location      | Choose the location where the table will be stored. You can create a new table by writing a new table name.                                                                    |
+| Properties    | Define certain properties of the table. The schema cannot be changed for targets.                                                                                              |
+| Write Options | Select how you want the data to be written each time you run the pipeline (Table only). Learn more in [Write Options](/data-analytics/gems/source-target/table/write-options). |
 
 ### Views
 
@@ -84,10 +84,10 @@ Seeds are lightweight CSV datasets defined in your project. Seeds are source-onl
   Seeds are implemented as [dbt seeds](https://docs.getdbt.com/docs/build/seeds) under the hood. The
   CSV data you define is stored in your Prophecy project files and materialized as a table in your
   data warehouse. This table is created in the [default target
-  dataset](/administration/fabrics/prophecy-fabrics/connections/bigquery#connection-parameters)
-  specified in your BigQuery connection.
+  dataset](/data-analytics/environment/connections/bigquery#connection-parameters) specified in your
+  BigQuery connection.
 </Note>
 
 ## Reusing and sharing tables
 
-After you create a table in Prophecy, you can reuse its configuration across your entire project. All created tables appear in the [Project](/analysts/project-editor) tab in the left sidebar. To make tables available to other teams, you can share your project as a package in the [Package Hub](/engineers/package-hub). Other users will be able to use the shared table configuration, provided they have the necessary permissions in BigQuery to access the underlying data.
+After you create a table in Prophecy, you can reuse its configuration across your entire project. All created tables appear in the [Project](/data-analytics/development/studio/studio) tab in the left sidebar. To make tables available to other teams, you can share your project as a package in the [Package Hub](/data-analytics/development/extensibility/package-hub/package-hub). Other users will be able to use the shared table configuration, provided they have the necessary permissions in BigQuery to access the underlying data.
