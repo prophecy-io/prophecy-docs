@@ -99,17 +99,43 @@ python -m prophecy_lineage_extractor \
 
 To use the command, set up the following environment variables:
 
-| Variable/Secret    | Required                         | Description                                                                                                                                  |
-| ------------------ | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| `PROPHECY_PAT`     | Yes                              | [Personal Access Token](/api-reference/introduction#access-tokens) used to authenticate with Prophecy.                                       |
-| `PROPHECY_URL`     | Yes                              | Prophecy instance URL. Example: `https://app.prophecy.io`                                                                                    |
-| `SMTP_HOST`        | Required if using `--send-email` | SMTP server hostname for sending email reports (e.g., `smtp.gmail.com`).                                                                     |
-| `SMTP_PORT`        | Required if using `--send-email` | SMTP server port number. Example: `587`                                                                                                      |
-| `SMTP_USERNAME`    | Required if using `--send-email` | Username for the email account used to send reports.                                                                                         |
-| `SMTP_PASSWORD`    | Required if using `--send-email` | Password needed for the email account.                                                                                                       |
-| `MONITOR_TIME_ENV` | No                               | Duration of the monitoring window in minutes (default: `150`).                                                                               |
-| `GIT_COMMIT`       | No                               | Set to `1` to enable committing generated output to Git.                                                                                     |
-| `OPENLINEAGE_URL`  | No                               | URL for sending OpenLineage events. If not set, and format is `openlineage`, events are written as JSON files in `OUTPUT_DIR/<PROJECT-ID>/`. |
+<ResponseField name="PROPHECY_PAT" required>
+  [Personal Access Token](/api-reference/introduction#access-tokens) used to authenticate with
+  Prophecy.
+</ResponseField>
+
+<ResponseField name="PROPHECY_URL" required>
+  Prophecy instance URL. Example: `https://app.prophecy.io`.
+</ResponseField>
+
+<ResponseField name="SMTP_HOST">
+  Required if using `--send-email`. SMTP server hostname for sending email reports. Example:
+  `smtp.gmail.com`.
+</ResponseField>
+
+<ResponseField name="SMTP_PORT">
+  Required if using `--send-email`. SMTP server port number. Example: `587`.
+</ResponseField>
+
+<ResponseField name="SMTP_USERNAME">
+  Required if using `--send-email`. Username for the email account used to send reports.
+</ResponseField>
+
+<ResponseField name="SMTP_PASSWORD">
+  Required if using `--send-email`. Password needed for the email account.
+</ResponseField>
+
+<ResponseField name="MONITOR_TIME_ENV" default="150">
+  Duration of the monitoring window in minutes.
+</ResponseField>
+
+<ResponseField name="GIT_COMMIT">
+  Set to `1` to enable committing generated output to Git.
+</ResponseField>
+
+<ResponseField name="OPENLINEAGE_URL">
+URL for sending OpenLineage events. If not set, and format is `openlineage`, events are written as JSON files in `OUTPUT_DIR/<PROJECT-ID>/`.
+</ResponseField>
 
 ## Integration with GitHub Actions or GitLab CI
 
