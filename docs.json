@@ -680,8 +680,7 @@
                     "group": "Lineage",
                     "pages": [
                       "data-engineering/lineage/lineage",
-                      "data-engineering/lineage/lineage-extractor",
-                      "data-engineering/lineage/lineage-run-and-diagnose"
+                      "data-engineering/lineage/lineage-extractor"
                     ]
                   }
                 ]
