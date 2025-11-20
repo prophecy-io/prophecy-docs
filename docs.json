@@ -244,6 +244,7 @@
                 "group": "Sources and targets",
                 "pages": [
                   "data-analytics/gems/source-target/source-target",
+                  "data-analytics/gems/source-target/adding-data-sources",
                   {
                     "group": "Tables (Warehouse)",
                     "pages": [
