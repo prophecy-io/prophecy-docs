@@ -23,6 +23,34 @@ The following table types are supported for BigQuery connections.
 | View  | A virtual table that derives data dynamically from a query. Slower for complex queries (computed at runtime). | Source or Target |
 | Seed  | Small CSV-format files that you can write directly in Prophecy.                                               | **Source only**  |
 
+## Create a new table
+
+Once you create a Table gem, you can reuse the table throughout your project. All created tables appear in the [Project](/data-analytics/development/studio/studio) tab in the left sidebar.
+
+To create a table in your pipeline:
+
+<Steps>
+<Step title="Add a table gem to the pipeline">
+
+1. Open your pipeline in the [Studio](/data-analytics/development/studio/studio).
+1. Click on **Source/Target** in the canvas.
+1. Select **Table** from the dropdown.
+1. Click on the gem to open the configuration.
+
+</Step>
+
+<Step title="Create a new table">
+
+Click **+ New Table**. The gem configuration will depend on the table type:
+
+- [Tables](#tables)
+- [Views](#views)
+- [Seeds](#seeds)
+
+</Step>
+
+</Steps>
+
 ## Gem configuration
 
 ### Tables

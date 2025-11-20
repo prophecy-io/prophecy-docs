@@ -244,6 +244,7 @@
                 "group": "Sources and targets",
                 "pages": [
                   "data-analytics/gems/source-target/source-target",
+                  "data-analytics/gems/source-target/adding-data-sources",
                   {
                     "group": "Tables (Warehouse)",
                     "pages": [
@@ -526,7 +527,8 @@
                 "group": "Reference",
                 "pages": [
                   "data-analytics/releases/version-chart",
-                  "data-analytics/releases/version-support"
+                  "data-analytics/releases/version-support",
+                  "data-analytics/releases/find-version"
                 ]
               }
             ]
@@ -680,8 +682,7 @@
                     "group": "Lineage",
                     "pages": [
                       "data-engineering/lineage/lineage",
-                      "data-engineering/lineage/lineage-extractor",
-                      "data-engineering/lineage/lineage-run-and-diagnose"
+                      "data-engineering/lineage/lineage-extractor"
                     ]
                   }
                 ]
@@ -1006,7 +1007,8 @@
                 "group": "Reference",
                 "pages": [
                   "data-engineering/releases/version-chart",
-                  "data-engineering/releases/version-support"
+                  "data-engineering/releases/version-support",
+                  "data-engineering/releases/find-version"
                 ]
               }
             ]

@@ -26,21 +26,35 @@ Use a Source and Target gem to read from or write to S3 locations in Prophecy pi
 
 To create an S3 Source or Target gem in your pipeline:
 
-1. Set up your [S3 connection](/data-analytics/environment/connections/s3).
-1. Add a new Source or Target gem to your pipeline canvas and open the configuration.
-1. In the **Type** tab, select **S3**.
-1. In the **Location** tab, choose your [file format](#supported-file-formats) and location.
+<Steps>
+<Step title="Add a Source or Target gem to the pipeline">
 
-   <Info>
-     For more information on how to configure this screen, jump to [Source
-     location](#source-location) and [Target location](#target-location).
-   </Info>
+1. Open your pipeline in the [Studio](/data-analytics/development/studio/studio).
+1. Click on **Source/Target** in the canvas.
+1. Select **Source** or **Target** from the dropdown.
+1. Click on the gem to open the configuration.
 
-1. In the **Properties** tab, set the file properties. These vary based on the file type that you are working with.
+</Step>
 
-   <Info>See the list of properties per [file type](/data-analytics/gems/source-target/file).</Info>
+<Step title="Select S3 format">In the **Type** tab, select **S3**. Then, click **Next**.</Step>
 
-1. (Source only) In the **Preview** tab, load a sample of the data and verify that it looks correct.
+<Step title="Set location details">
+
+In the **Location** tab, set your file format and connection details. To learn more, jump to [Source location](#source-location) and [Target location](#target-location).
+
+</Step>
+
+<Step title="Set file properties">
+In the **Properties** tab, set the file properties. These vary based on the file type that you are working with.
+
+<Info>See the list of properties per file type, such as [CSV](/data-analytics/gems/source-target/file/file-types/csv).</Info>
+</Step>
+
+<Step title="Preview data (Source only)">
+  In the **Preview** tab, load a sample of the data and verify that it looks correct.
+</Step>
+
+</Steps>
 
 ## Source location
 
@@ -52,16 +66,16 @@ When setting up an S3 Source gem, you need to decide how Prophecy should locate 
 
 Use the table below to understand how to configure each option.
 
-| Parameter                                            | Description                                                                                                                                                                                                                       |
-| ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Format type                                          | Type of file to read, such as `csv` or `json`.                                                                                                                                                                                    |
-| Select or create connection                          | Select an existing S3 connection or [create a new one](/data-analytics/environment/connections/s3).                                                                                                                  |
+| Parameter                                            | Description                                                                                                                                                                                                                                                   |
+| ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Format type                                          | Type of file to read, such as `csv` or `json`.                                                                                                                                                                                                                |
+| Select or create connection                          | Select an existing S3 connection or [create a new one](/data-analytics/environment/connections/s3).                                                                                                                                                           |
 | Choose Path or Configuration                         | Choose between the following options.<ul><li>**Filepath**: Read one file from a specified file path.</li><li>**Configuration**: Dynamically read files provided by a [file arrival/change trigger](/data-analytics/production/scheduling/triggers).</li></ul> |
-| Filepath<br/>_Filepath option only_                  | Path to the file in the S3 bucket. Supports wildcards. <br/>Example: `/temp/dir/*.csv`                                                                                                                                            |
+| Filepath<br/>_Filepath option only_                  | Path to the file in the S3 bucket. Supports wildcards. <br/>Example: `/temp/dir/*.csv`                                                                                                                                                                        |
 | Select Configuration<br/>_Configuration option only_ | File arrival/change trigger [configuration](/data-analytics/production/scheduling/triggers#trigger-configuration) that provides the added or modified files for that run.                                                                                     |
-| Include filename Column                              | Appends a column containing the source filename for each row in the output table.                                                                                                                                                 |
-| Delete files after successfully processed            | Deletes objects after they are successfully read.                                                                                                                                                                                 |
-| Move files after successfully processed              | Moves objects to a specified directory after they are successfully read.                                                                                                                                                          |
+| Include filename Column                              | Appends a column containing the source filename for each row in the output table.                                                                                                                                                                             |
+| Delete files after successfully processed            | Deletes objects after they are successfully read.                                                                                                                                                                                                             |
+| Move files after successfully processed              | Moves objects to a specified directory after they are successfully read.                                                                                                                                                                                      |
 
 ### Configuration
 
@@ -77,8 +91,8 @@ For the same reason, you'll see an error if you try to infer the schema in the *
 
 When setting up an S3 Target gem, you need to set the location and file type to correctly write the file.
 
-| Parameter                   | Description                                                                                                      |
-| --------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| Format type                 | Type of file to write, such as `csv` or `json`.                                                                  |
+| Parameter                   | Description                                                                                         |
+| --------------------------- | --------------------------------------------------------------------------------------------------- |
+| Format type                 | Type of file to write, such as `csv` or `json`.                                                     |
 | Select or create connection | Select an existing S3 connection or [create a new one](/data-analytics/environment/connections/s3). |
-| Filepath                    | S3 path where the output file will be written. <br/>Example: `s3://my-bucket/data/orders.csv`                    |
+| Filepath                    | S3 path where the output file will be written. <br/>Example: `s3://my-bucket/data/orders.csv`       |

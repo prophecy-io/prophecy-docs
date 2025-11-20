@@ -1,6 +1,6 @@
 ---
-title: Connections
-description: A list of connections that you can configure for projects
+title: What are connections?
+description: Use connections to read and write data from external sources
 ---
 
 Prophecy lets you work with various data providers when building your pipelines. To read and write data from external sources, create **connections** inside a [Prophecy fabric](/data-analytics/environment/fabrics/prophecy-fabrics).
@@ -9,17 +9,26 @@ When you attach to a fabric with connections, you can:
 
 - Reuse credentials that are established in the connection.
 - Browse data from the data provider in the [Environment browser](/data-analytics/development/studio/studio#sidebar) of your Prophecy project.
-- Auto-index data for search in the Prophecy interface.
+
+<Info>
+  Most connections are only used to read from and write to data sources. The SQL Warehouse
+  connection is an exception: it also provides the compute environment for pipeline execution.
+</Info>
 
 ## Connections access
 
 Prophecy controls access to connections through fabric-level permissions. To access a connection, you must have access to the fabric that contains the connection. You can only access fabrics that are assigned to one of your teams.
 
-![Connections access diagram](/data-analytics/environment/connections/img/connections-fabrics-projects.png)
+<Frame>
+```mermaid
+erDiagram
+    Project }o--o{ Fabric : uses
+    Team ||--o{ Project : owns
+    Team ||--o{ Fabric : owns
+```
+</Frame>
 
-<Info>
-Most connections are only used to read from and write to data sources. The SQL Warehouse connection is an exception—it also provides the compute environment for pipeline execution.
-</Info>
+In this diagram, the lines show relationships between entities. `||--||` indicates a one-to-one relationship, `||--o{` indicates a one-to-many relationship (one entity on the left can relate to many entities on the right), and `}o--o{` indicates a many-to-many relationship.
 
 ## Add a new connection
 
@@ -35,10 +44,6 @@ To configure a new connection in a Prophecy fabric:
 - Configure the connection and save your changes.
 
 Learn about individual connection parameters in the connection's respective reference page.
-
-<Note>
-You can also create connections inside the [project editor](/data-analytics/environment/connections/connections).
-</Note>
 
 ## What's next
 

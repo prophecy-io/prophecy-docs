@@ -13,32 +13,19 @@ You can run the lineage extractor manually or integrate it into a CI workflow to
 
 ## Prerequisites
 
-To use the lineage extractor for SQL pipelines:
+To use the lineage extractor:
 
-- `knowledge-graph` must be enabled in your Prophecy deployment.
+- Install the Python tool. [Here's the PyPI package](https://pypi.org/project/prophecy-lineage-extractor/).
+- (SQL only): `knowledge-graph` must be enabled in your Prophecy deployment.
 
 ## Command
 
 Use the lineage extractor Python command to export the lineage of a specific pipeline.
 
-| Argument        | Type   | Required | Description                                                                                                                                                                                                        |
-| --------------- | ------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `--project-id`  | String | Yes      | Prophecy project ID. You can find it in the project URL. Example: `https://app.prophecy.io/metadata/entity/projects/57040` where 57040 is the project ID.                                                          |
-| `--reader`      | String | No       | Reader to use. Set to `lineage` for Spark projects or `knowledge-graph` for SQL projects.                                                                                                                          |
-| `--pipeline-id` | String | Depends  | One or more comma-separated pipeline IDs. The pipeline ID is equivalent to the name of the pipeline.<br />Required for the `lineage` reader; optional for the `knowledge-graph` reader.                            |
-| `--model-id`    | String | No       | One or more comma-separated model IDs. The model ID is equivalent to the name of the model. Only applicable when `--reader` is set to `knowledge-graph`. When defined, retrieves lineage for the specified models. |
-| `--output-dir`  | String | Yes      | Directory path where the extractor writes the lineage report.                                                                                                                                                      |
-| `--fmt`         | String | No       | Output format. Use `excel` (default) or `openlineage` (JSON in OpenLineage format).                                                                                                                                |
-| `--branch`      | String | No       | Branch to extract lineage from. Defaults to `main`.                                                                                                                                                                |
-| `--send-email`  | Flag   | No       | Sends the report by email. Requires SMTP configuration. <br />Learn more in [Integration with GitHub Actions or GitLab CI](#integration-with-github-actions-or-gitlab-ci).                                         |
-| `--run-for-all` | Flag   | No       | Generates lineage for all pipelines in the project, rather than just one pipeline.                                                                                                                                 |
-
-{/* | `--recursive-extract` | `flag` | No | Set to `true` to recursively trace upstream column changes. Set to `false` to disable this behavior. | */}
-
 <Tabs>
 <Tab title="SQL example">
 
-```
+```bash
 python -m prophecy_lineage_extractor \
   --project-id 6493 \
   --reader knowledge-graph \
@@ -51,7 +38,7 @@ python -m prophecy_lineage_extractor \
 </Tab>
 <Tab title="Spark example">
 
-```
+```bash
 python -m prophecy_lineage_extractor \
   --project-id 9900 \
   --reader lineage \
@@ -64,6 +51,91 @@ python -m prophecy_lineage_extractor \
 
 </Tab>
 </Tabs>
+
+### Parameters
+
+<ResponseField name="--project-id" type="string" required>
+  Prophecy project ID. You can find it in the project URL. Example:
+  `https://app.prophecy.io/metadata/entity/projects/57040` where 57040 is the project ID.
+</ResponseField>
+
+<ResponseField name="--output-dir" type="string" required>
+  Directory path where the extractor writes the lineage report.
+</ResponseField>
+
+<ResponseField name="--reader" type="string">
+  Reader to use. Set to `lineage` for Spark projects or `knowledge-graph` for SQL projects.
+</ResponseField>
+
+<ResponseField name="--pipeline-id" type="string">
+  One or more comma-separated pipeline IDs. The pipeline ID is equivalent to the name of the
+  pipeline. Required for the `lineage` reader; optional for the `knowledge-graph` reader.
+</ResponseField>
+
+<ResponseField name="--model-id" type="string">
+  One or more comma-separated model IDs. The model ID is equivalent to the name of the model. Only
+  applicable when `--reader` is set to `knowledge-graph`. When defined, retrieves lineage for the
+  specified models.
+</ResponseField>
+
+<ResponseField name="--fmt" type="string" default="excel">
+  Output format. Use `excel` or `openlineage` (JSON in OpenLineage format).
+</ResponseField>
+
+<ResponseField name="--branch" type="string" default="main">
+  Branch to extract lineage from.
+</ResponseField>
+
+<ResponseField name="--send-email" type="flag">
+  Sends the report by email. Requires SMTP configuration. See [Environment
+  variables](#environment-variables).
+</ResponseField>
+
+<ResponseField name="--run-for-all" type="flag">
+  Generates lineage for all pipelines in the project, rather than just one pipeline.
+</ResponseField>
+
+### Environment variables
+
+To use the command, set up the following environment variables:
+
+<ResponseField name="PROPHECY_PAT" required>
+  [Personal Access Token](/api-reference/introduction#access-tokens) used to authenticate with
+  Prophecy.
+</ResponseField>
+
+<ResponseField name="PROPHECY_URL" required>
+  Prophecy instance URL. Example: `https://app.prophecy.io`.
+</ResponseField>
+
+<ResponseField name="SMTP_HOST">
+  Required if using `--send-email`. SMTP server hostname for sending email reports. Example:
+  `smtp.gmail.com`.
+</ResponseField>
+
+<ResponseField name="SMTP_PORT">
+  Required if using `--send-email`. SMTP server port number. Example: `587`.
+</ResponseField>
+
+<ResponseField name="SMTP_USERNAME">
+  Required if using `--send-email`. Username for the email account used to send reports.
+</ResponseField>
+
+<ResponseField name="SMTP_PASSWORD">
+  Required if using `--send-email`. Password needed for the email account.
+</ResponseField>
+
+<ResponseField name="MONITOR_TIME_ENV" default="150">
+  Duration of the monitoring window in minutes.
+</ResponseField>
+
+<ResponseField name="GIT_COMMIT">
+  Set to `1` to enable committing generated output to Git.
+</ResponseField>
+
+<ResponseField name="OPENLINEAGE_URL">
+URL for sending OpenLineage events. If not set, and format is `openlineage`, events are written as JSON files in `OUTPUT_DIR/<PROJECT-ID>/`.
+</ResponseField>
 
 ## Integration with GitHub Actions or GitLab CI
 
@@ -84,26 +156,16 @@ To configure lineage extraction behavior related to authentication, email delive
 <Tab title="GitHub">
 
 1. Go to your repository's **Settings > Secrets and variables > Actions**.
-1. Add the listed variables under **Secrets** and **Variables** tabs.
+1. Add the [required variables](#environment-variables) under **Secrets** and **Variables** tabs.
 
 </Tab>
 <Tab title="GitLab">
 
 1. Go to your repository's **Settings > CI/CD > Variables**.
-1. Add each as a variable and mark secrets appropriately.
+1. Add the [required variables](#environment-variables) and mark secrets appropriately.
 
 </Tab>
 </Tabs>
-
-| Variable/Secret    | Description                                                                                                                                  |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| `PROPHECY_PAT`     | [Personal Access Token](/api-reference/introduction#access-tokens) used to authenticate with Prophecy.                                       |
-| `SMTP_USERNAME`    | Username for the email account used to send reports.                                                                                         |
-| `SMTP_PASSWORD`    | Password needed for the email account.                                                                                                       |
-| `MONITOR_TIME_ENV` | Duration of the monitoring window in minutes (default: `150`).                                                                               |
-| `GIT_COMMIT`       | Set to `1` to enable committing generated output to Git.                                                                                     |
-| `OUTPUT_DIR`       | Directory path where lineage files are stored.                                                                                               |
-| `OPENLINEAGE_URL`  | URL for sending OpenLineage events. If not set, and format is `openlineage`, events are written as JSON files in `OUTPUT_DIR/<PROJECT-ID>/`. |
 
 ### Set up workflow configuration
 
@@ -246,11 +308,55 @@ After a successful run, you should see a directory matching `OUTPUT_DIR` in your
 
 ![Lineage extractor output](/data-engineering/lineage/img/prophecy-lineage-report-for-pipeline.png)
 
-### Troubleshooting
+## Troubleshooting
 
+<AccordionGroup>
+
+<Accordion title="GitHub Action or GitLab CI doesn't run as expected">
 If your workflow doesn't run as expected:
 
 - Check for error messages in [GitHub workflow run logs](https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/monitoring-workflows/using-workflow-run-logs) or [GitLab job logs](https://docs.gitlab.com/ci/jobs/job_logs/).
 - Verify that you have set all environment variables and secrets correctly.
 - Ensure your Prophecy access token is valid and has the necessary permissions.
 - Confirm that the Project ID and Pipeline ID are correct in the workflow file.
+
+</Accordion>
+
+<Accordion title="Lineage extraction returns outdated results">
+The knowledge graph caches lineage data to improve extraction performance. In some cases, cached data can become stale or outdated, preventing accurate lineage extraction for older pipelines or specific branches. Clear the cache when lineage extraction returns outdated results for pipelines that have been updated. To do so, use the Clear Index API.
+
+**Endpoint:** `POST https://app.prophecy.io/api/lineage/sql/clearIndex`
+
+<Info>Replace the base URL with your environment URL for Dedicated SaaS deployments.</Info>
+
+**Headers:**
+
+- `X-AUTH-TOKEN`: Your Prophecy Personal Access Token
+- `Content-Type`: `application/json`
+
+**Request body:**
+
+```json
+{
+  "projectId": "95",
+  "branch": "dev"
+}
+```
+
+**Example:**
+
+```bash
+curl --location 'https://<your-prophecy-instance>/api/lineage/sql/clearIndex' \
+--header 'X-AUTH-TOKEN: <your-token>' \
+--header 'Content-Type: application/json' \
+--data '{
+    "projectId": "95",
+    "branch": "dev"
+}'
+```
+
+After clearing the cache, the next lineage extraction for the specified project and branch rebuilds the knowledge graph data from scratch.
+
+</Accordion>
+
+</AccordionGroup>

@@ -11,14 +11,40 @@ import Execution from '/snippets/gem-execution-engine.mdx';
 
 This page describes how to use BigQuery external Source and Target gems to read from or write to tables. Only use an external Source and Target gem when BigQuery is not the configured [SQL warehouse connection](/data-analytics/environment/fabrics/prophecy-fabrics). Otherwise, use the [Table gem](/data-analytics/gems/source-target/table/bigquery).
 
-## Configuration tabs
+## Create a BigQuery gem
 
-When you create a new external Source or Target gem, the gem dialog contains the following tabs.
+To create a BigQuery Source or Target gem in your pipeline:
 
-- **Type**: Select the BigQuery table option.
-- **Source/Target location**: Choose the [connection](/data-analytics/environment/connections/connections) and define the location where you will read/write tables in BigQuery.
-- **Properties**: Infer or manually specify the schema, and optionally add properties that influence table behavior.
-- **Preview**: Load a preview of the dataset reflecting your configurations.
+<Steps>
+<Step title="Add a Source or Target gem to the pipeline">
+
+1. Open your pipeline in the [Studio](/data-analytics/development/studio/studio).
+1. Click on **Source/Target** in the canvas.
+1. Select **Source** or **Target** from the dropdown.
+1. Click on the gem to open the configuration.
+
+</Step>
+
+<Step title="Select BigQuery format">
+  In the **Type** tab, select **BigQuery**. Then, click **Next**.
+</Step>
+
+<Step title="Set location details">
+
+In the **Location** tab, set your connection details and table location. To learn more, jump to [Source location](#source-location) and [Target location](#target-location).
+
+</Step>
+
+<Step title="Set table properties">
+  In the **Properties** tab, set the table properties. To learn more, jump to [Source
+  properties](#source-properties) and [Target properties](#target-properties).
+</Step>
+
+<Step title="Preview data (Source only)">
+  In the **Preview** tab, load a sample of the data and verify that it looks correct.
+</Step>
+
+</Steps>
 
 ## Source configuration
 

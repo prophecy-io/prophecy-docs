@@ -11,14 +11,40 @@ import Execution from '/snippets/gem-execution-engine.mdx';
 
 This page describes how to configure Oracle Source gems, including connection setup and schema options. Note that Prophecy does not support Oracle as a target destination.
 
-## Configuration tabs
+## Create an Oracle gem
 
-When you create a new external Source gem, the gem dialog contains the following tabs.
+To create an Oracle Source gem in your pipeline:
 
-- **Type**: Select the Oracle table option.
-- **Source location**: Choose the [connection](/data-analytics/environment/connections/connections) and define the location where you will read tables in Oracle.
-- **Properties**: Infer or manually specify the schema, and optionally add properties that influence table behavior.
-- **Preview**: Load a preview of the dataset reflecting your configurations.
+<Steps>
+<Step title="Add a Source gem to the pipeline">
+
+1. Open your pipeline in the [Studio](/data-analytics/development/studio/studio).
+1. Click on **Source/Target** in the canvas.
+1. Select **Source** from the dropdown.
+1. Click on the gem to open the configuration.
+
+</Step>
+
+<Step title="Select Oracle format">
+  In the **Type** tab, select **Oracle**. Then, click **Next**.
+</Step>
+
+<Step title="Set location details">
+
+In the **Location** tab, set your connection details and table location. To learn more, jump to [Source location](#source-location).
+
+</Step>
+
+<Step title="Set table properties">
+  In the **Properties** tab, set the table properties. To learn more, jump to [Source
+  properties](#source-properties).
+</Step>
+
+<Step title="Preview data">
+  In the **Preview** tab, load a sample of the data and verify that it looks correct.
+</Step>
+
+</Steps>
 
 ## Source configuration
 
@@ -29,7 +55,7 @@ Use these settings to configure an Oracle Source gem for reading data.
 | Parameter                   | Description                                                                                                                                                                               |
 | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Format type                 | Table format for the source. For Oracle tables, set to `oracle`.                                                                                                                          |
-| Select or create connection | Select or create a new [Oracle connection](/data-analytics/environment/connections/oracle) in the Prophecy fabric you will use.                                              |
+| Select or create connection | Select or create a new [Oracle connection](/data-analytics/environment/connections/oracle) in the Prophecy fabric you will use.                                                           |
 | Read using                  | Choose table or query.<ul><li>**Table**: Provide the schema and name of the table you want to read.</li><li>**Query**: Enter a SQL query directly in the gem to select a table.</li></ul> |
 
 ### Source properties

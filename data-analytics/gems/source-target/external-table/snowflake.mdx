@@ -11,14 +11,40 @@ import Execution from '/snippets/gem-execution-engine.mdx';
 
 The Snowflake Source and Target gems let you connect Prophecy pipelines to Snowflake tables for reading and writing data. This page outlines how to configure Snowflake sources and targets using the appropriate connections, locations, and properties.
 
-## Configuration tabs
+## Create a Snowflake gem
 
-When you create a new external Source or Target gem, the gem dialog contains the following tabs.
+To create a Snowflake Source or Target gem in your pipeline:
 
-- **Type**: Select the Snowflake table option.
-- **Source/Target location**: Choose the [connection](/data-analytics/environment/connections/connections) and define the location where you will read/write tables in Snowflake.
-- **Properties**: Infer or manually specify the schema, and optionally add properties that influence table behavior.
-- **Preview**: Load a preview of the dataset reflecting your configurations.
+<Steps>
+<Step title="Add a Source or Target gem to the pipeline">
+
+1. Open your pipeline in the [Studio](/data-analytics/development/studio/studio).
+1. Click on **Source/Target** in the canvas.
+1. Select **Source** or **Target** from the dropdown.
+1. Click on the gem to open the configuration.
+
+</Step>
+
+<Step title="Select Snowflake format">
+  In the **Type** tab, select **Snowflake**. Then, click **Next**.
+</Step>
+
+<Step title="Set location details">
+
+In the **Location** tab, set your connection details and table location. To learn more, jump to [Source location](#source-location) and [Target location](#target-location).
+
+</Step>
+
+<Step title="Set table properties">
+  In the **Properties** tab, set the table properties. To learn more, jump to [Source
+  properties](#source-properties) and [Target properties](#target-properties).
+</Step>
+
+<Step title="Preview data (Source only)">
+  In the **Preview** tab, load a sample of the data and verify that it looks correct.
+</Step>
+
+</Steps>
 
 ## Source configuration
 
@@ -26,13 +52,13 @@ Use these settings to configure a Snowflake Source gem for reading data.
 
 ### Source location
 
-| Parameter                   | Description                                                                                                                                    |
-| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| Format type                 | Table format for the source. For Snowflake tables, set to `snowflake`.                                                                         |
+| Parameter                   | Description                                                                                                                       |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Format type                 | Table format for the source. For Snowflake tables, set to `snowflake`.                                                            |
 | Select or create connection | Choose or create a [Snowflake connection](/data-analytics/environment/connections/snowflake) in the Prophecy fabric you will use. |
-| Database                    | Snowflake database containing the table you want to read from.                                                                                 |
-| Schema                      | Schema within the database where the table is located.                                                                                         |
-| Name                        | Exact name of the Snowflake table to read data from.                                                                                           |
+| Database                    | Snowflake database containing the table you want to read from.                                                                    |
+| Schema                      | Schema within the database where the table is located.                                                                            |
+| Name                        | Exact name of the Snowflake table to read data from.                                                                              |
 
 ### Source properties
 
@@ -44,13 +70,13 @@ Use these settings to configure a Snowflake Target gem for writing data.
 
 ### Target location
 
-| Parameter                   | Description                                                                                                                                    |
-| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| Format type                 | Table format for the target. For Snowflake tables, set to `snowflake`.                                                                         |
+| Parameter                   | Description                                                                                                                       |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Format type                 | Table format for the target. For Snowflake tables, set to `snowflake`.                                                            |
 | Select or create connection | Choose or create a [Snowflake connection](/data-analytics/environment/connections/snowflake) in the Prophecy fabric you will use. |
-| Database                    | Snowflake database where the target table will be created or updated.                                                                          |
-| Schema                      | Schema within the database where the target table resides or will be created.                                                                  |
-| Name                        | Name of the Snowflake table to write data to. If the table doesn't exist, it will be created automatically.                                    |
+| Database                    | Snowflake database where the target table will be created or updated.                                                             |
+| Schema                      | Schema within the database where the target table resides or will be created.                                                     |
+| Name                        | Name of the Snowflake table to write data to. If the table doesn't exist, it will be created automatically.                       |
 
 ### Target properties
 
