@@ -22,20 +22,6 @@ To use the lineage extractor:
 
 Use the lineage extractor Python command to export the lineage of a specific pipeline.
 
-| Argument        | Type   | Required | Description                                                                                                                                                                                                        |
-| --------------- | ------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `--project-id`  | String | Yes      | Prophecy project ID. You can find it in the project URL. Example: `https://app.prophecy.io/metadata/entity/projects/57040` where 57040 is the project ID.                                                          |
-| `--reader`      | String | No       | Reader to use. Set to `lineage` for Spark projects or `knowledge-graph` for SQL projects.                                                                                                                          |
-| `--pipeline-id` | String | Depends  | One or more comma-separated pipeline IDs. The pipeline ID is equivalent to the name of the pipeline.<br />Required for the `lineage` reader; optional for the `knowledge-graph` reader.                            |
-| `--model-id`    | String | No       | One or more comma-separated model IDs. The model ID is equivalent to the name of the model. Only applicable when `--reader` is set to `knowledge-graph`. When defined, retrieves lineage for the specified models. |
-| `--output-dir`  | String | Yes      | Directory path where the extractor writes the lineage report.                                                                                                                                                      |
-| `--fmt`         | String | No       | Output format. Use `excel` (default) or `openlineage` (JSON in OpenLineage format).                                                                                                                                |
-| `--branch`      | String | No       | Branch to extract lineage from. Defaults to `main`.                                                                                                                                                                |
-| `--send-email`  | Flag   | No       | Sends the report by email. Requires SMTP configuration. See [Environment variables](#environment-variables).                                                                                                       |
-| `--run-for-all` | Flag   | No       | Generates lineage for all pipelines in the project, rather than just one pipeline.                                                                                                                                 |
-
-{/* | `--recursive-extract` | `flag` | No | Set to `true` to recursively trace upstream column changes. Set to `false` to disable this behavior. | */}
-
 <Tabs>
 <Tab title="SQL example">
 
@@ -48,45 +34,6 @@ python -m prophecy_lineage_extractor \
   --run-for-all \
   --fmt openlineage
 ```
-
-<AccordionGroup>
-<Accordion title="Clear the knowledge graph cache">
-The knowledge graph caches lineage data to improve extraction performance. In some cases, cached data can become stale or outdated, preventing accurate lineage extraction for older pipelines or specific branches. Clear the cache when lineage extraction returns outdated results for pipelines that have been updated. To do so, use the Clear Index API.
-
-**Endpoint:** `POST https://app.prophecy.io/api/lineage/sql/clearIndex`
-
-<Info>Replace the base URL with your environment URL for Dedicated SaaS deployments.</Info>
-
-**Headers:**
-
-- `X-AUTH-TOKEN`: Your Prophecy Personal Access Token
-- `Content-Type`: `application/json`
-
-**Request body:**
-
-```json
-{
-  "projectId": "95",
-  "branch": "dev"
-}
-```
-
-**Example:**
-
-```bash
-curl --location 'https://<your-prophecy-instance>/api/lineage/sql/clearIndex' \
---header 'X-AUTH-TOKEN: <your-token>' \
---header 'Content-Type: application/json' \
---data '{
-    "projectId": "95",
-    "branch": "dev"
-}'
-```
-
-After clearing the cache, the next lineage extraction for the specified project and branch rebuilds the knowledge graph data from scratch.
-
-</Accordion>
-</AccordionGroup>
 
 </Tab>
 <Tab title="Spark example">
@@ -105,7 +52,50 @@ python -m prophecy_lineage_extractor \
 </Tab>
 </Tabs>
 
-## Environment variables
+### Parameters
+
+<ResponseField name="--project-id" type="string" required>
+  Prophecy project ID. You can find it in the project URL. Example:
+  `https://app.prophecy.io/metadata/entity/projects/57040` where 57040 is the project ID.
+</ResponseField>
+
+<ResponseField name="--output-dir" type="string" required>
+  Directory path where the extractor writes the lineage report.
+</ResponseField>
+
+<ResponseField name="--reader" type="string">
+  Reader to use. Set to `lineage` for Spark projects or `knowledge-graph` for SQL projects.
+</ResponseField>
+
+<ResponseField name="--pipeline-id" type="string">
+  One or more comma-separated pipeline IDs. The pipeline ID is equivalent to the name of the
+  pipeline. Required for the `lineage` reader; optional for the `knowledge-graph` reader.
+</ResponseField>
+
+<ResponseField name="--model-id" type="string">
+  One or more comma-separated model IDs. The model ID is equivalent to the name of the model. Only
+  applicable when `--reader` is set to `knowledge-graph`. When defined, retrieves lineage for the
+  specified models.
+</ResponseField>
+
+<ResponseField name="--fmt" type="string" default="excel">
+  Output format. Use `excel` or `openlineage` (JSON in OpenLineage format).
+</ResponseField>
+
+<ResponseField name="--branch" type="string" default="main">
+  Branch to extract lineage from.
+</ResponseField>
+
+<ResponseField name="--send-email" type="flag">
+  Sends the report by email. Requires SMTP configuration. See [Environment
+  variables](#environment-variables).
+</ResponseField>
+
+<ResponseField name="--run-for-all" type="flag">
+  Generates lineage for all pipelines in the project, rather than just one pipeline.
+</ResponseField>
+
+### Environment variables
 
 To use the command, set up the following environment variables:
 
@@ -292,11 +282,55 @@ After a successful run, you should see a directory matching `OUTPUT_DIR` in your
 
 ![Lineage extractor output](/data-engineering/lineage/img/prophecy-lineage-report-for-pipeline.png)
 
-### Troubleshooting
+## Troubleshooting
 
+<AccordionGroup>
+
+<Accordion title="GitHub Action or GitLab CI doesn't run as expected">
 If your workflow doesn't run as expected:
 
 - Check for error messages in [GitHub workflow run logs](https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/monitoring-workflows/using-workflow-run-logs) or [GitLab job logs](https://docs.gitlab.com/ci/jobs/job_logs/).
 - Verify that you have set all environment variables and secrets correctly.
 - Ensure your Prophecy access token is valid and has the necessary permissions.
 - Confirm that the Project ID and Pipeline ID are correct in the workflow file.
+
+</Accordion>
+
+<Accordion title="Lineage extraction returns outdated results">
+The knowledge graph caches lineage data to improve extraction performance. In some cases, cached data can become stale or outdated, preventing accurate lineage extraction for older pipelines or specific branches. Clear the cache when lineage extraction returns outdated results for pipelines that have been updated. To do so, use the Clear Index API.
+
+**Endpoint:** `POST https://app.prophecy.io/api/lineage/sql/clearIndex`
+
+<Info>Replace the base URL with your environment URL for Dedicated SaaS deployments.</Info>
+
+**Headers:**
+
+- `X-AUTH-TOKEN`: Your Prophecy Personal Access Token
+- `Content-Type`: `application/json`
+
+**Request body:**
+
+```json
+{
+  "projectId": "95",
+  "branch": "dev"
+}
+```
+
+**Example:**
+
+```bash
+curl --location 'https://<your-prophecy-instance>/api/lineage/sql/clearIndex' \
+--header 'X-AUTH-TOKEN: <your-token>' \
+--header 'Content-Type: application/json' \
+--data '{
+    "projectId": "95",
+    "branch": "dev"
+}'
+```
+
+After clearing the cache, the next lineage extraction for the specified project and branch rebuilds the knowledge graph data from scratch.
+
+</Accordion>
+
+</AccordionGroup>
