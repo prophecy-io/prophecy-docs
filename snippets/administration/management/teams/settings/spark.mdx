@@ -1,0 +1,19 @@
+<Callout icon="/images/icon.png" color="#FFC107">
+  Available for [Enterprise Edition](/data-engineering/administration/platform/editions) only.
+</Callout>
+
+The following sections describe different tabs within a team's metadata settings that pertain to **Spark projects**.
+
+## Execution Metrics
+
+In the Execution Metrics tab, you can enable or disable [execution metrics](/data-engineering/fabrics/execution-metrics) at the team level. You can also specify in which tables to store execution metrics for each pipeline run.
+
+## Code Generation
+
+When the **Enable multi file code generation** setting is enabled, Prophecy splits interactive execution code into multiple files instead of generating a single large file. Interactive execution code (generated when clicking the play button) differs from the project code committed to Git - it's optimized for running in Spark shell environments. This optimization reduces code recompilation by only updating changed portions of the pipeline during interactive runs, improving execution performance.
+
+## Advanced
+
+In the Advanced tab, the following configuration is relevant to Spark projects:
+
+- **Artifact ID:** Sets the parent artifact identifier for project JAR and wheel packages. This identifier is used when packaging your Spark project dependencies and becomes part of the artifact metadata for deployment and distribution.

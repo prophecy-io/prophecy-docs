@@ -20,10 +20,10 @@ The table below outlines whether the connection supports certain Prophecy featur
 
 | Feature                                                                    | Supported |
 | -------------------------------------------------------------------------- | --------- |
-| Read data with a [Source gem](/analysts/mongodb)                           | Yes       |
-| Write data with a [Target gem](/analysts/mongodb)                          | Yes       |
-| Browse data in the [Environment browser](/analysts/project-editor#sidebar) | Yes       |
-| Index tables in the [Knowledge Graph](/knowledge-graph)                    | No        |
+| Read data with a [Source gem](/data-analytics/gems/source-target/external-table/mongodb)                           | Yes       |
+| Write data with a [Target gem](/data-analytics/gems/source-target/external-table/mongodb)                          | Yes       |
+| Browse data in the [Environment browser](/data-analytics/development/studio/studio#sidebar) | Yes       |
+| Index tables in the [Knowledge Graph](/data-analytics/ai/knowledge-graph/knowledge-graph)                    | No        |
 
 ## Connection parameters
 
@@ -35,7 +35,7 @@ To create a connection with MongoDB, enter the following parameters:
 | Protocol                                                                                      | Protocol to use to communicate to the database<br />Example:`mongodb+srv` for cloud-hosted clusters           |
 | Host                                                                                          | Where your MongoDB instance runs<br />Example:`cluster0.<cluster-name>.mongodb.net` for cloud-hosted clusters |
 | Username                                                                                      | Username for your MongoDB instance                                                                           |
-| Password ([Secret required](docs/administration/fabrics/prophecy-fabrics/secrets/secrets.md)) | Password for your MongoDB instance                                                                           |
+| Password ([Secret required](/data-analytics/environment/secrets/secrets)) | Password for your MongoDB instance                                                                           |
 | Database                                                                                      | Default database for reading and writing data                                                                |
 | Collection                                                                                    | Collection to use for the connection                                                                         |
 
@@ -69,12 +69,12 @@ When Prophecy processes data from MongoDB using SQL warehouses, it converts Mong
 | Unidentified                                                                                | STRING<br />Alias: String         | STRING<br />Alias: String             |
 
 <Info>
-Learn more in [Supported data types](/analysts/data-types).
+Learn more in [Supported data types](/data-analytics/gems/data-types).
 </Info>
 
 ## Sharing connections within teams
 
-Connections in Prophecy are stored within [fabrics](docs/administration/fabrics/prophecy-fabrics/prophecy-fabrics.md), which are assigned to specific teams. Once a MongoDB connection is added to a fabric, all team members who have access to the fabric can use the connection in their projects. No additional authentication is required—team members automatically inherit the access and permissions of the stored connection credentials.
+Connections in Prophecy are stored within [fabrics](/data-analytics/environment/fabrics/prophecy-fabrics), which are assigned to specific teams. Once a MongoDB connection is added to a fabric, all team members who have access to the fabric can use the connection in their projects. No additional authentication is required—team members automatically inherit the access and permissions of the stored connection credentials.
 
 <Warning>
 Be mindful of the access level granted by the stored credentials. Anyone on the team will have the same permissions—including access to sensitive data if allowed.

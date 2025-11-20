@@ -23,10 +23,10 @@ The table below outlines whether the connection supports certain Prophecy featur
 
 | Feature                                                                                                     | Supported |
 | ----------------------------------------------------------------------------------------------------------- | --------- |
-| Read data with a [Source gem](/analysts/gcs-gem)                                                            | Yes       |
-| Write data with a [Target gem](/analysts/gcs-gem)                                                           | Yes       |
-| Browse data in the [Environment browser](/analysts/project-editor#sidebar)                                  | Yes       |
-| Trigger scheduled pipeline upon [file arrival or change](/analysts/triggers#file-arrival-or-change-trigger) | Yes       |
+| Read data with a [Source gem](/data-analytics/gems/source-target/file/gcs)                                                            | Yes       |
+| Write data with a [Target gem](/data-analytics/gems/source-target/file/gcs)                                                           | Yes       |
+| Browse data in the [Environment browser](/data-analytics/development/studio/studio#sidebar)                                  | Yes       |
+| Trigger scheduled pipeline upon [file arrival or change](/data-analytics/production/scheduling/triggers#file-arrival-or-change-trigger) | Yes       |
 
 ## Connection parameters
 
@@ -35,19 +35,19 @@ To create a connection with your GCS buckets, enter the following parameters:
 | Parameter                                                                                                | Description                                                                                                                                                            |
 | -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Connection Name                                                                                          | Unique name for the connection.                                                                                                                                        |
-| Service Account Key ([Secret required](docs/administration/fabrics/prophecy-fabrics/secrets/secrets.md)) | Key used to authenticate the connection. <br />See [Create and delete service account keys](https://cloud.google.com/iam/docs/keys-create-delete) for more information. |
+| Service Account Key ([Secret required](/data-analytics/environment/secrets/secrets)) | Key used to authenticate the connection. <br />See [Create and delete service account keys](https://cloud.google.com/iam/docs/keys-create-delete) for more information. |
 | Project ID                                                                                               | Google Cloud project ID that owns the bucket.                                                                                                                          |
 | Bucket Name                                                                                              | Name of your GCS bucket.                                                                                                                                               |
 
 <Info>
 **Service Account Key**
 
-Paste the full JSON content of your GCP service account key into a [Prophecy secret](/analysts/secrets) as text. Binary upload is not supported.
+Paste the full JSON content of your GCP service account key into a [Prophecy secret](/data-analytics/environment/secrets/secrets) as text. Binary upload is not supported.
 </Info>
 
 ## Sharing connections within teams
 
-Connections in Prophecy are stored within [fabrics](docs/administration/fabrics/prophecy-fabrics/prophecy-fabrics.md), which are assigned to specific teams. Once a GCS connection is added to a fabric, all team members who have access to the fabric can use the connection in their projects. No additional authentication is required—team members automatically inherit the access and permissions of the stored service account credentials.
+Connections in Prophecy are stored within [fabrics](/data-analytics/environment/fabrics/prophecy-fabrics), which are assigned to specific teams. Once a GCS connection is added to a fabric, all team members who have access to the fabric can use the connection in their projects. No additional authentication is required—team members automatically inherit the access and permissions of the stored service account credentials.
 
 <Warning>
 Be mindful of the access level granted by the stored service account key. Anyone on the team will have the same permissions—including access to sensitive data if allowed.

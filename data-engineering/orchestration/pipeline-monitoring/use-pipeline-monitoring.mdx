@@ -4,7 +4,7 @@ description: How to use Pipeline Monitoring for Spark
 ---
 
 <Callout icon="/images/icon.png" color="#FFC107">
-  Available for [Enterprise Edition](/getting-started/editions/) only.
+  Available for [Enterprise Edition](/data-engineering/administration/platform/editions) only.
 </Callout>
 
 You can use Pipeline Monitoring to help identify errors and failures at runtime. You can identify the cause of the failures, fix them with recommended solutions, and rerun failed or skipped tasks.
@@ -15,7 +15,7 @@ After your scheduled or ad-hoc run, you can view detected failures on your pipel
 
 - Hover over the gem to see failure details, such as run duration and the exception.
 
-![Gem failure-details](img/gem-failure-details.png)
+![Gem failure-details](/data-engineering/orchestration/pipeline-monitoring/img/gem-failure-details.png)
 
 - You can click **Open Logs** to open the Runtime Logs of that gem.
 
@@ -23,7 +23,7 @@ From the Runtime Logs panel, you can see other logs of the current run, includin
 
 - Click **More details** to see the entire exception details.
 
-![View runtime logs](img/view-runtime-logs.png)
+![View runtime logs](/data-engineering/orchestration/pipeline-monitoring/img/view-runtime-logs.png)
 
 ## Troubleshoot and fix problems
 
@@ -32,7 +32,7 @@ From the Runtime Logs panel, you can swap the tabs by clicking **Problems**. The
 - Click the name to view the problem. A side panel will open, taking you to the error location.
 - Or you can click **Fix with AI** to use a recommended solution made by Spark Copilot. And then try rerunning your task.
 
-![View and fix problems with AI](img/view-and-fix-problems.png)
+![View and fix problems with AI](/data-engineering/orchestration/pipeline-monitoring/img/view-and-fix-problems.png)
 
 ## View historical runs
 
@@ -42,10 +42,11 @@ You can see a complete history with logs and other debugging details for all of 
 
 This will take you to the Historical View of your pipeline in your particular fabric.
 
-![View run history](img/view-run-history.png)
+![View run history](/data-engineering/orchestration/pipeline-monitoring/img/view-run-history.png)
 
 <Note>
-It may take a moment to load the Historical View since Prophecy is using your cluster to fetch the historical run information from your table.
+  It may take a moment to load the Historical View since Prophecy is using your cluster to fetch the
+  historical run information from your table.
 </Note>
 
 - You can view different versions of your pipeline from the dropdown, or go back to view the Run Details.
@@ -54,5 +55,4 @@ Successful runs are labeled with a :heavy_check_mark:, while failed runs are lab
 
 - You can see the number of rows read and written at the top right.
 
-![Historical monitoring options and details](img/historical-monitoring-options.png)
-
+![Historical monitoring options and details](/data-engineering/orchestration/pipeline-monitoring/img/historical-monitoring-options.png)

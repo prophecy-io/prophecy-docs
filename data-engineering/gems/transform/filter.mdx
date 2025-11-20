@@ -33,14 +33,14 @@ Filters a DataFrame based on the provided filter condition.
 | Filter Condition | BooleanType column or boolean expression. Supports SQL, Python and Scala expressions. | True |
 
 <Note>
-Use the [visual language syntax](/engineers/configurations#syntax-for-different-languages) to call configuration variables in the Filter gem.
+Use the [visual language syntax](/data-engineering/development/pipelines/configuration#syntax-for-different-languages) to call configuration variables in the Filter gem.
 </Note>
 
 ## Example
 
 In this example, the Filter gem is used to return only marketing orders that are either finished or approved, while excluding any orders that have been discounted.
 
-![Example usage of Filter](./img/filter_eg_1.png)
+![Example usage of Filter](/data-engineering/gems/transform/img/filter_eg_1.png)
 
 <Info>
 The Filter gem configuration translates into the Spark code shown below, which applies the same filtering logic.

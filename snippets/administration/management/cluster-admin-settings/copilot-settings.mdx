@@ -1,13 +1,13 @@
 <Callout icon="/images/icon.png" color="#FFC107">
 
-  Applicable to the [Express and Enterprise Editions](/getting-started/editions/) only.
+Applicable to the [Express and Enterprise Editions](/data-engineering/administration/platform/editions) only.
 
 </Callout>
 
 Prophecy's AI capabilities, including Copilot and Agents, are powered by external LLMs.
 
-- The [SaaS](/administration/prophecy-deployment#saas) deployment uses a Prophecy-managed OpenAI subscription with GPT-4o and GPT-4o mini.
-- [Dedicated SaaS](/administration/prophecy-deployment#dedicated-saas) deployments connect to customer-managed endpoints.
+- The [SaaS](/data-analytics/administration/platform/prophecy-deployment#saas) deployment uses a Prophecy-managed OpenAI subscription with GPT-4o and GPT-4o mini.
+- [Dedicated SaaS](/data-analytics/administration/platform/prophecy-deployment#dedicated-saas) deployments connect to customer-managed endpoints.
 
 This page describes how to connect Prophecy to your customer-managed LLM.
 
@@ -19,7 +19,8 @@ To add your LLM provider and model details to Copilot settings:
 - Copilot must already be enabled in your Prophecy deployment. Reach out to the [Support team](mailto:support@prophecy.io) to enable Copilot.
 
 <Info>
-See [Prophecy AI](/prophecy-ai/#llm-providers-and-model-families) for a list of supported LLM providers and models.
+  See [Prophecy AI](/data-analytics/ai/llm-providers) for a list of supported LLM providers and
+  models.
 </Info>
 
 ## Configure Copilot settings
@@ -42,15 +43,17 @@ The following YAML example shows the required fields for different LLM providers
 
 ```yaml
 {
-  "azure_openai": { "api_key": "********", "api_endpoint": "********" },
-  "openai": { "api_key": "********" },
-  "gemini": { "api_key": "********" },
-  "vertex_ai": {},
+  'azure_openai': { 'api_key': '********', 'api_endpoint': '********' },
+  'openai': { 'api_key': '********' },
+  'gemini': { 'api_key': '********' },
+  'vertex_ai': {},
 }
 ```
 
 <Note>
-When editing the credentials in Prophecy, you will not be able to see previously-entered values. Likewise, once you save your credentials, values will be masked by asterisks `****` as shown in the example above.
+  When editing the credentials in Prophecy, you will not be able to see previously-entered values.
+  Likewise, once you save your credentials, values will be masked by asterisks `****` as shown in
+  the example above.
 </Note>
 
 #### Set up Vertex AI
@@ -81,8 +84,8 @@ The following YAML example shows how to format your smart and fast model configu
 
 ```yaml
 {
-  "smart_model": { "provider": "openai", "model_name": "gpt-4.1" },
-  "fast_model": { "provider": "openai", "model_name": "gpt-4.1-mini" },
+  'smart_model': { 'provider': 'openai', 'model_name': 'gpt-4.1' },
+  'fast_model': { 'provider': 'openai', 'model_name': 'gpt-4.1-mini' },
 }
 ```
 
@@ -96,7 +99,7 @@ The following YAML example shows how to format your speech-to-text (`stt`) and t
 
 ```yaml
 {
-  "stt": { "provider": "openai", "model_name": "whisper-1" },
-  "tts": { "provider": "openai", "model_name": "tts-1" },
+  'stt': { 'provider': 'openai', 'model_name': 'whisper-1' },
+  'tts': { 'provider': 'openai', 'model_name': 'tts-1' },
 }
 ```

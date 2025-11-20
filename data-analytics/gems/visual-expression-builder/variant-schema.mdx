@@ -19,13 +19,13 @@ Prophecy does not store variant data types within the table definition. Each row
 
 To automatically infer the variant data type:
 
-1. Open a gem that uses a variant column input, such as the [FlattenSchema gem](/analysts/flatten-schema).
+1. Open a gem that uses a variant column input, such as the [FlattenSchema gem](/data-analytics/gems/prepare/flatten-schema).
 
 1. Click the **Variant** dropdown, and click **Infer Schema**.
 
    Prophecy automatically detects and identifies the variant data types in your input data.
 
-   ![Schema and column selector](img/variant-infer-schema.png)
+   ![Schema and column selector](/data-analytics/gems/visual-expression-builder/img/variant-infer-schema.png)
 
    <Note>
 
@@ -46,7 +46,7 @@ To edit the variant data type schema:
 1. Click the **Variant** dropdown, and click **Edit Schema**.
 1. Use the data type dropdowns to manually choose the data type of each nested schema.
 
-   ![Edit schema view](img/variant-edit-schema.png)
+   ![Edit schema view](/data-analytics/gems/visual-expression-builder/img/variant-edit-schema.png)
 
 ## Variant sample setting
 
@@ -60,7 +60,7 @@ To update this limit:
 
    We recommend that you increase the limit for small structures, or decrease it for larger ones.
 
-   ![Variant sampling setting](img/variant-sampling-setting.png)
+   ![Variant sampling setting](/data-analytics/gems/visual-expression-builder/img/variant-sampling-setting.png)
 
 <Note>
 This setting does not rely on the ratio of the data since that would require a complete count of the data records.
@@ -70,7 +70,7 @@ This setting does not rely on the ratio of the data since that would require a c
 
 In the column selector, you can add a nested column by clicking **Add Column** when you hover over the input field name.
 
-![Add column](img/variant-add-column.png)
+![Add column](/data-analytics/gems/visual-expression-builder/img/variant-add-column.png)
 
 When you add a column nested within a variant data type, Prophecy automatically generates several fields according to the following rules:
 

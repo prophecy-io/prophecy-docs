@@ -31,7 +31,7 @@ To edit or remove input and output DataFrame(s), click on the **pen** icon next 
 
 ## Schema
 
-When executing a custom script gem, the output schema is not known by Prophecy so it must be inferred from a sample computation result. Click the `Custom Schema` button and `Infer from cluster` as shown in the gem [output port tab](/engineers/gems#output-ports). The schema will be inferred according to the script and the Spark version running on the connected cluster.
+When executing a custom script gem, the output schema is not known by Prophecy so it must be inferred from a sample computation result. Click the `Custom Schema` button and `Infer from cluster` as shown in the gem [output port tab](/data-engineering/gems/gems#output-ports). The schema will be inferred according to the script and the Spark version running on the connected cluster.
 
 ## Examples
 
@@ -41,7 +41,7 @@ When executing a custom script gem, the output schema is not known by Prophecy s
 
 We'll perform the `unpivot` operation using our custom code
 
-![Script - Unpivot](./img/script_unpivot.png)
+![Script - Unpivot](/data-engineering/gems/custom/img/script_unpivot.png)
 
 ---
 
@@ -53,4 +53,4 @@ We'll use the provided `SparkSession` to create and return a DataFrame
 Since we removed the input port, we don't see input DataFrame in the method signature
 </Note>
 
-![Script - Unpivot](./img/script_generate_df.png)
+![Script - Unpivot](/data-engineering/gems/custom/img/script_generate_df.png)

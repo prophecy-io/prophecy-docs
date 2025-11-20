@@ -8,25 +8,26 @@ The OpenAI gem allows the Prophecy user to interact with the OpenAI API using tw
 1. Compute text embeddings
 2. Answer a question, where the user has the option to provide context
 
-Follow along to learn how to interact with the OpenAI API using Prophecy's easy-to-use interface. For an example set of pipelines that use these gems to create a Generative AI Chatbot, see this [guide.](/engineers/generative-ai-chatbot)
+Follow along to learn how to interact with the OpenAI API using Prophecy's easy-to-use interface. For an example set of pipelines that use these gems to create a Generative AI Chatbot, see this [guide.](/data-engineering/gems/machine-learning/genaichatbot)
 
 <Warning>
-As with all applications that interface with Large Language Models (LLMs), the OpenAI gem can generate results that are incorrect and/or misleading. The OpenAI gem is subject to the same [limitations and risks](https://platform.openai.com/docs/guides/embeddings/limitations-risks) as those posed by OpenAI itself.
+  As with all applications that interface with Large Language Models (LLMs), the OpenAI gem can
+  generate results that are incorrect and/or misleading. The OpenAI gem is subject to the same
+  [limitations and risks](https://platform.openai.com/docs/guides/embeddings/limitations-risks) as
+  those posed by OpenAI itself.
 </Warning>
-
- 
 
 ### 1. Compute text embeddings
 
 Given a question input, the OpenAI gem will return a text embedding by calling the OpenAI [ada-002 model](https://platform.openai.com/docs/guides/embeddings/how-to-get-embeddings). View the input and output from this gem to understand the data formats and sample.
 
-![Overview of the gem showing the input and output for computing a text embedding](./img/openai-intro-compute-text-embeddings.png)
+![Overview of the gem showing the input and output for computing a text embedding](/data-engineering/gems/machine-learning/img/openai-intro-compute-text-embeddings.png)
 
 #### 1a. Configure
 
 Follow the steps below to configure the OpenAI gem to compute text embeddings.
 
-![Configure the gem to compute a text embedding](./img/openai-configure-embedding.png)
+![Configure the gem to compute a text embedding](/data-engineering/gems/machine-learning/img/openai-configure-embedding.png)
 
 Storing the OpenAI API token as a **(1) Databricks Secret** is highly recommended. For instructions click [here.](https://docs.databricks.com/en/security/secrets/index.html) Be sure to use the ** (2) Fabric connection** to the Databricks workspace which contains the Databricks scope and secrets configured in this gem. Contact us to understand the integrations with other secret managers.
 
@@ -36,16 +37,16 @@ Instead of sending a single row to OpenAI's API, select the **(5) Group data** o
 
 #### 1b. Input
 
-| Column | Description | Required |
+| Column        | Description                                    | Required |
 | ------------- | ---------------------------------------------- | -------- |
-| Question/Text | string - a question or text string of interest | True |
+| Question/Text | string - a question or text string of interest | True     |
 
 #### 1c. Output
 
-| Column | Description |
+| Column           | Description                                                                                                                                                                                                             |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | openai_embedding | array(float) - The vector embedding returned from OpenAI corresponding to the input question/text. Each record is an array of `1536` floating point numbers, such as `[-0.0018493991, -0.0059955865, ... -0.02498541]`. |
-| openai_error | string - this column is provided to display any error message returned from the OpenAI API; helpful for troubleshooting. |
+| openai_error     | string - this column is provided to display any error message returned from the OpenAI API; helpful for troubleshooting.                                                                                                |
 
 #### 1d. Generated code
 
@@ -87,13 +88,13 @@ def vectorize(spark: SparkSession, question_seed: DataFrame) -> DataFrame:
 
 In addition to computing text embeddings, OpenAI's ada-002 model is also very good at answering questions. The Prophecy interface allows users to input a question (and optionally provide a context) as components of the `prompt` sent to OpenAI. In response, OpenAI's ada-002 model returns an answer(s) to the question. See the input and output data previews before and after the OpenAI gem to understand the operation.
 
-![Overview of the gem showing the input and output for answering a question](./img/openai-intro-answer-question-context.png)
+![Overview of the gem showing the input and output for answering a question](/data-engineering/gems/machine-learning/img/openai-intro-answer-question-context.png)
 
 #### 2a. Configure
 
 Follow the steps below to configure the OpenAI gem to answer a question, and to understand how to provide a context if desired.
 
-![Configure the gem to answer a question with a given context](./img/openai-configure-answer.png)
+![Configure the gem to answer a question with a given context](/data-engineering/gems/machine-learning/img/openai-configure-answer.png)
 
 Storing the OpenAI API token as a **(1) Databricks Secret** is highly recommended. For instructions click [here.](https://docs.databricks.com/en/security/secrets/index.html) Be sure to use the ** (2) Fabric connection** to the Databricks workspace which contains the Databricks scope and secrets configured in this gem.
 
@@ -103,19 +104,19 @@ Now it's time to craft a prompt to send to the OpenAI ada-002 model. Select the 
 
 #### 2b. Input
 
-| Column | Description | Required |
-| -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| Question | string - a question of interest to include in the prompt sent to OpenAI. Example: `What is Prophecy's AI Assistant feature?` | True |
-| Context | string - a text corpus related to the question of interest, also included in the prompt sent to OpenAI. Frequently the context column should undergo data transformations in the gems preceding the OpenAI gem. See [this guide](/engineers/generative-ai-chatbot) for a great example of preparing the text corpus and transforming sufficiently to include in a useful prompt. | False |
+| Column   | Description                                                                                                                                                                                                                                                                                                                                                                                          | Required |
+| -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| Question | string - a question of interest to include in the prompt sent to OpenAI. Example: `What is Prophecy's AI Assistant feature?`                                                                                                                                                                                                                                                                         | True     |
+| Context  | string - a text corpus related to the question of interest, also included in the prompt sent to OpenAI. Frequently the context column should undergo data transformations in the gems preceding the OpenAI gem. See [this guide](/data-engineering/gems/machine-learning/genaichatbot) for a great example of preparing the text corpus and transforming sufficiently to include in a useful prompt. | False    |
 
 #### 2c. Output
 
-Since OpenAI's models are probabalistic, they return at least one, and frequently more than one, answer. These responses are formatted as a json array of answer choices. The user would usually select the best answer from the choices; we recommend selecting the first answer if you wish to select one by default. This can be done in the gem following the OpenAI gem as in this [example](/engineers/generative-ai-chatbot#3a-chatbot-live-pipeline).
+Since OpenAI's models are probabalistic, they return at least one, and frequently more than one, answer. These responses are formatted as a json array of answer choices. The user would usually select the best answer from the choices; we recommend selecting the first answer if you wish to select one by default. This can be done in the gem following the OpenAI gem as in this [example](/data-engineering/gems/machine-learning/genaichatbot#3a-chatbot-live-pipeline).
 
-| Column | Description |
+| Column        | Description                                                                                                                                                                                                                                 |
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | openai_answer | struct - this column contains the response from OpenAI in as a json array. Example: `{"choices":["Prophecy's AI Assistant feature is called Data Copilot."]}` Select/filter from multiple answer choices in a gem following the OpenAI gem. |
-| openai_error | string - this column is provided to display any error message returned from the OpenAI API; helpful for troubleshooting. |
+| openai_error  | string - this column is provided to display any error message returned from the OpenAI API; helpful for troubleshooting.                                                                                                                    |
 
 #### 2d. Generated code
 

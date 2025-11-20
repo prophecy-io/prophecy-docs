@@ -4,7 +4,7 @@ description: Conditionally run or skip transformations within pipelines
 ---
 
 <Callout icon="/images/icon.png" color="#FFC107">
-  Available for [Enterprise Edition](/getting-started/editions/) only.
+  Available for [Enterprise Edition](/data-engineering/administration/platform/editions) only.
 </Callout>
 
 For granular data processing control, you can conditionally run or skip transformations within gems in your pipeline.
@@ -20,7 +20,7 @@ To configure a condition on a gem:
 1. Choose the **Pass through condition** or **Remove condition** option.
 1. Write your condition in Scala or Python, depending on your project language.
 
-![Add a condition](./img/add-condition.png)
+![Add a condition](/data-engineering/development/runs/img/add-condition.png)
 
 When a condition is set on a gem, a (C) symbol will appear before the gem name. When a gem meets a pass-through or removed condition, the interims will not be displayed on the edges associated with that gem.
 
@@ -49,4 +49,4 @@ You can use a removal condition to do so:
 1. Use the condition `df_<input_gem_name>.count() > 0`. This example is Python code.
 1. Click **OK** to save.
 
-![Remove condition on Target gem](./img/remove-condition.png)
+![Remove condition on Target gem](/data-engineering/development/runs/img/remove-condition.png)

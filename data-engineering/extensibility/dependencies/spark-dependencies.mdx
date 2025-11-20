@@ -4,7 +4,7 @@ description: Reuse Spark dependencies in pipelines and jobs
 ---
 
 <Callout icon="/images/icon.png" color="#FFC107">
-  Available for [Enterprise Edition](/getting-started/editions/) only.
+  Available for [Enterprise Edition](/data-engineering/administration/platform/editions) only.
 </Callout>
 
 Dependencies allow you to make use of a variety of packages in your data pipelines and jobs. There are three types of dependencies for Spark projects:
@@ -55,7 +55,7 @@ Spark projects often have multiple dependencies. To simultaneously update all de
 - A) Click **Update all dependencies** in the Dependencies panel of the project editor.
 - B) Click **Update all dependencies** in the Dependencies tab of the project metadata.
 
-![Update dependencies](img/update-all-dependencies.png)
+![Update dependencies](/data-engineering/extensibility/dependencies/img/update-all-dependencies.png)
 
 <Warning>
   Connecting a Prophecy project to a Spark cluster with a different dependency version will prompt a
@@ -69,14 +69,14 @@ When you connect a pipeline to a cluster, dependencies are automatically install
 - **Dependency on the cluster's Spark and Scala versions.** A few dependencies depend on your cluster's Spark and Scala versions. You can usually find these version requirements in the respective repositories. For example, take a look at the [Spark Excel](https://mvnrepository.com/artifact/com.crealytics/spark-excel) page in the Maven Repository.
 - **Required manual installation on cluster**. Additionally, certain dependencies must be installed directly on your cluster. This is documented per dependency.
 
-![Update Spark cluster](./img/synth_0_1_requirements.png)
+![Update Spark cluster](/data-engineering/extensibility/dependencies/img/synth_0_1_requirements.png)
 
 ## Storage
 
 Dependencies are natively saved within your build system files. For example, if you're using Scala, dependencies are saved in the
 **pom.xml** file. If you're using Python, dependencies are saved in the **setup.py** file.
 
-![Storage code for Scala and Python](img/dependencies-storage.png)
+![Storage code for Scala and Python](/data-engineering/extensibility/dependencies/img/dependencies-storage.png)
 
 ## Build System template
 
@@ -119,7 +119,7 @@ To add the `io.github.etspaceman:scalacheck-faker_2.12:7.0.0` dependency, edit t
 
 When manually deploying pipelines using WHL format, you need to account for dependencies in both Python and Scala.
 WHL files inherently record Python dependencies, which ensures Python-related packages are handled during deployment.
-You can use the following option in [Prophecy Build Tool (PBT)](/engineers/prophecy-build-tool) to
+You can use the following option in [Prophecy Build Tool (PBT)](/data-engineering/ci-cd/prophecy-build-tool/prophecy-build-tool) to
 generate and include Scala dependency metadata in your deployment.
 
 #### Run the PBT command

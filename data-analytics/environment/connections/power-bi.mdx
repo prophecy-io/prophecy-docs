@@ -21,9 +21,9 @@ The table below outlines whether the connection supports certain Prophecy featur
 
 | Feature                                                                    | Supported |
 | -------------------------------------------------------------------------- | --------- |
-| Read and write using [Source and Target gems](/analysts/source-target)     | No        |
-| Write data with a [PowerBIWrite gem](/analysts/power-bi-write)             | Yes       |
-| Browse data in the [Environment browser](/analysts/project-editor#sidebar) | No        |
+| Read and write using [Source and Target gems](/data-analytics/gems/source-target/source-target)     | No        |
+| Write data with a [PowerBIWrite gem](/data-analytics/gems/report/power-bi)             | Yes       |
+| Browse data in the [Environment browser](/data-analytics/development/studio/studio#sidebar) | No        |
 
 ## Limitations
 
@@ -38,8 +38,8 @@ To create a connection with Power BI, enter the following parameters. You can fi
 | Connection Name                                                                                    | Unique name for the connection         |
 | Tenant ID                                                                                          | Your Microsoft Entra tenant ID         |
 | Client ID                                                                                          | Your Microsoft Entra app Client ID     |
-| Client Secret ([Secret required](docs/administration/fabrics/prophecy-fabrics/secrets/secrets.md)) | Your Microsoft Entra app Client Secret |
+| Client Secret ([Secret required](/data-analytics/environment/secrets/secrets)) | Your Microsoft Entra app Client Secret |
 
 ## Sharing connections within teams
 
-Power BI connections are stored within [fabrics](docs/administration/fabrics/prophecy-fabrics/prophecy-fabrics.md), which are assigned to specific teams in Prophecy. Once a Power BI connection is added to a fabric, anyone on that team can use it to send data to Power BI from their pipelines. Everyone will inherit the permissions of the Microsoft Entra app used for connection setup.
+Power BI connections are stored within [fabrics](/data-analytics/environment/fabrics/prophecy-fabrics), which are assigned to specific teams in Prophecy. Once a Power BI connection is added to a fabric, anyone on that team can use it to send data to Power BI from their pipelines. Everyone will inherit the permissions of the Microsoft Entra app used for connection setup.

@@ -9,7 +9,7 @@ Keep in mind that imported components are read-only. You can configure and run t
 
 ## Imported gems
 
-[Gems](/engineers/gems) from dependencies appear in two places:
+[Gems](/data-engineering/gems/gems) from dependencies appear in two places:
 
 - In the **Dependencies** panel in the bottom left of the project editor. Drag them to the canvas or click **+** on hover.
 - In the gem drawer on the pipeline canvas. These appear when imported from a Prophecy-provided package.
@@ -18,17 +18,17 @@ When you add the gem to the canvas, you can configure the gem with custom values
 
 ## Imported functions
 
-Functions in dependencies are automatically accessible in your project gems. This includes both [UDFs](/engineers/user-defined-functions) and [business rules](/engineers/business-rules). If you have UDFs coming from two different projects with conflicting definitions, you will see an error in the **Diagnostics** panel.
+Functions in dependencies are automatically accessible in your project gems. This includes both [UDFs](/data-engineering/development/functions/user-defined-functions) and [business rules](/data-engineering/development/functions/business-rules-engine/business-rules-engine). If you have UDFs coming from two different projects with conflicting definitions, you will see an error in the **Diagnostics** panel.
 
-![UDFConflict](./img/UDFConflictError.png)
+![UDFConflict](/data-engineering/extensibility/package-hub/img/UDFConflictError.png)
 
 ## Imported datasets
 
-[Datasets](/engineers/dataset) from dependencies appear in the **Dependencies** panel in the bottom left corner of the project editor. You can either drag the dataset onto the pipeline canvas or click the **+** button that appears on hover.
+[Datasets](/data-engineering/development/dataset) from dependencies appear in the **Dependencies** panel in the bottom left corner of the project editor. You can either drag the dataset onto the pipeline canvas or click the **+** button that appears on hover.
 
 When you add the gem to the pipeline canvas, Prophecy prompts you to choose whether to add the dataset as a Source or Target gem. You must choose before the gem appears on the canvas.
 
-![Import dataset dialog](img/imported-dataset.png)
+![Import dataset dialog](/data-engineering/extensibility/package-hub/img/imported-dataset.png)
 
 <Warning>
   When importing a dataset from another project, you may not know its source, configuration, or
@@ -38,22 +38,22 @@ When you add the gem to the pipeline canvas, Prophecy prompts you to choose whet
 
 ## Imported pipelines
 
-[Pipelines](/engineers/pipelines) from dependencies appear in the **Dependencies** panel in the bottom left of the project editor. You can't edit these pipelines, but you can run them using customizable [pipeline configs](/engineers/configurations). You can also schedule imported pipelines in [jobs](/engineers/orchestration) using default or custom configs.
+[Pipelines](/data-engineering/development/pipelines/pipelines) from dependencies appear in the **Dependencies** panel in the bottom left of the project editor. You can't edit these pipelines, but you can run them using customizable [pipeline configs](/data-engineering/development/pipelines/configuration). You can also schedule imported pipelines in [jobs](/data-engineering/orchestration) using default or custom configs.
 
 If the source pipeline doesn't include a configuration schema, Prophecy uses an empty default config. If the source pipeline does include a configuration schema, you can:
 
 - Use the default config to run the pipeline.
 - Create a custom config to update values in the pipeline.
 
-![Add new config to imported pipeline](img/imported-pipeline-config.png)
+![Add new config to imported pipeline](/data-engineering/extensibility/package-hub/img/imported-pipeline-config.png)
 
 After you use an imported pipeline, it appears in the project browser under **Pipelines**.
 
 ## Imported subgraphs
 
-[Subgraphs](/engineers/subgraph) from dependencies appear in the **Dependencies** panel in the bottom left corner of the project editor. You can either drag the gem onto the pipeline canvas or click the **+** button that appears on hover.
+[Subgraphs](/data-engineering/gems/subgraph/subgraph) from dependencies appear in the **Dependencies** panel in the bottom left corner of the project editor. You can either drag the gem onto the pipeline canvas or click the **+** button that appears on hover.
 
-As with pipelines, you can run the subgraph using your own [subgraph config](/engineers/basic-subgraph#subgraph-configurations) values. However, you cannot edit the subgraph itself.
+As with pipelines, you can run the subgraph using your own [subgraph config](/data-engineering/gems/subgraph/basicSubgraph#subgraph-configurations) values. However, you cannot edit the subgraph itself.
 
 ## Transitive packages
 

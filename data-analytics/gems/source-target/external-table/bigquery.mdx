@@ -9,14 +9,14 @@ import Execution from '/snippets/gem-execution-engine.mdx';
 
 ## Overview
 
-This page describes how to use BigQuery external Source and Target gems to read from or write to tables. Only use an external Source and Target gem when BigQuery is not the configured [SQL warehouse connection](docs/administration/fabrics/prophecy-fabrics/create-fabric.md#connections). Otherwise, use the [Table gem](/analysts/bigquery-table).
+This page describes how to use BigQuery external Source and Target gems to read from or write to tables. Only use an external Source and Target gem when BigQuery is not the configured [SQL warehouse connection](/data-analytics/environment/fabrics/prophecy-fabrics). Otherwise, use the [Table gem](/data-analytics/gems/source-target/table/bigquery).
 
 ## Configuration tabs
 
 When you create a new external Source or Target gem, the gem dialog contains the following tabs.
 
 - **Type**: Select the BigQuery table option.
-- **Source/Target location**: Choose the [connection](/administration/fabrics/prophecy-fabrics/connections/) and define the location where you will read/write tables in BigQuery.
+- **Source/Target location**: Choose the [connection](/data-analytics/environment/connections/connections) and define the location where you will read/write tables in BigQuery.
 - **Properties**: Infer or manually specify the schema, and optionally add properties that influence table behavior.
 - **Preview**: Load a preview of the dataset reflecting your configurations.
 
@@ -26,12 +26,12 @@ Use these settings to configure a BigQuery Source gem for reading data.
 
 ### Source location
 
-| Parameter                   | Description                                                                                                                                      |
-| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Format type                 | Table format for the source. For BigQuery tables, set to `bigquery`.                                                                             |
-| Select or create connection | Select or create a new [BigQuery connection](/administration/fabrics/prophecy-fabrics/connections/bigquery) in the Prophecy fabric you will use. |
-| Dataset                     | Dataset containing the table you want to read from.                                                                                              |
-| Name                        | Exact name of the BigQuery table to read data from.                                                                                              |
+| Parameter                   | Description                                                                                                                         |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Format type                 | Table format for the source. For BigQuery tables, set to `bigquery`.                                                                |
+| Select or create connection | Select or create a new [BigQuery connection](/data-analytics/environment/connections/bigquery) in the Prophecy fabric you will use. |
+| Dataset                     | Dataset containing the table you want to read from.                                                                                 |
+| Name                        | Exact name of the BigQuery table to read data from.                                                                                 |
 
 ### Source properties
 
@@ -43,12 +43,12 @@ Use these settings to configure a BigQuery Target gem for writing data.
 
 ### Target location
 
-| Parameter                   | Description                                                                                                                                  |
-| --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| Format type                 | Table format for the target. For BigQuery tables, set to `bigquery`.                                                                         |
-| Select or create connection | Choose or create a [BigQuery connection](/administration/fabrics/prophecy-fabrics/connections/bigquery) in the Prophecy fabric you will use. |
-| Dataset                     | Dataset where the target table will be created or updated.                                                                                   |
-| Name                        | Name of the BigQuery table to write data to. If the table doesn't exist, it will be created automatically.                                   |
+| Parameter                   | Description                                                                                                                     |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| Format type                 | Table format for the target. For BigQuery tables, set to `bigquery`.                                                            |
+| Select or create connection | Choose or create a [BigQuery connection](/data-analytics/environment/connections/bigquery) in the Prophecy fabric you will use. |
+| Dataset                     | Dataset where the target table will be created or updated.                                                                      |
+| Name                        | Name of the BigQuery table to write data to. If the table doesn't exist, it will be created automatically.                      |
 
 ### Target properties
 

@@ -9,11 +9,12 @@ import Execution from '/snippets/gem-execution-engine.mdx';
 
 ## Overview
 
-This page describes how to use Databricks external Source and Target gems to read from or write to tables. Only use an external Source and Target gem when Databricks is not the configured [SQL warehouse connection](docs/administration/fabrics/prophecy-fabrics/create-fabric.md#connections). Otherwise, use the [Table gem](/analysts/bigquery-table).
+This page describes how to use Databricks external Source and Target gems to read from or write to tables. Only use an external Source and Target gem when Databricks is not the configured [SQL warehouse connection](/data-analytics/environment/fabrics/prophecy-fabrics). Otherwise, use the [Table gem](/data-analytics/gems/source-target/table/bigquery).
 
 <Info>
   If you're working with file types like CSV or Parquet from Databricks file storage, see [File
-  types](/analysts/file-types) for guidance. This page focuses only on catalog tables.
+  types](/data-analytics/gems/source-target/file) for guidance. This page focuses only on catalog
+  tables.
 </Info>
 
 ## Configuration tabs
@@ -21,7 +22,7 @@ This page describes how to use Databricks external Source and Target gems to rea
 When you create a new external Source or Target gem, the gem dialog contains the following tabs.
 
 - **Type**: Select the Databricks table option.
-- **Source/Target location**: Choose the [connection](/administration/fabrics/prophecy-fabrics/connections/) and define the location where you will read/write tables in Databricks.
+- **Source/Target location**: Choose the [connection](/data-analytics/environment/connections/connections) and define the location where you will read/write tables in Databricks.
 - **Properties**: Infer or manually specify the schema, and optionally add properties that influence table behavior.
 - **Preview**: Load a preview of the dataset reflecting your configurations.
 
@@ -31,13 +32,13 @@ Use these settings to configure a Databricks Source gem for reading data.
 
 ### Source location
 
-| Parameter                   | Description                                                                                                                                          |
-| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Format type                 | Table format for the source. For Databricks tables, set to `databricks`.                                                                             |
-| Select or create connection | Select or create a new [Databricks connection](/administration/fabrics/prophecy-fabrics/connections/databricks) in the Prophecy fabric you will use. |
-| Database                    | Database including the schema where the table is located.                                                                                            |
-| Schema                      | Schema containing the table you want to read from.                                                                                                   |
-| Name                        | Exact name of the Databricks table to read data from.                                                                                                |
+| Parameter                   | Description                                                                                                                             |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Format type                 | Table format for the source. For Databricks tables, set to `databricks`.                                                                |
+| Select or create connection | Select or create a new [Databricks connection](/data-analytics/environment/connections/databricks) in the Prophecy fabric you will use. |
+| Database                    | Database including the schema where the table is located.                                                                               |
+| Schema                      | Schema containing the table you want to read from.                                                                                      |
+| Name                        | Exact name of the Databricks table to read data from.                                                                                   |
 
 ## Target configuration
 
@@ -45,13 +46,13 @@ Use these settings to configure a BigQuery Target gem for writing data.
 
 ### Target location
 
-| Parameter                   | Description                                                                                                                                          |
-| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Format type                 | Table format for the target. For Databricks tables, set to `databricks`.                                                                             |
-| Select or create connection | Select or create a new [Databricks connection](/administration/fabrics/prophecy-fabrics/connections/databricks) in the Prophecy fabric you will use. |
-| Database                    | Database including the schema where the table is/will be located.                                                                                    |
-| Schema                      | Schema where the target table will be created or updated.                                                                                            |
-| Name                        | Name of the Databricks table to write data to. If the table doesn't exist, it will be created automatically.                                         |
+| Parameter                   | Description                                                                                                                             |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Format type                 | Table format for the target. For Databricks tables, set to `databricks`.                                                                |
+| Select or create connection | Select or create a new [Databricks connection](/data-analytics/environment/connections/databricks) in the Prophecy fabric you will use. |
+| Database                    | Database including the schema where the table is/will be located.                                                                       |
+| Schema                      | Schema where the target table will be created or updated.                                                                               |
+| Name                        | Name of the Databricks table to write data to. If the table doesn't exist, it will be created automatically.                            |
 
 ### Target properties
 

@@ -4,7 +4,7 @@ description: Understand and explore project lineage
 ---
 
 <Callout icon="/images/icon.png" color="#FFC107">
-  Available for [Enterprise Edition](/getting-started/editions/) only.
+  Available for [Enterprise Edition](/data-engineering/administration/platform/editions) only.
 </Callout>
 
 Data lineage visualizes the complete journey of your data from source to destination, including all transformations it undergoes along the way. This visibility provides critical context for data operations and governance.
@@ -20,12 +20,11 @@ Understanding data lineage delivers multiple benefits for your engineering team:
 | Governance        | Maintain compliance with data policies          |
 
 <Tip>
-Lineage is computed on-demand directly from Git code. This means you can experiment in branches and immediately see how changes affect overall lineage before committing.
+  Lineage is computed on-demand directly from Git code. This means you can experiment in branches
+  and immediately see how changes affect overall lineage before committing.
 </Tip>
 
-<Note>
-Prophecy supports lineage for Python/PySpark and Scala [projects](/projects).
-</Note>
+<Note>Prophecy supports lineage for Python/PySpark and Scala projects.</Note>
 
 ## Accessing lineage
 
@@ -34,7 +33,7 @@ There are two ways to access the lineage view:
 - Option 1: Hover over your pipeline in the **Pipeline** tab of the **Metadata** page.
 - Option 2: Open the **Lineage** page from the left navigation bar.
 
-![How to Open Lineage](img/lineage-open-from-metadata.png)
+![How to Open Lineage](/data-engineering/lineage/img/lineage-open-from-metadata.png)
 
 When you open Lineage from the left navigation bar, you are brought to the lineage search page. Once you enter a search query, you can see a list of matching **entities** and a list of **columns**. You can filter these lists by:
 
@@ -45,23 +44,25 @@ When you open Lineage from the left navigation bar, you are brought to the linea
 
 Once you click an entity or column, you'll see the lineage visualization.
 
-![Lineage Search](img/lineage-search-high-level-view.png)
+![Lineage Search](/data-engineering/lineage/img/lineage-search-high-level-view.png)
 
 ## Lineage Summary
 
 The **Summary** tab visually illustrates the flow of data through pipelines, models, and datasets depending on the entities in your project. Use the **Browse Datasets** panel to search for and select the column or entity that you want to inspect.
 
-![Browse Datasets](img/lineage-browse-dataset.png)
+![Browse Datasets](/data-engineering/lineage/img/lineage-browse-dataset.png)
 
 <Info>
-When you open a project in the project editor, you will see the project's dataset and pipeline lineage. However, you cannot drill-down into lineage details unless you navigate to the lineage view described here.
+  When you open a project in the project editor, you will see the project's dataset and pipeline
+  lineage. However, you cannot drill-down into lineage details unless you navigate to the lineage
+  view described here.
 </Info>
 
 ### Column-level lineage
 
 Column-level lineage tracks the flow and transformation of individual data columns through the pipeline, demonstrating how they are processed at each stage. When you select a column in the lineage view, Prophecy provides the column's upstream and downstream transformations.
 
-![Lineage View](img/lineage-column-level-view.png)
+![Lineage View](/data-engineering/lineage/img/lineage-column-level-view.png)
 
 ## Lineage Zoom In
 
@@ -75,11 +76,10 @@ For pipelines, you can see code-level information about each component present i
 - Input columns
 - Output columns
 
-![pipeline zoom-in](img/lineage-pipeline-zoom-in.png)
+![pipeline zoom-in](/data-engineering/lineage/img/lineage-pipeline-zoom-in.png)
 
 ### Dataset lineage
 
 For datasets, you can find information around all the upstream and downstream transformations (if any) for all the columns of the selected dataset.
 
-![Dataset zoom-in](img/lineage-dataset-zoom-in.png)
-
+![Dataset zoom-in](/data-engineering/lineage/img/lineage-dataset-zoom-in.png)

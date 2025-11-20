@@ -5,7 +5,7 @@ description: Set up CI/CD in Prophecy using environment separation and testing
 ---
 
 <Callout icon="/images/icon.png" color="#FFC107">
-  Available for [Enterprise Edition](/getting-started/editions/) only.
+  Available for [Enterprise Edition](/data-engineering/administration/platform/editions) only.
 </Callout>
 
 Learn how to set up continuous integration and deployment ([CI/CD](https://en.wikipedia.org/wiki/CI/CD)) for your Prophecy data pipelines using environment separation and testing. This page outlines how to:
@@ -32,12 +32,12 @@ We recommend setting up separate environments (fabrics) for each stage of deploy
 | QA/Staging  | Testing and validation                  | Production-like data samples     | QA team   | Medium       |
 | Production  | Live data processing                    | Real production data             | Prod team | Large        |
 
-![Data pipeline](img/reliable-ci-cd/dev-qa-prod.png)
+![Data pipeline](/data-engineering/ci-cd/img/reliable-ci-cd/dev-qa-prod.png)
 
 <Info>
 See Also
 
-To learn more about the relationship between fabrics, projects, and teams, visit [Team-based Access](/administration/team-based-access).
+To learn more about the relationship between fabrics, projects, and teams, visit [Team-based Access](/data-engineering/administration/management/users/access/team-based-access).
 
 </Info>
 
@@ -82,15 +82,15 @@ Prophecy includes a native Git-based CI/CD workflow integrated directly into the
 <Info>
 See Also
 
-- [Git](/engineers/git) to learn more about the Git workflow
-- [Unit tests](/engineers/unit-tests) for validating pipeline functionality
-- [Deployment](/engineers/deployment) to deep dive into the phases of project deployment
+- [Git](/data-engineering/ci-cd/git/git) to learn more about the Git workflow
+- [Unit tests](/data-engineering/ci-cd/tests) for validating pipeline functionality
+- [Deployment](/data-engineering/ci-cd/deployment/deployment) to deep dive into the phases of project deployment
 
 </Info>
 
 ### Option 2: External CI/CD with PBT
 
-If your organization already uses an external CI/CD system, you can integrate Prophecy projects using the Prophecy Build Tool (PBT), a command-line interface designed for automation. PBT works with systems like [GitHub Actions](/engineers/github-actions-prophecy-build-tool) and [Jenkins](/engineers/jenkins-prophecy-build-tool) to build and deploy Prophecy projects from a Git repository.
+If your organization already uses an external CI/CD system, you can integrate Prophecy projects using the Prophecy Build Tool (PBT), a command-line interface designed for automation. PBT works with systems like [GitHub Actions](/data-engineering/ci-cd/prophecy-build-tool/pbt-github-actions) and [Jenkins](/data-engineering/ci-cd/prophecy-build-tool/pbt-jenkins) to build and deploy Prophecy projects from a Git repository.
 
 This approach supports the same multi-environment model as native CI/CD. Use the `--fabric-ids` flag in your CI/CD configuration to target specific fabrics during deployment.
 
@@ -100,4 +100,4 @@ To use PBT in your CI/CD pipeline:
 1. Configure secrets to securely store credentials and environment connection details.
 1. Set up your GitHub Actions or Jenkins workflow to include build and deploy steps using PBT.
 
-For detailed instructions and examples, see [Prophecy Build Tool (PBT)](/engineers/prophecy-build-tool).
+For detailed instructions and examples, see [Prophecy Build Tool (PBT)](/data-engineering/ci-cd/prophecy-build-tool/prophecy-build-tool).

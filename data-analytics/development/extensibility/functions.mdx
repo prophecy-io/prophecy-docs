@@ -1,11 +1,11 @@
 ---
-title: "Functions"
-description: "Build functions with SQL macros to be used in gem expressions"
+title: 'Functions'
+description: 'Build functions with SQL macros to be used in gem expressions'
 ---
 
 In SQL projects, functions are SQL macros that transform data at the column level. Unlike gems, which operate at the table level, functions apply transformations to individual columns, making them useful for data cleansing, formatting, and complex calculations. Functions are compiled into code using the Jinja templating language (standard for dbt macros).
 
-You will use functions as [expressions](data-analytics/development/gems/visual-expression-builder/visual-expression-builder) in gems.
+You will use functions as [expressions](data-analytics/gems/visual-expression-builder/visual-expression-builder) in gems.
 
 ## Create a function
 
@@ -61,4 +61,3 @@ To use this function in your pipeline:
 1. Save and run the gem.
 
 In summary, this function inside of the Reformat gem let us combine customer first and last names into a new column: `full_name`.
-

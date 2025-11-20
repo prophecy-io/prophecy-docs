@@ -9,7 +9,7 @@ The following sections describe how to add transformations, review modifications
 
 ## Prerequisites
 
-You need at least one [Source gem](/analysts/source-target) in your pipeline to add transformation gems with AI chat.
+You need at least one [Source gem](/data-analytics/gems/source-target/source-target) in your pipeline to add transformation gems with AI chat.
 
 ## Provide a transformation
 
@@ -22,7 +22,7 @@ The agent returns:
 - Options to restore, inspect, or preview changes.
 - A group of SQL execution logs.
 
-![Agent SQL logs](img/agent-sql-logs.png)
+![Agent SQL logs](/data-analytics/ai/agent/img/agent-sql-logs.png)
 
 ## Inspect pipeline changes
 
@@ -34,11 +34,11 @@ To understand the agent changes:
 1. Use the **Previous** and **Next** controls to move through other modified gems in sequence.
 1. Examine both the input and output of each gem to confirm that the transformation produces the expected result.
 
-![Agent inspect](img/agent-inspect.gif)
+![Agent inspect](/data-analytics/ai/agent/img/agent-inspect.gif)
 
 ## Restore a previous state of the pipeline
 
-To revert changes or try another transformation from a previous state, select **Restore** from the reply you want to revert to in the chat history. The pipeline will match the earlier version. You can also manage versions from the main project [version history](/analysts/versioning).
+To revert changes or try another transformation from a previous state, select **Restore** from the reply you want to revert to in the chat history. The pipeline will match the earlier version. You can also manage versions from the main project [version history](/data-analytics/development/versioning/version-control).
 
 ## Create output tables
 
@@ -51,7 +51,7 @@ After adding various data transformations in your pipeline, ask the agent to sav
 
 ## Project history
 
-All changes made by the agent are saved in the project [version history](/analysts/versioning). Commits will be clearly marked as authored by the agent.
+All changes made by the agent are saved in the project [version history](/data-analytics/development/versioning/version-control). Commits will be clearly marked as authored by the agent.
 
 <Note>
   If you did not save your project before interacting with the Agent, Prophecy will automatically
@@ -62,11 +62,11 @@ All changes made by the agent are saved in the project [version history](/analys
 
 Here are some sample prompts that can produce transformations in your pipeline.
 
-| Scenario           | Prompt                                                 | Expected output   |
-| ------------------ | ------------------------------------------------------ | ----------------- |
-| Filter records     | "Filter to only include customers from California"     | Filter gem        |
-| Add transformation | "Calculate the total order value as quantity \* price" | Reformat gem      |
-| Clean data         | "Remove rows where email is null"                      | DataCleansing gem |
-| Aggregate data     | "Group by region and calculate average sales"          | Aggregate gem     |
-| Rename columns     | "Rename cust_id to customer_id and amt to amount"      | Reformat gem      |
-| Save output tables | "Show me and save the final output of the pipeline"    | Table gem         |
+| Scenario           | Prompt                                                    | Expected output   |
+| ------------------ | --------------------------------------------------------- | ----------------- |
+| Filter records     | "Filter to only include customers from California"        | Filter gem        |
+| Add transformation | "Calculate the total order value as `quantity * price`"   | Reformat gem      |
+| Clean data         | "Remove rows where email is null"                         | DataCleansing gem |
+| Aggregate data     | "Group by region and calculate average sales"             | Aggregate gem     |
+| Rename columns     | "Rename `cust_id` to `customer_id` and `amt` to `amount`" | Reformat gem      |
+| Save output tables | "Show me and save the final output of the pipeline"       | Table gem         |

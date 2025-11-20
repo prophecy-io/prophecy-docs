@@ -18,13 +18,13 @@ The Macro gem lets you use a macro that you have defined or imported in your SQL
 
 | Parameter     | Description                                                                                                                                                                     |
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Macro         | The macro that you wish to use.<br/>Note: You can only select a Gem macro. You cannot select a macro defined as a [function](docs/analysts/development/functions/functions.md). |
+| Macro         | The macro that you wish to use.<br/>Note: You can only select a Gem macro. You cannot select a macro defined as a [function](/data-analytics/development/extensibility/functions). |
 | Parameter `1` | A parameter that is defined in the macro. This is a value that is passed to the macro.                                                                                          |
 | Parameter `N` | Additional parameters that are defined in the macro.                                                                                                                            |
 
 ## Example: dbt_utils
 
-For this example, assume you want to use the `dbt_utils` package as a [dependency](/analysts/dependencies) in your project.
+For this example, assume you want to use the `dbt_utils` package as a [dependency](/data-analytics/development/extensibility/dependencies) in your project.
 
 1. Open the **Options** (ellipses) menu in the project header.
 1. Select **Dependencies**.
@@ -46,4 +46,4 @@ To use one of the imported gems in your pipeline:
 
 The following image shows the unpivot macro imported from `dbt_utils` in a Macro gem.
 
-![Unpivot macro](img/unpivot-macro.png)
+![Unpivot macro](/data-analytics/gems/custom/img/unpivot-macro.png)

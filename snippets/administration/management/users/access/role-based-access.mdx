@@ -4,7 +4,7 @@ There are three key roles in Prophecy:
 
 - **Standard users**: Can access and work within the teams they belong to
 - **Team admins**: Manage team membership and team-level resources like fabrics and connections
-- **Prophecy cluster admins ([Enterprise](/getting-started/editions/) only)**: Administer the overall Prophecy deployment and infrastructure
+- **Prophecy cluster admins ([Enterprise](/data-engineering/administration/platform/editions) only)**: Administer the overall Prophecy deployment and infrastructure
 
 All users start as standard users by default, with the exception of being their [personal team](#personal-team) admin. They can be granted the team admin role for specific teams, and automatically become the team admin for any team they create. In contrast, Prophecy cluster admin roles are managed by Prophecy and assigned at the deployment level.
 
@@ -18,7 +18,8 @@ Standard users access resources through team assignments. In other words, permis
 Users cannot create or edit fabrics for a team unless they are also a [team admin](#team-admins).
 
 <Info>
-For more information about best practices, visit [Team-based access](/administration/team-based-access).
+  For more information about best practices, visit [Team-based
+  access](/data-engineering/administration/management/users/access/team-based-access).
 </Info>
 
 ### Personal team
@@ -27,25 +28,26 @@ Every user is automatically given a personal team, named after their login email
 
 ## Team admins
 
-Team admins manage teams and create resources for their [teams](docs/administration/teams-users/teamuser.md). This includes responsibilities like:
+Team admins manage teams and create resources for their [teams](/data-analytics/administration/management/teams/teams). This includes responsibilities like:
 
 - Adding and removing users from teams
 - Creating fabrics that correspond to different execution environments
 - Setting up connections with the appropriate credentials
 - Deploying projects to run scheduled pipelines
-- **([Professional Edition](/getting-started/editions/) only)** Managing usage and billing for the team
+- **([Professional Edition](/data-engineering/administration/platform/editions) only)** Managing usage and billing for the team
 
 The user who creates a team is automatically assigned as its team admin. Additional team admins can be added or disabled for each team.
 
 <Note>
-For recommendations regarding team setup and organization, visit [Team-based access](/administration/team-based-access).
+  For recommendations regarding team setup and organization, visit [Team-based
+  access](/data-engineering/administration/management/users/access/team-based-access).
 </Note>
 
 ## Prophecy cluster admins
 
 <Callout icon="/images/icon.png" color="#FFC107">
 
-  You can assign this role to users in the Enterprise Edition only.
+You can assign this role to users in the Enterprise Edition only.
 
 </Callout>
 

@@ -4,7 +4,7 @@ description: Use models to read and write data
 ---
 
 <Callout icon="/images/icon.png" color="#FFC107">
-  Available for [Enterprise Edition](/getting-started/editions/) only.
+  Available for [Enterprise Edition](/data-engineering/administration/platform/editions) only.
 </Callout>
 
 Model sources and targets vary slightly from those of a pipeline. The primary difference is that all model sources and targets must point to tables in the SQL warehouse.
@@ -14,7 +14,7 @@ Model sources and targets vary slightly from those of a pipeline. The primary di
 When you create a new model, you need to define an input data source. The data source can be:
 
 - Another model. You can drag a model from the Project tab of the left sidebar onto your canvas to use it as a source.
-- A [Table gem](/analysts/source-target). You can either use preconfigured tables from the Project tab of the left sidebar, or you can browse SQL warehouse tables in the Environment tab of the left sidebar.
+- A [Table gem](/data-analytics/gems/source-target/source-target). You can either use preconfigured tables from the Project tab of the left sidebar, or you can browse SQL warehouse tables in the Environment tab of the left sidebar.
 
 ## Targets
 
@@ -26,4 +26,4 @@ Target models let you define how you want to materialize your data using write f
 - **SQL Query**: Enable and create a custom SQL query to include at the end of the target model.
 - **Write Options**: Choose a specific write mode such as overwrite, append, and merge.
 
-![Target Model tabs](img/type-and-format.png)
+![Target Model tabs](/data-engineering/development/models/sources-target/img/type-and-format.png)
