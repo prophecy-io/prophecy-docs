@@ -105,12 +105,7 @@ This pipeline uses PBT to validate the pipelines and run all Prophecy unit tests
 - Choose pipeline Script from SCM
 - Provide the path to our Jenkinsfile within the repo
 
-<details>
-<summary> Refer to this image for all settings. </summary>
-
 ![hello-cicd-declarative-test_configure.png](/data-engineering/ci-cd/prophecy-build-tool/img/hello-cicd-declarative-test_configure.png)
-
-</details>
 
 ### Testing pipeline - Trigger
 
@@ -120,12 +115,7 @@ on a pull request (comment or new commit) to our special branches: `develop`, `q
 By providing GitHub credentials to the GHPRB plugin it will be able to automatically
 create webhooks in GitHub.
 
-<details>
-<summary> Refer to this image for all settings. </summary>
-
 ![hello-cicd-declarative-test_configure-trigger.png](/data-engineering/ci-cd/prophecy-build-tool/img/hello-cicd-declarative-test_configure-trigger.png)
-
-</details>
 
 ### Testing pipeline - Pipeline Code
 
@@ -216,12 +206,7 @@ This pipeline uses PBT to deploy the Prophecy pipelines to their appropriate fab
 - Choose the branches to trigger on (`develop`, `qa`, `prod`)
 - Point the "Script path" [to our Jenkinsfile](#deploy-pipeline---pipeline-code) containing the deploy logic
 
-<details>
-<summary> Refer to this image for all settings. </summary>
-
 ![hello-cicd-declarative-deploy_configure.png](/data-engineering/ci-cd/prophecy-build-tool/img/hello-cicd-declarative-deploy_configure.png)
-
-</details>
 
 ### Deploy Pipeline - Trigger
 
