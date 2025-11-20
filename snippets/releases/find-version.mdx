@@ -1,0 +1,21 @@
+## Find in the UI
+
+1. Open the **Settings** page.
+1. Navigate to the **About** tab.
+1. View your Prophecy deployment version.
+
+## Retrieve via API
+
+Use the Software Version API to retrieve your current Prophecy version programmatically.
+
+Call:
+
+```bash
+curl -s 'https://<prophecy-env-url>/athena/api/v1/cluster' | jq -r .current_version.controlplane_version
+```
+
+Response:
+
+```text
+3.4.1.0
+```

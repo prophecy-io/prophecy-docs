@@ -1,0 +1,74 @@
+---
+title: Adding data sources
+description: Use the Environment tab to quickly add tables and files to your pipeline
+---
+
+The easiest way to add data sources to your pipeline is through the **Environment** tab in the left sidebar. This method automatically configures the gem settings, so you can start using the data immediately without manually creating and configuring Source and Table gems.
+
+## Add data from the Environment tab
+
+The Environment tab displays all tables and files available through [connections](/data-analytics/environment/connections/connections) defined in your attached fabric. You can browse by connection type or use the search bar to find specific datasets.
+
+<Steps>
+<Step title="Open the Environment tab">
+
+1. Open your pipeline in the [Studio](/data-analytics/development/studio/studio).
+1. Click the **Environment** tab in the left sidebar.
+1. Expand the connection that contains your data source.
+
+</Step>
+
+<Step title="Add the data source to your pipeline">
+
+You can add data to your pipeline using either method:
+
+- **Drag and drop**: Drag the table or file from the Environment tab onto the canvas.
+- **Add button**: Hover over the table or file and click **Add**.
+
+</Step>
+
+</Steps>
+
+<Frame>
+  <iframe
+    className="aspect-video w-full rounded-xl"
+    src="https://fast.wistia.net/embed/iframe/5mkx7k0nbi?silentAutoPlay=true&videoFoam=true&playlistLoop=true"
+    title="Adding data sources to your pipeline"
+    allow="autoplay; fullscreen"
+    allowFullScreen
+    playsInline
+  ></iframe>
+</Frame>
+
+The gem appears on your canvas with all configuration settings already applied. The gem type depends on where your data is stored:
+
+- **Table gems**: For datasets in your [SQL Warehouse Connection](/data-analytics/environment/fabrics/prophecy-fabrics)
+- **Source gems**: For external tables or files that provide input to your pipelines
+
+## Modify gem configuration
+
+After adding a data source from the Environment tab, you can adjust any configuration settings:
+
+1. Click the gem on the canvas to open its configuration panel.
+1. Modify location paths, schema definitions, format properties, or connection settings as needed.
+1. Save your changes.
+
+<Note>
+  Changes you make to the gem configuration only affect that specific gem instance. The original
+  data source in your connection remains unchanged.
+</Note>
+
+## Alternative: Create gems from scratch
+
+If you need to create a gem manually, you can add Source, Target, or Table gems directly from the canvas:
+
+1. Click **Source/Target** in the gem drawer at the top of the canvas.
+1. Select the gem type from the dropdown.
+1. Click the gem to open the configuration panel.
+1. Configure all settings manually, including selecting connections, defining paths, and setting up schemas.
+
+<Warning>
+  Creating gems from scratch requires you to configure all settings manually. This approach is more
+  time-consuming and error-prone than using the Environment tab, which automatically applies the
+  correct configuration based on your existing connections.
+</Warning>

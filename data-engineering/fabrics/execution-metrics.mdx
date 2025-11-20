@@ -56,8 +56,8 @@ The following are sample `CREATE TABLE` commands for tables using Delta.
 
 These are suitable for Databricks or if your metastore supports Delta tables.
 
-<details>
-<summary>Create pipeline metrics table</summary>
+<AccordionGroup>
+<Accordion title="Create pipeline metrics table">
 
 ```sql
   CREATE TABLE IF NOT EXISTS <database>.<pipeline_runs_table_name>
@@ -92,10 +92,9 @@ These are suitable for Databricks or if your metastore supports Delta tables.
   TBLPROPERTIES (delta.autoOptimize.optimizeWrite = true, delta.autoOptimize.autoCompact = true)
 ```
 
-</details>
+</Accordion>
 
-<details>
-<summary>Create component metrics table</summary>
+<Accordion title="Create component metrics table">
 
 ```sql
   CREATE TABLE IF NOT EXISTS <database>.<component_runs_table_name>
@@ -141,10 +140,9 @@ These are suitable for Databricks or if your metastore supports Delta tables.
   TBLPROPERTIES (delta.autoOptimize.optimizeWrite = true, delta.autoOptimize.autoCompact = true)
 ```
 
-</details>
+</Accordion>
 
-<details>
-<summary>Create interims table</summary>
+<Accordion title="Create interims table">
 
 ```sql
   CREATE TABLE IF NOT EXISTS <database>.<interims_table_name>
@@ -161,10 +159,9 @@ These are suitable for Databricks or if your metastore supports Delta tables.
   TBLPROPERTIES (delta.autoOptimize.optimizeWrite = true, delta.autoOptimize.autoCompact = true)
 ```
 
-</details>
+</Accordion>
 
-<details>
-<summary>Grant permissions on these tables</summary>
+<Accordion title="Grant permissions on these tables">
 
 ```sql
   GRANT USAGE ON SCHEMA <database> TO group1;
@@ -186,7 +183,8 @@ These are suitable for Databricks or if your metastore supports Delta tables.
   GRANT MODIFY ON <database.interims-table> TO group2;
 ```
 
-</details>
+</Accordion>
+</AccordionGroup>
 
 ### Amazon EMR
 
@@ -201,8 +199,8 @@ The following are sample `CREATE TABLE` commands for tables using Parquet.
 
 These are suitable for Livy or for your Hive metastore in Hadoop setups.
 
-<details>
-<summary>Create pipeline metrics table</summary>
+<AccordionGroup>
+<Accordion title="Create pipeline metrics table">
 
 ```sql
   CREATE TABLE IF NOT EXISTS <database>.<pipeline_runs_table_name>
@@ -234,10 +232,9 @@ These are suitable for Livy or for your Hive metastore in Hadoop setups.
   PARTITIONED BY (fabric_uid, pipeline_uri, created_by)
 ```
 
-</details>
+</Accordion>
 
-<details>
-<summary>Create components metrics table</summary>
+<Accordion title="Create components metrics table">
 
 ```sql
   CREATE TABLE IF NOT EXISTS <database>.<component_runs_table_name>
@@ -280,10 +277,9 @@ These are suitable for Livy or for your Hive metastore in Hadoop setups.
   PARTITIONED BY (fabric_uid, component_uri, created_by)
 ```
 
-</details>
+</Accordion>
 
-<details>
-<summary>Create interims table</summary>
+<Accordion title="Create interims table">
 
 ```sql
   CREATE TABLE IF NOT EXISTS <database>.<interims_table_name>
@@ -297,7 +293,8 @@ These are suitable for Livy or for your Hive metastore in Hadoop setups.
   PARTITIONED BY (created_by, fabric_uid)
 ```
 
-</details>
+</Accordion>
+</AccordionGroup>
 
 ## View execution metrics
 
