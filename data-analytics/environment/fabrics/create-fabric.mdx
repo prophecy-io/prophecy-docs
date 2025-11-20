@@ -1,5 +1,5 @@
 ---
-title: Create a fabric
+title: Create and edit fabrics
 description: Define an execution environment for your project
 ---
 
@@ -12,39 +12,48 @@ Use the following instructions to create a Prophecy fabric.
 
 ## Create a new fabric
 
+<Steps>
+<Step title="Create a new fabric entity">
 Begin by creating a new fabric entity in Prophecy.
 
-1. From the left sidebar, click the **+** sign.
-1. On the Create Entity page, select **Fabric**.
+- From the left sidebar, click the **+** sign.
+- On the Create Entity page, select **Fabric**.
 
-### 1. Fill in the Basic Info tab
+</Step>
 
+<Step title="Fill in the Basic Info tab">
 The **Basic Info** tab lets you define the key identifiers of the fabric.
 
-1. Provide a name for the fabric.
-1. (Optional) Provide a description for the fabric.
-1. Select a [team](/data-analytics/administration/management/teams/teams) that can access the fabric.
-1. Click **Continue**.
+- Provide a name for the fabric.
+- (Optional) Provide a description for the fabric.
+- Select a [team](/data-analytics/administration/management/teams/teams) that can access the fabric.
+- Click **Continue**.
 
-### 2. Fill in the Providers tab
+</Step>
 
+<Step title="Fill in the Providers tab">
 The **Providers** tab allows you to configure what type of execution environment you would like to create.
 
-1. Under **Provider Type**, select **Prophecy**.
-1. For the **Provider**, select the SQL warehouse provider you want to use.
-1. Click **Continue**.
+- Under **Provider Type**, select **Prophecy**.
+- For the **Provider**, select the SQL warehouse provider you want to use.
+- Click **Continue**.
 
 <Info>You cannot edit the fabric provider after you create the fabric.</Info>
+</Step>
 
-### 3. Fill in the Connections tab
-
+<Step title="Fill in the Connections tab">
 The **Connections** tab allows you to store your credentials to various external data providers for reuse while attached to the fabric.
 
-1. Under **SQL Warehouse Connection**, click **+ Connect SQL Warehouse**.
-1. Configure connection details for the SQL warehouse provider you selected in the previous step. To understand the how to set up a connection for a specific provider, see [Connections](/data-analytics/environment/connections/connections).
-1. Click **Complete**. Prophecy saves the fabric.
+- Under **SQL Warehouse Connection**, click **+ Connect SQL Warehouse**.
+- Configure connection details for the SQL warehouse provider you selected in the previous step. To understand the how to set up a connection for a specific provider, see [Connections](/data-analytics/environment/connections/connections).
+- Click **Complete**. Prophecy saves the fabric.
 
-You can add **Ingress/Egress Connections** to your fabric if you want, but these are not required.
+</Step>
+</Steps>
+
+<Info>
+  You can add **Ingress/Egress Connections** to your fabric if you want, but these are not required.
+</Info>
 
 <Note>
   If you want to add [secrets](/data-analytics/environment/secrets/secrets) to your fabric, you need
@@ -56,5 +65,6 @@ You can add **Ingress/Egress Connections** to your fabric if you want, but these
 To edit an existing fabric:
 
 1. From the left sidebar, click the **Metadata** page.
+1. Navigate to the **Fabrics** tab.
 1. Open the fabric you want to edit.
 1. Update the fabric. Prophecy automatically saves your changes.
