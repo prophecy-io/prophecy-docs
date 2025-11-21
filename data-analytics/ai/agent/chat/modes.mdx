@@ -1,15 +1,21 @@
 ---
 title: 'Edit and extend mode'
-description: 'Control what the agent can modify in your pipeline'
+description: 'Toggle how the Agent can modify your pipeline'
 ---
 
-Control what the agent can modify in your pipeline using the toggle in the chat footer.
+import { WistiaVideo } from '/snippets/react/wistia-video.jsx';
+
+Control what the Agent can change in your pipeline using the toggle in the chat. Choose extend mode when you want to add transformations to existing gems without changing them. Use edit mode when you need to modify existing gems or rebuild parts of your pipeline.
+
+<Frame>
+  <WistiaVideo mediaId="x8e0n7shbo" />
+</Frame>
 
 ## Extend mode
 
 Agent adds new gems to the end of pipeline branches without modifying existing gems. This mode assumes you've approved existing gems and want to build upon them without retesting the pipeline.
 
-- For pipelines with multiple branches, the agent uses logic to determine which branch to extend based on your prompt.
+- For pipelines with multiple branches, the Agent uses logic to determine which branch to extend based on your prompt.
 - Use `@` mentions to explicitly specify which gem should be the starting point for new transformations.
 
 > Example: `Add a filter after @last_aggregation_gem to show only records from 2024`
@@ -19,9 +25,7 @@ Agent adds new gems to the end of pipeline branches without modifying existing g
 Agent can rebuild parts of or the entire pipeline, modifying existing gems when necessary.
 
 - Use this mode when you need to change details of existing gems in the flow.
-- The agent will highlight all changes for you to review.
-
-![Edit and extend mode](/data-analytics/ai/agent/chat/img/ai-edit-extend.png)
+- The Agent will highlight all changes for you to review.
 
 <Note>
   You can build an entire pipeline with one prompt, but we suggest building incrementally to reason

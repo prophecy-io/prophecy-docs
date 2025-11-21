@@ -5,18 +5,18 @@ description: Find and preview data sources using the Prophecy Agent
 
 One way to leverage the Prophecy Agent is to search your SQL warehouse, explore datasets, and generate insights with simple prompts. This allows you to add the appropriate sources to your pipeline that will undergo data processing. You must have source data in your pipeline to start building transformations.
 
-The following sections describe the ways you can interact with the agent for data exploration.
+The following sections describe the ways you can interact with the Agent for data exploration.
 
 ## Find tables in your SQL warehouse
 
-Ask the agent to search for tables in your [primary SQL warehouse](/data-analytics/environment/fabrics/prophecy-fabrics). Based on your query, it returns:
+Ask the Agent to search for tables in your [primary SQL warehouse](/data-analytics/environment/fabrics/prophecy-fabrics). Based on your query, it returns:
 
 - A short list of relevant datasets and their descriptions.
 - A full list of datasets that match your criteria.
 
 <Tip>
-  You can add a dataset to the pipeline as a [Table gem](/data-analytics/gems/source-target/source-target) directly from the
-  chat.
+  You can add a dataset to the pipeline as a [Table
+  gem](/data-analytics/gems/source-target/source-target) directly from the chat.
 </Tip>
 
 ### Explore datasets
@@ -27,7 +27,7 @@ To learn more about a dataset, you can click on it inside the chat. This opens a
 1. Look over the schema of the dataset.
 1. Preview a sample of the data in the dataset.
 1. Review the data profile of the sample.
-1. Open **Explore** to chat with an agent that limits responses to the context of the dataset.
+1. Open **Explore** to chat with an Agent that limits responses to the context of the dataset.
 
 ![Preview dataset UI](/data-analytics/ai/agent/img/agent-explore.png)
 
@@ -37,7 +37,7 @@ This helps you validate that your data is correct without having to manually bro
 
 If you want a summary of dataset information, you can ask the Agent to describe a table.
 
-The agent will provide a quick overview of key metadata, including the database and schema the table belongs to, as well as the names and data types of each column. This helps you understand the structure of the dataset without having to open or query it directly.
+The Agent will provide a quick overview of key metadata, including the database and schema the table belongs to, as well as the names and data types of each column. This helps you understand the structure of the dataset without having to open or query it directly.
 
 ## Compare datasets
 
@@ -47,9 +47,9 @@ This allows you to identify which dataset aligns better with your pipeline's req
 
 ## View sample rows from a table
 
-To preview data from a table, ask the agent to return a sample. You can request a random sample from the table or specific rows, such as "the ten most recent purchases over $100".
+To preview data from a table, ask the Agent to return a sample. You can request a random sample from the table or specific rows, such as "the ten most recent purchases over $100".
 
-The agent returns:
+The Agent returns:
 
 - A table showing the sample data
 - A **Preview** option for a closer look
@@ -69,7 +69,7 @@ Click **Preview** to open a larger view of the data sample. In this view, you ca
 
 ## Visualize table data
 
-You can also ask the agent to generate charts for data visualization. The agent returns:
+You can also ask the Agent to generate charts for data visualization. The Agent returns:
 
 - An embedded chart directly in the chat
 - A Preview button to open a detailed view
@@ -88,7 +88,10 @@ To see a larger version of the chart, click **Preview**. This opens the data vis
 | Visualization | <ul><li>View a larger version of the chart</li><li>Download the chart as an image</li><li>Copy the chart as an image</li></ul>  |
 | Data          | <ul><li>View the underlying data</li><li>Download the data as a JSON, Excel, or CSV file</li><li>Show or hide columns</li></ul> |
 
-<Info>To learn more about data visualization, see [Charts](/data-analytics/development/runs/data-explorer/charts/charts).</Info>
+<Info>
+  To learn more about data visualization, see
+  [Charts](/data-analytics/development/runs/data-explorer/charts/charts).
+</Info>
 
 ## Sample prompts
 
@@ -104,7 +107,7 @@ Here are some sample prompts that you can ask to search, explore, and learn abou
 ## Troubleshooting
 
 <Accordion title="The Agent can't find my table">
-The Agent depends on a [knowledge graph](/data-analytics/ai/knowledge-graph/knowledge-graph) to retrieve metadata about components like datasets. If the agent does not recognize a table that you try to reference, it could be because the knowledge graph has not been indexed recently enough to capture the dataset.
+The Agent depends on a [knowledge graph](/data-analytics/ai/knowledge-graph/knowledge-graph) to retrieve metadata about components like datasets. If the Agent does not recognize a table that you try to reference, it could be because the knowledge graph has not been indexed recently enough to capture the dataset.
 
 For detailed instructions on indexing, see [Knowledge graph indexer](/data-analytics/ai/knowledge-graph/indexer).
 
