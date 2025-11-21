@@ -124,7 +124,7 @@ Ask the Agent to search for the seed data table. Enter the following prompt in t
 Find datasets with information pertaining to hospital patients
 ```
 
-The agent returns:
+The Agent returns:
 
 - A short list of relevant datasets with descriptions.
 - A full list of matching datasets.
@@ -153,7 +153,7 @@ Request specific data samples to validate your understanding. Enter the followin
 Provide sample data from @patients_raw_data showing only patients from Boston
 ```
 
-The agent returns:
+The Agent returns:
 
 - A table with the requested data.
 - An option to preview the table for detailed examination.
@@ -174,7 +174,7 @@ Generate charts and insights from your data. Enter the following prompt:
 Visualize number of patients per city in @patients_raw_data
 ```
 
-The agent returns:
+The Agent returns:
 
 - An embedded chart in the chat showing patient counts by city.
 - An option to preview the table for detailed examination.
@@ -200,7 +200,7 @@ Before building transformations, add the source data to your pipeline. Enter the
 Add @patients_raw_data to the pipeline
 ```
 
-The agent adds a [Table gem](/data-analytics/gems/source-target/source-target) to your pipeline canvas.
+The Agent adds a [Table gem](/data-analytics/gems/source-target/source-target) to your pipeline canvas.
 
 <Note>
   The gem on the canvas will be labeled with a name like `l0_raw_patients` or similar. You'll
@@ -219,7 +219,7 @@ Transform @l0_raw_patients to show total number of patients per county
 
 Replace `@l0_raw_patients` with the actual gem label from your canvas if it differs.
 
-The agent will:
+The Agent will:
 
 - Add the appropriate gem(s) to your pipeline canvas. This prompt should produce an [Aggregate](/data-analytics/gems/transform/aggregate) gem.
 - Execute the pipeline, generating data samples that you can review.
@@ -241,7 +241,7 @@ The agent will:
 </Step>
 
 <Step title="Inspect pipeline changes">
-To understand what the agent built:
+To understand what the Agent built:
 
 1. Click **Inspect** on the transformation response.
 2. Review the configuration panel starting with the first modified gem (highlighted in yellow).
@@ -250,7 +250,7 @@ To understand what the agent built:
 
 This helps you:
 
-- Understand the agent's approach.
+- Understand the Agent's approach.
 - Verify that the transformation logic matches your expectations.
 
 </Step>
@@ -262,7 +262,7 @@ Build a more complex transformation. Enter the following prompt:
 Calculate average treatment cost per county from the previous step
 ```
 
-The agent adds another transformation that calculates the average cost. This demonstrates how you can chain transformations together.
+The Agent adds another transformation that calculates the average cost. This demonstrates how you can chain transformations together.
 
 <Check>
   Verify the results show average costs for each county. Suffolk should have an average around
@@ -272,13 +272,13 @@ The agent adds another transformation that calculates the average cost. This dem
 </Step>
 
 <Step title="Save your results">
-After building your pipeline, ask the agent to save the final output. Enter the following prompt:
+After building your pipeline, ask the Agent to save the final output. Enter the following prompt:
 
 ```
 Save the final output of this pipeline as a table
 ```
 
-The agent adds a [Table gem](/data-analytics/gems/source-target/source-target) to the end of your pipeline. When you run the pipeline, the Table gem writes the data to your default database and schema defined in your fabric, allowing you to persist results.
+The Agent adds a [Table gem](/data-analytics/gems/source-target/source-target) to the end of your pipeline. When you run the pipeline, the Table gem writes the data to your default database and schema defined in your fabric, allowing you to persist results.
 
 </Step>
 </Steps>
@@ -308,7 +308,7 @@ Worcester,830000,Central
 Hampden,470000,Western
 ```
 
-Upload this data as a Seed. Then, prompt the agent:
+Upload this data as a Seed. Then, prompt the Agent:
 
 ```
 Join @l0_raw_patients with @county_info on county
@@ -352,7 +352,7 @@ Use these prompts as templates for your own pipelines.
 <Accordion title="Be specific with your requests">
 **How to do it**: Instead of `Clean the data` → Try `Remove duplicate customer records and fill null values in the email column`
 
-**Why it helps**: Reduces ambiguity so the agent applies the correct operations.
+**Why it helps**: Reduces ambiguity so the Agent applies the correct operations.
 
 </Accordion>
 
@@ -398,7 +398,7 @@ Use these prompts as templates for your own pipelines.
 <Accordion title="Need to report a bad response">
 **Probable cause**: You want to provide feedback to improve results
 
-**How to fix**: Click the thumbs-up or thumbs-down on the agent's message. This helps us improve the agent's behavior.
+**How to fix**: Click the thumbs-up or thumbs-down on the Agent's message. This helps us improve the Agent's behavior.
 
 </Accordion>
 
