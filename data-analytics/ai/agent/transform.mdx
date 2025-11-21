@@ -3,7 +3,7 @@ title: Transformation
 description: Transform data sources using the Prophecy Agent
 ---
 
-You can use the Prophecy Agent to generate transformations based on natural language prompts. When you describe a data operation, the agent adds the corresponding gems to the pipeline and provides a summary of the changes in the chat interface.
+You can use the Prophecy Agent to generate transformations based on natural language prompts. When you describe a data operation, the Agent adds the corresponding gems to the pipeline and provides a summary of the changes in the chat interface.
 
 The following sections describe how to add transformations, review modifications, and restore previous versions of the pipeline.
 
@@ -15,7 +15,7 @@ You need at least one [Source gem](/data-analytics/gems/source-target/source-tar
 
 To generate a transformation, enter a prompt that describes the desired data operation.
 
-The agent returns:
+The Agent returns:
 
 - One or more gems on the pipeline canvas.
 - A description of the applied changes.
@@ -26,7 +26,7 @@ The agent returns:
 
 ## Inspect pipeline changes
 
-To understand the agent changes:
+To understand the Agent changes:
 
 1. Select **Inspect** on the chat that generates a transformation.
 1. Review the configuration panel beginning with the first modified gem. Modified gems appear in yellow.
@@ -42,20 +42,20 @@ To revert changes or try another transformation from a previous state, select **
 
 ## Create output tables
 
-After adding various data transformations in your pipeline, ask the agent to save the result as a table. The agent writes the data to the default database and schema in your connected fabric. This allows you to persist results and reuse them in downstream workflows.
+After adding various data transformations in your pipeline, ask the Agent to save the result as a table. The Agent writes the data to the default database and schema in your connected fabric. This allows you to persist results and reuse them in downstream workflows.
 
 <Warning>
-  If you have multiple pipelines or pipeline branches that do not terminate with tables, the agent
+  If you have multiple pipelines or pipeline branches that do not terminate with tables, the Agent
   will not be able to create an output table.
 </Warning>
 
 ## Project history
 
-All changes made by the agent are saved in the project [version history](/data-analytics/development/versioning/version-control). Commits will be clearly marked as authored by the agent.
+All changes made by the Agent are saved in the project [version history](/data-analytics/development/versioning/version-control). Commits will be clearly marked as authored by the Agent.
 
 <Note>
   If you did not save your project before interacting with the Agent, Prophecy will automatically
-  save your changes before the agent proceeds.
+  save your changes before the Agent proceeds.
 </Note>
 
 ## Sample prompts

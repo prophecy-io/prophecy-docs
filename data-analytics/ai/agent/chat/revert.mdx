@@ -1,7 +1,9 @@
 ---
 title: 'Checkpoints'
-description: 'Restore your pipeline to previous states using checkpoints created by Agent transformations'
+description: 'Restore your pipeline to previous states using checkpoints'
 ---
+
+import { WistiaVideo } from '/snippets/react/wistia-video.jsx';
 
 Each Agent response that modifies your pipeline creates a checkpoint in the [project version history](/data-analytics/development/versioning/version-control). Use checkpoints to revert to previous pipeline states.
 
@@ -29,6 +31,10 @@ Find the chat response containing the transformation you want to restore to. Res
 Review the pipeline canvas to confirm it matches the expected state. All gems and configurations from that checkpoint are restored.
 </Step>
 </Steps>
+
+<Frame>
+  <WistiaVideo mediaId="y0rb4h2s6w" />
+</Frame>
 
 Restoring a checkpoint does not affect:
 

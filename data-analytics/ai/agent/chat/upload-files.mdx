@@ -5,8 +5,10 @@ description: 'Add local files to the SQL warehouse for Agent use'
 
 Upload local files directly into the Agent chat to incorporate them into your pipeline. Uploaded files are converted to tables in the SQL warehouse configured in your fabric, making them available for the Agent to read and use in transformations.
 
-## Supported file types
+<Note>The recommended maximum file size is 100 MB.</Note>
 
+<AccordionGroup>
+<Accordion title="Supported file formats">
 You can upload the following file formats:
 
 - CSV
@@ -15,13 +17,14 @@ You can upload the following file formats:
 - Parquet
 - XML
 
-<Note>The recommended maximum file size is 100 MB.</Note>
+</Accordion>
+</AccordionGroup>
 
 ## Upload a file
 
 <Steps>
 <Step title="Start the upload">
-Click the **paperclip** icon in the chat footer to open the file upload dialog.
+Click the **paperclip** icon in the chat footer to open the file upload dialog. Alternatively, you can drag and drop a file directly onto the pipeline canvas.
 </Step>
 
 <Step title="Select your file">

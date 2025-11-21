@@ -14,9 +14,9 @@ Use CTL markers directly inside your documentation template Markdown file. Marke
 [MARKER_TYPE]()
 ```
 
-The `MARKER_TYPE` tells the agent what type of special component to create. Each marker generates a specific type of component—like interactive forms, visual diagrams, or structured data tables—that standard Markdown cannot create on its own.
+The `MARKER_TYPE` tells the Agent what type of special component to create. Each marker generates a specific type of component—like interactive forms, visual diagrams, or structured data tables—that standard Markdown cannot create on its own.
 
-For example, when the agent comes across the `[TRANSFORMATIONS]()` marker in the template file, it will replace the marker with a formatted section listing all transformation steps in your pipeline in the generated documentation file.
+For example, when the Agent comes across the `[TRANSFORMATIONS]()` marker in the template file, it will replace the marker with a formatted section listing all transformation steps in your pipeline in the generated documentation file.
 
 Each marker may accept zero, one, or multiple arguments. Review the specific marker to see its correct format.
 
@@ -44,7 +44,7 @@ The Copilot Template Language includes the following markers.
 [OVERVIEW]()
 ```
 
-The agent-generated documentation will have a summary section of the pipeline or project. When the agent generates the documentation for one pipeline specifically, it will embed an interactive visual diagram of the pipeline directly in the document.
+The Agent-generated documentation will have a summary section of the pipeline or project. When the Agent generates the documentation for one pipeline specifically, it will embed an interactive visual diagram of the pipeline directly in the document.
 
 ### Sources
 
@@ -52,7 +52,7 @@ The agent-generated documentation will have a summary section of the pipeline or
 [SOURCES]()
 ```
 
-The agent-generated documentation will have a formatted section that lists all data sources used in the pipeline, including descriptions and column information. This marker does not accept any parameters. This marker is compatible with pipeline-level templates only.
+The Agent-generated documentation will have a formatted section that lists all data sources used in the pipeline, including descriptions and column information. This marker does not accept any parameters. This marker is compatible with pipeline-level templates only.
 
 ### Targets
 
@@ -60,7 +60,7 @@ The agent-generated documentation will have a formatted section that lists all d
 [TARGETS]()
 ```
 
-The agent-generated documentation will have a formatted section that lists all output tables or files created by the pipeline, including descriptions and column information. This marker does not accept any parameters. This marker is compatible with pipeline-level templates only.
+The Agent-generated documentation will have a formatted section that lists all output tables or files created by the pipeline, including descriptions and column information. This marker does not accept any parameters. This marker is compatible with pipeline-level templates only.
 
 ### Transformations
 
@@ -68,7 +68,7 @@ The agent-generated documentation will have a formatted section that lists all o
 [TRANSFORMATIONS]()
 ```
 
-The agent-generated documentation will have a formatted section with a summary and detailed explanation of each data transformation step in the pipeline. This marker does not accept any parameters. This marker is compatible with pipeline-level templates only.
+The Agent-generated documentation will have a formatted section with a summary and detailed explanation of each data transformation step in the pipeline. This marker does not accept any parameters. This marker is compatible with pipeline-level templates only.
 
 ### Copilot question
 
@@ -76,12 +76,12 @@ The agent-generated documentation will have a formatted section with a summary a
 [COPILOT_QUESTION]('Your question here')
 ```
 
-The agent-generated documentation will have an interactive question form in your documentation. The Agent tries to answer the question automatically based on the pipeline or project. If the agent can't answer, the question appears as a form field for users to fill in after the documentation is generated.
+The Agent-generated documentation will have an interactive question form in your documentation. The Agent tries to answer the question automatically based on the pipeline or project. If the Agent can't answer, the question appears as a form field for users to fill in after the documentation is generated.
 
 This marker accepts one string parameter that contains your question or prompt. For example: `'[COPILOT_QUESTION]('Specify the number of transformation steps in the pipeline.')`
 
 <Note>
-  The agent will be able to answer most questions about the project and pipelines. It will not be
+  The Agent will be able to answer most questions about the project and pipelines. It will not be
   able to answer questions that require additional context external to the project.
 </Note>
 
@@ -91,7 +91,7 @@ This marker accepts one string parameter that contains your question or prompt. 
 [QUESTION]('Your question here')
 ```
 
-The agent-generated documentation will have an interactive question form in your documentation that users must answer manually. Unlike `COPILOT_QUESTION`, the agent does not try to answer this question. It always appears as a form field for users to complete.
+The Agent-generated documentation will have an interactive question form in your documentation that users must answer manually. Unlike `COPILOT_QUESTION`, the Agent does not try to answer this question. It always appears as a form field for users to complete.
 
 This marker accepts one string parameter that contains your question or prompt. For example: `'[QUESTION]('Define the expected outcome of this pipeline')`
 
@@ -101,11 +101,11 @@ This marker accepts one string parameter that contains your question or prompt. 
 [PIPELINES](template=subtemplate.md)
 ```
 
-The agent will use a pipeline template to generate documentation and embed that documentation in the higher-level project documentation. The agent processes the template separately for each pipeline, filling in the details specific to that pipeline. The template must already exist in the project for the agent to locate it.
+The Agent will use a pipeline template to generate documentation and embed that documentation in the higher-level project documentation. The Agent processes the template separately for each pipeline, filling in the details specific to that pipeline. The template must already exist in the project for the Agent to locate it.
 
 To learn how to upload a new template, see [Document pipelines](/data-analytics/ai/agent/documentation/documentation).
 
 <Info>
-  The agent can only generate one sub-document per marker. Use multiple pipeline markers to
+  The Agent can only generate one sub-document per marker. Use multiple pipeline markers to
   incorporate multiple pipeline documentation embeddings.
 </Info>

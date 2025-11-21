@@ -3,7 +3,7 @@ title: Generate documentation
 description: Automatically create comprehensive documentation for project pipelines
 ---
 
-Use the Prophecy Agent to generate documentation for pipelines or entire projects. The agent uses [templates](#documentation-templates) to structure the output as Markdown files that describe your data pipelines. You need to upload separate templates for pipeline and project documentation tasks.
+Use the Prophecy Agent to generate documentation for pipelines or entire projects. The Agent uses [templates](#documentation-templates) to structure the output as Markdown files that describe your data pipelines. You need to upload separate templates for pipeline and project documentation tasks.
 
 You can generate documentation for a single pipeline or for an entire project.
 
@@ -13,17 +13,17 @@ To generate documentation for a pipeline, follow these steps:
 
 1. Open your pipeline in Prophecy.
 1. Click **Chat** in the left sidebar.
-1. Prompt the agent to document your pipeline.
+1. Prompt the Agent to document your pipeline.
 
    For example: `Generate pipeline documentation using @custom_template`.
 
    This generates a document for the pipeline that you have opened in your project.
 
-If you don't specify a template using an @ mention, the agent looks for a default template file in your project, which should have the name `pipeline-template.md`.
+If you don't specify a template using an @ mention, the Agent looks for a default template file in your project, which should have the name `pipeline-template.md`.
 
-If the default template exists, the agent uses it. Otherwise, the agent asks you to upload or specify a template.
+If the default template exists, the Agent uses it. Otherwise, the Agent asks you to upload or specify a template.
 
-![Ask agent to generate documentation](/data-analytics/ai/agent/documentation/img/agent-generate-docs.png)
+![Ask Agent to generate documentation](/data-analytics/ai/agent/documentation/img/agent-generate-docs.png)
 
 ## Generate project documentation
 
@@ -32,19 +32,19 @@ To generate documentation for a project, including all of its pipelines, follow 
 1. Open your project in Prophecy.
 1. Open any pipeline or document entity.
 1. Click **Chat** in the left sidebar.
-1. Prompt the agent to document your project.
+1. Prompt the Agent to document your project.
 
    For example: `Generate project documentation using @custom_template`.
 
    This generates a document that describes your project.
 
-If you don't specify a template using an @ mention, the agent looks for a default template file in your project, which should have the name `project-template.md`.
+If you don't specify a template using an @ mention, the Agent looks for a default template file in your project, which should have the name `project-template.md`.
 
-If the default template exists, the agent uses it. Otherwise, the agent asks you to upload or specify a template.
+If the default template exists, the Agent uses it. Otherwise, the Agent asks you to upload or specify a template.
 
-## How the agent generates documentation
+## How the Agent generates documentation
 
-During generation, the agent:
+During generation, the Agent:
 
 1. Displays a preparation checklist with progress.
 1. Analyzes pipeline or project components.
@@ -58,7 +58,7 @@ View the generated document in **Documents** in the project sidebar.
 
 ## Update generated documentation
 
-After the agent generates your document, you can:
+After the Agent generates your document, you can:
 
 - Edit the document in the visual editor (recommended). The visual editor displays the rendered Markdown file, including special components like pipeline frames.
 - Switch to the **Code** tab to edit the Markdown code. In the Code tab, you may see encoded or complex strings that contain embedded data. Don't edit them, as changes will break the visual output.
@@ -67,7 +67,7 @@ Since the document is stored in your project repository, all changes are version
 
 ## Documentation templates
 
-Templates define how the agent structures documentation output. Templates use Markdown for standard formatting and [Copilot Template Language (CTL)](/data-analytics/ai/agent/documentation/ctl-reference) markers to create special components that standard Markdown doesn't support. You might create your template such that the agent generates a completely static file, or you can incorporate components that allows users to fill in fields of the generated document.
+Templates define how the Agent structures documentation output. Templates use Markdown for standard formatting and [Copilot Template Language (CTL)](/data-analytics/ai/agent/documentation/ctl-reference) markers to create special components that standard Markdown doesn't support. You might create your template such that the Agent generates a completely static file, or you can incorporate components that allows users to fill in fields of the generated document.
 
 Once you have written the template file, you need to upload the file to your project:
 
