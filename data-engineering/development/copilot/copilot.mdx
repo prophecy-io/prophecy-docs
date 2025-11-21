@@ -1,22 +1,21 @@
 ---
-title: Copilot in the engineering canvas
+title: Spark Copilot
 sidebarTitle: Copilot
 description: See how Copilot can help you build your pipeline
 ---
+
+import { WistiaVideo } from '/snippets/react/wistia-video.jsx';
 
 <Callout icon="/images/icon.png" color="#FFC107">
   Applicable to the [Enterprise Edition](/data-engineering/administration/platform/editions) only.
 </Callout>
 
-Prophecy's Copilot provides suggestions from an AI model as you develop your data pipelines and models. You can view and incorporate suggestions directly within the Prophecy visual editor and code editor.
+Prophecy's Spark Copilot provides suggestions from an AI model as you develop your data pipelines and models. You can view and incorporate suggestions directly within the Prophecy visual editor and code editor.
 
-- [Start a new pipeline](#text-to-pipelines)
-- [Suggest gems](#suggest-gems)
-- [Suggest expressions](#suggest-expressions)
-- [Generate scripts](#generate-with-ai)
-- [Generate functions](#generate-with-ai)
-- [Auto documentation](#auto-documentation)
-- [Suggest unit tests](#data-tests-and-quality-checks)
+<Info>
+  The Spark Copilot fetches context from environment metadata only. The Spark Copilot does not use
+  knowledge graphs, which additionally store metadata relationships.
+</Info>
 
 ## Text to pipelines
 
@@ -38,14 +37,9 @@ The following example uses Data Copilot to help start a pipeline:
 
 You can also call Data Copilot to modify an existing model. Type a new text prompt, and Data Copilot will suggest a new sequence of data transformations. You don't necessarily have to select where you want to make your modification for Data Copilot to make its suggestion.
 
-<iframe
-  className="aspect-video w-full rounded-xl"
-  src="https://fast.wistia.net/embed/iframe/a2x6kkzy8y?videoFoam=true"
-  title="Modify an existing Pipeline"
-  frameBorder="0"
-  allow="autoplay; fullscreen"
-  allowFullScreen
-></iframe>
+<Frame>
+  <WistiaVideo mediaId="a2x6kkzy8y" />
+</Frame>
 
 Added/updated gems are highlighted in yellow.
 
@@ -82,27 +76,17 @@ Within our [advanced Expression Builder](/data-engineering/gems/expression-build
 
 Data Copilot can generate script gems, user-defined functions in Spark, or macro functions in SQL.
 
-<iframe
-  className="aspect-video w-full rounded-xl"
-  src="https://fast.wistia.net/embed/iframe/vhf63tjnun?videoFoam=true"
-  title="Generate scripts and functions with AI"
-  frameBorder="0"
-  allow="autoplay; fullscreen"
-  allowFullScreen
-></iframe>
+<Frame>
+  <WistiaVideo mediaId="vhf63tjnun" />
+</Frame>
 
 ## Map with AI
 
 You don't have to worry about mapping the schema across your model. Data Copilot will map the target schema with the existing gems and datasets.
 
-<iframe
-  className="aspect-video w-full rounded-xl"
-  src="https://fast.wistia.net/embed/iframe/p5ab7sgfdw?videoFoam=true"
-  title="Map schema with AI"
-  frameBorder="0"
-  allow="autoplay; fullscreen"
-  allowFullScreen
-></iframe>
+<Frame>
+  <WistiaVideo mediaId="p5ab7sgfdw" />
+</Frame>
 
 ## Code with AI
 
@@ -110,14 +94,9 @@ In addition to the visual editor above, you'll also see code completion suggesti
 
 Data Copilot helps you build your model in the code interface by making predictions as you type your code. And when you go back to the visual interface, you'll see your code represented as a model.
 
-<iframe
-  className="aspect-video w-full rounded-xl"
-  src="https://fast.wistia.net/embed/iframe/7lff0jpqnm?videoFoam=true"
-  title="Code with AI in the code editor"
-  frameBorder="0"
-  allow="autoplay; fullscreen"
-  allowFullScreen
-></iframe>
+<Frame>
+  <WistiaVideo mediaId="7lff0jpqnm" />
+</Frame>
 
 ## Fix with AI
 
@@ -125,14 +104,9 @@ If there are any errors in your gems, perhaps introduced upstream without your k
 
 The Fix with AI option appears on the diagnostic screen where you see the error messages or directly with the expression itself.
 
-<iframe
-  className="aspect-video w-full rounded-xl"
-  src="https://fast.wistia.net/embed/iframe/17q9stsz6n?videoFoam=true"
-  title="Fix errors with AI"
-  frameBorder="0"
-  allow="autoplay; fullscreen"
-  allowFullScreen
-></iframe>
+<Frame>
+  <WistiaVideo mediaId="17q9stsz6n" />
+</Frame>
 
 ## Auto Documentation
 
@@ -142,28 +116,18 @@ Understanding data assets is much easier with Data Copilot's auto-documentation.
 
 Here Data Copilot provides a high-level summary of a pipeline and more detailed description of each gem.
 
-<iframe
-  className="aspect-video w-full rounded-xl"
-  src="https://fast.wistia.net/embed/iframe/9r86rl0lbz?videoFoam=true"
-  title="Explain gems with auto-documentation"
-  frameBorder="0"
-  allow="autoplay; fullscreen"
-  allowFullScreen
-></iframe>
+<Frame>
+  <WistiaVideo mediaId="9r86rl0lbz" />
+</Frame>
 
 ### Describe Datasets and Metadata
 
 How did a dataset change? Data Copilot recommends a description of the change for every edit you make.
 How was a column computed? Data Copilot suggests a plain English description that explains data sources and how every column is generated and what it represents.
 
-<iframe
-  className="aspect-video w-full rounded-xl"
-  src="https://fast.wistia.net/embed/iframe/rec6bcdwet?seo=false?videoFoam=true"
-  title="Describe datasets and metadata"
-  frameBorder="0"
-  allow="autoplay; fullscreen"
-  allowFullScreen
-></iframe>
+<Frame>
+  <WistiaVideo mediaId="rec6bcdwet" />
+</Frame>
 
 This is a big time saver! You can edit the documentation suggestions and commit them to your repository.
 
@@ -171,26 +135,16 @@ This is a big time saver! You can edit the documentation suggestions and commit 
 
 Data Copilot auto-documents anywhere you need it - from the granular data sources and columns to gem labels, all the way to project descriptions. Copilot even helps you write commit messages and release notes.
 
-<iframe
-  className="aspect-video w-full rounded-xl"
-  src="https://fast.wistia.net/embed/iframe/z3x5tfu1cf?videoFoam=true"
-  title="Write commit messages and release notes"
-  frameBorder="0"
-  allow="autoplay; fullscreen"
-  allowFullScreen
-></iframe>
+<Frame>
+  <WistiaVideo mediaId="z3x5tfu1cf" />
+</Frame>
 
 ## Data Tests and Quality Checks
 
 Unit tests and data quality checks are crucial for pipeline and job productionalization, yet many teams leave little time to develop these tests or worse, don't build them at all. With Data Copilot, you'll have one or more suggested [unit tests](/data-engineering/ci-cd/tests) that can be seamlessly integrated into your CI/CD process.
 
-<iframe
-  className="aspect-video w-full rounded-xl"
-  src="https://fast.wistia.net/embed/iframe/i1bjyf2zae?seo=false?videoFoam=true"
-  title="Data tests and quality checks"
-  frameBorder="0"
-  allow="autoplay; fullscreen"
-  allowFullScreen
-></iframe>
+<Frame>
+  <WistiaVideo mediaId="i1bjyf2zae" />
+</Frame>
 
 Data Copilot also suggests data quality checks based on the data profile and expectations.
