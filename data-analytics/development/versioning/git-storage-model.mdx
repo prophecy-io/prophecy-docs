@@ -1,0 +1,44 @@
+---
+title: 'Git storage models'
+description: 'Guide for advanced Git users who want to understand how different Git models work in Prophecy'
+---
+
+<Callout icon="/images/icon.png" color="#FFC107">
+  Normal and Fork Git models are only available on the [Express and Enterprise
+  Editions](/data-analytics/administration/platform/editions).
+</Callout>
+
+By default, new projects use the Simple Git Storage Model and are hosted on Prophecy-managed Git. This lets users develop projects without knowledge of Git or branching strategies. While this is sufficient for most users, you can change the Git Storage Model during project creation to use a normal or forked Git repository.
+
+![Git setup during project creation](/data-analytics/development/versioning/img/git-setup.png)
+
+## Model comparison
+
+The following table describes the different Git storage models and how they work.
+
+| Git Storage Model | Description                                                                                                                              |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Simple            | Provides an intuitive visual workflow for project drafting and publication. Users all work on the same `dev` branch in the Git backend.  |
+| Normal (no forks) | Enables the typical Git workflow aligned with DevOps best practices. Users all work in the same repository on different branches.        |
+| Fork per user     | (External Git only) Enables the typical Git workflow aligned with DevOps best practices. Users work on their own copy of the repository. |
+
+<Note>
+  Regardless of the Git storage model you choose, you'll be able to use a Prophecy-managed Git
+  repository or your own external Git repository to host your project code.
+</Note>
+
+## Simple Git Storage Model
+
+As you move through the Simple versioning workflow in your project, Prophecy actually maps these actions to Git processes in the backend. In other words, actions like saving, publishing, and restoring changes trigger Git commands. This is possible because all Prophecy projects are hosted on Git, regardless of the project's Git storage model.
+
+The following diagram explains what each versioning action does in Git. If you connect to an external Git provider (rather than use Prophecy-managed Git), you can view how each action in is reflected in Git as you work on your project.
+
+![Simple Git](/data-analytics/development/versioning/img/git-flow-simple.png)
+
+The table below reiterates the diagram.
+
+| Action in Prophecy       | Action in Git                                                                                                                                                                                                         |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Save to draft            | <ul><li>Pull changes from the remote `dev` branch</li><li>Pull changes from the local `main` branch</li><li>Commit changes to local `dev`</li><li>Push changes to remote `dev`</li></ul>                              |
+| Publish                  | <ul><li>Merge changes into local `main`</li><li>Add a Git Tag with the published version number</li><li>Push changes to remote `main`</li></ul>                                                                       |
+| Restore previous version | <ul><li>Run `git reset --soft`</li><li>Commit the changes to revert in `dev`</li><li>Push changes to remote `dev` branch</li></ul> (You must manually publish the project again to merge what you reverted to `main`) |

@@ -117,7 +117,8 @@
                     "group": "Versioning",
                     "pages": [
                       "data-analytics/development/versioning/version-control",
-                      "data-analytics/development/versioning/collaboration-modes",
+                      "data-analytics/development/versioning/git-storage-model",
+                      "data-analytics/development/versioning/conflicts",
                       "data-analytics/development/versioning/clone-projects",
                       "data-analytics/development/versioning/import-projects",
                       "data-analytics/development/versioning/migrate-managed"
