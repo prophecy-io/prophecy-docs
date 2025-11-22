@@ -71,3 +71,12 @@
 [data-component-part='callout-icon'] img {
   height: auto !important;
 }
+
+/* Nav dropdown item icon background colors */
+.nav-dropdown-item-icon {
+  background-color: #e1e7fd;
+}
+
+.dark .nav-dropdown-item-icon {
+  background-color: #a7b5f6;
+}
