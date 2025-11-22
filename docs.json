@@ -12,7 +12,7 @@
     "dropdowns": [
       {
         "dropdown": "Data Analysis",
-        "icon": "/images/pipeline.svg",
+        "icon": "/images/bar-chart-j.svg",
         "tabs": [
           {
             "tab": "Documentation",
@@ -538,7 +538,7 @@
       },
       {
         "dropdown": "Data Engineering",
-        "icon": "code",
+        "icon": "/images/code-square-a.svg",
         "tabs": [
           {
             "tab": "Documentation",
@@ -1019,8 +1019,8 @@
     ]
   },
   "logo": {
-    "light": "/logo/logo-light.png",
-    "dark": "/logo/logo-dark.png"
+    "light": "/images/logo/logo-light.png",
+    "dark": "/images/logo/logo-dark.png"
   },
   "navbar": {
     "links": [
