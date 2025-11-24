@@ -8,8 +8,8 @@
   "paths": {
     "/orchestration/fabric": {
       "post": {
-        "tags": ["Orchestration Fabric"],
-        "summary": "Create a new Fabric resource",
+        "tags": ["Fabrics"],
+        "summary": "Create a new fabric",
         "operationId": "createFabric",
         "requestBody": {
           "description": "Fabric object to be created",
@@ -41,7 +41,7 @@
         {
           "name": "fabricId",
           "in": "path",
-          "description": "The unique ID of the Fabric resource",
+          "description": "The unique ID of the fabric",
           "required": true,
           "schema": {
             "type": "string"
@@ -49,8 +49,8 @@
         }
       ],
       "get": {
-        "tags": ["Orchestration Fabric"],
-        "summary": "Retrieve a specific Fabric resource",
+        "tags": ["Fabrics"],
+        "summary": "Check for existing fabric",
         "operationId": "getFabricById",
         "responses": {
           "200": {
@@ -66,8 +66,8 @@
         }
       },
       "put": {
-        "tags": ["Orchestration Fabric"],
-        "summary": "Update an existing Fabric resource",
+        "tags": ["Fabrics"],
+        "summary": "Update an existing fabric",
         "operationId": "updateFabric",
         "requestBody": {
           "description": "Fabric object with updated fields",
@@ -94,8 +94,8 @@
         }
       },
       "delete": {
-        "tags": ["Orchestration Fabric"],
-        "summary": "Delete a specific Fabric resource",
+        "tags": ["Fabrics"],
+        "summary": "Delete a fabric",
         "operationId": "deleteFabric",
         "x-mint": {
           "playground": "none"
@@ -112,7 +112,7 @@
         {
           "name": "fabricId",
           "in": "path",
-          "description": "The unique ID of the parent Fabric resource",
+          "description": "The unique ID of the parent fabric",
           "required": true,
           "schema": {
             "type": "string"
@@ -120,12 +120,12 @@
         }
       ],
       "get": {
-        "tags": ["Orchestration Secrets"],
-        "summary": "List all Secrets for a Fabric",
+        "tags": ["Secrets"],
+        "summary": "List secrets per fabric",
         "operationId": "listSecretsByFabric",
         "responses": {
           "200": {
-            "description": "A list of Fabric Secrets",
+            "description": "A list of fabric secrets",
             "content": {
               "application/json": {
                 "schema": {
@@ -140,8 +140,8 @@
         }
       },
       "post": {
-        "tags": ["Orchestration Secrets"],
-        "summary": "Create a new Secret for a Fabric",
+        "tags": ["Secrets"],
+        "summary": "Add secret to fabric",
         "operationId": "createSecret",
         "requestBody": {
           "description": "Secret object to be created",
@@ -173,7 +173,7 @@
         {
           "name": "fabricId",
           "in": "path",
-          "description": "The unique ID of the parent Fabric resource",
+          "description": "The unique ID of the parent fabric",
           "required": true,
           "schema": {
             "type": "string"
@@ -182,7 +182,7 @@
         {
           "name": "secretId",
           "in": "path",
-          "description": "The unique ID of the Secret resource",
+          "description": "The unique ID of the secret",
           "required": true,
           "schema": {
             "type": "string"
@@ -190,8 +190,8 @@
         }
       ],
       "get": {
-        "tags": ["Orchestration Secrets"],
-        "summary": "Retrieve a specific Secret by ID",
+        "tags": ["Secrets"],
+        "summary": "Retrieve secret details",
         "operationId": "getSecretById",
         "responses": {
           "200": {
@@ -207,8 +207,8 @@
         }
       },
       "put": {
-        "tags": ["Orchestration Secrets"],
-        "summary": "Update an existing Secret by ID",
+        "tags": ["Secrets"],
+        "summary": "Update secret",
         "operationId": "updateSecret",
         "requestBody": {
           "description": "Secret object with updated fields",
@@ -235,8 +235,8 @@
         }
       },
       "delete": {
-        "tags": ["Orchestration Secrets"],
-        "summary": "Delete a specific Secret by ID",
+        "tags": ["Secrets"],
+        "summary": "Delete secret",
         "operationId": "deleteSecret",
         "x-mint": {
           "playground": "none"
@@ -253,7 +253,7 @@
         {
           "name": "fabricId",
           "in": "path",
-          "description": "The unique ID of the parent Fabric resource",
+          "description": "The unique ID of the parent fabric",
           "required": true,
           "schema": {
             "type": "string"
@@ -261,12 +261,12 @@
         }
       ],
       "get": {
-        "tags": ["Orchestration Connections"],
-        "summary": "List all Connections for a Fabric",
+        "tags": ["Connections"],
+        "summary": "List connections per fabric",
         "operationId": "listConnectionsByFabric",
         "responses": {
           "200": {
-            "description": "A list of Fabric Connections",
+            "description": "A list of all connections in a fabric",
             "content": {
               "application/json": {
                 "schema": {
@@ -281,8 +281,8 @@
         }
       },
       "post": {
-        "tags": ["Orchestration Connections"],
-        "summary": "Create a new Connection for a Fabric",
+        "tags": ["Connections"],
+        "summary": "Add connection to fabric",
         "operationId": "createConnection",
         "requestBody": {
           "description": "Connection object to be created",
@@ -314,7 +314,7 @@
         {
           "name": "fabricId",
           "in": "path",
-          "description": "The unique ID of the parent Fabric resource",
+          "description": "The unique ID of the parent fabric",
           "required": true,
           "schema": {
             "type": "string"
@@ -323,7 +323,7 @@
         {
           "name": "connectionName",
           "in": "path",
-          "description": "The unique name of the Connection resource",
+          "description": "The unique name of the connection",
           "required": true,
           "schema": {
             "type": "string"
@@ -331,8 +331,8 @@
         }
       ],
       "get": {
-        "tags": ["Orchestration Connections"],
-        "summary": "Retrieve a specific Connection by Name",
+        "tags": ["Connections"],
+        "summary": "Retrieve connection details",
         "operationId": "getConnectionByName",
         "responses": {
           "200": {
@@ -348,8 +348,8 @@
         }
       },
       "put": {
-        "tags": ["Orchestration Connections"],
-        "summary": "Update an existing Connection by Name",
+        "tags": ["Connections"],
+        "summary": "Update connection",
         "operationId": "updateConnection",
         "requestBody": {
           "description": "Connection object with updated fields",
@@ -376,8 +376,8 @@
         }
       },
       "delete": {
-        "tags": ["Orchestration Connections"],
-        "summary": "Delete a specific Connection by Name",
+        "tags": ["Connections"],
+        "summary": "Delete connection",
         "operationId": "deleteConnection",
         "x-mint": {
           "playground": "none"

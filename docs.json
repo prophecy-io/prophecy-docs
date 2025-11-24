@@ -411,17 +411,9 @@
               {
                 "group": "API documentation",
                 "pages": ["api-reference/introduction"]
-              },
-              {
-                "group": "Endpoint examples",
-                "openapi": "openapi.json",
-                "pages": [
-                  "api-reference/endpoint/deploy-project",
-                  "api-reference/endpoint/trigger-run",
-                  "api-reference/endpoint/get-run-status"
-                ]
               }
-            ]
+            ],
+            "openapi": "openapi.json"
           },
           {
             "tab": "Administration",
