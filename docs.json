@@ -430,8 +430,7 @@
                 "pages": [
                   "data-analytics/administration/platform/editions",
                   "data-analytics/administration/platform/architecture",
-                  "data-analytics/administration/platform/prophecy-deployment",
-                  "data-analytics/administration/platform/security"
+                  "data-analytics/administration/platform/prophecy-deployment"
                 ]
               },
               {
@@ -508,6 +507,7 @@
                 "pages": [
                   "data-analytics/administration/getting-help/get-in-touch",
                   "data-analytics/administration/getting-help/troubleshooting",
+
                   {
                     "group": "Collect diagnostic data",
                     "pages": [
@@ -517,7 +517,8 @@
                       "data-analytics/administration/getting-help/diagnostics",
                       "data-analytics/administration/getting-help/copy-session-info"
                     ]
-                  }
+                  },
+                  "data-analytics/administration/getting-help/security"
                 ]
               }
             ]
@@ -915,8 +916,7 @@
                 "pages": [
                   "data-engineering/administration/platform/editions",
                   "data-engineering/administration/platform/architecture",
-                  "data-engineering/administration/platform/prophecy-deployment",
-                  "data-engineering/administration/platform/security"
+                  "data-engineering/administration/platform/prophecy-deployment"
                 ]
               },
               {
@@ -992,6 +992,7 @@
                 "group": "Help and resources",
                 "pages": [
                   "data-engineering/administration/getting-help/get-in-touch",
+                  "data-engineering/administration/getting-help/security",
                   {
                     "group": "Collect diagnostic data",
                     "pages": [

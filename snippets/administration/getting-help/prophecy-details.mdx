@@ -1,4 +1,14 @@
-Gather logs from your Prophecy environment and send them to the support team via the [Support Portal](https://prophecy.zendesk.com/).
+## Collect diagnostic data
+
+To help our team investigate and resolve your issue faster, include diagnostic data in your support request.
+
+Use the table below to find what information to collect based on your issue.
+
+| Issue                            | What to include                                                                                                                                                                             |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Can't attach pipeline to cluster | Connection logs from [Prophecy](./prophecy-details), Spark cluster [configuration](./spark-cluster-details), and [connectivity check](./spark-cluster-details#connectivity-check) results.  |
+| Pipeline fails during execution  | Pipeline [logs](./prophecy-details), Spark [configuration](./spark-cluster-details.mdx#spark-configurations), and [connectivity check](./spark-cluster-details#connectivity-check) results. |
+| Spark application errors         | Pipeline [logs](./prophecy-details) and Spark [driver logs](https://docs.databricks.com/en/compute/troubleshooting/debugging-spark-ui.html#driver-logs).                                    |
 
 ## Send runtime logs
 
