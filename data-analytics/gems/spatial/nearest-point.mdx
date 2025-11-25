@@ -37,8 +37,8 @@ The output schema of **out** contains:
 <Note>
   Geographic points must be in Well-known Text
   ([WKT](https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry)) format. Use the
-  [CreatePoint](/data-analytics/gems/spatial/create-point) gem to convert longitude and latitude coordinates to WKT
-  format.
+  [CreatePoint](/data-analytics/gems/spatial/create-point) gem to convert longitude and latitude
+  coordinates to WKT format.
 </Note>
 
 ## Parameters
@@ -70,10 +70,10 @@ Assume you have two tables:
 
   <div class="table-example">
 
-  | customer_id | customer_point           |
-  | ----------- | ------------------------ |
-  | C001        | POINT(-122.4194 37.7749) |
-  | C002        | POINT(-74.0060 40.7128)  |
+  | `customer_id` | `customer_point`         |
+  | ------------- | ------------------------ |
+  | C001          | POINT(-122.4194 37.7749) |
+  | C002          | POINT(-74.0060 40.7128)  |
 
   </div>
 
@@ -81,11 +81,11 @@ Assume you have two tables:
 
   <div class="table-example">
 
-  | center_id | center_point             |
-  | --------- | ------------------------ |
-  | S100      | POINT(-122.4192 37.7793) |
-  | S200      | POINT(-73.9352 40.7306)  |
-  | S300      | POINT(-118.2437 34.0522) |
+  | `center_id` | `center_point`           |
+  | ----------- | ------------------------ |
+  | S100        | POINT(-122.4192 37.7793) |
+  | S200        | POINT(-73.9352 40.7306)  |
+  | S300        | POINT(-118.2437 34.0522) |
 
   </div>
 
@@ -110,12 +110,8 @@ For this example, let's find the **two** nearest service centers in a 1000 km ra
 
 The output contains the two closest service centers to each customer. Ranks begin at `1`, with `1` being the closest point. Note that customer `C002` only has one service center within 1000 km from their location.
 
-<div class="table-example">
-
-| customer_id | customer_point           | center_id | center_point             | rank_number | distanceKilometers  | cardinal_direction |
-| ----------- | ------------------------ | --------- | ------------------------ | ----------- | ------------------- | ------------------ |
-| C001        | POINT(-122.4194 37.7749) | S100      | POINT(-122.4192 37.7793) | 1           | 0.48957333464416436 | N                  |
-| C001        | POINT(-122.4194 37.7749) | S300      | POINT(-118.2437 34.0522) | 2           | 559.1205770615533   | SE                 |
-| C002        | POINT(-74.0060 40.7128)  | S200      | POINT(-73.9352 40.7306)  | 1           | 6.286267237667312   | E                  |
-
-</div>
+| `customer_id` | `customer_point`         | `center_id` | `center_point`           | `rank_number` | `distanceKilometers` | `cardinal_direction` |
+| ------------- | ------------------------ | ----------- | ------------------------ | ------------- | -------------------- | -------------------- |
+| C001          | POINT(-122.4194 37.7749) | S100        | POINT(-122.4192 37.7793) | 1             | 0.48957333464416436  | N                    |
+| C001          | POINT(-122.4194 37.7749) | S300        | POINT(-118.2437 34.0522) | 2             | 559.1205770615533    | SE                   |
+| C002          | POINT(-74.0060 40.7128)  | S200        | POINT(-73.9352 40.7306)  | 1             | 6.286267237667312    | E                    |

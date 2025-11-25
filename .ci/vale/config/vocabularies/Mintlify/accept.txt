@@ -1,4 +1,4 @@
-## Default Mintlify vocabulary 
+## Default Mintlify vocabulary
 
 Mintlify
 mintlify
