@@ -1,0 +1,29 @@
+exclude: 'docs/sql.md|README.md'
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-json
+      - id: check-merge-conflict
+      - id: detect-aws-credentials
+        args: ['--allow-missing-credentials']
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: no-commit-to-branch
+        args: [--branch, main]
+      - id: no-commit-to-branch
+        args: [--branch, master]
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+
+  - repo: local
+    hooks:
+      - id: mintlify-broken-links
+        name: Mintlify Broken Links
+        entry: npx mintlify broken-links
+        language: node
+        files: \.(md|mdx)$
+        # Example of passing arguments to exclude certain domains/links
+        # Note: The Mintlify CLI itself might have limitations on what can be excluded locally.
+        # You may need to create a custom script for advanced exclusion logic.
+        args: [--exclude, 'example.com', --verbose]
