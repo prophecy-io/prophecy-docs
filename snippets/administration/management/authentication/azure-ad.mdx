@@ -1,6 +1,6 @@
 <Callout icon="/images/icon.png" color="#FFC107">
 
-  Available for [Express and Enterprise Editions](/data-engineering/administration/platform/editions) only.
+Available for [Express and Enterprise Editions](/data-engineering/administration/platform/editions) only.
 
 </Callout>
 
@@ -13,8 +13,8 @@ First, you need to log in to the [Azure portal](https://portal.azure.com/) as an
 1. In the Azure portal, open the **App registrations** page.
 2. Click **New Registration**.
 3. Name it `ProphecyEntraIDApp`.
-4. Choose the supported account type: **Accounts in this organizational directory only (xxxxx only - Single tenant)**
-5. For the Redirect URI, choose **Web** in the dropdown and use:  
+4. Choose the supported account type: **Accounts in this organizational directory only (`xxxxx only - Single tenant`)**
+5. For the Redirect URI, choose **Web** in the dropdown and use:
    `https://your-prophecy-ide-url.domain/api/oauth/azureadCallback`
 6. Click **Register**.
 
@@ -28,13 +28,14 @@ To automatically create new teams in Prophecy via [group mappings](/data-enginee
 1. Under **Manage**, select **Token configuration**.
 1. Select **Add groups claim**.
 1. Select the **Groups assigned to the application** checkbox.
-
    - To change the groups assigned to the application, select the corresponding application from the **Enterprise applications** list. Select **Users and groups** and then **Add user/group**. Select the group(s) you want to add to the application from **Users and groups**.
 
 1. Click **Save**.
 
 <Note>
-These steps are also listed in the [Configure groups optional claims](https://learn.microsoft.com/en-us/entra/identity-platform/optional-claims?tabs=appui#configure-groups-optional-claims) section of the Microsoft documentation.
+  These steps are also listed in the [Configure groups optional
+  claims](https://learn.microsoft.com/en-us/entra/identity-platform/optional-claims?tabs=appui#configure-groups-optional-claims)
+  section of the Microsoft documentation.
 </Note>
 
 ## 3. API Permission
