@@ -12,7 +12,7 @@ To run the API, you need to:
 - Use an existing Git tag that defines the project version.
 
 <Note>
-Unlike in the Prophecy UI where Git tags are created automatically during publish, when using this API you must create the Git tag externally. 
+Unlike in the Prophecy UI where Git tags are created automatically during publish, when using this API you must create the Git tag externally.
 
 The tag must follow the exact format `{projectName}/{version}`.
 </Note>
@@ -41,31 +41,31 @@ Replace the base URL with your environment URL for Dedicated SaaS deployments.
 
 <ResponseField name="projectName" type="string" required>
   Name of the project to be deployed.
-  
+
   Example: `CustomerAnalytics`
 </ResponseField>
 
 <ResponseField name="fabricName" type="string" required>
   Name of the fabric where the project will be deployed.
-  
+
   Example: `production-databricks`
 </ResponseField>
 
 <ResponseField name="gitTag" type="string" required>
   Git tag identifying the specific version of the project to deploy. Must follow the format `{projectName}/{version}`.
-  
+
   Example: `CustomerAnalytics/2.1`
 </ResponseField>
 
 <ResponseField name="pipelineConfigurations" type="JSON">
   Override default values for specific pipeline parameters. Each pipeline can have multiple parameter overrides. The parameter must exist in the pipeline definition, or the override will be skipped.
-  
+
   Example: `{"sales_report": {"report_period": "monthly"}}`
 </ResponseField>
 
 <ResponseField name="projectConfiguration" type="JSON">
   Override default values for project-level configuration parameters that apply to all pipelines in the project.
-  
+
   Example: `{"environment": "production"}`
 </ResponseField>
 
