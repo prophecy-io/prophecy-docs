@@ -50,12 +50,12 @@ One common use case for the FuzzyMatch gem is to match similarly spelled names. 
 
 <div class="table-example">
 
-| id  | email                 | phone        | first_name | last_name | date_added |
-| --- | --------------------- | ------------ | ---------- | --------- | ---------- |
-| 1   | `alex.t@example.com`  | 123-456-7890 | Alex       | Taylor    | 2023-01-01 |
-| 2   | `alex.t@example.com`  | 123-456-9542 | Alex       | Ttaylor   | 2023-07-01 |
-| 3   | `sam.p@example.com`   | 987-654-3210 | Sam        | Patel     | 2024-03-15 |
-| 4   | `casey.l@example.com` | 555-111-2222 | Casey      | Lee       | 2024-05-01 |
+| `id` | `email`               | `phone`      | `first_name` | `last_name` | `date_added` |
+| ---- | --------------------- | ------------ | ------------ | ----------- | ------------ |
+| 1    | `alex.t@example.com`  | 123-456-7890 | Alex         | Taylor      | 2023-01-01   |
+| 2    | `alex.t@example.com`  | 123-456-9542 | Alex         | Ttaylor     | 2023-07-01   |
+| 3    | `sam.p@example.com`   | 987-654-3210 | Sam          | Patel       | 2024-03-15   |
+| 4    | `casey.l@example.com` | 555-111-2222 | Casey        | Lee         | 2024-05-01   |
 
 </div>
 
@@ -75,9 +75,9 @@ The output includes the Record IDs of the records with fuzzy matches above the d
 
 <div class="table-example">
 
-| id  | id2 | similarityScore    |
-| --- | --- | ------------------ |
-| 1   | 2   | 0.9111111111111111 |
+| `id` | `id2` | `similarityScore`  |
+| ---- | ----- | ------------------ |
+| 1    | 2     | 0.9111111111111111 |
 
 </div>
 
@@ -87,6 +87,6 @@ The output includes the Record IDs of the records with fuzzy matches above the d
 </Info>
 
 <Tip>
-  To view the names per record, [join](/data-analytics/gems/join-split/join) the FuzzyMatch output with the original
-  dataset.
+  To view the names per record, [join](/data-analytics/gems/join-split/join) the FuzzyMatch output
+  with the original dataset.
 </Tip>

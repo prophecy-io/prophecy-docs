@@ -93,13 +93,13 @@ Given the following product catalog dataset:
 
 <div class="table-example">
 
-| product_id | category | region  | last_updated |
-| ---------- | -------- | ------- | ------------ |
-| 001        | laptop   | us-east | 2024-01-01   |
-| 002        | tablet   | us-east | 2024-01-02   |
-| 003        | laptop   | us-east | 2024-01-15   |
-| 004        | laptop   | us-west | 2024-01-03   |
-| 005        | laptop   | us-east | 2024-01-20   |
+| `product_id` | `category` | `region` | `last_updated` |
+| ------------ | ---------- | -------- | -------------- |
+| 001          | laptop     | us-east  | 2024-01-01     |
+| 002          | tablet     | us-east  | 2024-01-02     |
+| 003          | laptop     | us-east  | 2024-01-15     |
+| 004          | laptop     | us-west  | 2024-01-03     |
+| 005          | laptop     | us-east  | 2024-01-20     |
 
 </div>
 
@@ -123,13 +123,13 @@ Given the following sales transactions dataset:
 
 <div class="table-example">
 
-| transaction_id | customer_id | date       | amount |
-| -------------- | ----------- | ---------- | ------ |
-| T001           | C101        | 2024-01-05 | 120.00 |
-| T002           | C101        | 2024-02-10 | 250.00 |
-| T003           | C102        | 2024-01-07 | 75.00  |
-| T004           | C101        | 2024-03-15 | 300.00 |
-| T005           | C102        | 2024-02-20 | 150.00 |
+| `transaction_id` | `customer_id` | `date`     | `amount` |
+| ---------------- | ------------- | ---------- | -------- |
+| T001             | C101          | 2024-01-05 | 120.00   |
+| T002             | C101          | 2024-02-10 | 250.00   |
+| T003             | C102          | 2024-01-07 | 75.00    |
+| T004             | C101          | 2024-03-15 | 300.00   |
+| T005             | C102          | 2024-02-20 | 150.00   |
 
 </div>
 
@@ -148,11 +148,11 @@ The output keeps only rows whose position in the sorted order within their group
 
 <div class="table-example">
 
-| transaction_id | customer_id | date       | amount |
-| -------------- | ----------- | ---------- | ------ |
-| T002           | C101        | 2024-02-10 | 250.00 |
-| T001           | C101        | 2024-01-05 | 120.00 |
-| T003           | C102        | 2024-01-07 | 75.00  |
+| `transaction_id` | `customer_id` | `date`     | `amount` |
+| ---------------- | ------------- | ---------- | -------- |
+| T002             | C101          | 2024-02-10 | 250.00   |
+| T001             | C101          | 2024-01-05 | 120.00   |
+| T003             | C102          | 2024-01-07 | 75.00    |
 
 </div>
 

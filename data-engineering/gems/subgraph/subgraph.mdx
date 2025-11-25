@@ -9,11 +9,11 @@ Subgraph gems let you take multiple different gems and wrap them under a single 
 
 There are three types of subgraphs available by default. The [basic](/data-engineering/gems/subgraph/basicSubgraph) subgraph is a great introduction to using subgraphs. Use the individual subgraph documentation to learn how to build each type of subgraph.
 
-| Name                                        | Description                                                                                                                     |
-| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| Name                                                            | Description                                                                                                                     |
+| --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | [Basic](/data-engineering/gems/subgraph/basicSubgraph)          | Captures one or more gems within a pipeline to reuse across other pipelines and projects.                                       |
 | [Table Iterator](/data-engineering/gems/subgraph/tableIterator) | Iterates over one or more gems for each row of the first input DataFrame. Table iterator is available for Python projects only. |
-| [Custom](#build-a-custom-subgraph-type)     | Apply any custom logic to the group of gems present inside the subgraph.                                                        |
+| [Custom](#build-a-custom-subgraph-type)                         | Apply any custom logic to the group of gems present inside the subgraph.                                                        |
 
 ## Reuse subgraphs
 
@@ -28,10 +28,10 @@ You can also create your own Subgraph to apply any custom logic on the group of 
 To create your own Subgraph type, Go to the project you want to create the gem in.
 Click on the **(1) Create Gem** button. This will open up the **Create Gem** Form. Provide a **(2) Name** for the gem, and select the mode as **Control Flow Gem**.
 
-![Create_subgraph_gem](/data-engineering/gems/subgraph/img/create_subgraph_type.png)
+![Create subgraph gem](/data-engineering/gems/subgraph/img/create_subgraph_type.png)
 
 This takes you to the gem code editor with a basic structure of the code generated. Here you can start modifying your gem dialog, validation, and processing logic. Visit the [gem builder documentation](/data-engineering/extensibility/gem-builder/spark-gem-builder) for more details.
 
 The newly constructed Subgraph gem appears in the Subgraph section of the project browser and can be utilized within any pipeline of this project. Furthermore, if you publish this project to the [Package Hub](/data-engineering/extensibility/package-hub/package-hub), other projects can utilize the Subgraph gem via a package dependency.
 
-![Use_subgraph](/data-engineering/gems/subgraph/img/Use_new_subgraph.png)
+![Use subgraph](/data-engineering/gems/subgraph/img/Use_new_subgraph.png)

@@ -14,6 +14,7 @@ DataFrames
 # Platform Names
 Databricks
 EMR
+Hana
 Synapse
 BigQuery
 Snowflake
@@ -24,12 +25,20 @@ Livy
 Okta
 Dataproc
 Serverless
-serverless 
+serverless
 Splunk
 Smartsheet
 Crealytics
 Kerberos
 Alteryx
+Microsoft
+Entra
+Mixpanel
+Kerberized
+Keytab
+Zendesk
+websockets
+Matchers
 
 # Prophecy Concepts
 Subgraph
@@ -51,6 +60,44 @@ Avro
 ORC
 JDBC
 ODBC
+superset
+walkthroughs
+templated
+tooltips
+Tooltips
+Tooltip
+tooltip
+donut
+Donut
+geo
+Lookups
+Bcc
+SLAs
+SLA
+allowlists
+allowlist
+Allowlist
+failover
+deprovision
+ACLs
+ZOrder
+fsck
+colocate
+colocation
+inlined
+Callout
+callout
+preconfigured
+dataset's
+data's
+underpartitioned
+overparititioned
+subfolder
+Backoff
+backoff
+deprovisioning
+namespaces
+namespace
 
 # Prophecy Tools
 PBT
@@ -83,7 +130,7 @@ interims
 CPUs
 UDFs
 artifactory
-polylines 
+polylines
 polyline
 unpivot
 subquery
@@ -93,15 +140,41 @@ datetime
 namespace
 Namespace
 hotfixes
-hotfix 
-Hotfixes 
-runtime 
+hotfix
+Hotfixes
+runtime
 runtimes
-Runtime 
-Runtimes 
+Runtime
+Runtimes
+metastore
+Metastore
+lakehouses
+subtabs
+subtab
+Creds
+URIs
+Egressed
+Ingressed
+reauthentication
+heatmap
+heatmaps
+reindex
+Transpiler
+backported
+UUIDs
+Bc
+Cc
+hardcoded
+unioned
+hostname
+Ungroup
+unselect
+Filepath
 
-
-## Gems 
+## Gems
 
 Unpivot
 Deduplicate
+SQLStatement
+XMLParse
+JSONParse

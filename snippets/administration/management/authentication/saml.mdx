@@ -82,7 +82,7 @@ Now the form for **Set up Single Sign-On with SAML** will open. You'll have to f
 #### Basic SAML Configuration
 
 1. Provide an Identifier (Entity ID) which is a unique ID to identify this application to Microsoft Entra ID. This will be added to the Entity issuer field in Prophecy.
-2. In the same section, configure **Reply URL** and **Sign on URL** as:  
+2. In the same section, configure **Reply URL** and **Sign on URL** as:
    `https://your-prophecy-ide-url.domain/api/oauth/samlCallback`
 3. Click **Save**.
 
@@ -136,7 +136,7 @@ Configure SAML for Okta and enable SCIM provisioning
 5. Enter **App Name** as _Prophecy SAML App_ and click **Next**.
 6. For **Single Sign-On URL**, specify `https://your-prophecy-ide-url.domain/api/oauth/samlCallback`.
 7. Select **Use this** for both **Recipient URL** and **Destination URL**.
-8. In **Audience URI (SP Entity ID)**, provide a name to serve as the entity issuer ID (e.g., _prophecyokta_).
+8. In **Audience URI (SP Entity ID)**, provide a name to serve as the entity issuer ID (for example, `prophecyokta`).
 9. Set **Name ID format** to **EmailAddress** from the dropdown.
 10. For **Application Username**, select **Email**.
 11. Under **Attribute Statements**, add two attributes **name** and **email**.

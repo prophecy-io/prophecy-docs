@@ -47,12 +47,12 @@ Let's say you're working with two tables: **Table A** and **Table B**.
 
 <div class="table-example">
 
-| order_id | customer_id | order_date | amount |
-| -------- | ----------- | ---------- | ------ |
-| 101      | 1           | 2024-12-01 | 250.00 |
-| 102      | 2           | 2024-12-03 | 150.00 |
-| 101      | 1           | 2024-12-01 | 250.00 |
-| 104      | 3           | 2025-02-10 | 200.00 |
+| `order_id` | `customer_id` | `order_date` | `amount` |
+| ---------- | ------------- | ------------ | -------- |
+| 101        | 1             | 2024-12-01   | 250.00   |
+| 102        | 2             | 2024-12-03   | 150.00   |
+| 101        | 1             | 2024-12-01   | 250.00   |
+| 104        | 3             | 2025-02-10   | 200.00   |
 
 </div>
 
@@ -60,12 +60,12 @@ Let's say you're working with two tables: **Table A** and **Table B**.
 
 <div class="table-example">
 
-| order_id | customer_id | order_date | amount |
-| -------- | ----------- | ---------- | ------ |
-| 103      | 1           | 2025-01-15 | 300.00 |
-| 104      | 3           | 2025-02-10 | 200.00 |
-| 105      | 4           | 2025-03-05 | 400.00 |
-| 106      | 2           | 2025-03-07 | 180.00 |
+| `order_id` | `customer_id` | `order_date` | `amount` |
+| ---------- | ------------- | ------------ | -------- |
+| 103        | 1             | 2025-01-15   | 300.00   |
+| 104        | 3             | 2025-02-10   | 200.00   |
+| 105        | 4             | 2025-03-05   | 400.00   |
+| 106        | 2             | 2025-03-07   | 180.00   |
 
 </div>
 
@@ -77,10 +77,10 @@ The table that results from the Except gem only includes records in Table A that
 
 <div class="table-example">
 
-| order_id | customer_id | order_date | amount |
-| -------- | ----------- | ---------- | ------ |
-| 101      | 1           | 2024-12-01 | 250.00 |
-| 102      | 2           | 2024-12-03 | 150.00 |
+| `order_id` | `customer_id` | `order_date` | `amount` |
+| ---------- | ------------- | ------------ | -------- |
+| 101        | 1             | 2024-12-01   | 250.00   |
+| 102        | 2             | 2024-12-03   | 150.00   |
 
 </div>
 
@@ -92,11 +92,11 @@ If you select the `preserve duplicates` option, the gem preserves the duplicates
 
 <div class="table-example">
 
-| order_id | customer_id | order_date | amount |
-| -------- | ----------- | ---------- | ------ |
-| 102      | 2           | 2024-12-03 | 150.00 |
-| 101      | 1           | 2024-12-01 | 250.00 |
-| 101      | 1           | 2024-12-01 | 250.00 |
+| `order_id` | `customer_id` | `order_date` | `amount` |
+| ---------- | ------------- | ------------ | -------- |
+| 102        | 2             | 2024-12-03   | 150.00   |
+| 101        | 1             | 2024-12-01   | 250.00   |
+| 101        | 1             | 2024-12-01   | 250.00   |
 
 The output is the same as above, except the gem also retains the duplicate order `101`.
 
