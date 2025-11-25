@@ -1,4 +1,5 @@
 exclude: 'docs/sql.md|README.md'
+fail_fast: false
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
@@ -18,12 +19,16 @@ repos:
 
   - repo: local
     hooks:
+      - id: vale
+        name: Vale
+        entry: vale
+        language: system
+        files: \.(md|mdx)$
+        args: [--config=.vale.ini]
+
       - id: mintlify-broken-links
         name: Mintlify Broken Links
         entry: npx mintlify broken-links
-        language: node
+        language: system
         files: \.(md|mdx)$
-        # Example of passing arguments to exclude certain domains/links
-        # Note: The Mintlify CLI itself might have limitations on what can be excluded locally.
-        # You may need to create a custom script for advanced exclusion logic.
-        args: [--exclude, 'example.com', --verbose]
+        pass_filenames: false

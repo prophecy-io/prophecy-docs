@@ -38,44 +38,44 @@ https://app.prophecy.io/api/trigger/pipeline
 ---
 
 <ResponseField name="fabricId" type="Long" required>
-  Unique identifier of the data fabric where the pipeline resides. You can find the ID in the URL of the fabric metadata page. 
-  
+  Unique identifier of the data fabric where the pipeline resides. You can find the ID in the URL of the fabric metadata page.
+
   Example: `90645`
 </ResponseField>
 
 <ResponseField name="pipelineName" type="string" required>
-  Name of the pipeline to be triggered. 
-  
+  Name of the pipeline to be triggered.
+
   Example: `data_processing_pipeline`
 </ResponseField>
 
 <ResponseField name="projectId" type="string" required>
-  Unique ID of the project where the pipeline resides. You can find this string in the URL of the project editor or metadata page. 
-  
+  Unique ID of the project where the pipeline resides. You can find this string in the URL of the project editor or metadata page.
+
   Example: `46059`
 </ResponseField>
 
 <ResponseField name="parameters" type="JSON">
-  Map of key-value pairs representing pipeline parameters. These will override default parameter values. 
-  
+  Map of key-value pairs representing pipeline parameters. These will override default parameter values.
+
   Example: `{"parameter_1": "1234", "parameter_2": "table_1"}`
 </ResponseField>
 
 <ResponseField name="branch" type="string">
-  Specific branch of the pipeline to execute. If omitted, the current working branch is used. 
-  
+  Specific branch of the pipeline to execute. If omitted, the current working branch is used.
+
   Example: `dev`
 </ResponseField>
 
 <ResponseField name="version" type="string">
-  Specific version of the project containing the pipeline. If omitted, the latest version is used. 
-  
+  Specific version of the project containing the pipeline. If omitted, the latest version is used.
+
   Example: `2`
 </ResponseField>
 
 <ResponseField name="processName" type="string">
-  Name of a specific gem within the pipeline. If provided, the pipeline will not run beyond this gem. If no processName is specified, the full pipeline is executed. 
-  
+  Name of a specific gem within the pipeline. If provided, the pipeline will not run beyond this gem. If no processName is specified, the full pipeline is executed.
+
   Example: `aggregated_orders`
 </ResponseField>
 
