@@ -413,21 +413,45 @@
                 "pages": ["api-reference/introduction"]
               },
               {
-                "group": "Connections",
+                "group": "Endpoints",
                 "pages": [
                   {
-                    "group": "Connection properties",
-                    "pages": ["api-reference/connections/bigquery"]
+                    "group": "Connections",
+                    "pages": [
+                      {
+                        "group": "Connection properties",
+                        "pages": ["api-reference/connections/bigquery"]
+                      },
+                      "api-reference/connections/openapi.json POST /api/orchestration/fabric/{fabricId}/connection",
+                      "api-reference/connections/openapi.json GET /api/orchestration/fabric/{fabricId}/connection",
+                      "api-reference/connections/openapi.json GET /api/orchestration/fabric/{fabricId}/connection/name/{connectionName}",
+                      "api-reference/connections/openapi.json PUT /api/orchestration/fabric/{fabricId}/connection/name/{connectionName}",
+                      "api-reference/connections/openapi.json DELETE /api/orchestration/fabric/{fabricId}/connection/name/{connectionName}"
+                    ]
                   },
-                  "api-reference/connections/openapi.json POST /api/orchestration/fabric/{fabricId}/connection",
-                  "api-reference/connections/openapi.json GET /api/orchestration/fabric/{fabricId}/connection",
-                  "api-reference/connections/openapi.json GET /api/orchestration/fabric/{fabricId}/connection/name/{connectionName}",
-                  "api-reference/connections/openapi.json PUT /api/orchestration/fabric/{fabricId}/connection/name/{connectionName}",
-                  "api-reference/connections/openapi.json DELETE /api/orchestration/fabric/{fabricId}/connection/name/{connectionName}"
-                ]
+                  {
+                    "group": "Secrets",
+                    "pages": [
+                      {
+                        "group": "Secret properties",
+                        "pages": [
+                          "api-reference/secrets/text",
+                          "api-reference/secrets/binary",
+                          "api-reference/secrets/username-password",
+                          "api-reference/secrets/oauth"
+                        ]
+                      },
+                      "api-reference/secrets/openapi.json POST /api/orchestration/fabric/{fabricId}/secret",
+                      "api-reference/secrets/openapi.json GET /api/orchestration/fabric/{fabricId}/secret",
+                      "api-reference/secrets/openapi.json GET /api/orchestration/fabric/{fabricId}/secret/id/{secretId}",
+                      "api-reference/secrets/openapi.json PUT /api/orchestration/fabric/{fabricId}/secret/id/{secretId}",
+                      "api-reference/secrets/openapi.json DELETE /api/orchestration/fabric/{fabricId}/secret/id/{secretId}"
+                    ]
+                  }
+                ],
+                "openapi": "/api-reference/openapi.json"
               }
-            ],
-            "openapi": "/api-reference/openapi.json"
+            ]
           },
           {
             "tab": "Administration",

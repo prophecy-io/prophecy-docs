@@ -5,6 +5,19 @@
     "description": "API for managing Prophecy resources",
     "version": "1.0.0"
   },
+  "components": {
+    "parameters": {
+      "X-AUTH-TOKEN": {
+        "name": "X-AUTH-TOKEN",
+        "in": "header",
+        "description": "Prophecy authentication token. Required for all API requests.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    }
+  },
   "paths": {
     "/api/orchestration/fabric": {
       "post": {
@@ -12,6 +25,11 @@
         "summary": "Create a new fabric",
         "description": "Create an orchestration fabric with optional secret and connection. You can only add one secret and one connection in the same request. Secret and connection properties vary per secret type and connection type.",
         "operationId": "createFabric",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-AUTH-TOKEN"
+          }
+        ],
         "requestBody": {
           "description": "Fabric creation request with optional secret and connection",
           "required": true,
@@ -226,8 +244,14 @@
       ],
       "get": {
         "tags": ["Fabrics"],
-        "summary": "Check for existing fabric",
+        "summary": "Get fabric details",
+        "description": "Retrieve details for a specific fabric by its ID.",
         "operationId": "getFabricById",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-AUTH-TOKEN"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Fabric resource found",
@@ -235,19 +259,39 @@
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "required": ["success", "data"],
                   "properties": {
-                    "fabricId": {
-                      "type": "string",
-                      "description": "The unique identifier for the Fabric."
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates the request was successful.",
+                      "enum": [true]
                     },
-                    "name": {
-                      "type": "string",
-                      "description": "The human-readable name of the Fabric."
-                    },
-                    "status": {
-                      "type": "string",
-                      "description": "The current status of the Fabric."
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "fabricID": {
+                          "type": "string",
+                          "description": "The unique identifier for the fabric."
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "The human-readable name of the fabric."
+                        },
+                        "teamID": {
+                          "type": "string",
+                          "description": "The unique identifier of the team that owns the fabric."
+                        }
+                      },
+                      "description": "Response data containing fabric details."
                     }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "data": {
+                    "fabricID": "10740",
+                    "name": "API_fabric_test",
+                    "teamID": "1200"
                   }
                 }
               }
@@ -258,9 +302,15 @@
       "put": {
         "tags": ["Fabrics"],
         "summary": "Update an existing fabric",
+        "description": "Update the name or description of an existing fabric. Only name and description can be modified.",
         "operationId": "updateFabric",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-AUTH-TOKEN"
+          }
+        ],
         "requestBody": {
-          "description": "Fabric object with updated fields",
+          "description": "Fabric object with updated fields. Only name and description can be modified.",
           "required": true,
           "content": {
             "application/json": {
@@ -269,13 +319,16 @@
                 "properties": {
                   "name": {
                     "type": "string",
-                    "description": "The human-readable name of the Fabric."
+                    "description": "The human-readable name of the fabric."
                   },
-                  "config": {
-                    "type": "object",
-                    "description": "Configuration details for the Fabric."
+                  "description": {
+                    "type": "string",
+                    "description": "Optional description of the fabric."
                   }
                 }
+              },
+              "example": {
+                "name": "APIfabrictestupdate"
               }
             }
           }
@@ -287,19 +340,29 @@
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "required": ["success", "data"],
                   "properties": {
-                    "fabricId": {
-                      "type": "string",
-                      "description": "The unique identifier for the Fabric."
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates the request was successful.",
+                      "enum": [true]
                     },
-                    "name": {
-                      "type": "string",
-                      "description": "The human-readable name of the Fabric."
-                    },
-                    "status": {
-                      "type": "string",
-                      "description": "The current status of the Fabric."
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "The unique identifier for the fabric."
+                        }
+                      },
+                      "description": "Response data containing the fabric ID."
                     }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "data": {
+                    "id": "10740"
                   }
                 }
               }
@@ -311,226 +374,48 @@
         "tags": ["Fabrics"],
         "summary": "Delete a fabric",
         "operationId": "deleteFabric",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-AUTH-TOKEN"
+          }
+        ],
         "x-mint": {
           "playground": "none"
         },
         "responses": {
-          "204": {
-            "description": "Fabric deleted successfully"
-          }
-        }
-      }
-    },
-    "/api/orchestration/fabric/{fabricId}/secret": {
-      "parameters": [
-        {
-          "name": "fabricId",
-          "in": "path",
-          "description": "The unique ID of the parent fabric",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "get": {
-        "tags": ["Secrets"],
-        "summary": "List secrets per fabric",
-        "operationId": "listSecretsByFabric",
-        "responses": {
           "200": {
-            "description": "A list of fabric secrets",
+            "description": "Fabric deleted successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "secretId": {
-                        "type": "string",
-                        "description": "The unique identifier for the Secret."
+                  "type": "object",
+                  "required": ["success", "data"],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates the request was successful.",
+                      "enum": [true]
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "The unique identifier for the deleted fabric."
+                        }
                       },
-                      "name": {
-                        "type": "string",
-                        "description": "The key name for the secret."
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "format": "date-time"
-                      }
+                      "description": "Response data containing the fabric ID."
                     }
                   }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": ["Secrets"],
-        "summary": "Add secret to fabric",
-        "operationId": "createSecret",
-        "requestBody": {
-          "description": "Secret object to be created",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": ["name", "value"],
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "description": "The key name for the secret."
-                  },
-                  "value": {
-                    "type": "string",
-                    "description": "The secret value (will not be returned on GET)."
+                },
+                "example": {
+                  "success": true,
+                  "data": {
+                    "id": "10743"
                   }
                 }
               }
             }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Secret created successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "secretId": {
-                      "type": "string",
-                      "description": "The unique identifier for the Secret."
-                    },
-                    "name": {
-                      "type": "string",
-                      "description": "The key name for the secret."
-                    },
-                    "createdAt": {
-                      "type": "string",
-                      "format": "date-time"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/orchestration/fabric/{fabricId}/secret/id/{secretId}": {
-      "parameters": [
-        {
-          "name": "fabricId",
-          "in": "path",
-          "description": "The unique ID of the parent fabric",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        },
-        {
-          "name": "secretId",
-          "in": "path",
-          "description": "The unique ID of the secret",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "get": {
-        "tags": ["Secrets"],
-        "summary": "Retrieve secret details",
-        "operationId": "getSecretById",
-        "responses": {
-          "200": {
-            "description": "Secret resource found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "secretId": {
-                      "type": "string",
-                      "description": "The unique identifier for the Secret."
-                    },
-                    "name": {
-                      "type": "string",
-                      "description": "The key name for the secret."
-                    },
-                    "createdAt": {
-                      "type": "string",
-                      "format": "date-time"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": ["Secrets"],
-        "summary": "Update secret",
-        "operationId": "updateSecret",
-        "requestBody": {
-          "description": "Secret object with updated fields",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "value": {
-                    "type": "string",
-                    "description": "The updated secret value."
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Secret updated successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "secretId": {
-                      "type": "string",
-                      "description": "The unique identifier for the Secret."
-                    },
-                    "name": {
-                      "type": "string",
-                      "description": "The key name for the secret."
-                    },
-                    "createdAt": {
-                      "type": "string",
-                      "format": "date-time"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": ["Secrets"],
-        "summary": "Delete secret",
-        "operationId": "deleteSecret",
-        "x-mint": {
-          "playground": "none"
-        },
-        "responses": {
-          "204": {
-            "description": "Secret deleted successfully"
           }
         }
       }
