@@ -411,9 +411,23 @@
               {
                 "group": "API documentation",
                 "pages": ["api-reference/introduction"]
+              },
+              {
+                "group": "Connections",
+                "pages": [
+                  {
+                    "group": "Connection properties",
+                    "pages": ["api-reference/connections/bigquery"]
+                  },
+                  "api-reference/connections/openapi.json POST /api/orchestration/fabric/{fabricId}/connection",
+                  "api-reference/connections/openapi.json GET /api/orchestration/fabric/{fabricId}/connection",
+                  "api-reference/connections/openapi.json GET /api/orchestration/fabric/{fabricId}/connection/name/{connectionName}",
+                  "api-reference/connections/openapi.json PUT /api/orchestration/fabric/{fabricId}/connection/name/{connectionName}",
+                  "api-reference/connections/openapi.json DELETE /api/orchestration/fabric/{fabricId}/connection/name/{connectionName}"
+                ]
               }
             ],
-            "openapi": "openapi.json"
+            "openapi": "/api-reference/openapi.json"
           },
           {
             "tab": "Administration",
@@ -1034,9 +1048,9 @@
   "footer": {},
   "api": {
     "mdx": {
-      "server": "https://app.prophecy.io/api/",
+      "server": "https://app.prophecy.io/",
       "playground": {
-        "display": "simple"
+        "display": "none"
       }
     }
   }

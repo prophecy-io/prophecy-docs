@@ -1,0 +1,61 @@
+---
+title: BigQuery
+description: Properties required to create and update BigQuery connections
+---
+
+Properties for BigQuery connections are specified in the `properties` object when creating or updating a connection. All properties are nested within the connection request body.
+
+<Tip>
+  Create the secret containing your service account key JSON in Prophecy before creating the
+  BigQuery connection. The secret must be of type `text` and contain the full service account key
+  JSON as its value.
+</Tip>
+
+## Properties
+
+<ParamField body="authType" type="string" required>
+  Authentication type for BigQuery. Currently only `private_key` is supported.
+</ParamField>
+
+<ParamField body="projectId" type="string" required>
+  GCP project ID where your BigQuery datasets are located.
+</ParamField>
+
+<ParamField body="dataset" type="string" required>
+  Default dataset name to use for queries when no dataset is explicitly specified.
+</ParamField>
+
+<ParamField body="id" type="string">
+  Optional connection ID. Can be an empty string if not provided.
+</ParamField>
+
+<ParamField body="serviceAccountKey" type="object" required>
+  Reference to a Prophecy secret containing the service account key JSON. The secret must be stored in Prophecy before creating the connection.
+
+  <Expandable title="serviceAccountKey properties">
+    <ParamField body="serviceAccountKey.kind" type="string" required>
+      Secret kind. Must be `prophecy`.
+    </ParamField>
+
+    <ParamField body="serviceAccountKey.subKind" type="string" required>
+      Secret sub-type. Must be `text` for service account keys.
+    </ParamField>
+
+    <ParamField body="serviceAccountKey.type" type="string" required>
+      Type of reference. Must be `secret`.
+    </ParamField>
+
+    <ParamField body="serviceAccountKey.properties" type="object" required>
+      Properties identifying the secret by ID and name.
+    </ParamField>
+
+    <ParamField body="serviceAccountKey.properties.id" type="string" required>
+      The ID of the secret stored in Prophecy. You can find this in the secret details page.
+    </ParamField>
+
+    <ParamField body="serviceAccountKey.properties.name" type="string" required>
+      The name of the secret stored in Prophecy.
+    </ParamField>
+
+  </Expandable>
+</ParamField>

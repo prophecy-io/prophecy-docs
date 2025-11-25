@@ -1,0 +1,595 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Prophecy Connections API",
+    "description": "API for managing Prophecy connections",
+    "version": "1.0.0"
+  },
+  "components": {
+    "parameters": {
+      "X-AUTH-TOKEN": {
+        "name": "X-AUTH-TOKEN",
+        "in": "header",
+        "description": "Prophecy authentication token. Required for all API requests.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "paths": {
+    "/api/orchestration/fabric/{fabricId}/connection": {
+      "parameters": [
+        {
+          "name": "fabricId",
+          "in": "path",
+          "description": "The unique ID of the parent fabric",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": ["Connections"],
+        "summary": "List connections per fabric",
+        "operationId": "listConnectionsByFabric",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-AUTH-TOKEN"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of all connections in a fabric",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates whether the request was successful."
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "Connections": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "description": "Unique identifier for the connection."
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "The unique name of the connection."
+                              },
+                              "kind": {
+                                "type": "string",
+                                "description": "The type of connection."
+                              },
+                              "isDefaultWarehouseConnection": {
+                                "type": "boolean",
+                                "description": "Whether this connection is the default warehouse connection."
+                              },
+                              "properties": {
+                                "type": "object",
+                                "description": "Connection configuration properties."
+                              },
+                              "category": {
+                                "type": "string",
+                                "description": "Connection category."
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "data": {
+                    "Connections": [
+                      {
+                        "id": "aa7281d4-e88d-4e82-9125-33206ad5a93b",
+                        "name": "bigquery_1",
+                        "kind": "bigquery",
+                        "isDefaultWarehouseConnection": true,
+                        "properties": {
+                          "authType": "private_key",
+                          "dataset": "kw_dev",
+                          "id": "",
+                          "projectId": "product-internal-463917",
+                          "serviceAccountKey": {
+                            "kind": "prophecy",
+                            "properties": {
+                              "id": "4655",
+                              "name": "bq_service_account"
+                            },
+                            "subKind": "text",
+                            "type": "secret"
+                          }
+                        },
+                        "category": ""
+                      },
+                      {
+                        "id": "8934a2c5-390f-42b9-b674-00173aa94654",
+                        "name": "bigquery_api_test",
+                        "kind": "bigquery",
+                        "isDefaultWarehouseConnection": false,
+                        "properties": {
+                          "authType": "private_key",
+                          "dataset": "kw_dev",
+                          "id": "",
+                          "projectId": "product-internal-463917",
+                          "serviceAccountKey": {
+                            "kind": "prophecy",
+                            "properties": {
+                              "id": "4657",
+                              "name": "bq_service_account_2"
+                            },
+                            "subKind": "text",
+                            "type": "secret"
+                          }
+                        },
+                        "category": ""
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Connections"],
+        "summary": "Add connection to fabric",
+        "operationId": "createConnection",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-AUTH-TOKEN"
+          }
+        ],
+        "requestBody": {
+          "description": "Connection object to be created. The `properties` object structure varies by connection type. See connection type documentation pages for specific property requirements.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "kind", "properties"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The unique name of the connection."
+                  },
+                  "kind": {
+                    "type": "string",
+                    "description": "The type of connection. Determines the structure of the `properties` object."
+                  },
+                  "isDefaultWarehouseConnection": {
+                    "type": "boolean",
+                    "description": "Whether this connection is the default warehouse connection."
+                  },
+                  "properties": {
+                    "type": "object",
+                    "description": "Connection configuration properties. The structure varies by connection type. See connection type documentation pages for specific property schemas."
+                  }
+                }
+              },
+              "example": {
+                "name": "bigquery_api_test",
+                "kind": "bigquery",
+                "isDefaultWarehouseConnection": false,
+                "properties": {
+                  "authType": "private_key",
+                  "dataset": "kw_dev",
+                  "id": "",
+                  "projectId": "product-internal-463917",
+                  "serviceAccountKey": {
+                    "kind": "prophecy",
+                    "properties": {
+                      "id": "4657",
+                      "name": "bq_service_account_2"
+                    },
+                    "subKind": "text",
+                    "type": "secret"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Connection created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates whether the request was successful."
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Unique identifier for the connection."
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "The unique name of the connection."
+                        },
+                        "kind": {
+                          "type": "string",
+                          "description": "The type of connection."
+                        },
+                        "isDefaultWarehouseConnection": {
+                          "type": "boolean",
+                          "description": "Whether this connection is the default warehouse connection."
+                        },
+                        "properties": {
+                          "type": "object",
+                          "description": "Connection configuration properties."
+                        },
+                        "category": {
+                          "type": "string",
+                          "description": "Connection category."
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "data": {
+                    "id": "8934a2c5-390f-42b9-b674-00173aa94654",
+                    "name": "bigquery_api_test",
+                    "kind": "bigquery",
+                    "isDefaultWarehouseConnection": false,
+                    "properties": {
+                      "authType": "private_key",
+                      "dataset": "kw_dev",
+                      "id": "",
+                      "projectId": "product-internal-463917",
+                      "serviceAccountKey": {
+                        "kind": "prophecy",
+                        "properties": {
+                          "id": "4657",
+                          "name": "bq_service_account_2"
+                        },
+                        "subKind": "text",
+                        "type": "secret"
+                      }
+                    },
+                    "category": ""
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/orchestration/fabric/{fabricId}/connection/name/{connectionName}": {
+      "parameters": [
+        {
+          "name": "fabricId",
+          "in": "path",
+          "description": "The unique ID of the parent fabric",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "connectionName",
+          "in": "path",
+          "description": "The unique name of the connection",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": ["Connections"],
+        "summary": "Retrieve connection details",
+        "operationId": "getConnectionByName",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-AUTH-TOKEN"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Connection resource found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates whether the request was successful."
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Unique identifier for the connection."
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "The unique name of the connection."
+                        },
+                        "kind": {
+                          "type": "string",
+                          "description": "The type of connection."
+                        },
+                        "isDefaultWarehouseConnection": {
+                          "type": "boolean",
+                          "description": "Whether this connection is the default warehouse connection."
+                        },
+                        "properties": {
+                          "type": "object",
+                          "description": "Connection configuration properties."
+                        },
+                        "category": {
+                          "type": "string",
+                          "description": "Connection category."
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "data": {
+                    "id": "5f5a7dfb-1459-495d-b464-7c36499f72fe",
+                    "name": "synapse_1",
+                    "kind": "synapse",
+                    "isDefaultWarehouseConnection": false,
+                    "properties": {
+                      "database": "SynapseDev",
+                      "password": {
+                        "kind": "prophecy",
+                        "properties": {
+                          "id": "2719",
+                          "name": "qa-synapse"
+                        },
+                        "subKind": "text",
+                        "type": "secret"
+                      },
+                      "port": "1433",
+                      "server": "synapse-internal-dev.sql.azuresynapse.net",
+                      "username": "synapse-internal-dev-sql-user"
+                    },
+                    "category": ""
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Connections"],
+        "summary": "Update connection",
+        "operationId": "updateConnection",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-AUTH-TOKEN"
+          }
+        ],
+        "requestBody": {
+          "description": "Connection object with updated fields. The `name`, `kind`, `isDefaultWarehouseConnection`, and `properties` fields are required. The `name` field must match the connection name specified in the endpoint URL path parameter. The `properties` object must include all required properties for the connection type. Note: The `name` field cannot be changed to a different value. See connection type documentation pages for specific property requirements.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "kind", "isDefaultWarehouseConnection", "properties"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The connection name. Must match the connection name specified in the endpoint URL path parameter. This value cannot be changed to a different name."
+                  },
+                  "kind": {
+                    "type": "string",
+                    "description": "The type of connection. Determines the structure of the `properties` object."
+                  },
+                  "isDefaultWarehouseConnection": {
+                    "type": "boolean",
+                    "description": "Whether this connection is the default warehouse connection."
+                  },
+                  "properties": {
+                    "type": "object",
+                    "description": "Connection configuration properties. All required properties for the connection type must be included. The structure varies by connection type. See connection type documentation pages for specific property requirements."
+                  }
+                }
+              },
+              "example": {
+                "name": "bigquery_api_test",
+                "kind": "bigquery",
+                "isDefaultWarehouseConnection": false,
+                "properties": {
+                  "authType": "private_key",
+                  "dataset": "kw_dev_api",
+                  "id": "",
+                  "projectId": "product-internal-463917",
+                  "serviceAccountKey": {
+                    "kind": "prophecy",
+                    "properties": {
+                      "id": "4657",
+                      "name": "bq_service_account_2"
+                    },
+                    "subKind": "text",
+                    "type": "secret"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Connection updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates whether the request was successful."
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Unique identifier for the connection."
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "The unique name of the connection."
+                        },
+                        "kind": {
+                          "type": "string",
+                          "description": "The type of connection."
+                        },
+                        "isDefaultWarehouseConnection": {
+                          "type": "boolean",
+                          "description": "Whether this connection is the default warehouse connection."
+                        },
+                        "properties": {
+                          "type": "object",
+                          "description": "Connection configuration properties."
+                        },
+                        "category": {
+                          "type": "string",
+                          "description": "Connection category."
+                        }
+                      }
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Response message."
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "data": {
+                    "id": "d0ef2f82-5b66-4a17-b238-cc04c6f1cb3e",
+                    "name": "bigquery_api_test",
+                    "kind": "bigquery",
+                    "isDefaultWarehouseConnection": false,
+                    "properties": {
+                      "authType": "private_key",
+                      "dataset": "kw_dev_api",
+                      "id": "",
+                      "projectId": "product-internal-463917",
+                      "serviceAccountKey": {
+                        "kind": "prophecy",
+                        "properties": {
+                          "id": "4657",
+                          "name": "bq_service_account_2"
+                        },
+                        "subKind": "text",
+                        "type": "secret"
+                      }
+                    },
+                    "category": ""
+                  },
+                  "message": "List(), List()"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error. Required fields are missing or invalid, or the `name` field does not match the connection name in the endpoint URL.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates whether the request was successful. Always false for error responses."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message describing the validation failure."
+                    }
+                  }
+                },
+                "example": {
+                  "success": false,
+                  "message": "Update connection failed due to : No connection found for fabric 10740 and connection id bigquery_api_test_update"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Connections"],
+        "summary": "Delete connection",
+        "operationId": "deleteConnection",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-AUTH-TOKEN"
+          }
+        ],
+        "x-mint": {
+          "playground": "none"
+        },
+        "responses": {
+          "200": {
+            "description": "Connection deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates whether the request was successful."
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "The name of the deleted connection."
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "data": {
+                    "id": "bigquery_api_test"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
