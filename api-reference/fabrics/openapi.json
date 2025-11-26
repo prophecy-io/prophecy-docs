@@ -155,32 +155,19 @@
                 "secret": {
                   "subKind": "text",
                   "properties": {
-                    "name": "secret123",
-                    "value": "secret_value"
+                    "name": "databricks-pat",
+                    "value": "databricks-pat-value"
                   },
                   "kind": "prophecy"
                 },
                 "connection": {
-                  "name": "databricks_1",
+                  "name": "databricks_pat_1",
                   "kind": "databricks",
                   "properties": {
                     "authType": "pat",
-                    "oAuthType": "u2m",
-                    "clientId": "",
-                    "oAuthAppRegistrationID": "",
-                    "provider": "",
-                    "kgConfig": {
-                      "kgSchedule": {},
-                      "authProperties": {
-                        "authType": "oauth",
-                        "oAuthType": "m2m",
-                        "clientId": "",
-                        "oAuthAppRegistrationID": ""
-                      }
-                    },
-                    "jdbcUrl": "jdbc:databricks://dbc-ac0e9adb-13fb.cloud.databricks.com:443/default;transportMode=http;ssl=1;AuthMech=3;httpPath=/sql/1.0/warehouses/2dc4d06bcada6a51;",
-                    "catalog": "tanmay",
-                    "schema": "default",
+                    "jdbcUrl": "<databricks-jdbc>",
+                    "catalog": "pipelinehub",
+                    "schema": "katherine",
                     "token": "{{SECRET}}"
                   },
                   "isDefaultWarehouseConnection": true
@@ -268,7 +255,7 @@
       "get": {
         "tags": ["Fabrics"],
         "summary": "Get fabric details",
-        "description": "Retrieve details for a specific fabric by its ID.",
+        "description": "Retrieve details for a specific fabric by its ID",
         "operationId": "getFabricById",
         "parameters": [
           {
@@ -298,7 +285,7 @@
                         },
                         "name": {
                           "type": "string",
-                          "description": "The human-readable name of the fabric."
+                          "description": "The name of the fabric."
                         },
                         "teamID": {
                           "type": "string",
@@ -325,7 +312,7 @@
       "put": {
         "tags": ["Fabrics"],
         "summary": "Update an existing fabric",
-        "description": "Update the name or description of an existing fabric. Only name and description can be modified.",
+        "description": "Update the name or description of an existing fabric",
         "operationId": "updateFabric",
         "parameters": [
           {
@@ -342,16 +329,16 @@
                 "properties": {
                   "name": {
                     "type": "string",
-                    "description": "The human-readable name of the fabric."
+                    "description": "The name of the fabric."
                   },
                   "description": {
                     "type": "string",
-                    "description": "Optional description of the fabric."
+                    "description": "The description of the fabric."
                   }
                 }
               },
               "example": {
-                "name": "APIfabrictestupdate"
+                "name": "API_fabric_test_update"
               }
             }
           }
@@ -396,6 +383,7 @@
       "delete": {
         "tags": ["Fabrics"],
         "summary": "Delete a fabric",
+        "description": "Delete a fabric by its ID",
         "operationId": "deleteFabric",
         "parameters": [
           {
