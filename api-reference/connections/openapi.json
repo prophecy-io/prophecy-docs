@@ -34,6 +34,7 @@
       "get": {
         "tags": ["Connections"],
         "summary": "List connections per fabric",
+        "description": "List all connections and their details from a specific fabric",
         "operationId": "listConnectionsByFabric",
         "parameters": [
           {
@@ -325,6 +326,7 @@
       "get": {
         "tags": ["Connections"],
         "summary": "Retrieve connection details",
+        "description": "Retrieve details for a specific connection by its name",
         "operationId": "getConnectionByName",
         "parameters": [
           {
@@ -377,7 +379,7 @@
                 "example": {
                   "success": true,
                   "data": {
-                    "id": "5f5a7dfb-1459-495d-b464-7c36499f72fe",
+                    "id": "<connection-id>",
                     "name": "synapse_1",
                     "kind": "synapse",
                     "isDefaultWarehouseConnection": false,
@@ -387,14 +389,14 @@
                         "kind": "prophecy",
                         "properties": {
                           "id": "2719",
-                          "name": "qa-synapse"
+                          "name": "secret-synapse"
                         },
                         "subKind": "text",
                         "type": "secret"
                       },
                       "port": "1433",
-                      "server": "synapse-internal-dev.sql.azuresynapse.net",
-                      "username": "synapse-internal-dev-sql-user"
+                      "server": "<server-name>.sql.azuresynapse.net",
+                      "username": "<username>"
                     },
                     "category": ""
                   }
@@ -407,17 +409,14 @@
       "put": {
         "tags": ["Connections"],
         "summary": "Update connection",
+        "description": "Update the properties of a specific connection",
         "operationId": "updateConnection",
-        "x-mint": {
-          "content": "<Note>The `isDefaultWarehouseConnection` field is specified at the connection level, not within the `properties` object. This field can only be set to `true` for Databricks and BigQuery connections.</Note>"
-        },
         "parameters": [
           {
             "$ref": "#/components/parameters/X-AUTH-TOKEN"
           }
         ],
         "requestBody": {
-          "description": "Connection object with updated fields. The `name`, `kind`, `isDefaultWarehouseConnection`, and `properties` fields are required. The `name` field must match the connection name specified in the endpoint URL path parameter. The `properties` object must include all required properties for the connection type. Note: The `name` field cannot be changed to a different value. See connection type documentation pages for specific property requirements.",
           "required": true,
           "content": {
             "application/json": {
@@ -427,19 +426,19 @@
                 "properties": {
                   "name": {
                     "type": "string",
-                    "description": "The connection name. Must match the connection name specified in the endpoint URL path parameter. This value cannot be changed to a different name."
+                    "description": "The connection name. Must match the connection name specified in the endpoint URL path parameter. This value cannot be changed."
                   },
                   "kind": {
                     "type": "string",
-                    "description": "The type of connection. Determines the structure of the `properties` object."
+                    "description": "The type of connection. This value cannot be changed."
                   },
                   "isDefaultWarehouseConnection": {
                     "type": "boolean",
-                    "description": "Whether this connection is the default warehouse connection."
+                    "description": "Whether this connection is the default warehouse connection. This value cannot be changed."
                   },
                   "properties": {
                     "type": "object",
-                    "description": "Connection configuration properties. All required properties for the connection type must be included. The structure varies by connection type. See connection type documentation pages for specific property requirements."
+                    "description": "Connection configuration properties. All required properties for the connection type must be included. Only certain properties can be updated. Check the Prophecy UI to see which properties can be updated.\n\nFind specific properties in the **Connections > Properties** section of the API documentation."
                   }
                 }
               },
@@ -571,15 +570,13 @@
       "delete": {
         "tags": ["Connections"],
         "summary": "Delete connection",
+        "description": "Delete a specific connection by its name",
         "operationId": "deleteConnection",
         "parameters": [
           {
             "$ref": "#/components/parameters/X-AUTH-TOKEN"
           }
         ],
-        "x-mint": {
-          "playground": "none"
-        },
         "responses": {
           "200": {
             "description": "Connection deleted successfully",
