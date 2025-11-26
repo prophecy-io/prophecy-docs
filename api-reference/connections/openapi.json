@@ -151,6 +151,9 @@
         "tags": ["Connections"],
         "summary": "Add connection to fabric",
         "operationId": "createConnection",
+        "x-mint": {
+          "content": "<Note>The `isDefaultWarehouseConnection` field is specified at the connection level, not within the `properties` object. This field can only be set to `true` for Databricks and BigQuery connections.</Note>"
+        },
         "parameters": [
           {
             "$ref": "#/components/parameters/X-AUTH-TOKEN"
@@ -387,6 +390,9 @@
         "tags": ["Connections"],
         "summary": "Update connection",
         "operationId": "updateConnection",
+        "x-mint": {
+          "content": "<Note>The `isDefaultWarehouseConnection` field is specified at the connection level, not within the `properties` object. This field can only be set to `true` for Databricks and BigQuery connections.</Note>"
+        },
         "parameters": [
           {
             "$ref": "#/components/parameters/X-AUTH-TOKEN"
@@ -553,6 +559,9 @@
             "$ref": "#/components/parameters/X-AUTH-TOKEN"
           }
         ],
+        "x-mint": {
+          "playground": "none"
+        },
         "responses": {
           "200": {
             "description": "Connection deleted successfully",

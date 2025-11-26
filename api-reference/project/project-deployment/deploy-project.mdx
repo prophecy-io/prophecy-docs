@@ -1,0 +1,27 @@
+---
+openapi: post /api/deploy/project
+playground: 'none'
+---
+
+## Requirements
+
+To run the API, you need to:
+
+- Reference a fabric that exists in your environment.
+- Use an existing Git tag that defines the project version.
+
+<Note>
+Unlike in the Prophecy UI where Git tags are created automatically during publish, when using this API you must create the Git tag externally.
+
+The tag must follow the exact format `{projectName}/{version}`.
+
+</Note>
+
+## Parameter Precedence
+
+Configuration parameters follow this precedence order:
+
+1. Pipeline parameter overrides (highest priority)
+2. Project configuration overrides
+3. Default pipeline parameters
+4. Default project configuration (lowest priority)
