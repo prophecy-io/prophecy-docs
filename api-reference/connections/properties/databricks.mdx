@@ -14,77 +14,68 @@ Properties for Databricks connections are specified in the `properties` object w
 ## Properties
 
 <ParamField body="authType" type="string" required>
-  Authentication type for Databricks. Supported values: `oauth` for OAuth authentication, or `pat`
-  for Personal Access Token authentication.
-</ParamField>
 
-<ParamField body="oAuthType" type="string" required>
-  OAuth authentication type. Use `u2m` for user-to-machine authentication, or `m2m` for
-  machine-to-machine authentication. Required when `authType` is `oauth`. Can be an empty string
-  when `authType` is `pat`.
-</ParamField>
+Authentication method for your Databricks connection.
 
-<ParamField body="clientId" type="string">
-  OAuth client ID. Required when `authType` is `oauth` and `oAuthType` is `m2m`. Can be an empty
-  string for `u2m` authentication or when using `pat` authentication.
-</ParamField>
+Supported values:
 
-<ParamField body="oAuthAppRegistrationID" type="string" required>
-  OAuth app registration ID configured in Prophecy for Databricks authentication. Required when
-  `authType` is `oauth`. Can be an empty string when `authType` is `pat`.
-</ParamField>
+- `oauth` for OAuth authentication
+- `pat` for Personal Access Token authentication
 
-<ParamField body="provider" type="string" required>
-  Provider name. Must be `databricks` when `authType` is `oauth`. Can be an empty string when
-  `authType` is `pat`.
 </ParamField>
 
 <ParamField body="jdbcUrl" type="string" required>
-  JDBC connection URL for the Databricks SQL warehouse. Format: `jdbc:databricks://{workspace - url}
-  :{port}/{database};transportMode=http;ssl=1;AuthMech=3;httpPath={http - path};`
+
+JDBC connection URL for the Databricks SQL warehouse.
+
+Format: `jdbc:databricks://{workspace - url}:{port}/{database};transportMode=http;ssl=1;AuthMech=3;httpPath={http - path};`
+
 </ParamField>
 
 <ParamField body="catalog" type="string" required>
-  Unity Catalog catalog name to use for queries.
+  Unity Catalog catalog name for the default write location.
 </ParamField>
 
 <ParamField body="schema" type="string" required>
-  Schema name within the catalog to use for queries.
+  Schema name within the catalog for the default write location.
 </ParamField>
 
-<ParamField body="token" type="object">
-  Reference to a Prophecy secret containing the Personal Access Token. Required when `authType` is `pat`. The secret must be stored in Prophecy before creating the connection.
+<ParamField body="provider" type="string">
+  Provider name (must be `databricks`). Required when `authType` is `oauth`.
+</ParamField>
 
-  <Expandable title="token properties">
-    <ParamField body="token.kind" type="string" required>
-      Secret kind. Must be `prophecy`.
-    </ParamField>
+<ParamField body="oAuthType" type="string">
 
-    <ParamField body="token.subKind" type="string" required>
-      Secret sub-type. Must be `text` for Personal Access Tokens.
-    </ParamField>
+OAuth authentication type. Required when `authType` is `oauth`.
 
-    <ParamField body="token.type" type="string" required>
-      Type of reference. Must be `secret`.
-    </ParamField>
+Supported values:
 
-    <ParamField body="token.properties" type="object" required>
-      Properties identifying the secret by ID and name.
-    </ParamField>
+- `u2m` for user-to-machine authentication
+- `m2m` for machine-to-machine authentication
 
-    <ParamField body="token.properties.id" type="string" required>
-      The ID of the secret stored in Prophecy. You can find this in the secret details page.
-    </ParamField>
+</ParamField>
 
-    <ParamField body="token.properties.name" type="string" required>
-      The name of the secret stored in Prophecy.
-    </ParamField>
+<ParamField body="clientId" type="string">
 
-  </Expandable>
+Your OAuth client ID.
+
+Required for `authType: oauth` and `oAuthType: m2m`.
+
+</ParamField>
+
+<ParamField body="oAuthAppRegistrationID" type="string">
+
+OAuth app registration ID [configured in Prophecy](/data-analytics/administration/management/cluster-admin-settings/oauth-setup) for Databricks.
+
+Required for `authType: oauth` and `oAuthType: u2m`.
+
 </ParamField>
 
 <ParamField body="clientSecret" type="object">
-  Reference to a Prophecy secret containing the OAuth client secret. Required when `authType` is `oauth` and `oAuthType` is `m2m`. The secret must be stored in Prophecy before creating the connection.
+
+Reference to a Prophecy secret containing the OAuth client secret. Required when `authType: oauth` and `oAuthType: m2m`.
+
+The secret must be stored in Prophecy before creating the connection.
 
   <Expandable title="clientSecret properties">
     <ParamField body="clientSecret.kind" type="string" required>
@@ -114,16 +105,61 @@ Properties for Databricks connections are specified in the `properties` object w
   </Expandable>
 </ParamField>
 
-<ParamField body="metadataUserID" type="string">
-  User ID for metadata operations. Optional.
+<ParamField body="token" type="object">
+
+Reference to a Prophecy secret containing your Databricks PAT/OAuth client secret. Required when:
+
+- `authType: pat`
+- `authType: oauth` and `oAuthType: m2m`
+
+This field is not required when `oAuthType: u2m` because the app registration will already contain the client secret.
+
+<Note>
+
+- When using the [create connection API](/api-reference/connections/create-a-new-connection), the secret must be stored in Prophecy before creating the connection.
+- When using the [create fabric API](/api-reference/fabrics/create-a-new-fabric), replace this whole object with the string `{{SECRET}}`, which references the secret being created in parallel to the connection.
+
+</Note>
+
+      <Expandable title="token properties">
+      <ParamField body="token.kind" type="string" required>
+        Secret kind. Must be `prophecy`.
+      </ParamField>
+
+        <ParamField body="token.subKind" type="string" required>
+          Secret sub-type. Must be `text` for Personal Access Tokens.
+        </ParamField>
+
+        <ParamField body="token.type" type="string" required>
+          Type of reference. Must be `secret`.
+        </ParamField>
+
+        <ParamField body="token.properties" type="object" required>
+          Properties identifying the secret by ID and name.
+        </ParamField>
+
+        <ParamField body="token.properties.id" type="string" required>
+          The ID of the secret stored in Prophecy. You can find this in the secret details page.
+        </ParamField>
+
+        <ParamField body="token.properties.name" type="string" required>
+          The name of the secret stored in Prophecy.
+        </ParamField>
+
+      </Expandable>
+
 </ParamField>
 
-<ParamField body="kgConfig" type="object" required>
+<ParamField body="metadataUserID" type="string">
+  User ID for metadata operations.
+</ParamField>
+
+<ParamField body="kgConfig" type="object">
   Knowledge graph configuration settings for the connection.
 
   <Expandable title="kgConfig properties">
-    <ParamField body="kgConfig.enabled" type="boolean">
-      Whether the knowledge graph is enabled for this connection. Optional.
+    <ParamField body="kgConfig.enabled" type="boolean" required>
+      Whether the knowledge graph is enabled for this connection. 
     </ParamField>
 
     <ParamField body="kgConfig.useConnectorAuth" type="boolean" required>

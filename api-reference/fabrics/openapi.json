@@ -23,7 +23,7 @@
       "post": {
         "tags": ["Fabrics"],
         "summary": "Create a new fabric",
-        "description": "Create an orchestration fabric with optional secret and connection. You can only add one secret and one connection in the same request. Secret and connection properties vary per secret type and connection type.",
+        "description": "Create a Prophecy fabric with optional secret and connection",
         "operationId": "createFabric",
         "parameters": [
           {
@@ -31,7 +31,6 @@
           }
         ],
         "requestBody": {
-          "description": "Fabric creation request with optional secret and connection",
           "required": true,
           "content": {
             "application/json": {
@@ -45,19 +44,20 @@
                   },
                   "description": {
                     "type": "string",
-                    "description": "Optional description of the fabric."
+                    "description": "Short description of the fabric."
                   },
                   "teamName": {
                     "type": "string",
-                    "description": "Name of the team that owns the fabric."
+                    "description": "Name of the team that will own the fabric."
                   },
                   "provider": {
                     "type": "string",
-                    "description": "SQL warehouse provider for the fabric. Prophecy supports two values: `databricks` and `bigquery`."
+                    "description": "SQL warehouse provider for the fabric.",
+                    "enum": ["databricks", "bigquery"]
                   },
                   "dataplaneUrl": {
                     "type": "string",
-                    "description": "Optional dataplane URL for the fabric."
+                    "description": "Specific dataplane URL for the fabric. This is usually not needed and will be automatically set by Prophecy."
                   },
                   "secret": {
                     "type": "object",
@@ -65,16 +65,17 @@
                     "properties": {
                       "kind": {
                         "type": "string",
-                        "description": "Secret kind. Must be 'prophecy'.",
+                        "description": "Secret management provider. Must be `prophecy`.",
                         "enum": ["prophecy"]
                       },
                       "subKind": {
                         "type": "string",
-                        "description": "Secret sub-type (e.g., 'text', 'm2m'). Secret properties vary by subKind. Refer to the orchestration API in the networks tab for specific property schemas."
+                        "description": "Secret sub-type.",
+                        "enum": ["text", "binary", "username_password", "m2m_oauth"]
                       },
                       "properties": {
                         "type": "object",
-                        "description": "Secret properties that vary by subKind. The schema is specification-driven and depends on the subKind value. Refer to the orchestration API documentation for property schemas specific to each secret type.",
+                        "description": "Secret properties that define the secret. \n\nThe schema is specification-driven and depends on the subKind value. Refer to the **Secrets > Properties** section of the API documentation for the specific properties per secret type.",
                         "additionalProperties": true
                       }
                     },
@@ -90,24 +91,46 @@
                       },
                       "kind": {
                         "type": "string",
-                        "description": "Type of connection (e.g., 'databricks', 'bigquery'). Connection properties vary by kind."
+                        "description": "Type of connection.",
+                        "enum": [
+                          "databricks",
+                          "bigquery",
+                          "synapse",
+                          "snowflake",
+                          "mssql",
+                          "oracle",
+                          "mongodb",
+                          "hana",
+                          "smtp",
+                          "redshift",
+                          "s3",
+                          "salesforce",
+                          "sftp",
+                          "sharepoint",
+                          "smartsheet",
+                          "ADLS",
+                          "tableau",
+                          "onedrive",
+                          "powerbi",
+                          "GCS"
+                        ]
                       },
                       "isDefaultWarehouseConnection": {
                         "type": "boolean",
-                        "description": "Whether this connection should be set as the default warehouse connection."
+                        "description": "Whether this connection should be set as the default SQL warehouse connection."
                       },
                       "properties": {
                         "type": "object",
-                        "description": "Connection properties that vary by connection kind. The schema depends on the connection type. In connection properties, replace secret field references with the string '{{SECRET}}' as secret_id is not available during creation.",
+                        "description": "Connection properties that define the connection. \n\nThe schema depends on the connection type. Refer to the **Connections > Properties** section of the API documentation for the specific properties per connection type.\n\nIn connection properties, replace secret field references with the string `{{SECRET}}` as the secret ID will not be available during creation.",
                         "additionalProperties": true
                       },
                       "category": {
                         "type": "string",
-                        "description": "Optional category for the connection."
+                        "description": "Category for the connection."
                       },
                       "metadataUserID": {
                         "type": "string",
-                        "description": "Optional metadata user ID."
+                        "description": "Metadata user ID. Define if you want to associate the connection with a specific user."
                       },
                       "shouldValidate": {
                         "type": "boolean",
@@ -120,13 +143,13 @@
                         "default": true
                       }
                     },
-                    "description": "Optional connection to be created with the fabric. Only one connection can be added per request. It often makes sense to create the connection for your SQL warehouse when creating the fabric. This means you would set `isDefaultWarehouseConnection` to `true`."
+                    "description": "Optional connection to be created with the fabric. Only one connection can be added per request.\n\nIt often makes sense to create the connection for your SQL warehouse when creating the fabric. This means you would set `isDefaultWarehouseConnection` to `true`."
                   }
                 }
               },
               "example": {
-                "name": "API_fab",
-                "description": "desc123",
+                "name": "API_Generated_Fabric",
+                "description": "This is a description of the fabric.",
                 "teamName": "devTeam",
                 "provider": "databricks",
                 "secret": {
