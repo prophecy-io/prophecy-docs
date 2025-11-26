@@ -5,22 +5,16 @@ description: Properties required to create and update Databricks connections
 
 Properties for Databricks connections are specified in the `properties` object when creating or updating a connection. All properties are nested within the connection request body.
 
-<Tip>
-  Create the secrets containing your Personal Access Token or OAuth client secret in Prophecy before
-  creating the Databricks connection. Secrets must be of type `text` and contain the token or secret
-  as their value.
-</Tip>
-
 ## Properties
+
+Review the required connection properties for the authentication method you are using.
+
+<Tabs>
+<Tab title="PAT">
 
 <ParamField body="authType" type="string" required>
 
-Authentication method for your Databricks connection.
-
-Supported values:
-
-- `oauth` for OAuth authentication
-- `pat` for Personal Access Token authentication
+Authentication method for your Databricks connection. Must be `pat` for Personal Access Token authentication.
 
 </ParamField>
 
@@ -40,113 +34,40 @@ Format: `jdbc:databricks://{workspace - url}:{port}/{database};transportMode=htt
   Schema name within the catalog for the default write location.
 </ParamField>
 
-<ParamField body="provider" type="string">
-  Provider name (must be `databricks`). Required when `authType` is `oauth`.
-</ParamField>
+<ParamField body="token" type="object" required>
 
-<ParamField body="oAuthType" type="string">
+Reference to a Prophecy secret containing your Databricks Personal Access Token.
 
-OAuth authentication type. Required when `authType` is `oauth`.
-
-Supported values:
-
-- `u2m` for user-to-machine authentication
-- `m2m` for machine-to-machine authentication
-
-</ParamField>
-
-<ParamField body="clientId" type="string">
-
-Your OAuth client ID.
-
-Required for `authType: oauth` and `oAuthType: m2m`.
-
-</ParamField>
-
-<ParamField body="oAuthAppRegistrationID" type="string">
-
-OAuth app registration ID [configured in Prophecy](/data-analytics/administration/management/cluster-admin-settings/oauth-setup) for Databricks.
-
-Required for `authType: oauth` and `oAuthType: u2m`.
-
-</ParamField>
-
-<ParamField body="clientSecret" type="object">
-
-Reference to a Prophecy secret containing the OAuth client secret. Required when `authType: oauth` and `oAuthType: m2m`.
-
-The secret must be stored in Prophecy before creating the connection.
-
-  <Expandable title="clientSecret properties">
-    <ParamField body="clientSecret.kind" type="string" required>
-      Secret kind. Must be `prophecy`.
-    </ParamField>
-
-    <ParamField body="clientSecret.subKind" type="string" required>
-      Secret sub-type. Must be `text` for client secrets.
-    </ParamField>
-
-    <ParamField body="clientSecret.type" type="string" required>
-      Type of reference. Must be `secret`.
-    </ParamField>
-
-    <ParamField body="clientSecret.properties" type="object" required>
-      Properties identifying the secret by ID and name.
-    </ParamField>
-
-    <ParamField body="clientSecret.properties.id" type="string" required>
-      The ID of the secret stored in Prophecy. You can find this in the secret details page.
-    </ParamField>
-
-    <ParamField body="clientSecret.properties.name" type="string" required>
-      The name of the secret stored in Prophecy.
-    </ParamField>
-
-  </Expandable>
-</ParamField>
-
-<ParamField body="token" type="object">
-
-Reference to a Prophecy secret containing your Databricks PAT/OAuth client secret. Required when:
-
-- `authType: pat`
-- `authType: oauth` and `oAuthType: m2m`
-
-This field is not required when `oAuthType: u2m` because the app registration will already contain the client secret.
-
-<Note>
-
-- When using the [create connection API](/api-reference/connections/create-a-new-connection), the secret must be stored in Prophecy before creating the connection.
+- When using the [create connection API](/api-reference/connections/add-connection-to-fabric), the secret must be stored in Prophecy before creating the connection.
 - When using the [create fabric API](/api-reference/fabrics/create-a-new-fabric), replace this whole object with the string `{{SECRET}}`, which references the secret being created in parallel to the connection.
 
-</Note>
+<Expandable title="token properties">
+<ParamField body="token.kind" type="string" required>
+  Secret kind. Must be `prophecy`.
+</ParamField>
 
-      <Expandable title="token properties">
-      <ParamField body="token.kind" type="string" required>
-        Secret kind. Must be `prophecy`.
-      </ParamField>
+<ParamField body="token.subKind" type="string" required>
+  Secret sub-type. Must be `text` for Personal Access Tokens.
+</ParamField>
 
-        <ParamField body="token.subKind" type="string" required>
-          Secret sub-type. Must be `text` for Personal Access Tokens.
-        </ParamField>
+<ParamField body="token.type" type="string" required>
+  Type of reference. Must be `secret`.
+</ParamField>
 
-        <ParamField body="token.type" type="string" required>
-          Type of reference. Must be `secret`.
-        </ParamField>
+<ParamField body="token.properties" type="object" required>
+  Properties identifying the secret by ID and name.
+</ParamField>
 
-        <ParamField body="token.properties" type="object" required>
-          Properties identifying the secret by ID and name.
-        </ParamField>
+<ParamField body="token.properties.id" type="string" required>
+  The ID of the secret stored in Prophecy. Find the ID using the [List secrets per fabric
+  API](/api-reference/secrets/list-secrets-per-fabric).
+</ParamField>
 
-        <ParamField body="token.properties.id" type="string" required>
-          The ID of the secret stored in Prophecy. You can find this in the secret details page.
-        </ParamField>
+<ParamField body="token.properties.name" type="string" required>
+  The name of the secret stored in Prophecy.
+</ParamField>
 
-        <ParamField body="token.properties.name" type="string" required>
-          The name of the secret stored in Prophecy.
-        </ParamField>
-
-      </Expandable>
+</Expandable>
 
 </ParamField>
 
@@ -159,7 +80,7 @@ This field is not required when `oAuthType: u2m` because the app registration wi
 
   <Expandable title="kgConfig properties">
     <ParamField body="kgConfig.enabled" type="boolean" required>
-      Whether the knowledge graph is enabled for this connection. 
+      Whether the knowledge graph is enabled for this connection.
     </ParamField>
 
     <ParamField body="kgConfig.useConnectorAuth" type="boolean" required>
@@ -200,3 +121,230 @@ This field is not required when `oAuthType: u2m` because the app registration wi
 
   </Expandable>
 </ParamField>
+
+</Tab>
+
+<Tab title="U2M">
+
+<ParamField body="authType" type="string" required>
+
+Authentication method for your Databricks connection. Must be `oauth` for OAuth authentication.
+
+</ParamField>
+
+<ParamField body="jdbcUrl" type="string" required>
+
+JDBC connection URL for the Databricks SQL warehouse.
+
+Format: `jdbc:databricks://{workspace - url}:{port}/{database};transportMode=http;ssl=1;AuthMech=3;httpPath={http - path};`
+
+</ParamField>
+
+<ParamField body="catalog" type="string" required>
+  Unity Catalog catalog name for the default write location.
+</ParamField>
+
+<ParamField body="schema" type="string" required>
+  Schema name within the catalog for the default write location.
+</ParamField>
+
+<ParamField body="provider" type="string" required>
+  Provider name. Must be `databricks`.
+</ParamField>
+
+<ParamField body="oAuthType" type="string" required>
+
+OAuth authentication type. Must be `u2m` for user-to-machine authentication.
+
+</ParamField>
+
+<ParamField body="oAuthAppRegistrationID" type="string" required>
+
+OAuth app registration ID [configured in Prophecy](/data-analytics/administration/management/cluster-admin-settings/oauth-setup) for Databricks.
+
+</ParamField>
+
+<ParamField body="metadataUserID" type="string">
+  User ID for metadata operations.
+</ParamField>
+
+<ParamField body="kgConfig" type="object">
+  Knowledge graph configuration settings for the connection.
+
+  <Expandable title="kgConfig properties">
+    <ParamField body="kgConfig.enabled" type="boolean" required>
+      Whether the knowledge graph is enabled for this connection.
+    </ParamField>
+
+    <ParamField body="kgConfig.useConnectorAuth" type="boolean" required>
+      Whether to use connector authentication for knowledge graph operations. When `true`, the knowledge graph uses the connection's authentication. When `false`, the knowledge graph uses separate authentication specified in `authProperties`.
+    </ParamField>
+
+    <ParamField body="kgConfig.kgSchedule" type="object" required>
+      Knowledge graph scheduling configuration. Can be an empty object `{}` if no scheduling is configured.
+
+      <Expandable title="kgSchedule properties">
+        <ParamField body="kgConfig.kgSchedule.timeZone" type="string">
+          Time zone for knowledge graph scheduling. Format: `America/New_York` or other IANA time zone identifier. Optional when `kgSchedule` is an empty object.
+        </ParamField>
+      </Expandable>
+    </ParamField>
+
+    <ParamField body="kgConfig.authProperties" type="object" required>
+      Authentication properties for knowledge graph operations. These properties can differ from the main connection's authentication settings. For example, a connection using `m2m` OAuth for pipeline operations can use `u2m` OAuth for knowledge graph operations.
+
+      <Expandable title="authProperties properties">
+        <ParamField body="kgConfig.authProperties.authType" type="string" required>
+          Authentication type for knowledge graph operations. Can differ from the connection's `authType`.
+        </ParamField>
+
+        <ParamField body="kgConfig.authProperties.oAuthType" type="string" required>
+          OAuth authentication type for knowledge graph operations. Can differ from the connection's `oAuthType`. For example, use `u2m` for knowledge graph even when the connection uses `m2m` for pipeline operations.
+        </ParamField>
+
+        <ParamField body="kgConfig.authProperties.clientId" type="string">
+          OAuth client ID for knowledge graph operations. Can be an empty string if not required.
+        </ParamField>
+
+        <ParamField body="kgConfig.authProperties.oAuthAppRegistrationID" type="string">
+          OAuth app registration ID for knowledge graph operations. Can be an empty string if not required.
+        </ParamField>
+      </Expandable>
+    </ParamField>
+
+  </Expandable>
+</ParamField>
+
+</Tab>
+
+<Tab title="M2M">
+
+<ParamField body="authType" type="string" required>
+
+Authentication method for your Databricks connection. Must be `oauth` for OAuth authentication.
+
+</ParamField>
+
+<ParamField body="jdbcUrl" type="string" required>
+
+JDBC connection URL for the Databricks SQL warehouse.
+
+Format: `jdbc:databricks://{workspace - url}:{port}/{database};transportMode=http;ssl=1;AuthMech=3;httpPath={http - path};`
+
+</ParamField>
+
+<ParamField body="catalog" type="string" required>
+  Unity Catalog catalog name for the default write location.
+</ParamField>
+
+<ParamField body="schema" type="string" required>
+  Schema name within the catalog for the default write location.
+</ParamField>
+
+<ParamField body="provider" type="string" required>
+  Provider name. Must be `databricks`.
+</ParamField>
+
+<ParamField body="oAuthType" type="string" required>
+
+OAuth authentication type. Must be `m2m` for machine-to-machine authentication.
+
+</ParamField>
+
+<ParamField body="clientId" type="string" required>
+
+Your OAuth client ID.
+
+</ParamField>
+
+<ParamField body="clientSecret" type="object" required>
+
+Reference to a Prophecy secret containing the OAuth client secret.
+
+- When using the [create connection API](/api-reference/connections/add-connection-to-fabric), the secret must be stored in Prophecy before creating the connection.
+- When using the [create fabric API](/api-reference/fabrics/create-a-new-fabric), replace this whole object with the string `{{SECRET}}`, which references the secret being created in parallel to the connection.
+
+<Expandable title="clientSecret properties">
+<ParamField body="clientSecret.kind" type="string" required>
+  Secret kind. Must be `prophecy`.
+</ParamField>
+
+<ParamField body="clientSecret.subKind" type="string" required>
+  Secret sub-type. Must be `text` for client secrets.
+</ParamField>
+
+<ParamField body="clientSecret.type" type="string" required>
+  Type of reference. Must be `secret`.
+</ParamField>
+
+<ParamField body="clientSecret.properties" type="object" required>
+  Properties identifying the secret by ID and name.
+</ParamField>
+
+<ParamField body="clientSecret.properties.id" type="string" required>
+  The ID of the secret stored in Prophecy. Find the ID using the [List secrets per fabric
+  API](/api-reference/secrets/list-secrets-per-fabric).
+</ParamField>
+
+<ParamField body="clientSecret.properties.name" type="string" required>
+  The name of the secret stored in Prophecy.
+</ParamField>
+
+</Expandable>
+
+</ParamField>
+
+<ParamField body="metadataUserID" type="string">
+  User ID for metadata operations.
+</ParamField>
+
+<ParamField body="kgConfig" type="object">
+  Knowledge graph configuration settings for the connection.
+
+  <Expandable title="kgConfig properties">
+    <ParamField body="kgConfig.enabled" type="boolean" required>
+      Whether the knowledge graph is enabled for this connection.
+    </ParamField>
+
+    <ParamField body="kgConfig.useConnectorAuth" type="boolean" required>
+      Whether to use connector authentication for knowledge graph operations. When `true`, the knowledge graph uses the connection's authentication. When `false`, the knowledge graph uses separate authentication specified in `authProperties`.
+    </ParamField>
+
+    <ParamField body="kgConfig.kgSchedule" type="object" required>
+      Knowledge graph scheduling configuration. Can be an empty object `{}` if no scheduling is configured.
+
+      <Expandable title="kgSchedule properties">
+        <ParamField body="kgConfig.kgSchedule.timeZone" type="string">
+          Time zone for knowledge graph scheduling. Format: `America/New_York` or other IANA time zone identifier. Optional when `kgSchedule` is an empty object.
+        </ParamField>
+      </Expandable>
+    </ParamField>
+
+    <ParamField body="kgConfig.authProperties" type="object" required>
+      Authentication properties for knowledge graph operations. These properties can differ from the main connection's authentication settings. For example, a connection using `m2m` OAuth for pipeline operations can use `u2m` OAuth for knowledge graph operations.
+
+      <Expandable title="authProperties properties">
+        <ParamField body="kgConfig.authProperties.authType" type="string" required>
+          Authentication type for knowledge graph operations. Can differ from the connection's `authType`.
+        </ParamField>
+
+        <ParamField body="kgConfig.authProperties.oAuthType" type="string" required>
+          OAuth authentication type for knowledge graph operations. Can differ from the connection's `oAuthType`. For example, use `u2m` for knowledge graph even when the connection uses `m2m` for pipeline operations.
+        </ParamField>
+
+        <ParamField body="kgConfig.authProperties.clientId" type="string">
+          OAuth client ID for knowledge graph operations. Can be an empty string if not required.
+        </ParamField>
+
+        <ParamField body="kgConfig.authProperties.oAuthAppRegistrationID" type="string">
+          OAuth app registration ID for knowledge graph operations. Can be an empty string if not required.
+        </ParamField>
+      </Expandable>
+    </ParamField>
+
+  </Expandable>
+</ParamField>
+
+</Tab>
+
+</Tabs>
