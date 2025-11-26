@@ -1,0 +1,432 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Prophecy API - Fabrics",
+    "description": "API for managing Prophecy fabrics",
+    "version": "1.0.0"
+  },
+  "components": {
+    "parameters": {
+      "X-AUTH-TOKEN": {
+        "name": "X-AUTH-TOKEN",
+        "in": "header",
+        "description": "Prophecy authentication token. Required for all API requests.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "paths": {
+    "/api/orchestration/fabric": {
+      "post": {
+        "tags": ["Fabrics"],
+        "summary": "Create a new fabric",
+        "description": "Create a Prophecy fabric with optional secret and connection",
+        "operationId": "createFabric",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-AUTH-TOKEN"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "teamName", "provider"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the fabric to be created."
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Short description of the fabric."
+                  },
+                  "teamName": {
+                    "type": "string",
+                    "description": "Name of the team that will own the fabric."
+                  },
+                  "provider": {
+                    "type": "string",
+                    "description": "SQL warehouse provider for the fabric.",
+                    "enum": ["databricks", "bigquery"]
+                  },
+                  "dataplaneUrl": {
+                    "type": "string",
+                    "description": "Specific dataplane URL for the fabric. This is usually not needed and will be automatically set by Prophecy."
+                  },
+                  "secret": {
+                    "type": "object",
+                    "required": ["kind", "subKind", "properties"],
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "description": "Secret management provider. Must be `prophecy`.",
+                        "enum": ["prophecy"]
+                      },
+                      "subKind": {
+                        "type": "string",
+                        "description": "Secret sub-type.",
+                        "enum": ["text", "binary", "username_password", "m2m_oauth"]
+                      },
+                      "properties": {
+                        "type": "object",
+                        "description": "Secret properties that define the secret. \n\nThe schema is specification-driven and depends on the subKind value. Refer to the **Secrets > Properties** section of the API documentation for the specific properties per secret type.",
+                        "additionalProperties": true
+                      }
+                    },
+                    "description": "Optional secret to be created with the fabric. Only one secret can be added per request."
+                  },
+                  "connection": {
+                    "type": "object",
+                    "required": ["name", "kind", "isDefaultWarehouseConnection"],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "Name of the connection."
+                      },
+                      "kind": {
+                        "type": "string",
+                        "description": "Type of connection.",
+                        "enum": [
+                          "databricks",
+                          "bigquery",
+                          "synapse",
+                          "snowflake",
+                          "mssql",
+                          "oracle",
+                          "mongodb",
+                          "hana",
+                          "smtp",
+                          "redshift",
+                          "s3",
+                          "salesforce",
+                          "sftp",
+                          "sharepoint",
+                          "smartsheet",
+                          "ADLS",
+                          "tableau",
+                          "onedrive",
+                          "powerbi",
+                          "GCS"
+                        ]
+                      },
+                      "isDefaultWarehouseConnection": {
+                        "type": "boolean",
+                        "description": "Whether this connection should be set as the default SQL warehouse connection."
+                      },
+                      "properties": {
+                        "type": "object",
+                        "description": "Connection properties that define the connection. \n\nThe schema depends on the connection type. Refer to the **Connections > Properties** section of the API documentation for the specific properties per connection type.\n\nIn connection properties, replace secret field references with the string `{{SECRET}}` as the secret ID will not be available during creation.",
+                        "additionalProperties": true
+                      },
+                      "category": {
+                        "type": "string",
+                        "description": "Category for the connection."
+                      },
+                      "metadataUserID": {
+                        "type": "string",
+                        "description": "Metadata user ID. Define if you want to associate the connection with a specific user."
+                      },
+                      "shouldValidate": {
+                        "type": "boolean",
+                        "description": "Whether to validate the connection. Defaults to true.",
+                        "default": true
+                      },
+                      "shouldTest": {
+                        "type": "boolean",
+                        "description": "Whether to test the connection. Defaults to true.",
+                        "default": true
+                      }
+                    },
+                    "description": "Optional connection to be created with the fabric. Only one connection can be added per request.\n\nIt often makes sense to create the connection for your SQL warehouse when creating the fabric. This means you would set `isDefaultWarehouseConnection` to `true`."
+                  }
+                }
+              },
+              "example": {
+                "name": "API_Generated_Fabric",
+                "description": "This is a description of the fabric.",
+                "teamName": "devTeam",
+                "provider": "databricks",
+                "secret": {
+                  "subKind": "text",
+                  "properties": {
+                    "name": "databricks-pat",
+                    "value": "databricks-pat-value"
+                  },
+                  "kind": "prophecy"
+                },
+                "connection": {
+                  "name": "databricks_pat_1",
+                  "kind": "databricks",
+                  "properties": {
+                    "authType": "pat",
+                    "jdbcUrl": "<databricks-jdbc>",
+                    "catalog": "pipelinehub",
+                    "schema": "katherine",
+                    "token": "{{SECRET}}"
+                  },
+                  "isDefaultWarehouseConnection": true
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Fabric created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["success", "data"],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates the request was successful.",
+                      "enum": [true]
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "The fabric ID of the created fabric."
+                        }
+                      },
+                      "description": "Response data containing the fabric ID."
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "data": {
+                    "id": "10740"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Fabric creation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["success", "message"],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates the request failed.",
+                      "enum": [false]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message describing why the request failed."
+                    }
+                  }
+                },
+                "example": {
+                  "success": false,
+                  "message": "Fabric creation failed due to : Fabric with name `API_fabric_test` already exists in the team"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/orchestration/fabric/{fabricId}": {
+      "parameters": [
+        {
+          "name": "fabricId",
+          "in": "path",
+          "description": "The unique ID of the fabric",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": ["Fabrics"],
+        "summary": "Get fabric details",
+        "description": "Retrieve details for a specific fabric by its ID",
+        "operationId": "getFabricById",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-AUTH-TOKEN"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Fabric resource found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["success", "data"],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates the request was successful.",
+                      "enum": [true]
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "fabricID": {
+                          "type": "string",
+                          "description": "The unique identifier for the fabric."
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "The name of the fabric."
+                        },
+                        "teamID": {
+                          "type": "string",
+                          "description": "The unique identifier of the team that owns the fabric."
+                        }
+                      },
+                      "description": "Response data containing fabric details."
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "data": {
+                    "fabricID": "10740",
+                    "name": "API_fabric_test",
+                    "teamID": "1200"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Fabrics"],
+        "summary": "Update an existing fabric",
+        "description": "Update the name or description of an existing fabric",
+        "operationId": "updateFabric",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-AUTH-TOKEN"
+          }
+        ],
+        "requestBody": {
+          "description": "Fabric object with updated fields. Only name and description can be modified.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the fabric."
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "The description of the fabric."
+                  }
+                }
+              },
+              "example": {
+                "name": "API_fabric_test_update"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Fabric updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["success", "data"],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates the request was successful.",
+                      "enum": [true]
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "The unique identifier for the fabric."
+                        }
+                      },
+                      "description": "Response data containing the fabric ID."
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "data": {
+                    "id": "10740"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Fabrics"],
+        "summary": "Delete a fabric",
+        "description": "Delete a fabric by its ID",
+        "operationId": "deleteFabric",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-AUTH-TOKEN"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Fabric deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["success", "data"],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates the request was successful.",
+                      "enum": [true]
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "The unique identifier for the deleted fabric."
+                        }
+                      },
+                      "description": "Response data containing the fabric ID."
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "data": {
+                    "id": "10743"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

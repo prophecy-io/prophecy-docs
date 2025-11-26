@@ -410,14 +410,86 @@
             "groups": [
               {
                 "group": "API documentation",
-                "pages": ["api-reference/introduction"]
+                "pages": ["api-reference/introduction", "api-reference/rest-api-gem"]
               },
               {
-                "group": "Endpoint examples",
+                "group": "Endpoints",
                 "pages": [
-                  "api-reference/endpoint/deploy-project",
-                  "api-reference/endpoint/trigger-run",
-                  "api-reference/endpoint/get-run-status"
+                  {
+                    "group": "Fabrics",
+                    "pages": [
+                      "api-reference/fabrics/create-a-new-fabric",
+                      "api-reference/fabrics/get-fabric-details",
+                      "api-reference/fabrics/update-an-existing-fabric",
+                      "api-reference/fabrics/delete-a-fabric"
+                    ]
+                  },
+                  {
+                    "group": "Connections",
+                    "pages": [
+                      "api-reference/connections/add-connection-to-fabric",
+                      "api-reference/connections/list-connections-per-fabric",
+                      "api-reference/connections/retrieve-connection-details",
+                      "api-reference/connections/update-connection",
+                      "api-reference/connections/delete-connection",
+                      {
+                        "group": "Properties",
+                        "pages": [
+                          "api-reference/connections/properties/redshift",
+                          "api-reference/connections/properties/s3",
+                          "api-reference/connections/properties/adls",
+                          "api-reference/connections/properties/synapse",
+                          "api-reference/connections/properties/bigquery",
+                          "api-reference/connections/properties/gcs",
+                          "api-reference/connections/properties/databricks",
+                          "api-reference/connections/properties/mssql",
+                          "api-reference/connections/properties/onedrive",
+                          "api-reference/connections/properties/power-bi",
+                          "api-reference/connections/properties/sharepoint",
+                          "api-reference/connections/properties/mongodb",
+                          "api-reference/connections/properties/oracle",
+                          "api-reference/connections/properties/salesforce",
+                          "api-reference/connections/properties/hana",
+                          "api-reference/connections/properties/sftp",
+                          "api-reference/connections/properties/smartsheet",
+                          "api-reference/connections/properties/smpt",
+                          "api-reference/connections/properties/snowflake",
+                          "api-reference/connections/properties/tableau"
+                        ]
+                      },
+                      "api-reference/connections/properties/kgconfig"
+                    ]
+                  },
+                  {
+                    "group": "Secrets",
+                    "pages": [
+                      {
+                        "group": "Properties",
+                        "pages": [
+                          "api-reference/secrets/properties/text",
+                          "api-reference/secrets/properties/binary",
+                          "api-reference/secrets/properties/username-password",
+                          "api-reference/secrets/properties/oauth"
+                        ]
+                      },
+                      "api-reference/secrets/add-secret-to-fabric",
+                      "api-reference/secrets/list-secrets-per-fabric",
+                      "api-reference/secrets/retrieve-secret-details",
+                      "api-reference/secrets/update-secret",
+                      "api-reference/secrets/delete-secret"
+                    ]
+                  },
+                  {
+                    "group": "Projects",
+                    "pages": ["api-reference/projects/deploy-project"]
+                  },
+                  {
+                    "group": "Pipelines",
+                    "pages": [
+                      "api-reference/pipelines/trigger-pipeline-run",
+                      "api-reference/pipelines/get-pipeline-run-status"
+                    ]
+                  }
                 ]
               }
             ]
@@ -1041,7 +1113,7 @@
   "footer": {},
   "api": {
     "mdx": {
-      "server": "https://app.prophecy.io/api/",
+      "server": "https://app.prophecy.io/",
       "playground": {
         "display": "none"
       }

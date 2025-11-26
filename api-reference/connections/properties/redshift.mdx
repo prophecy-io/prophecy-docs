@@ -1,0 +1,75 @@
+---
+title: Amazon Redshift
+description: Properties required to create and update Redshift connections
+---
+
+Properties for Amazon Redshift connections are specified in the `properties` object when creating or updating a connection. All properties are nested within the connection request body.
+
+## Properties
+
+<ParamField body="server" type="string" required>
+
+Redshift cluster endpoint hostname or fully qualified domain name.
+
+Example: `cluster-name.us-east-1.redshift.amazonaws.com`
+
+</ParamField>
+
+<ParamField body="port" type="string" required>
+
+Port number for the Redshift cluster connection.
+
+Typically `5439` for Redshift database connections.
+
+</ParamField>
+
+<ParamField body="username" type="string" required>
+  Username for authenticating to the Redshift cluster.
+</ParamField>
+
+<ParamField body="password" type="object" required>
+Reference to a Prophecy secret containing the Redshift password.
+
+- When using the [create connection API](/api-reference/connections/add-connection-to-fabric), the secret must be stored in Prophecy before creating the connection.
+- When using the [create fabric API](/api-reference/fabrics/create-a-new-fabric), replace this whole object with the string `{{SECRET}}`, which references the secret being created in parallel to the connection.
+
+<Expandable title="password properties">
+<ParamField body="password.kind" type="string" required>
+Secret kind. Must be `prophecy` for Prophecy secrets.
+</ParamField>
+
+<ParamField body="password.subKind" type="string" required>
+  Secret sub-type. Must be `text` for passwords.
+</ParamField>
+
+<ParamField body="password.type" type="string" required>
+  Type of reference. Must be `secret`.
+</ParamField>
+
+<ParamField body="password.properties" type="object" required>
+  Properties identifying the secret by ID and name.
+</ParamField>
+
+<ParamField body="password.properties.id" type="string" required>
+
+The ID of the secret stored in Prophecy.
+
+Use the [list secrets](/api-reference/secrets/list-secrets-per-fabric) endpoint to find the secret ID.
+
+</ParamField>
+
+<ParamField body="password.properties.name" type="string" required>
+  The name of the secret stored in Prophecy.
+</ParamField>
+
+</Expandable>
+</ParamField>
+
+<ParamField body="database" type="string" required>
+  Name of the Redshift database to connect to.
+</ParamField>
+
+<ParamField body="kgConfig" type="object">
+  Knowledge graph configuration settings for the connection. See the [Knowledge graph
+  indexer](/api-reference/connections/properties/kgconfig) properties for more information.
+</ParamField>

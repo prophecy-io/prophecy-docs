@@ -1,0 +1,120 @@
+---
+title: Knowledge graph indexer
+description: Properties for configuring the knowledge graph indexer for a connection
+---
+
+The `kgConfig` object configures [knowledge graph indexer](/data-analytics/ai/knowledge-graph/indexer) settings for connections. Properties vary by connector type and authentication method.
+
+## General properties
+
+<ParamField body="kgConfig.enabled" type="boolean" default="true">
+  Whether the knowledge graph is enabled for this connection.
+</ParamField>
+
+  <ParamField body="kgConfig.useConnectorAuth" type="boolean" default="true">
+
+    Whether to use existing connector authentication for knowledge graph operations.
+
+    - When `true`, the knowledge graph uses the connection's authentication.
+    - When `false`, the knowledge graph uses separate authentication specified in `kgConfig.authProperties`.
+
+    The value can only be `false` when the connection's authentication method is **OAuth**.
+
+  </ParamField>
+
+  <ParamField body="kgConfig.kgSchedule" type="object">
+    Knowledge graph scheduling configuration.
+
+    <Expandable title="kgSchedule properties">
+      <ParamField body="kgConfig.kgSchedule.timeZone" type="string">
+
+        Time zone for knowledge graph scheduling.
+
+        Format: `America/New_York` or other IANA time zone identifier.
+
+      </ParamField>
+
+      <ParamField body="kgConfig.kgSchedule.cron" type="string">
+
+        Cron expression defining the schedule for knowledge graph operations. Format follows standard cron syntax.
+
+        Example: `0 0 18 ? * 1,3 *` for 6 PM on Mondays and Wednesdays.
+
+      </ParamField>
+    </Expandable>
+
+  </ParamField>
+
+  <ParamField body="kgConfig.authProperties" type="object">
+
+    Authentication properties for knowledge graph operations. These properties can differ from the main connection's authentication settings. Properties vary by OAuth type (`u2m` or `m2m`).
+
+    <Tabs>
+      <Tab title="U2M">
+
+        <Expandable title="U2M authProperties properties">
+          <ParamField body="kgConfig.authProperties.authType" type="string" required>
+            Authentication type for knowledge graph operations. Must be `oauth`.
+          </ParamField>
+
+          <ParamField body="kgConfig.authProperties.oAuthType" type="string" required>
+            OAuth authentication type for knowledge graph operations. Must be `u2m`.
+          </ParamField>
+
+          <ParamField body="kgConfig.authProperties.oAuthAppRegistrationID" type="string" required>
+            OAuth app registration ID [configured in Prophecy](/data-analytics/administration/management/cluster-admin-settings/oauth-setup).
+          </ParamField>
+        </Expandable>
+
+      </Tab>
+
+      <Tab title="M2M">
+
+        <Expandable title="M2M authProperties properties">
+          <ParamField body="kgConfig.authProperties.authType" type="string" required>
+            Authentication type for knowledge graph operations. Must be `oauth`.
+          </ParamField>
+
+          <ParamField body="kgConfig.authProperties.oAuthType" type="string" required>
+            OAuth authentication type for knowledge graph operations. Must be `m2m`.
+          </ParamField>
+
+          <ParamField body="kgConfig.authProperties.clientId" type="string" required>
+            OAuth client ID for knowledge graph operations.
+          </ParamField>
+
+          <ParamField body="kgConfig.authProperties.clientSecret" type="object" required>
+            Reference to a Prophecy secret containing the OAuth client secret.
+
+            <Expandable title="clientSecret properties">
+              <ParamField body="kgConfig.authProperties.clientSecret.kind" type="string" required>
+                Secret kind. Must be `prophecy`.
+              </ParamField>
+
+              <ParamField body="kgConfig.authProperties.clientSecret.subKind" type="string" required>
+                Secret sub-type. Must be `text` for client secrets.
+              </ParamField>
+
+              <ParamField body="kgConfig.authProperties.clientSecret.type" type="string" required>
+                Type of reference. Must be `secret`.
+              </ParamField>
+
+              <ParamField body="kgConfig.authProperties.clientSecret.properties" type="object" required>
+                Properties identifying the secret by ID and name.
+              </ParamField>
+
+              <ParamField body="kgConfig.authProperties.clientSecret.properties.id" type="string" required>
+                The ID of the secret stored in Prophecy. Find the ID using the [List secrets per fabric API](/api-reference/secrets/list-secrets-per-fabric).
+              </ParamField>
+
+              <ParamField body="kgConfig.authProperties.clientSecret.properties.name" type="string" required>
+                The name of the secret stored in Prophecy.
+              </ParamField>
+            </Expandable>
+          </ParamField>
+        </Expandable>
+
+      </Tab>
+    </Tabs>
+
+  </ParamField>
