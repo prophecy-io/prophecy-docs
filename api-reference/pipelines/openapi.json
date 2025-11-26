@@ -1,0 +1,226 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Prophecy API - Pipeline Runs",
+    "description": "API for triggering and monitoring pipeline runs",
+    "version": "1.0.0"
+  },
+  "components": {
+    "parameters": {
+      "X-AUTH-TOKEN": {
+        "name": "X-AUTH-TOKEN",
+        "in": "header",
+        "description": "Prophecy authentication token. Required for all API requests.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "paths": {
+    "/api/trigger/pipeline": {
+      "parameters": [
+        {
+          "name": "X-AUTH-TOKEN",
+          "in": "header",
+          "description": "Prophecy access token",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "tags": ["Pipeline Runs"],
+        "summary": "Trigger pipeline run",
+        "description": "Trigger the execution of a pipeline in a deployed project. This is useful when you want to automate pipeline runs without relying on Prophecy's built-in scheduling.",
+        "operationId": "triggerPipelineRun",
+        "requestBody": {
+          "description": "Pipeline run trigger parameters",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["fabricId", "pipelineName", "projectId"],
+                "properties": {
+                  "fabricId": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "Unique identifier of the data fabric where the pipeline resides. You can find the ID in the URL of the fabric metadata page."
+                  },
+                  "pipelineName": {
+                    "type": "string",
+                    "description": "Name of the pipeline to be triggered."
+                  },
+                  "projectId": {
+                    "type": "string",
+                    "description": "Unique ID of the project where the pipeline resides. You can find this string in the URL of the project editor or metadata page."
+                  },
+                  "parameters": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string",
+                      "description": "Pipeline parameter name and value. The key is the name of a pipeline parameter, and the value is the parameter value to assign."
+                    },
+                    "description": "Map of key-value pairs representing pipeline parameters. These will override default parameter values."
+                  },
+                  "branch": {
+                    "type": "string",
+                    "description": "Specific branch of the pipeline to execute. If omitted, the current working branch is used."
+                  },
+                  "version": {
+                    "type": "string",
+                    "description": "Specific version of the project containing the pipeline. If omitted, the latest version is used."
+                  },
+                  "processName": {
+                    "type": "string",
+                    "description": "Name of a specific gem within the pipeline. If provided, the pipeline will not run beyond this gem. If no processName is specified, the full pipeline is executed."
+                  }
+                }
+              },
+              "example": {
+                "fabricId": 33290,
+                "pipelineName": "bakehouse",
+                "parameters": {
+                  "franchise_id": "3000007"
+                },
+                "version": "2",
+                "projectId": "41459",
+                "processName": "franchise_reviews"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pipeline run triggered successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates whether the request to trigger the pipeline was successful. It does not reflect the success of the pipeline run."
+                    },
+                    "runId": {
+                      "type": "string",
+                      "description": "Unique identifier of the pipeline run."
+                    },
+                    "msg": {
+                      "type": "string",
+                      "description": "Error message if the request to trigger the pipeline was unsuccessful."
+                    }
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "summary": "Response to a request with an invalid fabric ID",
+                    "value": {
+                      "success": false,
+                      "msg": "error in triggering pipeline: Success(Left(sdl.md.client.package$MetadataException: Fabric with uid `2290` not found)) (of class scala.util.Success)"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/trigger/pipeline/{runId}": {
+      "parameters": [
+        {
+          "name": "runId",
+          "in": "path",
+          "description": "Pipeline run ID",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "MDAw-xZGYzYzc3LTYzdsSdfx--LTQ3NTQ1ZYjI2Mw=="
+          }
+        },
+        {
+          "name": "X-AUTH-TOKEN",
+          "in": "header",
+          "description": "Prophecy access token",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": ["Pipeline Runs"],
+        "summary": "Get pipeline run status",
+        "description": "Get the status of a triggered pipeline run, including an error message if the pipeline run fails.",
+        "operationId": "getPipelineRunStatus",
+        "responses": {
+          "200": {
+            "description": "Pipeline run status retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates whether the request to retrieve the pipeline run status was successful. It does not reflect the success of the run."
+                    },
+                    "runId": {
+                      "type": "string",
+                      "description": "Unique identifier of the pipeline run."
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Timestamp when the pipeline run record was created. Returns ISO 8601 format, including microseconds."
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Timestamp when the pipeline run record was last updated. Returns ISO 8601 format, including microseconds."
+                    },
+                    "projectId": {
+                      "type": "string",
+                      "description": "ID of the project associated with this pipeline run."
+                    },
+                    "pipelineName": {
+                      "type": "string",
+                      "description": "Name of the pipeline associated with this run."
+                    },
+                    "fabricId": {
+                      "type": "string",
+                      "description": "ID of the fabric where the pipeline resides."
+                    },
+                    "runStatus": {
+                      "type": "string",
+                      "enum": ["RUNNING", "ERROR", "SUCCEEDED"],
+                      "description": "Execution status of the pipeline run."
+                    },
+                    "errorMessage": {
+                      "type": "string",
+                      "description": "Descriptive error message if the runStatus is ERROR."
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "runId": "MDAw-xZGYzYzc3LTYzdsSdfx--LTQ3NTQ1ZYjI2Mw==",
+                  "createdAt": "2025-06-17T18:01:49.275359",
+                  "updatedAt": "2025-06-17T18:02:41.712486",
+                  "projectId": "41459",
+                  "pipelineName": "bakehouse",
+                  "fabricId": "33290",
+                  "runStatus": "SUCCEEDED"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

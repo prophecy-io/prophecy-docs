@@ -1,0 +1,17 @@
+---
+openapi: post /api/orchestration/fabric
+playground: 'none'
+---
+
+<Note>
+  You can only add one secret and one connection in the same request. In most cases, the connection
+  will require a secret, so these will be created together.
+</Note>
+
+<Tip>
+The `connection.properties` object and `secret.properties` object depend on the connection type and secret type. Find specific properties in the following API documentation sections:
+
+- **Connections > Properties**
+- **Secrets > Properties**
+
+</Tip>
