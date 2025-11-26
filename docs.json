@@ -416,61 +416,80 @@
                 "group": "Endpoints",
                 "pages": [
                   {
+                    "group": "Fabrics",
+                    "pages": [
+                      "api-reference/fabrics/create-a-new-fabric",
+                      "api-reference/fabrics/get-fabric-details",
+                      "api-reference/fabrics/update-an-existing-fabric",
+                      "api-reference/fabrics/delete-a-fabric"
+                    ]
+                  },
+                  {
                     "group": "Connections",
                     "pages": [
                       {
-                        "group": "Connection properties",
+                        "group": "Properties",
                         "pages": [
-                          "api-reference/connections/redshift",
-                          "api-reference/connections/s3",
-                          "api-reference/connections/adls",
-                          "api-reference/connections/synapse",
-                          "api-reference/connections/bigquery",
-                          "api-reference/connections/gcs",
-                          "api-reference/connections/databricks",
-                          "api-reference/connections/mssql",
-                          "api-reference/connections/onedrive",
-                          "api-reference/connections/power-bi",
-                          "api-reference/connections/sharepoint",
-                          "api-reference/connections/mongodb",
-                          "api-reference/connections/oracle",
-                          "api-reference/connections/salesforce",
-                          "api-reference/connections/hana",
-                          "api-reference/connections/sftp",
-                          "api-reference/connections/smartsheet",
-                          "api-reference/connections/smpt",
-                          "api-reference/connections/snowflake",
-                          "api-reference/connections/tableau"
+                          "api-reference/connections/properties/redshift",
+                          "api-reference/connections/properties/s3",
+                          "api-reference/connections/properties/adls",
+                          "api-reference/connections/properties/synapse",
+                          "api-reference/connections/properties/bigquery",
+                          "api-reference/connections/properties/gcs",
+                          "api-reference/connections/properties/databricks",
+                          "api-reference/connections/properties/mssql",
+                          "api-reference/connections/properties/onedrive",
+                          "api-reference/connections/properties/power-bi",
+                          "api-reference/connections/properties/sharepoint",
+                          "api-reference/connections/properties/mongodb",
+                          "api-reference/connections/properties/oracle",
+                          "api-reference/connections/properties/salesforce",
+                          "api-reference/connections/properties/hana",
+                          "api-reference/connections/properties/sftp",
+                          "api-reference/connections/properties/smartsheet",
+                          "api-reference/connections/properties/smpt",
+                          "api-reference/connections/properties/snowflake",
+                          "api-reference/connections/properties/tableau"
                         ]
                       },
-                      "api-reference/connections/openapi.json POST /api/orchestration/fabric/{fabricId}/connection",
-                      "api-reference/connections/openapi.json GET /api/orchestration/fabric/{fabricId}/connection",
-                      "api-reference/connections/openapi.json GET /api/orchestration/fabric/{fabricId}/connection/name/{connectionName}",
-                      "api-reference/connections/openapi.json PUT /api/orchestration/fabric/{fabricId}/connection/name/{connectionName}",
-                      "api-reference/connections/openapi.json DELETE /api/orchestration/fabric/{fabricId}/connection/name/{connectionName}"
+                      "api-reference/connections/add-connection-to-fabric",
+                      "api-reference/connections/list-connections-per-fabric",
+                      "api-reference/connections/retrieve-connection-details",
+                      "api-reference/connections/update-connection",
+                      "api-reference/connections/delete-connection"
                     ]
                   },
                   {
                     "group": "Secrets",
                     "pages": [
                       {
-                        "group": "Secret properties",
+                        "group": "Properties",
                         "pages": [
-                          "api-reference/secrets/text",
-                          "api-reference/secrets/binary",
-                          "api-reference/secrets/username-password",
-                          "api-reference/secrets/oauth"
+                          "api-reference/secrets/properties/text",
+                          "api-reference/secrets/properties/binary",
+                          "api-reference/secrets/properties/username-password",
+                          "api-reference/secrets/properties/oauth"
                         ]
                       },
-                      "api-reference/secrets/openapi.json POST /api/orchestration/fabric/{fabricId}/secret",
-                      "api-reference/secrets/openapi.json GET /api/orchestration/fabric/{fabricId}/secret",
-                      "api-reference/secrets/openapi.json GET /api/orchestration/fabric/{fabricId}/secret/id/{secretId}",
-                      "api-reference/secrets/openapi.json PUT /api/orchestration/fabric/{fabricId}/secret/id/{secretId}",
-                      "api-reference/secrets/openapi.json DELETE /api/orchestration/fabric/{fabricId}/secret/id/{secretId}"
+                      "api-reference/secrets/add-secret-to-fabric",
+                      "api-reference/secrets/list-secrets-per-fabric",
+                      "api-reference/secrets/retrieve-secret-details",
+                      "api-reference/secrets/update-secret",
+                      "api-reference/secrets/delete-secret"
+                    ]
+                  },
+                  {
+                    "group": "Projects",
+                    "pages": ["api-reference/projects/deploy-project"]
+                  },
+                  {
+                    "group": "Pipelines",
+                    "pages": [
+                      "api-reference/pipelines/trigger-pipeline-run",
+                      "api-reference/pipelines/get-pipeline-run-status"
                     ]
                   }
-                ],
-                "openapi": "/api-reference/openapi.json"
+                ]
               }
             ]
           },
