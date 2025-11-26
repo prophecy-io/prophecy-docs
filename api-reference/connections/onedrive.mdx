@@ -1,12 +1,14 @@
 ---
-title: OneDrive
+title: Microsoft OneDrive
 description: Properties required to create and update OneDrive connections
 ---
 
-Properties for OneDrive connections are specified in the `properties` object when creating or updating a connection. All properties are nested within the connection request body.
+Properties for Microsoft OneDrive connections are specified in the `properties` object when creating or updating a connection. All properties are nested within the connection request body.
 
 <Tip>
-  Create the secrets containing your Azure client secret and OneDrive username in Prophecy before creating the OneDrive connection. All secrets must be of type `text` and contain their respective values.
+  Create the secrets containing your Azure client secret and OneDrive username in Prophecy before
+  creating the OneDrive connection. All secrets must be of type `text` and contain their respective
+  values.
 </Tip>
 
 ## Properties
@@ -16,7 +18,8 @@ Properties for OneDrive connections are specified in the `properties` object whe
 </ParamField>
 
 <ParamField body="clientId" type="string" required>
-  Azure Active Directory application (client) ID. Format: UUID. Example: `63ffdc73-347c-4194-a0e6-ceee543a2e3e`.
+  Azure Active Directory application (client) ID. Format: UUID. Example:
+  `63ffdc73-347c-4194-a0e6-ceee543a2e3e`.
 </ParamField>
 
 <ParamField body="clientSecret" type="object" required>

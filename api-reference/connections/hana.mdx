@@ -1,0 +1,93 @@
+---
+title: SAP HANA
+description: Properties required to create and update SAP HANA connections
+---
+
+Properties for SAP HANA connections are specified in the `properties` object when creating or updating a connection. All properties are nested within the connection request body.
+
+<Tip>
+  Create the secrets containing your password and user key (if using user key authentication) in
+  Prophecy before creating the HANA connection. Secrets must be of type `text` and contain the
+  password or user key as their value.
+</Tip>
+
+## Properties
+
+<ParamField body="authType" type="string" required>
+  Authentication type for SAP HANA. Supported values: `pwd` for password authentication, or
+  `userkey` for user key authentication.
+</ParamField>
+
+<ParamField body="host" type="string" required>
+  Hostname or IP address of the SAP HANA server.
+</ParamField>
+
+<ParamField body="port" type="string" required>
+  Port number for the SAP HANA server connection. Typically `30168` for HTTPS or `30015` for HTTP.
+</ParamField>
+
+<ParamField body="username" type="string" required>
+  Username for authenticating to the SAP HANA database.
+</ParamField>
+
+<ParamField body="password" type="object" required>
+  Reference to a Prophecy secret containing the password for authentication. Required for both `pwd` and `userkey` authentication types. The secret must be stored in Prophecy before creating the connection.
+
+  <Expandable title="password properties">
+    <ParamField body="password.kind" type="string" required>
+      Secret kind. Must be `prophecy`.
+    </ParamField>
+
+    <ParamField body="password.subKind" type="string" required>
+      Secret sub-type. Must be `text` for passwords.
+    </ParamField>
+
+    <ParamField body="password.type" type="string" required>
+      Type of reference. Must be `secret`.
+    </ParamField>
+
+    <ParamField body="password.properties" type="object" required>
+      Properties identifying the secret by ID and name.
+    </ParamField>
+
+    <ParamField body="password.properties.id" type="string" required>
+      The ID of the secret stored in Prophecy. You can find this in the secret details page.
+    </ParamField>
+
+    <ParamField body="password.properties.name" type="string" required>
+      The name of the secret stored in Prophecy.
+    </ParamField>
+
+  </Expandable>
+</ParamField>
+
+<ParamField body="userkey" type="object">
+  Reference to a Prophecy secret containing the user key for authentication. Required when `authType` is `userkey`. The secret must be stored in Prophecy before creating the connection.
+
+  <Expandable title="userkey properties">
+    <ParamField body="userkey.kind" type="string" required>
+      Secret kind. Must be `prophecy`.
+    </ParamField>
+
+    <ParamField body="userkey.subKind" type="string" required>
+      Secret sub-type. Must be `text` for user keys.
+    </ParamField>
+
+    <ParamField body="userkey.type" type="string" required>
+      Type of reference. Must be `secret`.
+    </ParamField>
+
+    <ParamField body="userkey.properties" type="object" required>
+      Properties identifying the secret by ID and name.
+    </ParamField>
+
+    <ParamField body="userkey.properties.id" type="string" required>
+      The ID of the secret stored in Prophecy. You can find this in the secret details page.
+    </ParamField>
+
+    <ParamField body="userkey.properties.name" type="string" required>
+      The name of the secret stored in Prophecy.
+    </ParamField>
+
+  </Expandable>
+</ParamField>
