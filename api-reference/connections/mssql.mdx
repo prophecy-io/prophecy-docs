@@ -1,0 +1,91 @@
+---
+title: MSSQL
+description: Properties required to create and update MSSQL connections
+---
+
+Properties for MSSQL connections are specified in the `properties` object when creating or updating a connection. All properties are nested within the connection request body.
+
+<Tip>
+  Create the secret containing your MSSQL password in Prophecy before creating the MSSQL connection.
+  The secret must be of type `text` and contain the password as its value.
+</Tip>
+
+## Properties
+
+<ParamField body="server" type="string" required>
+  MSSQL server hostname or fully qualified domain name.
+</ParamField>
+
+<ParamField body="port" type="string" required>
+  Port number for the MSSQL server connection. Typically `1433` for SQL Server connections.
+</ParamField>
+
+<ParamField body="username" type="string" required>
+  Username for authenticating to the MSSQL server.
+</ParamField>
+
+<ParamField body="password" type="object" required>
+  Reference to a Prophecy secret containing the MSSQL password. The secret must be stored in Prophecy before creating the connection.
+
+  <Expandable title="password properties">
+    <ParamField body="password.kind" type="string" required>
+      Secret kind. Must be `prophecy`.
+    </ParamField>
+
+    <ParamField body="password.subKind" type="string" required>
+      Secret sub-type. Must be `text` for passwords.
+    </ParamField>
+
+    <ParamField body="password.type" type="string" required>
+      Type of reference. Must be `secret`.
+    </ParamField>
+
+    <ParamField body="password.properties" type="object" required>
+      Properties identifying the secret by ID and name.
+    </ParamField>
+
+    <ParamField body="password.properties.id" type="string" required>
+      The ID of the secret stored in Prophecy. You can find this in the secret details page.
+    </ParamField>
+
+    <ParamField body="password.properties.name" type="string" required>
+      The name of the secret stored in Prophecy.
+    </ParamField>
+
+  </Expandable>
+</ParamField>
+
+<ParamField body="kgConfig" type="object" required>
+  Knowledge graph configuration settings for the connection.
+
+  <Expandable title="kgConfig properties">
+    <ParamField body="kgConfig.useConnectorAuth" type="boolean" required>
+      Whether to use connector authentication for knowledge graph operations. When `true`, the knowledge graph uses the connection's authentication. When `false`, the knowledge graph uses separate authentication specified in `authProperties`.
+    </ParamField>
+
+    <ParamField body="kgConfig.kgSchedule" type="object" required>
+      Knowledge graph scheduling configuration. Can be an empty object `{}` if no scheduling is configured.
+
+      <Expandable title="kgSchedule properties">
+        <ParamField body="kgConfig.kgSchedule.timeZone" type="string">
+          Time zone for knowledge graph scheduling. Format: `America/New_York` or other IANA time zone identifier. Optional when `kgSchedule` is an empty object.
+        </ParamField>
+      </Expandable>
+    </ParamField>
+
+    <ParamField body="kgConfig.authProperties" type="object" required>
+      Authentication properties for knowledge graph operations. These properties can differ from the main connection's authentication settings.
+
+      <Expandable title="authProperties properties">
+        <ParamField body="kgConfig.authProperties.username" type="string" required>
+          Username for knowledge graph operations. Can be an empty string when `useConnectorAuth` is `true` to use the connection's username.
+        </ParamField>
+      </Expandable>
+    </ParamField>
+
+  </Expandable>
+</ParamField>
+
+<ParamField body="id" type="string">
+  Optional connection ID. Can be an empty string if not provided.
+</ParamField>

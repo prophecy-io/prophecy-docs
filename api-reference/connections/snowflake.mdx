@@ -1,0 +1,78 @@
+---
+title: Snowflake
+description: Properties required to create and update Snowflake connections
+---
+
+Properties for Snowflake connections are specified in the `properties` object when creating or updating a connection. All properties are nested within the connection request body.
+
+<Tip>
+  Create the secret containing your Snowflake password in Prophecy before creating the Snowflake
+  connection. The secret must be of type `text` and contain the password as its value.
+</Tip>
+
+## Properties
+
+<ParamField body="authType" type="string" required>
+  Authentication type for Snowflake. Use `pwd` for password authentication.
+</ParamField>
+
+<ParamField body="account" type="string" required>
+  Snowflake account identifier. Format: `{account_identifier}.{region}.{cloud_provider}
+  .snowflakecomputing.com`. Example: `tu22760.ap-south-1.aws.snowflakecomputing.com`.
+</ParamField>
+
+<ParamField body="username" type="string" required>
+  Snowflake user name for authentication.
+</ParamField>
+
+<ParamField body="password" type="object" required>
+  Reference to a Prophecy secret containing the Snowflake password. The secret must be stored in Prophecy before creating the connection.
+
+  <Expandable title="password properties">
+    <ParamField body="password.kind" type="string" required>
+      Secret kind. Must be `prophecy`.
+    </ParamField>
+
+    <ParamField body="password.subKind" type="string" required>
+      Secret sub-type. Must be `text` for passwords.
+    </ParamField>
+
+    <ParamField body="password.type" type="string" required>
+      Type of reference. Must be `secret`.
+    </ParamField>
+
+    <ParamField body="password.properties" type="object" required>
+      Properties identifying the secret by ID and name.
+    </ParamField>
+
+    <ParamField body="password.properties.id" type="string" required>
+      The ID of the secret stored in Prophecy. You can find this in the secret details page.
+    </ParamField>
+
+    <ParamField body="password.properties.name" type="string" required>
+      The name of the secret stored in Prophecy.
+    </ParamField>
+
+  </Expandable>
+</ParamField>
+
+<ParamField body="database" type="string" required>
+  Default database name to use for queries when no database is explicitly specified.
+</ParamField>
+
+<ParamField body="schema" type="string" required>
+  Default schema name within the database to use for queries.
+</ParamField>
+
+<ParamField body="warehouse" type="string" required>
+  Snowflake warehouse name to use for query execution.
+</ParamField>
+
+<ParamField body="role" type="string" required>
+  Snowflake role to use for the connection. Determines the permissions and access level for
+  operations.
+</ParamField>
+
+<ParamField body="id" type="string">
+  Optional connection ID. Can be an empty string if not provided.
+</ParamField>

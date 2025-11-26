@@ -1,0 +1,58 @@
+---
+title: SMTP
+description: Properties required to create and update SMTP connections
+---
+
+Properties for SMTP connections are specified in the `properties` object when creating or updating a connection. All properties are nested within the connection request body.
+
+<Tip>
+  Create the secret containing your SMTP password in Prophecy before creating the SMTP connection.
+  The secret must be of type `text` and contain the password as its value.
+</Tip>
+
+## Properties
+
+<ParamField body="smtpUrl" type="string" required>
+  SMTP server hostname or fully qualified domain name. Example: `smtp.gmail.com`.
+</ParamField>
+
+<ParamField body="smtpPort" type="integer" required>
+  Port number for the SMTP server connection. Common ports include `587` for TLS/STARTTLS and `465`
+  for SSL.
+</ParamField>
+
+<ParamField body="smtpUsername" type="string" required>
+  Username for authenticating to the SMTP server. This is typically the email address used for
+  sending emails.
+</ParamField>
+
+<ParamField body="smtpPassword" type="object" required>
+  Reference to a Prophecy secret containing the SMTP password. The secret must be stored in Prophecy before creating the connection.
+
+  <Expandable title="smtpPassword properties">
+    <ParamField body="smtpPassword.kind" type="string" required>
+      Secret kind. Must be `prophecy`.
+    </ParamField>
+
+    <ParamField body="smtpPassword.subKind" type="string" required>
+      Secret sub-type. Must be `text` for passwords.
+    </ParamField>
+
+    <ParamField body="smtpPassword.type" type="string" required>
+      Type of reference. Must be `secret`.
+    </ParamField>
+
+    <ParamField body="smtpPassword.properties" type="object" required>
+      Properties identifying the secret by ID and name.
+    </ParamField>
+
+    <ParamField body="smtpPassword.properties.id" type="string" required>
+      The ID of the secret stored in Prophecy. You can find this in the secret details page.
+    </ParamField>
+
+    <ParamField body="smtpPassword.properties.name" type="string" required>
+      The name of the secret stored in Prophecy.
+    </ParamField>
+
+  </Expandable>
+</ParamField>

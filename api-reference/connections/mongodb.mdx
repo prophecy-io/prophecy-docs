@@ -1,0 +1,70 @@
+---
+title: MongoDB
+description: Properties required to create and update MongoDB connections
+---
+
+Properties for MongoDB connections are specified in the `properties` object when creating or updating a connection. All properties are nested within the connection request body.
+
+<Tip>
+  Create the secret containing your MongoDB password in Prophecy before creating the MongoDB
+  connection. The secret must be of type `text` and contain the password as its value.
+</Tip>
+
+## Properties
+
+<ParamField body="protocol" type="string" required>
+  MongoDB connection protocol. Use `mongodb` for standard connections or `mongodb+srv` for
+  connections using DNS seed list format (typically used with MongoDB Atlas).
+</ParamField>
+
+<ParamField body="host" type="string" required>
+  MongoDB server hostname or fully qualified domain name. For MongoDB Atlas, this is typically the
+  cluster hostname. Example: `cluster0.rmzyl.mongodb.net`.
+</ParamField>
+
+<ParamField body="username" type="string" required>
+  Username for authenticating to the MongoDB server.
+</ParamField>
+
+<ParamField body="password" type="object" required>
+  Reference to a Prophecy secret containing the MongoDB password. The secret must be stored in Prophecy before creating the connection.
+
+  <Expandable title="password properties">
+    <ParamField body="password.kind" type="string" required>
+      Secret kind. Must be `prophecy`.
+    </ParamField>
+
+    <ParamField body="password.subKind" type="string" required>
+      Secret sub-type. Must be `text` for passwords.
+    </ParamField>
+
+    <ParamField body="password.type" type="string" required>
+      Type of reference. Must be `secret`.
+    </ParamField>
+
+    <ParamField body="password.properties" type="object" required>
+      Properties identifying the secret by ID and name.
+    </ParamField>
+
+    <ParamField body="password.properties.id" type="string" required>
+      The ID of the secret stored in Prophecy. You can find this in the secret details page.
+    </ParamField>
+
+    <ParamField body="password.properties.name" type="string" required>
+      The name of the secret stored in Prophecy.
+    </ParamField>
+
+  </Expandable>
+</ParamField>
+
+<ParamField body="database" type="string" required>
+  Name of the MongoDB database to connect to.
+</ParamField>
+
+<ParamField body="collection" type="string" required>
+  Name of the default collection to use for queries when no collection is explicitly specified.
+</ParamField>
+
+<ParamField body="id" type="string">
+  Optional connection ID. Can be an empty string if not provided.
+</ParamField>

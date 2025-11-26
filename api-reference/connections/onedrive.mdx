@@ -1,0 +1,86 @@
+---
+title: OneDrive
+description: Properties required to create and update OneDrive connections
+---
+
+Properties for OneDrive connections are specified in the `properties` object when creating or updating a connection. All properties are nested within the connection request body.
+
+<Tip>
+  Create the secrets containing your Azure client secret and OneDrive username in Prophecy before creating the OneDrive connection. All secrets must be of type `text` and contain their respective values.
+</Tip>
+
+## Properties
+
+<ParamField body="tenantId" type="string" required>
+  Azure Active Directory tenant ID. Format: UUID. Example: `393ecdf0-1e48-4763-8537-46c6a427c7fb`.
+</ParamField>
+
+<ParamField body="clientId" type="string" required>
+  Azure Active Directory application (client) ID. Format: UUID. Example: `63ffdc73-347c-4194-a0e6-ceee543a2e3e`.
+</ParamField>
+
+<ParamField body="clientSecret" type="object" required>
+  Reference to a Prophecy secret containing the Azure client secret. The secret must be stored in Prophecy before creating the connection.
+
+  <Expandable title="clientSecret properties">
+    <ParamField body="clientSecret.kind" type="string" required>
+      Secret kind. Must be `prophecy`.
+    </ParamField>
+
+    <ParamField body="clientSecret.subKind" type="string" required>
+      Secret sub-type. Must be `text` for client secrets.
+    </ParamField>
+
+    <ParamField body="clientSecret.type" type="string" required>
+      Type of reference. Must be `secret`.
+    </ParamField>
+
+    <ParamField body="clientSecret.properties" type="object" required>
+      Properties identifying the secret by ID and name.
+    </ParamField>
+
+    <ParamField body="clientSecret.properties.id" type="string" required>
+      The ID of the secret stored in Prophecy. You can find this in the secret details page.
+    </ParamField>
+
+    <ParamField body="clientSecret.properties.name" type="string" required>
+      The name of the secret stored in Prophecy.
+    </ParamField>
+
+  </Expandable>
+</ParamField>
+
+<ParamField body="userName" type="object" required>
+  Reference to a Prophecy secret containing the OneDrive username. The secret must be stored in Prophecy before creating the connection.
+
+  <Expandable title="userName properties">
+    <ParamField body="userName.kind" type="string" required>
+      Secret kind. Must be `prophecy`.
+    </ParamField>
+
+    <ParamField body="userName.subKind" type="string" required>
+      Secret sub-type. Must be `text` for usernames.
+    </ParamField>
+
+    <ParamField body="userName.type" type="string" required>
+      Type of reference. Must be `secret`.
+    </ParamField>
+
+    <ParamField body="userName.properties" type="object" required>
+      Properties identifying the secret by ID and name.
+    </ParamField>
+
+    <ParamField body="userName.properties.id" type="string" required>
+      The ID of the secret stored in Prophecy. You can find this in the secret details page.
+    </ParamField>
+
+    <ParamField body="userName.properties.name" type="string" required>
+      The name of the secret stored in Prophecy.
+    </ParamField>
+
+  </Expandable>
+</ParamField>
+
+<ParamField body="id" type="string">
+  Optional connection ID. Can be an empty string if not provided.
+</ParamField>

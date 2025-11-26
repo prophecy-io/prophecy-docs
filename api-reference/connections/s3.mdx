@@ -1,0 +1,103 @@
+---
+title: S3
+description: Properties required to create and update S3 connections
+---
+
+Properties for S3 connections are specified in the `properties` object when creating or updating a connection. All properties are nested within the connection request body.
+
+<Tip>
+  Create the secret containing your AWS secret access key in Prophecy before creating the S3
+  connection. The secret must be of type `text` and contain the secret access key as its value.
+</Tip>
+
+## Properties
+
+<ParamField body="region" type="string" required>
+  AWS region where the S3 bucket is located. Example: `us-east-1`, `ap-south-1`, `eu-west-1`.
+</ParamField>
+
+<ParamField body="bucketName" type="string" required>
+  Name of the S3 bucket to connect to.
+</ParamField>
+
+<ParamField body="accessKeyID" type="string" required>
+  AWS access key ID for authenticating to S3.
+</ParamField>
+
+<ParamField body="secretAccessKey" type="object" required>
+  Reference to a Prophecy secret containing the AWS secret access key. The secret must be stored in Prophecy before creating the connection.
+
+  <Expandable title="secretAccessKey properties">
+    <ParamField body="secretAccessKey.kind" type="string" required>
+      Secret kind. Must be `prophecy`.
+    </ParamField>
+
+    <ParamField body="secretAccessKey.subKind" type="string" required>
+      Secret sub-type. Must be `text` for secret access keys.
+    </ParamField>
+
+    <ParamField body="secretAccessKey.type" type="string" required>
+      Type of reference. Must be `secret`.
+    </ParamField>
+
+    <ParamField body="secretAccessKey.properties" type="object" required>
+      Properties identifying the secret by ID and name.
+    </ParamField>
+
+    <ParamField body="secretAccessKey.properties.id" type="string" required>
+      The ID of the secret stored in Prophecy. You can find this in the secret details page.
+    </ParamField>
+
+    <ParamField body="secretAccessKey.properties.name" type="string" required>
+      The name of the secret stored in Prophecy.
+    </ParamField>
+
+  </Expandable>
+</ParamField>
+
+<ParamField body="kgConfig" type="object" required>
+  Knowledge graph configuration settings for the connection.
+
+  <Expandable title="kgConfig properties">
+    <ParamField body="kgConfig.enabled" type="boolean">
+      Whether the knowledge graph is enabled for this connection. Optional.
+    </ParamField>
+
+    <ParamField body="kgConfig.useConnectorAuth" type="boolean" required>
+      Whether to use connector authentication for knowledge graph operations. When `true`, the knowledge graph uses the connection's authentication. When `false`, the knowledge graph uses separate authentication specified in `authDetails`.
+    </ParamField>
+
+    <ParamField body="kgConfig.kgSchedule" type="object" required>
+      Knowledge graph scheduling configuration. Can be an empty object `{}` if no scheduling is configured.
+
+      <Expandable title="kgSchedule properties">
+        <ParamField body="kgConfig.kgSchedule.timeZone" type="string">
+          Time zone for knowledge graph scheduling. Format: `America/New_York` or other IANA time zone identifier. Optional when `kgSchedule` is an empty object.
+        </ParamField>
+
+        <ParamField body="kgConfig.kgSchedule.cron" type="string">
+          Cron expression defining the schedule for knowledge graph operations. Format follows standard cron syntax. Optional when `kgSchedule` is an empty object.
+        </ParamField>
+      </Expandable>
+    </ParamField>
+
+    <ParamField body="kgConfig.authDetails" type="object" required>
+      Authentication details for knowledge graph operations. These properties can differ from the main connection's authentication settings. Can be an empty object `{}` when `useConnectorAuth` is `true`.
+
+      <Expandable title="authDetails properties">
+        <ParamField body="kgConfig.authDetails.accessKeyID" type="string">
+          AWS access key ID for knowledge graph operations. Can be an empty string if not required.
+        </ParamField>
+
+        <ParamField body="kgConfig.authDetails.secretAccessKey" type="object">
+          Reference to a Prophecy secret containing the AWS secret access key for knowledge graph operations. Can be omitted if not required.
+        </ParamField>
+      </Expandable>
+    </ParamField>
+
+  </Expandable>
+</ParamField>
+
+<ParamField body="id" type="string">
+  Optional connection ID. Can be an empty string if not provided.
+</ParamField>

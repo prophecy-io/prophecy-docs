@@ -410,7 +410,7 @@
             "groups": [
               {
                 "group": "API documentation",
-                "pages": ["api-reference/introduction"]
+                "pages": ["api-reference/introduction", "api-reference/rest-api-gem"]
               },
               {
                 "group": "Endpoints",
@@ -420,7 +420,28 @@
                     "pages": [
                       {
                         "group": "Connection properties",
-                        "pages": ["api-reference/connections/bigquery"]
+                        "pages": [
+                          "api-reference/connections/adls",
+                          "api-reference/connections/bigquery",
+                          "api-reference/connections/databricks",
+                          "api-reference/connections/gcs",
+                          "api-reference/connections/hana",
+                          "api-reference/connections/mongodb",
+                          "api-reference/connections/mssql",
+                          "api-reference/connections/onedrive",
+                          "api-reference/connections/oracle",
+                          "api-reference/connections/power-bi",
+                          "api-reference/connections/redshift",
+                          "api-reference/connections/s3",
+                          "api-reference/connections/salesforce",
+                          "api-reference/connections/sftp",
+                          "api-reference/connections/sharepoint",
+                          "api-reference/connections/smartsheet",
+                          "api-reference/connections/smpt",
+                          "api-reference/connections/snowflake",
+                          "api-reference/connections/synapse",
+                          "api-reference/connections/tableau"
+                        ]
                       },
                       "api-reference/connections/openapi.json POST /api/orchestration/fabric/{fabricId}/connection",
                       "api-reference/connections/openapi.json GET /api/orchestration/fabric/{fabricId}/connection",
