@@ -96,20 +96,20 @@
                   "data": {
                     "Connections": [
                       {
-                        "id": "aa7281d4-e88d-4e82-9125-33206ad5a93b",
-                        "name": "bigquery_1",
+                        "id": "<connection-id-1>",
+                        "name": "bigquery_connection_1",
                         "kind": "bigquery",
                         "isDefaultWarehouseConnection": true,
                         "properties": {
                           "authType": "private_key",
-                          "dataset": "kw_dev",
+                          "dataset": "dev",
                           "id": "",
-                          "projectId": "product-internal-463917",
+                          "projectId": "dev-project-2222",
                           "serviceAccountKey": {
                             "kind": "prophecy",
                             "properties": {
-                              "id": "4655",
-                              "name": "bq_service_account"
+                              "id": "1234",
+                              "name": "bq_service_account_1"
                             },
                             "subKind": "text",
                             "type": "secret"
@@ -118,24 +118,23 @@
                         "category": ""
                       },
                       {
-                        "id": "8934a2c5-390f-42b9-b674-00173aa94654",
-                        "name": "bigquery_api_test",
-                        "kind": "bigquery",
+                        "id": "<connection-id-2>",
+                        "name": "sharepoint_connection_1",
+                        "kind": "sharepoint",
                         "isDefaultWarehouseConnection": false,
                         "properties": {
-                          "authType": "private_key",
-                          "dataset": "kw_dev",
-                          "id": "",
-                          "projectId": "product-internal-463917",
-                          "serviceAccountKey": {
+                          "clientId": "<client-id>",
+                          "clientSecret": {
                             "kind": "prophecy",
                             "properties": {
-                              "id": "4657",
-                              "name": "bq_service_account_2"
+                              "id": "4670",
+                              "name": "client-secret-sharepoint"
                             },
                             "subKind": "text",
                             "type": "secret"
-                          }
+                          },
+                          "siteUrl": "https://<site>.sharepoint.com/sites/site",
+                          "tenantId": "<tenant-id>"
                         },
                         "category": ""
                       }
@@ -150,17 +149,14 @@
       "post": {
         "tags": ["Connections"],
         "summary": "Add connection to fabric",
+        "description": "Create a new connection in a specific fabric",
         "operationId": "createConnection",
-        "x-mint": {
-          "content": "<Note>The `isDefaultWarehouseConnection` field is specified at the connection level, not within the `properties` object. This field can only be set to `true` for Databricks and BigQuery connections.</Note>"
-        },
         "parameters": [
           {
             "$ref": "#/components/parameters/X-AUTH-TOKEN"
           }
         ],
         "requestBody": {
-          "description": "Connection object to be created. The `properties` object structure varies by connection type. See connection type documentation pages for specific property requirements.",
           "required": true,
           "content": {
             "application/json": {
@@ -174,32 +170,54 @@
                   },
                   "kind": {
                     "type": "string",
-                    "description": "The type of connection. Determines the structure of the `properties` object."
+                    "description": "The type of connection.",
+                    "enum": [
+                      "databricks",
+                      "bigquery",
+                      "synapse",
+                      "snowflake",
+                      "mssql",
+                      "oracle",
+                      "mongodb",
+                      "hana",
+                      "smtp",
+                      "redshift",
+                      "s3",
+                      "salesforce",
+                      "sftp",
+                      "sharepoint",
+                      "smartsheet",
+                      "ADLS",
+                      "tableau",
+                      "onedrive",
+                      "powerbi",
+                      "GCS"
+                    ]
                   },
                   "isDefaultWarehouseConnection": {
                     "type": "boolean",
-                    "description": "Whether this connection is the default warehouse connection."
+                    "description": "Whether this connection is the default SQL warehouse connection in the fabric.\n\nThis field can only be set to `true` for Databricks and BigQuery connections."
                   },
                   "properties": {
                     "type": "object",
-                    "description": "Connection configuration properties. The structure varies by connection type. See connection type documentation pages for specific property schemas."
+                    "description": "Connection configuration properties. The structure varies by connection `kind`. Find specific properties in the **Connections > Properties** section of the API documentation."
                   }
                 }
               },
               "example": {
-                "name": "bigquery_api_test",
+                "name": "bigquery_connection_1",
                 "kind": "bigquery",
                 "isDefaultWarehouseConnection": false,
                 "properties": {
                   "authType": "private_key",
-                  "dataset": "kw_dev",
+                  "dataset": "dev",
                   "id": "",
-                  "projectId": "product-internal-463917",
+                  "projectId": "dev-project-2222",
                   "serviceAccountKey": {
                     "kind": "prophecy",
                     "properties": {
-                      "id": "4657",
-                      "name": "bq_service_account_2"
+                      "id": "1234",
+                      "name": "bq_service_account_1"
                     },
                     "subKind": "text",
                     "type": "secret"
@@ -255,20 +273,20 @@
                 "example": {
                   "success": true,
                   "data": {
-                    "id": "8934a2c5-390f-42b9-b674-00173aa94654",
-                    "name": "bigquery_api_test",
+                    "id": "<connection-id>",
+                    "name": "bigquery_connection_1",
                     "kind": "bigquery",
                     "isDefaultWarehouseConnection": false,
                     "properties": {
                       "authType": "private_key",
-                      "dataset": "kw_dev",
+                      "dataset": "dev",
                       "id": "",
-                      "projectId": "product-internal-463917",
+                      "projectId": "dev-project-2222",
                       "serviceAccountKey": {
                         "kind": "prophecy",
                         "properties": {
-                          "id": "4657",
-                          "name": "bq_service_account_2"
+                          "id": "1234",
+                          "name": "bq_service_account_1"
                         },
                         "subKind": "text",
                         "type": "secret"

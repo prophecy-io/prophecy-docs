@@ -3,4 +3,7 @@ openapi: post /api/orchestration/fabric/{fabricId}/connection
 playground: 'none'
 ---
 
-<Note>The `isDefaultWarehouseConnection` field is specified at the connection level, not within the `properties` object. This field can only be set to `true` for Databricks and BigQuery connections.</Note>
+<Tip>
+  The `properties` object in the connection request body depends on the connection type. Find
+  specific properties in the **Connections > Properties** section of the API documentation.
+</Tip>
