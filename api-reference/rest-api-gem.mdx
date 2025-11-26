@@ -5,31 +5,57 @@ description: Make API calls directly from pipelines
 
 The [RestAPI gem](/data-analytics/gems/custom/rest-api) allows you to make API calls from your pipeline—including Prophecy APIs. Review this example to learn how to use the RestAPI gem to trigger a pipeline run.
 
+<Frame>![RestAPI example gem configuration](/api-reference/img/rest-api-gem-example.png)</Frame>
+
 ## Example configuration
 
-Populate the gem configuration with the following values:
+<Steps>
+<Step title="Set Target Column Name">
+  Define a target column name that will contain the API response, such as`api_response`.
+</Step>
 
-- Target Column Name: `api_response`
-- URL: `https://app.prophecy.io/api/trigger/pipeline`
-- Method: `POST`
-- Parse API response as JSON: `false` (Disabled)
-- Authentication: None
-- Params: None
-- Body: `{ "fabricId": <fabricID>, "pipelineName": "customer_orders", "parameters": {}, "projectId": "<projectID>" }`
-- Headers:
-  - Content-Type: `application/json`
-  - X-AUTH-TOKEN: `<prophecy-access-token-secret>`
+<Step title="Configure URL">
+  Specify the endpoint and replace the base URL with your Prophecy URL. This is the trigger pipeline
+  endpoint: `https://app.prophecy.io/api/trigger/pipeline`.
+</Step>
 
-<Frame>![RestAPI example gem configuration](/api-reference/img/rest-api-gem-example.png)</Frame>
+<Step title="Set Method">
+  Specify the method to use for the API call. In this example, use `POST`.
+</Step>
+
+<Step title="Configure Parse API response as JSON">
+  Do not select the checkbox. Leave it disabled.
+</Step>
+
+<Step title="Set Authentication">Set Authentication to None.</Step>
+
+<Step title="Set Params">Do not add any parameters.</Step>
+
+<Step title="Configure Body">
+  Paste the JSON string into the body:
+
+`{ "fabricId": <fabricID>, "pipelineName": "customer_orders", "parameters": {}, "projectId": "<projectID>" }`
+
+</Step>
+
+<Step title="Configure Headers">
+  Include the following headers:
+
+- Content-Type: `application/json`
+- X-AUTH-TOKEN: `<prophecy-access-token-secret>`
 
 <Tip>
   We recommend that you store your Prophecy access token as a secret, rather than hardcoding it in
   the gem configuration. You can reference the secret by clicking **+ > Secret** in the value field.
 </Tip>
 
-## Monitoring
+ </Step>
+<Step title="Run the pipeline and review run history">
 
-When you run the pipeline that includes the RestAPI gem, you will see the following in the Run History interface:
+When you run the pipeline with this gem configuration, you will see the following in the [Run History](/data-analytics/production/monitoring#run-history) interface:
 
-- A record of the pipeline run that triggers the child pipeline using the RestAPI gem.
+- A record of the pipeline run that triggers the child pipeline.
 - A record of the triggered pipeline run that has the type `API Run`.
+
+</Step>
+</Steps>
