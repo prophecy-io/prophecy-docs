@@ -5,117 +5,128 @@ description: Properties required to create and update Salesforce connections
 
 Properties for Salesforce connections are specified in the `properties` object when creating or updating a connection. All properties are nested within the connection request body.
 
-<Tip>
-  Create the secrets containing your Salesforce username, password, and security token in Prophecy
-  before creating the Salesforce connection. All secrets must be of type `text` and contain their
-  respective values.
-</Tip>
+<Note>
+
+Consider the following when creating a Salesforce connection:
+
+- When using the [create connection API](/api-reference/connections/add-connection-to-fabric), the secret must be stored in Prophecy before creating the connection.
+
+- You cannot create a Salesforce connection using the [create fabric API](/api-reference/fabrics/create-a-new-fabric), unless the required secrets are already created in Prophecy. This is because this connection type requires more than one secret, and the create fabric API only supports creating one secret at a time.
+
+</Note>
 
 ## Properties
 
 <ParamField body="sfURL" type="string" required>
-  Salesforce instance URL. Format: `https://{instance}.my.salesforce.com` for production or
-  `https://{instance}.sandbox.my.salesforce.com` for sandbox environments. Example:
-  `https://d6g000000emeqea0--1.sandbox.my.salesforce.com`.
+
+Salesforce instance URL.
+
+For production environments, use the format `https://{instance}.my.salesforce.com`
+
+For sandbox environments, use the format `https://{instance}.sandbox.my.salesforce.com`
+
 </ParamField>
 
 <ParamField body="sfUser" type="object" required>
-  Reference to a Prophecy secret containing the Salesforce username. The secret must be stored in Prophecy before creating the connection.
 
-  <Expandable title="sfUser properties">
-    <ParamField body="sfUser.kind" type="string" required>
-      Secret kind. Must be `prophecy`.
-    </ParamField>
+Reference to a Prophecy secret containing the Salesforce username.
 
-    <ParamField body="sfUser.subKind" type="string" required>
-      Secret sub-type. Must be `text` for usernames.
-    </ParamField>
+<Expandable title="sfUser properties">
+<ParamField body="sfUser.kind" type="string" required>
+Secret kind. Must be `prophecy`.
+</ParamField>
 
-    <ParamField body="sfUser.type" type="string" required>
-      Type of reference. Must be `secret`.
-    </ParamField>
+<ParamField body="sfUser.subKind" type="string" required>
+  Secret sub-type. Must be `text` for usernames.
+</ParamField>
 
-    <ParamField body="sfUser.properties" type="object" required>
-      Properties identifying the secret by ID and name.
-    </ParamField>
+<ParamField body="sfUser.type" type="string" required>
+  Type of reference. Must be `secret`.
+</ParamField>
 
-    <ParamField body="sfUser.properties.id" type="string" required>
-      The ID of the secret stored in Prophecy. You can find this in the secret details page.
-    </ParamField>
+<ParamField body="sfUser.properties" type="object" required>
+  Properties identifying the secret by ID and name.
+</ParamField>
 
-    <ParamField body="sfUser.properties.name" type="string" required>
-      The name of the secret stored in Prophecy.
-    </ParamField>
+<ParamField body="sfUser.properties.id" type="string" required>
+  The ID of the secret stored in Prophecy. Find the ID using the [List secrets per fabric
+  API](/api-reference/secrets/list-secrets-per-fabric).
+</ParamField>
 
-  </Expandable>
+<ParamField body="sfUser.properties.name" type="string" required>
+  The name of the secret stored in Prophecy.
+</ParamField>
+
+</Expandable>
+
 </ParamField>
 
 <ParamField body="sfPassword" type="object" required>
-  Reference to a Prophecy secret containing the Salesforce password. The secret must be stored in Prophecy before creating the connection.
+Reference to a Prophecy secret containing the Salesforce password.
 
-  <Expandable title="sfPassword properties">
-    <ParamField body="sfPassword.kind" type="string" required>
-      Secret kind. Must be `prophecy`.
-    </ParamField>
+<Expandable title="sfPassword properties">
+<ParamField body="sfPassword.kind" type="string" required>
+Secret kind. Must be `prophecy`.
+</ParamField>
 
-    <ParamField body="sfPassword.subKind" type="string" required>
-      Secret sub-type. Must be `text` for passwords.
-    </ParamField>
+<ParamField body="sfPassword.subKind" type="string" required>
+  Secret sub-type. Must be `text` for passwords.
+</ParamField>
 
-    <ParamField body="sfPassword.type" type="string" required>
-      Type of reference. Must be `secret`.
-    </ParamField>
+<ParamField body="sfPassword.type" type="string" required>
+  Type of reference. Must be `secret`.
+</ParamField>
 
-    <ParamField body="sfPassword.properties" type="object" required>
-      Properties identifying the secret by ID and name.
-    </ParamField>
+<ParamField body="sfPassword.properties" type="object" required>
+  Properties identifying the secret by ID and name.
+</ParamField>
 
-    <ParamField body="sfPassword.properties.id" type="string" required>
-      The ID of the secret stored in Prophecy. You can find this in the secret details page.
-    </ParamField>
+<ParamField body="sfPassword.properties.id" type="string" required>
+  The ID of the secret stored in Prophecy. Find the ID using the [List secrets per fabric
+  API](/api-reference/secrets/list-secrets-per-fabric).
+</ParamField>
 
-    <ParamField body="sfPassword.properties.name" type="string" required>
-      The name of the secret stored in Prophecy.
-    </ParamField>
+<ParamField body="sfPassword.properties.name" type="string" required>
+  The name of the secret stored in Prophecy.
+</ParamField>
 
-  </Expandable>
+</Expandable>
+
 </ParamField>
 
 <ParamField body="sfToken" type="object" required>
-  Reference to a Prophecy secret containing the Salesforce security token. The secret must be stored in Prophecy before creating the connection.
+Reference to a Prophecy secret containing the Salesforce security token.
 
-  <Expandable title="sfToken properties">
-    <ParamField body="sfToken.kind" type="string" required>
-      Secret kind. Must be `prophecy`.
-    </ParamField>
-
-    <ParamField body="sfToken.subKind" type="string" required>
-      Secret sub-type. Must be `text` for security tokens.
-    </ParamField>
-
-    <ParamField body="sfToken.type" type="string" required>
-      Type of reference. Must be `secret`.
-    </ParamField>
-
-    <ParamField body="sfToken.properties" type="object" required>
-      Properties identifying the secret by ID and name.
-    </ParamField>
-
-    <ParamField body="sfToken.properties.id" type="string" required>
-      The ID of the secret stored in Prophecy. You can find this in the secret details page.
-    </ParamField>
-
-    <ParamField body="sfToken.properties.name" type="string" required>
-      The name of the secret stored in Prophecy.
-    </ParamField>
-
-  </Expandable>
+<Expandable title="sfToken properties">
+<ParamField body="sfToken.kind" type="string" required>
+Secret kind. Must be `prophecy`.
 </ParamField>
 
-<ParamField body="sfAPI" type="string">
-  Salesforce API version. Can be an empty string if not specified.
+<ParamField body="sfToken.subKind" type="string" required>
+  Secret sub-type. Must be `text` for security tokens.
 </ParamField>
 
-<ParamField body="id" type="string">
-  Optional connection ID. Can be an empty string if not provided.
+<ParamField body="sfToken.type" type="string" required>
+  Type of reference. Must be `secret`.
+</ParamField>
+
+<ParamField body="sfToken.properties" type="object" required>
+  Properties identifying the secret by ID and name.
+</ParamField>
+
+<ParamField body="sfToken.properties.id" type="string" required>
+  The ID of the secret stored in Prophecy. Find the ID using the [List secrets per fabric
+  API](/api-reference/secrets/list-secrets-per-fabric).
+</ParamField>
+
+<ParamField body="sfToken.properties.name" type="string" required>
+  The name of the secret stored in Prophecy.
+</ParamField>
+
+</Expandable>
+
+</ParamField>
+
+<ParamField body="sfAPI" type="string" default="54.0">
+  Salesforce API version.
 </ParamField>

@@ -5,21 +5,14 @@ description: Properties required to create and update SFTP connections
 
 Properties for SFTP connections are specified in the `properties` object when creating or updating a connection. All properties are nested within the connection request body.
 
-<Tip>
-  For password authentication, create the secret containing your SFTP password in Prophecy before
-  creating the SFTP connection. The secret must be of type `text` and contain the password as its
-  value. For private key authentication, provide the private key as a base64-encoded string in the
-  `privateKey` field.
-</Tip>
-
 ## Properties
 
 <ParamField body="host" type="string" required>
-  SFTP server hostname or fully qualified domain name. Example: `sftp.prophecy.io`.
+  SFTP server hostname or fully qualified domain name.
 </ParamField>
 
 <ParamField body="port" type="integer" required>
-  Port number for the SFTP server connection. Typically `22` for SFTP connections.
+  Port number for the SFTP server connection.
 </ParamField>
 
 <ParamField body="username" type="string" required>
@@ -27,39 +20,50 @@ Properties for SFTP connections are specified in the `properties` object when cr
 </ParamField>
 
 <ParamField body="authMethod" type="string" required>
-  Authentication method for SFTP. Supported values: `password` for password authentication, or
-  `private_key` for private key authentication.
+
+Authentication method for SFTP.
+
+Supported values:
+
+- `password` for password authentication.
+- `private_key` for private key authentication.
+
 </ParamField>
 
 <ParamField body="password" type="object">
-  Reference to a Prophecy secret containing the SFTP password. Required when `authMethod` is `password`. The secret must be stored in Prophecy before creating the connection.
+Reference to a Prophecy secret containing the SFTP password. Required when `authMethod` is `password`.
 
-  <Expandable title="password properties">
-    <ParamField body="password.kind" type="string" required>
-      Secret kind. Must be `prophecy`.
-    </ParamField>
+- When using the [create connection API](/api-reference/connections/add-connection-to-fabric), the secret must be stored in Prophecy before creating the connection.
+- When using the [create fabric API](/api-reference/fabrics/create-a-new-fabric), replace this whole object with the string `{{SECRET}}`, which references the secret being created in parallel to the connection.
 
-    <ParamField body="password.subKind" type="string" required>
-      Secret sub-type. Must be `text` for passwords.
-    </ParamField>
+<Expandable title="password properties">
+<ParamField body="password.kind" type="string" required>
+  Secret kind. Must be `prophecy`.
+</ParamField>
 
-    <ParamField body="password.type" type="string" required>
-      Type of reference. Must be `secret`.
-    </ParamField>
+<ParamField body="password.subKind" type="string" required>
+  Secret sub-type. Must be `text` for passwords.
+</ParamField>
 
-    <ParamField body="password.properties" type="object" required>
-      Properties identifying the secret by ID and name.
-    </ParamField>
+<ParamField body="password.type" type="string" required>
+  Type of reference. Must be `secret`.
+</ParamField>
 
-    <ParamField body="password.properties.id" type="string" required>
-      The ID of the secret stored in Prophecy. You can find this in the secret details page.
-    </ParamField>
+<ParamField body="password.properties" type="object" required>
+  Properties identifying the secret by ID and name.
+</ParamField>
 
-    <ParamField body="password.properties.name" type="string" required>
-      The name of the secret stored in Prophecy.
-    </ParamField>
+<ParamField body="password.properties.id" type="string" required>
+  The ID of the secret stored in Prophecy. Find the ID using the [List secrets per fabric
+  API](/api-reference/secrets/list-secrets-per-fabric).
+</ParamField>
+
+<ParamField body="password.properties.name" type="string" required>
+  The name of the secret stored in Prophecy.
+</ParamField>
 
   </Expandable>
+
 </ParamField>
 
 <ParamField body="privateKey" type="string">
@@ -70,8 +74,4 @@ Properties for SFTP connections are specified in the `properties` object when cr
 <ParamField body="kgConfig" type="object">
   Knowledge graph configuration settings for the connection. See the [Knowledge graph
   indexer](/api-reference/connections/properties/kgconfig) properties for more information.
-</ParamField>
-
-<ParamField body="id" type="string">
-  Optional connection ID. Can be an empty string if not provided.
 </ParamField>
