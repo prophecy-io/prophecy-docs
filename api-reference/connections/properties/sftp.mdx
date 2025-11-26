@@ -67,77 +67,9 @@ Properties for SFTP connections are specified in the `properties` object when cr
   The private key should be in OpenSSH format and encoded as base64.
 </ParamField>
 
-<ParamField body="kgConfig" type="object" required>
-  Knowledge graph configuration settings for the connection.
-
-  <Expandable title="kgConfig properties">
-    <ParamField body="kgConfig.enabled" type="boolean">
-      Whether the knowledge graph is enabled for this connection. Optional.
-    </ParamField>
-
-    <ParamField body="kgConfig.useConnectorAuth" type="boolean" required>
-      Whether to use connector authentication for knowledge graph operations. When `true`, the knowledge graph uses the connection's authentication. When `false`, the knowledge graph uses separate authentication specified in `authDetails`.
-    </ParamField>
-
-    <ParamField body="kgConfig.kgSchedule" type="object" required>
-      Knowledge graph scheduling configuration. Can be an empty object `{}` if no scheduling is configured.
-
-      <Expandable title="kgSchedule properties">
-        <ParamField body="kgConfig.kgSchedule.timeZone" type="string">
-          Time zone for knowledge graph scheduling. Format: `America/New_York` or other IANA time zone identifier. Optional when `kgSchedule` is an empty object.
-        </ParamField>
-
-        <ParamField body="kgConfig.kgSchedule.cron" type="string">
-          Cron expression defining the schedule for knowledge graph operations. Format follows standard cron syntax. Optional when `kgSchedule` is an empty object.
-        </ParamField>
-      </Expandable>
-    </ParamField>
-
-    <ParamField body="kgConfig.authDetails" type="object" required>
-      Authentication details for knowledge graph operations. These properties can differ from the main connection's authentication settings. Required when `useConnectorAuth` is `false`. Can be an empty object `{}` when `useConnectorAuth` is `true`.
-
-      <Expandable title="authDetails properties">
-        <ParamField body="kgConfig.authDetails.authMethod" type="string" required>
-          Authentication method for knowledge graph operations. Supported values: `password` or `private_key`. Can differ from the connection's `authMethod`.
-        </ParamField>
-
-        <ParamField body="kgConfig.authDetails.password" type="object">
-          Reference to a Prophecy secret containing the SFTP password for knowledge graph operations. Required when `useConnectorAuth` is `false` and `authMethod` is `password`. Can be omitted otherwise.
-
-          <Expandable title="password properties">
-            <ParamField body="kgConfig.authDetails.password.kind" type="string" required>
-              Secret kind. Must be `prophecy`.
-            </ParamField>
-
-            <ParamField body="kgConfig.authDetails.password.subKind" type="string" required>
-              Secret sub-type. Must be `text` for passwords.
-            </ParamField>
-
-            <ParamField body="kgConfig.authDetails.password.type" type="string" required>
-              Type of reference. Must be `secret`.
-            </ParamField>
-
-            <ParamField body="kgConfig.authDetails.password.properties" type="object" required>
-              Properties identifying the secret by ID and name.
-            </ParamField>
-
-            <ParamField body="kgConfig.authDetails.password.properties.id" type="string" required>
-              The ID of the secret stored in Prophecy. You can find this in the secret details page.
-            </ParamField>
-
-            <ParamField body="kgConfig.authDetails.password.properties.name" type="string" required>
-              The name of the secret stored in Prophecy.
-            </ParamField>
-          </Expandable>
-        </ParamField>
-
-        <ParamField body="kgConfig.authDetails.privateKey" type="string">
-          Base64-encoded private key for knowledge graph operations. Required when `useConnectorAuth` is `false` and `authMethod` is `private_key`. Can be omitted otherwise.
-        </ParamField>
-      </Expandable>
-    </ParamField>
-
-  </Expandable>
+<ParamField body="kgConfig" type="object">
+  Knowledge graph configuration settings for the connection. See the [Knowledge graph
+  indexer](/api-reference/connections/properties/kgconfig) properties for more information.
 </ParamField>
 
 <ParamField body="id" type="string">

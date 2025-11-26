@@ -55,35 +55,9 @@ Properties for Microsoft SQL Server (MSSQL) connections are specified in the `pr
   </Expandable>
 </ParamField>
 
-<ParamField body="kgConfig" type="object" required>
-  Knowledge graph configuration settings for the connection.
-
-  <Expandable title="kgConfig properties">
-    <ParamField body="kgConfig.useConnectorAuth" type="boolean" required>
-      Whether to use connector authentication for knowledge graph operations. When `true`, the knowledge graph uses the connection's authentication. When `false`, the knowledge graph uses separate authentication specified in `authProperties`.
-    </ParamField>
-
-    <ParamField body="kgConfig.kgSchedule" type="object" required>
-      Knowledge graph scheduling configuration. Can be an empty object `{}` if no scheduling is configured.
-
-      <Expandable title="kgSchedule properties">
-        <ParamField body="kgConfig.kgSchedule.timeZone" type="string">
-          Time zone for knowledge graph scheduling. Format: `America/New_York` or other IANA time zone identifier. Optional when `kgSchedule` is an empty object.
-        </ParamField>
-      </Expandable>
-    </ParamField>
-
-    <ParamField body="kgConfig.authProperties" type="object" required>
-      Authentication properties for knowledge graph operations. These properties can differ from the main connection's authentication settings.
-
-      <Expandable title="authProperties properties">
-        <ParamField body="kgConfig.authProperties.username" type="string" required>
-          Username for knowledge graph operations. Can be an empty string when `useConnectorAuth` is `true` to use the connection's username.
-        </ParamField>
-      </Expandable>
-    </ParamField>
-
-  </Expandable>
+<ParamField body="kgConfig" type="object">
+  Knowledge graph configuration settings for the connection. See the [Knowledge graph
+  indexer](/api-reference/connections/properties/kgconfig) properties for more information.
 </ParamField>
 
 <ParamField body="id" type="string">

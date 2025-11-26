@@ -76,50 +76,8 @@ Reference to a Prophecy secret containing your Databricks Personal Access Token.
 </ParamField>
 
 <ParamField body="kgConfig" type="object">
-  Knowledge graph configuration settings for the connection.
-
-  <Expandable title="kgConfig properties">
-    <ParamField body="kgConfig.enabled" type="boolean" required>
-      Whether the knowledge graph is enabled for this connection.
-    </ParamField>
-
-    <ParamField body="kgConfig.useConnectorAuth" type="boolean" required>
-      Whether to use connector authentication for knowledge graph operations. When `true`, the knowledge graph uses the connection's authentication. When `false`, the knowledge graph uses separate authentication specified in `authProperties`.
-    </ParamField>
-
-    <ParamField body="kgConfig.kgSchedule" type="object" required>
-      Knowledge graph scheduling configuration. Can be an empty object `{}` if no scheduling is configured.
-
-      <Expandable title="kgSchedule properties">
-        <ParamField body="kgConfig.kgSchedule.timeZone" type="string">
-          Time zone for knowledge graph scheduling. Format: `America/New_York` or other IANA time zone identifier. Optional when `kgSchedule` is an empty object.
-        </ParamField>
-      </Expandable>
-    </ParamField>
-
-    <ParamField body="kgConfig.authProperties" type="object" required>
-      Authentication properties for knowledge graph operations. These properties can differ from the main connection's authentication settings. For example, a connection using `m2m` OAuth for pipeline operations can use `u2m` OAuth for knowledge graph operations.
-
-      <Expandable title="authProperties properties">
-        <ParamField body="kgConfig.authProperties.authType" type="string" required>
-          Authentication type for knowledge graph operations. Can differ from the connection's `authType`.
-        </ParamField>
-
-        <ParamField body="kgConfig.authProperties.oAuthType" type="string" required>
-          OAuth authentication type for knowledge graph operations. Can differ from the connection's `oAuthType`. For example, use `u2m` for knowledge graph even when the connection uses `m2m` for pipeline operations.
-        </ParamField>
-
-        <ParamField body="kgConfig.authProperties.clientId" type="string">
-          OAuth client ID for knowledge graph operations. Can be an empty string if not required.
-        </ParamField>
-
-        <ParamField body="kgConfig.authProperties.oAuthAppRegistrationID" type="string">
-          OAuth app registration ID for knowledge graph operations. Can be an empty string if not required.
-        </ParamField>
-      </Expandable>
-    </ParamField>
-
-  </Expandable>
+  Knowledge graph configuration settings for the connection. See the [Knowledge graph
+  indexer](/api-reference/connections/properties/kgconfig) properties for more information.
 </ParamField>
 
 </Tab>
@@ -169,50 +127,8 @@ OAuth app registration ID [configured in Prophecy](/data-analytics/administratio
 </ParamField>
 
 <ParamField body="kgConfig" type="object">
-  Knowledge graph configuration settings for the connection.
-
-  <Expandable title="kgConfig properties">
-    <ParamField body="kgConfig.enabled" type="boolean" required>
-      Whether the knowledge graph is enabled for this connection.
-    </ParamField>
-
-    <ParamField body="kgConfig.useConnectorAuth" type="boolean" required>
-      Whether to use connector authentication for knowledge graph operations. When `true`, the knowledge graph uses the connection's authentication. When `false`, the knowledge graph uses separate authentication specified in `authProperties`.
-    </ParamField>
-
-    <ParamField body="kgConfig.kgSchedule" type="object" required>
-      Knowledge graph scheduling configuration. Can be an empty object `{}` if no scheduling is configured.
-
-      <Expandable title="kgSchedule properties">
-        <ParamField body="kgConfig.kgSchedule.timeZone" type="string">
-          Time zone for knowledge graph scheduling. Format: `America/New_York` or other IANA time zone identifier. Optional when `kgSchedule` is an empty object.
-        </ParamField>
-      </Expandable>
-    </ParamField>
-
-    <ParamField body="kgConfig.authProperties" type="object" required>
-      Authentication properties for knowledge graph operations. These properties can differ from the main connection's authentication settings. For example, a connection using `m2m` OAuth for pipeline operations can use `u2m` OAuth for knowledge graph operations.
-
-      <Expandable title="authProperties properties">
-        <ParamField body="kgConfig.authProperties.authType" type="string" required>
-          Authentication type for knowledge graph operations. Can differ from the connection's `authType`.
-        </ParamField>
-
-        <ParamField body="kgConfig.authProperties.oAuthType" type="string" required>
-          OAuth authentication type for knowledge graph operations. Can differ from the connection's `oAuthType`. For example, use `u2m` for knowledge graph even when the connection uses `m2m` for pipeline operations.
-        </ParamField>
-
-        <ParamField body="kgConfig.authProperties.clientId" type="string">
-          OAuth client ID for knowledge graph operations. Can be an empty string if not required.
-        </ParamField>
-
-        <ParamField body="kgConfig.authProperties.oAuthAppRegistrationID" type="string">
-          OAuth app registration ID for knowledge graph operations. Can be an empty string if not required.
-        </ParamField>
-      </Expandable>
-    </ParamField>
-
-  </Expandable>
+  Knowledge graph configuration settings for the connection. See the [Knowledge graph
+  indexer](/api-reference/connections/properties/kgconfig) properties for more information.
 </ParamField>
 
 </Tab>
@@ -299,50 +215,8 @@ Reference to a Prophecy secret containing the OAuth client secret.
 </ParamField>
 
 <ParamField body="kgConfig" type="object">
-  Knowledge graph configuration settings for the connection.
-
-  <Expandable title="kgConfig properties">
-    <ParamField body="kgConfig.enabled" type="boolean" required>
-      Whether the knowledge graph is enabled for this connection.
-    </ParamField>
-
-    <ParamField body="kgConfig.useConnectorAuth" type="boolean" required>
-      Whether to use connector authentication for knowledge graph operations. When `true`, the knowledge graph uses the connection's authentication. When `false`, the knowledge graph uses separate authentication specified in `authProperties`.
-    </ParamField>
-
-    <ParamField body="kgConfig.kgSchedule" type="object" required>
-      Knowledge graph scheduling configuration. Can be an empty object `{}` if no scheduling is configured.
-
-      <Expandable title="kgSchedule properties">
-        <ParamField body="kgConfig.kgSchedule.timeZone" type="string">
-          Time zone for knowledge graph scheduling. Format: `America/New_York` or other IANA time zone identifier. Optional when `kgSchedule` is an empty object.
-        </ParamField>
-      </Expandable>
-    </ParamField>
-
-    <ParamField body="kgConfig.authProperties" type="object" required>
-      Authentication properties for knowledge graph operations. These properties can differ from the main connection's authentication settings. For example, a connection using `m2m` OAuth for pipeline operations can use `u2m` OAuth for knowledge graph operations.
-
-      <Expandable title="authProperties properties">
-        <ParamField body="kgConfig.authProperties.authType" type="string" required>
-          Authentication type for knowledge graph operations. Can differ from the connection's `authType`.
-        </ParamField>
-
-        <ParamField body="kgConfig.authProperties.oAuthType" type="string" required>
-          OAuth authentication type for knowledge graph operations. Can differ from the connection's `oAuthType`. For example, use `u2m` for knowledge graph even when the connection uses `m2m` for pipeline operations.
-        </ParamField>
-
-        <ParamField body="kgConfig.authProperties.clientId" type="string">
-          OAuth client ID for knowledge graph operations. Can be an empty string if not required.
-        </ParamField>
-
-        <ParamField body="kgConfig.authProperties.oAuthAppRegistrationID" type="string">
-          OAuth app registration ID for knowledge graph operations. Can be an empty string if not required.
-        </ParamField>
-      </Expandable>
-    </ParamField>
-
-  </Expandable>
+  Knowledge graph configuration settings for the connection. See the [Knowledge graph
+  indexer](/api-reference/connections/properties/kgconfig) properties for more information.
 </ParamField>
 
 </Tab>

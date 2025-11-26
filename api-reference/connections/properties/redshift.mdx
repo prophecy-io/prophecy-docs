@@ -13,13 +13,19 @@ Properties for Amazon Redshift connections are specified in the `properties` obj
 ## Properties
 
 <ParamField body="server" type="string" required>
-  Redshift cluster endpoint hostname or fully qualified domain name. Example:
-  `pfizer-poc.c40fu9v5qviz.us-east-1.redshift.amazonaws.com`.
+
+Redshift cluster endpoint hostname or fully qualified domain name.
+
+Example: `cluster-name.us-east-1.redshift.amazonaws.com`
+
 </ParamField>
 
 <ParamField body="port" type="string" required>
-  Port number for the Redshift cluster connection. Typically `5439` for Redshift database
-  connections.
+
+Port number for the Redshift cluster connection.
+
+Typically `5439` for Redshift database connections.
+
 </ParamField>
 
 <ParamField body="username" type="string" required>
@@ -27,11 +33,11 @@ Properties for Amazon Redshift connections are specified in the `properties` obj
 </ParamField>
 
 <ParamField body="password" type="object" required>
-  Reference to a Prophecy secret containing the Redshift password. The secret must be stored in Prophecy before creating the connection.
+  Reference to a Prophecy secret containing the Redshift password.
 
   <Expandable title="password properties">
     <ParamField body="password.kind" type="string" required>
-      Secret kind. Must be `prophecy`.
+      Secret kind. Must be `prophecy` for Prophecy secrets.
     </ParamField>
 
     <ParamField body="password.subKind" type="string" required>
@@ -47,7 +53,11 @@ Properties for Amazon Redshift connections are specified in the `properties` obj
     </ParamField>
 
     <ParamField body="password.properties.id" type="string" required>
-      The ID of the secret stored in Prophecy. You can find this in the secret details page.
+
+      The ID of the secret stored in Prophecy.
+
+      Use the [list secrets](/api-reference/secrets/list-secrets-per-fabric) endpoint to find the secret ID.
+
     </ParamField>
 
     <ParamField body="password.properties.name" type="string" required>
@@ -61,35 +71,9 @@ Properties for Amazon Redshift connections are specified in the `properties` obj
   Name of the Redshift database to connect to.
 </ParamField>
 
-<ParamField body="kgConfig" type="object" required>
-  Knowledge graph configuration settings for the connection.
-
-  <Expandable title="kgConfig properties">
-    <ParamField body="kgConfig.useConnectorAuth" type="boolean" required>
-      Whether to use connector authentication for knowledge graph operations. When `true`, the knowledge graph uses the connection's authentication. When `false`, the knowledge graph uses separate authentication specified in `authProperties`.
-    </ParamField>
-
-    <ParamField body="kgConfig.kgSchedule" type="object" required>
-      Knowledge graph scheduling configuration. Can be an empty object `{}` if no scheduling is configured.
-
-      <Expandable title="kgSchedule properties">
-        <ParamField body="kgConfig.kgSchedule.timeZone" type="string">
-          Time zone for knowledge graph scheduling. Format: `America/New_York` or other IANA time zone identifier. Optional when `kgSchedule` is an empty object.
-        </ParamField>
-      </Expandable>
-    </ParamField>
-
-    <ParamField body="kgConfig.authProperties" type="object" required>
-      Authentication properties for knowledge graph operations. These properties can differ from the main connection's authentication settings.
-
-      <Expandable title="authProperties properties">
-        <ParamField body="kgConfig.authProperties.username" type="string" required>
-          Username for knowledge graph operations. Can be an empty string when `useConnectorAuth` is `true` to use the connection's username.
-        </ParamField>
-      </Expandable>
-    </ParamField>
-
-  </Expandable>
+<ParamField body="kgConfig" type="object">
+  Knowledge graph configuration settings for the connection. See the [Knowledge graph
+  indexer](/api-reference/connections/properties/kgconfig) properties for more information.
 </ParamField>
 
 <ParamField body="id" type="string">

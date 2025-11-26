@@ -427,6 +427,11 @@
                   {
                     "group": "Connections",
                     "pages": [
+                      "api-reference/connections/add-connection-to-fabric",
+                      "api-reference/connections/list-connections-per-fabric",
+                      "api-reference/connections/retrieve-connection-details",
+                      "api-reference/connections/update-connection",
+                      "api-reference/connections/delete-connection",
                       {
                         "group": "Properties",
                         "pages": [
@@ -452,11 +457,7 @@
                           "api-reference/connections/properties/tableau"
                         ]
                       },
-                      "api-reference/connections/add-connection-to-fabric",
-                      "api-reference/connections/list-connections-per-fabric",
-                      "api-reference/connections/retrieve-connection-details",
-                      "api-reference/connections/update-connection",
-                      "api-reference/connections/delete-connection"
+                      "api-reference/connections/properties/kgconfig"
                     ]
                   },
                   {

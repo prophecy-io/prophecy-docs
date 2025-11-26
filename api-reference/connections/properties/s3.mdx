@@ -55,47 +55,9 @@ Properties for Amazon S3 connections are specified in the `properties` object wh
   </Expandable>
 </ParamField>
 
-<ParamField body="kgConfig" type="object" required>
-  Knowledge graph configuration settings for the connection.
-
-  <Expandable title="kgConfig properties">
-    <ParamField body="kgConfig.enabled" type="boolean">
-      Whether the knowledge graph is enabled for this connection. Optional.
-    </ParamField>
-
-    <ParamField body="kgConfig.useConnectorAuth" type="boolean" required>
-      Whether to use connector authentication for knowledge graph operations. When `true`, the knowledge graph uses the connection's authentication. When `false`, the knowledge graph uses separate authentication specified in `authDetails`.
-    </ParamField>
-
-    <ParamField body="kgConfig.kgSchedule" type="object" required>
-      Knowledge graph scheduling configuration. Can be an empty object `{}` if no scheduling is configured.
-
-      <Expandable title="kgSchedule properties">
-        <ParamField body="kgConfig.kgSchedule.timeZone" type="string">
-          Time zone for knowledge graph scheduling. Format: `America/New_York` or other IANA time zone identifier. Optional when `kgSchedule` is an empty object.
-        </ParamField>
-
-        <ParamField body="kgConfig.kgSchedule.cron" type="string">
-          Cron expression defining the schedule for knowledge graph operations. Format follows standard cron syntax. Optional when `kgSchedule` is an empty object.
-        </ParamField>
-      </Expandable>
-    </ParamField>
-
-    <ParamField body="kgConfig.authDetails" type="object" required>
-      Authentication details for knowledge graph operations. These properties can differ from the main connection's authentication settings. Can be an empty object `{}` when `useConnectorAuth` is `true`.
-
-      <Expandable title="authDetails properties">
-        <ParamField body="kgConfig.authDetails.accessKeyID" type="string">
-          AWS access key ID for knowledge graph operations. Can be an empty string if not required.
-        </ParamField>
-
-        <ParamField body="kgConfig.authDetails.secretAccessKey" type="object">
-          Reference to a Prophecy secret containing the AWS secret access key for knowledge graph operations. Can be omitted if not required.
-        </ParamField>
-      </Expandable>
-    </ParamField>
-
-  </Expandable>
+<ParamField body="kgConfig" type="object">
+  Knowledge graph configuration settings for the connection. See the [Knowledge graph
+  indexer](/api-reference/connections/properties/kgconfig) properties for more information.
 </ParamField>
 
 <ParamField body="id" type="string">

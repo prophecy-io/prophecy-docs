@@ -59,77 +59,9 @@ Properties for SharePoint connections are specified in the `properties` object w
   </Expandable>
 </ParamField>
 
-<ParamField body="kgConfig" type="object" required>
-  Knowledge graph configuration settings for the connection.
-
-  <Expandable title="kgConfig properties">
-    <ParamField body="kgConfig.enabled" type="boolean">
-      Whether the knowledge graph is enabled for this connection. Optional.
-    </ParamField>
-
-    <ParamField body="kgConfig.useConnectorAuth" type="boolean" required>
-      Whether to use connector authentication for knowledge graph operations. When `true`, the knowledge graph uses the connection's authentication. When `false`, the knowledge graph uses separate authentication specified in `authDetails`.
-    </ParamField>
-
-    <ParamField body="kgConfig.kgSchedule" type="object" required>
-      Knowledge graph scheduling configuration. Can be an empty object `{}` if no scheduling is configured.
-
-      <Expandable title="kgSchedule properties">
-        <ParamField body="kgConfig.kgSchedule.timeZone" type="string">
-          Time zone for knowledge graph scheduling. Format: `America/New_York` or other IANA time zone identifier. Optional when `kgSchedule` is an empty object.
-        </ParamField>
-
-        <ParamField body="kgConfig.kgSchedule.cron" type="string">
-          Cron expression defining the schedule for knowledge graph operations. Format follows standard cron syntax. Optional when `kgSchedule` is an empty object.
-        </ParamField>
-      </Expandable>
-    </ParamField>
-
-    <ParamField body="kgConfig.authDetails" type="object" required>
-      Authentication details for knowledge graph operations. These properties can differ from the main connection's authentication settings. Required when `useConnectorAuth` is `false`. Can be an empty object `{}` when `useConnectorAuth` is `true`.
-
-      <Expandable title="authDetails properties">
-        <ParamField body="kgConfig.authDetails.tenantId" type="string" required>
-          Azure Active Directory tenant ID for knowledge graph operations. Required when `useConnectorAuth` is `false`. Can be an empty string when `useConnectorAuth` is `true`.
-        </ParamField>
-
-        <ParamField body="kgConfig.authDetails.clientId" type="string" required>
-          Azure Active Directory application (client) ID for knowledge graph operations. Required when `useConnectorAuth` is `false`. Can be an empty string when `useConnectorAuth` is `true`.
-        </ParamField>
-
-        <ParamField body="kgConfig.authDetails.clientSecret" type="object" required>
-          Reference to a Prophecy secret containing the Azure client secret for knowledge graph operations. Required when `useConnectorAuth` is `false`. Can be omitted when `useConnectorAuth` is `true`.
-
-          <Expandable title="clientSecret properties">
-            <ParamField body="kgConfig.authDetails.clientSecret.kind" type="string" required>
-              Secret kind. Must be `prophecy`.
-            </ParamField>
-
-            <ParamField body="kgConfig.authDetails.clientSecret.subKind" type="string" required>
-              Secret sub-type. Must be `text` for client secrets.
-            </ParamField>
-
-            <ParamField body="kgConfig.authDetails.clientSecret.type" type="string" required>
-              Type of reference. Must be `secret`.
-            </ParamField>
-
-            <ParamField body="kgConfig.authDetails.clientSecret.properties" type="object" required>
-              Properties identifying the secret by ID and name.
-            </ParamField>
-
-            <ParamField body="kgConfig.authDetails.clientSecret.properties.id" type="string" required>
-              The ID of the secret stored in Prophecy. You can find this in the secret details page.
-            </ParamField>
-
-            <ParamField body="kgConfig.authDetails.clientSecret.properties.name" type="string" required>
-              The name of the secret stored in Prophecy.
-            </ParamField>
-          </Expandable>
-        </ParamField>
-      </Expandable>
-    </ParamField>
-
-  </Expandable>
+<ParamField body="kgConfig" type="object">
+  Knowledge graph configuration settings for the connection. See the [Knowledge graph
+  indexer](/api-reference/connections/properties/kgconfig) properties for more information.
 </ParamField>
 
 <ParamField body="id" type="string">
