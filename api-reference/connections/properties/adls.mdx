@@ -1,0 +1,60 @@
+---
+title: Azure Data Lake Storage
+description: Properties required to create and update ADLS connections
+---
+
+Properties for Azure Data Lake Storage (ADLS) connections are specified in the `properties` object when creating or updating a connection. All properties are nested within the connection request body.
+
+## Properties
+
+<ParamField body="tenantId" type="string" required>
+  Azure Active Directory tenant ID.
+</ParamField>
+
+<ParamField body="clientId" type="string" required>
+  Azure Active Directory application (client) ID.
+</ParamField>
+
+<ParamField body="clientSecret" type="object" required>
+Reference to a Prophecy secret containing the Azure client secret.
+
+- When using the [create connection API](/api-reference/connections/add-connection-to-fabric), the secret must be stored in Prophecy before creating the connection.
+- When using the [create fabric API](/api-reference/fabrics/create-a-new-fabric), replace this whole object with the string `{{SECRET}}`, which references the secret being created in parallel to the connection.
+
+<Expandable title="clientSecret properties">
+<ParamField body="clientSecret.kind" type="string" required>
+  Secret kind. Must be `prophecy`.
+</ParamField>
+
+<ParamField body="clientSecret.subKind" type="string" required>
+  Secret sub-type. Must be `text` for client secrets.
+</ParamField>
+
+<ParamField body="clientSecret.type" type="string" required>
+  Type of reference. Must be `secret`.
+</ParamField>
+
+<ParamField body="clientSecret.properties" type="object" required>
+  Properties identifying the secret by ID and name.
+</ParamField>
+
+<ParamField body="clientSecret.properties.id" type="string" required>
+  The ID of the secret stored in Prophecy. Find the ID using the [List secrets per fabric
+  API](/api-reference/secrets/list-secrets-per-fabric).
+</ParamField>
+
+<ParamField body="clientSecret.properties.name" type="string" required>
+  The name of the secret stored in Prophecy.
+</ParamField>
+
+</Expandable>
+
+</ParamField>
+
+<ParamField body="accountName" type="string" required>
+  Azure Data Lake Storage account name.
+</ParamField>
+
+<ParamField body="containerName" type="string" required>
+  Name of the container within the ADLS account that Prophecy will use by default for writing data.
+</ParamField>

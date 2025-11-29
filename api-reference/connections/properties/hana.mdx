@@ -1,0 +1,120 @@
+---
+title: SAP HANA
+description: Properties required to create and update SAP HANA connections
+---
+
+Properties for SAP HANA connections are specified in the `properties` object when creating or updating a connection. All properties are nested within the connection request body.
+
+There are two authentication methods supported for SAP HANA connections:
+
+- Username/Password authentication.
+- User Key authentication.
+
+Review the required connection properties for the authentication method you are using.
+
+## Properties
+
+<Tabs>
+<Tab title="Username/Password">
+
+<ParamField body="authType" type="string" required>
+
+Use`pwd` for Username/Password authentication.
+
+</ParamField>
+
+<ParamField body="host" type="string" required>
+  Hostname or IP address of the SAP HANA server.
+</ParamField>
+
+<ParamField body="port" type="string" required>
+  Port number for the SAP HANA server connection.
+</ParamField>
+
+<ParamField body="username" type="string" required>
+  Username for authenticating to the SAP HANA database.
+</ParamField>
+
+<ParamField body="password" type="object" required>
+
+Reference to a Prophecy secret containing the password for authentication. Required for `pwd` authentication.
+
+- When using the [create connection API](/api-reference/connections/add-connection-to-fabric), the secret must be stored in Prophecy before creating the connection.
+- When using the [create fabric API](/api-reference/fabrics/create-a-new-fabric), replace this whole object with the string `{{SECRET}}`, which references the secret being created in parallel to the connection.
+
+<Expandable title="password properties">
+<ParamField body="password.kind" type="string" required>
+  Secret kind. Must be `prophecy`.
+</ParamField>
+
+<ParamField body="password.subKind" type="string" required>
+  Secret sub-type. Must be `text` for passwords.
+</ParamField>
+
+<ParamField body="password.type" type="string" required>
+  Type of reference. Must be `secret`.
+</ParamField>
+
+<ParamField body="password.properties" type="object" required>
+  Properties identifying the secret by ID and name.
+</ParamField>
+
+<ParamField body="password.properties.id" type="string" required>
+  The ID of the secret stored in Prophecy. Find the ID using the [List secrets per fabric
+  API](/api-reference/secrets/list-secrets-per-fabric).
+</ParamField>
+
+<ParamField body="password.properties.name" type="string" required>
+  The name of the secret stored in Prophecy.
+</ParamField>
+
+</Expandable>
+</ParamField>
+
+</Tab>
+
+<Tab title="User Key">
+
+<ParamField body="authType" type="string" required>
+
+Use `userkey` for User Key authentication.
+
+</ParamField>
+
+<ParamField body="userkey" type="object" required>
+  Reference to a Prophecy secret containing the user key for authentication. Required when `authType` is `userkey`.
+
+- When using the [create connection API](/api-reference/connections/add-connection-to-fabric), the secret must be stored in Prophecy before creating the connection.
+- When using the [create fabric API](/api-reference/fabrics/create-a-new-fabric), replace this whole object with the string `{{SECRET}}`, which references the secret being created in parallel to the connection.
+
+<Expandable title="userkey properties">
+<ParamField body="userkey.kind" type="string" required>
+  Secret kind. Must be `prophecy`.
+</ParamField>
+
+<ParamField body="userkey.subKind" type="string" required>
+  Secret sub-type. Must be `text` for user keys.
+</ParamField>
+
+<ParamField body="userkey.type" type="string" required>
+  Type of reference. Must be `secret`.
+</ParamField>
+
+<ParamField body="userkey.properties" type="object" required>
+  Properties identifying the secret by ID and name.
+</ParamField>
+
+<ParamField body="userkey.properties.id" type="string" required>
+  The ID of the secret stored in Prophecy. Find the ID using the [List secrets per fabric
+  API](/api-reference/secrets/list-secrets-per-fabric).
+</ParamField>
+
+<ParamField body="userkey.properties.name" type="string" required>
+  The name of the secret stored in Prophecy.
+</ParamField>
+
+</Expandable>
+</ParamField>
+
+</Tab>
+</Tabs>
