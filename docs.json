@@ -427,11 +427,6 @@
                   {
                     "group": "Connections",
                     "pages": [
-                      "api-reference/connections/add-connection-to-fabric",
-                      "api-reference/connections/list-connections-per-fabric",
-                      "api-reference/connections/retrieve-connection-details",
-                      "api-reference/connections/update-connection",
-                      "api-reference/connections/delete-connection",
                       {
                         "group": "Properties",
                         "pages": [
@@ -457,7 +452,12 @@
                           "api-reference/connections/properties/tableau"
                         ]
                       },
-                      "api-reference/connections/properties/kgconfig"
+                      "api-reference/connections/properties/kgconfig",
+                      "api-reference/connections/add-connection-to-fabric",
+                      "api-reference/connections/list-connections-per-fabric",
+                      "api-reference/connections/retrieve-connection-details",
+                      "api-reference/connections/update-connection",
+                      "api-reference/connections/delete-connection"
                     ]
                   },
                   {
@@ -1071,8 +1071,7 @@
                       "data-engineering/administration/getting-help/prophecy-details",
                       "data-engineering/administration/getting-help/spark-cluster-details",
                       "data-engineering/administration/getting-help/har-file",
-                      "data-engineering/administration/getting-help/diagnostics",
-                      "data-engineering/administration/getting-help/copy-session-info"
+                      "data-engineering/administration/getting-help/diagnostics"
                     ]
                   }
                 ]
