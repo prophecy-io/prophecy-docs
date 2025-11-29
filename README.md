@@ -1,44 +1,25 @@
-# Mintlify Starter Kit
+## Overview
 
-Use the starter kit to get your docs deployed and ready to customize.
+Welcome to the public source repository for the official **Prophecy Documentation**.
 
-Click the green **Use this template** button at the top of this repo to copy the Mintlify starter kit. The starter kit contains examples with
+This repository contains the source files that generate the content for our documentation webstie. Prophecy is the **AI Data Prep & Analysis Platform** that empowers data teams to build, refine, and deploy production-ready data pipelines and transformations on cloud data platforms like Databricks and BigQuery.
 
-- Guide pages
-- Navigation
-- Customizations
-- API reference pages
-- Use of popular components
+We keep this repository public to maintain transparency and allow our users and the broader community to explore the structure and content of our documentation.
 
-**[Follow the full quickstart guide](https://starter.mintlify.com/quickstart)**
+## Live Documentation
 
-## Development
+The most up-to-date and searchable version of our documentation is always available on the official website:
 
-Install the [Mintlify CLI](https://www.npmjs.com/package/mint) to preview your documentation changes locally. To install, use the following command:
+**[https://docs.prophecy.ai/](https://docs.prophecy.ai/)**
 
-```
-npm i -g mint
-```
+If you are looking for guides, reference materials, or tutorials on using the Prophecy platform, please start there.
 
-Run the following command at the root of your documentation, where your `docs.json` is located:
+## Contributing and Feedback
 
-```
-mint dev
-```
+We highly value feedback from our community. While we currently manage and update the content internally, we welcome your suggestions for improvement:
 
-View your local preview at `http://localhost:3000`.
+1.  **Found an error or inaccuracy?**
+2.  **Think a section is confusing or needs more detail?**
+3.  **Have an idea for a new guide?**
 
-## Publishing changes
-
-Install our GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app) to propagate changes from your repo to your deployment. Changes are deployed to production automatically after pushing to the default branch.
-
-## Need help?
-
-### Troubleshooting
-
-- If your dev environment isn't running: Run `mint update` to ensure you have the most recent version of the CLI.
-- If a page loads as a 404: Make sure you are running in a folder with a valid `docs.json`.
-
-### Resources
-
-- [Mintlify documentation](https://mintlify.com/docs)
+If you discover an issue, please email the [Documentation team](mailto:docs@prophecy.io).
