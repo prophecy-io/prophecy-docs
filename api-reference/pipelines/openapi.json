@@ -221,6 +221,277 @@
           }
         }
       }
+    },
+    "/api/orchestrate/tests/run": {
+      "parameters": [
+        {
+          "name": "X-AUTH-TOKEN",
+          "in": "header",
+          "description": "Prophecy orchestration authentication token",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "tags": ["Pipeline Runs"],
+        "summary": "Run column-level data tests",
+        "description": "Execute data quality tests for a specific column in a pipeline",
+        "operationId": "runDataTests",
+        "requestBody": {
+          "description": "Data test execution parameters",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["sessionId", "pipelineId", "tests"],
+                "properties": {
+                  "sessionId": {
+                    "type": "string",
+                    "description": "WebSocket session ID from the frontend to orchestration service."
+                  },
+                  "pipelineId": {
+                    "type": "string",
+                    "description": "Pipeline identifier for tracking. Can be either the pipeline name or ID."
+                  },
+                  "tests": {
+                    "type": "array",
+                    "description": "Array of test configurations to execute.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "source": {
+                          "type": "string",
+                          "description": "Source identifier for table tests."
+                        },
+                        "table": {
+                          "type": "string",
+                          "description": "Table name for table and column tests."
+                        },
+                        "pipeline": {
+                          "type": "string",
+                          "description": "Pipeline name for pipeline-level tests."
+                        },
+                        "columnTests": {
+                          "type": "array",
+                          "description": "Array of column-level test configurations.",
+                          "items": {
+                            "type": "object",
+                            "required": ["name", "tests"],
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "description": "Column name to test."
+                              },
+                              "tests": {
+                                "type": "array",
+                                "description": "Array of test definitions for this column.",
+                                "items": {
+                                  "type": "object",
+                                  "required": ["name", "index"],
+                                  "properties": {
+                                    "name": {
+                                      "type": "string",
+                                      "description": "Name of the test to execute."
+                                    },
+                                    "index": {
+                                      "type": "integer",
+                                      "description": "Test execution index."
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "tableTests": {
+                          "type": "array",
+                          "description": "Array of table-level test configurations.",
+                          "items": {
+                            "type": "object",
+                            "required": ["name", "index"],
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "description": "Name of the table test to execute."
+                              },
+                              "index": {
+                                "type": "integer",
+                                "description": "Test execution index."
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "pipelineTests": {
+                  "summary": "Request to run pipeline-level tests",
+                  "value": {
+                    "sessionId": "e5e160ea-773c-4fe4-875f-d8681d25445e",
+                    "pipelineId": "ashraytest1",
+                    "tests": [
+                      {
+                        "pipeline": "ashraytest1"
+                      }
+                    ]
+                  }
+                },
+                "tableTests": {
+                  "summary": "Request to run table and column tests",
+                  "value": {
+                    "sessionId": "e5e160ea-773c-4fe4-875f-d8681d25445e",
+                    "pipelineId": "ashraytest1",
+                    "tests": [
+                      {
+                        "source": "tanmay.default_default",
+                        "table": "pp_test_1",
+                        "columnTests": [
+                          {
+                            "name": "id",
+                            "tests": [
+                              {
+                                "name": "unique",
+                                "index": 0
+                              }
+                            ]
+                          },
+                          {
+                            "name": "payment_method",
+                            "tests": [
+                              {
+                                "name": "not_null",
+                                "index": 0
+                              }
+                            ]
+                          }
+                        ],
+                        "tableTests": []
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Test execution completed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["results", "summary"],
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "description": "Array of test execution results.",
+                      "items": {
+                        "type": "object",
+                        "required": ["name", "status", "index", "time"],
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "description": "Name of the test that was executed."
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": ["SUCCEEDED", "FAIL", "SKIP"],
+                            "description": "Execution status of the test."
+                          },
+                          "table": {
+                            "type": "string",
+                            "description": "Table name associated with this test result."
+                          },
+                          "columnName": {
+                            "type": "string",
+                            "description": "Column name associated with this test result."
+                          },
+                          "index": {
+                            "type": "integer",
+                            "description": "Test execution index."
+                          },
+                          "time": {
+                            "type": "string",
+                            "description": "Time taken to execute the test."
+                          }
+                        }
+                      }
+                    },
+                    "dbtStdout": {
+                      "type": "string",
+                      "description": "Standard output from dbt test execution."
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "Error message if test execution failed."
+                    },
+                    "summary": {
+                      "type": "object",
+                      "required": ["failed", "skip", "succeeded", "total", "warning"],
+                      "properties": {
+                        "failed": {
+                          "type": "integer",
+                          "description": "Number of tests that failed."
+                        },
+                        "skip": {
+                          "type": "integer",
+                          "description": "Number of tests that were skipped."
+                        },
+                        "succeeded": {
+                          "type": "integer",
+                          "description": "Number of tests that succeeded."
+                        },
+                        "total": {
+                          "type": "integer",
+                          "description": "Total number of tests executed."
+                        },
+                        "warning": {
+                          "type": "integer",
+                          "description": "Number of tests that produced warnings."
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "results": [
+                    {
+                      "name": "unique",
+                      "status": "SUCCEEDED",
+                      "table": "pp_test_1",
+                      "columnName": "id",
+                      "index": 0,
+                      "time": "0.5s"
+                    },
+                    {
+                      "name": "not_null",
+                      "status": "SUCCEEDED",
+                      "table": "pp_test_1",
+                      "columnName": "payment_method",
+                      "index": 0,
+                      "time": "0.3s"
+                    }
+                  ],
+                  "summary": {
+                    "failed": 0,
+                    "skip": 0,
+                    "succeeded": 2,
+                    "total": 2,
+                    "warning": 0
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
