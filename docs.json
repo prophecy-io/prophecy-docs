@@ -410,7 +410,7 @@
             "groups": [
               {
                 "group": "API documentation",
-                "pages": ["api-reference/introduction", "api-reference/rest-api-gem"]
+                "pages": ["api-reference/introduction"]
               },
               {
                 "group": "Endpoints",

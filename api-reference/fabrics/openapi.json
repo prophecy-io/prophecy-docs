@@ -53,7 +53,7 @@
                   "provider": {
                     "type": "string",
                     "description": "SQL warehouse provider for the fabric.",
-                    "enum": ["databricks", "bigquery"]
+                    "enum": ["databricks", "bigquery", "ProphecyManaged"]
                   },
                   "dataplaneUrl": {
                     "type": "string",
