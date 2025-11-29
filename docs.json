@@ -502,8 +502,7 @@
                 "pages": [
                   "data-analytics/administration/platform/editions",
                   "data-analytics/administration/platform/architecture",
-                  "data-analytics/administration/platform/prophecy-deployment",
-                  "data-analytics/administration/platform/security"
+                  "data-analytics/administration/platform/prophecy-deployment"
                 ]
               },
               {
@@ -572,19 +571,26 @@
                       "data-analytics/administration/management/usage-billing/credits"
                     ]
                   },
-                  "data-analytics/administration/management/audit-logs",
+                  "data-analytics/administration/management/audit-logs"
+                ]
+              },
+              {
+                "group": "Help and resources",
+                "pages": [
+                  "data-analytics/administration/getting-help/get-in-touch",
+                  "data-analytics/administration/getting-help/troubleshooting",
+
                   {
-                    "group": "Getting help",
+                    "group": "Collect diagnostic data",
                     "pages": [
-                      "data-analytics/administration/getting-help/getting-help",
                       "data-analytics/administration/getting-help/prophecy-details",
                       "data-analytics/administration/getting-help/spark-cluster-details",
-                      "data-analytics/administration/getting-help/troubleshooting",
                       "data-analytics/administration/getting-help/har-file",
                       "data-analytics/administration/getting-help/diagnostics",
                       "data-analytics/administration/getting-help/copy-session-info"
                     ]
-                  }
+                  },
+                  "data-analytics/administration/getting-help/security"
                 ]
               }
             ]
@@ -982,8 +988,7 @@
                 "pages": [
                   "data-engineering/administration/platform/editions",
                   "data-engineering/administration/platform/architecture",
-                  "data-engineering/administration/platform/prophecy-deployment",
-                  "data-engineering/administration/platform/security"
+                  "data-engineering/administration/platform/prophecy-deployment"
                 ]
               },
               {
@@ -1052,14 +1057,19 @@
                       "data-engineering/administration/management/usage-billing/credits"
                     ]
                   },
-                  "data-engineering/administration/management/audit-logs",
+                  "data-engineering/administration/management/audit-logs"
+                ]
+              },
+              {
+                "group": "Help and resources",
+                "pages": [
+                  "data-engineering/administration/getting-help/get-in-touch",
+                  "data-engineering/administration/getting-help/security",
                   {
-                    "group": "Getting help",
+                    "group": "Collect diagnostic data",
                     "pages": [
-                      "data-engineering/administration/getting-help/getting-help",
                       "data-engineering/administration/getting-help/prophecy-details",
                       "data-engineering/administration/getting-help/spark-cluster-details",
-                      "data-engineering/administration/getting-help/troubleshooting",
                       "data-engineering/administration/getting-help/har-file",
                       "data-engineering/administration/getting-help/diagnostics",
                       "data-engineering/administration/getting-help/copy-session-info"
