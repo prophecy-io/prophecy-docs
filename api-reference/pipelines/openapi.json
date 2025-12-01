@@ -236,11 +236,10 @@
       ],
       "post": {
         "tags": ["Pipeline Runs"],
-        "summary": "Run column-level data tests",
-        "description": "Execute data quality tests for a specific column in a pipeline",
+        "summary": "Run generic data tests",
+        "description": "Execute existing data tests for a table or column in a pipeline",
         "operationId": "runDataTests",
         "requestBody": {
-          "description": "Data test execution parameters",
           "required": true,
           "content": {
             "application/json": {
@@ -250,7 +249,7 @@
                 "properties": {
                   "sessionId": {
                     "type": "string",
-                    "description": "WebSocket session ID from the frontend to orchestration service."
+                    "description": "Session ID from the IDE. You can find this in the attached fabric dialog shown in the top right of the Prophecy UI (indicated by the \"Cluster Attached\" status). "
                   },
                   "pipelineId": {
                     "type": "string",
@@ -262,17 +261,17 @@
                     "items": {
                       "type": "object",
                       "properties": {
+                        "pipeline": {
+                          "type": "string",
+                          "description": "If a pipeline name is specified, all tests in the pipeline will run. When using this parameter, **you do not need to include any other attributes** (such as `source`, `table`, `columnTests`, or `tableTests`) in the test object."
+                        },
                         "source": {
                           "type": "string",
-                          "description": "Source identifier for table tests."
+                          "description": "If a pipeline is **not specified**, provide a path to the table to test. Required when running table-specific tests. Must be used together with `table`, since the source name is not enough to identify the table.\n\nExample: `<schema>.<table>`"
                         },
                         "table": {
                           "type": "string",
-                          "description": "Table name for table and column tests."
-                        },
-                        "pipeline": {
-                          "type": "string",
-                          "description": "Pipeline name for pipeline-level tests."
+                          "description": "If a pipeline is **not specified**, provide the name of the table that includes the generic test definition. Required when running table-specific tests. Must be used together with `source`, since the table name is not enough to identify the table."
                         },
                         "columnTests": {
                           "type": "array",
@@ -283,22 +282,18 @@
                             "properties": {
                               "name": {
                                 "type": "string",
-                                "description": "Column name to test."
+                                "description": "Name of the column to test."
                               },
                               "tests": {
                                 "type": "array",
-                                "description": "Array of test definitions for this column.",
+                                "description": "Array of test definitions for this column. ",
                                 "items": {
                                   "type": "object",
-                                  "required": ["name", "index"],
+                                  "required": ["name"],
                                   "properties": {
                                     "name": {
                                       "type": "string",
                                       "description": "Name of the test to execute."
-                                    },
-                                    "index": {
-                                      "type": "integer",
-                                      "description": "Test execution index."
                                     }
                                   }
                                 }
@@ -311,15 +306,11 @@
                           "description": "Array of table-level test configurations.",
                           "items": {
                             "type": "object",
-                            "required": ["name", "index"],
+                            "required": ["name"],
                             "properties": {
                               "name": {
                                 "type": "string",
-                                "description": "Name of the table test to execute."
-                              },
-                              "index": {
-                                "type": "integer",
-                                "description": "Test execution index."
+                                "description": "Name of the test to execute."
                               }
                             }
                           }
@@ -330,34 +321,33 @@
                 }
               },
               "examples": {
-                "pipelineTests": {
+                "runAllTests": {
                   "summary": "Request to run pipeline-level tests",
                   "value": {
-                    "sessionId": "e5e160ea-773c-4fe4-875f-d8681d25445e",
-                    "pipelineId": "ashraytest1",
+                    "sessionId": "<session-id>",
+                    "pipelineId": "pipeline_1",
                     "tests": [
                       {
-                        "pipeline": "ashraytest1"
+                        "pipeline": "pipeline_1"
                       }
                     ]
                   }
                 },
-                "tableTests": {
+                "runSpecificTests": {
                   "summary": "Request to run table and column tests",
                   "value": {
-                    "sessionId": "e5e160ea-773c-4fe4-875f-d8681d25445e",
-                    "pipelineId": "ashraytest1",
+                    "sessionId": "<session-id>",
+                    "pipelineId": "pipeline_1",
                     "tests": [
                       {
-                        "source": "tanmay.default_default",
-                        "table": "pp_test_1",
+                        "source": "your_schema.your_table",
+                        "table": "your_table",
                         "columnTests": [
                           {
                             "name": "id",
                             "tests": [
                               {
-                                "name": "unique",
-                                "index": 0
+                                "name": "unique"
                               }
                             ]
                           },
@@ -365,13 +355,16 @@
                             "name": "payment_method",
                             "tests": [
                               {
-                                "name": "not_null",
-                                "index": 0
+                                "name": "not_null"
                               }
                             ]
                           }
                         ],
-                        "tableTests": []
+                        "tableTests": [
+                          {
+                            "name": "custom_table_test"
+                          }
+                        ]
                       }
                     ]
                   }
@@ -394,7 +387,7 @@
                       "description": "Array of test execution results.",
                       "items": {
                         "type": "object",
-                        "required": ["name", "status", "index", "time"],
+                        "required": ["name", "status", "time"],
                         "properties": {
                           "name": {
                             "type": "string",
@@ -412,10 +405,6 @@
                           "columnName": {
                             "type": "string",
                             "description": "Column name associated with this test result."
-                          },
-                          "index": {
-                            "type": "integer",
-                            "description": "Test execution index."
                           },
                           "time": {
                             "type": "string",
@@ -465,17 +454,15 @@
                     {
                       "name": "unique",
                       "status": "SUCCEEDED",
-                      "table": "pp_test_1",
+                      "table": "table_1",
                       "columnName": "id",
-                      "index": 0,
                       "time": "0.5s"
                     },
                     {
                       "name": "not_null",
                       "status": "SUCCEEDED",
-                      "table": "pp_test_1",
+                      "table": "table_1",
                       "columnName": "payment_method",
-                      "index": 0,
                       "time": "0.3s"
                     }
                   ],

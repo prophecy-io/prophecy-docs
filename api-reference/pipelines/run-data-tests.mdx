@@ -3,6 +3,17 @@ openapi: post /api/orchestrate/tests/run
 playground: 'none'
 ---
 
+Use this endpoint to run data tests built on [dbt generic data tests](https://docs.getdbt.com/docs/build/data-tests#generic-data-tests).
+
+## Requirements
+
+To run the API, you need to:
+
+- Set up your generic test definitions in the Prophecy UI. Learn more about [generic test definitions](/data-analytics/development/tests/use-model-tests).
+- Ensure that the tables you want to test have data. If you create a pipeline that writes to a new table, you must run the pipeline first to populate the table with data. This gives data tests something to check against; otherwise, tests may fail or result in errors due to lack of data.
+
+<Note>Limitation: This endpoint currently requires an active UI session.</Note>
+
 #### Endpoint
 
 ---
