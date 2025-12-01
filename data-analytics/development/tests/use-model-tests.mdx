@@ -5,7 +5,7 @@ description: 'Create reusable data tests that can be applied to different models
 
 Test definitions are reusable SQL queries that validate your data quality. You write a test definition once, then apply it to any table or model in your project to check for data problems.
 
-Use test definitions to catch data issues before they affect your analysis or reports. For example, you might create a test to verify that customer IDs are unique, that required fields aren't missing, or that two related tables have matching values. When you run these tests, they automatically check your data and report any violations, helping you identify problems early in your workflow.
+Use test definitions to catch data issues before they affect your analysis or reports. For example, you might create a test to verify that customer IDs are unique, that required fields aren't missing, or that two related tables have matching values. When you run these tests, you'll be able to identify any problems in your data.
 
 <Note>
   Test definitions are based on [dbt generic data
@@ -20,10 +20,12 @@ Use test definitions to catch data issues before they affect your analysis or re
 
 Prophecy includes a set of default test definitions that you can use to get started.
 
-- **Unique**: Validates that each value within a column is unique.
-- **Not null**: Validates that a column contains no null values.
-- **Accepted values**: Validates that column values only include values from a defined set.
-- **Relationships**: Validates referential integrity by ensuring that each value in a column exists as a corresponding value in another column or model.
+| Test definition     | Description                                                                                                                         |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| **Unique**          | Validates that each value within a column is unique.                                                                                |
+| **Not null**        | Validates that a column contains no null values.                                                                                    |
+| **Accepted values** | Validates that column values only include values from a defined set.                                                                |
+| **Relationships**   | Validates referential integrity by ensuring that each value in a column exists as a corresponding value in another column or model. |
 
 ## How are test definitions defined?
 
@@ -38,13 +40,7 @@ For example:
 - The `unique` test asks: "Are there any duplicate values in this column?" If duplicates exist, the query returns those duplicate rows and the test fails.
 - The `relationships` test asks: "Are there any values in this column that don't exist in the related table?" If mismatched values exist, the query returns those rows and the test fails.
 
-To create your own test definitions, you need to understand these SQL concepts:
-
-- **Select statements**: How to query data from tables
-- **Where clauses**: How to filter rows based on conditions
-- **Aggregations**: Functions like `COUNT()`, `SUM()`, `MAX()` that calculate values
-- **Joins**: How to combine data from multiple tables (for tests that compare models)
-- **CTEs (Common Table Expressions)**: The `WITH` clause that lets you break complex queries into named parts
+To create your own test definitions, **you need to know how to write SQL queries.**
 
 ### Example: Comparing row counts
 
@@ -80,18 +76,18 @@ where diff_count > 0
 
 **How it works:**
 
-1. The first CTE (`a`) counts rows in your model.
+1. The first <Tooltip tip="Common Table Expressions are temporary result sets created with the WITH clause that lets you break complex queries into simpler, named parts." cta="Learn more about CTEs" href="https://www.getdbt.com/blog/getting-started-with-cte">CTE</Tooltip> (`a`) counts rows in your model.
 2. The second CTE (`b`) counts rows in the comparison model.
 3. The `final` CTE calculates the difference between the two counts.
 4. The final `SELECT` returns rows only when the difference is greater than 0.
 
 If the row counts match, the query returns no rows and the test passes. If they differ, the query returns a row showing the difference and the test fails.
 
-## Build a test
+## Build and run tests
 
-Use the following example to learn how to build a test definition.
+Use the following example to learn how to build a test definition and run the test.
 
-### Add a test definition
+### 1. Add a test definition
 
 To add a test definition, follow these steps:
 
@@ -105,7 +101,7 @@ To add a test definition, follow these steps:
   You can also create a new data test directly from the **Data Tests** tab of a table or model gem.
 </Tip>
 
-### Define the test query
+### 2. Define the test query
 
 On the test definition page, you can define the test query.
 
@@ -128,11 +124,9 @@ If changes are made to the columns or schemas used in your data test, then Proph
 
 </Warning>
 
-## Run tests
+### 3. Assign the test definition
 
-After you've developed your model or column test, you can run it.
-
-### Assign the test definition to a table or model
+After you've created a test definition, you can assign it to a table or model.
 
 1. Open the table or model that you want to run the test on.
 1. Click the **Data Tests** tab.
@@ -143,9 +137,32 @@ After you've developed your model or column test, you can run it.
 
 If necessary, you can add additional tests to the same table or model.
 
-### Run data tests
+<Accordion title="Advanced settings">
 
-Once you have assigned test definitions to a table or model, you can run them.
+In addition to the test parameters, you can also set the following advanced settings for all tests:
+
+| Setting                    | Description                                                                                                                                                                                                                                                                                 |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Filter Condition**       | When enabled, lets you define a filter expression for what you want your test to run on. Use the dropdown to select an expression.                                                                                                                                                          |
+| **Severity**               | Determines whether the failure of the test returns an error or warning. Select from the dropdown to set the severity level.                                                                                                                                                                 |
+| **Failure Calculation**    | Sets the failure condition used to run against the test result. Use the expression builder to define how failures are calculated, such as using the `count()` function on a column or multiple columns.                                                                                     |
+| **Error If**               | Sets conditions that trigger an error. Use the expression builder to define when the test should return an error based on the failure calculation result.                                                                                                                                   |
+| **Warn If**                | Sets conditions that trigger a warning. Use the expression builder to define when the test should return a warning based on the failure calculation result.                                                                                                                                 |
+| **Store Failures**         | When enabled, stores all records that failed the test. The records are saved in a new table with schema `dbt_test__audit` in your database. The table is named after the name of the model and data test. Make sure you have write permission to create a new table in your data warehouse. |
+| **Set max no of failures** | When enabled, sets the maximum number of failures returned by a test query. You can set the limit to save resources and time by having the test stop its query as soon as it encounters a certain number of failed rows.                                                                    |
+
+<Info>
+  Severity operates from highest priority (error) to lowest priority (warning). If you select
+  **error**, the test first checks the **Error If** conditions. If no errors are found, it then
+  checks the **Warn If** conditions. If you select **warning**, the test only checks the **Warn If**
+  conditions. If you don't select a severity, **error** is chosen by default.
+</Info>
+
+</Accordion>
+
+### 4. Run data tests
+
+Now that you've configured the tests, you can run them.
 
 1. Select the test definition you want to run.
 1. Click **Run all** to execute all the defined tests.
@@ -174,27 +191,6 @@ When you schedule a project, you can also schedule tests in the project to run. 
 
 </Accordion>
 
-### Advanced settings
-
-When you add a test definition to a table or model, you set the test parameters. In addition, you can also set the following advanced settings for all tests:
-
-| Setting                    | Description                                                                                                                                                                                                                                                                                 |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Filter Condition**       | When enabled, lets you define a filter expression for what you want your test to run on. Use the dropdown to select an expression.                                                                                                                                                          |
-| **Severity**               | Determines whether the failure of the test returns an error or warning. Select from the dropdown to set the severity level.                                                                                                                                                                 |
-| **Failure Calculation**    | Sets the failure condition used to run against the test result. Use the expression builder to define how failures are calculated, such as using the `count()` function on a column or multiple columns.                                                                                     |
-| **Error If**               | Sets conditions that trigger an error. Use the expression builder to define when the test should return an error based on the failure calculation result.                                                                                                                                   |
-| **Warn If**                | Sets conditions that trigger a warning. Use the expression builder to define when the test should return a warning based on the failure calculation result.                                                                                                                                 |
-| **Store Failures**         | When enabled, stores all records that failed the test. The records are saved in a new table with schema `dbt_test__audit` in your database. The table is named after the name of the model and data test. Make sure you have write permission to create a new table in your data warehouse. |
-| **Set max no of failures** | When enabled, sets the maximum number of failures returned by a test query. You can set the limit to save resources and time by having the test stop its query as soon as it encounters a certain number of failed rows.                                                                    |
-
-<Info>
-  Severity operates from highest priority (error) to lowest priority (warning). If you select
-  **error**, the test first checks the **Error If** conditions. If no errors are found, it then
-  checks the **Warn If** conditions. If you select **warning**, the test only checks the **Warn If**
-  conditions. If you don't select a severity, **error** is chosen by default.
-</Info>
-
-## Sharing test definitions
+## Share test definitions
 
 If you publish your project as a package, you can share your test definitions with other teams. Once they import the package, they will be able to use your test definitions in their own projects.
