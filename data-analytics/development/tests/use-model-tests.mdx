@@ -83,9 +83,9 @@ where diff_count > 0
 
 If the row counts match, the query returns no rows and the test passes. If they differ, the query returns a row showing the difference and the test fails.
 
-## Build and run tests
+## Build and run custom tests
 
-Use the following example to learn how to build a test definition and run the test.
+In the following sections, we'll build a test called `not_constant` to validate that a column does not have the same value in all rows. Follow the example to learn how to build a test definition and run the test.
 
 ### 1. Add a test definition
 
@@ -94,7 +94,7 @@ To add a test definition, follow these steps:
 1. In the left sidebar, click **+ Add Entity**.
 1. Hover the **Tests** option and select **Test definitions**.
 1. Assign a name to your test definition, such as `not_constant`.
-1. Keep the default path `tests/generic`. This is the directory in the Git repository where Prophecy will store the test definition.
+1. Keep the default path `tests/generic`. This is the directory in the project Git repository where Prophecy will store the test definition.
 1. Click **Create**. The test definition page opens.
 
 <Tip>
@@ -103,11 +103,14 @@ To add a test definition, follow these steps:
 
 ### 2. Define the test query
 
-On the test definition page, you can define the test query.
+On the test definition page, configure the following.
 
-1. In the **Description**, add a summary of what the test definition does, for example `Validates that a column does not have the same value in all rows.`
-1. In the **Parameters** table, add the parameters for the test. Each test has a default `model` parameter. When you apply a test to a table or model, Prophecy automatically sets this parameter to that entity's name. The `not_constant` test also requires a reference to a column in the model. Thus, you need to add another parameter called `column_name` of type `column`.
-1. In the **Definition** field, add the SQL query for the test. In this case:
+1. Under **Description**, add a summary of the test.
+1. Under **Parameters**, add the parameters for the test.
+   - All tests require the default `model` parameter of type `table`.
+   - The `not_constant` test requires a `column_name` parameter of type `column` (the column to check).
+
+1. Under **Definition**, add the SQL query for the test.
 
    ```sql
    select
@@ -116,13 +119,7 @@ On the test definition page, you can define the test query.
    having count(distinct {{ column_name }}) = 1
    ```
 
-![Create a new model test definition](/data-analytics/development/tests/img/test-not-constant.png)
-
-<Warning>
-
-If changes are made to the columns or schemas used in your data test, then Prophecy will delete the data test. For example, if you run into a data mismatch error on the Schema tab of your target model or update the schema, then your data test will be affected.
-
-</Warning>
+   ![Create a new model test definition](/data-analytics/development/tests/img/test-not-constant.png)
 
 ### 3. Assign the test definition
 
@@ -133,9 +130,18 @@ After you've created a test definition, you can assign it to a table or model.
 1. Click **+ New Test**.
 1. Under **Data Test Type**, select the test definition you want to add to the gem.
 1. Fill in the parameters for the test.
+
+   Prophecy automatically sets the value of the `model` parameter to the current table.
+
 1. Click **Create Test**.
 
 If necessary, you can add additional tests to the same table or model.
+
+<Warning>
+
+If changes are made to the columns or schemas used in your data test, then Prophecy will delete the data test. For example, if you run into a data mismatch error on the Schema tab of your target model or update the schema, then your data test will be affected.
+
+</Warning>
 
 <Accordion title="Advanced settings">
 
@@ -164,8 +170,7 @@ In addition to the test parameters, you can also set the following advanced sett
 
 Now that you've configured the tests, you can run them.
 
-1. Select the test definition you want to run.
-1. Click **Run all** to execute all the defined tests.
+1. Click **Run all** to execute all the defined tests. Alternatively, run individual tests by clicking the play button on the test's row.
 1. Once the tests finish running, you'll see the relevant test result next to each test definition.
 
 ![Assign a test definition to a table or model](/data-analytics/development/tests/img/test-table-config.png)
@@ -193,4 +198,4 @@ When you schedule a project, you can also schedule tests in the project to run. 
 
 ## Share test definitions
 
-If you publish your project as a package, you can share your test definitions with other teams. Once they import the package, they will be able to use your test definitions in their own projects.
+If you publish your project as a [package](/data-analytics/development/extensibility/package-hub/package-hub), you can share your test definitions with other teams. Once they import the package, they will be able to use your test definitions in their own projects.
