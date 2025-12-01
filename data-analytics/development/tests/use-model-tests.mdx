@@ -3,13 +3,15 @@ title: 'Test definitions'
 description: 'Create reusable data tests that can be applied to different models'
 ---
 
-Test definitions are generic data tests that ... Each project can contain multiple test definitions.
+Test definitions are reusable SQL queries that validate your data quality. You write a test definition once, then apply it to any table or model in your project to check for data problems.
+
+Use test definitions to catch data issues before they affect your analysis or reports. For example, you might create a test to verify that customer IDs are unique, that required fields aren't missing, or that two related tables have matching values. When you run these tests, they automatically check your data and report any violations, helping you identify problems early in your workflow.
 
 <Note>
-  Test definitions become [dbt generic data
+  Test definitions are based on [dbt generic data
   tests](https://docs.getdbt.com/docs/build/data-tests#generic-data-tests) behind the scenes. When
-  you add a test definition to a table, Prophecy add the test definition as a property of the dbt
-  model.
+  you add a test definition to a table, Prophecy adds the test as a property of the corresponding
+  dbt model.
 </Note>
 
 <Info>SQL fabrics configured with BigQuery and a CMEK are not compatible with data tests.</Info>
@@ -25,28 +27,33 @@ Prophecy includes a set of default test definitions that you can use to get star
 
 ## How are test definitions defined?
 
-Each test definition is a SQL query that is executed to validate the data.
+Test definitions use SQL queries to check your data. The query looks for problems in your data. If the query finds any rows (problems), the test fails. If the query returns no rows (no problems found), the test passes.
 
-Each test has a `model` parameter by default. This model is automatically set to the model that you apply the test to.
+### Understanding test queries
 
-For example, the `unique` test definition query selects duplicate values; if no duplicates are found, the test passes. Another example is the `relationships` test definition query selects rows where the foreign key value has no matching primary key; if all values have matches, the test passes.
+Think of a test query as a question you ask about your data: "Are there any rows that violate this rule?" If the answer is "yes" (rows are returned), the test fails. If the answer is "no" (no rows returned), the test passes.
 
-You'll have to be familiar with SQL to create your own test definitions.
+For example:
 
-dbt tests fail when they return rows, and pass when they return no rows.
+- The `unique` test asks: "Are there any duplicate values in this column?" If duplicates exist, the query returns those duplicate rows and the test fails.
+- The `relationships` test asks: "Are there any values in this column that don't exist in the related table?" If mismatched values exist, the query returns those rows and the test fails.
 
-### Example
+To create your own test definitions, you need to understand these SQL concepts:
 
-Name: `equal_rowcount`
+- **Select statements**: How to query data from tables
+- **Where clauses**: How to filter rows based on conditions
+- **Aggregations**: Functions like `COUNT()`, `SUM()`, `MAX()` that calculate values
+- **Joins**: How to combine data from multiple tables (for tests that compare models)
+- **CTEs (Common Table Expressions)**: The `WITH` clause that lets you break complex queries into named parts
 
-Parameters:
+### Example: Comparing row counts
 
-| Name            | Type    |
+This example `equal_rowcount` test checks if two models have the same number of rows. It has the following parameters and definition:
+
+| Parameter       | Type    |
 | --------------- | ------- |
 | `model`         | `table` |
 | `compare_model` | `table` |
-
-Definition:
 
 ```sql
 with a as (
@@ -71,6 +78,15 @@ select * from final
 where diff_count > 0
 ```
 
+**How it works:**
+
+1. The first CTE (`a`) counts rows in your model.
+2. The second CTE (`b`) counts rows in the comparison model.
+3. The `final` CTE calculates the difference between the two counts.
+4. The final `SELECT` returns rows only when the difference is greater than 0.
+
+If the row counts match, the query returns no rows and the test passes. If they differ, the query returns a row showing the difference and the test fails.
+
 ## Build a test
 
 Use the following example to learn how to build a test definition.
@@ -94,7 +110,7 @@ To add a test definition, follow these steps:
 On the test definition page, you can define the test query.
 
 1. In the **Description**, add a summary of what the test definition does, for example `Validates that a column does not have the same value in all rows.`
-1. In the **Parameters** table, add the parameters for the test. By default, the `model` parameter of type `table`is added. The `not_constant` test also requires a reference to a column in the model. Thus, you need to add another parameter called `column_name` of type `column`.
+1. In the **Parameters** table, add the parameters for the test. Each test has a default `model` parameter. When you apply a test to a table or model, Prophecy automatically sets this parameter to that entity's name. The `not_constant` test also requires a reference to a column in the model. Thus, you need to add another parameter called `column_name` of type `column`.
 1. In the **Definition** field, add the SQL query for the test. In this case:
 
    ```sql
@@ -158,9 +174,9 @@ When you schedule a project, you can also schedule tests in the project to run. 
 
 </Accordion>
 
-## Advanced settings
+### Advanced settings
 
-In additional to the required test arguments, you can also set the following advanced settings for all tests:
+When you add a test definition to a table or model, you set the test parameters. In addition, you can also set the following advanced settings for all tests:
 
 | Setting                    | Description                                                                                                                                                                                                                                                                                 |
 | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
