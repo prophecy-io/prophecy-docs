@@ -87,7 +87,8 @@ Load some data into the project as a <Tooltip tip="Seeds are CSV files that are 
 
 </Step>
 <Step title="Reindex your connection">
-Reindex your connection so the [knowledge graph](/data-analytics/ai/knowledge-graph/knowledge-graph) includes the new table. This allows the Agent to discover and use the seed data.
+
+Prophecy should automatically index the table when you save the seed. This allows the Agent to discover and use the seed data. If you have trouble finding the table in later steps, you can also manually reindex the [knowledge graph](/data-analytics/ai/knowledge-graph/knowledge-graph).
 
 1. Open the **Environment** tab in the left sidebar.
 1. Below your connections, you'll see a **Missing Tables?** callout.
@@ -96,11 +97,6 @@ Reindex your connection so the [knowledge graph](/data-analytics/ai/knowledge-gr
 You'll see a progress bar in the callout indicating the indexer is running. Once it's complete, the callout will disappear.
 
 <Check>Verify the table was indexed by checking the **Environment** tab in the left sidebar.</Check>
-
-<Warning>
-  The Agent relies on the knowledge graph to find tables. If you skip reindexing, the Agent won't be
-  able to locate your seed data.
-</Warning>
 
 </Step>
 </Steps>
