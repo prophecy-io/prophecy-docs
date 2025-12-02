@@ -135,10 +135,10 @@
                   {
                     "group": "Extensibility",
                     "pages": [
+                      "data-analytics/development/extensibility/dependencies",
                       "data-analytics/development/extensibility/package-hub/package-hub",
                       "data-analytics/development/extensibility/package-hub/template-hub",
                       "data-analytics/development/extensibility/functions",
-                      "data-analytics/development/extensibility/dependencies",
                       "data-analytics/development/extensibility/stored-procedure",
                       "data-analytics/development/extensibility/sql-gem-builder"
                     ]
