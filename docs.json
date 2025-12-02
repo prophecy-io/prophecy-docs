@@ -1053,8 +1053,7 @@
                   {
                     "group": "Usage and billing",
                     "pages": [
-                      "data-engineering/administration/management/usage-billing/usage-billing",
-                      "data-engineering/administration/management/usage-billing/credits"
+                      "data-engineering/administration/management/usage-billing/usage-billing"
                     ]
                   },
                   "data-engineering/administration/management/audit-logs"

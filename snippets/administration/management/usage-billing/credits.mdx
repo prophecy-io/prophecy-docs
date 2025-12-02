@@ -43,7 +43,7 @@ flowchart LR
 A[Plan] --> B[Team]
 B --> C[Fabric / Prophecy Warehouse]
 
-subgraph "Credit Consumption Actions"
+subgraph "Credit Consumption"
 direction LR
 E[Team Members]
 F[AI Requests]
@@ -66,3 +66,12 @@ classDef cluster fill:transparent,stroke:#bdbdbd,stroke-width:1px
 class A,B,C entity
 class E,F,G,H,I metric
 ```
+
+## What happens when you run out of credits?
+
+When you run out of credits, the following features will be disabled:
+
+- Prophecy Agent
+- Interactive pipeline runs
+- Scheduled pipeline runs
+- Project publication (deployment)
