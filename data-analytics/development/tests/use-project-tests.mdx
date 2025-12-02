@@ -7,8 +7,6 @@ Project tests are custom SQL queries that validate your data by checking whether
 
 Use project tests when you need to validate data that combines multiple models or tables, or when you want to test a specific transformation pipeline. For example, you might create a project test to verify referential integrity across related tables or ensure that a complex data transformation produces expected results.
 
-By default, a project test passes when the query returns no rows. If the query returns any rows, the test fails, indicating that the data doesn't meet the specified condition.
-
 <Note>
   Project tests are based on [dbt singular data
   tests](https://docs.getdbt.com/docs/build/data-tests#singular-data-tests).
@@ -26,17 +24,19 @@ By default, a project test passes when the query returns no rows. If the query r
 
 When you create a project test, a Data Test gem appears on an otherwise empty canvas. The Data Test gem has the following optional parameters:
 
-| Parameter               | Description                                                                                                                                                                                                                                                                                                                                                                                                                |
-| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Failure Calculation** | Sets the failure condition. The limit, error, and warning condition is measured against this calculation.                                                                                                                                                                                                                                                                                                                  |
-| **Limit**               | Sets the maximum number of failures returned by a test query. You can set the limit to save resources and time by having the test stop its query as soon as it encounters a certain number of failed rows.                                                                                                                                                                                                                 |
-| **Severity**            | Determines whether the failure of the test returns an error or warning. The severity operates from the highest priority selection, error, to the lowest, warning. So if you select error, then the test first checks for errors. If it doesn't find any, then it then checks for warnings. If you select warning, then the test only checks for warnings. If you don't select a severity, then error is chosen by default. |
-| **Error If**            | Sets the number of failed rows to determine a failed test. Depending on the selected severity, your test only returns a failed test for error checks. Warning won't return a failed test.                                                                                                                                                                                                                                  |
-| **Warning If**          | Sets the number of failed rows to determine a warning. Only evaluated when severity is set to error (checks warnings after errors) or when severity is set to warning.                                                                                                                                                                                                                                                     |
+| Parameter               | Description                                                                                                                                                                                       | Default          |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
+| **Failure Calculation** | Sets the failure condition. The error and warning conditions are measured against this calculation.                                                                                               | `count(*)`       |
+| **Limit**               | Sets the maximum number of failures returned by a test query. You can set the limit to save resources by having the test stop its query as soon as it encounters a certain number of failed rows. | Empty (no limit) |
+| **Severity**            | Determines whether the failure of the test returns an error or warning.                                                                                                                           | `error`          |
+| **Error If**            | Sets the condition to determine an error. If the condition is met, and the severity is set to error, the tests returns an error.                                                                  | `!=0`            |
+| **Warning If**          | Sets the condition to determine a warning. If the condition is met, and the severity is set to error or warning, the tests returns a warning.                                                     | `!=0`            |
+
+If you leave all parameters empty, Prophecy uses the default values. The test passes when the query returns no rows. If the query returns any rows, the test returns an error.
 
 ## Build and run a test
 
-This example creates a test named `assert_total_payment_amount_is_positive` that validates payment data.
+This example creates a test named `assert_total_payment_amount_is_positive` that validates payment data. For each order, there might be multiple transactions: negative transactions represent refunds. The total payment amount for an order is the sum of all transaction amounts, and should never be negative (greater than or equal to zero). Let's build a project test to validate this for a table.
 
 ### 1. Create a project test entity
 
@@ -50,11 +50,11 @@ To develop a project test, start by opening a project:
 
 ### 2. Develop a test model
 
-Create your test model by connecting your data sources to the Data Test gem. For the `assert_total_payment_amount_is_positive` example:
+Let's prepare the data for the `assert_total_payment_amount_is_positive` test. Our test checks checks if the table has any rows. Because of this, we need to add a filter to the original table to return the rows that will make the test fail. In this case, we want to return the rows where the total amount is negative.
 
 1. Drag a table to evaluate onto the canvas.
 
-   In this example, we'll use a `fct_payments` table:
+   In this example, we'll use a `payments` table:
 
    | order_id | amount  |
    | -------- | ------- |
@@ -64,56 +64,64 @@ Create your test model by connecting your data sources to the Data Test gem. For
    | ORD-003  | 100.00  |
    | ORD-003  | -150.00 |
 
-1. Connect the `fct_payments` table to the **Data Test** gem.
+1. Add an Aggregate gem to the pipeline after the `payments` table.
+1. Configure the Aggregate gem to sum the amounts for each order.
+1. Add a Filter gem after the Aggregate gem.
+1. Configure the Filter gem to return only the orders where the total amount is negative.
+1. Connect the Filter gem to the **Data Test** gem.
+
+<Check>Because `ORD-003` has a negative total amount, the test will return an error.</Check>
 
 ### 3. Configure the Data Test gem
 
 The Data Test gem should validate that the total amount for each order is always greater than or equal to zero. To do so, the test identifies orders where the sum of all payment amounts is negative.
 
 1. Open the **Data Test** gem.
-1. Configure the test parameters.
-   - **Failure Calculation**: `count(*)`
-   - **Limit**: `100` (stops after finding 100 orders with negative totals)
-   - **Severity**: `error`
-   - **Error If**: `> 0` (fails if any orders have negative total amounts)
-
-1. Select the **Use Custom Query** checkbox to enter a custom SQL query.
-1. Enter the following SQL query in the custom query field:
-
-   ```sql
-   SELECT
-      order_id,
-      sum(amount) as total_amount
-   FROM fct_payments
-   GROUP BY order_id
-   HAVING total_amount < 0
-   ```
-
+1. Keep the default parameters. Without modifying the parameters, the test returns an error if the input to the Data Test gem has any rows.
+1. The **Final Query** code editor displays the SQL query that results from your visual test pipeline. You do not need to edit this query. This is the query that the test will run against.
 1. Click **Save**.
-
-<Info>You can also write your test in the Code view.</Info>
 
 ### 4. Run the project test
 
 To run the test:
 
 1. Click the **Play** button on the canvas or on the Data Test gem.
-1. The test runs against the input to the Data Test gem. For the `assert_total_payment_amount_is_positive` example, the test executes the SQL query against your `fct_payments` table.
-1. Click **See Run Details** in the top right of the canvas to view the test summary. Depending on the outcome of the test, the icon displays a different color.
+1. The test runs against the input to the Data Test gem. For the `assert_total_payment_amount_is_positive` example, the test executes the SQL query against the output of the Filter gem.
+1. Click **See Run Details** in the top right of the canvas to view the test summary.
 
    ![See Run Details](/data-analytics/development/tests/img/project-test-run-details.png)
 
 1. Prophecy displays the final test status (succeeded, warning, or failed).
-1. To troubleshoot failed tests, click to expand the logs and review the dbt logs.
+1. To troubleshoot failed tests, click to expand the logs and review the dbt logs. The example test fails because `ORD-003` has a negative total amount.
+
+   ![Test logs](/data-analytics/development/tests/img/project-test-logs.png)
 
 <Info>
   You can execute a partial pipeline run by clicking play on an intermediate gem. However, since the
   execution stops before reaching the Data Test gem, the test will not run.
 </Info>
 
+### 5. Schedule test runs
+
+When you schedule a pipeline, you can also configure project tests to run during that schedule.
+
+1. Open a pipeline to associate the project tests schedule with.
+1. In the project header, click **... > Schedule**.
+1. Edit the existing schedule or configure a new schedule.
+1. Under **Project level tests**, select the tests you want to schedule.
+1. Click **Confirm** to save the changes.
+
+<Info>
+
+You must enable the schedule and publish the project to activate the automation.
+
+Learn more in [Schedule activation](/data-analytics/production/scheduling/scheduling#schedule-activation).
+
+</Info>
+
 <Accordion title="Schedule test runs (Models ONLY)">
 
-When you schedule a project, you can also schedule tests in the project to run. Scheduling tests ensures that your data is correct on a regular basis.
+Pipeline schedules differ from model schedules. Use the following steps if you are using **scheduling models only**.
 
 1. In the left sidebar of the project, click **+ Add Entity**.
 1. Click **Job**. This opens the **Create Job** dialog.

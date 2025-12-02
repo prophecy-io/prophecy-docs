@@ -180,9 +180,19 @@ Now that you've configured the tests, you can run them.
   test run. You can copy or download the logs if needed.
 </Info>
 
+### 5. Schedule test runs
+
+When you schedule a pipeline, you can enable tests associated with Tables gems in the pipeline to run during that schedule.
+
+1. Open a pipeline containing tests to schedule.
+1. In the project header, click **... > Schedule**.
+1. Edit the existing schedule or configure a new schedule.
+1. Enable the **Run data quality tests** toggle.
+1. Click **Confirm** to save the changes.
+
 <Accordion title="Schedule test runs (Models ONLY)">
 
-When you schedule a project, you can also schedule tests in the project to run. Scheduling tests ensures that your data is correct on a regular basis.
+Pipeline schedules differ from model schedules. Use the following steps if you are using **scheduling models only**.
 
 1. In the left sidebar of the project, click **+ Add Entity**.
 1. Click **Job**. This opens the **Create Job** dialog.
