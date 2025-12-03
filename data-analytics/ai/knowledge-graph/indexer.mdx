@@ -13,12 +13,12 @@ This page covers:
 
 ## How indexing works
 
-When triggered, the knowledge graph indexer:
+The knowledge graph indexer crawls each connection in your fabric separately. For each run, the indexer:
 
-1. Connects to your data storage connections using configured identities.
-2. Scans databases and file storage systems that the identities have access to.
-3. Indexes table names, schemas, column names, data types, and other metadata.
-4. Updates the knowledge graph with this information.
+1. Uses the credentials stored in the connection to authenticate as an identity in the external system.
+1. Scans databases and file storage systems that the identity has access to, limited by the permissions granted to that identity.
+1. Indexes table names, schemas, column names, data types, and other metadata.
+1. Updates the knowledge graph with this information.
 
 ## Configure automatic indexing
 
@@ -80,9 +80,9 @@ If more convenient, you can also start this process from the [Environment tab](/
 
 ## Add separate authentication for the indexer
 
-Prophecy lets you configure authentication credentials for the knowledge graph indexer separately from pipeline execution credentials for the **Databricks SQL warehouse connection**, allowing you to control which tables get indexed and how results are scoped for different users.
+In certain scenarios, you may want more granular control over which tables get indexed. For Databricks connections only, Prophecy lets you do so with dedicated authentication credentials for the knowledge graph indexer.
 
-This means there are two types of credentials stored in a connection:
+There are two types of credentials stored in a connection:
 
 - **Pipeline Development and Scheduled Execution** credentials control how pipelines authenticate when they run.
 - **Knowledge Graph Indexer** credentials control how the crawler authenticates when it indexes your warehouse on an automated schedule.
