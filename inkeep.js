@@ -34,10 +34,14 @@ const baseSettings = {
 
 // Load the original script for SidebarChat functionality
 loadScript('https://cdn.jsdelivr.net/npm/@inkeep/cxkit-js@0.5/dist/embed.js', () => {
+  // Track sidebar state for toggle functionality
+  let sidebarIsOpen = false;
+
   const sidebarSettings = {
     ...baseSettings,
     isOpen: false,
     onOpenChange: (isOpen) => {
+      sidebarIsOpen = isOpen;
       if (widget) {
         widget.update({ isOpen: isOpen });
       }
@@ -90,10 +94,11 @@ loadScript('https://cdn.jsdelivr.net/npm/@inkeep/cxkit-js@0.5/dist/embed.js', ()
         </div>
       `;
 
-      // Add click handler to trigger the sidebar
+      // Add click handler to toggle the sidebar
       newButton.addEventListener('click', () => {
         if (widget) {
-          widget.update({ isOpen: true });
+          sidebarIsOpen = !sidebarIsOpen;
+          widget.update({ isOpen: sidebarIsOpen });
         }
       });
 
