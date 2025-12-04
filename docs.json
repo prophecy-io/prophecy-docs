@@ -280,14 +280,6 @@
                   {
                     "group": "File storage systems",
                     "pages": [
-                      "data-analytics/gems/source-target/file/adls",
-                      "data-analytics/gems/source-target/file/s3",
-                      "data-analytics/gems/source-target/file/gcs",
-                      "data-analytics/gems/source-target/file/databricks-volumes",
-                      "data-analytics/gems/source-target/file/sftp",
-                      "data-analytics/gems/source-target/file/onedrive",
-                      "data-analytics/gems/source-target/file/sharepoint",
-                      "data-analytics/gems/source-target/file/smartsheet",
                       {
                         "group": "File types",
                         "pages": [
@@ -299,7 +291,15 @@
                           "data-analytics/gems/source-target/file/file-types/text",
                           "data-analytics/gems/source-target/file/file-types/fixed-width"
                         ]
-                      }
+                      },
+                      "data-analytics/gems/source-target/file/adls",
+                      "data-analytics/gems/source-target/file/s3",
+                      "data-analytics/gems/source-target/file/gcs",
+                      "data-analytics/gems/source-target/file/databricks-volumes",
+                      "data-analytics/gems/source-target/file/sftp",
+                      "data-analytics/gems/source-target/file/onedrive",
+                      "data-analytics/gems/source-target/file/sharepoint",
+                      "data-analytics/gems/source-target/file/smartsheet"
                     ]
                   }
                 ]
