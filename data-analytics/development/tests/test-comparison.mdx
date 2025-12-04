@@ -26,51 +26,82 @@ Use project tests when your validation logic doesn't need to be reused elsewhere
 
 However, project tests are not parameterized, so you cannot reuse the same test with different inputs.
 
-## Example
+## Example: Comparing row counts between two tables
 
-Imagine you want to test that two tables have the same number of rows.
+Both table tests and project tests can validate the same data quality requirement. This example demonstrates how to verify that two tables have the same number of rows using each approach.
 
-You can create either a table test or a project test that validates that the number of rows in the two tables are the same.
+### Scenario
 
-The table test would be a parameterized SQL query that looks like this:
+You need to ensure that `customers` and `customers_cleaned` tables have matching row counts. If the counts differ, the test should fail.
 
-```sql
-with a as (
-    select
-      count(*) as count_a
-    from {{ model }}
-),
-b as (
-    select
-      count(*) as count_b
-    from {{ compare_model }}
-),
-final as (
-    select
-        count_a,
-        count_b,
-        abs(count_a - count_b) as diff_count
-    from a
-    cross join b
-)
-select * from final
-where diff_count > 0
+### Approach 1: Table test
+
+Create a parameterized test definition that you can apply to any table.
+
+1. Create a new test definition.
+
+   ![Equal row count table test](/data-analytics/development/tests/img/table-test-equal-row-count.png)
+
+2. Define the parameters `{{ model }}` and `{{ compare_model }}` to accept any two tables.
+3. Define the SQL query for the test. The query returns rows only when the counts differ (test fails).
+
+   ```sql
+    with a as (
+        select
+        count(*) as count_a
+        from {{ model }}
+    ),
+    b as (
+        select
+        count(*) as count_b
+        from {{ compare_model }}
+    ),
+    final as (
+        select
+            count_a,
+            count_b,
+            abs(count_a - count_b) as diff_count
+        from a
+        cross join b
+    )
+    select * from final
+    where diff_count > 0
+   ```
+
+4. Add the test to a table in a pipeline.
+   - Prophecy sets the value of the `model` parameter to the current table.
+   - You specify the `compare_model` parameter to the table you want to compare.
+
+   ![Applying the table test to compare customers and customers_cleaned tables](/data-analytics/development/tests/img/apply-equal-row-count.png)
+
+5. Run the test.
+
+**Result:** You can reuse this test definition for any table in any pipeline in your project.
+
+### Approach 2: Project test
+
+Build a visual pipeline that performs the same validation using gems instead of SQL.
+
+1. Add two Table gems to the pipeline to read `customers` and `customers_cleaned`.
+2. Add two Aggregate gems to count rows in each table.
+3. Add a Join gem to combine the counts into a single row.
+4. Add a Reformat gem to calculate the difference between counts.
+5. Add a Filter gem to return rows only when the difference is greater than `0`.
+6. Connect to the Data Test gem to evaluate the result: if any rows exist, the test fails.
+
+**Pipeline structure:**
+
+```
+Table 1 → Aggregate (count rows) ┐
+                                    → Join → Reformat → Filter → Data Test
+Table 2 → Aggregate (count rows) ┘
 ```
 
-![Equal row count table test](/data-analytics/development/tests/img/table-test-equal-row-count.png)
+<Frame>
+  <img
+    src="/data-analytics/development/tests/img/project-test-equal-row-count.png"
+    alt="Project test pipeline showing visual gems for comparing row counts"
+  />
+</Frame>
 
-And apply it to any table.
-
-![Equal row count table test applied to a table](/data-analytics/development/tests/img/apply-equal-row-count.png)
-
-But you could also create a project test that looks like this, which produces the same output as the table test SQL query:
-
-```
-Table → Aggregate ┐
-                    →  Join → Reformat → Filter → Data Test
-Table → Aggregate ┘
-```
-
-![Project test example](/data-analytics/development/tests/img/project-test-equal-row-count.png)
-
-The Data Test gem allows you to change the failure condition, which is analogous to the **Advanced** options of a table test when you apply it to a table.
+**Result:** This test validates the specific `customers` and `customers_cleaned` tables. To test different tables, you must create a new project test.
