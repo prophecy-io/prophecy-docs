@@ -80,3 +80,13 @@
 .dark .nav-dropdown-item-icon {
   background-color: #a7b5f6;
 }
+
+/* Search bar border styling */
+#search-bar-entry,
+#search-bar-entry-mobile {
+  border-radius: 12px;
+}
+
+#search-input {
+  border-radius: 12px;
+}
