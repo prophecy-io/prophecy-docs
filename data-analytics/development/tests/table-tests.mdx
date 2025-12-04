@@ -1,6 +1,6 @@
 ---
-title: 'Test definitions'
-description: 'Create reusable data tests that can be applied to different models'
+title: 'Table tests'
+description: 'Create reusable data tests that apply to tables'
 ---
 
 Test definitions are reusable SQL queries that validate your data quality. You write a test definition once, then apply it to any table or model in your project to check for data problems.
@@ -8,7 +8,7 @@ Test definitions are reusable SQL queries that validate your data quality. You w
 Use test definitions to catch data issues before they affect your analysis or reports. For example, you might create a test to verify that customer IDs are unique, that required fields aren't missing, or that two related tables have matching values. When you run these tests, you'll be able to identify any problems in your data.
 
 <Note>
-  Test definitions are based on [dbt generic data
+  Table tests are based on [dbt generic data
   tests](https://docs.getdbt.com/docs/build/data-tests#generic-data-tests) behind the scenes. When
   you add a test definition to a table, Prophecy adds the test as a property of the corresponding
   dbt model.

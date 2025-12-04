@@ -127,8 +127,9 @@
                   {
                     "group": "Tests",
                     "pages": [
-                      "data-analytics/development/tests/use-model-tests",
-                      "data-analytics/development/tests/use-project-tests"
+                      "data-analytics/development/tests/test-comparison",
+                      "data-analytics/development/tests/table-tests",
+                      "data-analytics/development/tests/project-tests"
                     ]
                   },
                   {

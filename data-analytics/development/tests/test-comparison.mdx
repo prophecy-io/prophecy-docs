@@ -1,0 +1,76 @@
+---
+title: What are tests?
+description: Understand the purpose of different test types in Prophecy
+---
+
+Table tests and project tests serve different purposes in your data quality strategy. Understanding their differences helps you select the right approach for each validation scenario.
+
+The bottom line is that you can use **either type of test** to validate the same data quality requirements. However, table tests require parameterized SQL queries, whereas project tests leverage visual pipeline building.
+
+## When to use table tests
+
+Use table tests when you need **reusable**, **parameterized** tests that can be applied across multiple tables or models. Table tests are written as "test definitions," which are essentially stored SQL queries with parameters. They are useful for:
+
+- **Parameterization**: Leverage parameters (like `model` and `column_name`).
+- **Sharing**: Share tests with other teams through Prophecy packages.
+- **Standardization**: Establish consistent data quality checks across your project.
+
+The test logic must be expressible as a **parameterized SQL query**. Because of this, you need to know how to write SQL queries.
+
+## When to use project tests
+
+Use project tests when your validation logic doesn't need to be reused elsewhere. Project tests provide the following benefits:
+
+- **No SQL required**: Prepare data for testing using the visual pipeline builder.
+- **Workflow-specific**: Validate specific combinations of models or tables that are unique to a particular pipeline or workflow.
+
+However, project tests are not parameterized, so you cannot reuse the same test with different inputs.
+
+## Example
+
+Imagine you want to test that two tables have the same number of rows.
+
+You can create either a table test or a project test that validates that the number of rows in the two tables are the same.
+
+The table test would be a parameterized SQL query that looks like this:
+
+```sql
+with a as (
+    select
+      count(*) as count_a
+    from {{ model }}
+),
+b as (
+    select
+      count(*) as count_b
+    from {{ compare_model }}
+),
+final as (
+    select
+        count_a,
+        count_b,
+        abs(count_a - count_b) as diff_count
+    from a
+    cross join b
+)
+select * from final
+where diff_count > 0
+```
+
+![Equal row count table test](/data-analytics/development/tests/img/table-test-equal-row-count.png)
+
+And apply it to any table.
+
+![Equal row count table test applied to a table](/data-analytics/development/tests/img/apply-equal-row-count.png)
+
+But you could also create a project test that looks like this, which produces the same output as the table test SQL query:
+
+```
+Table → Aggregate ┐
+                    →  Join → Reformat → Filter → Data Test
+Table → Aggregate ┘
+```
+
+![Project test example](/data-analytics/development/tests/img/project-test-equal-row-count.png)
+
+The Data Test gem allows you to change the failure condition, which is analogous to the **Advanced** options of a table test when you apply it to a table.
