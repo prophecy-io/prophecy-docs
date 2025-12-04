@@ -73,7 +73,7 @@ loadScript('https://cdn.jsdelivr.net/npm/@inkeep/cxkit-js@0.5/dist/embed.js', ()
       newButton.id = 'inkeep-ask-ai-button';
       newButton.type = 'button';
       newButton.className =
-        'flex shrink-0 pointer-events-auto rounded-2xl items-center text-sm leading-6 h-9 px-3 text-gray-500 dark:text-white/50 bg-background-light dark:bg-background-dark dark:brightness-[1.1] dark:ring-1 dark:hover:brightness-[1.25] ring-1 ring-gray-400/30 hover:ring-gray-600/30 dark:ring-gray-600/30 dark:hover:ring-gray-500/30 justify-between truncate gap-2 ml-2';
+        'flex shrink-0 pointer-events-auto rounded-xl items-center text-sm leading-6 h-9 px-3 text-gray-500 dark:text-white/50 bg-background-light dark:bg-background-dark dark:brightness-[1.1] dark:ring-1 dark:hover:brightness-[1.25] ring-1 ring-gray-400/30 hover:ring-gray-600/30 dark:ring-gray-600/30 dark:hover:ring-gray-500/30 justify-between truncate gap-2 ml-2';
       newButton.setAttribute('aria-label', 'Ask AI');
 
       // Add content to the button
