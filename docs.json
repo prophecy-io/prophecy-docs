@@ -486,7 +486,8 @@
                     "group": "Pipelines",
                     "pages": [
                       "api-reference/pipelines/trigger-pipeline-run",
-                      "api-reference/pipelines/get-pipeline-run-status"
+                      "api-reference/pipelines/get-pipeline-run-status",
+                      "api-reference/pipelines/run-data-tests"
                     ]
                   }
                 ]
