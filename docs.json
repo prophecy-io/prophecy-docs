@@ -127,18 +127,18 @@
                   {
                     "group": "Tests",
                     "pages": [
-                      "data-analytics/development/tests/data-tests",
-                      "data-analytics/development/tests/use-project-tests",
-                      "data-analytics/development/tests/use-model-tests"
+                      "data-analytics/development/tests/test-comparison",
+                      "data-analytics/development/tests/table-tests",
+                      "data-analytics/development/tests/project-tests"
                     ]
                   },
                   {
                     "group": "Extensibility",
                     "pages": [
+                      "data-analytics/development/extensibility/dependencies",
                       "data-analytics/development/extensibility/package-hub/package-hub",
                       "data-analytics/development/extensibility/package-hub/template-hub",
                       "data-analytics/development/extensibility/functions",
-                      "data-analytics/development/extensibility/dependencies",
                       "data-analytics/development/extensibility/stored-procedure",
                       "data-analytics/development/extensibility/sql-gem-builder"
                     ]
@@ -280,14 +280,6 @@
                   {
                     "group": "File storage systems",
                     "pages": [
-                      "data-analytics/gems/source-target/file/adls",
-                      "data-analytics/gems/source-target/file/s3",
-                      "data-analytics/gems/source-target/file/gcs",
-                      "data-analytics/gems/source-target/file/databricks-volumes",
-                      "data-analytics/gems/source-target/file/sftp",
-                      "data-analytics/gems/source-target/file/onedrive",
-                      "data-analytics/gems/source-target/file/sharepoint",
-                      "data-analytics/gems/source-target/file/smartsheet",
                       {
                         "group": "File types",
                         "pages": [
@@ -299,7 +291,15 @@
                           "data-analytics/gems/source-target/file/file-types/text",
                           "data-analytics/gems/source-target/file/file-types/fixed-width"
                         ]
-                      }
+                      },
+                      "data-analytics/gems/source-target/file/adls",
+                      "data-analytics/gems/source-target/file/s3",
+                      "data-analytics/gems/source-target/file/gcs",
+                      "data-analytics/gems/source-target/file/databricks-volumes",
+                      "data-analytics/gems/source-target/file/sftp",
+                      "data-analytics/gems/source-target/file/onedrive",
+                      "data-analytics/gems/source-target/file/sharepoint",
+                      "data-analytics/gems/source-target/file/smartsheet"
                     ]
                   }
                 ]
@@ -1058,8 +1058,7 @@
                   {
                     "group": "Usage and billing",
                     "pages": [
-                      "data-engineering/administration/management/usage-billing/usage-billing",
-                      "data-engineering/administration/management/usage-billing/credits"
+                      "data-engineering/administration/management/usage-billing/usage-billing"
                     ]
                   },
                   "data-engineering/administration/management/audit-logs"

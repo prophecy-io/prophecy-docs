@@ -1,3 +1,45 @@
+<Update label="Prophecy 4.2.3" description="December 5, 2025" tags={["Data Analysis"]}>
+
+## Data tests compatible with pipelines
+
+Prophecy now supports running data tests on Prophecy fabrics. (Previously, data tests were only supported on SQL fabrics.)
+
+Learn more in [Table tests](/data-analytics/development/tests/table-tests) and [Project tests](/data-analytics/development/tests/project-tests).
+
+## Schema validation for JSON and XML files
+
+Prophecy lets you enable schema validation for [JSON](/data-analytics/gems/source-target/file/file-types/json) and [XML](/data-analytics/gems/source-target/file/file-types/xml) files in a Source gem. Use schema validation to ensure files conform to a predefined structure before ingesting the data. Schema validation works for all file storage connections.
+
+## Knowledge graph scope
+
+The [knowledge graph](/data-analytics/ai/knowledge-graph/knowledge-graph) indexer now scans all connections in a fabric, not just the SQL warehouse connection. This way, the Agent can access all data from the attached fabric.
+
+## Charts improvements
+
+Now, when you configure a chart in a [Prophecy App](/data-analytics/collaboration/prophecy-apps/apps) or in the [Data Explorer](/data-analytics/development/runs/data-explorer/data-explorer), you can change the colors used in the chart.
+
+<Frame>
+  ![Charts color picker](/data-analytics/development/runs/data-explorer/charts/img/chart-colors.png)
+</Frame>
+
+</Update>
+
+<Update label="Prophecy 4.2.3" description="December 5, 2025" tags={["Data Engineering"]}>
+
+## Selective sampling mode
+
+There have been several improvements to [selective sampling](/data-engineering/development/runs/data-sampling#selective-sampling):
+
+- Prophecy can now display the total [record count](/data-engineering/development/runs/data-sampling#record-counts) of selected gems.
+- You can now use selective data sampling mode when running pipelines on [Livy](/data-engineering/fabrics/spark-provider/livy) clusters.
+
+## Prophecy Library versions
+
+- ProphecyLibsPython 2.1.7
+- ProphecyLibsScala 8.15.1
+
+</Update>
+
 <Update label="Prophecy 4.2.2" description="November 17, 2025" tags={["Data Analysis"]}>
 
 ## Agent documentation templates

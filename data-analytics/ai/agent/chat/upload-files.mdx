@@ -65,15 +65,12 @@ The file is converted to a table in your SQL warehouse.
 
 ## Make the table available to the Agent
 
-After uploading a file, reindex the [knowledge graph](/data-analytics/ai/knowledge-graph/indexer) so the Agent can discover and use the new table.
+For the Agent to discover the table, you need to add it to the knowledge graph.
+
+After uploading a file, the [knowledge graph indexer](/data-analytics/ai/knowledge-graph/indexer) will automatically index the table. However, you can also manually reindex the knowledge graph, in case something goes wrong.
 
 1. Open the **Environment** tab in the left sidebar.
 1. Below your connections, locate the **Missing Tables?** callout.
 1. Click **Refresh** to trigger the knowledge graph indexer.
-
-<Warning>
-  The Agent relies on the knowledge graph to find tables. If you skip reindexing, the Agent won't be
-  able to locate your uploaded file table.
-</Warning>
 
 Once indexed, the Agent can reference the table using `@` mentions or discover it through natural language queries. The Agent will use the [Table gem](/data-analytics/gems/source-target/table) to read the file into your pipeline.
