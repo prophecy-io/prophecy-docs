@@ -1,7 +1,6 @@
 ---
-title: 'SQL project dependencies'
-sidebarTitle: Dependencies
-description: 'Make use of external or custom components in your pipelines and models'
+title: 'Dependencies'
+description: 'Make use of external or custom components in your projects'
 ---
 
 Dependencies allow you to reuse logic in your SQL projects, so you can build on work that's already been tested and versioned. Dependencies are scoped at the project level, and can include [packaged Prophecy projects](/data-analytics/development/extensibility/package-hub/package-hub), as well as external packages from GitHub or the dbt Hub.
@@ -49,16 +48,7 @@ dbt Hub dependencies have the following parameters:
 | Package   | Package name or path (e.g., `dbt-labs/dbt_utils`). |
 | Version   | Package version or version range.                  |
 
-## Manage dependencies
-
-To manage your project dependencies, there are two options:
-
-- A) Open the **Manage Dependencies** dialog by clicking **... > Dependencies** in the project header.
-- B) Open the **Manage Dependencies** dialog from the bottom left of the canvas, in the **Dependencies** panel.
-
-From here, you can add, edit, update, or remove dependencies from your project.
-
-## Create a new dependency
+## Add a dependency to your project
 
 To add a dependency to your project:
 
@@ -70,7 +60,9 @@ To add a dependency to your project:
 1. Click **Create**.
 1. Click **Reload and Save** to validate and download the new dependency.
 
-![dbt Hub dependency](/data-analytics/development/extensibility/img/dbt-dependency.png)
+<Note>
+  Dependencies are stored at the project level within the `packages.yml` file of the project code.
+</Note>
 
 <Tip>
   You can also browse packaged projects in the [Package
@@ -78,12 +70,22 @@ To add a dependency to your project:
   there.
 </Tip>
 
-## Component usage
+![dbt Hub dependency](/data-analytics/development/extensibility/img/dbt-dependency.png)
 
-Depending on the dependency type, components may appear in the project differently. For example, if you add a project from the Package Hub as a dependency, new gems may appear automatically in the gem drawer.
+## Use dependency components in your project
 
-However, all of the dependencies and their components should appear in the **Dependencies** panel in the bottom left of the project editor. Expand a dependency to view the various functions, gems, and other components that it may contain. You can drag these components directly onto the visual canvas.
+When you add a dependency to your project:
 
-## Storage
+- The dependency will be visible in the **Packages** section of the left sidebar. Expand a dependency to view the various functions, gems, and other components that it may contain. You can drag these components directly onto the visual canvas.
 
-Dependencies are stored at the project level within the `packages.yml` file of the project code.
+- Any gems in the package will automatically appear in the gem drawer on the canvas itself.
+
+## Manage your project dependencies
+
+To manage your project dependencies, there are two options:
+
+**A)** Open your project in the Studio. Then, click **... > Dependencies** in the project header.
+
+**B)** Open your project in the Studio. Then, hover the **Packages** section of the left sidebar and click the **gear** icon.
+
+From here, you can add, edit, update, or remove dependencies from your project.

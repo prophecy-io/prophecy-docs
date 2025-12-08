@@ -3,9 +3,11 @@ title: 'What is a knowledge graph?'
 description: 'Prophecy creates a metadata index to power AI features'
 ---
 
-Prophecy uses **knowledge graphs** to understand your [SQL warehouse structure](/data-analytics/environment/fabrics/prophecy-fabrics) for AI capabilities, including Prophecy Agent and Copilot.
+Prophecy uses **knowledge graphs** to understand your [data environment](/data-analytics/environment/fabrics/prophecy-fabrics) for AI capabilities (Prophecy Agent and Copilot).
 
-A [knowledge graph](/data-analytics/ai/knowledge-graph/knowledge-graph) is an internal index that maps your data environment. The knowledge graph contains metadata about tables, schemas, columns, and data types—not your actual data. When you interact with AI, Prophecy uses a knowledge graph to add context to your prompts. This context helps the Large Language Model (LLM) generate accurate SQL code that references the correct tables and columns in your warehouse.
+A [knowledge graph](https://en.wikipedia.org/wiki/Knowledge_graph) is an index that maps the relationships between data in your fabric. The knowledge graph contains metadata about tables, schemas, columns, and data types—not your actual data.
+
+When you interact with AI, Prophecy uses a knowledge graph to add context to your prompts. This context helps the Large Language Model (LLM) generate accurate SQL code that references the correct tables and columns in your warehouse.
 
 ## How knowledge graphs work
 
@@ -13,9 +15,9 @@ When you interact with AI in Prophecy, the system enriches your prompt with cont
 
 ## Knowledge graph generation
 
-Prophecy generates one knowledge graph per fabric. Each knowledge graph indexes metadata from the connected SQL warehouse for that fabric.
+Prophecy generates one knowledge graph per fabric. Each knowledge graph indexes metadata from all data connections in the fabric.
 
-The indexer crawls your warehouse using either your identity or a separately configured identity. You can schedule automatic refreshes or trigger manual indexing to keep the knowledge graph current.
+The indexer crawls your data storage using either your identity or a separately configured identity. You can schedule automatic refreshes or trigger manual indexing to keep the knowledge graph current.
 
 <Note>
   Prophecy uses the knowledge graph of the fabric attached to your project. If you attach to a

@@ -3,7 +3,7 @@ title: 'Knowledge graph indexer'
 description: 'Configure automatic indexing and authentication for the knowledge graph'
 ---
 
-The [knowledge graph](/data-analytics/ai/knowledge-graph/knowledge-graph) indexer scans your SQL warehouse to build and maintain the metadata index that powers AI features. Prophecy automatically indexes your data environment when you create a fabric using your default credentials. After the initial run, configure indexing behavior to control when and how the indexer runs.
+The [knowledge graph](/data-analytics/ai/knowledge-graph/knowledge-graph) indexer scans your SQL warehouse and external data storage to build and maintain the metadata index that powers AI features. Prophecy automatically indexes your data environment when you create a fabric using your default credentials. After the initial run, you can configure indexing behavior to control when and how the indexer runs.
 
 This page covers:
 
@@ -11,19 +11,14 @@ This page covers:
 - [Triggering manual runs](#manually-trigger-indexing)
 - [Configuring separate authentication credentials for the indexer](#add-separate-authentication-for-the-indexer)
 
-<Note>
-  Prophecy only indexes tables from your SQL warehouse connection. Datasets from data ingress/egress
-  connections are not included in the knowledge graph.
-</Note>
-
 ## How indexing works
 
-When triggered, the knowledge graph indexer:
+The knowledge graph indexer crawls each connection in your fabric separately. For each run, the indexer:
 
-1. Connects to your SQL warehouse using configured credentials.
-2. Scans catalogs and schemas that the identity has access to in your warehouse connection.
-3. Indexes table names, schemas, column names, data types, and other metadata.
-4. Updates the knowledge graph with this information.
+1. Uses the credentials stored in the connection to authenticate as an identity in the external system.
+1. Scans databases and file storage systems that the identity has access to, limited by the permissions granted to that identity.
+1. Indexes table names, schemas, column names, data types, and other metadata.
+1. Updates the knowledge graph with this information.
 
 ## Configure automatic indexing
 
@@ -32,7 +27,7 @@ Configure scheduled crawling to keep your index up-to-date without manual interv
 1. In Prophecy, navigate to **Metadata > Fabrics**.
 1. Select the fabric where you will enable indexing.
 1. Open the **Connections** tab.
-1. Click the pencil icon to edit the **SQL Warehouse Connection**.
+1. Click to open the connection that you wish to schedule indexing for.
 1. In the connection dialog, scroll to the **Knowledge Graph Indexer** tile and toggle on **Enable Knowledge Graph Periodic Indexing**.
 1. Configure the schedule to run hourly, daily, or weekly.
 
@@ -66,7 +61,7 @@ You may need to manually trigger indexing if you know that certain tables are mi
 1. In Prophecy, navigate to **Metadata > Fabrics**.
 1. Select the fabric where you will enable indexing.
 1. Open the **Connections** tab.
-1. Click the pencil icon to edit the **SQL Warehouse Connection**.
+1. Click to open the connection that you wish to reindex.
 1. Scroll to the **Knowledge Graph Indexing Status** tile in the connection dialog.
 1. Click **Start** to reindex the tables and track its progress. You'll be able to view the progress of processed schemas and directories.
 
@@ -76,7 +71,7 @@ If more convenient, you can also start this process from the [Environment tab](/
 1. Attach to the fabric that you wish to reindex.
 1. In the left sidebar, open the Environment tab.
 1. Below your connections, you'll see a **Missing Tables?** callout.
-1. Click **Refresh** to reindex the SQL warehouse.
+1. Click **Refresh**.
 
 <Tip>
   You might be prompted to manually trigger indexing if the Agent can't locate a table during a
@@ -85,9 +80,9 @@ If more convenient, you can also start this process from the [Environment tab](/
 
 ## Add separate authentication for the indexer
 
-Prophecy lets you configure authentication credentials for the knowledge graph indexer separately from pipeline execution credentials, allowing you to control which tables get indexed and how results are scoped for different users.
+In certain scenarios, you may want more granular control over which tables get indexed. For Databricks connections only, Prophecy lets you do so with dedicated authentication credentials for the knowledge graph indexer.
 
-This means there are two types of credentials stored in a connection:
+There are two types of credentials stored in a connection:
 
 - **Pipeline Development and Scheduled Execution** credentials control how pipelines authenticate when they run.
 - **Knowledge Graph Indexer** credentials control how the crawler authenticates when it indexes your warehouse on an automated schedule.
