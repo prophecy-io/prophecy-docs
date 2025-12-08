@@ -20,6 +20,25 @@ const baseSettings = {
     apiKey: '1ad64cdd8b65ffda750f6158e356585bf684dba789a84432', // required
     primaryBrandColor: '#403fc2', // required -- your brand color, the color scheme is derived from this
     organizationDisplayName: 'Prophecy',
+    transformSource: (source, type, opts) => {
+      const tabs = [...(source.tabs || [])];
+
+      // Categorize sources based on breadcrumbs
+      if (source.breadcrumbs?.includes('Data Analysis')) {
+        tabs.push('Data Analysis');
+      }
+      if (source.breadcrumbs?.includes('Data Engineering')) {
+        tabs.push('Data Engineering');
+      }
+      if (source.breadcrumbs?.includes('Blog')) {
+        tabs.push('Blog');
+      }
+
+      return {
+        ...source,
+        tabs,
+      };
+    },
     theme: {
       styles: [
         {
@@ -29,6 +48,19 @@ const baseSettings = {
         },
       ],
     },
+  },
+  searchSettings: {
+    tabs: ['All', 'Data Analysis', 'Data Engineering', 'Blog'],
+  },
+  aiChatSettings: {
+    exampleQuestions: [
+      'How can Agent help me build projects?',
+      'How do I add data to my pipeline?',
+      'Can I monitor my deployed projects?',
+      'What are Prophecy fabrics?',
+    ],
+    exampleQuestionsLabel: 'Example Questions',
+    isFirstExampleQuestionHighlighted: true,
   },
 };
 
