@@ -5,18 +5,11 @@ description: Read and write JSON files
 
 This page describes the **JSON-specific properties** that appear in the **Properties** tab of Source and Target gems. These settings are the same for JSON files regardless of which connection type is configured in the gem (for example, S3, SFTP, or SharePoint).
 
-If you need details on configuring a Source or Target gem end to end (including all tabs such as **Location**), see the documentation for the specific file storage connection:
-
-    - [Amazon S3](/data-analytics/gems/source-target/file/s3)
-    - [Databricks](/data-analytics/gems/source-target/file/databricks-volumes)
-    - [Microsoft OneDrive](/data-analytics/gems/source-target/file/onedrive)
-    - [SFTP](/data-analytics/gems/source-target/file/sftp)
-    - [SharePoint](/data-analytics/gems/source-target/file/sharepoint)
+If you need details on configuring a Source or Target gem end to end (including all tabs such as **Location**), see the documentation for the specific file storage connection.
 
 <Info>
-  You can also use the [upload
-  file](/data-analytics/gems/source-target/table/upload-files) feature to use JSON
-  files. These will be stored in the SQL warehouse configured in your fabric.
+  You can also use the [upload file](/data-analytics/gems/source-target/table/upload-files) feature
+  to use JSON files. These will be stored in the SQL warehouse configured in your fabric.
 </Info>
 
 ## Properties
@@ -25,17 +18,87 @@ If you need details on configuring a Source or Target gem end to end (including 
 
 The following properties are available for the JSON Source gem.
 
-| Property                      | Description                                                           | Default |
-| ----------------------------- | --------------------------------------------------------------------- | ------- |
-| Description                   | Description of the table.                                             | None    |
-| Multiple documents per file   | Whether the file contains multiple JSON objects separated by newline. | False   |
-| Inference Data Sampling Limit | Maximum number of rows to sample for inferring the schema.            | `0`     |
+| Property                      | Description                                                                                                                                                                                                                 | Default |
+| ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| Schema                        | Define the structure of your data. This includes the column names and the data type for each column (such as String, Integer, etc.).<br /><br />Click **Infer Schema** to automatically detect the structure from the file. | None    |
+| Description                   | Add a description of the table.<br /><br />Click **Auto-description** to automatically generate the description.                                                                                                            | None    |
+| Multiple documents per file   | Select whether the file contains multiple JSON objects separated by newline.                                                                                                                                                | False   |
+| Inference Data Sampling Limit | Define the maximum number of rows to sample for inferring the schema. Set to `0` to use all rows.                                                                                                                           | `0`     |
 
 ### Target properties
 
 The following properties are available for the JSON Target gem.
 
-| Property                    | Description                                                               | Default |
-| --------------------------- | ------------------------------------------------------------------------- | ------- |
-| Description                 | Description of the table.                                                 | None    |
-| Multiple documents per file | Whether the file will contain multiple JSON objects separated by newline. | False   |
+| Property                    | Description                                                                                                      | Default |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------- | ------- |
+| Schema                      | Review the structure of your data. Prophecy automatically detects the schema from the input gem.                 | None    |
+| Description                 | Add a description of the table.<br /><br />Click **Auto-description** to automatically generate the description. | None    |
+| Multiple documents per file | Select whether the file will contain multiple JSON objects separated by newline.                                 | False   |
+| Enable indentation          | Select whether to format the JSON output with indentation for readability.                                       | False   |
+| Indentation size            | Define the number of spaces to use for each indentation level when indentation is enabled.                       | `2`     |
+| Escape HTML characters      | Select whether to escape HTML characters (such as `<`, `>`, and `&`) in the JSON output.                         | True    |
+
+## Schema validation
+
+Prophecy lets you enable schema validation for JSON files in a Source gem. Use schema validation to ensure JSON files conform to a predefined structure before ingesting the data. JSON schema validation works for all file storage connections.
+
+### Prerequisites
+
+To use schema validation, you need a JSON Schema file in the same directory as your source file. If your schema uses `$ref` to reference external schemas, those referenced schema files must also be in the same directory. Learn how to [write JSON Schema files](https://json-schema.org/learn).
+
+### Set up schema validation
+
+1. In the Location tab of a Source gem, toggle **Enable JSON Schema Validation**.
+1. Provide a path to the JSON file that you will use to validate against.
+1. Open the Properties tab.
+1. Click **Infer Schema**.
+
+If the source file schema matches the validation schema, schema inference will run successfully.
+
+### Example
+
+The following example shows a source file and a corresponding validation file that would validate successfully.
+
+<CodeGroup>
+```json users.json
+{
+  "id": 1,
+  "name": "John Doe",
+  "email": "john.doe@example.com"
+}
+```
+
+```json users-schema.json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    }
+  },
+  "required": ["id", "name", "email"]
+}
+```
+
+</CodeGroup>
+
+### Troubleshooting
+
+If the schemas do not match:
+
+- Schema inference will fail.
+- The Source gem will fail to run.
+
+To troubleshoot, look for the error in the [runtime logs](/data-analytics/development/runs/runtime-logs). Here is an example error:
+
+```text wrap
+Failed due to error in "OrchestrationSource_0". Error: JSON validation failed against JSON schema for file /Volumes/pipelinehub/dev/json-schema-validate/users.json: 1.data: Additional property location is not allowed; 1.data: Additional property lastLogin is not allowed
+```

@@ -1,0 +1,206 @@
+---
+title: 'Table tests'
+description: 'Create reusable data tests that apply to tables'
+---
+
+Test definitions are reusable SQL queries that validate your data quality. You write a test definition once, then apply it to any table or model in your project to check for data problems.
+
+Use test definitions to catch data issues before they affect your analysis or reports. For example, you might create a test to verify that customer IDs are unique, that required fields aren't missing, or that two related tables have matching values. When you run these tests, you'll be able to identify any problems in your data.
+
+<Note>
+  Table tests are based on [dbt generic data
+  tests](https://docs.getdbt.com/docs/build/data-tests#generic-data-tests) behind the scenes. When
+  you add a test definition to a table, Prophecy adds the test as a property of the corresponding
+  dbt model.
+</Note>
+
+<Info>SQL fabrics configured with BigQuery and a CMEK are not compatible with data tests.</Info>
+
+## Default test definitions
+
+Prophecy includes a set of default test definitions that you can use to get started.
+
+| Test definition     | Description                                                                                                                         |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| **Unique**          | Validates that each value within a column is unique.                                                                                |
+| **Not null**        | Validates that a column contains no null values.                                                                                    |
+| **Accepted values** | Validates that column values only include values from a defined set.                                                                |
+| **Relationships**   | Validates referential integrity by ensuring that each value in a column exists as a corresponding value in another column or model. |
+
+## How are test definitions defined?
+
+Test definitions use SQL queries to check your data. The query looks for problems in your data. If the query finds any rows (problems), the test fails. If the query returns no rows (no problems found), the test passes.
+
+### Understanding test queries
+
+Think of a test query as a question you ask about your data: "Are there any rows that violate this rule?" If the answer is "yes" (rows are returned), the test fails. If the answer is "no" (no rows returned), the test passes.
+
+For example:
+
+- The `unique` test asks: "Are there any duplicate values in this column?" If duplicates exist, the query returns those duplicate rows and the test fails.
+- The `relationships` test asks: "Are there any values in this column that don't exist in the related table?" If mismatched values exist, the query returns those rows and the test fails.
+
+To create your own test definitions, **you need to know how to write SQL queries.**
+
+### Example: Comparing row counts
+
+This example `equal_rowcount` test checks if two models have the same number of rows. It has the following parameters and definition:
+
+| Parameter       | Type    |
+| --------------- | ------- |
+| `model`         | `table` |
+| `compare_model` | `table` |
+
+```sql
+with a as (
+    select
+      count(*) as count_a
+    from {{ model }}
+),
+b as (
+    select
+      count(*) as count_b
+    from {{ compare_model }}
+),
+final as (
+    select
+        count_a,
+        count_b,
+        abs(count_a - count_b) as diff_count
+    from a
+    cross join b
+)
+select * from final
+where diff_count > 0
+```
+
+**How it works:**
+
+1. The first <Tooltip tip="Common Table Expressions are temporary result sets created with the WITH clause that lets you break complex queries into simpler, named parts." cta="Learn more about CTEs" href="https://www.getdbt.com/blog/getting-started-with-cte">CTE</Tooltip> (`a`) counts rows in your model.
+2. The second CTE (`b`) counts rows in the comparison model.
+3. The `final` CTE calculates the difference between the two counts.
+4. The final `SELECT` returns rows only when the difference is greater than 0.
+
+If the row counts match, the query returns no rows and the test passes. If they differ, the query returns a row showing the difference and the test fails.
+
+## Build and run custom tests
+
+In the following sections, we'll build a test called `not_constant` to validate that a column does not have the same value in all rows. Follow the example to learn how to build a test definition and run the test.
+
+### 1. Add a test definition
+
+To add a test definition, follow these steps:
+
+1. In the left sidebar, click **+ Add Entity**.
+1. Hover the **Tests** option and select **Test definitions**.
+1. Assign a name to your test definition, such as `not_constant`.
+1. Keep the default path `tests/generic`. This is the directory in the project Git repository where Prophecy will store the test definition.
+1. Click **Create**. The test definition page opens.
+
+<Tip>
+  You can also create a new data test directly from the **Data Tests** tab of a table or model gem.
+</Tip>
+
+### 2. Define the test query
+
+On the test definition page, configure the following.
+
+1. Under **Description**, add a summary of the test.
+1. Under **Parameters**, add the parameters for the test.
+   - All tests require the default `model` parameter of type `table`.
+   - The `not_constant` test requires a `column_name` parameter of type `column` (the column to check).
+
+1. Under **Definition**, add the SQL query for the test.
+
+   ```sql
+   select
+      count(distinct {{ column_name }}) as filler_column
+   from {{ model }}
+   having count(distinct {{ column_name }}) = 1
+   ```
+
+   ![Create a new model test definition](/data-analytics/development/tests/img/test-not-constant.png)
+
+### 3. Assign the test definition
+
+After you've created a test definition, you can assign it to a table or model.
+
+1. Open the table or model that you want to run the test on.
+1. Click the **Data Tests** tab.
+1. Click **+ New Test**.
+1. Under **Data Test Type**, select the test definition you want to add to the gem.
+1. Fill in the parameters for the test.
+
+   Prophecy automatically sets the value of the `model` parameter to the current table.
+
+1. Click **Create Test**.
+
+If necessary, you can add additional tests to the same table or model.
+
+<Warning>
+
+If changes are made to the columns or schemas used in your data test, then Prophecy will delete the data test. For example, if you run into a data mismatch error on the Schema tab of your target model or update the schema, then your data test will be affected.
+
+</Warning>
+
+<Accordion title="Advanced settings">
+
+If you want to change the failure condition of a test, you can do so by changing the **Advanced** settings for that test.
+
+| Setting                    | Description                                                                                                                                                                                                                                                                                 |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Filter Condition**       | When enabled, lets you define a filter expression for what you want your test to run on. Use the dropdown to select an expression.                                                                                                                                                          |
+| **Severity**               | Determines whether the failure of the test returns an error or warning. Select from the dropdown to set the severity level.                                                                                                                                                                 |
+| **Failure Calculation**    | Expression that calculates a value from the test results. The **Error If** and **Warning If** conditions evaluate this calculated value.                                                                                                                                                    |
+| **Error If**               | Condition that triggers an error. Evaluates the **Failure Calculation** result. If true and severity is `error`, the test fails with an error status.                                                                                                                                       |
+| **Warn If**                | Condition that triggers a warning. Evaluates the **Failure Calculation** result. If true, the test returns a warning status (regardless of severity setting).                                                                                                                               |
+| **Store Failures**         | When enabled, stores all records that failed the test. The records are saved in a new table with schema `dbt_test__audit` in your database. The table is named after the name of the model and data test. Make sure you have write permission to create a new table in your data warehouse. |
+| **Set max no of failures** | When enabled, sets the maximum number of failures returned by a test query. You can set the limit to save resources and time by having the test stop its query as soon as it encounters a certain number of failed rows.                                                                    |
+
+The Advanced settings are generally equivalent to the [Data Test gem parameters](/data-analytics/development/tests/project-tests#data-test-gem-parameters).
+
+</Accordion>
+
+### 4. Run data tests
+
+Now that you've configured the tests, you can run them.
+
+1. Click **Run all** to execute all the defined tests. Alternatively, run individual tests by clicking the play button on the test's row.
+1. Once the tests finish running, you'll see the relevant test result next to each test definition.
+
+![Assign a test definition to a table or model](/data-analytics/development/tests/img/test-table-config.png)
+
+<Info>
+  Click **View Log** to view the test logs. You'll only be able to view the log of the most recent
+  test run. You can copy or download the logs if needed.
+</Info>
+
+### 5. Schedule test runs
+
+When you schedule a pipeline, you can enable tests associated with Tables gems in the pipeline to run during that schedule.
+
+1. Open a pipeline containing tests to schedule.
+1. In the project header, click **... > Schedule**.
+1. Edit the existing schedule or configure a new schedule.
+1. Enable the **Run data quality tests** toggle.
+1. Click **Confirm** to save the changes.
+
+<Accordion title="Schedule test runs (Models ONLY)">
+
+Pipeline schedules differ from model schedules. Use the following steps if you are using **scheduling models only**.
+
+1. In the left sidebar of the project, click **+ Add Entity**.
+1. Click **Job**. This opens the **Create Job** dialog.
+1. Enter a name for your job and click **Create New**.
+1. Drag a **Model** gem to your visual canvas.
+1. Click the model to open the model properties.
+1. Select the database object you want to run the test on.
+1. Select the **Run tests** checkbox in the left sidebar of the model gem.
+1. Ensure that your **project, model**, and **fabric** are correct.
+1. Click **Save**.
+
+</Accordion>
+
+## Share test definitions
+
+If you publish your project as a [package](/data-analytics/development/extensibility/package-hub/package-hub), you can share your test definitions with other teams. Once they import the package, they will be able to use your test definitions in their own projects.

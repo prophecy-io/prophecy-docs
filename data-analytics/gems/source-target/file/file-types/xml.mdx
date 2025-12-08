@@ -5,18 +5,11 @@ description: Read and write XML files
 
 This page describes the **XML-specific properties** that appear in the **Properties** tab of Source and Target gems. These settings are the same for XML files regardless of which connection type is configured in the gem (for example, S3, SFTP, or SharePoint).
 
-If you need details on configuring a Source or Target gem end to end (including all tabs such as **Location**), see the documentation for the specific file storage connection:
-
-- [Amazon S3](/data-analytics/gems/source-target/file/s3)
-- [Databricks](/data-analytics/gems/source-target/file/databricks-volumes)
-- [Microsoft OneDrive](/data-analytics/gems/source-target/file/onedrive)
-- [SFTP](/data-analytics/gems/source-target/file/sftp)
-- [SharePoint](/data-analytics/gems/source-target/file/sharepoint)
+If you need details on configuring a Source or Target gem end to end (including all tabs such as **Location**), see the documentation for the specific file storage connection.
 
 <Info>
-  You can also use the [upload
-  file](/data-analytics/gems/source-target/table/upload-files) feature to use XML
-  files. These will be stored in the SQL warehouse configured in your fabric.
+  You can also use the [upload file](/data-analytics/gems/source-target/table/upload-files) feature
+  to use XML files. These will be stored in the SQL warehouse configured in your fabric.
 </Info>
 
 ## Properties
@@ -25,16 +18,90 @@ If you need details on configuring a Source or Target gem end to end (including 
 
 The following properties are available for the XML Source gem.
 
-| Property                      | Description                                                    | Default |
-| ----------------------------- | -------------------------------------------------------------- | ------- |
-| Description                   | Description of the table.                                      | None    |
-| Row Tag                       | XML tag that identifies a single row or record in the dataset. | None    |
-| Inference Data Sampling Limit | Maximum number of rows to sample for inferring the schema.     | `0`     |
+| Property                      | Description                                                                                                                                                                                                                 | Default |
+| ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| Schema                        | Define the structure of your data. This includes the column names and the data type for each column (such as String, Integer, etc.).<br /><br />Click **Infer Schema** to automatically detect the structure from the file. | None    |
+| Description                   | Add a description of the table.<br /><br />Click **Auto-description** to automatically generate the description.                                                                                                            | None    |
+| Row Tag                       | Specify the XML tag that identifies a single row or record in the dataset.                                                                                                                                                  | None    |
+| Inference Data Sampling Limit | Define the maximum number of rows to sample for inferring the schema. Set to `0` to use all rows.                                                                                                                           | `0`     |
 
 ### Target properties
 
 The following properties are available for the XML Target gem.
 
-| Property    | Description               | Default |
-| ----------- | ------------------------- | ------- |
-| Description | Description of the table. | None    |
+| Property    | Description                                                                                                      | Default |
+| ----------- | ---------------------------------------------------------------------------------------------------------------- | ------- |
+| Schema      | Review the structure of your data. Prophecy automatically detects the schema from the input gem.                 | None    |
+| Description | Add a description of the table.<br /><br />Click **Auto-description** to automatically generate the description. | None    |
+
+## Schema validation
+
+Prophecy lets you enable schema validation for XML files in a Source gem. Use schema validation to ensure XML files conform to a predefined structure before ingesting the data. XML schema validation works for all file storage connections.
+
+### Prerequisites
+
+To use schema validation, you need an XSD schema file in the same directory as your source XML file. If your schema uses `xs:include` or `xs:import` to reference external schemas, those referenced schema files must also be in the same directory.
+
+### Set up schema validation
+
+1. In the Location tab, toggle **Enable XSD Schema Validation**.
+1. Provide a path to the XSD file that you will use to validate against.
+1. Open the Properties tab.
+1. Click **Infer Schema**.
+
+If the source file schema matches the validation schema, schema inference will run successfully.
+
+### Example
+
+The following example shows an XML file and a corresponding XSD schema file that would validate successfully.
+
+<CodeGroup>
+```xml users.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<users xmlns="http://example.com/users">
+  <user>
+    <id>1</id>
+    <name>John Doe</name>
+    <email>john.doe@example.com</email>
+  </user>
+</users>
+```
+
+```xml users-schema.xsd
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://example.com/users"
+           xmlns="http://example.com/users"
+           elementFormDefault="qualified">
+  <xs:element name="users">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="user" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" type="xs:integer"/>
+              <xs:element name="name" type="xs:string"/>
+              <xs:element name="email" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+```
+
+</CodeGroup>
+
+### Troubleshooting
+
+If the schemas do not match:
+
+- Schema inference will fail.
+- The Source gem will fail to run.
+
+To troubleshoot, look for the error in the [runtime logs](/data-analytics/development/runs/runtime-logs). Here is an example error:
+
+```text wrap
+Failed due to error in "reports_xml". Error: XML validation failed against XSD schema for file /path/to/your/file.xml: /tmp/xml_val_1234567890.xml:117: element invalidElement: Schemas validity error : Element '{http://example.com/namespace/v1.0}invalidElement': This element is not expected. Expected is one of ( {http://example.com/namespace/v1.0}validElement1, {http://example.com/namespace/v1.0}validElement2, {http://example.com/namespace/v1.0}validElement3 ).
+```

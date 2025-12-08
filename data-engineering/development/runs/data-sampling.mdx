@@ -17,6 +17,17 @@ You can customize data sampling at three levels:
 
 This page describes how to set up and use data samples for your use cases.
 
+## Interactive run configuration
+
+You can adjust data sampling settings for each pipeline through the **Interactive Run Configuration** panel. You can also access the same settings in [Pipeline Settings](/data-engineering/development/pipelines/pipeline-settings#run-settings).
+
+1. Hover the large **play** button in the canvas.
+1. Click on the **ellipses** that appears on hover.
+1. Toggle data sampling on or off.
+1. When data sampling is on, select your [preferred mode](#data-sampling-modes) from the **Data Sampling** dropdown.
+
+![Interactive run configuration](/data-engineering/development/runs/img/interactive-run-config.png)
+
 ## Data sampling modes
 
 Prophecy provides the following data sampling modes.
@@ -41,16 +52,15 @@ When Data Preview is disabled for a gem, its output appears pale after pipeline 
 ![Selective](/data-engineering/development/runs/img/selective-interims.png)
 
 <Tip>
-
-We recommend using Selective sampling mode for all Databricks users. It is faster and more powerful than the default mode. Selective sampling is also important when working with [Databricks UC standard clusters](/data-engineering/fabrics/spark-provider/databricks/UCShared), as other sampling modes only generate data samples on edge nodes for this access mode.
-
+  Prophecy recommends using selective sampling mode for all users, regardless of your Spark
+  provider.
 </Tip>
 
 <AccordionGroup>
 
 <Accordion title="Modify the behavior of selective sampling">
 
-Selectively-generated samples load up to 10,000 rows (or 2 MB payload) by default. Set the following environment variables in Databricks to modify this behavior:
+Selectively-generated samples load up to 10,000 rows (or 2 MB payload) by default. Set the following environment variables for your Spark cluster to modify this behavior:
 
 - `EXECUTION_DATA_SAMPLE_LOADER_MAX_ROWS`: Max number of rows (default is 10,000 rows).
 - `EXECUTION_DATA_SAMPLE_LOADER_PAYLOAD_SIZE_LIMIT`: Max payload size (default 2 MB).
@@ -60,24 +70,28 @@ Selectively-generated samples load up to 10,000 rows (or 2 MB payload) by defaul
 
 </AccordionGroup>
 
-## Interactive run configuration
-
-You can adjust data sampling settings for each pipeline through the **Interactive Run Configuration** panel. You can also access the same settings in [Pipeline Settings](/data-engineering/development/pipelines/pipeline-settings#run-settings).
-
-1. Hover the large **play** button in the canvas.
-1. Click on the **ellipses** that appears on hover.
-1. Toggle data sampling on or off.
-1. When data sampling is on, select your preferred mode from the **Data Sampling** dropdown.
-
-This mode will be used when you interactively run the pipeline.
-
-![Interactive run configuration](/data-engineering/development/runs/img/interactive-run-config.png)
-
 ## Cached interims
 
 When you change data sampling settings and re-run a pipeline, some data samples may appear grayed out. These cached samples are from previous runs and may not reflect your current data or pipeline changes.
 
 ![Cached interims](/data-engineering/development/runs/img/cached-interims.png)
+
+## Record counts
+
+In addition to data samples, Prophecy can also display the total record count of datasets between gems. This works for **selective data sampling** mode only.
+
+To display the record count for a certain gem output:
+
+1. Click the **...** (ellipsis) on the gem.
+2. Select the **Record Count** checkbox.
+
+![Gem menu with Record Count checkbox](/data-engineering/development/runs/img/gem-menu.png)
+
+You can enable the record count and leave the data preview option disabled. They are independent of each other.
+
+The following image shows a pipeline with the record count enabled on the DataCleansing and Reformat gems. Notice that the Reformat gem is the only gem that has data preview enabled.
+
+![Pipeline with record count enabled](/data-engineering/development/runs/img/record-count.png)
 
 ## Fabric settings
 
