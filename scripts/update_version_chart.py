@@ -44,8 +44,13 @@ def get_versions_for_tag(repo, tag_name):
             end_of_support_date = create_date + relativedelta(years=1)
             tag_name = tag_name + " EM"
         elif not tag_name.endswith(".0"):
-            # for patch versions, use the patch version's own creation date plus 6 months
-            end_of_support_date = create_date + relativedelta(months=6)
+            # for patch versions, set the same end date as associated minor version
+            try:
+                minor_create_date = get_commit_date(repo, re.sub(r'(\d+)\.(\d+)\.(\d+)\.(\d+)$', r'\1.\2.\3.0', tag_name))
+                end_of_support_date = minor_create_date + relativedelta(months=6)
+            except IOError:
+                # If minor version tag doesn't exist, skip this version
+                return
         else:
             end_of_support_date = create_date + relativedelta(months=6)
         ver_dict = {
@@ -60,6 +65,20 @@ def get_versions_for_tag(repo, tag_name):
         raise FileNotFoundError(f"File '{deps_file_path}' not found in this version.")
     except git.exc.GitCommandError:
         raise IOError(f"Error checking out tag '{tag_name}'.")
+
+
+def parse_existing_row(row_line):
+    """Parse a table row line into a version dictionary."""
+    parts = [p.strip() for p in row_line.split("|")]
+    if len(parts) < 6 or not parts[1] or parts[1].startswith("Prophecy"):
+        return None
+    return {
+        "prophecy_version": parts[1],
+        "scala_version": parts[2],
+        "python_version": parts[3],
+        "date": parts[4],
+        "end_of_support_date": parts[5]
+    }
 
 
 def update_version_chart_file(docs_repo_path):
@@ -90,23 +109,59 @@ def update_version_chart_file(docs_repo_path):
     header = ''.join(header_lines)
 
     # Extract existing table rows (everything after the delimiter)
-    existing_rows = lines[header_end_index:]
+    existing_row_lines = lines[header_end_index:]
+
+    # Parse existing rows into a dictionary keyed by prophecy_version
+    existing_versions = {}
+    for row_line in existing_row_lines:
+        if row_line.strip() and row_line.strip().startswith("|"):
+            parsed = parse_existing_row(row_line)
+            if parsed:
+                existing_versions[parsed["prophecy_version"]] = parsed
+
+    # Update existing_versions with new versions (this will add new ones and update changed ones)
+    for new_version in versions:
+        prophecy_version = new_version["prophecy_version"]
+        # Check if version exists and if any data has changed
+        if prophecy_version not in existing_versions:
+            existing_versions[prophecy_version] = new_version
+            print(f"Adding new version: {prophecy_version}")
+        else:
+            existing = existing_versions[prophecy_version]
+            # Check if any field has changed
+            if (existing["scala_version"] != new_version["scala_version"] or
+                existing["python_version"] != new_version["python_version"] or
+                existing["date"] != new_version["date"] or
+                existing["end_of_support_date"] != new_version["end_of_support_date"]):
+                existing_versions[prophecy_version] = new_version
+                print(f"Updating version: {prophecy_version}")
+            else:
+                print(f"Version {prophecy_version} unchanged, skipping")
+
+    # Sort all versions by date (newest first) - parse date for sorting
+    def sort_key(v):
+        try:
+            return datetime.strptime(v["date"], '%Y/%m/%d')
+        except:
+            return datetime.min
+
+    sorted_versions = sorted(existing_versions.values(), key=sort_key, reverse=True)
 
     # Parse delimiter to get column widths
     delimiter = lines[delimiter_index]
     delimiter_parts = delimiter.split("|")
 
-    # Create new rows for versions
-    new_rows = ["| {} | {} | {} | {} | {} |\n".format(
+    # Create rows for all versions
+    all_rows = ["| {} | {} | {} | {} | {} |\n".format(
         v['prophecy_version'].ljust(len(delimiter_parts[1].strip())),
         v['scala_version'].ljust(len(delimiter_parts[2].strip())),
         v['python_version'].ljust(len(delimiter_parts[3].strip())),
         v['date'].ljust(len(delimiter_parts[4].strip())),
         v['end_of_support_date'].ljust(len(delimiter_parts[5].strip()))
-    ) for v in versions]
+    ) for v in sorted_versions]
 
-    # Combine: header (includes table header + delimiter) + new rows + existing rows
-    output_string = header + ''.join(new_rows) + ''.join(existing_rows)
+    # Combine: header (includes table header + delimiter) + all rows
+    output_string = header + ''.join(all_rows)
 
     print("Writing the following to the file:")
     print(output_string[:500] + "..." if len(output_string) > 500 else output_string)
