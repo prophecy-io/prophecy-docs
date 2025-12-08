@@ -44,9 +44,8 @@ def get_versions_for_tag(repo, tag_name):
             end_of_support_date = create_date + relativedelta(years=1)
             tag_name = tag_name + " EM"
         elif not tag_name.endswith(".0"):
-            # for patch versions, set the same end date as associated minor version
-            minor_create_date = get_commit_date(repo, re.sub(r'(\d+)\.(\d+)\.(\d+)\.(\d+)$', r'\1.\2.\3.0', tag_name))
-            end_of_support_date = minor_create_date + relativedelta(months=6)
+            # for patch versions, use the patch version's own creation date plus 6 months
+            end_of_support_date = create_date + relativedelta(months=6)
         else:
             end_of_support_date = create_date + relativedelta(months=6)
         ver_dict = {
