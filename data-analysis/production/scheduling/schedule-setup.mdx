@@ -1,0 +1,37 @@
+---
+title: 'Set up schedule'
+description: 'Automate a pipeline with the Prophecy scheduler'
+---
+
+Use Prophecy's built-in scheduler to automate pipeline runs based on time or file triggers. Each schedule is specific to a single pipeline.
+
+## Prerequisites
+
+- Run the pipeline using a [Prophecy fabric](data-analysis/environment/fabrics/prophecy-fabrics).
+- Use Simple Git Storage Model. Prophecy's built-in scheduler does not appear in projects that use the Normal Git Storage Model.
+
+## Configure a schedule
+
+To configure a schedule for a pipeline:
+
+1. Open a pipeline in the project editor.
+1. Expand the **...** menu in the project header.
+1. Click **Schedule**.
+1. Configure the [trigger](/data-analysis/production/scheduling/triggers) for the schedule.
+1. Optionally, set up an [email alert](/data-analysis/production/scheduling/alerts) in your schedule.
+1. Click the **Enabled** toggle to enable the schedule.
+1. Click **Schedule** to save the schedule.
+
+## Activate the schedule
+
+Enabling a schedule does **not** automatically activate it. To activate your schedule, [publish the project](/data-analysis/production/publication). When you publish a project, Prophecy deploys all enabled schedules to your selected fabrics. In other words, your scheduled pipelines will begin running in the fabrics you selected.
+
+Any time you make changes to a schedule (including enabling, disabling, or editing the configuration), you must republish the project for those changes to take effect.
+
+## What's next
+
+Once you have set up your first schedule:
+
+- Monitor automated pipeline runs in the [Observability](/data-analysis/production/monitoring) interface.
+- Set up [email alerts](/data-analysis/production/scheduling/alerts) to stay informed about your scheduled pipeline runs.
+- Learn more about different [trigger types](/data-analysis/production/scheduling/triggers).
