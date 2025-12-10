@@ -1,0 +1,44 @@
+name: Pre-commit checks
+
+# Trigger this workflow on pull requests targeting the main branch
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  pre-commit:
+    # Run on the latest Ubuntu runner provided by GitHub
+    runs-on: ubuntu-latest
+
+    steps:
+      # Check out the repository code so the workflow can access it
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Install Python, which is required for pre-commit itself and standard Python hooks
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x' # Use the latest Python 3.x version
+
+      # Install Node.js, which is required for the 'mintlify-broken-links' local hook
+      # that uses npx to run Mintlify commands
+      - name: Setup Node.js for Mintlify/NPM
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x' # Use Node.js v20 (current LTS version)
+
+      # Install Vale using the official Vale GitHub Action
+      # This ensures Vale is available as a system command for the pre-commit hook
+      - name: Install Vale
+        uses: errata-ai/vale-action@reviewdog
+        with:
+          version: 3.4.1 # Pin to a specific Vale version for consistency
+          files: '.' # Specify the directory Vale should check (not used by pre-commit, but required by the action)
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      # Run all pre-commit hooks defined in .pre-commit-config.yaml
+      # This action automatically installs hook dependencies and runs all configured hooks
+      - name: Run pre-commit checks
+        uses: pre-commit/action@v3.0.0
