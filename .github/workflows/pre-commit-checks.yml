@@ -31,12 +31,10 @@ jobs:
       # Install Vale using the official Vale GitHub Action
       # This ensures Vale is available as a system command for the pre-commit hook
       - name: Install Vale
-        uses: errata-ai/vale-action@reviewdog
-        with:
-          version: 3.4.1 # Pin to a specific Vale version for consistency
-          files: '.' # Specify the directory Vale should check (not used by pre-commit, but required by the action)
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        run: |
+          wget https://github.com/errata-ai/vale/releases/download/v3.4.1/vale_3.4.1_Linux_64-bit.tar.gz
+          sudo tar -xzf vale_3.4.1_Linux_64-bit.tar.gz -C /usr/local/bin vale
+          vale --version
 
       # Run all pre-commit hooks defined in .pre-commit-config.yaml
       # This action automatically installs hook dependencies and runs all configured hooks
