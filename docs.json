@@ -1137,10 +1137,10 @@
   "footer": {},
   "api": {
     "mdx": {
-      "server": "https://app.prophecy.io/",
-      "playground": {
-        "display": "none"
-      }
+      "server": "https://app.prophecy.io/"
+    },
+    "playground": {
+      "display": "simple"
     }
   }
 }
