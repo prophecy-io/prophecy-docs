@@ -31,23 +31,39 @@ The following Python libraries are required for selective sampling on Livy clust
 
 Prophecy provides a bundled ZIP file containing all required dependencies. This simplifies installation by including all libraries in a single package.
 
-<Steps>
-<Step title="Download the bundle">
+Access the bundle from the Prophecy public S3 bucket:
 
-Download the bundled library file from the Prophecy public bucket. Replace `<prophecy-libs-version>` with the version number from your project dependencies.
-
-```bash
-wget https://prophecy-public-bucket.s3.us-east-2.amazonaws.com/python-prophecy-libs/prophecy-libs-livy-bundle-<prophecy-libs-version>.zip
+```text
+https://prophecy-public-bucket.s3.us-east-2.amazonaws.com/python-prophecy-libs/prophecy-libs-livy-bundle-<prophecy-libs-version>.zip
 ```
 
-<Note>
-The bundle version must match your project's ProphecyPythonLibs version.
-</Note>
-</Step>
+Replace `<prophecy-libs-version>` with the version number from your project dependencies.
 
-<Step title="Extract and install libraries">
+<Note>The bundle version must match your project's ProphecyPythonLibs version.</Note>
 
-Extract the ZIP file and install the libraries on your Livy cluster. The exact installation method depends on your cluster configuration and access method.
+<Steps>
+<Step title="Set the fabric's resolution mode">
+
+You'll need to configure your Livy fabric to use the bundled library file. There are two ways to do this.
+
+**Option A:** Use the Prophecy public bucket as the artifactory.
+
+- Set **Resolution mode** to **Custom Artifactory**.
+- Set the **Artifactory URL** to the provided bucket URL.
+
+<Frame>
+  ![Livy resolution
+  mode](/data-engineering/fabrics/spark-provider/livy/img/resolution-mode-livy.png)
+</Frame>
+
+**Option B:** Host your own artifactory.
+
+- Download the bundle file from the bucket.
+- Upload it to your own infrastructure.
+- Set the **Resolution mode** to **File System**.
+- Set the **Path** to the location of the bundled library file.
+
+Set the resolution mode to **File System** and provide the path to the bundled library file.
 
 </Step>
 

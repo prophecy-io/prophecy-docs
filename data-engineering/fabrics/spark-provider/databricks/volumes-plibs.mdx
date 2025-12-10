@@ -96,27 +96,31 @@ Review the following required and optional libraries:
 </Accordion>
 </AccordionGroup>
 
-To install a dependency, follow the steps below:
+To install dependencies, follow the steps below:
 
-1. Download the appropriate wheel file from the public bucket or an internal artifactory.
+1. Download the appropriate wheel files for each dependency you need to install. Refer to the tables above for the specific wheel file names based on your Databricks Runtime version.
 
-1. Upload the dependency to the volumes path.
+1. Upload each dependency to the volumes path. Repeat this step for every dependency:
 
    ```
    databricks fs cp pyhocon-0.3.61-py3-none-any.whl /Volumes/<your-volume-location>/prophecy-libs/
+   databricks fs cp hvac-2.3.0-py3-none-any.whl /Volumes/<your-volume-location>/prophecy-libs/
+   # Add additional dependencies as needed
    ```
 
-1. Create a local Init Script. For example, create `install_pyhocon.sh` with the following content:
+1. Create a local Init Script that installs all dependencies. For example, create `install_dependencies.sh` with the following content, including all dependencies you uploaded:
 
    ```
    #!/bin/bash
    pip install /Volumes/<your-volume-location>/prophecy-libs/pyhocon-0.3.61-py3-none-any.whl
+   pip install /Volumes/<your-volume-location>/prophecy-libs/hvac-2.3.0-py3-none-any.whl
+   # Add pip install commands for each additional dependency
    ```
 
 1. Upload the script to your volumes path.
 
    ```
-   databricks fs cp install_pyhocon.sh /Volumes/<your-volume-location>/prophecy-libs/
+   databricks fs cp install_dependencies.sh /Volumes/<your-volume-location>/prophecy-libs/
    ```
 
 ## Upload Prophecy libraries
