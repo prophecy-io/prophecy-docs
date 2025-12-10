@@ -4,7 +4,7 @@ Prophecy [Express Edition](/data-engineering/administration/platform/editions) i
 
 Prophecy Express Edition requires a customer-provided endpoint for an LLM to power Prophecy AI. Contact Support to configure the model provider and LLM you will use, or request to disable AI features for your environment.
 
-For more information about AI model support, visit [Prophecy AI](/data-analytics/ai/llm-providers).
+For more information about AI model support, visit [Prophecy AI](/data-analysis/ai/llm-providers).
 
 ## Users and sign-on
 
@@ -14,7 +14,7 @@ Learn how to add teams and users in [Team and user provisioning](/data-engineeri
 
 ### Optional: Authentication
 
-Express Edition supports Single Sign-On (SSO) integration with Okta. Learn more about setting up Okta in our [SAML documentation](/data-analytics/administration/management/authentication/saml#set-up-saml).
+Express Edition supports Single Sign-On (SSO) integration with Okta. Learn more about setting up Okta in our [SAML documentation](/data-analysis/administration/management/authentication/saml#set-up-saml).
 
 If you're not using SSO, users must use the exact same email addresses for their Prophecy accounts as they use for authenticating with Databricks. This ensures proper authentication flow between platforms.
 
@@ -38,9 +38,9 @@ When creating a new project, users can select to connect to the Prophecy-managed
 
 A fabric in Prophecy defines the execution environment for your pipelines. To set up an execution environment:
 
-- Create a [Prophecy fabric](/data-analytics/environment/fabrics/prophecy-fabrics). You can only create fabrics for teams where you are the [team admin](/data-analytics/administration/management/users/access/role-based-access).
-- To add SQL warehouse connection in the fabric, set up a [Databricks connection](/data-analytics/environment/connections/databricks).
-- To add data ingress/egress connections in the fabric, [follow the instructions](/data-analytics/environment/connections/connections) for each type of connection.
+- Create a [Prophecy fabric](/data-analysis/environment/fabrics/prophecy-fabrics). You can only create fabrics for teams where you are the [team admin](/data-analysis/administration/management/users/access/role-based-access).
+- To add SQL warehouse connection in the fabric, set up a [Databricks connection](/data-analysis/environment/connections/databricks).
+- To add data ingress/egress connections in the fabric, [follow the instructions](/data-analysis/environment/connections/connections) for each type of connection.
 
 You can create individual fabrics for different execution environments (for example, `dev` and `prod`).
 

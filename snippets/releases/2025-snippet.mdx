@@ -1,8 +1,50 @@
+<Update label="Prophecy 4.2.3" description="December 8, 2025" tags={["Data Analysis"]}>
+
+## Data tests compatible with pipelines
+
+Prophecy now supports running data tests on Prophecy fabrics. (Previously, data tests were only supported on SQL fabrics.)
+
+Learn more in [Table tests](/data-analysis/development/tests/table-tests) and [Project tests](/data-analysis/development/tests/project-tests).
+
+## Schema validation for JSON and XML files
+
+Prophecy lets you enable schema validation for [JSON](/data-analysis/gems/source-target/file/file-types/json) and [XML](/data-analysis/gems/source-target/file/file-types/xml) files in a Source gem. Use schema validation to ensure files conform to a predefined structure before ingesting the data. Schema validation works for all file storage connections.
+
+## Knowledge graph scope
+
+The [knowledge graph](/data-analysis/ai/knowledge-graph/knowledge-graph) indexer now scans all connections in a fabric, not just the SQL warehouse connection. This way, the Agent can access all data from the attached fabric.
+
+## Charts improvements
+
+Now, when you configure a chart in a [Prophecy App](/data-analysis/collaboration/prophecy-apps/apps) or in the [Data Explorer](/data-analysis/development/runs/data-explorer/data-explorer), you can change the colors used in the chart.
+
+<Frame>
+  ![Charts color picker](/data-analysis/development/runs/data-explorer/charts/img/chart-colors.png)
+</Frame>
+
+</Update>
+
+<Update label="Prophecy 4.2.3" description="December 8, 2025" tags={["Data Engineering"]}>
+
+## Selective sampling mode
+
+There have been several improvements to [selective sampling](/data-engineering/development/runs/data-sampling#selective-sampling):
+
+- Prophecy can now display the total [record count](/data-engineering/development/runs/data-sampling#record-counts) of selected gems.
+- You can now use selective data sampling mode when running pipelines on [Livy](/data-engineering/fabrics/spark-provider/livy) clusters.
+
+## Prophecy Library versions
+
+- ProphecyLibsPython 2.1.7
+- ProphecyLibsScala 8.15.1
+
+</Update>
+
 <Update label="Prophecy 4.2.2.2" description="November 25, 2025" tags={["Data Analysis"]}>
 
 ## Fabric APIs
 
-We've exposed many [new endpoints](/api-reference/introduction) for creating and managing [fabrics](/data-analytics/environment/fabrics/prophecy-fabrics). You can now create, update, and delete fabrics, as well as manage fabric connections and secrets, via REST API.
+We've exposed many [new endpoints](/api-reference/introduction) for creating and managing [fabrics](/data-analysis/environment/fabrics/prophecy-fabrics). You can now create, update, and delete fabrics, as well as manage fabric connections and secrets, via REST API.
 
 </Update>
 
@@ -10,17 +52,17 @@ We've exposed many [new endpoints](/api-reference/introduction) for creating and
 
 ## Agent documentation templates
 
-Create custom templates for AI pipeline documentation generation using [Copilot Template Language (CTL)](/data-analytics/ai/agent/documentation/ctl-reference). CTL extends Markdown with special markers that generate interactive components like question forms, visual pipeline diagrams, and dynamic content that automatically updates based on your pipeline structure.
+Create custom templates for AI pipeline documentation generation using [Copilot Template Language (CTL)](/data-analysis/ai/agent/documentation/ctl-reference). CTL extends Markdown with special markers that generate interactive components like question forms, visual pipeline diagrams, and dynamic content that automatically updates based on your pipeline structure.
 
 ## Azure Data Lake Storage (ADLS) Source and Target gems
 
-Use Azure Data Lake Storage (ADLS) as a source and target in your pipelines with the [ADLS gem](/data-analytics/gems/source-target/file/adls). The gem supports reading and writing CSV, JSON, Parquet, XLSX, and XML files. Source gems can read from specific file paths or from a file arrival/change trigger. Target gems can write to specific file paths.
+Use Azure Data Lake Storage (ADLS) as a source and target in your pipelines with the [ADLS gem](/data-analysis/gems/source-target/file/adls). The gem supports reading and writing CSV, JSON, Parquet, XLSX, and XML files. Source gems can read from specific file paths or from a file arrival/change trigger. Target gems can write to specific file paths.
 
 ## Knowledge graph indexer
 
-You can now schedule automated indexing for the [knowledge graph indexer](/data-analytics/ai/knowledge-graph/indexer) to run hourly, daily, or weekly. The schedule supports custom timezone configuration, with the default timezone matching your Prophecy access location.
+You can now schedule automated indexing for the [knowledge graph indexer](/data-analysis/ai/knowledge-graph/indexer) to run hourly, daily, or weekly. The schedule supports custom timezone configuration, with the default timezone matching your Prophecy access location.
 
-You can also configure separate authentication credentials for the [knowledge graph indexer](/data-analytics/ai/knowledge-graph/indexer#add-separate-authentication-for-the-indexer), independent from pipeline execution credentials. Use Service Principal OAuth for production environments where credentials don't expire, or User OAuth for development scenarios.
+You can also configure separate authentication credentials for the [knowledge graph indexer](/data-analysis/ai/knowledge-graph/indexer#add-separate-authentication-for-the-indexer), independent from pipeline execution credentials. Use Service Principal OAuth for production environments where credentials don't expire, or User OAuth for development scenarios.
 
 </Update>
 
@@ -54,35 +96,35 @@ We have released two new editions of Prophecy for analysts: Free and Professiona
 
 ## Agent-generated pipeline documentation
 
-You can now use the Prophecy Agent to [generate pipeline documentation](/data-analytics/ai/agent/documentation/documentation). Instead of writing documentation manually, this lets you create detailed specifications automatically.
+You can now use the Prophecy Agent to [generate pipeline documentation](/data-analysis/ai/agent/documentation/documentation). Instead of writing documentation manually, this lets you create detailed specifications automatically.
 
 ## New gems
 
-- [Regex](/data-analytics/gems/parse/regex): Enables pattern matching and text extraction using regular expressions.
-- [GenerateRows](/data-analytics/gems/prepare/generate-rows): Create new rows of data using iterative expressions.
-- [GCS Source and Target](/data-analytics/gems/source-target/file/gcs): Read from or write to Google Cloud Storage (GCS) buckets.
-- [Salesforce Target](/data-analytics/gems/source-target/external-table/salesforce): Supports writing to Salesforce Objects (CRM Analytics datasets not supported for targets).
+- [Regex](/data-analysis/gems/parse/regex): Enables pattern matching and text extraction using regular expressions.
+- [GenerateRows](/data-analysis/gems/prepare/generate-rows): Create new rows of data using iterative expressions.
+- [GCS Source and Target](/data-analysis/gems/source-target/file/gcs): Read from or write to Google Cloud Storage (GCS) buckets.
+- [Salesforce Target](/data-analysis/gems/source-target/external-table/salesforce): Supports writing to Salesforce Objects (CRM Analytics datasets not supported for targets).
 
 ## Gem improvements
 
-- The [Email gem](/data-analytics/gems/report/email) now supports a **Use column** option for several parameters, including **To**, **Cc**, **Bc**, **Subject**, and **Body**. When enabled, these fields can be dynamically populated from columns in your input dataset. Each row in your dataset can specify a different recipient and/or custom message while sending the same attachment to all recipients.
+- The [Email gem](/data-analysis/gems/report/email) now supports a **Use column** option for several parameters, including **To**, **Cc**, **Bc**, **Subject**, and **Body**. When enabled, these fields can be dynamically populated from columns in your input dataset. Each row in your dataset can specify a different recipient and/or custom message while sending the same attachment to all recipients.
 
-- The [RestAPI gem](/data-analytics/gems/custom/rest-api) has been updated in the following ways:
+- The [RestAPI gem](/data-analysis/gems/custom/rest-api) has been updated in the following ways:
   - The gem now supports parsing JSON responses into multiple output columns.
 
-  - There are two new authentication methods — **Basic Auth** and **Bearer Token** — that automatically send credentials to APIs using new [Prophecy secret types](/data-analytics/environment/secrets/secrets).
+  - There are two new authentication methods — **Basic Auth** and **Bearer Token** — that automatically send credentials to APIs using new [Prophecy secret types](/data-analysis/environment/secrets/secrets).
 
 - XLSX (Excel) Source and Target gems have been enhanced:
   - Read from multiple sheets in a single Excel file and union all rows into one output table.
   - Write to multiple sheets by providing a column whose values are target sheet names. Sheets are created if they don't exist.
 
-- We have added an option to the [Directory gem](/data-analytics/gems/custom/directory) that enables you to list all the sheet names in XLSX files detected in a specified directory.
+- We have added an option to the [Directory gem](/data-analysis/gems/custom/directory) that enables you to list all the sheet names in XLSX files detected in a specified directory.
 
-- You can now use the [DynamicInput gem](/data-analytics/gems/custom/dynamic-input) to union data from files defined in a column of file paths. Schemas are matched based on column names.
+- You can now use the [DynamicInput gem](/data-analysis/gems/custom/dynamic-input) to union data from files defined in a column of file paths. Schemas are matched based on column names.
 
 ## Automatic package upgrades
 
-When configuring [Prophecy project dependencies](/data-analytics/development/extensibility/dependencies), you can now enable automatic package upgrades. When enabled, the dependency will automatically upgrade to the latest version available.
+When configuring [Prophecy project dependencies](/data-analysis/development/extensibility/dependencies), you can now enable automatic package upgrades. When enabled, the dependency will automatically upgrade to the latest version available.
 
 </Update>
 
@@ -126,11 +168,11 @@ For [Databricks Jobs](/data-engineering/orchestration/databricks-jobs), we have 
 
 ## Automatic team creation
 
-You can now enable automatic team creation when using Microsoft Entra ID (Azure Active Directory) [SSO](/data-analytics/administration/management/authentication/azure-ad#step-2-optional-enable-automatic-team-creation).
+You can now enable automatic team creation when using Microsoft Entra ID (Azure Active Directory) [SSO](/data-analysis/administration/management/authentication/azure-ad#step-2-optional-enable-automatic-team-creation).
 
 ## Team-level Copilot
 
-We've added the ability to [enable or disable Copilot](/data-analytics/administration/management/teams/teams) at the team level.
+We've added the ability to [enable or disable Copilot](/data-analysis/administration/management/teams/teams) at the team level.
 
 </Update>
 
@@ -144,47 +186,47 @@ We've added the ability to [enable or disable Copilot](/data-analytics/administr
 
 ## Pipeline gem
 
-The [Pipeline gem](/data-analytics/production/scheduling/pipeline-trigger-gem) lets you trigger another pipeline from within the current pipeline. You can use trigger conditions, pass parameters, and receive metadata for each run. Each gem execution can trigger the target pipeline multiple times, running sequentially until all runs finish.
+The [Pipeline gem](/data-analysis/production/scheduling/pipeline-trigger-gem) lets you trigger another pipeline from within the current pipeline. You can use trigger conditions, pass parameters, and receive metadata for each run. Each gem execution can trigger the target pipeline multiple times, running sequentially until all runs finish.
 
 ## Data processing gems
 
-- [CountRecords](/data-analytics/gems/transform/count-records): Count the number of rows in a dataset using different methods.
-- [Directory](/data-analytics/gems/custom/directory): List files and folders of a specified directory from a data ingress/egress connection.
-- [DataMasking](/data-analytics/gems/prepare/masking): Obfuscate sensitive string data in one or more columns.
-- [DataEncoderDecoder](/data-analytics/gems/transform/encoder-decoder): Encode or decode data in selected columns using a variety of techniques.
-- [FindDuplicates](/data-analytics/gems/prepare/find-duplicates): Filters rows in a dataset based on how frequently they appear.
-- [RecordID](/data-analytics/gems/prepare/record-id): Generate row-level IDs using UUIDs for randomly generated values or incremental IDs for sequential values.
-- [DynamicInput](/data-analytics/gems/custom/dynamic-input): Run SQL queries that update automatically based on your incoming data.
+- [CountRecords](/data-analysis/gems/transform/count-records): Count the number of rows in a dataset using different methods.
+- [Directory](/data-analysis/gems/custom/directory): List files and folders of a specified directory from a data ingress/egress connection.
+- [DataMasking](/data-analysis/gems/prepare/masking): Obfuscate sensitive string data in one or more columns.
+- [DataEncoderDecoder](/data-analysis/gems/transform/encoder-decoder): Encode or decode data in selected columns using a variety of techniques.
+- [FindDuplicates](/data-analysis/gems/prepare/find-duplicates): Filters rows in a dataset based on how frequently they appear.
+- [RecordID](/data-analysis/gems/prepare/record-id): Generate row-level IDs using UUIDs for randomly generated values or incremental IDs for sequential values.
+- [DynamicInput](/data-analysis/gems/custom/dynamic-input): Run SQL queries that update automatically based on your incoming data.
 
 ## Connections and source/target gems
 
 The following are new connections and source/target gems:
 
-- [Fixed-width Source](/data-analytics/gems/source-target/file/file-types/fixed-width): Read fixed-width files from various file storage accessed from connections.
-- [Azure Synapse Source](/data-analytics/gems/source-target/external-table/synapse): Using the new Azure Synapse [connection](/data-analytics/environment/connections/synapse), you can read data from Microsoft SQL Server hosted on Azure Synapse dedicated SQL pools.
-- [Hana Source and Target](/data-analytics/gems/source-target/external-table/hana/hana): Using the new HANA connection, you can read and write to an SAP HANA database (Added in 4.1.3.3).
+- [Fixed-width Source](/data-analysis/gems/source-target/file/file-types/fixed-width): Read fixed-width files from various file storage accessed from connections.
+- [Azure Synapse Source](/data-analysis/gems/source-target/external-table/synapse): Using the new Azure Synapse [connection](/data-analysis/environment/connections/synapse), you can read data from Microsoft SQL Server hosted on Azure Synapse dedicated SQL pools.
+- [Hana Source and Target](/data-analysis/gems/source-target/external-table/hana/hana): Using the new HANA connection, you can read and write to an SAP HANA database (Added in 4.1.3.3).
 
 Additionally, the following enhancements have been made to existing gems:
 
-- We've added a **File Encoding** property to [CSV Source and Target](/data-analytics/gems/source-target/file/file-types/csv) gems. This lets you decode CSV files when reading and encode CSV files when writing.
-- [SFTP](/data-analytics/gems/source-target/file/sftp) and [S3](/data-analytics/gems/source-target/file/s3) Source gems have the following enhancements that allow you to (Added in 4.1.3.3):
+- We've added a **File Encoding** property to [CSV Source and Target](/data-analysis/gems/source-target/file/file-types/csv) gems. This lets you decode CSV files when reading and encode CSV files when writing.
+- [SFTP](/data-analysis/gems/source-target/file/sftp) and [S3](/data-analysis/gems/source-target/file/s3) Source gems have the following enhancements that allow you to (Added in 4.1.3.3):
   - Use wildcard patterns in file paths.
   - Move or delete files after they are successfully read.
   - Dynamically read files provided by file arrival/change triggers through the new Configuration mode.
 
 ## Visual containers
 
-We've added a feature that lets you divide your pipeline into logical sections using [visual containers](/data-analytics/development/studio/containers) for canvas organization.
+We've added a feature that lets you divide your pipeline into logical sections using [visual containers](/data-analysis/development/studio/containers) for canvas organization.
 
 ## Version control improvements
 
-You can now [move projects](/data-analytics/development/versioning/migrate-managed) hosted in a Prophecy-managed Git repository into an external repository without having to clone the project.
+You can now [move projects](/data-analysis/development/versioning/migrate-managed) hosted in a Prophecy-managed Git repository into an external repository without having to clone the project.
 
 ## Enhancements
 
-- You can now enable or disable [auto-run](/data-analytics/collaboration/prophecy-apps/app-settings) for Prophecy Apps in the app settings.
+- You can now enable or disable [auto-run](/data-analysis/collaboration/prophecy-apps/app-settings) for Prophecy Apps in the app settings.
 - When you open a gem, you can now collapse the **Ports** panel of the gem configuration dialog.
-- [Write options](/data-analytics/gems/source-target/table/write-options) for Table gems have been renamed. However, they are still mapped to the same dbt configs under the hood (Changed in 4.1.3.9).
+- [Write strategies](/data-analysis/gems/source-target/table/write-options) for Table gems have been renamed. However, they are still mapped to the same dbt configs under the hood (Changed in 4.1.3.9).
 - We've enhanced the [lineage extractor](/data-engineering/lineage/lineage-extractor) Python tool to be able to extract lineage from pipelines in SQL projects in Excel and OpenLineage format (Added in 4.1.3.10).
 
 </Update>
@@ -232,39 +274,39 @@ Prophecy uses external LLMs for Copilot and Agents. We've added support for addi
 
 ## BigQuery warehouse
 
-Prophecy now supports running SQL transformations in your BigQuery warehouse. Learn how to configure a [BigQuery connection](/data-analytics/environment/connections/bigquery) in fabrics to leverage this capability.
+Prophecy now supports running SQL transformations in your BigQuery warehouse. Learn how to configure a [BigQuery connection](/data-analysis/environment/connections/bigquery) in fabrics to leverage this capability.
 
 ## Spatial gems
 
-- [Buffer](/data-analytics/gems/spatial/buffer): Take any polygon or line and expand or contract its boundaries.
-- [FindNearest](/data-analytics/gems/spatial/nearest-point): Find the closest spatial point(s) between two datasets based on geographic distance.
-- [Simplify](/data-analytics/gems/spatial/simplify): Reduce the number of vertices in polygons and polylines while preserving overall shape.
-- [HeatMap](/data-analytics/gems/spatial/heatmap): Transform latitude and longitude point data into a spatial heatmap using hexagonal tiling.
-- [PolyBuild](/data-analytics/gems/spatial/polybuild): Build spatial shapes from coordinate data by grouping and ordering points into either polygons or polylines.
-- [SpatialMatch](/data-analytics/gems/spatial/spatial-match): Compare geometries and return only the pairs that have the spatial relationship you specify.
+- [Buffer](/data-analysis/gems/spatial/buffer): Take any polygon or line and expand or contract its boundaries.
+- [FindNearest](/data-analysis/gems/spatial/nearest-point): Find the closest spatial point(s) between two datasets based on geographic distance.
+- [Simplify](/data-analysis/gems/spatial/simplify): Reduce the number of vertices in polygons and polylines while preserving overall shape.
+- [HeatMap](/data-analysis/gems/spatial/heatmap): Transform latitude and longitude point data into a spatial heatmap using hexagonal tiling.
+- [PolyBuild](/data-analysis/gems/spatial/polybuild): Build spatial shapes from coordinate data by grouping and ordering points into either polygons or polylines.
+- [SpatialMatch](/data-analysis/gems/spatial/spatial-match): Compare geometries and return only the pairs that have the spatial relationship you specify.
 
 ## Transformation gems
 
-- [Pivot](/data-analytics/gems/transform/pivot): Reshape your data by transforming unique row values from one column into new columns.
-- [Unpivot](/data-analytics/gems/transform/unpivot): Convert multiple columns into row-level key-value pairs to simplify columnar data.
+- [Pivot](/data-analysis/gems/transform/pivot): Reshape your data by transforming unique row values from one column into new columns.
+- [Unpivot](/data-analysis/gems/transform/unpivot): Convert multiple columns into row-level key-value pairs to simplify columnar data.
 
 ## Connections and source/target gems
 
-- Connect to [Salesforce](/data-analytics/gems/source-target/external-table/salesforce) and read data into your pipelines.
-- Prophecy now supports uploading [Parquet](/data-analytics/gems/source-target/file/file-types/parquet) files to Databricks connections.
+- Connect to [Salesforce](/data-analysis/gems/source-target/external-table/salesforce) and read data into your pipelines.
+- Prophecy now supports uploading [Parquet](/data-analysis/gems/source-target/file/file-types/parquet) files to Databricks connections.
 
 ## File arrival trigger
 
-Pipeline schedules can now be triggered by [file arrivals or changes](/data-analytics/production/scheduling/triggers#file-arrival-or-change-trigger) in a specified SFTP or S3 location.
+Pipeline schedules can now be triggered by [file arrivals or changes](/data-analysis/production/scheduling/triggers#file-arrival-or-change-trigger) in a specified SFTP or S3 location.
 
 ## Stored procedures
 
-You can now define and call [stored procedures](/data-analytics/gems/custom/stored-procedure) within SQL projects running on BigQuery. This is particularly useful when migrating workflows from other systems.
+You can now define and call [stored procedures](/data-analysis/gems/custom/stored-procedure) within SQL projects running on BigQuery. This is particularly useful when migrating workflows from other systems.
 
 ## Enhancements
 
 - Prophecy uses temporary tables to process data from external systems in a SQL warehouse. Previously, these tables were written and then removed, which meant you could briefly see them in your warehouse. Now, they use **ephemeral materialization**, so they only exist during execution and no longer appear in your warehouse.
-- You can now overwrite a Table gem using the [File Upload component](/data-analytics/collaboration/prophecy-apps/app-components#file-upload) in a Prophecy App. Previously, you could only overwrite Source gems. (Added in 4.1.2.2).
+- You can now overwrite a Table gem using the [File Upload component](/data-analysis/collaboration/prophecy-apps/app-components#file-upload) in a Prophecy App. Previously, you could only overwrite Source gems. (Added in 4.1.2.2).
 
 </Update>
 
@@ -314,7 +356,7 @@ You can now enable auditing for file downloads from Prophecy. When this feature 
 
 ## Service principal OAuth
 
-Databricks connections in Prophecy fabrics now accept [service principal](https://docs.databricks.com/aws/en/admin/users-groups/service-principals) credentials for OAuth. Now you can deploy scheduled pipelines using the service principal credentials. To learn more, visit the [Databricks connection](/data-analytics/environment/connections/databricks) documentation.
+Databricks connections in Prophecy fabrics now accept [service principal](https://docs.databricks.com/aws/en/admin/users-groups/service-principals) credentials for OAuth. Now you can deploy scheduled pipelines using the service principal credentials. To learn more, visit the [Databricks connection](/data-analysis/environment/connections/databricks) documentation.
 
 ## Run history improvement
 
@@ -326,7 +368,7 @@ We've added the ability to reindex your SQL warehouse for the knowledge graph. T
 
 ## Reporting connection and gem
 
-The new [Power BI connection](/data-analytics/environment/connections/power-bi) and [PowerBIWrite gem](/data-analytics/gems/report/power-bi) allow you to you publish pipeline results directly to Power BI tables (Added in 4.1.1.5).
+The new [Power BI connection](/data-analysis/environment/connections/power-bi) and [PowerBIWrite gem](/data-analysis/gems/report/power-bi) allow you to you publish pipeline results directly to Power BI tables (Added in 4.1.1.5).
 
 </Update>
 

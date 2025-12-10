@@ -21,9 +21,9 @@
                 "group": "Getting started",
                 "pages": [
                   "index",
-                  "data-analytics/getting-started/concepts",
-                  "data-analytics/getting-started/quick-start",
-                  "data-analytics/getting-started/create-project"
+                  "data-analysis/getting-started/concepts",
+                  "data-analysis/getting-started/quick-start",
+                  "data-analysis/getting-started/create-project"
                 ]
               },
               {
@@ -32,25 +32,25 @@
                   {
                     "group": "Agent",
                     "pages": [
-                      "data-analytics/ai/agent/agent",
+                      "data-analysis/ai/agent/agent",
                       {
                         "group": "Chat",
                         "pages": [
-                          "data-analytics/ai/agent/chat/mentions",
-                          "data-analytics/ai/agent/chat/modes",
-                          "data-analytics/ai/agent/chat/upload-files",
-                          "data-analytics/ai/agent/chat/reset",
-                          "data-analytics/ai/agent/chat/revert",
-                          "data-analytics/ai/agent/chat/export"
+                          "data-analysis/ai/agent/chat/mentions",
+                          "data-analysis/ai/agent/chat/modes",
+                          "data-analysis/ai/agent/chat/upload-files",
+                          "data-analysis/ai/agent/chat/reset",
+                          "data-analysis/ai/agent/chat/revert",
+                          "data-analysis/ai/agent/chat/export"
                         ]
                       },
-                      "data-analytics/ai/agent/explore",
-                      "data-analytics/ai/agent/transform",
+                      "data-analysis/ai/agent/explore",
+                      "data-analysis/ai/agent/transform",
                       {
                         "group": "Documentation",
                         "pages": [
-                          "data-analytics/ai/agent/documentation/documentation",
-                          "data-analytics/ai/agent/documentation/ctl-reference"
+                          "data-analysis/ai/agent/documentation/documentation",
+                          "data-analysis/ai/agent/documentation/ctl-reference"
                         ]
                       }
                     ]
@@ -58,19 +58,19 @@
                   {
                     "group": "Copilot",
                     "pages": [
-                      "data-analytics/ai/copilot/gem-expressions",
-                      "data-analytics/ai/copilot/gem-fixes",
-                      "data-analytics/ai/copilot/auto-documentation"
+                      "data-analysis/ai/copilot/gem-expressions",
+                      "data-analysis/ai/copilot/gem-fixes",
+                      "data-analysis/ai/copilot/auto-documentation"
                     ]
                   },
                   {
                     "group": "Knowledge graph",
                     "pages": [
-                      "data-analytics/ai/knowledge-graph/knowledge-graph",
-                      "data-analytics/ai/knowledge-graph/indexer"
+                      "data-analysis/ai/knowledge-graph/knowledge-graph",
+                      "data-analysis/ai/knowledge-graph/indexer"
                     ]
                   },
-                  "data-analytics/ai/llm-providers"
+                  "data-analysis/ai/llm-providers"
                 ]
               },
               {
@@ -79,68 +79,68 @@
                   {
                     "group": "Studio",
                     "pages": [
-                      "data-analytics/development/studio/studio",
-                      "data-analytics/development/studio/folders",
-                      "data-analytics/development/studio/canvas-annotations",
-                      "data-analytics/development/studio/containers"
+                      "data-analysis/development/studio/studio",
+                      "data-analysis/development/studio/folders",
+                      "data-analysis/development/studio/canvas-annotations",
+                      "data-analysis/development/studio/containers"
                     ]
                   },
                   {
                     "group": "Runs",
                     "pages": [
-                      "data-analytics/development/runs/execution",
-                      "data-analytics/development/runs/runtime-logs",
+                      "data-analysis/development/runs/execution",
+                      "data-analysis/development/runs/runtime-logs",
                       {
                         "group": "Data Explorer",
                         "pages": [
-                          "data-analytics/development/runs/data-explorer/data-explorer",
-                          "data-analytics/development/runs/data-explorer/data-profile",
+                          "data-analysis/development/runs/data-explorer/data-explorer",
+                          "data-analysis/development/runs/data-explorer/data-profile",
                           {
                             "group": "Charts",
                             "pages": [
-                              "data-analytics/development/runs/data-explorer/charts/charts",
-                              "data-analytics/development/runs/data-explorer/charts/area-chart",
-                              "data-analytics/development/runs/data-explorer/charts/bar-chart",
-                              "data-analytics/development/runs/data-explorer/charts/candlestick-chart",
-                              "data-analytics/development/runs/data-explorer/charts/line-chart",
-                              "data-analytics/development/runs/data-explorer/charts/map-chart",
-                              "data-analytics/development/runs/data-explorer/charts/pie-chart",
-                              "data-analytics/development/runs/data-explorer/charts/scatter-chart"
+                              "data-analysis/development/runs/data-explorer/charts/charts",
+                              "data-analysis/development/runs/data-explorer/charts/area-chart",
+                              "data-analysis/development/runs/data-explorer/charts/bar-chart",
+                              "data-analysis/development/runs/data-explorer/charts/candlestick-chart",
+                              "data-analysis/development/runs/data-explorer/charts/line-chart",
+                              "data-analysis/development/runs/data-explorer/charts/map-chart",
+                              "data-analysis/development/runs/data-explorer/charts/pie-chart",
+                              "data-analysis/development/runs/data-explorer/charts/scatter-chart"
                             ]
                           }
                         ]
                       }
                     ]
                   },
-                  "data-analytics/development/pipeline-params",
+                  "data-analysis/development/pipeline-params",
                   {
                     "group": "Versioning",
                     "pages": [
-                      "data-analytics/development/versioning/version-control",
-                      "data-analytics/development/versioning/git-storage-model",
-                      "data-analytics/development/versioning/conflicts",
-                      "data-analytics/development/versioning/clone-projects",
-                      "data-analytics/development/versioning/import-projects",
-                      "data-analytics/development/versioning/migrate-managed"
+                      "data-analysis/development/versioning/version-control",
+                      "data-analysis/development/versioning/git-storage-model",
+                      "data-analysis/development/versioning/conflicts",
+                      "data-analysis/development/versioning/clone-projects",
+                      "data-analysis/development/versioning/import-projects",
+                      "data-analysis/development/versioning/migrate-managed"
                     ]
                   },
                   {
                     "group": "Tests",
                     "pages": [
-                      "data-analytics/development/tests/data-tests",
-                      "data-analytics/development/tests/use-project-tests",
-                      "data-analytics/development/tests/use-model-tests"
+                      "data-analysis/development/tests/test-comparison",
+                      "data-analysis/development/tests/table-tests",
+                      "data-analysis/development/tests/project-tests"
                     ]
                   },
                   {
                     "group": "Extensibility",
                     "pages": [
-                      "data-analytics/development/extensibility/package-hub/package-hub",
-                      "data-analytics/development/extensibility/package-hub/template-hub",
-                      "data-analytics/development/extensibility/functions",
-                      "data-analytics/development/extensibility/dependencies",
-                      "data-analytics/development/extensibility/stored-procedure",
-                      "data-analytics/development/extensibility/sql-gem-builder"
+                      "data-analysis/development/extensibility/dependencies",
+                      "data-analysis/development/extensibility/package-hub/package-hub",
+                      "data-analysis/development/extensibility/package-hub/template-hub",
+                      "data-analysis/development/extensibility/functions",
+                      "data-analysis/development/extensibility/stored-procedure",
+                      "data-analysis/development/extensibility/sql-gem-builder"
                     ]
                   }
                 ]
@@ -151,54 +151,59 @@
                   {
                     "group": "Fabrics",
                     "pages": [
-                      "data-analytics/environment/fabrics/prophecy-fabrics",
-                      "data-analytics/environment/fabrics/create-fabric"
+                      "data-analysis/environment/fabrics/prophecy-fabrics",
+                      "data-analysis/environment/fabrics/create-fabric"
                     ]
                   },
                   {
                     "group": "Connections",
                     "pages": [
-                      "data-analytics/environment/connections/connections",
-                      "data-analytics/environment/connections/adls",
-                      "data-analytics/environment/connections/bigquery",
-                      "data-analytics/environment/connections/databricks",
-                      "data-analytics/environment/connections/gcs",
-                      "data-analytics/environment/connections/hana",
-                      "data-analytics/environment/connections/mongodb",
-                      "data-analytics/environment/connections/mssql",
-                      "data-analytics/environment/connections/onedrive",
-                      "data-analytics/environment/connections/oracle",
-                      "data-analytics/environment/connections/power-bi",
-                      "data-analytics/environment/connections/prophecy-managed",
-                      "data-analytics/environment/connections/redshift",
-                      "data-analytics/environment/connections/s3",
-                      "data-analytics/environment/connections/salesforce",
-                      "data-analytics/environment/connections/sftp",
-                      "data-analytics/environment/connections/sharepoint",
-                      "data-analytics/environment/connections/smartsheet",
-                      "data-analytics/environment/connections/smtp",
-                      "data-analytics/environment/connections/snowflake",
-                      "data-analytics/environment/connections/synapse",
-                      "data-analytics/environment/connections/tableau"
+                      "data-analysis/environment/connections/connections",
+                      "data-analysis/environment/connections/adls",
+                      "data-analysis/environment/connections/bigquery",
+                      "data-analysis/environment/connections/databricks",
+                      "data-analysis/environment/connections/gcs",
+                      "data-analysis/environment/connections/hana",
+                      "data-analysis/environment/connections/mongodb",
+                      "data-analysis/environment/connections/mssql",
+                      "data-analysis/environment/connections/onedrive",
+                      "data-analysis/environment/connections/oracle",
+                      "data-analysis/environment/connections/power-bi",
+                      "data-analysis/environment/connections/prophecy-managed",
+                      "data-analysis/environment/connections/redshift",
+                      "data-analysis/environment/connections/s3",
+                      "data-analysis/environment/connections/salesforce",
+                      "data-analysis/environment/connections/sftp",
+                      "data-analysis/environment/connections/sharepoint",
+                      "data-analysis/environment/connections/smartsheet",
+                      "data-analysis/environment/connections/smtp",
+                      "data-analysis/environment/connections/snowflake",
+                      "data-analysis/environment/connections/synapse",
+                      "data-analysis/environment/connections/tableau"
                     ]
                   },
-                  "data-analytics/environment/secrets/secrets"
+                  "data-analysis/environment/secrets/secrets"
                 ]
               },
               {
                 "group": "Collaboration",
                 "pages": [
-                  "data-analytics/collaboration/project-sharing",
-                  "data-analytics/collaboration/project-replays",
+                  "data-analysis/collaboration/project-sharing",
+                  "data-analysis/collaboration/project-replays",
                   {
                     "group": "Prophecy Apps",
                     "pages": [
-                      "data-analytics/collaboration/prophecy-apps/apps",
-                      "data-analytics/collaboration/prophecy-apps/app-builder",
-                      "data-analytics/collaboration/prophecy-apps/app-components",
-                      "data-analytics/collaboration/prophecy-apps/app-creation",
-                      "data-analytics/collaboration/prophecy-apps/app-settings",
-                      "data-analytics/collaboration/prophecy-apps/run-apps"
+                      "data-analysis/collaboration/prophecy-apps/apps",
+                      "data-analysis/collaboration/prophecy-apps/run-apps",
+                      {
+                        "group": "Build apps",
+                        "pages": [
+                          "data-analysis/collaboration/prophecy-apps/app-builder",
+                          "data-analysis/collaboration/prophecy-apps/app-creation",
+                          "data-analysis/collaboration/prophecy-apps/app-components",
+                          "data-analysis/collaboration/prophecy-apps/app-settings"
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -209,15 +214,15 @@
                   {
                     "group": "Scheduling",
                     "pages": [
-                      "data-analytics/production/scheduling/scheduling",
-                      "data-analytics/production/scheduling/schedule-setup",
-                      "data-analytics/production/scheduling/triggers",
-                      "data-analytics/production/scheduling/alerts",
-                      "data-analytics/production/scheduling/pipeline-trigger-gem"
+                      "data-analysis/production/scheduling/scheduling",
+                      "data-analysis/production/scheduling/schedule-setup",
+                      "data-analysis/production/scheduling/triggers",
+                      "data-analysis/production/scheduling/alerts",
+                      "data-analysis/production/scheduling/pipeline-trigger-gem"
                     ]
                   },
-                  "data-analytics/production/publication",
-                  "data-analytics/production/monitoring"
+                  "data-analysis/production/publication",
+                  "data-analysis/production/monitoring"
                 ]
               }
             ]
@@ -228,15 +233,15 @@
               {
                 "group": "Overview",
                 "pages": [
-                  "data-analytics/gems/gems",
-                  "data-analytics/gems/data-types",
+                  "data-analysis/gems/gems",
+                  "data-analysis/gems/data-types",
                   {
                     "group": "Visual expressions",
                     "pages": [
-                      "data-analytics/gems/visual-expression-builder/visual-expression-builder",
-                      "data-analytics/gems/visual-expression-builder/use-the-visual-expression-builder",
-                      "data-analytics/gems/visual-expression-builder/visual-expression-builder-reference",
-                      "data-analytics/gems/visual-expression-builder/variant-schema"
+                      "data-analysis/gems/visual-expression-builder/visual-expression-builder",
+                      "data-analysis/gems/visual-expression-builder/use-the-visual-expression-builder",
+                      "data-analysis/gems/visual-expression-builder/visual-expression-builder-reference",
+                      "data-analysis/gems/visual-expression-builder/variant-schema"
                     ]
                   }
                 ]
@@ -244,35 +249,35 @@
               {
                 "group": "Sources and targets",
                 "pages": [
-                  "data-analytics/gems/source-target/source-target",
-                  "data-analytics/gems/source-target/adding-data-sources",
+                  "data-analysis/gems/source-target/source-target",
+                  "data-analysis/gems/source-target/adding-data-sources",
                   {
                     "group": "Tables (Warehouse)",
                     "pages": [
-                      "data-analytics/gems/source-target/table/bigquery",
-                      "data-analytics/gems/source-target/table/databricks",
-                      "data-analytics/gems/source-target/table/prophecy-warehouse",
-                      "data-analytics/gems/source-target/table/upload-files",
-                      "data-analytics/gems/source-target/table/write-options"
+                      "data-analysis/gems/source-target/table/bigquery",
+                      "data-analysis/gems/source-target/table/databricks",
+                      "data-analysis/gems/source-target/table/prophecy-warehouse",
+                      "data-analysis/gems/source-target/table/upload-files",
+                      "data-analysis/gems/source-target/table/write-options"
                     ]
                   },
                   {
                     "group": "Tables (External systems)",
                     "pages": [
-                      "data-analytics/gems/source-target/external-table/bigquery",
-                      "data-analytics/gems/source-target/external-table/databricks",
-                      "data-analytics/gems/source-target/external-table/mssql",
-                      "data-analytics/gems/source-target/external-table/mongodb",
-                      "data-analytics/gems/source-target/external-table/oracle",
-                      "data-analytics/gems/source-target/external-table/redshift",
-                      "data-analytics/gems/source-target/external-table/salesforce",
-                      "data-analytics/gems/source-target/external-table/snowflake",
-                      "data-analytics/gems/source-target/external-table/synapse",
+                      "data-analysis/gems/source-target/external-table/bigquery",
+                      "data-analysis/gems/source-target/external-table/databricks",
+                      "data-analysis/gems/source-target/external-table/mssql",
+                      "data-analysis/gems/source-target/external-table/mongodb",
+                      "data-analysis/gems/source-target/external-table/oracle",
+                      "data-analysis/gems/source-target/external-table/redshift",
+                      "data-analysis/gems/source-target/external-table/salesforce",
+                      "data-analysis/gems/source-target/external-table/snowflake",
+                      "data-analysis/gems/source-target/external-table/synapse",
                       {
                         "group": "SAP HANA",
                         "pages": [
-                          "data-analytics/gems/source-target/external-table/hana/hana",
-                          "data-analytics/gems/source-target/external-table/hana/identity-columns"
+                          "data-analysis/gems/source-target/external-table/hana/hana",
+                          "data-analysis/gems/source-target/external-table/hana/identity-columns"
                         ]
                       }
                     ]
@@ -280,26 +285,26 @@
                   {
                     "group": "File storage systems",
                     "pages": [
-                      "data-analytics/gems/source-target/file/adls",
-                      "data-analytics/gems/source-target/file/s3",
-                      "data-analytics/gems/source-target/file/gcs",
-                      "data-analytics/gems/source-target/file/databricks-volumes",
-                      "data-analytics/gems/source-target/file/sftp",
-                      "data-analytics/gems/source-target/file/onedrive",
-                      "data-analytics/gems/source-target/file/sharepoint",
-                      "data-analytics/gems/source-target/file/smartsheet",
                       {
                         "group": "File types",
                         "pages": [
-                          "data-analytics/gems/source-target/file/file-types/csv",
-                          "data-analytics/gems/source-target/file/file-types/excel",
-                          "data-analytics/gems/source-target/file/file-types/parquet",
-                          "data-analytics/gems/source-target/file/file-types/json",
-                          "data-analytics/gems/source-target/file/file-types/xml",
-                          "data-analytics/gems/source-target/file/file-types/text",
-                          "data-analytics/gems/source-target/file/file-types/fixed-width"
+                          "data-analysis/gems/source-target/file/file-types/csv",
+                          "data-analysis/gems/source-target/file/file-types/excel",
+                          "data-analysis/gems/source-target/file/file-types/parquet",
+                          "data-analysis/gems/source-target/file/file-types/json",
+                          "data-analysis/gems/source-target/file/file-types/xml",
+                          "data-analysis/gems/source-target/file/file-types/text",
+                          "data-analysis/gems/source-target/file/file-types/fixed-width"
                         ]
-                      }
+                      },
+                      "data-analysis/gems/source-target/file/adls",
+                      "data-analysis/gems/source-target/file/s3",
+                      "data-analysis/gems/source-target/file/gcs",
+                      "data-analysis/gems/source-target/file/databricks-volumes",
+                      "data-analysis/gems/source-target/file/sftp",
+                      "data-analysis/gems/source-target/file/onedrive",
+                      "data-analysis/gems/source-target/file/sharepoint",
+                      "data-analysis/gems/source-target/file/smartsheet"
                     ]
                   }
                 ]
@@ -310,64 +315,64 @@
                   {
                     "group": "Transform",
                     "pages": [
-                      "data-analytics/gems/transform/aggregate",
-                      "data-analytics/gems/transform/count-records",
-                      "data-analytics/gems/transform/dynamic-select",
-                      "data-analytics/gems/transform/encoder-decoder",
-                      "data-analytics/gems/transform/fuzzy-match",
-                      "data-analytics/gems/transform/pivot",
-                      "data-analytics/gems/transform/unpivot",
-                      "data-analytics/gems/transform/window"
+                      "data-analysis/gems/transform/aggregate",
+                      "data-analysis/gems/transform/count-records",
+                      "data-analysis/gems/transform/dynamic-select",
+                      "data-analysis/gems/transform/encoder-decoder",
+                      "data-analysis/gems/transform/fuzzy-match",
+                      "data-analysis/gems/transform/pivot",
+                      "data-analysis/gems/transform/unpivot",
+                      "data-analysis/gems/transform/window"
                     ]
                   },
                   {
                     "group": "Prepare",
                     "pages": [
-                      "data-analytics/gems/prepare/data-cleansing",
-                      "data-analytics/gems/prepare/deduplicate",
-                      "data-analytics/gems/prepare/filter",
-                      "data-analytics/gems/prepare/find-duplicates",
-                      "data-analytics/gems/prepare/flatten-schema",
-                      "data-analytics/gems/prepare/generate-rows",
-                      "data-analytics/gems/prepare/limit",
-                      "data-analytics/gems/prepare/masking",
-                      "data-analytics/gems/prepare/multi-column-edit",
-                      "data-analytics/gems/prepare/multi-column-rename",
-                      "data-analytics/gems/prepare/order-by",
-                      "data-analytics/gems/prepare/record-id",
-                      "data-analytics/gems/prepare/reformat"
+                      "data-analysis/gems/prepare/data-cleansing",
+                      "data-analysis/gems/prepare/deduplicate",
+                      "data-analysis/gems/prepare/filter",
+                      "data-analysis/gems/prepare/find-duplicates",
+                      "data-analysis/gems/prepare/flatten-schema",
+                      "data-analysis/gems/prepare/generate-rows",
+                      "data-analysis/gems/prepare/limit",
+                      "data-analysis/gems/prepare/masking",
+                      "data-analysis/gems/prepare/multi-column-edit",
+                      "data-analysis/gems/prepare/multi-column-rename",
+                      "data-analysis/gems/prepare/order-by",
+                      "data-analysis/gems/prepare/record-id",
+                      "data-analysis/gems/prepare/reformat"
                     ]
                   },
                   {
                     "group": "Join",
                     "pages": [
-                      "data-analytics/gems/join-split/except",
-                      "data-analytics/gems/join-split/intersect",
-                      "data-analytics/gems/join-split/join",
-                      "data-analytics/gems/join-split/union",
-                      "data-analytics/gems/join-split/union-by-name"
+                      "data-analysis/gems/join-split/except",
+                      "data-analysis/gems/join-split/intersect",
+                      "data-analysis/gems/join-split/join",
+                      "data-analysis/gems/join-split/union",
+                      "data-analysis/gems/join-split/union-by-name"
                     ]
                   },
                   {
                     "group": "Spatial",
                     "pages": [
-                      "data-analytics/gems/spatial/buffer",
-                      "data-analytics/gems/spatial/create-point",
-                      "data-analytics/gems/spatial/distance",
-                      "data-analytics/gems/spatial/heatmap",
-                      "data-analytics/gems/spatial/nearest-point",
-                      "data-analytics/gems/spatial/polybuild",
-                      "data-analytics/gems/spatial/simplify",
-                      "data-analytics/gems/spatial/spatial-match"
+                      "data-analysis/gems/spatial/buffer",
+                      "data-analysis/gems/spatial/create-point",
+                      "data-analysis/gems/spatial/distance",
+                      "data-analysis/gems/spatial/heatmap",
+                      "data-analysis/gems/spatial/nearest-point",
+                      "data-analysis/gems/spatial/polybuild",
+                      "data-analysis/gems/spatial/simplify",
+                      "data-analysis/gems/spatial/spatial-match"
                     ]
                   },
                   {
                     "group": "Parse",
                     "pages": [
-                      "data-analytics/gems/parse/json-parse",
-                      "data-analytics/gems/parse/regex",
-                      "data-analytics/gems/parse/text-to-column",
-                      "data-analytics/gems/parse/xml-parse"
+                      "data-analysis/gems/parse/json-parse",
+                      "data-analysis/gems/parse/regex",
+                      "data-analysis/gems/parse/text-to-column",
+                      "data-analysis/gems/parse/xml-parse"
                     ]
                   }
                 ]
@@ -378,9 +383,9 @@
                   {
                     "group": "Report",
                     "pages": [
-                      "data-analytics/gems/report/email",
-                      "data-analytics/gems/report/power-bi",
-                      "data-analytics/gems/report/tableau"
+                      "data-analysis/gems/report/email",
+                      "data-analysis/gems/report/power-bi",
+                      "data-analysis/gems/report/tableau"
                     ]
                   }
                 ]
@@ -391,14 +396,14 @@
                   {
                     "group": "Custom",
                     "pages": [
-                      "data-analytics/gems/custom/todo-gem",
-                      "data-analytics/gems/custom/directory",
-                      "data-analytics/gems/custom/dynamic-input",
-                      "data-analytics/gems/custom/macro",
-                      "data-analytics/gems/custom/rest-api",
-                      "data-analytics/gems/custom/sql-statement",
-                      "data-analytics/gems/custom/stored-procedure",
-                      "data-analytics/gems/custom/script"
+                      "data-analysis/gems/custom/todo-gem",
+                      "data-analysis/gems/custom/directory",
+                      "data-analysis/gems/custom/dynamic-input",
+                      "data-analysis/gems/custom/macro",
+                      "data-analysis/gems/custom/rest-api",
+                      "data-analysis/gems/custom/sql-statement",
+                      "data-analysis/gems/custom/stored-procedure",
+                      "data-analysis/gems/custom/script"
                     ]
                   }
                 ]
@@ -500,17 +505,17 @@
               {
                 "group": "Platform",
                 "pages": [
-                  "data-analytics/administration/platform/editions",
-                  "data-analytics/administration/platform/architecture",
-                  "data-analytics/administration/platform/prophecy-deployment"
+                  "data-analysis/administration/platform/editions",
+                  "data-analysis/administration/platform/architecture",
+                  "data-analysis/administration/platform/prophecy-deployment"
                 ]
               },
               {
                 "group": "Setup",
                 "pages": [
-                  "data-analytics/administration/setup/prophecy-express-guide",
-                  "data-analytics/administration/setup/prophecy-enterprise-guide",
-                  "data-analytics/administration/setup/databricks-partner-connect"
+                  "data-analysis/administration/setup/prophecy-express-guide",
+                  "data-analysis/administration/setup/prophecy-enterprise-guide",
+                  "data-analysis/administration/setup/databricks-partner-connect"
                 ]
               },
               {
@@ -519,13 +524,13 @@
                   {
                     "group": "Teams",
                     "pages": [
-                      "data-analytics/administration/management/teams/teams",
+                      "data-analysis/administration/management/teams/teams",
                       {
                         "group": "Settings",
                         "pages": [
-                          "data-analytics/administration/management/teams/settings/ai",
-                          "data-analytics/administration/management/teams/settings/default-dependencies",
-                          "data-analytics/administration/management/teams/settings/project-creation-template"
+                          "data-analysis/administration/management/teams/settings/ai",
+                          "data-analysis/administration/management/teams/settings/default-dependencies",
+                          "data-analysis/administration/management/teams/settings/project-creation-template"
                         ]
                       }
                     ]
@@ -533,13 +538,13 @@
                   {
                     "group": "Users",
                     "pages": [
-                      "data-analytics/administration/management/users/team-user-provisioning",
-                      "data-analytics/administration/management/users/account-settings",
+                      "data-analysis/administration/management/users/team-user-provisioning",
+                      "data-analysis/administration/management/users/account-settings",
                       {
                         "group": "Access control",
                         "pages": [
-                          "data-analytics/administration/management/users/access/role-based-access",
-                          "data-analytics/administration/management/users/access/team-based-access"
+                          "data-analysis/administration/management/users/access/role-based-access",
+                          "data-analysis/administration/management/users/access/team-based-access"
                         ]
                       }
                     ]
@@ -547,55 +552,55 @@
                   {
                     "group": "Authentication",
                     "pages": [
-                      "data-analytics/administration/management/authentication/authentication",
-                      "data-analytics/administration/management/authentication/saml",
-                      "data-analytics/administration/management/authentication/azure-ad",
-                      "data-analytics/administration/management/authentication/google-sso",
-                      "data-analytics/administration/management/authentication/ldap",
-                      "data-analytics/administration/management/authentication/group-team-mapping"
+                      "data-analysis/administration/management/authentication/authentication",
+                      "data-analysis/administration/management/authentication/saml",
+                      "data-analysis/administration/management/authentication/azure-ad",
+                      "data-analysis/administration/management/authentication/google-sso",
+                      "data-analysis/administration/management/authentication/ldap",
+                      "data-analysis/administration/management/authentication/group-team-mapping"
                     ]
                   },
                   {
                     "group": "Cluster admin settings",
                     "pages": [
-                      "data-analytics/administration/management/cluster-admin-settings/cluster-admin-settings",
-                      "data-analytics/administration/management/cluster-admin-settings/oauth-setup",
-                      "data-analytics/administration/management/cluster-admin-settings/copilot-settings"
+                      "data-analysis/administration/management/cluster-admin-settings/cluster-admin-settings",
+                      "data-analysis/administration/management/cluster-admin-settings/oauth-setup",
+                      "data-analysis/administration/management/cluster-admin-settings/copilot-settings"
                     ]
                   },
 
                   {
                     "group": "Usage and billing",
                     "pages": [
-                      "data-analytics/administration/management/usage-billing/usage-billing",
-                      "data-analytics/administration/management/usage-billing/credits"
+                      "data-analysis/administration/management/usage-billing/usage-billing",
+                      "data-analysis/administration/management/usage-billing/credits"
                     ]
                   },
-                  "data-analytics/administration/management/audit-logs"
+                  "data-analysis/administration/management/audit-logs"
                 ]
               },
               {
                 "group": "Help and resources",
                 "pages": [
-                  "data-analytics/administration/getting-help/get-in-touch",
+                  "data-analysis/administration/getting-help/get-in-touch",
                   {
                     "group": "Support",
                     "pages": [
-                      "data-analytics/administration/getting-help/submit-request",
-                      "data-analytics/administration/getting-help/troubleshooting",
+                      "data-analysis/administration/getting-help/submit-request",
+                      "data-analysis/administration/getting-help/troubleshooting",
                       {
                         "group": "Collect diagnostic data",
                         "pages": [
-                          "data-analytics/administration/getting-help/prophecy-details",
-                          "data-analytics/administration/getting-help/spark-cluster-details",
-                          "data-analytics/administration/getting-help/har-file",
-                          "data-analytics/administration/getting-help/diagnostics",
-                          "data-analytics/administration/getting-help/copy-session-info"
+                          "data-analysis/administration/getting-help/prophecy-details",
+                          "data-analysis/administration/getting-help/spark-cluster-details",
+                          "data-analysis/administration/getting-help/har-file",
+                          "data-analysis/administration/getting-help/diagnostics",
+                          "data-analysis/administration/getting-help/copy-session-info"
                         ]
                       }
                     ]
                   },
-                  "data-analytics/administration/getting-help/security"
+                  "data-analysis/administration/getting-help/security"
                 ]
               }
             ]
@@ -605,14 +610,14 @@
             "groups": [
               {
                 "group": "Releases",
-                "pages": ["data-analytics/releases/2025"]
+                "pages": ["data-analysis/releases/2025"]
               },
               {
                 "group": "Reference",
                 "pages": [
-                  "data-analytics/releases/version-chart",
-                  "data-analytics/releases/version-support",
-                  "data-analytics/releases/find-version"
+                  "data-analysis/releases/version-chart",
+                  "data-analysis/releases/version-support",
+                  "data-analysis/releases/find-version"
                 ]
               }
             ]
@@ -1058,8 +1063,7 @@
                   {
                     "group": "Usage and billing",
                     "pages": [
-                      "data-engineering/administration/management/usage-billing/usage-billing",
-                      "data-engineering/administration/management/usage-billing/credits"
+                      "data-engineering/administration/management/usage-billing/usage-billing"
                     ]
                   },
                   "data-engineering/administration/management/audit-logs"
@@ -1133,10 +1137,10 @@
   "footer": {},
   "api": {
     "mdx": {
-      "server": "https://app.prophecy.io/",
-      "playground": {
-        "display": "none"
-      }
+      "server": "https://app.prophecy.io/"
+    },
+    "playground": {
+      "display": "simple"
     }
   }
 }
