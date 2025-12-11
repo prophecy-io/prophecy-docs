@@ -1,23 +1,15 @@
 ---
-openapi: post /api/orchestrate/tests/run
-playground: 'none'
+openapi: post /api/orchestration/tests/run
 ---
 
-Use this endpoint to run data tests built on [dbt generic data tests](https://docs.getdbt.com/docs/build/data-tests#generic-data-tests).
+Use this endpoint to run [data tests](/data-analysis/development/tests/test-comparison).
+
+Column tests, table tests, and project tests can be run together in a single API call. Model tests must be run in a separate API call and cannot be mixed with other test types.
 
 ## Requirements
 
-To run the API, you need to:
+To run data tests for a project using the API, you need to:
 
-- Set up your generic test definitions in the Prophecy UI. Learn more about [generic test definitions](/data-analytics/development/tests/use-model-tests).
-- Ensure that the tables you want to test have data. If you create a pipeline that writes to a new table, you must run the pipeline first to populate the table with data. This gives data tests something to check against; otherwise, tests may fail or result in errors due to lack of data.
-
-<Note>Limitation: This endpoint currently requires an active UI session.</Note>
-
-#### Endpoint
-
----
-
-```
-{baseURL}/api/orchestrate/tests/run
-```
+- Publish the project to a [Prophecy fabric](/data-analysis/environment/fabrics/prophecy-fabrics).
+- Set up data tests in the Prophecy [Studio](/data-analysis/development/studio/studio). This includes both creating tests and assigning them to tables or models.
+- Ensure that any tables you want to test have data. You'll have to run your pipelines once to populate target tables.
