@@ -20,6 +20,25 @@ const baseSettings = {
     apiKey: '1ad64cdd8b65ffda750f6158e356585bf684dba789a84432', // required
     primaryBrandColor: '#403fc2', // required -- your brand color, the color scheme is derived from this
     organizationDisplayName: 'Prophecy',
+    transformSource: (source, type, opts) => {
+      const tabs = [...(source.tabs || [])];
+
+      // Categorize sources based on breadcrumbs
+      if (source.breadcrumbs?.includes('Data Analysis')) {
+        tabs.push('Data Analysis');
+      }
+      if (source.breadcrumbs?.includes('Data Engineering')) {
+        tabs.push('Data Engineering');
+      }
+      if (source.breadcrumbs?.includes('Blog')) {
+        tabs.push('Blog');
+      }
+
+      return {
+        ...source,
+        tabs,
+      };
+    },
     theme: {
       styles: [
         {
@@ -30,14 +49,31 @@ const baseSettings = {
       ],
     },
   },
+  searchSettings: {
+    tabs: ['All', 'Data Analysis', 'Data Engineering', 'Blog'],
+  },
+  aiChatSettings: {
+    exampleQuestions: [
+      'How can Agent help me build projects?',
+      'How do I add data to my pipeline?',
+      'Can I monitor my deployed projects?',
+      'What are Prophecy fabrics?',
+    ],
+    exampleQuestionsLabel: 'Example Questions',
+    isFirstExampleQuestionHighlighted: true,
+  },
 };
 
 // Load the original script for SidebarChat functionality
 loadScript('https://cdn.jsdelivr.net/npm/@inkeep/cxkit-js@0.5/dist/embed.js', () => {
+  // Track sidebar state for toggle functionality
+  let sidebarIsOpen = false;
+
   const sidebarSettings = {
     ...baseSettings,
     isOpen: false,
     onOpenChange: (isOpen) => {
+      sidebarIsOpen = isOpen;
       if (widget) {
         widget.update({ isOpen: isOpen });
       }
@@ -60,13 +96,20 @@ loadScript('https://cdn.jsdelivr.net/npm/@inkeep/cxkit-js@0.5/dist/embed.js', ()
   // Add sibling button to search bar
   function addSiblingButton() {
     const searchBar = document.getElementById('search-bar-entry');
+    const existingButton = document.getElementById('inkeep-ask-ai-button');
+
+    // Don't add if button already exists
+    if (existingButton) {
+      return;
+    }
 
     if (searchBar) {
       // Create the new button with similar styling
       const newButton = document.createElement('button');
+      newButton.id = 'inkeep-ask-ai-button';
       newButton.type = 'button';
       newButton.className =
-        'flex shrink-0 pointer-events-auto rounded-2xl items-center text-sm leading-6 h-9 px-3 text-gray-500 dark:text-white/50 bg-background-light dark:bg-background-dark dark:brightness-[1.1] dark:ring-1 dark:hover:brightness-[1.25] ring-1 ring-gray-400/30 hover:ring-gray-600/30 dark:ring-gray-600/30 dark:hover:ring-gray-500/30 justify-between truncate gap-2 ml-2';
+        'flex shrink-0 pointer-events-auto rounded-xl items-center text-sm leading-6 h-9 px-3 text-gray-500 dark:text-white/50 bg-background-light dark:bg-background-dark dark:brightness-[1.1] dark:ring-1 dark:hover:brightness-[1.25] ring-1 ring-gray-400/30 hover:ring-gray-600/30 dark:ring-gray-600/30 dark:hover:ring-gray-500/30 justify-between truncate gap-2 ml-2';
       newButton.setAttribute('aria-label', 'Ask AI');
 
       // Add content to the button
@@ -83,17 +126,16 @@ loadScript('https://cdn.jsdelivr.net/npm/@inkeep/cxkit-js@0.5/dist/embed.js', ()
         </div>
       `;
 
-      // Add click handler to trigger the sidebar
+      // Add click handler to toggle the sidebar
       newButton.addEventListener('click', () => {
         if (widget) {
-          widget.update({ isOpen: true });
+          sidebarIsOpen = !sidebarIsOpen;
+          widget.update({ isOpen: sidebarIsOpen });
         }
       });
 
       // Insert the button after the search bar
       searchBar.parentNode.insertBefore(newButton, searchBar.nextSibling);
-    } else {
-      console.warn('Search bar not found');
     }
   }
 
@@ -103,6 +145,42 @@ loadScript('https://cdn.jsdelivr.net/npm/@inkeep/cxkit-js@0.5/dist/embed.js', ()
   } else {
     addSiblingButton();
   }
+
+  // Watch for route changes and re-add button if needed
+  // Use MutationObserver to watch for DOM changes (SPA navigation)
+  const observer = new MutationObserver(() => {
+    const searchBar = document.getElementById('search-bar-entry');
+    const existingButton = document.getElementById('inkeep-ask-ai-button');
+
+    // If search bar exists but button doesn't, add it
+    if (searchBar && !existingButton) {
+      addSiblingButton();
+    }
+  });
+
+  // Start observing the document body for changes
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
+
+  // Also listen for navigation events (popstate for back/forward, pushState/replaceState for programmatic navigation)
+  const originalPushState = history.pushState;
+  const originalReplaceState = history.replaceState;
+
+  history.pushState = function (...args) {
+    originalPushState.apply(history, args);
+    setTimeout(addSiblingButton, 100);
+  };
+
+  history.replaceState = function (...args) {
+    originalReplaceState.apply(history, args);
+    setTimeout(addSiblingButton, 100);
+  };
+
+  window.addEventListener('popstate', () => {
+    setTimeout(addSiblingButton, 100);
+  });
 
   // Initialize the SidebarChat widget
   const widget = Inkeep.SidebarChat('#inkeep-sidebar', sidebarSettings);
