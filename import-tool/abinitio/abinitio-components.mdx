@@ -1,0 +1,79 @@
+---
+title: Ab Initio | Component mapping
+description: List of supported Ab Initio components
+---
+
+For transpiling Ab Initio graphs to Prophecy pipelines, Transpiler first reads the uploaded files and then internally maps the Ab Initio components with Prophecy-supported gems to create the visual graph and open-source Spark code.
+
+These Ab Initio components are core part of the graph as they perform data operations like reading data from source table, performing transformations and writing data into the destination table.
+
+Below is a list of all the Ab Initio components that are supported by Prophecy and the corresponding Prophecy [Spark gems](/data-engineering/gems/gems):
+
+| Ab Initio Component         | Equivalent Prophecy Gems                                                                                                  |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| Fixed File                  | Fixed File                                                                                                                |
+| INPUT TABLE                 | [Source]                                                                                                                  |
+| READ MULTIPLE FILES         | Read Multiple Files                                                                                                       |
+| READ SEPARATED VALUES       | Read Separated Values                                                                                                     |
+| READ RAW                    | Read Raw                                                                                                                  |
+| READ JSON                   | [Source]                                                                                                                  |
+| READ EXCEL SPREADSHEET      | [Source]                                                                                                                  |
+| LOOKUP FILE                 | [Lookup](/data-engineering/gems/source-target/lookup)                                                                     |
+| OUTPUT FILE                 | [Target]                                                                                                                  |
+| WRITE MULTIPLE FILES        | Write Multiple Files                                                                                                      |
+| WRITE LOOKUP                | [Lookup](/data-engineering/gems/source-target/lookup) + [Target]                                                          |
+| Write Separated Values      | Write Separated Values                                                                                                    |
+| JOIN                        | [Join](/data-engineering/gems/join-split/join)                                                                            |
+| REFORMAT                    | [Reformat](/data-engineering/gems/transform/reformat)                                                                     |
+| NORMALIZE                   | Normalize                                                                                                                 |
+| FILTER BY EXPRESSION        | [Filter](/data-engineering/gems/transform/filter)                                                                         |
+| GATHER                      | [Set Operation](/data-engineering/gems/transform/set-operation)                                                           |
+| ROLLUP                      | [Aggregate](data-engineering/gems/transform/aggregate)                                                                    |
+| GATHER LOGS                 | [Target]                                                                                                                  |
+| FUSE                        | [Join](/data-engineering/gems/join-split/join)                                                                            |
+| VALIDATE RECORDS            | [Filter](/data-engineering/gems/transform/filter) or Row Distributor                                                      |
+| LOCAL SORT, SORT            | [OrderBy](/data-engineering/gems/transform/order-by)                                                                      |
+| CHECKPOINTED SORT           | [OrderBy](/data-engineering/gems/transform/order-by)                                                                      |
+| SORT WITHIN GROUPS          | [OrderBy](/data-engineering/gems/transform/order-by)                                                                      |
+| DEDUP SORTED                | [Deduplicate](/data-engineering/gems/transform/deduplicate)                                                               |
+| DENORMALIZE SORTED          | [WindowFunction](data-engineering/gems/transform/window-function)                                                         |
+| PARTIALSORT                 | [OrderBy](/data-engineering/gems/transform/order-by)                                                                      |
+| SCAN                        | [WindowFunction](data-engineering/gems/transform/window-function) + [Reformat](/data-engineering/gems/transform/reformat) |
+| PARTITION BY EXPRESSION     | [Filter](/data-engineering/gems/transform/filter)                                                                         |
+| PARTITION BY KEY AND SORT   | [OrderBy](/data-engineering/gems/transform/order-by)                                                                      |
+| PARTITION BY KEY            | [Repartition](data-engineering/gems/join-split/repartition)                                                               |
+| PARTITION BY ROUND-ROBIN    | RoundRobinPartition                                                                                                       |
+| HASH                        | [Repartition](data-engineering/gems/join-split/repartition)                                                               |
+| CREATE DATA                 | Create Data                                                                                                               |
+| META PIVOT                  | Meta Pivot                                                                                                                |
+| CONCATENATE                 | [Set Operation](/data-engineering/gems/transform/set-operation)                                                           |
+| ASSIGN NEW KEYS             | Assign Keys                                                                                                               |
+| LEADING RECORDS             | [Limit](/data-engineering/gems/transform/limit)                                                                           |
+| JOIN WITH DB JDBC           | [Source] + Join                                                                                                           |
+| GENERATE RECORDS            | CreateData + [Reformat](/data-engineering/gems/transform/reformat)                                                        |
+| GET FILE MTIME              | MTime                                                                                                                     |
+| COMPARE RECORDS             | Compare Record                                                                                                            |
+| META PIVOT                  | Meta Pivot                                                                                                                |
+| MULTI REFORMAT              | [Reformat](/data-engineering/gems/transform/reformat)                                                                     |
+| XML REFORMAT                | [Reformat](/data-engineering/gems/transform/reformat)                                                                     |
+| SFTP FROM                   | [Source]                                                                                                                  |
+| FTP TO                      | [Target]                                                                                                                  |
+| FTP FROM                    | [Source]                                                                                                                  |
+| SUBGRAPH                    | [Subgraph](/data-engineering/gems/subgraph/basicSubgraph)                                                                 |
+| Sequence                    | Sequence                                                                                                                  |
+| Log                         | Log                                                                                                                       |
+| Error Detection             | Error Detection                                                                                                           |
+| Broadcast                   | [Script](/data-engineering/gems/custom/script)                                                                            |
+| Procedural Transform        | [Script](/data-engineering/gems/custom/script)                                                                            |
+| Send Mail                   | [Script](/data-engineering/gems/custom/script)                                                                            |
+| Sftp                        | [Script](/data-engineering/gems/custom/script)                                                                            |
+| Std Out                     | [Script](/data-engineering/gems/custom/script)                                                                            |
+| Trash                       | [Script](/data-engineering/gems/custom/script)                                                                            |
+| Predicate Push Down         | [Script](/data-engineering/gems/custom/script)                                                                            |
+| Run Sql                     | [Script](/data-engineering/gems/custom/script)                                                                            |
+| Select Procedure With Param | [Script](/data-engineering/gems/custom/script)                                                                            |
+| Scan With Rollup            | [Script](/data-engineering/gems/custom/script)                                                                            |
+| File Intermediate           | [Script](/data-engineering/gems/custom/script)                                                                            |
+| Intermediate Lookup         | [Script](/data-engineering/gems/custom/script)                                                                            |
+
+If you are looking for a particular component and don't see it on this list, fear not! Prophecy is extensible to allow inclusion of custom abilities way beyond custom scripting. Read [this](/data-engineering/extensibility/gem-builder/spark-gem-builder) to learn more.

@@ -1,0 +1,71 @@
+---
+title: DataStage | Component mapping
+description: List of supported DataStage components
+---
+
+When you migrate an DataStage workflow to a Prophecy pipeline, the transpiler first reads uploaded files. Then, the transpiler internally maps the DataStage components to the Prophecy-supported gems to create the visual pipeline and open-source code.
+
+DataStage components are a core part of the workflow. They perform data operations such as reading data from the source table, performing transformations, and writing data into the destination table.
+
+The following tables list all the DataStage components that Prophecy supports and the corresponding Prophecy gem it maps to in a Spark project:
+
+## Pipeline Components
+
+Below is a list of DataStage workflow components that are supported by Prophecy and have corresponding Prophecy gems. These components are core part of the workflow as they perform data operations like reading data from source table, performing transformations, and writing data into the destination table.
+
+| DataStage Component                                | Equivalent Prophecy Gems                                                                                                                                                         |
+| -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| CTransformerStage (for cyclic stage variables)     | [Script](/data-engineering/gems/custom/script)                                                                                                                                   |
+| CTransformerStage (for non-cyclic stage variables) | [SchemaTransform](/data-engineering/gems/transform/schema-transform) + [Filter](/data-engineering/gems/transform/filter) + [Reformat](/data-engineering/gems/transform/reformat) |
+| DB2ConnectorPX                                     | Source/Target with DB2 warehouse type                                                                                                                                            |
+| Hierarchical Data stage                            | [Script](/data-engineering/gems/custom/script) with only XML output                                                                                                              |
+| ODBCConnector                                      | Source/Target with JDBC warehouse type                                                                                                                                           |
+| ODBCConnectorPX                                    | Source/Target with JDBC warehouse type                                                                                                                                           |
+| OracleConnectorPX                                  | Source/Target with the Oracle warehouse type                                                                                                                                     |
+| PxAggregator                                       | [Aggregate](/data-engineering/gems/transform/aggregate)                                                                                                                          |
+| PxChangeCapture                                    | [Script](/data-engineering/gems/custom/script)                                                                                                                                   |
+| PxColumnExport                                     | [SchemaTransform](/data-engineering/gems/transform/schema-transform)                                                                                                             |
+| PxColumnImport                                     | [SchemaTransform](/data-engineering/gems/transform/schema-transform)                                                                                                             |
+| PxCopy                                             | Source/Target                                                                                                                                                                    |
+| PxDataSet                                          | Source/Target with the CSV file type                                                                                                                                             |
+| PxExternalSource                                   | [Script](/data-engineering/gems/custom/script) to call external APIs                                                                                                             |
+| PxExternalTarget                                   | [Script](/data-engineering/gems/custom/script) to call external APIs                                                                                                             |
+| PxFilter                                           | [Filter](/data-engineering/gems/transform/filter)                                                                                                                                |
+| PxFunnel                                           | [SetOperation](/data-engineering/gems/transform/set-operation)                                                                                                                   |
+| PxJoin                                             | [Join](/data-engineering/gems/join-split/join)                                                                                                                                   |
+| PxLookup                                           | [Join](/data-engineering/gems/join-split/join)                                                                                                                                   |
+| PxMerge                                            | [Join](/data-engineering/gems/join-split/join)                                                                                                                                   |
+| PxModify                                           | [Reformat](/data-engineering/gems/transform/reformat)                                                                                                                            |
+| PxPeek                                             | Target with the CSV file type                                                                                                                                                    |
+| PxPivot                                            | [Script](/data-engineering/gems/custom/script)                                                                                                                                   |
+| PxRemDup                                           | [Deduplicate](/data-engineering/gems/transform/deduplicate)                                                                                                                      |
+| PxRowGenerator                                     | Source with the Seed file type                                                                                                                                                   |
+| PxSequentialFile                                   | Source/Target with the CSV file type                                                                                                                                             |
+| PxSort                                             | [Order By](/data-engineering/gems/transform/order-by)                                                                                                                            |
+| TeradataConnectorPX, TeradataConnector             | Source/Target                                                                                                                                                                    |
+| UnstructuredDataConnectorPX                        | Source with the XLSX file type                                                                                                                                                   |
+| XMLInputPX                                         | [Reformat](/data-engineering/gems/transform/reformat) + [Join](/data-engineering/gems/join-split/join)+ Source with the XML file type                                            |
+| XMLOutputPX                                        | [Aggregate](/data-engineering/gems/transform/aggregate) + Target gem with XML file type                                                                                          |
+
+## Orchestration Components
+
+The following table describes components of DataStage **sequence jobs** that can be migrated to Prophecy. Note that all jobs are converted into Airflow jobs in Prophecy.
+
+| DataStage Component   | Equivalent Prophecy Component                                                                   |
+| --------------------- | ----------------------------------------------------------------------------------------------- |
+| CCondition            | Python Branch Component                                                                         |
+| CEndLoopActivity      | Loop Component                                                                                  |
+| CExecCommandActivity  | Python Component                                                                                |
+| CExceptionHandler     | Python Component                                                                                |
+| CJobActivity          | Trigger DAG if you have a sequence job, or Pipeline Component if you have a parallel/server job |
+| CNotificationActivity | Email Component                                                                                 |
+| CSequencer            | Databricks Job                                                                                  |
+| CStartLoopActivity    | Loop Component                                                                                  |
+| CTerminatorActivity   | Python Component                                                                                |
+| CUserVarsActivity     | Python Component with Airflow XComs                                                             |
+
+<Note>
+  If you don't see a particular component on this list, you can include custom abilities beyond
+  custom scripting. To learn more, see [Gem Builder for
+  Spark](/data-engineering/extensibility/gem-builder/spark-gem-builder).
+</Note>

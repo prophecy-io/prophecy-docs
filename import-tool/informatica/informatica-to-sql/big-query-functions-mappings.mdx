@@ -1,0 +1,87 @@
+---
+title: Informatica | Function mapping to BigQuery SQL
+description: List of supported Informatica functions and how they map to Prophecy functions in BigQuery SQL
+---
+
+While transpiling Informatica workflows to Prophecy pipelines, Transpiler converts Informatica functions into equivalent BigQuery SQL functions.
+
+The following tables list all the Informatica functions that Prophecy supports and the corresponding Prophecy function it maps to in BigQuery SQL.
+
+## Aggregate
+
+| Informatica Function | Equivalent Prophecy Function |
+| -------------------- | ---------------------------- |
+| `FIRST`              | `any_value`                  |
+| `LAST`               | `any_value`                  |
+| `MAX`                | `max`                        |
+| `MIN`                | `min`                        |
+
+## Conversion
+
+| Informatica Function | Equivalent Prophecy Function |
+| -------------------- | ---------------------------- |
+| `TO_CHAR`            | cast `x` as `string`         |
+| `TO_DATE`            | `date`                       |
+| `TO_DECIMAL`         | cast `x` as `decimal(19,0)`  |
+| `TO_FLOAT`           | cast `x` as `float64`        |
+| `TO_INTEGER`         | cast `x` as `int`            |
+
+## Date
+
+| Informatica Function | Equivalent Prophecy Function         |
+| -------------------- | ------------------------------------ |
+| `ADD_TO_DATE`        | `date_add`                           |
+| `DATE_COMPARE`       | `date_diff`                          |
+| `DATE_DIFF`          | `date_diff`                          |
+| `GET_DATE_PART`      | `extract(part FROM date_expression)` |
+| `ROUND`              | `round`                              |
+| `SYSTIMESTAMP`       | `current_timestamp`                  |
+| `TRUNC`              | `date_trunc`                         |
+
+## Data cleansing
+
+| Informatica Function | Equivalent Prophecy Function |
+| -------------------- | ---------------------------- |
+| `IN`                 | `in`                         |
+| `REG_MATCH`          | `regexp_contains`            |
+
+## Numeric
+
+| Informatica Function | Equivalent Prophecy Function |
+| -------------------- | ---------------------------- |
+| `ABS`                | `abs`                        |
+| `POWER`              | `pow`                        |
+| `ROUND`              | `round`                      |
+
+## Special
+
+| Informatica Function | Equivalent Prophecy Function |
+| -------------------- | ---------------------------- |
+| `DECODE`             | `concat`                     |
+| `SETCOUNTVARIABLE`   | `1`                          |
+| `SETMAXVARIABLE`     | `1`                          |
+
+## String
+
+| Informatica Function | Equivalent Prophecy Function |
+| -------------------- | ---------------------------- |
+| `CHR(x)`             | `x`                          |
+| `CONCAT`             | `concat`                     |
+| `INSTR`              | `regexp_instr`               |
+| `LENGTH`             | `length`                     |
+| `LOWER`              | `lower`                      |
+| `LPAD`               | `lpad`                       |
+| `LTRIM`              | `ltrim`                      |
+| `REPLACECHR`         | `regexp_replace`             |
+| `REPLACESTR`         | `regexp_replace`             |
+| `RPAD`               | `rpad`                       |
+| `RTRIM`              | `rtrim`                      |
+| `SUBSTR`             | `substr`                     |
+
+## Test
+
+| Informatica Function | Equivalent Prophecy Function        |
+| -------------------- | ----------------------------------- |
+| `IS_DATE`            | `to_date(x) is not null`            |
+| `IS_NUMBER`          | `safe_cast(x as float) is not null` |
+| `IS_SPACES`          | `regexp_contains`                   |

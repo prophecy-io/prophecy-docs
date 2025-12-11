@@ -1,0 +1,146 @@
+---
+title: Ab Initio | Convert Plans into Airflow DAGs
+description: Recreate Ab Initio plans in Prophecy orchestration via Airflow
+---
+
+Prophecy Transpiler can transpile **Ab Initio Plans** that helps organizations to easily schedule, monitor and manage complex graphs from Ab Initio to modern cloud solutions like Airflow.
+
+In this training, we'll show you step-by-step how to use Transpiler for running a simple Ab Initio Plan in Airflow (execution environment for the Ab Initio plan). Let's dig in!
+
+## Prerequisites
+
+To complete this training, you will need:
+
+- An Ab Initio Plan
+- A [Databricks Fabric (Prophecy Managed)](data-engineering/fabrics/spark-provider/prophecy-managed)
+- A [Airflow Fabric (Prophecy Managed)](https://prophecy.zendesk.com/hc/en-us/articles/39340032362395-Airflow-Fabrics)
+- A GitHub Account
+
+## 1. Export Ab Initio Files
+
+For transpiling an Ab Initio Plan, first you will need to have a pre-existing plan created in Ab Initio. Then you will have to export this plan from Ab Initio. After exporting, look for the below-mentioned files, as Transpiler will use them:
+
+- ** Plan files ** : Plan files contain the execution plan for a particular graph or set of graphs. The execution plan outlines the sequence of operations and dependencies required to execute the graph(s) successfully as shown below:
+  ![Plan File](/import-tool/abinitio/img/plan_file.png)
+- ** Mp files ** : Mp (multi-processing) files contain information about the graph like components used in the graph, number of parallel instances and resource specifications for components in a graph as shown below:
+  ![Mp File](/import-tool/abinitio/img/mp_file.png)
+- ** Pset files ** : Pset (parameter set) files store and manage parameter values for the graph, thus allowing you to run the same graph differently by passing dynamic values at the run-time as shown below:
+  ![Pset File](/import-tool/abinitio/img/pset_file.png)
+- ** Dml files **: Dml (data manipulation language) files are used to define the structure of the data records so that data is processed correctly inside the graph component. Example of a component is shown below that defines the schema of a table that will be read and processed.
+  ![Dml File](/import-tool/abinitio/img/dml_file.png)
+
+As you have access to all the Ab Initio files now, compress them in a zip folder and let's try to use the same in Transpiler.
+
+## 2. Import Bundle
+
+![Transpiler landing page](/import-tool/abinitio/img/landing_page.png)
+
+Navigate to the ** (1) Transpiler ** section and ** (2) import ** a new bundle to see the Transpiler feature in action.
+
+### 2.1 Select Source Type
+
+![Source page](/import-tool/abinitio/img/source_page.png)
+
+Source Type refers to the Legacy ETL product from which you want to import the files into Prophecy. As you are using Ab Initio, select the same and click on the Next button.
+
+### 2.2 Enter Bundle Details
+
+![Package details](/import-tool/abinitio/img/package_details.png)
+
+Bundle in Transpiler is like a project where all the details like Ab Initio files, pipelines etc. will be stored for future reference. Creating a bundle is pretty straightforward. First, give a (1) name to your bundle. Select the (2) language in which you want the Transpiler to generate the open-source code for you. Then, select the (3) team to whom you want to have access to the bundle. More teams can be added later. Choose the (4) project where the Prophecy graph will be uploaded and (5) Git branch where all the open-source code will be stored. Finally, you have to select the (6) Databricks Fabric, (7) Databricks Cluster Size and (8) Airflow Fabric where the pipelines and plans will run.
+
+### 2.3 Upload Artifacts
+
+![Upload artifacts](/import-tool/abinitio/img/upload_artifact.png)
+
+Upload the Ab Initio zip file that you want to transpile and click on the Next button.
+
+![Entity page](/import-tool/abinitio/img/entity_page.png)
+
+Now, you have to add the (1) plan file that you want to transpile. The Ab Initio Plans will be converted to a [job](/data-engineering/orchestration/databricks-jobs) in Prophecy.
+
+![Add plan](/import-tool/abinitio/img/add_plan.png)
+
+After the plan file is added, Transpiler automatically detects the (1) **associated mp files** and adds them in the Entity page under the Pipeline section if graph has been directly referenced.
+
+![Add plan manually](/import-tool/abinitio/img/add_plan_manually.png)
+
+If pipelines are not added automatically, then add the pipelines manually by clicking on the + icon next to mp file as shown in (1).
+
+![Default pset](/import-tool/abinitio/img/default_pset.png)
+
+(1) Provide a readable name to the pipeline. Also, add relevant (2) pset files to the pipeline, so that Transpiler can read the parameters and generate the pipeline with high accuracy.
+
+![Add config](/import-tool/abinitio/img/config_pset.png)
+
+In cases where generic/custom frameworks have been implemented, you will need to upload configuration psets. In order to add the configuration pset for a pipeline, first click on (1) Add Configuration button, give a (2) readable name to the configuration, click on (3) Add Psets button and go to (4) folder icon for adding the relevant pset file.
+
+## 3. Validate and Transpile
+
+![Validate section](/import-tool/abinitio/img/validate.png)
+
+It is always advisable to (1) validate the uploaded files before running transpilation so that you know beforehand if any important files are missing. For higher Transpiler coverage, please make sure to upload the correct plan, mp, pset, xfr and dml files before starting the transpilation process.
+
+![Validate warning](/import-tool/abinitio/img/validate_warning.png)
+
+Please feel free to ignore the warning message during validation if you are sure that all the Ab Initio files for the graph have been properly uploaded. Close the validation summary pop-up and click on the Transpile button after you are sure from your side.
+
+![Transpiler progress](/import-tool/abinitio/img/progress.png)
+
+Here, you can track the progress of the transpilation process. The total time taken to transpile depends on the complexity of the plan that you have uploaded. If the plan is simple, transpilation will take a few seconds but complex plans can take several minutes.
+
+![Transpile complete](/import-tool/abinitio/img/transpile_complete.png)
+
+After the transpilation is complete, click on the Import button.
+
+![Resolve conflicts](/import-tool/abinitio/img/resolve_conflicts.png)
+
+The purpose of the above screen is to help you resolve conflicts if any components already exist in the project. Deselect the entities that are not required. As you are using a new project, click on the Continue button.
+
+## 4. Bundle Overview
+
+![Package overview](/import-tool/abinitio/img/package_overview.png)
+
+After the bundle is imported, you will be redirected to the overview section. Here, you will see the overall summary of the transpilation process. (1) shows the jobs and pipelines that were created in Prophecy. (2) shows the pipeline components - the individual transformation steps that we call "Components" - with a status column. In case the Transpiler was not able to read any Ab Initio component, the same would be displayed here with Failed status. (3) shows the overall transpiler coverage %.
+
+![Plan](/import-tool/abinitio/img/open_plan.png)
+
+Now click on the (1) icon to check the plan that has been transpiled by the Transpiler. Similarly, you can check the individual pipelines also.
+
+![Job canvas](/import-tool/abinitio/img/job_canvas.png)
+
+With the magic of Transpiler, the Ab Initio plan has been converted into a simple visual graph which is called **Job** in Prophecy. All Ab Initio components and functions will be mapped to equivalent Prophecy entities inside the respective pipelines.
+
+![Plan code](/import-tool/abinitio/img/plan_code.png)
+
+Prophecy has also generated optimal high-performance **open-source Spark code** for the Job that will be executed in Airflow.
+
+## 5. Run Job
+
+![Pipeline fabric](/import-tool/abinitio/img/pipeline_fabric.png)
+
+Before running the job, you have to check whether all the pipelines are connected to Databricks Fabric. For this training, I will show for one pipeline and you can replicate the same for other pipelines. First, open any pipeline by clicking on the (1) gem.
+
+![Fabric size](/import-tool/abinitio/img/fabric_size.png)
+
+Select the Databricks Fabric by clicking on (1) and click on Save button after making all the changes. Replicate the same steps for all the other pipelines.
+
+**Note**: Please make sure all the source and target gems are properly migrated to cloud before running the Job.
+
+![Airflow fabric](/import-tool/abinitio/img/airflow_fabric.png)
+
+To run the Job, make sure the (1) Airflow Fabric is connected.
+
+![Run job](/import-tool/abinitio/img/run_job.png)
+
+Click on the (1) Run button to execute the Job.
+
+![Job status](/import-tool/abinitio/img/job_status.png)
+
+Click on (1) to check the Job details.
+
+![Job complete](/import-tool/abinitio/img/job_complete.png)
+
+After the plan runs successfully, all the steps will be marked complete and you can check the expected data in the target gem.
+
+Great work! 🎉 You've successfully migrated your first Ab Initio Plan to the cloud using Prophecy Transpiler in a few minutes without any manual help. Take a moment to appreciate your accomplishment 🥳.

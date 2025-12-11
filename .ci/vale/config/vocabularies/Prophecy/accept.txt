@@ -178,3 +178,36 @@ Deduplicate
 SQLStatement
 XMLParse
 JSONParse
+
+## Transpiler
+
+Informatica
+informatica
+Informatica's
+Ab Initio
+Ab Initio's
+Initio
+Initio's
+Teradata
+pset
+Pset
+psets
+Psets
+xfr
+dml
+Transpiler
+transpiling
+Transpile
+transpile
+transpiled
+transpilation
+CSequencer
+CCondition
+ODBCConnector
+MTime
+Mtime
+Maplet
+XComs
+Rollup
+Param
+Sftp

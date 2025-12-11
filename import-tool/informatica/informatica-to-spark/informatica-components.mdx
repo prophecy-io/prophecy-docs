@@ -1,0 +1,37 @@
+---
+title: Informatica | Component mapping
+description: List of supported Informatica components
+---
+
+For transpiling Informatica workflows to Prophecy pipelines, Transpiler first reads the uploaded files and then internally maps the Informatica components with Prophecy-supported gems to create the visual pipeline and open-source Spark code.
+
+These Informatica components are core part of the workflow as they perform data operations like reading data from source table, performing transformations and writing data into the destination table.
+
+Below is a list of all the Informatica components that are supported by Prophecy and the corresponding Prophecy gems:
+
+| Informatica Component | Equivalent Prophecy Gems                                              |
+| --------------------- | --------------------------------------------------------------------- |
+| Aggregator            | [Aggregate](data-engineering/gems/transform/aggregate)                |
+| Teradata              | Source/Target                                                         |
+| Oracle                | Source/Target                                                         |
+| Flat File             | Source/Target                                                         |
+| Custom Transformation | [Script](/data-engineering/gems/custom/script)                        |
+| Expression            | [Reformat](/data-engineering/gems/transform/reformat)                 |
+| External Procedure    | [Script](/data-engineering/gems/custom/script)                        |
+| Filter                | [Filter](/data-engineering/gems/transform/filter)                     |
+| Input Transformation  | [Reformat](/data-engineering/gems/transform/reformat)                 |
+| Joiner                | [Join](/data-engineering/gems/join-split/join)                        |
+| Lookup Procedure      | [Join](/data-engineering/gems/join-split/join)                        |
+| Maplet                | [Subgraph](/data-engineering/gems/subgraph/basicSubgraph)             |
+| Output Transformation | [Reformat](/data-engineering/gems/transform/reformat)                 |
+| Rank                  | [Window Function](data-engineering/gems/transform/window-function)    |
+| Router                | [Filter](/data-engineering/gems/transform/filter)                     |
+| Schema Transform      | [Schema Transform](/data-engineering/gems/transform/schema-transform) |
+| Sequence              | [Schema Transform](/data-engineering/gems/transform/schema-transform) |
+| Sort                  | [Order By](/data-engineering/gems/transform/order-by)                 |
+| Source Qualifier      | [Reformat](/data-engineering/gems/transform/reformat)                 |
+| Stored Procedure      | [Script](/data-engineering/gems/custom/script)                        |
+| Transaction Control   | Target                                                                |
+| Update Strategy       | Target                                                                |
+
+If you are looking for a particular component and don't see it on this list, fear not! Prophecy is extensible to allow inclusion of custom abilities way beyond custom scripting. Read [this](/data-engineering/extensibility/gem-builder/spark-gem-builder) to learn more.

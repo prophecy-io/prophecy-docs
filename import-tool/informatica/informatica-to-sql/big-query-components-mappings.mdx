@@ -1,0 +1,37 @@
+---
+title: Informatica | Component mapping to BigQuery SQL
+description: List of supported Informatica components and how they map to Prophecy SQL gems in BigQuery
+---
+
+When you migrate an Informatica workflow to a Prophecy pipeline, the transpiler first reads uploaded files. Then, the transpiler internally maps the Informatica components to the Prophecy-supported gems to create the visual pipeline and open-source code.
+
+Informatica components are a core part of the workflow. They perform data operations such as reading data from the source table, performing transformations, and writing data into the destination table.
+
+The following tables list all the Informatica components that Prophecy supports and the corresponding Prophecy gem it maps to in BigQuery SQL:
+
+| Informatica Component | Equivalent Prophecy Gems                                |
+| --------------------- | ------------------------------------------------------- |
+| Aggregator            | [Aggregate](/data-analysis/gems/transform/aggregate)    |
+| Teradata              | Table                                                   |
+| Oracle                | Source/Target                                           |
+| Flat File             | Source/Target                                           |
+| Expression            | [Reformat](/data-analysis/gems/prepare/reformat)        |
+| Filter                | [Filter](/data-analysis/gems/prepare/filter)            |
+| Input Transformation  | [Reformat](/data-analysis/gems/prepare/reformat)        |
+| Joiner                | [Join](/data-analysis/gems/join-split/join)             |
+| Lookup Procedure      | [Join](/data-analysis/gems/join-split/join)             |
+| Output Transformation | [Reformat](/data-analysis/gems/prepare/reformat)        |
+| Rank                  | [Window Function](/data-analysis/gems/transform/window) |
+| Router                | [Filter](/data-analysis/gems/prepare/filter)            |
+| Schema Transform      | [Reformat](/data-analysis/gems/prepare/reformat)        |
+| Sequence              | [Reformat](/data-analysis/gems/prepare/reformat)        |
+| Sort                  | [Order By](/data-analysis/gems/prepare/order-by)        |
+| Source Qualifier      | [Reformat](/data-analysis/gems/prepare/reformat)        |
+| Transaction Control   | Target                                                  |
+| Update Strategy       | Target                                                  |
+
+<Note>
+  If you don't see a particular component on this list, you can include custom abilities beyond
+  custom scripting. To learn more, see [Gem Builder for
+  SQL](/data-analysis/development/extensibility/sql-gem-builder).
+</Note>
