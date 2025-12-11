@@ -294,7 +294,7 @@ Filter the source data to only include patients over 50 years old
 </Step>
 
 <Step title="Join with additional data">
-Create a second CSV file named `county_info.csv` with the following content:
+Create a second Seed file named `county_info` with the following content:
 
 ```csv county_info.csv
 county,population,region
@@ -304,7 +304,7 @@ Worcester,830000,Central
 Hampden,470000,Western
 ```
 
-Upload this data as a Seed. Then, prompt the Agent:
+Then, prompt the Agent:
 
 ```
 Join @l0_raw_patients with @county_info on county
@@ -324,6 +324,13 @@ Add a column that calculates days since admission using the current date
 
 </Step>
 </Steps>
+
+## Connect your own data
+
+This quickstart uses a Seed file as the source data. When you start building your own pipelines, you'll likely want to use your own data from files or external systems. You can do this by:
+
+- Uploading files directly from your local filesystem using the [upload file](/data-analysis/gems/source-target/table/upload-files) feature.
+- Ingesting data from external systems using [connections](/data-analysis/environment/connections/connections).
 
 ## Sample prompts reference
 
