@@ -1,0 +1,78 @@
+---
+title: Alteryx Data Cleansing tool > Prophecy Data Cleansing gem
+description: Mapping between Alteryx’s Data Cleansing tool and Prophecy’s Data Cleansing gem
+---
+
+The [Alteryx Data Cleansing tool](https://help.alteryx.com/current/en/designer/tools/preparation/data-cleansing-tool.html) and the [Prophecy Data Cleansing gem](https://docs.prophecy.io/analysts/data-cleansing) both apply column-level cleaning operations, including trimming whitespace, converting nulls, removing unwanted characters, and changing case.
+
+## Automated migration results
+
+During Import:
+
+- The Data Cleansing tool is converted into a **Data Cleansing** gem.
+- Import preserves column selections and cleansing options (such as trim, null replacement, and character removal).
+
+## Manually replicate in Prophecy
+
+1. Add a **Data Cleansing** gem.
+2. Select columns to clean.
+3. Select and configure options such as **Replace nulls in column**, **Remove unwanted characters**, and **Modify case**.
+4. Preview results in the [**Data Explorer**](https://docs.prophecy.io/analysts/data-explorer) to verify fields.
+
+## Configuration options
+
+In Alteryx, configuration includes choosing fields and selecting operations to apply:
+
+- Replace nulls with blanks or zeros.
+- Remove unwanted characters (letters, numbers, punctuation).
+- Trim leading and trailing whitespace.
+- Force upper or lower case.
+- Remove duplicate whitespace.
+
+In Prophecy, configuration is very similar: you choose which columns to clean and select which operations to perform:
+
+- Replace nulls with user-defined values.
+- Trim whitespace (leading, trailing, or both).
+- Remove tabs, line breaks, or other specified characters.
+- Convert text to lowercase, uppercase, or title case.
+
+Configuration is column-centric in both platforms.
+
+## Output behavior
+
+Alteryx applies cleansing row by row inside Designer or on an Alteryx server.
+Prophecy computes cleansing operations using SQL expressions at execution time.
+
+## Known caveats
+
+- Some Alteryx character filters (such as removing all letters or all numbers) may require regex in Prophecy.
+- Type handling follows SQL rules in Prophecy and may differ from Alteryx.
+- Automatic field-group selections in Alteryx must be specified explicitly in Prophecy.
+
+## Examples
+
+### Alteryx Data Cleansing tool example
+
+Goal: Trim whitespace across name and address fields and replace nulls with blanks.
+
+Steps:
+
+1. Add **Data Cleansing Tool** to canvas.
+2. Select `Name` and `Address` under **Select Fields to Cleanse**.
+3. Check **Replace with Blanks** under **Replace Nulls**.
+4. Check **Leading and Trailing Whitespace** under **Remove Unwanted Characters**.
+5. Click **Run**.
+
+### Prophecy DataCleansing gem example
+
+Goal: Enable trimming and null replacement for the same fields in the Data Cleansing gem and preview results in the Data Explorer.
+
+Steps:
+
+1. Add a **DataCleansing** gem to the canvas.
+1. Configure the DataCleansing gem:
+   1. Under **Select columns to clean**, select `Name` and `Address`.
+   1. Under **Replace null values in columns**, check **For string columns**.
+   1. Under **Remove unwanted characters**, check **Leading and trailing whitespaces**.
+   1. Click **Save**.
+1. Confirm output using the [Data Explorer](https://docs.prophecy.io/analysts/data-profile).

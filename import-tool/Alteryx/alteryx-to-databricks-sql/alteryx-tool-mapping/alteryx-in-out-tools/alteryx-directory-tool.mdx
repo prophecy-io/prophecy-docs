@@ -1,0 +1,67 @@
+---
+title: Alteryx Directory Tool > Prophecy Directory Gem
+description: Mapping between Alteryx’s Directory tool and Prophecy’s Directory gem
+---
+
+The [Alteryx Directory tool](https://help.alteryx.com/current/en/designer/tools/in-out-tools/directory-tool.html) and the [Prophecy Directory gem](https://docs.prophecy.io/analysts/directory/) perform the same fundamental function: both generate a dataset containing metadata about files in a specified directory.
+
+In Alteryx, this tool is typically used in combination with the Dynamic Input tool to import multiple files from a folder.
+
+In Prophecy, the Directory gem provides equivalent functionality, allowing analysts to retrieve structured file information, such as file name, path, size, and modification time for use in SQL-based pipelines.
+
+## Automated migration results
+
+When an Alteryx workflow using the Directory tool is imported, Prophecy generates a **Directory gem** configured with the same folder path. Import preserves settings such as recursive traversal when possible and reproduces the expected output schema, including file path, name, modification time, and size.
+
+After migration, review the Directory gem configuration to confirm that the path resolves correctly in your Prophecy environment. Local or network paths from Alteryx will need to be updated to cloud or workspace-accessible locations.
+
+## Manually replicate in Prophecy
+
+To recreate the Directory tool behavior manually in Prophecy:
+
+1. Add a Directory gem to the canvas.
+2. Provide a directory `path` that is accessible to your SQL Warehouse (for example, a Databricks Volume).
+3. Enable recursive listing if you want to include files in subdirectories.
+4. Connect downstream gems (Filter, Dynamic Input) to select or ingest the files discovered.
+
+<Tip title="Dynamic filtering">
+A Directory gem is often followed by a Filter gem to select a subset of files before ingestion. This mirrors common Alteryx patterns using Directory + Filter + Dynamic Input.
+</Tip>
+
+## Configuration options
+
+In Alteryx, the Directory tool scans a location on a user’s machine or network share. You specify the folder path, enable or disable recursive search, and receive metadata fields such as `FullPath`, `FileName`, `Size`, `CreationTime`, and `LastModifiedTime`.
+
+In Prophecy, the Directory gem accepts a directory path that must be readable by the SQL Warehouse. You can parameterize the path or provide a static location. Prophecy outputs standardized metadata fields such as `path`, `name`, `size_in_bytes`, and `modification_time`. Depending on the storage environment, additional metadata may be available.
+
+If your Alteryx workflow used local file paths, you will need to migrate these to a cloud or warehouse-accessible directory before replication.
+
+Directory paths must resolve inside the warehouse environment. Local and on-premises paths cannot be used directly.
+
+## Output behavior
+
+Both tools produce one row per file with metadata.
+
+| **Alteryx Field**                                  | **Prophecy Equivalent** | **Notes**                                                    |
+| -------------------------------------------------- | ----------------------- | ------------------------------------------------------------ |
+| FullPath                                           | `path`                  | Direct conceptual match.                                     |
+| Directory                                          | `parent_directory`      | Parent directory returned; drive letters not preserved.      |
+| FileName                                           | `name`                  | Direct mapping.                                              |
+| CreationTime                                       | `creation_time`         | Direct mapping.                                              |
+| LastWriteTime                                      | `modification_time`     | Direct mapping.                                              |
+| Size                                               | `size_in_bytes`         | Direct mapping; folders return 0 bytes.                      |
+| —                                                  | `file_type`             | Indicates file or folder.                                    |
+| —                                                  | `sheet_name`            | XLSX-only; appears when enabled.                             |
+| ShortFileName                                      | —                       | Not available in cloud storage.                              |
+| LastAccessTime                                     | —                       | Not exposed in Databricks SQL.                               |
+| Windows attributes (Hidden, System, Archive, etc.) | —                       | OS-specific; cloud object stores do not provide these flags. |
+
+Alteryx reads from the local filesystem or a network share, while Prophecy reads from cloud-backed storage through the SQL Warehouse. Output order is not guaranteed and may vary from run to run.
+
+Prophecy’s output can be fed directly into downstream SQL operations. For ingestion, a Directory gem is typically followed by a Dynamic Input gem that reads each file discovered by the directory scan.
+
+## Known caveats
+
+Because Prophecy relies on Warehouse storage visibility, directory paths used in Alteryx often require migration to a cloud or Volume path.
+
+File order is non-deterministic in both systems and should not be relied upon. If your Warehouse lacks permission to read a directory, the Directory gem may return an empty or partially populated result.

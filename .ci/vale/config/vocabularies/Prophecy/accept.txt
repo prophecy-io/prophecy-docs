@@ -211,3 +211,7 @@ XComs
 Rollup
 Param
 Sftp
+DSNs
+Oversample
+sales_clean
+auditable

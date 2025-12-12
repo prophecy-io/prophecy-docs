@@ -1,0 +1,73 @@
+---
+title: Alteryx Multi-Field Formula tool > Prophecy Multi-Column Edit Gem
+description: Mapping between Alteryx’s Multi-Field Formula tool and Prophecy’s Multi-Column Edit gem
+---
+
+The [Alteryx Multi-Field Formula tool](https://help.alteryx.com/current/en/designer/tools/preparation/multi-field-formula-tool.html#multi-field-formula-tool) applies a single expression across multiple selected columns, modifying or creating new fields using Alteryx’s expression language.
+
+Prophecy provides equivalent functionality through its [Multi-Column Edit gem](https://docs.prophecy.ai/data-analysis/gems/prepare/multi-column-edit/). This gem lets you define one transformation pattern that is applied to all selected columns.
+
+## Automated migration results
+
+When Import detects an Alteryx Multi-Field Formula tool:
+
+- It generates a MultiColumnEdit gem.
+- The Alteryx expression is converted into a an expression template that uses Prophecy’s placeholder variable ( `column_name` or `column_value` ).
+- The import process applies this template to each selected column, matching Alteryx’s behavior.
+- Field overwrite or “create new field” options are preserved when possible.
+
+The result is a Multi-Column Edit gem that applies one SQL transformation pattern to all chosen columns.
+
+## Manually replicate in Prophecy
+
+To manually recreate Multi-Field Formula behavior in Prophecy:
+
+1. Add a **Multi-Column Edit** gem.
+2. Select the columns you want to transform.
+3. Enter an expression that refererences the placeholder `column_name` or `column_value`. (Prophecy automatically substitutes each selected column at runtime.)
+4. Choose whether to overwrite existing fields or create new fields with a naming pattern.
+5. Validate output in the Data Explorer.
+
+## Configuration options
+
+**In Alteryx:**
+
+- Select multiple fields using the UI.
+- Define one formula referencing `_CurrentField_`.
+- Choose overwrite vs new-field creation.
+- Optional renaming rules for new fields.
+
+**In Prophecy:**
+
+- Select multiple fields inside the Multi-Column Edit gem.
+- Write a single SQL expression using `column_name` or `column_value` as placeholders.
+- Choose whether to 1) apply to original columns or 2) maintain original columns and add prefix or suffix to new columns.
+
+## Output behavior
+
+- Alteryx evaluates the formula in the Designer engine.
+- Prophecy evaluates the SQL expression inside the Databricks SQL Warehouse, generating one derived expression per selected field.
+
+## Known caveats
+
+- Some Alteryx functions do not map directly to SQL and may require adjustments.
+- Expressions that don’t generalize across fields may not convert cleanly.
+- Type behavior may differ when applying one expression across multiple columns.
+
+## Example
+
+### Alteryx Multi-Field Formula example
+
+Goal: Trim whitespace from `[Name]`, `[City]`, and `[State]`.
+Alteryx expression:
+`Trim([_CurrentField_])`
+
+### Prophecy equivalent (MultiColumnEdit gem)
+
+Select the same three columns and define the expression:
+
+```
+trim(${column})
+```
+
+Prophecy applies this transformation to each selected column, producing the same result as Alteryx’s Multi-Field Formula tool.

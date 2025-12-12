@@ -1,0 +1,81 @@
+---
+title: Alteryx Browse tool > Prophecy Data Explorer
+description: Mapping between Alteryx’s Browse Tool and Prophecy’s Data Explorer
+---
+
+The [Alteryx Browse tool](https://help.alteryx.com/current/en/designer/tools/in-out-tools/browse-tool.html) and Prophecy’s [Data Explorer](https://docs.prophecy.io/engineers/data-explorer) both let you inspect, validate, and understand the data flowing through a workflow or pipeline.
+
+In Alteryx, you add the Browse tool to the canvas and connect it an upstream tool. It provides a full or sampled data view, statistics, metadata, histograms, and spatial visualizations.
+
+In Prophecy, the Data Explorer is built directly into the UI. You do not add a gem to view data. Instead, you preview data from any gem’s output by clicking a graph icon. These appear throughout your entire pipeline.
+
+## Automated migration results
+
+When you import an Alteryx workflow that uses a Browse Tool, the Transpiler omits the tool: no equivalent gem is created because the Data Explorer is part of the UI and does not require a canvas node.
+
+- No ToDo or placeholder gem is created.
+- Upstream and downstream connections remain unchanged.
+- Imported pipelines typically contain fewer nodes than the original workflow.
+
+Removing Browse Tools before migration is optional.
+
+## Manually replicate in Prophecy
+
+To inspect or profile data in Prophecy:
+
+1. Open the pipeline in the project editor.
+1. Run the pipeline or run a preview.
+1. Click the graph icon between gems to open the **Data Explorer**.
+
+This provides the same diagnostic role as Alteryx’s Browse Tool.
+
+## Configuration options
+
+In Alteryx, you configure the Browse Tool by placing it on the canvas and connecting it to an upstream tool.
+
+In Prophecy, no configuration is needed. Every gem supports preview:
+
+1. Run or preview the pipeline.
+1. Click the graph icon on any connection.
+1. Review the previewed dataset, schema, and column-level statistics in the Data Explorer.
+
+The Data Explorer lets you do the following:
+
+- **View sample preview:** shows columns and values for a limited set of rows.
+- **Quick Data Profile:** computed from the sampled data; shows most common values.
+- **Expanded Data Profile:** computed across the full dataset; includes unique counts, longest/shortest values, most/least frequent values, min/max values, value-length statistics, and detailed summaries.
+- **Visualization:** shows bar charts, histograms, scatter plots, line charts, and pie charts for visualizing column distributions.
+- **Interactive controls:** sort, filter, search, hide columns, export the sample (CSV/JSON/XLSX), and save transformations as gems.
+
+## Output behavior
+
+The Browse tool is diagnostic only; it does not modify data. It reruns upstream logic to refresh its preview.
+
+Prophecy's Data Explorer is similarly non-transformational.
+
+## Known caveats
+
+Some view configurations, such as behavioral analysis, differ between the two platforms.
+
+## Examples
+
+### Alteryx Browse tool
+
+Goal: Inspect the results of a Join operation.
+
+You place a Browse tool immediately after the Join tool to view the resulting dataset.
+
+The Browse Tool displays joined rows, metadata, basic statistics, and profile charts.
+
+### Prophecy Data Explorer
+
+Goal: Inspect the output of a Join gem.
+
+After running the pipeline, click the graph icon on the connection after the Join gem. The Data Explorer displays:
+
+- Sampled rows
+- Schema and data types
+- Quick or expanded profile statistics
+- Optional charts for visual distribution analysis
+
+No additional gem is required.
