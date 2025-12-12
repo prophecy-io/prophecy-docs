@@ -1129,7 +1129,32 @@
         "dropdowns": [
           {
             "dropdown": "Alteryx",
-            "icon": "/images/import/logo-alteryx.svg"
+            "icon": "/images/import/logo-alteryx.svg",
+            "groups": [
+            {
+                "group": "Alteryx to SQL",
+                "pages": [
+                  "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-connections.mdx",
+                  "import-tool/Alteryx/alteryx-to-databricks-sql/databricks-functions-mappings.mdx",
+                  "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-to-databricks-sql.mdx",
+                  "import-tool/Alteryx/alteryx-to-databricks-sql/databricks-performance-tuning.mdx",
+                  "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-to-prophecy-sql.mdx"
+                ]
+            },
+            {
+                "group": "Alteryx to Spark",
+                "pages": [
+                  "import-tool/Alteryx/alteryx-to-spark/alteryx-components.mdx",
+                  "import-tool/Alteryx/alteryx-to-spark/alteryx-to-spark.mdx"
+                ]
+              },
+              {
+                "group": "Migration Analysis",
+                "pages": [
+                  "import-tool/Alteryx/alteryx-migration-analysis.mdx"
+                ]
+              }
+            ]
           },
           {
             "dropdown": "Informatica",
