@@ -124,14 +124,6 @@
                         "description": "Connection properties that define the connection. \n\nThe schema depends on the connection type. Refer to the **Connections > Properties** section of the API documentation for the specific properties per connection type.\n\nIn connection properties, replace secret field references with the string `{{SECRET}}` as the secret ID will not be available during creation.",
                         "additionalProperties": true
                       },
-                      "category": {
-                        "type": "string",
-                        "description": "Category for the connection."
-                      },
-                      "metadataUserID": {
-                        "type": "string",
-                        "description": "Metadata user ID. Define if you want to associate the connection with a specific user."
-                      },
                       "shouldValidate": {
                         "type": "boolean",
                         "description": "Whether to validate the connection. Defaults to true.",
