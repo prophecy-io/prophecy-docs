@@ -1,0 +1,15 @@
+---
+openapi: post /api/orchestration/tests/run
+---
+
+Use this endpoint to run [data tests](/data-analysis/development/tests/test-comparison).
+
+Column tests, table tests, and project tests can be run together in a single API call. Model tests must be run in a separate API call and cannot be mixed with other test types.
+
+## Requirements
+
+To run data tests for a project using the API, you need to:
+
+- Publish the project to a [Prophecy fabric](/data-analysis/environment/fabrics/prophecy-fabrics).
+- Set up data tests in the Prophecy [Studio](/data-analysis/development/studio/studio). This includes both creating tests and assigning them to tables or models.
+- Ensure that any tables you want to test have data. You'll have to run your pipelines once to populate target tables.
