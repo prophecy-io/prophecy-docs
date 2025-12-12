@@ -1,0 +1,30 @@
+---
+title: Informatica IICS | Component mapping
+description: List of supported Informatica Intelligent Cloud Services (IICS) components and their equivalent Prophecy gems
+---
+
+For transpiling **Informatica Intelligent Cloud Services (IICS)** mappings to Prophecy pipelines, Transpiler reads the exported IICS JSON and maps each transformation to a Prophecy-supported gem in a visual Spark pipeline.
+
+| IICS Transformation                                 | Equivalent Prophecy Gem                                                            |
+| --------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| **Aggregator**                                      | [Aggregate](https://docs.prophecy.io/Spark/gems/transform/aggregate)               |
+| **Source (Database, Flat File, Cloud Application)** | [Source](https://docs.prophecy.io/Spark/gems/source-target)                        |
+| **Target**                                          | [Target](https://docs.prophecy.io/Spark/gems/source-target)                        |
+| **Expression**                                      | [Reformat](https://docs.prophecy.io/Spark/gems/transform/reformat)                 |
+| **Filter**                                          | [Filter](https://docs.prophecy.io/Spark/gems/transform/filter)                     |
+| **Joiner**                                          | [Join](https://docs.prophecy.io/Spark/gems/join-split/join)                        |
+| **Lookup**                                          | [Join](https://docs.prophecy.io/Spark/gems/join-split/join)                        |
+| **Rank**                                            | [Window Function](https://docs.prophecy.io/Spark/gems/transform/window-function)   |
+| **Sorter**                                          | [Order By](https://docs.prophecy.io/Spark/gems/transform/order-by)                 |
+| **Router**                                          | [Filter](https://docs.prophecy.io/Spark/gems/transform/filter)                     |
+| **Union**                                           | [Union](https://docs.prophecy.io/Spark/gems/join-split/union)                      |
+| **Reusable Mapping**                                | [Subgraph](https://docs.prophecy.io/Spark/gems/subgraph)                           |
+| **Update Strategy**                                 | [Target](https://docs.prophecy.io/Spark/gems/source-target)                        |
+| **Sequence Generator**                              | [Schema Transform](https://docs.prophecy.io/Spark/gems/transform/schema-transform) |
+| **Stored Procedure**                                | [Script](https://docs.prophecy.io/Spark/gems/custom/script)                        |
+| **Command Task / HTTP Task**                        | [Script](https://docs.prophecy.io/Spark/gems/custom/script)                        |
+| **Data Masking**                                    | [Reformat](https://docs.prophecy.io/Spark/gems/transform/reformat)                 |
+| **Transaction Control**                             | [Target](https://docs.prophecy.io/Spark/gems/source-target)                        |
+| **Data Preview / Metadata Update**                  | [Schema Transform](https://docs.prophecy.io/Spark/gems/transform/schema-transform) |
+| **Parameter Set / In-Out Fields**                   | [Pipeline Parameters](https://docs.prophecy.io/Spark/gems/pipeline-parameters)     |
+| **Taskflow (Orchestration)**                        | [Job](https://docs.prophecy.io/Spark/gems/jobs)                                    |

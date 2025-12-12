@@ -1,0 +1,63 @@
+---
+title: Import Workflows into Prophecy
+---
+
+Prophecy’s Import is an automated process that lets you migrate workflows from your existing data integration platform into Prophecy. We currently support importing from Alteryx, Informatica, IBM DataStage, and Ab Initio. In each case, Import recreates workflows in Prophecy, allowing you to begin working in Prophecy quickly.
+
+Prophecy supports key features from these platforms, including data input, cleansing, transformation, and output. Import generates open-source SQL or Spark code that runs natively on a cloud platform; all code can be edited and exported.
+
+Once import is complete, you work with the same data sources you've been using on your existing platform using Prophecy's AI-supported IDE. To support users moving from these platforms, Prophecy provides documentation that maps components from your existing platform to Prophecy's toolset.
+
+## Import features
+
+Before import, Prophecy analyzes and validates files exported from your platform, providing reporting on how much of the files can be imported. While most elements will import smoothly, if a tool uses platform-specific behavior or has no exact equivalent, Import flags it for review rather than silently dropping it.
+
+During import, Prophecy reads these files, identifying workflow graphs, tools, connections, expressions, schema information, and parameters. Import then reconstructs these as a Prophecy pipeline inside a Prophecy project; the result is a familiar workflow that you can manage in Prophecy.
+
+### Deterministic import
+
+Import processes exported workflow files deterministically: the same input always produces the same migrated pipeline. Import does not use AI or heuristic guessing, and instead relies on explicit mappings between tools, properties, and schema elements to ensure predictable, reviewable results.
+
+Because Prophecy works with the same underlying input and output sources (files, database tables, and catalog datasets), most transformation steps can be converted directly.
+
+### Result of import
+
+After import, you can open the pipeline in the Prophecy UI for preview, validation, and refinement. The result is an open-source, modernized, cloud-native version of your pipeline that maintains your business logic while taking advantage of Prophecy’s AI-supported development environment.
+
+## Working in Prophecy
+
+If you're used to working in Alteryx, Informatica, DataStage, or Ab Initio, much of what you already know carries over into Prophecy:
+
+- You build pipelines by connecting steps (such as joins, filters, formulas, and aggregations).
+- You connect the same inputs and outputs.
+- You preview and validate data at each stage.
+
+Prophecy also lets you edit open-source SQL or Spark code, with help from Prophecy's AI agent.
+
+### Prophecy execution model
+
+Unlike these legacy platforms, Prophecy separates pipeline development from execution. Pipelines run in the cloud, allowing administrators to adjust compute depending on a pipeline's requirements and allowing you to configure execution environments for different use cases, such as development and production. Prophecy uses the term _fabric_ for this execution environment.
+
+### Prophecy versioning
+
+Behind the scenes, Prophecy organizes pipelines, datasets, and configuration files in a project backed by Git. Prophecy versions every change in Git so your work is automatically tracked, reviewable, and recoverable. If you're used to working with local files, you'll find that these processes are mostly transparent; you don't need to use GitHub directly, as Prophecy manages creating branches, committing edits, and merging updates.
+
+## Prophecy Import documentation
+
+Prophecy’s Import documentation explains how components from your data integration platform translate into Prophecy gems, functions, and data types, helping you understand exactly how your existing logic maps onto Prophecy’s visual and code-based environment.
+
+In addition to tool-by-tool and type-by-type mapping, the documentation also covers performance tuning, optimization strategies, and troubleshooting guidance tailored to Databricks SQL and Spark.
+
+This gives migrating users a clear picture of both functional equivalence and best practices for running pipelines efficiently in Prophecy’s cloud-native architecture.
+
+## Supported legacy tools
+
+Prophecy Transpiler supports ETL modernization from the following legacy tools:
+
+| Legacy Tool | Supported features |
+|-------------|-------------|
+| Ab Initio    | [Ab Initio components](import-tool/abinitio/abinitio-components.mdx); [Ab Initio functions](import-tool/abinitio/abinitio-functions.mdx); [Ab Initio Convert Plans into Airflow DAGs](import-tool/abinitio/abinitio-plans.mdx) |
+| DataStage   | [DataStage components](import-tool/datastage/datastage-components.mdx) |
+| Alteryx     | [Alteryx tools \(Databricks SQL\)](import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-tool-mapping.mdx); [Alteryx functions \(Databricks SQL\)](import-tool/Alteryx/alteryx-to-databricks-sql/databricks-functions-mappings.mdx); [Alteryx connections mapping \(Databricks SQL\)](import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-connections.mdx); [Alteryx tools \(Spark\)](import-tool/Alteryx/alteryx-to-spark/alteryx-components.mdx) |
+| Informatica | [Informatica components \(BigQuery SQL\)](import-tool/informatica/informatica-to-sql/big-query-components-mappings.mdx); [Informatica functions \(BigQuery SQL\)](import-tool/informatica/informatica-to-sql/big-query-functions-mappings.mdx); [Informatica components \(Spark\) ](import-tool/informatica/informatica-to-spark/informatica-components.mdx) |
+| Informatica ICS | [Informatica ICS components](import-tool/informatica/informatica-ics-to-spark/informatica-ics-components.mdx) |
