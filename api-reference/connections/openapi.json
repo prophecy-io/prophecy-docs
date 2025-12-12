@@ -80,10 +80,6 @@
                               "properties": {
                                 "type": "object",
                                 "description": "Connection configuration properties."
-                              },
-                              "category": {
-                                "type": "string",
-                                "description": "Connection category."
                               }
                             }
                           }
@@ -115,8 +111,7 @@
                             "subKind": "text",
                             "type": "secret"
                           }
-                        },
-                        "category": ""
+                        }
                       },
                       {
                         "id": "<connection-id-2>",
@@ -136,8 +131,7 @@
                           },
                           "siteUrl": "https://<site>.sharepoint.com/sites/site",
                           "tenantId": "<tenant-id>"
-                        },
-                        "category": ""
+                        }
                       }
                     ]
                   }
@@ -262,10 +256,6 @@
                         "properties": {
                           "type": "object",
                           "description": "Connection configuration properties."
-                        },
-                        "category": {
-                          "type": "string",
-                          "description": "Connection category."
                         }
                       }
                     }
@@ -292,8 +282,7 @@
                         "subKind": "text",
                         "type": "secret"
                       }
-                    },
-                    "category": ""
+                    }
                   }
                 }
               }
@@ -367,10 +356,6 @@
                         "properties": {
                           "type": "object",
                           "description": "Connection configuration properties."
-                        },
-                        "category": {
-                          "type": "string",
-                          "description": "Connection category."
                         }
                       }
                     }
@@ -397,8 +382,7 @@
                       "port": "1433",
                       "server": "<server-name>.sql.azuresynapse.net",
                       "username": "<username>"
-                    },
-                    "category": ""
+                    }
                   }
                 }
               }
@@ -499,10 +483,6 @@
                         "properties": {
                           "type": "object",
                           "description": "Connection configuration properties."
-                        },
-                        "category": {
-                          "type": "string",
-                          "description": "Connection category."
                         }
                       }
                     },
@@ -533,8 +513,7 @@
                         "subKind": "text",
                         "type": "secret"
                       }
-                    },
-                    "category": ""
+                    }
                   },
                   "message": "List(), List()"
                 }
