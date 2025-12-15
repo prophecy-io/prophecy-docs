@@ -1,9 +1,11 @@
 ---
 title: Write strategies
-description: Determine how to store processed data and handle changes over time
+description: Choose from multiple write strategies including append, merge, and replace
 ---
 
-When writing data to a table, there are multiple ways to determine how the data will be written. When you configure a target table or target model, the **Write Options** tab lets you determine how you will store your processed data and handle changes to the data over time. The choice of write mode depends on your specific use case.
+Prophecy provides a set of write strategies that determine how you will store your processed data and handle changes to the data over time. This page describes each strategy so you can choose the best one for your use case.
+
+You will configure the write strategy in the **Write Options** tab of a target table.
 
 ## Write modes matrix
 
@@ -24,8 +26,6 @@ The following table describes the write modes that Prophecy supports by SQL ware
 ### Wipe and Replace Table (default)
 
 Replaces all existing data with new data on each run. This is the simplest approach and ensures your target table always reflects the latest state of your source data.
-
-<Info>The incoming table must have the same schema as the existing table.</Info>
 
 #### Example: Replace vehicle registry
 
