@@ -1131,28 +1131,64 @@
             "dropdown": "Alteryx",
             "icon": "/images/import/logo-alteryx.svg",
             "groups": [
-            {
+              {
+                "group": "Import overview",
+                "pages": [
+                  "import-tool/index",
+                  "import-tool/migration",
+                  "import-tool/get-help"
+                ]
+              },
+              {
                 "group": "Alteryx to SQL",
                 "pages": [
-                  "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-connections.mdx",
-                  "import-tool/Alteryx/alteryx-to-databricks-sql/databricks-functions-mappings.mdx",
-                  "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-to-databricks-sql.mdx",
-                  "import-tool/Alteryx/alteryx-to-databricks-sql/databricks-performance-tuning.mdx",
-                  "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-to-prophecy-sql.mdx"
+                  "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-to-prophecy-sql",
+                  "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-to-databricks-sql",
+                  "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-connections",
+                  "import-tool/Alteryx/alteryx-to-databricks-sql/databricks-functions-mappings",
+                  "import-tool/Alteryx/alteryx-to-databricks-sql/databricks-performance-tuning",
+                  {
+                    "group": "Alteryx tool mapping",
+                    "pages": [
+                      "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-tool-mapping",
+                      {
+                        "group": "Alteryx In/Out tools",
+                        "pages": [
+                          "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-in-out-tools/alteryx-browse-tool",
+                          "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-in-out-tools/alteryx-datetime-now",
+                          "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-in-out-tools/alteryx-directory-tool",
+                          "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-in-out-tools/alteryx-input-data-tool",
+                          "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-in-out-tools/alteryx-output-data-tool",
+                          "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-in-out-tools/alteryx-text-input-tool"
+                        ]
+                      },
+                      {
+                        "group": "Alteryx Prep tools",
+                        "pages": [
+                          "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-prep-tools/alteryx-data-cleansing-tool",
+                          "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-prep-tools/alteryx-filter-tool",
+                          "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-prep-tools/alteryx-formula-tool",
+                          "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-prep-tools/alteryx-imputation-tool",
+                          "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-prep-tools/alteryx-multi-field-binning-tool",
+                          "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-prep-tools/alteryx-multi-field-formula-tool",
+                          "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-prep-tools/alteryx-multi-row-formula-tool",
+                          "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-prep-tools/alteryx-oversample-field-tool"
+                        ]
+                      }
+                    ]
+                  }
                 ]
-            },
-            {
+              },
+              {
                 "group": "Alteryx to Spark",
                 "pages": [
-                  "import-tool/Alteryx/alteryx-to-spark/alteryx-components.mdx",
-                  "import-tool/Alteryx/alteryx-to-spark/alteryx-to-spark.mdx"
+                  "import-tool/Alteryx/alteryx-to-spark/alteryx-components",
+                  "import-tool/Alteryx/alteryx-to-spark/alteryx-to-spark"
                 ]
               },
               {
                 "group": "Migration Analysis",
-                "pages": [
-                  "import-tool/Alteryx/alteryx-migration-analysis.mdx"
-                ]
+                "pages": ["import-tool/Alteryx/alteryx-migration-analysis"]
               }
             ]
           },
@@ -1160,6 +1196,14 @@
             "dropdown": "Informatica",
             "icon": "/images/import/logo-informatica.svg",
             "groups": [
+              {
+                "group": "Import overview",
+                "pages": [
+                  "import-tool/index",
+                  "import-tool/migration",
+                  "import-tool/get-help"
+                ]
+              },
               {
                 "group": "Getting started",
                 "pages": [
@@ -1189,6 +1233,14 @@
             "dropdown": "Ab Initio",
             "icon": "/images/import/logo-abinitio.svg",
             "groups": [
+              {
+                "group": "Import overview",
+                "pages": [
+                  "import-tool/index",
+                  "import-tool/migration",
+                  "import-tool/get-help"
+                ]
+              },
               {
                 "group": "Getting started",
                 "pages": [
@@ -1228,6 +1280,14 @@
             "dropdown": "DataStage",
             "icon": "/images/import/logo-ibm.svg",
             "groups": [
+              {
+                "group": "Import overview",
+                "pages": [
+                  "import-tool/index",
+                  "import-tool/migration",
+                  "import-tool/get-help"
+                ]
+              },
               {
                 "group": "Getting started",
                 "pages": [

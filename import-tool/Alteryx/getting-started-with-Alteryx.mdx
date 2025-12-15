@@ -13,7 +13,7 @@ This document describes the process of importing Alteryx files into Prophecy.
 - Databricks Fabric
 - GitHub Account (recommended)
 
-If you don't have an existing Prophecy Fabric and Prophecy Project, see [this guide](https://docs.prophecy.io/low-code-spark/fabrics/create-a-Fabric/) for Fabric and [this guide](https://docs.prophecy.io/concepts/project/#1-create-new-project) for setting up a Project.
+If you don't have an existing Prophecy Fabric and Prophecy Project, see [this guide](/data-analysis/environment/fabrics/create-fabric) for Fabric and [this guide](/data-analysis/getting-started/create-project#1-create-new-project) for setting up a Project.
 
 ## 1. Export Alteryx Files
 
@@ -61,10 +61,10 @@ To create a bundle:
 
 1. Enter a name for the bundle.
 1. Select a language for import (Spark/Python, Spark/Scala, or SQL). Prophecy will convert your imported Alteryx files to this language.
-1. Select the [team](https://docs.prophecy.io/administration/teams-users/teams-users/) who will access the bundle. (You can add more teams later.)
-1. Choose the [project](https://docs.prophecy.io/projects) for the new workflow.
-1. Select the Git branch where code will be stored. For more information on how Prophecy uses Git, see [Using Git with Prophecy](https://docs.prophecy.io/engineers/git).
-1. Select a [Fabric](https://docs.prophecy.io/fabrics) where the workflow will run. A fabric specifies everything required for execution, most importantly a connection to compute.
+1. Select the [team](/data-analysis/administration/management/teams/teams) who will access the bundle. (You can add more teams later.)
+1. Choose the [project](/data-analysis/collaboration/project-sharing) for the new workflow.
+1. Select the Git branch where code will be stored. For more information on how Prophecy uses Git, see [Using Git with Prophecy](/data-engineering/ci-cd/git/git).
+1. Select a [Fabric](/data-analysis/environment/fabrics/prophecy-fabrics) where the workflow will run. A fabric specifies everything required for execution, most importantly a connection to compute.
 
 ### 4. Upload Artifacts
 
@@ -78,7 +78,7 @@ Upload the Alteryx files that you want to transpile and click **Next**.
 
 ![Entity Page](import-tool/Alteryx/img/alteryx_entity_page.png)
 
-Select the `.yxmd` file(s) for import. The Alteryx workflow will be converted to a [Prophecy Pipeline](https://docs.prophecy.io/pipelines).
+Select the `.yxmd` file(s) for import. The Alteryx workflow will be converted to a [Prophecy Pipeline](/data-engineering/development/pipelines/pipelines).
 
 ![Add pipeline](import-tool/Alteryx/img/alteryx_add_pipeline.png)
 
@@ -165,4 +165,4 @@ After the pipeline runs successfully, you can data at each stage by clicking the
 
 ## What’s next?
 
-See [Moving from Alteryx to Prophecy](import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-to-prophecy-sql.mdx) for an overview of how working in Prophecy differs from working in Alteryx.
+See [Moving from Alteryx to Prophecy](import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-to-prophecy-sql) for an overview of how working in Prophecy differs from working in Alteryx.

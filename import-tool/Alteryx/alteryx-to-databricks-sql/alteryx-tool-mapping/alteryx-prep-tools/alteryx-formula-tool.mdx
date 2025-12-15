@@ -3,13 +3,13 @@ title: Alteryx Formula tool > Prophecy Reformat gem
 description: Mapping between Alteryx’s Formula tool and Prophecy’s Reformat gem
 ---
 
-The [Alteryx Formula tool](https://help.alteryx.com/current/en/designer/tools/preparation/formula-tool.html) and the [Prophecy Reformat gem](https://docs.prophecy.io/analysts/reformat/) both create new columns or update existing columns using custom expressions.
+The [Alteryx Formula tool](https://help.alteryx.com/current/en/designer/tools/preparation/formula-tool.html) and the [Prophecy Reformat gem](/data-analysis/gems/prepare/reformat) both create new columns or update existing columns using custom expressions.
 
 Alteryx uses its proprietary expression language, whereas Prophecy uses SQL expressions.
 
 Prophecy focuses on SQL-native transformations; some Alteryx-specific functions may require re-expression using SQL equivalents or additional gems.
 
-See [Alteryx Function mapping to Databricks SQL](/import-tool/Alteryx/alteryx-to-databricks-sql/databricks-functions-mappings.mdx) for a comparison of Alteryx functions and Prophecy functions.
+See [Alteryx Function mapping to Databricks SQL](/import-tool/Alteryx/alteryx-to-databricks-sql/databricks-functions-mappings) for a comparison of Alteryx functions and Prophecy functions.
 
 ## Automated migration results
 
@@ -27,8 +27,8 @@ During migration:
 To manually recreate an Alteryx Formula tool:
 
 1. Add a **Reformat** gem to your pipeline.
-1. Use the [visual expression builder](https://docs.prophecy.io/analysts/visual-expression-builder/) to create or modify columns using expressions.
-1. Preview results in the [Data Explorer](https://docs.prophecy.io/analysts/data-explorer) to validate output types and values. (You can also preview results using the **Data** button in the gem itself.)
+1. Use the [visual expression builder](/data-analysis/gems/visual-expression-builder/visual-expression-builder) to create or modify columns using expressions.
+1. Preview results in the [Data Explorer](/data-analysis/development/runs/data-explorer/data-explorer) to validate output types and values. (You can also preview results using the **Data** button in the gem itself.)
 
 Prophecy provides function menus, syntax highlighting, and AI assist for SQL expressions to smooth the transition from Alteryx's formula language.
 

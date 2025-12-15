@@ -5,7 +5,7 @@ description: Mapping between Alteryx’s Multi-Row Formula tool and Prophecy’s
 
 The [Alteryx Multi-Row Formula tool](https://help.alteryx.com/current/en/designer/tools/preparation/multi-row-formula-tool.html#multi-row-formula-tool) allows users to create or update columns by referencing values from previous or subsequent rows. This enables running totals, differences between rows, forward-fill/backfill logic, and row-based conditionals.
 
-Prophecy accomplishes this behavior using a combination of [WindowFunction gems](https://docs.prophecy.io/analysts/window/) and [Reformat gems](https://docs.prophecy.io/analysts/reformat/#parameters), which provide an equivalent set of capabilities through SQL analytic expressions.
+Prophecy accomplishes this behavior using a combination of [WindowFunction gems](/data-analysis/gems/transform/window) and [Reformat gems](/data-analysis/gems/prepare/reformat#parameters), which provide an equivalent set of capabilities through SQL analytic expressions.
 
 ## Automated migration results
 
@@ -25,7 +25,7 @@ To reproduce common Multi-Row Formula patterns manually:
 3. In the WindowFunction gem, define expressions such as `LAG()`, `LEAD()`, `ROW_NUMBER()`, or `SUM() OVER()` to capture previous/next values or running aggregates.
 4. Specify the ordering column (required) and any partitioning columns needed so that row-relative logic is scoped correctly (for example, per customer or per group).
 5. If additional conditional logic is needed (for example, filling nulls, computing differences, or custom averages), add a **Reformat** gem after the WindowFunction gem and build the final expressions there.
-6. Preview results in the [Data Explorer](https://docs.prophecy.io/analysts/data-profile) to confirm row alignment and behavior. (You can also preview results using the **Data** button in gems.)
+6. Preview results in the [Data Explorer](/data-analysis/development/runs/data-explorer/data-profile) to confirm row alignment and behavior. (You can also preview results using the **Data** button in gems.)
 
 Window functions provide a declarative way to express most row-relative behavior (previous/next row, running totals, moving windows), though highly customized Multi-Row formulas may require review or adjustment after import.
 
@@ -100,7 +100,7 @@ Prophecy equivalent:
 
 5. In a Reformat gem, add an expression along the lines of `` * EXCEPT (`prophecy_row_id`) `` to restore the original schema.
 
-6. Confirm results using the [Data Explorer](https://docs.prophecy.io/analysts/data-profile).
+6. Confirm results using the [Data Explorer](/data-analysis/development/runs/data-explorer/data-profile).
 
 ### Alteryx Multi-Row Formula more complex example
 
@@ -130,4 +130,4 @@ Steps:
    - `sales_lag1 = LAG(Sales, 1)`
    - `sales_lag2 = LAG(Sales, 2)`
 3. Add a **Reformat** gem. Create a new column that computes the average of `sales`, `sales_lag1`, and `sales_lag2` by summing the available values and dividing by the number of non-null values. If all three inputs are `null`, return `null`. This pattern mimics Alteryx’s `Average()` behavior (even though the generated SQL does not use an `AVG()` function).
-4. Confirm results using the [Data Explorer](https://docs.prophecy.io/analysts/data-profile).
+4. Confirm results using the [Data Explorer](/data-analysis/development/runs/data-explorer/data-profile).

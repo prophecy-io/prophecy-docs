@@ -14,7 +14,7 @@ When you create an Alteryx bundle in the Prophecy transpiler, you can analyze, c
    - Choose the team that will have access to the bundle.
    - Choose the target project of the migration. This list will be filtered by projects that are written in the language you chose.
    - Select the Git branch where the Prophecy code will be uploaded.
-   - Choose the Spark [fabric](https://docs.prophecy.io/concepts/fabrics/) that will be used for Spark computation.
+   - Choose the Spark [fabric](/data-analysis/environment/fabrics/prophecy-fabrics) that will be used for Spark computation.
    - Click **Next** to continue.
 1. Upload your Alteryx files that you wish to convert to Prophecy pipelines.
 
@@ -28,7 +28,7 @@ Next, you'll want to configure how your pipelines are imported into Prophecy.
 
 3. **Configure datasets**. Before transpiling your pipelines, you have the option to configure included datasets. This includes a dataset's type, location, and properties. Importantly, you are able to configure the dataset schema and preview the data before importing.
 
-4. **Run analysis.** If you want to better understand the outcome of your transpilation **before** running it, you can use the Analyze feature. For more information, visit [Alteryx migration analysis](/import-tool/Alteryx/alteryx-migration-analysis.mdx). This is only available for migration to Spark projects.
+4. **Run analysis.** If you want to better understand the outcome of your transpilation **before** running it, you can use the Analyze feature. For more information, visit [Alteryx migration analysis](/import-tool/Alteryx/alteryx-migration-analysis). This is only available for migration to Spark projects.
 
 5. **Validate the transpilation.** Before you can start the transpilation, you must validate it. When you click **Validate**, Prophecy will make sure that the migration is possible given the set of files that you wish to import. If the validation succeeds, you can click **Transpile**.
 

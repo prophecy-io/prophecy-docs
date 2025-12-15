@@ -31,7 +31,7 @@ PadLeft(
 ) + "-01"
 ```
 
-When you import the tool into Transpiler, Prophecy puts it in a [Reformat gem](https://docs.prophecy.io/analysts/reformat/) with the following expression:
+When you import the tool into Transpiler, Prophecy puts it in a [Reformat gem](/data-analysis/gems/prepare/reformat) with the following expression:
 
 ```sql
 CAST(concat(reverse(rpad(reverse(CAST(year(mes) AS STRING)), 4, '0')), '-', reverse(rpad(reverse(CAST(((((floor(((month(mes) / 3) / (month(mes) / 3))) * (month(mes) / 3)) + CASE WHEN CAST(((floor(((month(mes) / 3) / (month(mes) / 3))) * (month(mes) / 3)) = (month(mes) / 3)) AS BOOLEAN) THEN 0 ELSE 1 END) * 3) - 2) AS STRING)), 2, '0')), '-01') AS STRING)
@@ -81,7 +81,7 @@ Although this works, it is inefficient and your pipeline will be slow because yo
 ### Solution
 To make this more efficient, use a WindowFunction and Reformat gem for SQL can execute the partitions in parallel:
 
-1. Insert a [WindowFunction gem](https://docs.prophecy.io/analysts/window/).
+1. Insert a [WindowFunction gem](/data-analysis/gems/transform/window).
 
    1. Open the gem.
    1. Navigate to the **Order By** tab.
@@ -90,7 +90,7 @@ To make this more efficient, use a WindowFunction and Reformat gem for SQL can e
    1. In the **Target Column**, enter `row_number`.
    1. In the **Source Expression**, enter `row_number()`.
 
-1. Insert a [Reformat gem](https://docs.prophecy.io/analysts/reformat/).
+1. Insert a [Reformat gem](/data-analysis/gems/prepare/reformat).
 
    1. Open the gem.
    1. In the **Target Column**, enter `id`.

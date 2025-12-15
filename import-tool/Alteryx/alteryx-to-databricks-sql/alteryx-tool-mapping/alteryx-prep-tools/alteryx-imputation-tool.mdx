@@ -5,7 +5,7 @@ description: Mapping between Alteryx’s Imputation tool and equivalent Prophecy
 
 The [Alteryx Imputation tool](https://help.alteryx.com/current/en/designer/tools/preparation/imputation-tool.html) replaces missing or special values with fixed values or aggregates such as mean, median, or mode.
 
-Prophecy accomplishes this using a combination of [Reformat gems](https://docs.prophecy.io/analysts/reformat/) and [Join gems](https://docs.prophecy.io/analysts/join).
+Prophecy accomplishes this using a combination of [Reformat gems](/data-analysis/gems/prepare/reformat) and [Join gems](/data-analysis/gems/join-split/join).
 
 ## Automated migration results
 
@@ -82,4 +82,4 @@ Steps:
 1. Add a **Join** gem to the canvas of type **Join**.
 1. Connect the dataset and **Aggregate** gem to the **Join** gem.
 1. Add a **Reformat** gem and define a conditional expression for `sales` such that if `sales` is null, use `sales_avg`; otherwise, retain original value.
-1. Confirm output using the [Data Explorer](https://docs.prophecy.io/analysts/data-profile).
+1. Confirm output using the [Data Explorer](/data-analysis/development/runs/data-explorer/data-profile).

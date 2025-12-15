@@ -7,7 +7,7 @@ This page serves as the starting point for the Migrate to Databricks SQL section
 
 Alteryx and Prophecy both use a visual, low-code approach to transformations. The key difference is the engine beneath your work. In Alteryx, workflows run inside the Designer engine. In Prophecy, the same visual pipelines run on Databricks SQL, which offers distributed execution and efficient performance on larger datasets.
 
-This documentation section provides reference material for users moving from Alteryx to Prophecy: [a step-by-step migration tutorial](/import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-to-databricks-sql.mdx), [tool mappings](/import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-tool-mapping.mdx), [function mappings](/import-tool/Alteryx/alteryx-to-databricks-sql/databricks-functions-mappings.mdx), [connection mappings](/import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-connections.mdx), [data type mappings](/import-tool/Alteryx/alteryx-to-databricks-sql/databricks-data-types.mdx), [information on performance tuning](/import-tool/Alteryx/alteryx-to-databricks-sql/databricks-performance-tuning.mdx), and [troubleshooting](/import-tool/Alteryx/alteryx-to-databricks-sql/troubleshooting/troubleshooting.mdx).
+This documentation section provides reference material for users moving from Alteryx to Prophecy: [a step-by-step migration tutorial](/import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-to-databricks-sql), [tool mappings](/import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-tool-mapping), [function mappings](/import-tool/Alteryx/alteryx-to-databricks-sql/databricks-functions-mappings), [connection mappings](/import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-connections), [data type mappings](/import-tool/Alteryx/alteryx-to-databricks-sql/databricks-data-types), [information on performance tuning](/import-tool/Alteryx/alteryx-to-databricks-sql/databricks-performance-tuning), and [troubleshooting](/import-tool/Alteryx/alteryx-to-databricks-sql/troubleshooting/troubleshooting).
 
 The rest of this page describes how common Alteryx processes, such as opening projects, connecting to data, cleaning, testing, and deploying, translate into Prophecy’s environment.
 
@@ -31,7 +31,7 @@ The experience is similar (upload a file, configure the Source gem, preview the 
 You drag an Input Data tool onto the canvas and either select a data file (such as CSV or Excel), or configure a database connection.
 
 **In Prophecy:**
-You add a Source gem to the visual canvas. You can [upload CSV, JSON, text, Excel, and XML files](https://docs.prophecy.io/engineers/upload-file/) and you can connect to other data sources through JDBC or a cloud connector (Snowflake, Redshift, Delta, and so on).
+You add a Source gem to the visual canvas. You can [upload CSV, JSON, text, Excel, and XML files](/data-engineering/gems/source-target/file/upload-file) and you can connect to other data sources through JDBC or a cloud connector (Snowflake, Redshift, Delta, and so on).
 
 ## Clean and transform data
 
@@ -41,7 +41,7 @@ Because Prophecy executes pipelines on a distributed SQL warehouse, operations l
 You chain tools like Filter → Formula → Summarize, testing each with a Browse tool and re-running.
 
 **In Prophecy:**
-You build similar logical sequences using [Filter](https://docs.prophecy.io/analysts/filter/), [Aggregate](https://docs.prophecy.io/analysts/aggregate/), [Reformat](https://docs.prophecy.io/analysts/reformat/), and other gems. You can preview sample data for each gem using Propehecy's [Data Explorer](https://docs.prophecy.io/engineers/data-explorer).
+You build similar logical sequences using [Filter](/data-analysis/gems/prepare/filter), [Aggregate](/data-analysis/gems/transform/aggregate), [Reformat](/data-analysis/gems/prepare/reformat), and other gems. You can preview sample data for each gem using Propehecy's [Data Explorer](/data-engineering/development/data-explorer/data-explorer).
 
 ## Test and debug
 

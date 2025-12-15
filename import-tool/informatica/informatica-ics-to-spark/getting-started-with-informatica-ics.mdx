@@ -31,7 +31,7 @@ In Prophecy:
 1. By default, Prophecy imports Informatica bundles as **Spark/Python** code. If desired, you can switch to **Spark/Scala**. To do so, click the **Change** button under **Language** and follow the steps in the modal.
 1. Select a **team** for the bundle. Team members will be able to access the bundle later.
 1. Either select or create a **project**. Projects are Git repositories where Prophecy pipelines and other assets are stored.
-1. Select or create the **Spark Fabric** that you will use with the bundle. (SQL fabrics are not supported.) See [Spark fabrics](https://docs.prophecy.io/administration/fabrics/Spark-fabrics/Fabrics/) for more information.
+1. Select or create the **Spark Fabric** that you will use with the bundle. (SQL fabrics are not supported.) See [Spark fabrics](/data-engineering/fabrics/spark-provider/databricks) for more information.
 1. Upload your exported `.zip` or `.json` files.
 
 ## Validate uploaded files
@@ -58,7 +58,7 @@ To do so:
 1. Under **Projects**, click the link for the bundle's project. (This is the project that you chose or created above.)
 1. In the page that opens, click **Open in Editor**.
 
-You’ll see Informatica transformations represented as **Prophecy gems**. Unsupported or partially translated components will appear as [ToDo gems](https://docs.prophecy.io/analysts/development/gems/custom/todo), placeholders that mark where manual adjustments are required.
+You’ll see Informatica transformations represented as **Prophecy gems**. Unsupported or partially translated components will appear as [ToDo gems](/data-analysis/gems/custom/todo-gem), placeholders that mark where manual adjustments are required.
 
 ## Troubleshooting
 
@@ -75,7 +75,7 @@ Example: If the validation summary lists a missing connection object (for exampl
 
 After reviewing the generated pipeline:
 
-1. If necessary, update [Source/Target gems](https://docs.prophecy.io/engineers/source-target) to connect to your datasets.
+1. If necessary, update [Source/Target gems](/data-engineering/gems/source-target) to connect to your datasets.
 2. Run output comparison tests between the Prophecy pipeline and the original Informatica ICS mapping to confirm that results match.
 
 ### Report issues or gaps

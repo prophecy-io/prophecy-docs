@@ -5,7 +5,7 @@ description: Mapping between Alteryx’s Oversample Field tool and equivalent Pr
 
 The [Alteryx Oversample Field tool](https://help.alteryx.com/current/en/designer/tools/preparation/oversample-field-tool.html) adjusts class imbalance in categorical fields (commonly for predictive modeling). It increases the proportion of a minority class or balances classes by randomly selecting additional records from one or more categories.
 
-Prophecy does not provide a single oversampling gem. Instead, Import reproduces the behavior using a combination of [WindowFunction gems](https://docs.prophecy.io/analysts/window/), [Reformat gems](https://docs.prophecy.io/analysts/reformat/#parameters), and [Filter gems](https://docs.prophecy.io/analysts/filter). This sequence computes class counts, assigns random values, ranks rows, and filters to achieve the requested oversample percentage.
+Prophecy does not provide a single oversampling gem. Instead, Import reproduces the behavior using a combination of [WindowFunction gems](/data-analysis/gems/transform/window), [Reformat gems](/data-analysis/gems/prepare/reformat#parameters), and [Filter gems](/data-analysis/gems/prepare/filter). This sequence computes class counts, assigns random values, ranks rows, and filters to achieve the requested oversample percentage.
 
 ## Automated migration results
 

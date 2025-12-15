@@ -10,7 +10,7 @@ When you create an Alteryx bundle for a SQL project in the Prophecy transpiler, 
 Review the supported versions and migration scope:
 
 - Prophecy supports transpiling files from Alteryx Designer version 2023.2 and later.
-- Prophecy cannot migrate Alteryx schedules. You must [manually configure your schedule](https://docs.prophecy.io/analysts/scheduling) in your Prophecy project after you transpile your Alteryx workflow. Then, you can monitor your schedule on [the Monitoring page](https://docs.prophecy.io/analysts/monitoring/#scheduled-pipelines).
+- Prophecy cannot migrate Alteryx schedules. You must [manually configure your schedule](/data-analysis/production/scheduling/scheduling) in your Prophecy project after you transpile your Alteryx workflow. Then, you can monitor your schedule on [the Monitoring page](/data-analysis/production/monitoring#scheduled-pipelines).
 
 ## Prerequisites
 
@@ -50,7 +50,7 @@ Start with creating a new bundle in the Transpiler.
    | Team               | Create or select the team that will be able to access the bundle.                                                                                               |
    | Project            | Create or select the project where Prophecy will add migrated pipelines.<br />The project you choose must have the same language and team defined in the bundle. |
    | Branch             | Select the Git branch where the migration will appear. <br />The Transpiler will not commit directly to the `main` branch of the project repository.             |
-   | SQL Fabric         | Choose the [fabric](https://docs.prophecy.io/administration/fabrics/prophecy-fabrics/) the Transpiler will use to run Prophecy pipelines.                       |
+   | SQL Fabric         | Choose the [fabric](/data-analysis/environment/fabrics/prophecy-fabrics) the Transpiler will use to run Prophecy pipelines.                       |
 
 1. Click **Next**.
 1. In the **Upload Files** tab, upload the Alteryx files you want to migrate.

@@ -11,98 +11,98 @@ The following tables list all the Alteryx components that Prophecy supports, and
 
 | Alteryx Tool  | Equivalent Prophecy Gem                                                  | Description                                                                                        |
 | ------------- | ------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------- |
-| Browse        | [Data Explorer](https://docs.prophecy.io/engineers/data-explorer)        | Lets you explore and analyze data samples directly within the UI.                                  |
-| Directory     | [Directory](https://docs.prophecy.io/engineers/directory/)               | Returns a listing of all files in a directory with metadata such as creation time, type, and size. |
-| Input Data    | [Source](https://docs.prophecy.io/engineers/source-target/)              | Facilitates data ingestion from supported sources, including schema inference and preview.         |
-| Output Data   | [Target](https://docs.prophecy.io/engineers/source-target/)              | Allows saving transformed data to various destinations, databases, or file formats.                |
-| Text Input    | [Source](https://docs.prophecy.io/engineers/source-target/)              | Provides a seed source option for manually inputting data to create small datasets.                |
-| Date Time Now | [Schema Transform](https://docs.prophecy.io/engineers/schema-transform/) | Returns the current timestamp or date at the start of pipeline execution.                          |
+| Browse        | [Data Explorer](/data-engineering/development/data-explorer/data-explorer)        | Lets you explore and analyze data samples directly within the UI.                                  |
+| Directory     | [Directory](/data-engineering/gems/custom/directory)               | Returns a listing of all files in a directory with metadata such as creation time, type, and size. |
+| Input Data    | [Source](/data-engineering/gems/source-target)              | Facilitates data ingestion from supported sources, including schema inference and preview.         |
+| Output Data   | [Target](/data-engineering/gems/source-target)              | Allows saving transformed data to various destinations, databases, or file formats.                |
+| Text Input    | [Source](/data-engineering/gems/source-target)              | Provides a seed source option for manually inputting data to create small datasets.                |
+| Date Time Now | [Schema Transform](/data-engineering/gems/transform/schema-transform) | Returns the current timestamp or date at the start of pipeline execution.                          |
 
 ## Preparation
 
 | Alteryx Tool        | Equivalent Prophecy Gems                                                                                                                                              | Description                                                                                                             |
 | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| Create Samples      | [RowDistributor](https://docs.prophecy.io/engineers/row-distributor)                                                                                                  | Samples records on multiple output ports based on given criteria.                                                       |
-| Data Cleansing      | [DataCleansing](https://docs.prophecy.io/engineers/data-cleansing)                                                                                                    | Standardizes data formats and addresses missing or null values in the data.                                             |
-| Filter              | [Filter](https://docs.prophecy.io/engineers/filter)                                                                                                                   | Filters data based on the provided filter condition.                                                                    |
-| Formula             | [Reformat](https://docs.prophecy.io/engineers/reformat)                                                                                                               | Transforms one or more column names or values by using expressions and functions.                                       |
-| Generate Rows       | [SchemaTransform](https://docs.prophecy.io/engineers/schema-transform) (Spark UDF)                                                                                    | Calls Spark UDF with `explode()` to create new rows of data.                                                            |
-| Imputation          | [Aggregate](https://docs.prophecy.io/engineers/aggregate) + [Join](https://docs.prophecy.io/engineers/join) + [Reformat](https://docs.prophecy.io/engineers/reformat) | Replaces specific values with an aggregate of the column such as `min`, `avg`, and `max` using Join and Aggregate Gems. |
-| Multi-field Binning | [Reformat](https://docs.prophecy.io/engineers/reformat)                                                                                                               | Tiles or bins multiple fields by assigning bin numbers using aggregates and expressions.                                |
-| Multi-field Formula | [BulkColumnExpressions](https://docs.prophecy.io/engineers/order-by)                                                                                                  | Renames, updates, or changes the type of a set of columns.                                                              |
-| Multi-row Formula   | [Reformat](https://docs.prophecy.io/engineers/reformat)                                                                                                               | Updates rows with sequential transformations inside a Reformat gem.                                                     |
-| Oversample Field    | [Filter](https://docs.prophecy.io/engineers/filter) + [SetOperation](https://docs.prophecy.io/engineers/set-operation)                                                | Uses Filter and Union operations to oversample fields with appropriate counts.                                          |
-| Random % Sample     | [SampleRows](https://docs.prophecy.io/engineers/sample-rows)                                                                                                          | Generates a random sample of records, optionally grouped on specific fields.                                            |
+| Create Samples      | [RowDistributor](/data-engineering/gems/join-split/row-distributor)                                                                                                  | Samples records on multiple output ports based on given criteria.                                                       |
+| Data Cleansing      | [DataCleansing](/data-engineering/gems/transform/data-cleansing)                                                                                                    | Standardizes data formats and addresses missing or null values in the data.                                             |
+| Filter              | [Filter](/data-engineering/gems/transform/filter)                                                                                                                   | Filters data based on the provided filter condition.                                                                    |
+| Formula             | [Reformat](/data-engineering/gems/transform/reformat)                                                                                                               | Transforms one or more column names or values by using expressions and functions.                                       |
+| Generate Rows       | [SchemaTransform](/data-engineering/gems/transform/schema-transform) (Spark UDF)                                                                                    | Calls Spark UDF with `explode()` to create new rows of data.                                                            |
+| Imputation          | [Aggregate](/data-engineering/gems/transform/aggregate) + [Join](/data-engineering/gems/join-split/join) + [Reformat](/data-engineering/gems/transform/reformat) | Replaces specific values with an aggregate of the column such as `min`, `avg`, and `max` using Join and Aggregate Gems. |
+| Multi-field Binning | [Reformat](/data-engineering/gems/transform/reformat)                                                                                                               | Tiles or bins multiple fields by assigning bin numbers using aggregates and expressions.                                |
+| Multi-field Formula | [BulkColumnExpressions](/data-engineering/gems/transform/order-by)                                                                                                  | Renames, updates, or changes the type of a set of columns.                                                              |
+| Multi-row Formula   | [Reformat](/data-engineering/gems/transform/reformat)                                                                                                               | Updates rows with sequential transformations inside a Reformat gem.                                                     |
+| Oversample Field    | [Filter](/data-engineering/gems/transform/filter) + [SetOperation](/data-engineering/gems/transform/set-operation)                                                | Uses Filter and Union operations to oversample fields with appropriate counts.                                          |
+| Random % Sample     | [SampleRows](/data-engineering/gems/transform/sample-rows)                                                                                                          | Generates a random sample of records, optionally grouped on specific fields.                                            |
 | Record ID           | [Sequence](https://transpiler.docs.prophecy.io/abinitio/abinitio-gems/sequence)                                                                                       | Generates IDs for each record starting from an initial value and incrementing by a fixed amount.                        |
-| Sample              | [SampleRows](https://docs.prophecy.io/engineers/sample-rows)                                                                                                          | Samples records by selecting a specific number or percentage of records.                                                |
-| Select Records      | [Sequence](https://transpiler.docs.prophecy.io/abinitio/abinitio-gems/sequence) + [Filter](https://docs.prophecy.io/engineers/filter)                                 | Combines Sequence and Filter Gems to generate record IDs and choose subsets of records.                                 |
-| Select              | [Reformat](https://docs.prophecy.io/engineers/reformat)                                                                                                               | Includes, excludes, reorders, casts, or renames columns.                                                                |
-| Sort                | [OrderBy](https://docs.prophecy.io/engineers/order-by)                                                                                                                | Sorts incoming records based on one or more selected fields.                                                            |
-| Tile                | [WindowFunction](https://docs.prophecy.io/engineers/window-function)                                                                                                  | Assigns tile values to each record using the `ntile()` function.                                                        |
-| Unique              | [Deduplicate](https://docs.prophecy.io/engineers/deduplicate)                                                                                                         | Filters unique rows based on specified columns.                                                                         |
+| Sample              | [SampleRows](/data-engineering/gems/transform/sample-rows)                                                                                                          | Samples records by selecting a specific number or percentage of records.                                                |
+| Select Records      | [Sequence](https://transpiler.docs.prophecy.io/abinitio/abinitio-gems/sequence) + [Filter](/data-engineering/gems/transform/filter)                                 | Combines Sequence and Filter Gems to generate record IDs and choose subsets of records.                                 |
+| Select              | [Reformat](/data-engineering/gems/transform/reformat)                                                                                                               | Includes, excludes, reorders, casts, or renames columns.                                                                |
+| Sort                | [OrderBy](/data-engineering/gems/transform/order-by)                                                                                                                | Sorts incoming records based on one or more selected fields.                                                            |
+| Tile                | [WindowFunction](/data-engineering/gems/transform/window-function)                                                                                                  | Assigns tile values to each record using the `ntile()` function.                                                        |
+| Unique              | [Deduplicate](/data-engineering/gems/transform/deduplicate)                                                                                                         | Filters unique rows based on specified columns.                                                                         |
 
 ## Join
 
 | Alteryx Tool  | Equivalent Prophecy Gems                                         | Description                                                  |
 | ------------- | ---------------------------------------------------------------- | ------------------------------------------------------------ |
-| Append Fields | [Join](https://docs.prophecy.io/engineers/join)                  | When the condition is true, performs Inner/Outer Join.       |
-| Find Replace  | [Reformat](https://docs.prophecy.io/engineers/reformat)          | Finds and replaces string matches in a column.               |
-| Join          | [Join](https://docs.prophecy.io/engineers/join)                  | Joins two data sources based on a common field.              |
-| Join Multiple | [Join](https://docs.prophecy.io/engineers/join)                  | Joins multiple data sources on a common field.               |
-| Make Group    | [Script](https://docs.prophecy.io/engineers/script)              | Identifies relationships across fields using custom logic.   |
-| Union         | [SetOperation](https://docs.prophecy.io/engineers/set-operation) | Combines records from multiple data sources into one output. |
+| Append Fields | [Join](/data-engineering/gems/join-split/join)                  | When the condition is true, performs Inner/Outer Join.       |
+| Find Replace  | [Reformat](/data-engineering/gems/transform/reformat)          | Finds and replaces string matches in a column.               |
+| Join          | [Join](/data-engineering/gems/join-split/join)                  | Joins two data sources based on a common field.              |
+| Join Multiple | [Join](/data-engineering/gems/join-split/join)                  | Joins multiple data sources on a common field.               |
+| Make Group    | [Script](/data-engineering/gems/custom/script)              | Identifies relationships across fields using custom logic.   |
+| Union         | [SetOperation](/data-engineering/gems/transform/set-operation) | Combines records from multiple data sources into one output. |
 
 ## Parse
 
 | Alteryx Tool    | Equivalent Prophecy Gems                                                                                                          | Description                                                                            |
 | --------------- | --------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| DateTime        | [Reformat](https://docs.prophecy.io/engineers/reformat)                                                                           | Uses data functions such as `current_date()` to manipulate date and time fields.       |
-| RegEx           | [Reformat](https://docs.prophecy.io/engineers/reformat) or [SchemaTransform](https://docs.prophecy.io/engineers/schema-transform) | Uses regex functions such as `regex_replace()` and `regex_extract()` for parsing data. |
-| Text to Columns | [Script](https://docs.prophecy.io/engineers/script)                                                                               | Implements custom parsing logic to split text into multiple columns.                   |
-| XML Parse       | [ColumnParser](https://docs.prophecy.io/engineers/column-parser)                                                                  | Parses input JSON or XML fields with schema inference or predefined schema.            |
+| DateTime        | [Reformat](/data-engineering/gems/transform/reformat)                                                                           | Uses data functions such as `current_date()` to manipulate date and time fields.       |
+| RegEx           | [Reformat](/data-engineering/gems/transform/reformat) or [SchemaTransform](/data-engineering/gems/transform/schema-transform) | Uses regex functions such as `regex_replace()` and `regex_extract()` for parsing data. |
+| Text to Columns | [Script](/data-engineering/gems/custom/script)                                                                               | Implements custom parsing logic to split text into multiple columns.                   |
+| XML Parse       | [ColumnParser](/data-engineering/gems/transform/column-parser)                                                                  | Parses input JSON or XML fields with schema inference or predefined schema.            |
 
 ## Transform
 
 | Alteryx Tool     | Equivalent Prophecy Gems                                                                                                                  | Description                                                                      |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| Arrange          | [Reformat](https://docs.prophecy.io/engineers/reformat)                                                                                   | Rearranges columns in the dataset.                                               |
-| Count Records    | [Reformat](https://docs.prophecy.io/engineers/reformat)                                                                                   | Uses the `count()` function to count records in a dataset.                       |
-| Cross Tab        | [Aggregate](https://docs.prophecy.io/engineers/aggregate)                                                                                 | Pivots data on unique values of a specified column.                              |
-| Make Columns     | [Reformat](https://docs.prophecy.io/engineers/reformat) + [WindowFunction](https://docs.prophecy.io/Spark/gems/transform/window-function) | Wraps rows of data into columns.                                                 |
-| Running Total    | [WindowFunction](https://docs.prophecy.io/engineers/window-function)                                                                      | Calculates a cumulative sum on a numeric field using unbounded precedence.       |
-| Summarize        | [Aggregate](https://docs.prophecy.io/engineers/aggregate)                                                                                 | Performs functions and calculations on data (excluding domain-specific actions). |
-| Transpose        | [Script](https://docs.prophecy.io/engineers/script)                                                                                       | Uses pivoting logic to change data orientation.                                  |
-| Weighted Average | [Aggregate](https://docs.prophecy.io/engineers/aggregate)                                                                                 | Computes a weighted average using required expressions.                          |
+| Arrange          | [Reformat](/data-engineering/gems/transform/reformat)                                                                                   | Rearranges columns in the dataset.                                               |
+| Count Records    | [Reformat](/data-engineering/gems/transform/reformat)                                                                                   | Uses the `count()` function to count records in a dataset.                       |
+| Cross Tab        | [Aggregate](/data-engineering/gems/transform/aggregate)                                                                                 | Pivots data on unique values of a specified column.                              |
+| Make Columns     | [Reformat](/data-engineering/gems/transform/reformat) + [WindowFunction](/data-engineering/gems/transform/window-function) | Wraps rows of data into columns.                                                 |
+| Running Total    | [WindowFunction](/data-engineering/gems/transform/window-function)                                                                      | Calculates a cumulative sum on a numeric field using unbounded precedence.       |
+| Summarize        | [Aggregate](/data-engineering/gems/transform/aggregate)                                                                                 | Performs functions and calculations on data (excluding domain-specific actions). |
+| Transpose        | [Script](/data-engineering/gems/custom/script)                                                                                       | Uses pivoting logic to change data orientation.                                  |
+| Weighted Average | [Aggregate](/data-engineering/gems/transform/aggregate)                                                                                 | Computes a weighted average using required expressions.                          |
 
 ## Lab
 
 | Alteryx Tool    | Equivalent Prophecy Gems                                  | Description                                                            |
 | --------------- | --------------------------------------------------------- | ---------------------------------------------------------------------- |
-| JSON Build      | [Script](https://docs.prophecy.io/engineers/script)       | Builds JSON using functions from the `ProphecyLibs` package.           |
-| Transpose in-DB | [Aggregate](https://docs.prophecy.io/engineers/aggregate) | Uses pivoting logic to transform data orientation within the database. |
+| JSON Build      | [Script](/data-engineering/gems/custom/script)       | Builds JSON using functions from the `ProphecyLibs` package.           |
+| Transpose in-DB | [Aggregate](/data-engineering/gems/transform/aggregate) | Uses pivoting logic to transform data orientation within the database. |
 
 ## Developer
 
 | Alteryx Tool    | Equivalent Prophecy Gems                                                  | Description                                                         |
 | --------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| Base64 Encoder  | [Reformat](https://docs.prophecy.io/engineers/reformat)                   | Encodes a string field as Base64 using the `base64()` function.     |
-| Download        | [RestAPIEnrich](https://docs.prophecy.io/engineers/rest-api-enrich)       | Enriches a DataFrame by adding columns from REST API output.        |
-| Dynamic Input   | [TableIterator](https://docs.prophecy.io/engineers/table-iterator)        | Iterates over Gems for each row of the input DataFrame.             |
-| Dynamic Rename  | [BulkColumnRename](https://docs.prophecy.io/engineers/bulk-column-rename) | Renames multiple columns systematically.                            |
-| Dynamic Replace | [DynamicReplace](https://docs.prophecy.io/engineers/dynamic-replace)      | Dynamically replaces field values based on user-defined conditions. |
-| Dynamic Select  | [DynamicSelect](https://docs.prophecy.io/engineers/dynamic-select)        | Dynamically filters columns based on conditions.                    |
-| JSON Parse      | [ColumnParser](https://docs.prophecy.io/engineers/column-parser)          | Parses JSON or XML into a tabular format.                           |
-| Python          | [Script](https://docs.prophecy.io/engineers/script)                       | Lets you write custom Python code for transformations.              |
-| Test            | [Script](https://docs.prophecy.io/engineers/script)                       | Compares data using custom test logic.                              |
+| Base64 Encoder  | [Reformat](/data-engineering/gems/transform/reformat)                   | Encodes a string field as Base64 using the `base64()` function.     |
+| Download        | [RestAPIEnrich](/data-engineering/gems/custom/rest-api-enrich)       | Enriches a DataFrame by adding columns from REST API output.        |
+| Dynamic Input   | [TableIterator](/data-engineering/gems/subgraph/tableIterator)        | Iterates over Gems for each row of the input DataFrame.             |
+| Dynamic Rename  | [BulkColumnRename](/data-engineering/gems/transform/bulk-column-rename) | Renames multiple columns systematically.                            |
+| Dynamic Replace | [DynamicReplace](/data-engineering/gems/transform/dynamic-replace)      | Dynamically replaces field values based on user-defined conditions. |
+| Dynamic Select  | [DynamicSelect](/data-engineering/gems/transform/dynamic-select)        | Dynamically filters columns based on conditions.                    |
+| JSON Parse      | [ColumnParser](/data-engineering/gems/transform/column-parser)          | Parses JSON or XML into a tabular format.                           |
+| Python          | [Script](/data-engineering/gems/custom/script)                       | Lets you write custom Python code for transformations.              |
+| Test            | [Script](/data-engineering/gems/custom/script)                       | Compares data using custom test logic.                              |
 
 ## Macros
 
 | Alteryx Macro | Equivalent Prophecy Gems                                           | Description                                                                                            |
 | ------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
-| Standard      | [Subgraph](https://docs.prophecy.io/engineers/subgraph/)           | Encapsulates multiple Gems within a single, reusable parent Gem for modular pipelines.                 |
-| Batch         | [TableIterator](https://docs.prophecy.io/engineers/table-iterator) | Iterates over a subgraph for each input row.                                                           |
-| Iterative     | [WhileIterator](https://docs.prophecy.io/engineers/while-iterator) | Recursively processes rows until the result set is empty or a maximum number of iterations is reached. |
+| Standard      | [Subgraph](/data-engineering/gems/subgraph/subgraph)           | Encapsulates multiple Gems within a single, reusable parent Gem for modular pipelines.                 |
+| Batch         | [TableIterator](/data-engineering/gems/subgraph/tableIterator) | Iterates over a subgraph for each input row.                                                           |
+| Iterative     | [WhileIterator](/data-engineering/gems/subgraph/while-iterator) | Recursively processes rows until the result set is empty or a maximum number of iterations is reached. |
 
 <Note>
-If you don't see a particular component on this list, you can include custom abilities beyond custom scripting. To learn more, see [Gem Builder for Spark](https://docs.prophecy.io/engineers/gem-builder/).
+If you don't see a particular component on this list, you can include custom abilities beyond custom scripting. To learn more, see [Gem Builder for Spark](/data-engineering/extensibility/gem-builder/gem-builder-reference).
 </Note>
