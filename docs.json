@@ -1148,7 +1148,7 @@
                   "import-tool/Alteryx/alteryx-to-databricks-sql/databricks-functions-mappings",
                   "import-tool/Alteryx/alteryx-to-databricks-sql/databricks-performance-tuning",
                   {
-                    "group": "Alteryx tool mapping",
+                    "group": "Tool mapping",
                     "pages": [
                       "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-tool-mapping",
                       {
@@ -1182,8 +1182,9 @@
               {
                 "group": "Alteryx to Spark",
                 "pages": [
-                  "import-tool/Alteryx/alteryx-to-spark/alteryx-components",
-                  "import-tool/Alteryx/alteryx-to-spark/alteryx-to-spark"
+                  "import-tool/Alteryx/alteryx-to-spark/alteryx-to-spark",
+                  "import-tool/Alteryx/alteryx-to-spark/alteryx-components"
+
                 ]
               },
               {
@@ -1196,14 +1197,6 @@
             "dropdown": "Informatica",
             "icon": "/images/import/logo-informatica.svg",
             "groups": [
-              {
-                "group": "Import overview",
-                "pages": [
-                  "import-tool/index",
-                  "import-tool/migration",
-                  "import-tool/get-help"
-                ]
-              },
               {
                 "group": "Getting started",
                 "pages": [
@@ -1233,14 +1226,6 @@
             "dropdown": "Ab Initio",
             "icon": "/images/import/logo-abinitio.svg",
             "groups": [
-              {
-                "group": "Import overview",
-                "pages": [
-                  "import-tool/index",
-                  "import-tool/migration",
-                  "import-tool/get-help"
-                ]
-              },
               {
                 "group": "Getting started",
                 "pages": [
@@ -1280,14 +1265,6 @@
             "dropdown": "DataStage",
             "icon": "/images/import/logo-ibm.svg",
             "groups": [
-              {
-                "group": "Import overview",
-                "pages": [
-                  "import-tool/index",
-                  "import-tool/migration",
-                  "import-tool/get-help"
-                ]
-              },
               {
                 "group": "Getting started",
                 "pages": [
