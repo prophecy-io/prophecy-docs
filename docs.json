@@ -805,9 +805,15 @@
                               "data-engineering/fabrics/spark-provider/emr/emr-saml"
                             ]
                           },
+                          {
+                            "group": "Livy",
+                            "pages": [
+                              "data-engineering/fabrics/spark-provider/livy/livy",
+                              "data-engineering/fabrics/spark-provider/livy/selective-sampling"
+                            ]
+                          },
                           "data-engineering/fabrics/spark-provider/dataproc",
                           "data-engineering/fabrics/spark-provider/synapsefabric",
-                          "data-engineering/fabrics/spark-provider/livy",
                           "data-engineering/fabrics/spark-provider/prophecy-managed"
                         ]
                       },

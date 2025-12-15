@@ -1,14 +1,14 @@
 ---
-title: Set up Prophecy libraries in Databricks volumes
-sidebarTitle: ProphecyLibs in volumes
-description: Add ProphecyLibs directly to volumes when Maven/PyPI is blocked on Databricks
+title: Set up libraries in Databricks volumes
+sidebarTitle: Set up libraries in volumes
+description: Add libraries directly to volumes when Maven/PyPI is blocked on Databricks
 ---
 
 <Callout icon="/images/icon.png" color="#FFC107">
   Available for [Enterprise Edition](/data-engineering/administration/platform/editions) only.
 </Callout>
 
-If Maven or PyPI is blocked in your Databricks environment, you can add Prophecy libraries directly to Databricks volumes.
+If Maven or PyPI is blocked in your Databricks environment, you can add libraries directly to Databricks volumes.
 
 ## Prerequisites
 
@@ -38,25 +38,89 @@ To get started, you'll need to define a Databricks volume where you will store t
    databricks volumes create --name prophecy-libs --storage-location <your-volume-location>
    ```
 
-1. Download [pyhocon](https://pypi.org/project/pyhocon/) from PyPI or an internal artifactory.
+## Download library dependencies
 
-1. Upload the dependency to the volumes path.
+Depending on your Databricks Runtime version, you will need to download certain additional libraries (Python only).
+
+<AccordionGroup>
+<Accordion title="Databricks Runtime 16.4 and 17.3 LTS">
+
+Review the following required and optional libraries:
+
+| Name      | Version         | Purpose                                                                                                                                | Wheel file                                                                                        |
+| --------- | --------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| pyhocon   | 0.3.59 or later | General purpose dependency                                                                                                             | `pyhocon-0.3.61-py3-none-any.whl`                                                                 |
+| hvac      | 2.3.0           | To access Hashicorp secrets                                                                                                            | `hvac-2.3.0-py3-none-any.whl`                                                                     |
+| zstandard | 0.23.0 or later | (Optional) For [selective data sampling](/data-engineering/development/runs/data-sampling#selective-sampling) performance improvements | `zstandard-0.25.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl`                     |
+| msgspec   | 0.18.6 or later | (Optional) For [selective data sampling](/data-engineering/development/runs/data-sampling#selective-sampling) performance improvements | `msgspec-0.20.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl` |
+
+</Accordion>
+
+<Accordion title="Databricks Runtime 15.4 LTS">
+
+Review the following required and optional libraries:
+
+| Name      | Version         | Purpose                                                                                                                                | Wheel file                                                                                        |
+| --------- | --------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| pyhocon   | 0.3.59 or later | General purpose dependency                                                                                                             | `pyhocon-0.3.61-py3-none-any.whl`                                                                 |
+| hvac      | 2.3.0           | To access Hashicorp secrets                                                                                                            | `hvac-2.3.0-py3-none-any.whl`                                                                     |
+| zstandard | 0.23.0 or later | (Optional) For [selective data sampling](/data-engineering/development/runs/data-sampling#selective-sampling) performance improvements | `zstandard-0.25.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl`                     |
+| msgspec   | 0.18.6 or later | (Optional) For [selective data sampling](/data-engineering/development/runs/data-sampling#selective-sampling) performance improvements | `msgspec-0.20.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl` |
+
+</Accordion>
+
+<Accordion title="Databricks Runtime 13.3 and 14.3 LTS">
+
+Review the following required and optional libraries:
+
+| Name      | Version         | Purpose                                                                                                                                | Wheel file                                                                                        |
+| --------- | --------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| pyhocon   | 0.3.59 or later | General purpose dependency                                                                                                             | `pyhocon-0.3.61-py3-none-any.whl`                                                                 |
+| hvac      | 2.3.0           | To access Hashicorp secrets                                                                                                            | `hvac-2.3.0-py3-none-any.whl`                                                                     |
+| zstandard | 0.23.0 or later | (Optional) For [selective data sampling](/data-engineering/development/runs/data-sampling#selective-sampling) performance improvements | `zstandard-0.25.0-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.whl`                     |
+| msgspec   | 0.18.6 or later | (Optional) For [selective data sampling](/data-engineering/development/runs/data-sampling#selective-sampling) performance improvements | `msgspec-0.20.0-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl` |
+
+</Accordion>
+
+<Accordion title="Databricks Runtime 12.2 LTS">
+
+Review the following required and optional libraries:
+
+| Name      | Version         | Purpose                                                                                                                                | Wheel file                                                                                      |
+| --------- | --------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| pyhocon   | 0.3.59 or later | General purpose dependency                                                                                                             | `pyhocon-0.3.61-py3-none-any.whl`                                                               |
+| hvac      | 2.3.0           | To access Hashicorp secrets                                                                                                            | `hvac-2.3.0-py3-none-any.whl`                                                                   |
+| zstandard | 0.23.0 or later | (Optional) For [selective data sampling](/data-engineering/development/runs/data-sampling#selective-sampling) performance improvements | `zstandard-0.25.0-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.whl`                     |
+| msgspec   | 0.18.6 or later | (Optional) For [selective data sampling](/data-engineering/development/runs/data-sampling#selective-sampling) performance improvements | `msgspec-0.20.0-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl` |
+
+</Accordion>
+</AccordionGroup>
+
+To install dependencies, follow the steps below:
+
+1. Download the appropriate wheel files for each dependency you need to install. Refer to the tables above for the specific wheel file names based on your Databricks Runtime version.
+
+1. Upload each dependency to the volumes path. Repeat this step for every dependency:
 
    ```
    databricks fs cp pyhocon-0.3.61-py3-none-any.whl /Volumes/<your-volume-location>/prophecy-libs/
+   databricks fs cp hvac-2.3.0-py3-none-any.whl /Volumes/<your-volume-location>/prophecy-libs/
+   # Add additional dependencies as needed
    ```
 
-1. Create a local Init Script. For example, create `install_pyhocon.sh` with the following content:
+1. Create a local Init Script that installs all dependencies. For example, create `install_dependencies.sh` with the following content, including all dependencies you uploaded:
 
    ```
    #!/bin/bash
    pip install /Volumes/<your-volume-location>/prophecy-libs/pyhocon-0.3.61-py3-none-any.whl
+   pip install /Volumes/<your-volume-location>/prophecy-libs/hvac-2.3.0-py3-none-any.whl
+   # Add pip install commands for each additional dependency
    ```
 
 1. Upload the script to your volumes path.
 
    ```
-   databricks fs cp install_pyhocon.sh /Volumes/<your-volume-location>/prophecy-libs/
+   databricks fs cp install_dependencies.sh /Volumes/<your-volume-location>/prophecy-libs/
    ```
 
 ## Upload Prophecy libraries
