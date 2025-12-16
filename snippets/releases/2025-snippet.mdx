@@ -1,3 +1,14 @@
+<Update label="Prophecy 4.2.4" description="December 26, 2025" tags={["Data Engineering"]}>
+
+## ProphecySparkBasicsPython v0.2.54
+
+This new version of the ProphecySparkBasicsPython package includes the following enhancements:
+
+- Added support for bulk updating target columns during [SCD1 Delta merge](/data-engineering/gems/source-target/file/delta#scd1). This way, you don't have to write individual update expressions for each column.
+- Added support for lateral column aliases in [Reformat](data-engineering/gems/transform/reformat) and [Join](/data-engineering/gems/join-split/join) gems. Lateral column aliasing in PySpark allows you to reuse a column alias defined earlier in the same clause.
+
+</Update>
+
 <Update label="Prophecy 4.2.3.1" description="December 12, 2025" tags={["Data Analysis"]}>
 
 ## Data test API
@@ -431,7 +442,7 @@ You can now update all Spark dependencies simultaneously using the new **Update 
 - New Oracle, Redshift, and OneDrive connections
 - Parquet file support enabled for Amazon S3 and SFTP connections
 
-## `ProphecyDatabricksSqlSpatial 0.0.1`
+## ProphecyDatabricksSqlSpatial v0.0.1
 
 This package contains the following new spatial gems:
 
