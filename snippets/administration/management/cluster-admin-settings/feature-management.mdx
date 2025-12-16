@@ -1,0 +1,30 @@
+<Callout icon="/images/icon.png" color="#FFC107">
+  Available for the [Enterprise Edition](/data-engineering/administration/platform/editions) only.
+</Callout>
+
+Feature flags control which capabilities are available to users in your Prophecy deployment. Use them to restrict access to specific platform features, manage fabric types, or toggle AI functionality without having to directly modify your Kubernetes configuration.
+
+Access feature management from **Settings > Admin > Feature Management**. Any changes you make to feature flags take effect only after you restart your Prophecy deployment.
+
+## Feature list
+
+The following features are available in the Feature Management tab.
+
+<Note>
+  While Prophecy provides the following features flags in the Admin settings UI, there are
+  additional features that are set directly in your Kubernetes deployment. Reach out to the [Support
+  team](mailto:support@prophecy.io) if you need any other customization.
+</Note>
+
+| Feature                                            | Description                                                                                                                                           |
+| -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Prophecy Automate                                  | Enable or disable [Prophecy Automate](/data-analysis/administration/platform/architecture) for your deployment.                                       |
+| Limit to Prophecy Automate fabrics only            | When enabled, users can only create [Prophecy fabrics](/data-analysis/environment/fabrics/prophecy-fabrics) and cannot create other types of fabrics. |
+| Enable Databricks SQL warehouse classic fabrics    | When enabled, users can create [SQL fabrics](/data-engineering/fabrics/sql-provider/databricks) with Databricks as the provider.                      |
+| Enable Google BigQuery fabrics                     | When enabled, users can create Prophecy fabrics with Google BigQuery as the provider.                                                                 |
+| Enable Snowflake fabrics                           | When enabled, users can create SQL fabrics with Snowflake as the provider.                                                                            |
+| Artificial Intelligence                            | Enable or disable Copilot in your deployment.                                                                                                         |
+| AI Agents                                          | Enable or disable Agents in your deployment.                                                                                                          |
+| Transpiler                                         | Enable or disable the transpiler for your deployment.                                                                                                 |
+| SCIM (System for Cross-domain Identity Management) | Enable or disable SCIM for your deployment.                                                                                                           |
+| Full Text Search                                   | Enable or disable full text search for your deployment.                                                                                               |
