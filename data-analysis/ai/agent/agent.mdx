@@ -1,23 +1,51 @@
 ---
 title: 'Overview'
-description: 'What does the Agent do?'
+description: 'Build data pipelines faster with the Prophecy Agent'
 ---
 
-The Prophecy Agent uses natural language to interact with your data warehouse and build pipelines.
+## What does the Agent do?
 
-Describe what you need, and the Agent searches metadata, retrieves sample data, generates transformations, and optimizes existing pipelines. Use it to build pipelines incrementally or generate complete pipelines from a single prompt.
+The Prophecy Agent uses natural language to interact with your data warehouse and build pipelines. Describe what you need, and the Agent searches metadata, retrieves sample data, generates transformations, and optimizes existing pipelines. Use it to build pipelines incrementally or generate complete pipelines from a single prompt.
+
+## Why use the Agent?
+
+The Agent accelerates pipeline development by eliminating manual steps in the development workflow. Instead of browsing schema lists, manually configuring gems, or writing documentation from scratch, you describe your intent and the Agent handles the implementation. This reduces switching between tools, decreases the time spent on repetitive configuration tasks, and allows you to focus on the business logic.
+
+## Workflow
+
+The Agent handles three primary intents throughout the pipeline development lifecycle:
+
+- [Exploration](/data-analysis/ai/agent/explore) for discovering and understanding data sources.
+- [Transformation](/data-analysis/ai/agent/transform) for building and modifying pipeline logic.
+- [Documentation](/data-analysis/ai/agent/documentation/documentation) for generating complete project and pipeline documentation.
+
+Use the Agent to search your data warehouse, preview datasets, and validate data quality before building transformations. During transformation, describe data operations in natural language to generate gems and modify pipeline logic. After completing your pipeline, use documentation to automatically generate Markdown files that describe your project structure and pipeline logic.
+
+```mermaid
+graph TD
+    A[Start Project] --> B[Find Data Sources]
+    B -->|Exploration Agent| C[Preview & Validate Data]
+    C -->|Exploration Agent| D[Add Sources to Pipeline]
+    D --> E[Build Pipeline Logic]
+    E -->|Transformation Agent| F[Review & Refine]
+    F -->|Human in the loop| G{Complete?}
+    G -->|No| E
+    G -->|Yes| H[Generate Documentation]
+    H -->|Documentation Agent| I[Deploy & Maintain]
+```
 
 ## Available features
 
 <AccordionGroup>
 
-<Accordion title="Search through your connected warehouse">
+<Accordion title="Search through your data environment">
   Use table metadata—table names, schemas, owners, and tags—to locate datasets from your fabric.
   When you don't know the exact table name or work with many tables, searching through metadata
-  eliminates guesswork and reduces time spent browsing schema lists.
+  eliminates guesswork and reduces time spent browsing schema lists. You can find data from your
+  connected data warehouse, cloud storage, reporting platforms, and other sources.
 </Accordion>
 
-<Accordion title="Retrieve and visualize sample data from the warehouse">
+<Accordion title="Retrieve and visualize sample data from your data environment">
   Preview data samples and visualizations before selecting datasets for your pipeline. Understanding
   column structures, data patterns, and potential quality issues helps you make informed decisions
   about which tables to use.
@@ -47,11 +75,6 @@ Describe what you need, and the Agent searches metadata, retrieves sample data, 
 ## Features in progress
 
 <AccordionGroup>
-
-<Accordion title="Search through external connections and APIs">
-  Search for data in your fabric beyond your connected data warehouse, including cloud storage,
-  reporting platforms, and other sources.
-</Accordion>
 
 <Accordion title="Find tables based on similar datasets">
   Provide sample data to the Agent and retrieve similar datasets from your fabric.
