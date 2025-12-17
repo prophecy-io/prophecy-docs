@@ -8,7 +8,15 @@ description: Define an execution environment for your project
   creating new fabrics.
 </Callout>
 
-Use the following instructions to create a Prophecy fabric.
+Fabrics define your Prophecy project execution environment, including the compute (execution) resources. While Prophecy provides some compute, most users need to connect to their own compute. We support a variety of providers for compute, catering to each provider's capabilities. For examples, some providers support running SQL queries, some providers only provide Spark clusters, and some providers support both.
+
+For **data analysis** in SQL, we support the following providers:
+
+- [Prophecy In Memory](/data-analysis/environment/connections/prophecy-managed)
+- [Databricks SQL](/data-analysis/environment/connections/databricks)
+- [BigQuery](/data-analysis/environment/connections/bigquery)
+
+The following instructions are for creating a fabric for data analysis connection to a SQL warehouse.
 
 ## Create a new fabric
 
