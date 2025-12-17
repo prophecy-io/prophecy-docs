@@ -57,12 +57,25 @@ Prophecy fabrics are provisioned differently depending on your [Prophecy edition
 
 <Note>Free and Professional Editions do not support creating new fabrics.</Note>
 
-## Supported primary SQL warehouses
+## Supported SQL warehouses
 
-Prophecy fabrics can be connected to one of several primary SQL warehouses. The warehouse you choose provides the compute and determines the SQL dialect for all pipelines in the fabric.
+While the Profession Edition of Prophecy includes built-in compute, Enterprise users need to connect Prophecy to their own compute environment. Prophecy supports multiple compute providers and adapts to each provider's capabilities:
 
-| SQL Warehouse      | Description                                                                                                                                                                        |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Prophecy In Memory | Exclusive to Free and Professional Editions. This warehouse is fully managed by Prophecy and powered by DuckDB. All pipeline transformations execute using the DuckDB SQL dialect. |
-| Databricks SQL     | Supported in Express and Enterprise Editions. Connect your own Databricks SQL warehouse to run pipeline transformations.                                                           |
-| Google BigQuery    | Supported in Enterprise Edition. Connect to your BigQuery environment to run pipeline transformations.                                                                             |
+- Some providers support SQL execution only.
+- Some providers support Spark execution only.
+- Some providers support both SQL and Spark.
+
+For **data analysis** in SQL, we support the following SQL warehouse providers:
+
+| SQL Warehouse                                                                  | Description                                                                                                                                                                        |
+| ------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Prophecy In Memory                                                             | Exclusive to Free and Professional Editions. This warehouse is fully managed by Prophecy and powered by DuckDB. All pipeline transformations execute using the DuckDB SQL dialect. |
+| [Databricks SQL](/data-analysis/environment/fabrics/create-fabrics/databricks) | Supported in Express and Enterprise Editions. Connect your own Databricks SQL warehouse to run pipeline transformations.                                                           |
+| [Google BigQuery](/data-analysis/environment/fabrics/create-fabrics/bigquery)  | Supported in Enterprise Edition. Connect to your BigQuery environment to run pipeline transformations.                                                                             |
+
+<Note>
+  The warehouse you choose provides the compute and determines the SQL dialect for all pipelines in
+  the fabric.
+</Note>
+
+Visit each provider page to learn more about how to connect to the provider and configure the fabric.

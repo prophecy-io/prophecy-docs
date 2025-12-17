@@ -1,0 +1,69 @@
+---
+title: Databricks
+description: Connect Prophecy to your Databricks SQL warehouse
+---
+
+To create a fabric using Databricks as the provider, follow the steps below.
+
+<Steps>
+<Step title="Create a new fabric entity">
+Begin by creating a new fabric entity in Prophecy.
+
+1. From the left sidebar, click the **+** sign.
+1. On the Create Entity page, select **Fabric**.
+
+</Step>
+
+<Step title="Fill in the Basic Info tab">
+The **Basic Info** tab lets you define the key identifiers of the fabric.
+
+1. Provide a name for the fabric.
+1. (Optional) Provide a description for the fabric.
+1. Select a [team](/data-analysis/administration/management/teams/teams) that can access the fabric.
+1. Click **Continue**.
+
+</Step>
+
+<Step title="Fill in the Providers tab">
+The **Providers** tab allows you to configure the SQL warehouse provider you want to use. You cannot change the fabric provider after you create the fabric.
+
+1. Under **Provider**, select **Databricks**.
+1. Enter your Databricks Workspace URL.
+
+   Example: `https://dbc-<workspace-id>.cloud.databricks.com`.
+
+1. Select the authentication method you want to use.
+
+   <Note>
+     For detailed instructions, see [Authentication
+     methods](/data-analysis/environment/connections/databricks#authentication-methods).
+   </Note>
+
+1. Select the **SQL Warehouse** checkbox.
+1. Enter the **HTTP Path** for your[ Databricks SQL warehouse](https://docs.databricks.com/aws/en/integrations/compute-details).
+
+   Example: `/sql/1.0/warehouses/<warehouse-id>`.
+
+1. Provide the Databricks **Catalog** and **Schema** where Prophecy will write data to by default.
+1. Optionally, select the **Compute Cluster** checkbox and select the cluster you want to use for any Spark operations. Prophecy runs Spark on [Databricks serverless](/data-engineering/fabrics/spark-provider/databricks/databricks-serverless) when no compute cluster is selected.
+
+</Step>
+
+<Step title="Save the fabric">Click **Complete** to save the fabric.</Step>
+
+</Steps>
+
+<Note>
+  To add [secrets](/data-analysis/environment/secrets/secrets) and
+  [connections](/data-analysis/environment/connections/connections) to your fabric, you need to save
+  the fabric first.
+</Note>
+
+## Edit an existing fabric
+
+To edit an existing fabric:
+
+1. From the left sidebar, click the **Metadata** page.
+1. Navigate to the **Fabrics** tab.
+1. Open the fabric you want to edit.
+1. Update the fabric. Prophecy automatically saves your changes.
