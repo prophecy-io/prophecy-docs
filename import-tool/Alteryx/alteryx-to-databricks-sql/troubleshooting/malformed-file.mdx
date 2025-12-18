@@ -25,7 +25,7 @@ Following files have incorrect format: /customers.yxmd
 And, if you click **Transpile**, the transpilation fails and you get the following error:
 
 ```shell
-Transpilation failed with exception: org.xml.sax.SAXParseException; lineNumber 181; columnNumber: 15; The element type "AlteryxDocument" must be terminated by the matching end tag "</AlteryxDocument>".
+Transpilation failed with exception: org.xml.sax.SAXParseException; lineNumber 181; columnNumber: 15; The element type "AlteryxDocument" must be terminated by the matching end tag "</alteryxDocument>".
 ```
 
 ## Solution
@@ -44,4 +44,4 @@ Transpilation failed with exception: org.xml.sax.SAXParseException; lineNumber 1
     </Properties>
   ```
 
-  Add `</AlteryxDocument>` at the end of the file.
+  Add `</alteryxDocument>` at the end of the file.
