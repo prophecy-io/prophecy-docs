@@ -1,5 +1,13 @@
 <Update label="Prophecy 4.2.4" description="December 26, 2025" tags={["Data Engineering"]}>
 
+## Source and target file enhancements
+
+We've made several enhancements to the source and target gems for file storage systems:
+
+- **Compression**: Source gems can now read compressed files and target gems can now write compressed files in the following formats: `gzip`, `zstd`, `lz4`, `zlib`, `snappy`, and `lzop`.
+- **Examine**: Gems now have an **Examine** button in the **Location** tab. When you click the Examine button, Prophecy reads a small sample of the file to automatically determine the file format, compression type (if any), and schema.
+- **Encryption**: Target gems can now write encrypted files using the following encryption methods: `AES-192`, `AES-296`, and `BlowFish`. Source gems cannot read encrypted files.
+
 ## ProphecySparkBasicsPython v0.2.54
 
 This new version of the ProphecySparkBasicsPython package includes the following enhancements:

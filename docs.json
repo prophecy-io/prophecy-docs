@@ -283,8 +283,21 @@
                     ]
                   },
                   {
-                    "group": "File storage systems",
+                    "group": "Files",
                     "pages": [
+                      {
+                        "group": "File storage systems",
+                        "pages": [
+                          "data-analysis/gems/source-target/file/adls",
+                          "data-analysis/gems/source-target/file/s3",
+                          "data-analysis/gems/source-target/file/gcs",
+                          "data-analysis/gems/source-target/file/databricks-volumes",
+                          "data-analysis/gems/source-target/file/sftp",
+                          "data-analysis/gems/source-target/file/onedrive",
+                          "data-analysis/gems/source-target/file/sharepoint",
+                          "data-analysis/gems/source-target/file/smartsheet"
+                        ]
+                      },
                       {
                         "group": "File types",
                         "pages": [
@@ -296,15 +309,7 @@
                           "data-analysis/gems/source-target/file/file-types/text",
                           "data-analysis/gems/source-target/file/file-types/fixed-width"
                         ]
-                      },
-                      "data-analysis/gems/source-target/file/adls",
-                      "data-analysis/gems/source-target/file/s3",
-                      "data-analysis/gems/source-target/file/gcs",
-                      "data-analysis/gems/source-target/file/databricks-volumes",
-                      "data-analysis/gems/source-target/file/sftp",
-                      "data-analysis/gems/source-target/file/onedrive",
-                      "data-analysis/gems/source-target/file/sharepoint",
-                      "data-analysis/gems/source-target/file/smartsheet"
+                      }
                     ]
                   }
                 ]
