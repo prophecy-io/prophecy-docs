@@ -1229,6 +1229,13 @@
                   "import-tool/informatica/informatica-to-spark/informatica-to-spark",
                   "import-tool/informatica/informatica-to-spark/informatica-components"
                 ]
+              },
+              {
+                "group": "Informatica ICS to SQL",
+                "pages": [
+                  "import-tool/informatica/informatica-ics-to-spark/getting-started-with-informatica-ics",
+                  "import-tool/informatica/informatica-ics-to-spark/informatica-ics-components"
+                ]
               }
             ]
           },
