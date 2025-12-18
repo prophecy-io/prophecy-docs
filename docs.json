@@ -1139,42 +1139,52 @@
                   "import-tool/get-help"
                 ]
               },
-              {
+            {
                 "group": "Alteryx to SQL",
                 "pages": [
-                  "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-to-prophecy-sql",
-                  "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-to-databricks-sql",
-                  "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-connections",
-                  "import-tool/Alteryx/alteryx-to-databricks-sql/databricks-functions-mappings",
-                  "import-tool/Alteryx/alteryx-to-databricks-sql/databricks-performance-tuning",
-                  {
+                "import-tool/alteryx/alteryx-to-databricks-sql/alteryx-to-prophecy-sql",
+                "import-tool/alteryx/alteryx-to-databricks-sql/alteryx-to-databricks-sql",
+                "import-tool/alteryx/alteryx-to-databricks-sql/databricks-data-types",
+                "import-tool/alteryx/alteryx-to-databricks-sql/alteryx-connections",
+                "import-tool/alteryx/alteryx-to-databricks-sql/databricks-functions-mappings",
+                {
                     "group": "Tool mapping",
                     "pages": [
-                      "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-tool-mapping",
+                      "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-tool-mapping",
                       {
                         "group": "Alteryx In/Out tools",
                         "pages": [
-                          "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-in-out-tools/alteryx-browse-tool",
-                          "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-in-out-tools/alteryx-datetime-now",
-                          "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-in-out-tools/alteryx-directory-tool",
-                          "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-in-out-tools/alteryx-input-data-tool",
-                          "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-in-out-tools/alteryx-output-data-tool",
-                          "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-in-out-tools/alteryx-text-input-tool"
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-in-out-tools/alteryx-browse-tool",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-in-out-tools/alteryx-datetime-now",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-in-out-tools/alteryx-directory-tool",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-in-out-tools/alteryx-input-data-tool",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-in-out-tools/alteryx-output-data-tool",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-in-out-tools/alteryx-text-input-tool"
                         ]
                       },
                       {
                         "group": "Alteryx Prep tools",
                         "pages": [
-                          "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-prep-tools/alteryx-data-cleansing-tool",
-                          "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-prep-tools/alteryx-filter-tool",
-                          "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-prep-tools/alteryx-formula-tool",
-                          "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-prep-tools/alteryx-imputation-tool",
-                          "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-prep-tools/alteryx-multi-field-binning-tool",
-                          "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-prep-tools/alteryx-multi-field-formula-tool",
-                          "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-prep-tools/alteryx-multi-row-formula-tool",
-                          "import-tool/Alteryx/alteryx-to-databricks-sql/alteryx-tool-mapping/alteryx-prep-tools/alteryx-oversample-field-tool"
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-data-cleansing-tool",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-filter-tool",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-formula-tool",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-imputation-tool",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-field-binning-tool",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-field-formula-tool",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-row-formula-tool",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-oversample-field-tool"
                         ]
-                      }
+                      },
+                      "import-tool/alteryx/alteryx-to-databricks-sql/databricks-performance-tuning"
+                    ]
+                  },
+                  {
+                    "group": "Troubleshooting",
+                    "pages": [
+                      "import-tool/alteryx/alteryx-to-databricks-sql/troubleshooting/malformed-file",
+                      "import-tool/alteryx/alteryx-to-databricks-sql/troubleshooting/troubleshooting",
+                      "import-tool/alteryx/alteryx-to-databricks-sql/troubleshooting/unsupported-function",
+                      "import-tool/alteryx/alteryx-to-databricks-sql/troubleshooting/unsupported-tool"
                     ]
                   }
                 ]
@@ -1182,14 +1192,14 @@
               {
                 "group": "Alteryx to Spark",
                 "pages": [
-                  "import-tool/Alteryx/alteryx-to-spark/alteryx-to-spark",
-                  "import-tool/Alteryx/alteryx-to-spark/alteryx-components"
+                  "import-tool/alteryx/alteryx-to-spark/alteryx-to-spark",
+                  "import-tool/alteryx/alteryx-to-spark/alteryx-components"
 
                 ]
               },
               {
                 "group": "Migration Analysis",
-                "pages": ["import-tool/Alteryx/alteryx-migration-analysis"]
+                "pages": ["import-tool/alteryx/alteryx-migration-analysis"]
               }
             ]
           },
