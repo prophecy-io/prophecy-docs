@@ -1135,8 +1135,7 @@
                 "group": "Import overview",
                 "pages": [
                   "import-tool/index",
-                  "import-tool/migration",
-                  "import-tool/get-help"
+                  "import-tool/migration"
                 ]
               },
             {
