@@ -72,37 +72,40 @@ Prophecy does not support Alteryx's group-based outputs.
 Goal: Write a CSV to a shared network folder.
 
 Configuration:
-File path: \\corp-share\output\sales_clean.csv
-Max Records Per File: 1
-File Format: Comma Separated Value (CSV)
-Delimiters: ,
-First Row Contains Field Names: selected
-Quote Output Fields: Auto
-Code Page: Unicode UTF-8
-Line Ending Style: Windows
-Write BOM: selected
+
+- File path: \\corp-share\output\sales_clean.csv
+- Max Records Per File: 1
+- File Format: Comma Separated Value (CSV)
+- Delimiters: ,
+- First Row Contains Field Names: selected
+- Quote Output Fields: Auto
+- Code Page: Unicode UTF-8
+- Line Ending Style: Windows
+- Write BOM: selected
 
 ### Prophecy Target gem example
 
 Goal: Write a cleaned dataset to a BigQuery table.
 
 Configuration:
-Target: Bigquery
-Target location/Format type: big query
-Target location/Connection: Select or create BigQuery connection
-Target location/Dataset: analytics
-Target location/Name: sales_clean
-Properties/Description: Cleaned sales data
-Properties/Write Mode: Overwrite
+
+- Target: Bigquery
+- Target location/Format type: big query
+- Target location/Connection: Select or create BigQuery connection
+- Target location/Dataset: analytics
+- Target location/Name: sales_clean
+- Properties/Description: Cleaned sales data
+- Properties/Write Mode: Overwrite
 
 Alternative CSV example:
-Target Type: S3 file
-Target location/Format type: CSV
-Target location/Connection: Select or create Amazon S3 connection
-Target location/File path: /mnt/processed/sales/sales_clean.csv
-Properties/Description: Cleaned sales data.
-Separator: ,
-Header: selected
-Null Value: null (default)
-Allow Empty Column Names: selected
-File Encoding: UTF-8
+
+- Target Type: S3 file
+- Target location/Format type: CSV
+- Target location/Connection: Select or create Amazon S3 connection
+- Target location/File path: /mnt/processed/sales/sales_clean.csv
+- Properties/Description: Cleaned sales data.
+- Separator: ,
+- Header: selected
+- Null Value: null (default)
+- Allow Empty Column Names: selected
+- File Encoding: UTF-8
