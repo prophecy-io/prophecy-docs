@@ -22,8 +22,7 @@
                 "pages": [
                   "index",
                   "data-analysis/getting-started/concepts",
-                  "data-analysis/getting-started/quick-start",
-                  "data-analysis/getting-started/create-project"
+                  "data-analysis/getting-started/quick-start"
                 ]
               },
               {
@@ -76,6 +75,13 @@
               {
                 "group": "Development",
                 "pages": [
+                  {
+                    "group": "Projects",
+                    "pages": [
+                      "data-analysis/development/projects/create-project",
+                      "data-analysis/development/projects/project-languages"
+                    ]
+                  },
                   {
                     "group": "Studio",
                     "pages": [

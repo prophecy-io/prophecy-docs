@@ -1,0 +1,59 @@
+---
+title: 'Project languages'
+description: 'Supported languages for projects'
+---
+
+Prophecy supports two types of projects for data analysis. Hop to each section to learn more about each project type. The project type corresponds to the language Prophecy compiles your visual project components into.
+
+- [SQL](#sql)
+- [PySpark](#simplified-pyspark)
+
+## SQL
+
+Prophecy privileges SQL as the primary language for code generation for data analysis. Prophecy supports a variety of SQL warehouses to execute pipeline-generated SQL queries. For most use cases, use SQL as project language.
+
+## Simplified PySpark
+
+Simplified PySpark is a project type that abstracts PySpark into a simple, data analysis interface.Use PySpark when your organization has standardized on PySpark as the production codebase language. This makes the collaboration between data analysts and data engineers easier, as they can both use the same language.
+
+When you use PySpark, Prophecy generates Python files instead of SQL files. The visual interface remains unchanged—you continue working with SQL expressions and the same gem configurations.
+
+### Requirements
+
+- Databricks cluster available in your fabric. Simplified PySpark does not work with Databricks serverless or any other Spark provider, such as Amazon EMR.
+- You have to have both a SQL warehouse and a Databricks cluster configured in your fabric to use this project type. This is if you want to switch your project to SQL later.
+- You must have an init script in Databricks to install the necessary libraries on your cluster for this to work. The library installs functionality that is usually executed by Prophecy Automate.
+
+### How to create a PySpark project
+
+The steps to create a PySpark project are similar to creating a SQL project. The only difference is the project type.
+
+1. Click on the **Create Entity** button in the left navigation bar.
+2. Hover over the **Project** tile and select **Create**.
+3. Give your project a name.
+4. Under **Team**, select your personal team. (It will match your individual user email.)
+5. Under **Select Template**, choose **Custom**.
+6. For the **Project Type**, choose **Spark/Python (PySpark) > Simplified**.
+7. Click **Continue**.
+8. Under **Connect Git Account**, connect to an external Git provider or select Prophecy-managed Git.
+9. Click **Continue**.
+
+To save your project creation configuration, create a [project creation template](/data-analysis/administration/management/teams/settings/project-creation-template) that you can reuse for future projects.
+
+## Switch between SQL and PySpark
+
+Once you create a project, you can switch between SQL and PySpark. If you have
+
+1. Open your project settings.
+2. Navigate to development settings.
+3. Change the backend language from SQL to Python.
+
+Your fabric must have a Databricks compute cluster configured. PySpark pipelines run on Spark clusters instead of SQL warehouses.
+
+## Comparison matrix
+
+| Feature       | Comparison                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Gems          | Most transformation gems work identically in SQL and PySpark modes. Some gems gain additional capabilities in PySpark. For example, SQL can only write to one output at a time, while PySpark can write to multiple outputs. Some gems may not have PySpark implementations. If you switch to PySpark and use a gem without a Python implementation, Prophecy displays an error indicating that the gem doesn't support PySpark. |
+| Orchestration | PySpark pipelines can still be orchestrated using Prophecy Automate scheduling. However, you can also schedule using Databricks jobs. If you switch to SQL from PySpark, your project will not be compatible with Databricks jobs.                                                                                                                                                                                               |
+| Tests         | SQL projects support data tests. PySpark projects support data tests and unit tests.                                                                                                                                                                                                                                                                                                                                             |
