@@ -68,10 +68,12 @@ Alteryx uses its own internal method for computing quantile boundaries, which ma
 ### Alteryx Multi-Field Binning example
 
 Goal: Assign sales into 4 quartiles.
+
 Alteryx computes quartile boundaries and outputs a new `sales_tile` field containing a bin number from 1–4.
 
 ### Prophecy equivalent (Reformat + Aggregate + Join)
 
 Goal: Perform the same quartile assignment.
+
 Use an Aggregate or Window Function step to compute quartile boundaries for `sales`, join the result back, then assign bins in a Reformat gem using:
 `CASE WHEN sales < q1 THEN 1 WHEN sales < q2 THEN 2 WHEN sales < q3 THEN 3 ELSE 4 END`.
