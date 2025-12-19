@@ -1180,8 +1180,8 @@
                   {
                     "group": "Troubleshooting",
                     "pages": [
-                      "import-tool/alteryx/alteryx-to-databricks-sql/troubleshooting/malformed-file",
                       "import-tool/alteryx/alteryx-to-databricks-sql/troubleshooting/troubleshooting",
+                      "import-tool/alteryx/alteryx-to-databricks-sql/troubleshooting/malformed-file",
                       "import-tool/alteryx/alteryx-to-databricks-sql/troubleshooting/unsupported-function",
                       "import-tool/alteryx/alteryx-to-databricks-sql/troubleshooting/unsupported-tool"
                     ]

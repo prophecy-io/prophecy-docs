@@ -60,9 +60,11 @@ The **True** output contains matching rows; the **False** output contains all ot
 ### Prophecy equivalent (Filter gem)
 
 Condition:
-`Region = 'Europe' AND JoinDate < current_date()`
+
+```Region = 'Europe' AND JoinDate < current_date()```
 
 The gem's output will contain matching rows (the equivalent of the True branch).
 
 To reproduce the False branch, add a second Filter gem with:
-`NOT (Region = 'Europe' AND JoinDate < current_date())`
+
+```NOT (Region = 'Europe' AND JoinDate < current_date())```
