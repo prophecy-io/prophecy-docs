@@ -1,0 +1,117 @@
+---
+title: Function mapping
+description: List of supported Ab Initio Functions
+---
+
+While transpiling Ab Initio graphs to Prophecy pipelines, Transpiler has to convert core DML functions in Ab Initio into equivalent Spark or Plib (Prophecy library) functions.
+
+Below is a list of all the Ab Initio functions that are supported by Prophecy:
+
+| `Ab Initio Function`          | `Equivalent Prophecy Function`               | Function Type |
+| ----------------------------- | -------------------------------------------- | ------------- |
+| `accumulation`                | `collect_list`                               | Spark         |
+| `allocate`                    | `native spark object initialization`         | Spark         |
+| `allocate_with_defaults`      | `native spark object initialization`         | Spark         |
+| `allocate_with_nulls`         | `native spark object initialization`         | Spark         |
+| `ceiling`                     | `ceil`                                       | Spark         |
+| `char_string`                 | `char_string`                                | Plib          |
+| `date_add_months`             | `date_add_months`                            | Plib          |
+| `date_difference_days`        | `datediff`                                   | Spark         |
+| `date_month_end`              | `date_month_end`                             | Plib          |
+| `datetime_add`                | `datetime_add`                               | Plib          |
+| `datetime_difference`         | `datetime_difference`                        | Plib          |
+| `datetime_difference_abs`     | `datetime_difference`                        | Plib          |
+| `datetime_difference_days`    | `datediff`                                   | Spark         |
+| `datetime_difference_minutes` | `datetime_difference_minutes`                | Plib          |
+| `datetime_difference_months`  | `datetime_difference_months`                 | Plib          |
+| `datetime_difference_seconds` | `timestamp subtraction`                      | Spark         |
+| `decimal_lpad`                | `decimal_lpad`                               | Plib          |
+| `decimal_strip`               | `decimal_strip`                              | Plib          |
+| `deflate`                     | `deflate`                                    | Plib          |
+| `directory_listing`           | `directory_listing`                          | Plib          |
+| `ends_with`                   | `ends_with`                                  | Plib          |
+| `error_if_null`               | `error_if_null`                              | Plib          |
+| `eval`                        | `eval`                                       | Plib          |
+| `file_information`            | `file_information`                           | Plib          |
+| `first_defined`               | `coalesce`                                   | Spark         |
+| `first_without_error`         | `coalesce`                                   | Spark         |
+| `force_abort`                 | `force_error`                                | Plib          |
+| `force_error`                 | `force_error`                                | Plib          |
+| `is_blank`                    | `is_blank`                                   | Plib          |
+| `is_empty`                    | `is_empty`                                   | Plib          |
+| `is_error`                    | `isnan`                                      | Spark         |
+| `is_null`                     | `isnull`                                     | Spark         |
+| `is_valid`                    | `is_valid`                                   | Plib          |
+| `isnull`                      | `isnull`                                     | Spark         |
+| `length_of`                   | `size/length`                                | Spark         |
+| `lookup`                      | `lookup`                                     | Plib          |
+| `lookup_count`                | `lookup_count`                               | Plib          |
+| `lookup_count_local`          | `lookup_count`                               | Plib          |
+| `lookup_first`                | `lookup_first`                               | Plib          |
+| `lookup_last`                 | `lookup_last`                                | Plib          |
+| `lookup_local`                | `lookup`                                     | Plib          |
+| `lookup_match_local`          | `lookup_match`                               | Plib          |
+| `lookup_reverse_row`          | `lookup_reverse_row`                         | Plib          |
+| `lookup_row`                  | `lookup_row`                                 | Plib          |
+| `math_abs`                    | `abs`                                        | Spark         |
+| `math_acos`                   | `acos`                                       | Spark         |
+| `math_asin`                   | `asin`                                       | Spark         |
+| `math_cos`                    | `cos`                                        | Spark         |
+| `math_log`                    | `log`                                        | Spark         |
+| `math_min`                    | `math_min`                                   | Plib          |
+| `math_pow`                    | `pow`                                        | Spark         |
+| `math_sin`                    | `sin`                                        | Spark         |
+| `multifile_information`       | `multifile_information`                      | Plib          |
+| `now`                         | `now`                                        | Plib          |
+| `now1`                        | `now`                                        | Plib          |
+| `print_error`                 | `print_error`                                | Plib          |
+| `random_string_value`         | `random_string_value`                        | Plib          |
+| `re_get_match`                | `re_get_match_with_index / re_get_match`     | Plib          |
+| `re_get_matches`              | `re_get_matches_with_offset /re_get_matches` | Plib          |
+| `re_index`                    | `re_index_with_offset /re_index`             | Plib          |
+| `re_match_replace`            | `re_match_replace`                           | Plib          |
+| `re_replace`                  | `re_replace`                                 | Plib          |
+| `re_replace if false`         | `regexp_replace / re_replace`                | Plib          |
+| `re_split`                    | `string_split`                               | Plib          |
+| `re_split_no_empty`           | `string_split_no_empty`                      | Plib          |
+| `read_file`                   | `read_file`                                  | Plib          |
+| `record_info`                 | `record_info`                                | Plib          |
+| `starts_with`                 | `starts_with`                                | Plib          |
+| `string_compare`              | `string_compare`                             | Plib          |
+| `string_concat`               | `concat`                                     | Spark         |
+| `string_downcase`             | `lower`                                      | Spark         |
+| `string_filter`               | `string_filter`                              | Plib          |
+| `string_filter_out`           | `string_filter_out`                          | Plib          |
+| `string_from_hex`             | `string_from_hex`                            | Plib          |
+| `string_index`                | `string_index_with_offset / string_index`    | Plib          |
+| `string_is_numeric`           | `string_is_numeric`                          | Plib          |
+| `string_join`                 | `array_join`                                 | Spark         |
+| `string_length`               | `length`                                     | Spark         |
+| `string_like`                 | `string_like`                                | Plib          |
+| `string_lpad`                 | `string_lpad`                                | Plib          |
+| `string_lrtrim`               | `ltrim`                                      | Spark         |
+| `string_pad`                  | `string_pad_with_char / string_pad`          | Plib          |
+| `string_prefix`               | `string_prefix`                              | Plib          |
+| `string_replace`              | `string_replace`                             | Plib          |
+| `string_replace_first`        | `string_replace_first`                       | Plib          |
+| `string_representation`       | `string_representation`                      | Plib          |
+| `string_rindex`               | `string_rindex_with_offset / string_rindex`  | Plib          |
+| `string_split`                | `split`                                      | Spark         |
+| `string_split_no_empty`       | `string_split_no_empty`                      | Plib          |
+| `string_substring`            | `substring_scala`                            | Plib          |
+| `string_to_hex`               | `hex`                                        | Spark         |
+| `string_trim`                 | `trim`                                       | Spark         |
+| `string_upcase`               | `upper`                                      | Spark         |
+| `substring`                   | `substring_scala`                            | Plib          |
+| `this_partition`              | `spark_partition_id`                         | Spark         |
+| `today`                       | `today`                                      | Plib          |
+| `today1`                      | `today`                                      | Plib          |
+| `type_info`                   | `type_info`                                  | Plib          |
+| `unique_identifier`           | `unique_identifier`                          | Plib          |
+| `unix_timestamp`              | `unix_timestamp`                             | Plib          |
+| `upper`                       | `upper`                                      | Plib          |
+| `utc_now`                     | `unix_timestamp`                             | Spark         |
+| `vector_append`               | `array`                                      | Plib          |
+| `vector_concat`               | `array_union`                                | Spark         |
+| `vector_max`                  | `array_max`                                  | Spark         |
+| `vector_min`                  | `array_min`                                  | Spark         |
