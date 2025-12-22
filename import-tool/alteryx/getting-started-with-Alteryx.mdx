@@ -23,11 +23,11 @@ During import, Prophecy can process either of the following file types:
 
 - ** YXMD files ** : YXMD files contain information about the workflow components used and the connections between them. It also contains parameters, macros, and other metadata associated with the workflow. Example:
 
-  ![YXMD File](import-tool/alteryx/img/yxmc_file.png)
+  ![YXMD File](/import-tool/alteryx/img/yxmc_file.png)
 
 - **YXMC files** : YXMC files packages macros, which are reusable components or workflows created in Alteryx. A macro can be a collection of tools and configurations that perform a specific function or set of tasks. Example:
 
-  ![YXMC File](import-tool/alteryx/img/yxmc_file.png)
+  ![YXMC File](/import-tool/alteryx/img/yxmc_file.png)
 
 Once you have exported your Alteryx files, you are ready to import your Alteryx workflow into Prophecy.
 
@@ -41,7 +41,7 @@ To import a bundle into Prophecy:
    The **Select Source Type** page opens.
 1. Click **Alteryx** to select it.
 
-![source_page](import-tool/alteryx/img/alteryx_source_page.png)
+![source_page](/import-tool/alteryx/img/alteryx_source_page.png)
 
 ### 3. Enter Bundle Details
 
@@ -53,7 +53,7 @@ Next, enter bundle details:
 1. Choose or create the **project** for the Prophecy workflow (4).
 1. Select the **Fabric** where the workflow will run, such as Databricks (6).
 
-![Bundle details](import-tool/alteryx/img/alteryx_package_details.png)
+![Bundle details](/import-tool/alteryx/img/alteryx_package_details.png)
 
 A bundle stores imported artifacts, such as Alteryx files and pipelines for future reference.
 
@@ -72,15 +72,15 @@ In the page that opens, browse to open or drag-and-drop the Alteryx files that y
 
 Click **Next**.
 
-![Upload Artifacts](import-tool/alteryx/img/upload_alteryx_artifact.png)
+![Upload Artifacts](/import-tool/alteryx/img/upload_alteryx_artifact.png)
 
 Upload the Alteryx files that you want to transpile and click **Next**.
 
-![Entity Page](import-tool/alteryx/img/alteryx_entity_page.png)
+![Entity Page](/import-tool/alteryx/img/alteryx_entity_page.png)
 
 Select the `.yxmd` file(s) for import. The Alteryx workflow will be converted to a [Prophecy Pipeline](/data-engineering/development/pipelines/pipelines).
 
-![Add pipeline](import-tool/alteryx/img/alteryx_add_pipeline.png)
+![Add pipeline](/import-tool/alteryx/img/alteryx_add_pipeline.png)
 
 Prophecy will assign default names for pipelines. You can edit these names if desired.
 
@@ -111,36 +111,36 @@ If Import was not able to read any Alteryx component, these are displayed as **F
 
 (3) shows the overall transpiler coverage %.
 
-![Package Overview](import-tool/alteryx/img/alteryx_package_overview.png)
+![Package Overview](/import-tool/alteryx/img/alteryx_package_overview.png)
 
 ## 7. View imported pipeline
 
-![Pipeline](import-tool/alteryx/img/alteryx_open_pipeline.png)
+![Pipeline](/import-tool/alteryx/img/alteryx_open_pipeline.png)
 
 To view and edit pipelines generated during import:
 
 1. Click **Pipelines**.
 1. Hover over the pipeline you wish to view and click the **Edit** icon (the pencil).
 
-![Pipeline canvas](import-tool/alteryx/img/alteryx_pipeline_canvas.png)
+![Pipeline canvas](/import-tool/alteryx/img/alteryx_pipeline_canvas.png)
 
 The Alteryx workflow has been converted into a pipeline. Confirm that all Alteryx components and functions have be mapped to equivalent Prophecy entities.
 
-![Pipeline code](import-tool/alteryx/img/alteryx_pipeline_code.png)
+![Pipeline code](/import-tool/alteryx/img/alteryx_pipeline_code.png)
 
 Prophecy has also generated optimal high-performance open source Spark code for you.
 
 ## 8. Run Pipeline
 
-![Pipeline fabric](import-tool/alteryx/img/alteryx_pipeline_fabric.png)
+![Pipeline fabric](/import-tool/alteryx/img/alteryx_pipeline_fabric.png)
 
 To run the pipeline, you need to attach a fabric cluster. To do so, click the **Attach a cluster** button in the upper right of Prophecy's visual canvas.
 
 Once you attach a fabric, you can connect the sources from your Alteryx environment.
 
-![Pipeline fabric](import-tool/alteryx/img/alteryx_pipeline_fabric.png)
+![Pipeline fabric](/import-tool/alteryx/img/alteryx_pipeline_fabric.png)
 
-![Source filepath](import-tool/alteryx/img/alteryx_source_path.png)
+![Source filepath](/import-tool/alteryx/img/alteryx_source_path.png)
 
 1. Click a Source gem.
 1. Choose the file type from where you will read the data. This example reads from a CSV file stored in Databricks.
@@ -151,18 +151,16 @@ Once you attach a fabric, you can connect the sources from your Alteryx environm
 
 Repeat these steps to change the file paths for all source and target components in your pipeline.
 
-<Note>
-A **Target** gem contains information on a target storage location.
-</Note>
+<Note>A **Target** gem contains information on a target storage location.</Note>
 
-![Run Pipeline](import-tool/alteryx/img/alteryx_run_pipeline.png)
+![Run Pipeline](/import-tool/alteryx/img/alteryx_run_pipeline.png)
 
 To run the pipeline, click the **Run** button.
 
-![Interim Data](import-tool/alteryx/img/alteryx_interim_data.png)
+![Interim Data](/import-tool/alteryx/img/alteryx_interim_data.png)
 
 After the pipeline runs successfully, you can data at each stage by clicking the **interim** icon.
 
 ## What’s next?
 
-See [Moving from Alteryx to Prophecy](import-tool/alteryx/alteryx-to-databricks-sql/alteryx-to-prophecy-sql) for an overview of how working in Prophecy differs from working in Alteryx.
+See [Moving from Alteryx to Prophecy](/import-tool/alteryx/alteryx-to-databricks-sql/alteryx-to-prophecy-sql) for an overview of how working in Prophecy differs from working in Alteryx.
