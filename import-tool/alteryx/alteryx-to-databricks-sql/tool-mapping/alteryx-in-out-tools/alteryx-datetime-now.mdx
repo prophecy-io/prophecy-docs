@@ -1,0 +1,109 @@
+---
+title: Alteryx DateTime Now Tool > Prophecy Reformat Gem
+description: Mapping between Alteryx’s DateTime Now Tool and Prophecy’s Reformat Gem for implementing date and time logic, plus a function-by-function conversion table.
+---
+
+The [Alteryx DateTime Now tool](https://help.alteryx.com/current/en/designer/tools/in-out-tools/date-time-now-tool.html) generates a field containing the current system date and time at the workflow runtime. It is often used in workflows to timestamp data, record run times, or calculate durations relative to the present moment. It returns a single row with the date time data.
+
+In Prophecy, you can replicate this functionality by using the [Reformat gem](/data-analysis/gems/prepare/reformat) to add a new column with a SQL expression such as `current_timestamp()` or `current_date()`. (The Reformat gem lets you add or modify columns using SQL expressions.)
+
+## Automated migration results
+
+When an Alteryx workflow using the DateTime Now tool is imported, Prophecy generates a Reformat gem containing a SQL expression that inserts the current date or timestamp at runtime, such as `date_format(current_timestamp(), 'yyyy-MM-dd')`.
+
+After migration, confirm that the resulting timestamp or formatted string matches the pattern used in your original Alteryx workflow.
+
+## Manually replicate in Prophecy
+
+To add the equivalent of DateTime Now to Prophecy:
+
+1. Add a Reformat gem to the canvas.
+1. Add a SQL expression to insert the current date or timestamp, such as `current_date()` or `current_timestamp()` to mirror system-time behavior. To reproduce Alteryx’s default behavior most accurately, use `current_timestamp()`.
+1. If desired, apply formatting using SQL functions like `date_format()` or `to_char()`.
+
+<Tip title="Add multiple date/time fields">
+You can add multiple date/time fields within the same gem, since Prophecy does not require one tool per new field.
+</Tip>
+
+## Configuration options
+
+In Alteryx, you add the DateTime Now tool to your canvas, select a language for output (such as English, Chinese, or French), and select a format such as `yyyy-MM-dd`.
+
+In Prophecy, you add a Reformat gem to your canvas, then define a column and assign a SQL expression such as `date_format(current_timestamp(), 'yyyy-MM-dd')`. You can also use `current_timestamp`on its own, or add additional date/time or derived fields in the same operation.
+
+Because Prophecy relies on SQL functions, you can also incorporate related functions such as `to_char`, interval operations, or date-part functions such as `year()` or `month()`.
+
+To replicate Alteryx’s format dropdown, use equivalent SQL patterns with `date_format()`.
+
+Unlike Alteryx, Prophecy allows multiple derived columns to be created inside the same Reformat gem using SQL expressions. For example, you could add columns for `RunDate` or `RunHour`.
+
+<Note>
+Time values always come from the Databricks SQL Warehouse rather than the local machine.
+</Note>
+
+## Output behavior
+
+Alteryx's DateTime Now tool does not accept input and outputs a single row with the local system date and time at the workflow runtime. To add this row to a workflow, you perform a union between the DateTime Now tool and a dataset.
+
+Prophecy's Reformat tool can be added to any part of your workflow and accepts inputs. Output adds a new column with the timestamp you've configured. To calculate `current_timestamp`, Prophecy uses the warehouse’s evaluation of the current timestamp.
+
+Minor differences may occur due to time zone configuration, SQL formatting rules, or the moment a query is evaluated during pipeline execution. Prophecy also allows multiple date/time columns to be produced in one gem, whereas Alteryx requires a separate tool for each.
+
+## Known caveats
+
+Time zone differences may cause slight mismatches between Alteryx and Prophecy outputs.
+
+If timestamps are created in separate gems, evaluation times may differ slightly across SQL operations.
+
+## Examples
+
+### Alteryx DateTime Now tool
+
+**Goal:** Add a field showing the current date and time.
+
+Because the DateTime Now tool has no input connector, it produces a single-row, single-column dataset. To attach this timestamp to your actual data, you must combine it with your main stream using a tool such as Union.
+
+**Configuration in Alteryx:**
+
+- New field name: `DateTimeNow`
+- Language: English
+- Format: `yyyy-MM-dd hh:mm:ss`
+
+**Workflow:**
+
+```
+[Input Data] → [Union]
+                 ↑
+         [DateTime Now]
+```
+
+After the union, the resulting dataset includes the new timestamp in the top row (other rows are null):
+
+| CustomerID | Amount | DateTimeNow         |
+| ---------- | ------ | ------------------- |
+| 101        | 250.00 | 2025-10-27 09:42:13 |
+
+### Prophecy Reformat gem
+
+**Goal:** Add an equivalent timestamp column directly inside the pipeline.
+
+The Reformat gem modifies the incoming dataset, so no extra tools (like Union) are required.
+
+**Configuration:**
+
+- Add new column: `RunDateTime`
+- Expression: `current_timestamp()`
+- (Optional) For explicit formatting:
+  `date_format(current_timestamp(), 'yyyy-MM-dd HH:mm:ss')`
+
+**Workflow:**
+
+```
+Input → [Reformat gem] RunDateTime = current_timestamp() → Output
+```
+
+Resulting dataset:
+
+| CustomerID | Amount | RunDateTime         |
+| ---------- | ------ | ------------------- |
+| 101        | 250.00 | 2025-10-27 09:42:13 |

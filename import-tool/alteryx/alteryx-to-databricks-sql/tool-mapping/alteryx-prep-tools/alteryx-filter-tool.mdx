@@ -1,0 +1,70 @@
+---
+title: Alteryx Filter Tool > Prophecy Filter Gem
+description: Mapping between Alteryx’s Filter Tool and Prophecy’s Filter Gem
+---
+
+The [Alteryx Filter tool](https://help.alteryx.com/current/en/designer/tools/preparation/filter-tool.html) and the [Prophecy Filter gem](/data-analysis/gems/prepare/filter) perform the same essential task: selecting rows that satisfy a logical condition. Both evaluate a Boolean expression against each incoming record.
+
+Alteryx outputs two branches (True and False), while Prophecy outputs only the rows where the condition is True. To recreate the False branch, add a second Filter gem with the inverse condition.
+
+## Automated migration results
+
+When Import detects an Alteryx Filter tool:
+
+- It generates a Prophecy **Filter** gem with the same condition.
+- The **True** branch becomes the Filter gem’s output dataset.
+- The **False** branch is **not automatically created**; users must manually add a second gem if they need to preserve this logic.
+
+## Manually replicate in Prophecy
+
+To recreate Alteryx behavior:
+
+1. Add a **Filter** gem.
+2. Enter the condition using SQL/Prophecy syntax (such as `Region = 'Europe' AND JoinDate < current_date()`).
+3. Connect the output to downstream gems. This is equivalent to the **True** branch in Alteryx.
+4. If you need the **False** branch:
+
+   - Add a second Filter gem.
+   - Use the inverse condition, such as:
+     `NOT (Region = 'Europe' AND JoinDate < current_date())`.
+
+## Configuration options
+
+In Alteryx, the Filter tool is configured by entering a Boolean expression that determines which rows pass through the tool.
+
+In Prophecy, the equivalent behavior is defined by writing a Boolean expression in the **Filter** gem. Expressions may reference columns, comparison operators, logical operators, and null checks. Prophecy enforces schema-aware validation, so expressions must use types correctly (for example, avoiding comparisons between strings and numbers).
+
+## Output behavior
+
+- Produces a **single** dataset containing only rows where the condition evaluates to **True**.
+- Does **not** automatically create a False branch.
+- Null comparisons follow SQL behavior and must use `IS NULL`/`IS NOT NULL`.
+
+## Known caveats
+
+- Alteryx’s True/False split is not replicated automatically; users must add a second Filter gem for the False path.
+- SQL requires explicit `IS NULL` and `IS NOT NULL`.
+- Some Alteryx operators differ from SQL syntax and may require translation.
+
+## Example
+
+### Alteryx Filter tool
+
+Goal: Select customers in Europe with join dates before today.
+
+Expression:
+`[Region] = "Europe" AND [JoinDate] < DateTimeToday()`
+
+The **True** output contains matching rows; the **False** output contains all others.
+
+### Prophecy equivalent (Filter gem)
+
+Condition:
+
+```Region = 'Europe' AND JoinDate < current_date()```
+
+The gem's output will contain matching rows (the equivalent of the True branch).
+
+To reproduce the False branch, add a second Filter gem with:
+
+```NOT (Region = 'Europe' AND JoinDate < current_date())```

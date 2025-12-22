@@ -1,0 +1,97 @@
+---
+title: Alteryx Text Input Tool > Prophecy Table Gem (Seed)
+description: Mapping between Alteryx’s Text Input Tool and a Prophecy Table Gem configured as a Seed
+---
+
+The [Alteryx Text Input tool](https://help.alteryx.com/current/en/designer/tools/in-out-tools/text-input-tool.html) and a [Prophecy Table Gem configured as a Seed](/data-analysis/gems/source-target/table/prophecy-warehouse#seeds) both allow you to bring small, manually-defined datasets into a workflow.
+
+In Alteryx, the Text Input tool lets you type rows directly into the canvas. These rows become part of the workflow file and serve as small lookup tables, constants, or test data.
+
+Data from the Text Input tool is saved within Alteryx workflows; Prophecy imports this data and creates a Seed.
+
+In Prophecy, when you create a Seed inside a Table Gem, you define a small CSV dataset directly in the project. This Seed is stored in the project files and is available as a source of data inside the pipeline.
+
+## Automated migration results
+
+When an Alteryx workflow using the Text Input tool is imported, Prophecy creates a **Table gem (Seed)** containing the inline data. Import transfers field names, values, and the tabular structure from the Text Input block into a CSV-style representation stored inside the project.
+
+After migration, review the Seed to ensure headers, column types, and row values match the structure you defined in Alteryx.
+
+## Manually replicate in Prophecy
+
+To recreate Text Input data manually in Prophecy:
+
+1. Add a **Table** gem to the canvas and select **Seed** in the **Type & format** tab.
+2. Paste or upload CSV content into the Seed editor's **Properties** tab to reproduce your inline dataset.
+3. Load seed data in the **Preview** tab preview results.
+
+<Tip title="Combine lookup tables">
+If your Alteryx workflow used multiple scattered Text Input tools for reference data, you may consolidate them into a single Seed for easier maintenance.
+</Tip>
+
+## Configuration options
+
+In Alteryx, the Text Input tool provides a spreadsheet-style editor where you type values directly into a grid and define column names and types through the interface.
+
+In Prophecy, a Seed uses a CSV-entry model. You paste or upload rows and columns, and Prophecy infers the schema, which you can refine in the gem’s configuration panel. You may reorder columns, rename fields, or edit types after the initial paste.
+
+Seeds are best suited for small, stable lookup tables, constants, and test data—the same use cases covered by Alteryx’s Text Input tool.
+
+A Seed behaves as a small inline data source. When the pipeline runs, Prophecy materializes the Seed as a table in the Warehouse so downstream SQL can reference it.
+
+## Output behavior
+
+Both tools act as standalone data sources. Alteryx’s Text Input tool outputs a static table embedded in the workflow.
+
+A Prophecy Seed behaves similarly, producing a small table that downstream gems can join, filter, or reference.
+
+After the Seed materializes in the warehouse, its schema and contents are available across all SQL operations. Updating a Seed updates the downstream pipeline output the next time it runs.
+
+## Known caveats
+
+Text Input’s spreadsheet-style cell editing does not translate directly and must be recreated using CSV-style entry in a Seed.
+
+If the original data relied on formatting nuances—such as blank rows, special characters, or mixed data types—you may need to normalize the dataset when pasting it into the Seed.
+
+Very large manually entered datasets should be converted to file-based sources rather than Seeds, as Seeds are intended for small reference tables.
+
+## Examples
+
+### Alteryx Text Input tool example
+
+Goal: Provide a small status lookup table.
+
+Data entered manually:
+
+```
+Code | Description
+A | Active
+I | Inactive
+P | Pending
+```
+
+Workflow:
+
+```
+Text Input → downstream tools
+```
+
+### Prophecy Table gem (seed) example
+
+Goal: Provide the same status lookup table.
+
+Process:
+
+1. Add a Table gem.
+1. Open it.
+1. Click New Table.
+1. Choose Seed and give it a name.
+1. Paste CSV content.
+1. Load preview.
+1. Click **Save**.
+
+Workflow:
+
+```
+Table Gem (Seed) → downstream gems
+```

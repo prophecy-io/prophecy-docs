@@ -1,0 +1,57 @@
+---
+title: Ab Initio
+description: Simplify Ab Initio migration with Transpiler
+---
+
+In today's data-driven landscape, the ability to swiftly adapt and evolve is paramount for enterprises striving to stay ahead of the curve. However, migrating from legacy ETL (Extract, Transform, Load) systems like Ab Initio to modern, agile platforms can be a daunting task, riddled with complexities and risks. Enter Prophecy, a trailblazer in the realm of low-code platforms for data engineers, offering a game changing solution – **Transpiler**.
+
+## The Challenge of Manual Migration
+
+Manual migration processes from legacy ETL systems are notorious for their intricacy, consuming precious time and resources. The intricacies involved in dissecting and reconstructing Ab Initio workflows, coupled with the inherent risk of data loss or disruption, make it a high-stakes endeavor. Moreover, the cost implications of prolonged migration timelines further exacerbate the challenge.
+
+## Spark vs. Ab Initio: A Capabilities Comparison
+
+Before delving into the mechanics of Transpiler, it's imperative to understand the landscape in which it operates. Ab Initio, a stalwart in the ETL domain, has long been revered for its robustness and versatility. However, the emergence of Apache Spark has introduced a paradigm shift, offering unparalleled scalability, performance, and flexibility.
+
+| Capability               | Apache Spark                                                      | Ab Initio                                                 |
+| ------------------------ | ----------------------------------------------------------------- | --------------------------------------------------------- |
+| **Licensing**            | Open-source                                                       | Proprietary                                               |
+| **Cost**                 | Free to use                                                       | Requires licensing fees                                   |
+| **Development Language** | Scala, Java, Python, SQL                                          | Proprietary language                                      |
+| **Scalability**          | Highly scalable, supports large-scale data processing             | Limited scalability for large datasets                    |
+| **Performance**          | In-memory processing for speed                                    | High performance, but constrained by hardware             |
+| **Flexibility**          | Open-source ecosystem, vast libraries                             | Proprietary framework and components                      |
+| **Vendor Lock-In**       | No vendor lock-in, open standards                                 | Vendor lock-in due to proprietary nature                  |
+| **Customization**        | Highly customizable, allows for custom development and extensions | Customization limited to the capabilities of the platform |
+
+## Bridging the Gap with Transpiler
+
+Prophecy's Transpiler serves as a beacon of hope for enterprises grappling with the daunting task of ETL migration. Here's how it simplifies the process:
+
+- **Graph Parsing**: Transpiler adeptly parses Ab Initio's MP files, deciphering the intricate web of components and their interconnections to generate the equivalent graph in Prophecy. Prophecy's graph is called a "Pipeline" and a sample is pictured below. Prophecy components - easy to use Gems - contain all the business logic from the Ab Initio components.
+
+  ![Pipeline](/import-tool/abinitio/img/pipeline.png)
+
+- **Transformation Logic**: By delving into Ab Initio's XFR files, Transpiler unravels the transformation logic embedded within each component. Leveraging this insight, it generates **highly optimized open-source** Spark code, ensuring seamless compatibility with any Spark environment. Example of a Join Gem (both Visual and Code):
+
+  ![Transform](/import-tool/abinitio/img/transform.png)
+
+- **Schema Mapping**: Transpiler seamlessly maps the data schema encapsulated in Ab Initio's DML files, facilitating a smooth transition to Prophecy. This ensures that input and output schemas are accurately reflected within Prophecy Gems. Example of schema inside Gem:
+
+  ![Schema](/import-tool/abinitio/img/schema.png)
+
+- **Configuration Translation**: Transpiler efficiently translates Ab Initio's PSET files into Pipeline configurations within Prophecy. This empowers Data Engineers to run pipelines dynamically. Moreover, Transpiler can handle generic Ab Initio frameworks with ease, further streamlining the migration process. Example of configuration:
+
+  ![Config](/import-tool/abinitio/img/config.png)
+
+## Orchestrating Success: From Ab Initio Plans to Airflow
+
+Transpiler goes above and beyond by seamlessly orchestrating Ab Initio workflows into Airflow jobs. By parsing Ab Initio's PLAN files, Transpiler orchestrates Prophecy jobs, ensuring seamless execution in batches as per defined scheduling properties. Example of Prophecy Job:
+
+![Job canvas](/import-tool/abinitio/img/job_canvas.png)
+
+## Conclusion
+
+In conclusion, the migration from legacy ETL systems like Ab Initio to modern platforms is not just a necessity but an opportunity to future-proof your data infrastructure. With Transpiler as your ally, the arduous journey becomes a seamless transition, unlocking the full potential of Spark's superior capabilities. Embrace agility, scalability, and innovation – embark on your migration journey with Prophecy's Transpiler today.
+
+Let's delve deeper into the specifics of Ab Initio Transpiler now:

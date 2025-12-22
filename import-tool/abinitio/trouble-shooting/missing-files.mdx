@@ -1,0 +1,22 @@
+---
+title: Missing Artifacts
+description: A tutorial on how to deal with missing files
+---
+
+This article describes how to troubleshoot parsing errors that are caused due to missing artifacts (mp,xfr,pset and dml) at the time of graph transpilation:
+
+- **Problem**: When any important files (like Mp, Xfr, Pset or Dml) are missing from the uploaded artifacts, then Transpiler is not able to parse the Ab Initio code and thus end up throwing errors.
+- **Example**: When dml file is missing for the Ab Initio Input component, then following error message is shown:
+  ![Missing File](/import-tool/abinitio/img/missing_file.png)
+- **Resolution**:
+  - Go to Transpiler section and select the (1) Bundle which the pipeline was part of:
+    ![Select Bundle](/import-tool/abinitio/img/select_bundle.png)
+  - Click on the (1) Re-import button as shown below:
+    ![Reimport Bundle](/import-tool/abinitio/img/reimport_bundle.png)
+  - Click on Next button until you reach the Entity page as shown below:
+    ![Entity list](/import-tool/abinitio/img/entity_list.png)
+  - Click on (1) Validate button to see the details of missing files:
+    ![Validate Info](/import-tool/abinitio/img/validate_info.png)
+  - Upload all the missing files by (1) simple drag and drop mechanism as shown:
+    ![Upload Files](/import-tool/abinitio/img/upload_files.png)
+  - Now transpile the graph again and the errors due to missing artifacts will be resolved.

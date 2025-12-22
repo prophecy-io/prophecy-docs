@@ -1,0 +1,121 @@
+---
+title: Migrate to BigQuery SQL
+description: How to migrate from Informatica to BigQuery SQL
+---
+
+When you create an Informatica bundle for BigQuery SQL in the Prophecy transpiler, you can analyze, change, and validate your migration before the transpilation begins.
+
+## Prerequisite
+
+Export your Informatica workflow.
+
+### Export from Informatica Designer
+
+To export your Informatica workflow from your Informatica PowerCenter Designer:
+
+1. Navigate to the workflow you want to export.
+
+1. On the top navigation bar, click **Repository**.
+
+1. Click **Export Objects**.
+
+1. Navigate to where you want to save your file, then click **Save**.
+
+## Limitations
+
+- Prophecy only supports transpiling files from Informatica PowerCenter Designer version 10.4.1 and later.
+
+  In other words, Prophecy does not support transpiling files from Informatica Intelligent Data Management Cloud (IDMC).
+
+- Prophecy does not support transpiling your Informatica schedules.
+
+  You must [manually configure your schedule](/data-analysis/production/scheduling/scheduling) in your Prophecy project after transpiling your Informatica workflow. Then, you can monitor your schedule on [the Monitoring page](/data-analysis/production/monitoring/#scheduled-pipelines).
+
+## Migration
+
+### Upload your Informatica bundle
+
+1. On the left navigation bar, click the **Transpiler icon**, the icon with an arrow pointing down in a circle.
+
+1. At the top of the page, click **Import Bundle**.
+
+1. Select the **Informatica** format and click **Next**.
+
+1. Enter the bundle details.
+
+   | Field              | Description                                                                                                                             |
+   | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
+   | Import Bundle Name | Name of your bundle.                                                                                                                    |
+   | Language           | Change the language of your pipeline to **SQL**.                                                                                        |
+   | Team               | Create or choose the team with access to the bundle.                                                                                    |
+   | Project            | Create or choose the project of the migration. <br />Prophecy filters this list by projects that are written in the language you chose. |
+   | Branch             | Select the Git branch where you want to upload your code.                                                                               |
+   | Sql Fabric         | Choose the [fabric](/data-analysis/environment/fabrics/prophecy-fabrics) to attach your datasets and schedules to.                      |
+
+1. Click **Next**.
+
+1. Upload all the Informatica files you want to convert to SQL pipelines.
+
+   Prophecy accepts the `.xml` file type, which contains structured information about your Informatica workflow.
+
+1. Click **Next**.
+
+### Import pipeline
+
+Next, to configure how Prophecy imports your pipelines:
+
+![ImportPipeline](/import-tool/informatica/informatica-to-sql/img/informatica-import-pipeline.png)
+
+1. Click on each file to edit its configurations.
+
+   In the left sidebar, Prophecy lists the files you uploaded in the previous section, which are automatically staged to import. If you upload additional Informatica files on this page, then you have to manually stage them to import. All unstaged files can be viewed in the **Pending** tab of the left sidebar.
+
+   Once you add a pipeline, you can disable the import by deselecting the relevant checkbox. Disabling the import is useful if you want to save the pipeline in the import configuration to import it at a later time. However, you also can delete the pipeline from staging.
+
+1. Click **Validate**.
+
+   You must validate your pipeline before you can start the transpilation. When you click the **Validate** button, Prophecy makes sure that the migration is possible with all the files you want to import.
+
+1. Click the **Transpile**.
+
+   <Note>You can only click the **Transpile** button after Prophecy validates your files.</Note>
+
+### Import transpiled entities
+
+To import your transpiled entities:
+
+1. Click **Import**.
+
+   Now, you see a list of transpiled entities that you can create when you import them. You can either import all of the entities, or you can disable some before importing.
+
+   ![ImportTranspiledEntities](/import-tool/informatica/informatica-to-sql/img/informatica-import-transpiled-entities.png)
+
+1. Click **Import** again.
+
+1. Click **View Bundle Details**.
+
+### Review Prophecy project
+
+If there isn't an equivalent gem or function for a certain transformation, Prophecy inserts a placeholder **todo** gem or function in your pipeline where you can write your script or SQL statements to achieve the required functionality.
+
+### Review bundle metadata
+
+After you successfully import a bundle, you see the **Imported** status on the Transpiler page.
+
+To see the bundle metadata, which includes information about all of the imported entities in the bundle, click on the bundle.
+
+![BundleMetadata](/import-tool/informatica/informatica-to-sql/img/informatica-bundle-metadata.png)
+
+You can review the pipelines, jobs, tables, function, coverage, status, source, language, project, and fabric of the bundle in the right tile. You can open any entity in a new tab in the project editor by clicking on the entity.
+
+### Testing
+
+Open your bundle and run your pipeline to verify that it writes the same output as your Informatica workflow. If not, modify or add additional gems to make the output the same.
+
+Before you deploy your project into production, we recommend you run both your Informatica workflow and Prophecy pipeline in parallel for at least two weeks. This helps you see if Prophecy consistently produces the same output as Informatica.
+
+### Reimport pipelines
+
+If you want to update or restart your transpilation, click the **Reimport** button at the top right corner of the bundle's page.
+
+![Reimport](/import-tool/informatica/informatica-to-sql/img/informatica-bundle-metadata.png)

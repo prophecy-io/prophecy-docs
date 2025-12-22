@@ -1,0 +1,97 @@
+---
+title: Performance tuning scenarios
+description: Learn how to tune the performance of your transpiled Alteryx workflow in Databricks SQL
+---
+
+When you transpile your Alteryx workflow, the resulting Prophecy pipeline mirrors your original Alteryx configuration one-to-one. While this preserves the original flow logic, the pipeline may not be optimized for performance in Prophecy. This page walks through why Prophecy is more efficient, and two common scenarios where you can improve your pipeline runtime after transpilation.
+
+## Why Prophecy is more efficient
+
+Prophecy enables pipeline performance optimization in the following ways:
+
+- You can fine-tune pipeline performance by changing elements that result in SQL queries.
+
+  To minimize resource usage, reduce unnecessary joins, filter early, and use window functions strategically. These techniques help improve execution speed and lower computing costs.
+
+- Prophecy runs on scalable cloud infrastructure.
+
+  This allows you to take advantage of distributed computing and built-in optimizations that aren’t available in local Alteryx environments, and results in faster processing and better resource utilization.
+
+## Compute dates
+
+Assume your Alteryx workflow contains a [Formula tool](https://help.alteryx.com/current/en/designer/tools/preparation/formula-tool.html) that computes the beginning and end dates of a quarter:
+
+```xml
+PadLeft(ToString(DateTimeYear([mes])),4,"0") + "-" +
+PadLeft(
+    ToString(
+        (floor(DateTimeMonth([mes])/3) +
+        IIF(floor(DateTimeMonth([mes])/3) = DateTimeMonth([mes])/3, 0, 1)) * 3 - 2
+    ), 2, "0"
+) + "-01"
+```
+
+When you import the tool into Transpiler, Prophecy puts it in a [Reformat gem](/data-analysis/gems/prepare/reformat) with the following expression:
+
+```sql
+CAST(concat(reverse(rpad(reverse(CAST(year(mes) AS STRING)), 4, '0')), '-', reverse(rpad(reverse(CAST(((((floor(((month(mes) / 3) / (month(mes) / 3))) * (month(mes) / 3)) + CASE WHEN CAST(((floor(((month(mes) / 3) / (month(mes) / 3))) * (month(mes) / 3)) = (month(mes) / 3)) AS BOOLEAN) THEN 0 ELSE 1 END) * 3) - 2) AS STRING)), 2, '0')), '-01') AS STRING)
+```
+
+Although this works, it is inefficient and your pipeline will be slow.
+
+### Solution
+If you use Databricks as your SQL provider, you can use the `date_tunc` function to simplify your date calculation. Update the expression in your Reformat gem with the following:
+
+```
+date_tunc("QUARTER", col("mes"))
+```
+
+To learn about the other date functions available for each SQL provider, see [Snowflake Date and time functions](https://docs.snowflake.com/en/sql-reference/functions-date-time) and [Databricks date_trunc function](https://docs.databricks.com/aws/en/sql/language-manual/functions/date_trunc).
+
+## Calculate row value
+
+Assume your Alteryx workflow contains a [Multi-Row Formula tool](https://help.alteryx.com/current/en/designer/tools/preparation/multi-row-formula-tool.html#multi-row-formula-tool) that calculates the value of the `id` field by adding 10 to the previous row's `id` value:
+
+```xml
+[Row-1:id] + 10
+```
+
+When you import the tool into Transpiler, Prophecy puts it in a Script gem with the following expression:
+
+```sql
+def calculate(iterator):
+    ig_lag1 = 0
+
+    for row in iterator:
+        id_new = int(ig_lag1 + 10)
+        ig_lag1 = id_new
+        newRow = list(row)
+        newRow.append(id_new)
+        yield newRow
+
+    resultRDO = in0.repartition(lit(1)).sortWithPartitions(col("__row_id")).rdd.mapPartitions(calculate)
+
+    newSchema = StructType([field for field in in0.schema.fields if field.name != "id"])
+    newSchema.add("id" , IntegerType())
+    out0 = spark.createDataFrame(resultRDD, newSchema)
+```
+
+Although this works, it is inefficient and your pipeline will be slow because you need to retrieve the prior row's value in order to calculate the current row's value.
+
+### Solution
+To make this more efficient, use a WindowFunction and Reformat gem for SQL can execute the partitions in parallel:
+
+1. Insert a [WindowFunction gem](/data-analysis/gems/transform/window).
+
+   1. Open the gem.
+   1. Navigate to the **Order By** tab.
+   1. In the **Order Columns** field, type `lit(1)`.
+   1. Navigate to the **Window Use** tab.
+   1. In the **Target Column**, enter `row_number`.
+   1. In the **Source Expression**, enter `row_number()`.
+
+1. Insert a [Reformat gem](/data-analysis/gems/prepare/reformat).
+
+   1. Open the gem.
+   1. In the **Target Column**, enter `id`.
+   1. In the **Expression**, enter `lit("row_number") * 10`.

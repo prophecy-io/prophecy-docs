@@ -1,0 +1,83 @@
+---
+title: Alteryx Oversample Field tool > Prophecy Reformat + Filter gems
+description: Mapping between Alteryx’s Oversample Field tool and equivalent Prophecy gems
+---
+
+The [Alteryx Oversample Field tool](https://help.alteryx.com/current/en/designer/tools/preparation/oversample-field-tool.html) adjusts class imbalance in categorical fields (commonly for predictive modeling). It increases the proportion of a minority class or balances classes by randomly selecting additional records from one or more categories.
+
+Prophecy does not provide a single oversampling gem. Instead, Import reproduces the behavior using a combination of [WindowFunction gems](/data-analysis/gems/transform/window), [Reformat gems](/data-analysis/gems/prepare/reformat#parameters), and [Filter gems](/data-analysis/gems/prepare/filter). This sequence computes class counts, assigns random values, ranks rows, and filters to achieve the requested oversample percentage.
+
+## Automated migration results
+
+When Import encounters an Oversample Field tool, it generates a sequence of transformations equivalent to the Alteryx sampling logic:
+
+- A WindowFunction gem computes class-level counts (such as the number of `Default = 'Yes'` rows).
+- A Reformat gem assigns deterministic or random values used to order rows.
+- A second WindowFunction gem ranks rows using `ROW_NUMBER()` to support sampling.
+- A Filter gem keeps all minority-class rows, and a sampled subset of the remaining rows.
+- A final Reformat gem removes helper metadata columns.
+
+This import pattern is highly consistent: most Oversample Field configurations map to the same sequence.
+
+## Manually replicate in Prophecy
+
+To manually recreate oversampling logic:
+
+1. Add a **WindowFunction** gem, add a target column (such as `num_oversample_values`) under **Window Use**, and define the column with a `count` expression with custom code along the following lines: `CASE WHEN (Default = 'Yes') THEN true END`.
+2. Add a **Reformat** gem to assign a random value using `rand()` for majority-class rows and a fixed value (such as `1`) for minority-class rows.
+3. Add a **WindowFunction** gem to compute a row number ordered by the random value.
+4. Add a **Filter** gem to keep all minority-class rows, and majority-class rows whose row number is below a threshold (such as "equal to the minority-class count").
+5. Optionally, add a final **Reformat** gem to drop helper ranking and random columns.
+
+## Configuration options
+
+In Alteryx, the Oversample Field tool is configured with three main parameters:
+
+- **Field to oversample on** (e.g., `Default`)
+- **Field value to oversample** (e.g., `Yes`)
+- **Target percentage** of records that should have the selected value (e.g., 40%)
+
+Conceptually, Alteryx keeps all rows where the field equals the selected value, and randomly selects enough other rows so that the chosen value represents approximately the requested percentage of the output.
+
+In Prophecy, the same behavior is implemented explicitly in SQL:
+
+- A **WindowFunction** gem computes the count (or proportion) of rows where the field equals the oversampled value.
+- A **Reformat** gem assigns random values to non-oversampled rows and may tag oversampled rows with a fixed value.
+- Another **WindowFunction** gem ranks rows by the random value.
+- A **Filter** gem keeps:
+  - all rows where the field equals the oversampled value, and
+  - only as many other rows as needed to reach the target percentage.
+
+## Output behavior
+
+Alteryx returns a table with adjusted class proportions according to the oversampling strategy.
+
+Prophecy returns a table filtered according to SQL conditions:
+
+- Minority-class rows are always retained (unless configured otherwise).
+- Majority-class rows are included only when they satisfy the sampling threshold.
+- Random functions execute at runtime, so preview results may differ slightly from run results.
+
+## Known caveats
+
+None.
+
+## Example
+
+### Alteryx Oversample Field example
+
+Goal: Increase the representation of rows where `Default = 'Yes'`.
+
+### Prophecy equivalent (WindowFunction + Reformat + Filter)
+
+1. Use a **WindowFunction** gem to compute the number of `Default = 'Yes'` rows.
+2. Use a **Reformat** gem to assign:
+   - `1` for `Default = 'Yes'`,
+   - `rand()` for other rows.
+3. Use a **WindowFunction** gem to compute a row number ordered by the random value.
+4. Use a **Filter** gem to keep:
+   - all `Default = 'Yes'` rows, and
+   - majority-class rows with `row_number <= num_yes`.
+5. Remove helper columns in a final **Reformat** gem.
+
+This sequence reproduces the oversampling behavior of the Alteryx tool using SQL-native operations.

@@ -1,0 +1,69 @@
+---
+title: Analyze tool
+description: Understand the outcome of your Alteryx transpilation
+---
+
+Prophecy’s Analyze tool helps you preview the outcome of your Alteryx-to-Spark or Alteryx-to-SQL migration before you actually run the transpilation. This allows you to identify any gaps in tool or function coverage, understand workflow complexity, and anticipate any required fixes.
+
+## Overview
+
+The Analyze tool can help you understand the outcome of your Alteryx transpilation **before** running the transpilation. This is available during the [import](/import-tool/alteryx/alteryx-to-spark/alteryx-to-spark#import-pipelines) step of pipeline migration.
+
+1. Open the Transpiler interface from the left sidebar in Prophecy.
+1. Click **Import Bundle** and begin the migration process.
+1. Upload your Alteryx workflows.
+1. At the bottom of the migration interface, click **Analyze**.
+1. Prophecy evaluates each workflow and component, checks migration coverage, and scores complexity.
+1. Download the report as an Excel file to inspect the analysis.
+
+![Analyze option](./img/alteryx-analyze-feature.png)
+
+<Info>
+The analysis is based on the components Prophecy can currently migrate “out of the box.” Anything not yet supported is flagged so you can plan ahead.
+</Info>
+
+## Analysis report format
+
+When you run the analysis, Prophecy generates an Excel report that contains multiple tabs. When you open the file, you will see the following information:
+
+| Tab                  | Description                                                                 |
+| -------------------- | --------------------------------------------------------------------------- |
+| Summary              | Provides the high-level summary of each tab in the Excel file.              |
+| Coverage             | Details a complete list workflows and tools that were or were not migrated. |
+| Patterns Support     | Outlines whether tools and functions are supported or not supported.        |
+| Workflows Complexity | Assigns a score to your workflow complexity.                                |
+| Tool Type Complexity | Assigns a score to each tool in terms of its complexity.                    |
+
+<Tip>
+More comprehensive documentation for each tab is available in the Excel file itself.
+</Tip>
+
+## Example: Summary tab
+
+Below is an example of what the **Summary** tab might look like for a migration from Alteryx → Spark Python.
+
+### Migration Copilot Coverage
+
+- Overall Coverage: 26% of tools migrated successfully
+- Workflows: 1/1 migrated successfully (100%)
+- Tools: 6/23 migrated successfully (26%)
+
+### Migration Copilot Patterns Support
+
+- Unique Tools Supported: 11/11 (100%)
+- Unique Functions Supported: 1/1 (100%)
+
+### Workflows Complexity
+
+- Low: 0 workflows
+- Medium: 0 workflows
+- High: 1 workflow
+
+## Summary
+
+To summarize, running the Analyze tool before migration helps you:
+
+- **Estimate effort**: Identify complex workflows and unsupported tools ahead of time.
+- **Plan fixes**: Know which components will require manual conversion or adjustments.
+- **Reduce migration risk**: Catch potential blockers before investing in a full transpilation run.
+- **Prioritize work**: Focus on the highest-value or lowest-effort workflows first.

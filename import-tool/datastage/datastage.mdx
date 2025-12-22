@@ -1,0 +1,42 @@
+---
+title: DataStage
+description: DataStage Transpiler in depth
+---
+
+In today's data-driven landscape, the ability to swiftly adapt and evolve is paramount for enterprises striving to stay ahead of the curve. However, migrating from legacy ETL (Extract, Transform, Load) systems like DataStage to modern, agile platforms can be a daunting task, riddled with complexities and risks. Enter Prophecy, a trailblazer in the realm of low-code platforms for data engineers, offering a game changing solution – **Transpiler**.
+
+## The Challenge of Manual Migration
+
+Manual migration processes from legacy ETL systems are notorious for their intricacy, consuming precious time and resources. The intricacies involved in dissecting and reconstructing DataStage workflows, coupled with the inherent risk of data loss or disruption, make it a high-stakes endeavor. Moreover, the cost implications of prolonged migration timelines further exacerbate the challenge.
+
+## Spark vs. DataStage: A Capabilities Comparison
+
+Before delving into the mechanics of Transpiler, it's imperative to understand the landscape in which it operates. DataStage has long been revered for its robustness and versatility. However, the emergence of Apache Spark has introduced a paradigm shift, offering unparalleled scalability, performance, and flexibility.
+
+| Capability               | Apache Spark                                                      | DataStage                                                |
+| ------------------------ | ----------------------------------------------------------------- | -------------------------------------------------------- |
+| **Licensing**            | Open-source                                                       | Proprietary                                              |
+| **Cost**                 | Free to use                                                       | Requires licensing fees                                  |
+| **Development Language** | Scala, Java, Python, SQL                                          | Proprietary language                                     |
+| **Scalability**          | Highly scalable, supports large-scale data processing             | Scalable, designed for enterprise-level data integration |
+| **Performance**          | In-memory processing for speed                                    | Optimized for ETL operations and batch processing        |
+| **Flexibility**          | Open-source ecosystem, vast libraries                             | Proprietary framework and components                     |
+| **Vendor Lock-In**       | No vendor lock-in, open standards                                 | Vendor lock-in due to proprietary nature                 |
+| **Customization**        | Highly customizable, allows for custom development and extensions | Limited customization through extensions                 |
+
+## Bridging the Gap with Transpiler
+
+Prophecy's Transpiler serves as a beacon of hope for enterprises grappling with the daunting task of ETL migration. Here's how it simplifies the process:
+
+- **Job Parsing**: Transpiler adeptly parses DataStage's XML files, deciphering the intricate web of components and their interconnections to generate the equivalent job in Prophecy. Prophecy's workflow is called a "Pipeline" and a sample is pictured below. Prophecy components - easy to use Gems - contain all the business logic from the DataStage components.
+  ![Pipeline](/import-tool/abinitio/img/pipeline.png)
+- **Transformation Logic**: By delving into DataStage's XML files, Transpiler unravels the transformation logic embedded within each component. Leveraging this insight, it generates **highly optimized open-source** Spark code, ensuring seamless compatibility with any Spark environment. Example of a Join Gem (both Visual and Code):
+  ![Transform](/import-tool/abinitio/img/transform.png)
+- **Schema Mapping**: Transpiler seamlessly maps the data schema encapsulated in DataStage's XML files, facilitating a smooth transition to Prophecy. This ensures that input and output schemas are accurately reflected within Prophecy Gems. Example of schema inside Gem:
+  ![Schema](/import-tool/abinitio/img/schema.png)
+
+## Conclusion
+
+In conclusion, the migration from legacy ETL systems like DataStage to modern platforms is not just a necessity but an opportunity to future-proof your data infrastructure. With Transpiler as your ally, the arduous journey becomes a seamless transition, unlocking the full potential of Spark's superior capabilities. Embrace agility, scalability, and innovation – embark on your migration journey with Prophecy's Transpiler today.
+
+Let's delve deeper into the specifics of DataStage Transpiler now:

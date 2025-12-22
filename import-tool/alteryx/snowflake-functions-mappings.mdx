@@ -1,0 +1,194 @@
+---
+title: Alteryx Functions Mappings to Snowflake SQL
+description: List of supported Alteryx functions and how they map to Snowflake SQL
+---
+
+While transpiling Alteryx workflows to Prophecy pipelines, Transpiler converts Alteryx functions into equivalent SQL functions.
+
+The following table lists all the Alteryx functions that Prophecy supports and the corresponding Prophecy function it maps to in a SQL project. Select the tab corresponding to the fabric you're using.
+
+## Conditional
+
+| Alteryx Function                             | Equivalent Prophecy Function                                                                                            |
+| -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `IF c THEN t ELSE f ENDIF`                   | `CASE WHEN THEN ELSE END`                                                                                               |
+| `IF c THEN t ELSEIF c2 THEN t2 ELSE f ENDIF` | `CASE WHEN c THEN t WHEN c2 THEN t2 ELSE f END`                                                                         |
+| `IIF`                                        | `CASE WHEN c THEN t ELSE f END`                                                                                         |
+| `Switch`                                     | `CASE WHEN c THEN t WHEN c2 THEN t2 ... END` <br />The `...` symbolizes all the `WHEN c THEN t` statements you may have. |
+
+## Conversions
+
+| Alteryx Function | Equivalent Prophecy Function                                              |
+| ---------------- | ------------------------------------------------------------------------- |
+| `CharFromInt`    | `char`                                                                    |
+| `CharToInt`      | `ascii`                                                                   |
+| `ToDegrees`      | `degrees`                                                                 |
+| `ToNumber`       | `regexp_substr`                                                           |
+| `ToRadians`      | `degrees`                                                                 |
+| `ToString`       | `cast(columnName as String)` <br />Where `columnName` is your column name. |
+
+## DateTime
+
+| Alteryx Function       | Equivalent Prophecy Function |
+| ---------------------- | ---------------------------- |
+| `DateTimeAdd`          | `dateadd`                    |
+| `DateTimeDay`          | `date_part`                  |
+| `DateTimeDiff`         | `datediff`                   |
+| `DateTimeFirstOfMonth` | `date_part`                  |
+| `DateTimeFormat`       | `to_char`                    |
+| `DateTimeHour`         | `date_part`                  |
+| `DateTimeLastOfMonth`  | `last_day`                   |
+| `DateTimeMinutes`      | `date_part`                  |
+| `DateTimeMonth`        | `date_part`                  |
+| `DateTimeNow`          | `current_timestamp`          |
+| `DateTimeNowPrecise`   | `current_timestamp`          |
+| `DateTimeParse`        | `to_char`                    |
+| `DateTimeQuarter`      | `date_part`                  |
+| `DateTimeSeconds`      | `date_part`                  |
+| `DateTimeToday`        | `current_date`               |
+| `DateTimeToUTC`        | `convert_timezone`           |
+| `DateTimeTrim`         | `date_trunc`                 |
+| `DateTimeYear`         | `date_part`                  |
+| `ToDate`               | `to_char`                    |
+| `ToDateTime`           | `to_char`                    |
+
+## Math
+
+| Alteryx Function | Equivalent Prophecy Function |
+| ---------------- | ---------------------------- |
+| `ABS`            | `abs`                        |
+| `ACOS`           | `acos`                       |
+| `ASIN`           | `asin`                       |
+| `ATAN`           | `atan`                       |
+| `ATAN2`          | `atan2`                      |
+| `Average`        | `avg` and `coalesce`         |
+| `AverageNonNull` | `avg`                        |
+| `CEIL`           | `ceil`                       |
+| `COS`            | `cos`                        |
+| `COSH`           | `cosh`                       |
+| `DISTANCE`       | `haversine`                  |
+| `EXP`            | `exp`                        |
+| `FACTORIAL`      | `factorial`                  |
+| `FLOOR`          | `floor`                      |
+| `LOG`            | `ln`                         |
+| `LOG10`          | `log`                        |
+| `Median`         | `median`                     |
+| `Mod`            | `mod`                        |
+| `PI`             | `pi`                         |
+| `POW`            | `pow`                        |
+| `RAND`           | `rand`                       |
+| `RandInt`        | `rand`                       |
+| `Round`          | `round`                      |
+| `SIN`            | `sin`                        |
+| `SINH`           | `sinh`                       |
+| `SQRT`           | `sqrt`                       |
+| `TAN`            | `tan`                        |
+| `TANH`           | `tanh`                       |
+
+## Bitwise
+
+| Alteryx Function | Equivalent Prophecy Function |
+| ---------------- | ---------------------------- |
+| `BinaryAnd`      | `bitand`                     |
+| `BinaryNot`      | `bitnot`                     |
+| `BinaryOr`       | `bitor`                      |
+| `BinaryXOR`      | `bitxor`                     |
+| `ShiftLeft`      | `bitshiftleft`               |
+| `ShiftRight`     | `bitshiftright`              |
+
+## Minimum and Maximum
+
+| Alteryx Function | Equivalent Prophecy Function      |
+| ---------------- | --------------------------------- |
+| `Between`        | `when - then - otherwise` pattern |
+| `Bound`          | `when - then - otherwise` pattern |
+| `Max`            | `max`                             |
+| `MaxIDX`         | `array` and `array_position`      |
+| `Min`            | `min`                             |
+| `MinIDX`         | `array` and `array_position`      |
+
+## Operators
+
+| Alteryx Function         | Equivalent Prophecy Function |
+| ------------------------ | ---------------------------- |
+| `Block Comment`          | `/*`<br />`*/`                |
+| `Single Line Comment`    | `--`                         |
+| `Boolean AND &&`         | `AND`                        |
+| `Boolean AND - Keyword`  | `AND`                        |
+| `Boolean NOT !`          | `!`                          |
+| `Boolean NOT - Keyword`  | `!`                          |
+| `Boolean OR - Keyword`   | `OR`                         |
+| `Boolean OR \|\|`        | `OR`                         |
+| `Close Parenthesis ) `   | `)`                          |
+| `Division`               | `/`                          |
+| `Equal To`               | `==`                         |
+| `Greater Than`           | `>`                          |
+| `Greater Than Or Equal`  | `>=`                         |
+| `Less Than`              | `<`                          |
+| `Less Than Or Equal`     | `<=`                         |
+| `Multiplication`         | `*`                          |
+| `Not Equal To`           | `!=`                         |
+| `Open Parenthesis`       | `(`                          |
+| `Subtraction`            | `-`                          |
+| `Value IN - Keyword`     | `IN`                         |
+| `Value NOT IN - Keyword` | `NOT IN`                     |
+
+## Specialized
+
+| Alteryx Function | Equivalent Prophecy Function |
+| ---------------- | ---------------------------- |
+| `Coalesce`       | `coalesce`                   |
+| `GetVal`         | `get`                        |
+| `NULL`           | `coalesce`                   |
+| `TOPNIDX`        | `array_sort` and `get`       |
+| `UrlEncode`      | `urlencode`                  |
+
+## String
+
+| Alteryx Function     | Equivalent Prophecy Function |
+| -------------------- | ---------------------------- |
+| `Contains`           | `contains`                   |
+| `CountWords`         | `size` and `split`           |
+| `EndsWith`           | `like`                       |
+| `GetLeft`            | `substring`                  |
+| `GetPart`            | `split` and `get`            |
+| `GetRight`           | `substring`                  |
+| `GetWord`            | `split` and `get`            |
+| `Left`               | `substring`                  |
+| `Length`             | `length`                     |
+| `LowerCase`          | `lower`                      |
+| `MD5_ASCII`          | `md5`                        |
+| `MD5_UNICODE`        | `md5`                        |
+| `MD5_UTF8`           | `md5`                        |
+| `PadLeft`            | `lpad`                       |
+| `PadRight`           | `rpad`                       |
+| `REGEX_CountMatches` | `size` and `split`           |
+| `REGEX_Match`        | `length` and `regexp_subst`  |
+| `REGEX_Replace`      | `regexp_replace`             |
+| `Replace`            | `regexp_replace`             |
+| `ReplaceChar`        | `regexp_replace`             |
+| `ReplaceFirst`       | `regexp_replace`             |
+| `ReverseString`      | `reverse`                    |
+| `Right`              | `substring`                  |
+| `StartsWith`         | `like`                       |
+| `StripQuotes`        | `regexp_replace`             |
+| `Substring`          | `string_substring`           |
+| `TitleCase`          | `initcap`                    |
+| `Trim`               | `regexp_replace`             |
+| `TrimLeft`           | `ltrim`                      |
+| `TrimRight`          | `rtrim`                      |
+| `Uppercase`          | `upper`                      |
+| `UuidCreate`         | `uuid`                       |
+
+## Test
+
+| Alteryx Function | Equivalent Prophecy Function                                      |
+| ---------------- | ----------------------------------------------------------------- |
+| `EqualStrings`   | `=`                                                               |
+| `IsEmpty`        | `length` and `==0`                                                |
+| `IsInteger`      | `regexp_replace` and `length`                                     |
+| `IsLowerCase`    | `lower` and `==`                                                  |
+| `IsNull`         | `columnName is null` <br />Where `columnName` is your column name. |
+| `IsNumber`       | `cast` and `is not null`                                          |
+| `IsString`       | `isNull` and `cast`                                               |
+| `IsUpperCase`    | `upper` and `==`                                                  |

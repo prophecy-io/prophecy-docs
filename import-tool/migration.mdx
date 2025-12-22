@@ -1,0 +1,127 @@
+---
+title: Migration overview
+description: Overview of performing migration from other tools
+---
+
+This migration guide provides a comprehensive overview of migrating from legacy ETL tools to modern cloud-based architectures using Prophecy. Whether you're running Informatica, Ab Initio, IBM DataStage, or other legacy systems, this guide outlines an approach to help you understand the migration process.
+
+## Phases
+
+Review the following table for a quick look into the different phases of migration before reviewing each section in-depth.
+
+| Phase                      | What Happens                     | Key Deliverable                         |
+| -------------------------- | -------------------------------- | --------------------------------------- |
+| **Discovery**              | Map current state, define target | Architecture analysis & target stack    |
+| **Scoping**                | Plan approach, build team        | Migration plan & team setup             |
+| **Creating test datasets** | Create validation data           | 1 historic + 2 incremental datasets     |
+| **Transpilation**          | Convert pipelines to Spark       | Migrated pipelines (automated + manual) |
+| **Data validation**        | Test converted pipelines         | Validated pipeline functionality        |
+| **Integration testing**    | End-to-end orchestration test    | Working production-ready system         |
+| **Optimization**           | Performance & cost tuning        | SLA-compliant pipelines                 |
+| **Deployment**             | Production rollout               | Live system                             |
+| **Handover**               | Documentation & training         | Independent operation capability        |
+
+## Discovery
+
+Solidify your understanding of current systems in use and research the outcomes you would like to see in Prophecy. Specifically, you might want to:
+
+- **Understand business use cases**: How do you use your existing ETL system? Document how your data flows, how you transform your data, and what outputs you expect for each use case.
+
+- **Analyze your current ETL system architecture**: Identify the ETL tools, cloud data stack, and other data tools that you employ. For example, you might use Alteryx for ETL and send output data to Tableau from each workflow.
+
+- **Determine your target stack**: Based on your requirements, Prophecy will collaborate with you to determine the ideal target stack to migrate to. For example, you might be best suited to moved to Databricks for its Spark engine, or maybe your use case better suites using BigQuery for data storage and processing.
+
+## Scope
+
+Determine the scope for migration. Scope depends on factors such as cost, team readiness, and infrastructure preparedness. In many cases, you may start by migrating a subset of workflows from your ETL tool.
+
+This phase may involve the following roles to facilitate scoping:
+
+| Role                          | Team Size | Responsibility                                                   | Team                        |
+| ----------------------------- | --------- | ---------------------------------------------------------------- | --------------------------- |
+| Project Manager               | 1         | Responsible for project coordination and removing bottlenecks.   | Prophecy                    |
+| Data Steward                  | 1         | Helps in understanding data structures and resolves data issues. | Customer                    |
+| Legacy ETL Expert             | 2         | Assists in understanding existing ETL architecture and code.     | Customer                    |
+| Spark Architect/Data Engineer | 2         | Builds and ensures stability of Spark infrastructure.            | Prophecy and Customer       |
+| ETL Developer                 | 5         | Modernizes data pipelines and debugs issues.                     | Prophecy                    |
+| ETL Tester                    | 4         | Tests converted data pipelines and identifies discrepancies.     | Customer/System Integrators |
+
+<Note>
+This is one example. The configuration can vary depending on the business use case and complexity.
+</Note>
+
+Once the scope is determined, Prophecy will assist you in setting up your target infrastructure. This includes:
+
+- Implementing a unified identity system
+- Creating development, QA, and production environments
+- Integrating Git and CI/CD pipelines
+- Configuring Prophecy for your environment
+
+## Creating test datasets
+
+Reliable test data is essential for validating migrated pipelines. Poor or incomplete datasets can cause long delays.
+
+At minimum, create the following for each pipeline:
+
+- One historic dataset, often from the target table in your data warehouse
+- Two incremental datasets containing new raw data for transformation and merging
+
+Two incremental datasets allow you to validate pipelines that perform merge operations with high confidence.
+
+## Transpilation
+
+Begin the migration during the Import phase. Prophecy’s Import tool converts existing pipelines to optimized, open-source Spark or SQL code.
+
+Approaches vary:
+
+- **Automated migration** works best for pipelines of low to medium complexity.
+- **Manual migration** is more suitable for complex workflows with custom logic.
+- In practice, some manual review is always necessary to fully understand workflow structures.
+
+Migration is collaborative. Prophecy usually handles the first application alongside your team, establishing the process before enabling you or your system integrators to manage future migrations independently.
+
+## Data validation
+
+Validation ensures that migrated pipelines produce correct and reliable results. In the early stages, Prophecy performs validation for the first application using automated testing tools. Over time, your team takes over responsibility for validation, with Prophecy available for guidance.
+
+## Orchestration and integration testing
+
+Integration testing verifies that all components—from raw data ingestion to final output tables—work as intended in production-like conditions. This includes:
+
+- Parallel production runs to compare outputs against legacy systems.
+- Testing both historical and incremental datasets.
+- Migrating orchestration logic to modern tools such as the native Prophecy scheduler or Databricks jobs. Prophecy can reverse-engineer certain legacy orchestration formats like Ab Initio plans if needed.
+
+## Optimization
+
+After functional validation, the focus shifts to meeting performance and cost SLAs. Typically:
+
+1. You (the customer) define target execution times and resource budgets.
+1. Pipelines that don’t meet targets are optimized by a data/platform architect or engineer.
+1. Optimized pipelines are re-tested before moving to production.
+
+Prophecy handles optimization for the first application and supports your team in subsequent ones.
+
+## Deployment
+
+Modernized pipelines can be deployed through Prophecy’s built-in deployment features or integrated into your existing CI/CD process (for example, Jenkins). Deployment includes:
+
+- Continuous integration testing
+- Artifact creation
+- Pipeline orchestration
+
+## Documentation and handover
+
+The final step is enabling your team to operate independently. Prophecy provides:
+
+- Framework and process documentation
+- Guidance for adding or modifying tables
+- Procedures for data rollback and debugging
+
+After handover, your team manages daily operations, with Prophecy available for complex issues or ongoing advisory support.
+
+## Conclusion
+
+Migrating to Prophecy is a structured process that helps you move from legacy ETL platforms to a modern, scalable architecture. By following these phases—discovery, scoping, testing, import, validation, optimization, deployment, and handover—you can reduce risk and achieve a smooth transition.
+
+For questions or support, contact us at contact.us@prophecy.io or join our [Slack community](https://prophecy-io-support.slack.com/join/shared_invite/zt-moq3xzoj-~5MSJ6WPnZfz7bwsqWi8tQ#/shared-invite/email).

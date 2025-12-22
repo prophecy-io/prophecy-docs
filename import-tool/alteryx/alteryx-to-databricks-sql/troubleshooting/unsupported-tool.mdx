@@ -1,0 +1,33 @@
+---
+title: Missing support for an Alteryx tool
+description: Learn what to do when you import an unsupported tool
+---
+
+At the moment, Transpiler supports transpiling [a subset of Alteryx tools](/import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-tool-mapping/). If you import an unsupported tool, use the [solution](#solution) provided as a workaround to this limitation.
+
+## Example
+
+Assume you have an Alteryx workflow that uses the [FindNearest tool](https://help.alteryx.com/current/en/designer/tools/spatial/find-nearest-tool.html) that tells you the shortest distance between two venues. After you import your workflow and click the **Validate** button, you get the following error in the **Validation Summary** dialog:
+
+```shell
+The following components are not supported:ClosestVenue of type AlteryxSpatialPluginsGui.FindNearest.FindNearest
+```
+
+This means that your Alteryx workflow has a FindNearest tool named `ClosestVenue`.
+
+You can still click **Transpile**, but you notice that in your bundle overview, there is a **Failed** status for this components row. When you open your pipeline, you see a **todo** gem in place of the FindNearest tool.
+
+## Solution
+
+1. Open your bundle and navigate to your transpiled pipeline.
+
+   Notice the gem that isn't supported is a **todo** gem. <br />The Transpiler automatically creates a **todo** gem for unsupported Alteryx tools.
+
+1. Open and update the **todo** gem.
+
+   Implement the logic for that Alteryx tool in one of the following ways:
+
+   - Use a combination of [Prophecy gems](/data-engineering/gems/gems)
+   - Write your custom script in the [Script gem](/data-engineering/gems/custom/script)
+   - Write your custom SQL statement in the [SQLStatement gem](/data-engineering/gems/custom/sql-statement)
+   - Create a new gem using the [Gem Builder for SQL](/data-analysis/development/extensibility/sql-gem-builder)
