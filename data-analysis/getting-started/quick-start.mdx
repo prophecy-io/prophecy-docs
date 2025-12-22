@@ -26,7 +26,7 @@ First, you need to create the project where you will build your pipeline. You'll
 
 1. Click on the **Create Entity** button in the left navigation bar.
 1. Hover over the **Project** tile and click **Create**.
-1. Give your project a **Name**.
+1. Give your project a **Name**, such as `Prophecy_Quickstart`.
 1. Under **Team**, select your personal team.
 
    (It will match your user email.)
@@ -34,13 +34,21 @@ First, you need to create the project where you will build your pipeline. You'll
 1. Under **Select Template**, choose **Prophecy for Analysts**.
 1. Click **Complete**.
 
-Prophecy will open the your new project in the [Studio](/data-analysis/development/studio/studio). Your project will automatically attach to a fabric in the top right corner of the canvas.
+Prophecy will open the your new project in the [Studio](/data-analysis/development/studio/studio).
+
+</Step>
+<Step title="Connect to the execution environment">
+
+1. Select the default fabric or your own fabric.
+2. Click **Save**.
+
+This attaches the project to the fabric. You can switch fabrics at any time by clicking the fabric selector in the top right corner of the project canvas.
 
 </Step>
 <Step title="Add a new pipeline">
 
 1. On the project landing page, click **Create Pipeline**.
-1. For the **Pipeline Name**, enter `patients_analytics`.
+1. For the **Pipeline Name**, enter `patient_analytics`.
 1. Leave the default **Directory Path** of `pipelines`. Prophecy saves your compiled pipeline code in this folder of the project repository.
 1. Click **Create**.
 
@@ -83,7 +91,13 @@ Load some data into the project as a <Tooltip tip="Seeds are CSV files that are 
    ```
 
 1. Click **Next**.
-1. Preview the data in tabular format, then click **Save**.
+1. Click **Load Data** to preview the data in tabular format.
+1. Click **Save**.
+
+</Step>
+<Step title="Run the seed">
+
+To materialize the seed data into the SQL warehouse, run the pipeline once. To do so, click the play button in the bottom right corner of the canvas.
 
 </Step>
 <Step title="Reindex your connection">
@@ -101,20 +115,24 @@ You'll see a progress bar in the callout indicating the indexer is running. Once
 </Step>
 </Steps>
 
-## Build your pipeline
+## Explore the data
 
-Now, you'll build your pipeline using the Agent. Keep the **Visual** view open (rather than the **Code** view) to see updates in real-time as the Agent adds or modifies gems on the canvas.
+Now that you have data in your project, you can explore it using the Agent.
 
 <Steps>
 <Step title="Access the Agent">
 
-Locate the **Chat** tab on the left sidebar. This is where you'll interact with the Agent.
+Locate and open the **Chat** tab in the left sidebar.
+
+This is where you'll interact with the Agent.
 
 </Step>
 
 <Step title="Explore your data">
 
-Ask the Agent to search for the seed data table. Enter the following prompt in the chat:
+Ask the Agent to search for the seed data table.
+
+Enter the following prompt in the chat:
 
 ```
 Find datasets with information pertaining to hospital patients
@@ -126,13 +144,14 @@ The Agent returns:
 - A full list of matching datasets.
 - The option to add datasets directly to your pipeline on hover.
 
-Click on `patients_raw_data` (the data you uploaded) in the chat to open a detailed preview dialog where you can:
+1. Click on `patients_raw_data` (the data you uploaded) in the chat to open a detailed preview dialog where you can:
+   - View the table location.
+   - Examine the schema and column structure.
+   - Preview sample data.
+   - Review data profiles.
+   - Open an **Explore** session for dataset-specific queries.
 
-- View the table location.
-- Examine the schema and column structure.
-- Preview sample data.
-- Review data profiles.
-- Open an **Explore** session for dataset-specific queries.
+1. Close the preview dialog to return to the chat.
 
 <Note>
   If the Agent doesn't find your table, verify that the table was indexed by checking the
@@ -143,7 +162,9 @@ Click on `patients_raw_data` (the data you uploaded) in the chat to open a detai
 </Step>
 
 <Step title="Get data samples">
-Request specific data samples to validate your understanding. Enter the following prompt:
+Request specific data samples to validate your understanding.
+
+Enter the following prompt, replacing `@patients_raw_data` with your actual table path:
 
 ```
 Provide sample data from @patients_raw_data showing only patients from Boston
@@ -189,31 +210,23 @@ Click **Preview** to access:
 
 </Step>
 
-<Step title="Add source data to pipeline">
-Before building transformations, add the source data to your pipeline. Enter the following prompt:
+</Steps>
 
-```
-Add @patients_raw_data to the pipeline
-```
+## Build your pipeline
 
-The Agent adds a [Table gem](/data-analysis/gems/source-target/source-target) to your pipeline canvas.
+Now, you'll build your pipeline transformations using the Agent. Keep the **Visual** view open (rather than the **Code** view) to see updates in real-time as the Agent adds or modifies gems on the canvas.
 
-<Note>
-  The gem on the canvas will be labeled with a name like `l0_raw_patients` or similar. You'll
-  reference this label in subsequent prompts using @ mentions. You can also [rename the
-  gem](/data-analysis/gems/gems#gem-instance) to have a more descriptive name.
-</Note>
-
-</Step>
+<Steps>
 
 <Step title="Build your first transformation">
+
 Describe the transformation you want to perform. Enter the following prompt:
 
 ```
-Transform @l0_raw_patients to show total number of patients per county
+Transform @patient_records to show total number of patients per county
 ```
 
-Replace `@l0_raw_patients` with the actual gem label from your canvas if it differs.
+Replace `@patient_records` with the actual gem label from your canvas if it differs.
 
 The Agent will:
 
@@ -248,6 +261,12 @@ This helps you:
 
 - Understand the Agent's approach.
 - Verify that the transformation logic matches your expectations.
+
+import { WistiaVideo } from '/snippets/react/wistia-video.jsx';
+
+<Frame>
+  <WistiaVideo mediaId="021zpkv0ys" />
+</Frame>
 
 </Step>
 
@@ -294,7 +313,7 @@ Filter the source data to only include patients over 50 years old
 </Step>
 
 <Step title="Join with additional data">
-Create a second CSV file named `county_info.csv` with the following content:
+Create a second Seed file named `county_info` with the following content:
 
 ```csv county_info.csv
 county,population,region
@@ -304,7 +323,7 @@ Worcester,830000,Central
 Hampden,470000,Western
 ```
 
-Upload this data as a Seed. Then, prompt the Agent:
+Then, prompt the Agent:
 
 ```
 Join @l0_raw_patients with @county_info on county
@@ -324,6 +343,13 @@ Add a column that calculates days since admission using the current date
 
 </Step>
 </Steps>
+
+## Connect your own data
+
+This quickstart uses a Seed file as the source data. When you start building your own pipelines, you'll likely want to use your own data from files or external systems. You can do this by:
+
+- Uploading files directly from your local filesystem using the [upload file](/data-analysis/gems/source-target/table/upload-files) feature.
+- Ingesting data from external systems using [connections](/data-analysis/environment/connections/connections).
 
 ## Sample prompts reference
 

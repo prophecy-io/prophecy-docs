@@ -43,14 +43,14 @@ Start with creating a new bundle in the Transpiler.
 1. Click **Next**.
 1. In the **Bundle Details** tab, fill out the following fields:
 
-   | Field              | Action                                                                                                                                                          |
-   | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-   | Import Bundle Name | Provide a name for the bundle.                                                                                                                                  |
-   | Language           | Select **SQL** as the primary code language.                                                                                                                    |
-   | Team               | Create or select the team that will be able to access the bundle.                                                                                               |
+   | Field              | Action                                                                                                                                                           |
+   | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+   | Import Bundle Name | Provide a name for the bundle.                                                                                                                                   |
+   | Language           | Select **SQL** as the primary code language.                                                                                                                     |
+   | Team               | Create or select the team that will be able to access the bundle.                                                                                                |
    | Project            | Create or select the project where Prophecy will add migrated pipelines.<br />The project you choose must have the same language and team defined in the bundle. |
    | Branch             | Select the Git branch where the migration will appear. <br />The Transpiler will not commit directly to the `main` branch of the project repository.             |
-   | SQL Fabric         | Choose the [fabric](/data-analysis/environment/fabrics/prophecy-fabrics) the Transpiler will use to run Prophecy pipelines.                       |
+   | SQL Fabric         | Choose the [fabric](/data-analysis/environment/fabrics/prophecy-fabrics) the Transpiler will use to run Prophecy pipelines.                                      |
 
 1. Click **Next**.
 1. In the **Upload Files** tab, upload the Alteryx files you want to migrate.
@@ -70,7 +70,6 @@ Configure how Prophecy imports your workflows.
    The file appears under **Entities for Transpilation**.
 
 1. For each pipeline that you stage:
-
    - Review the **Source Mapping File** to verify the original file that corresponds to the new pipeline.
    - Verify or change the **Target Pipeline Name**, which will be the name of your new Prophecy pipeline.
    - Check the **Entities associated with this pipeline** section to see the datasets that will be created.
@@ -82,7 +81,9 @@ Configure how Prophecy imports your workflows.
 ![Import workflows](./img/alteryx-import-pipeline.png)
 
 <Note>
-Once you add a pipeline or table to the bundle, you can disable the import by deselecting the relevant checkbox. Disabling the import is useful if you want to save the pipeline or table in the import configuration to import it at a later time.
+  Once you add a pipeline or table to the bundle, you can disable the import by deselecting the
+  relevant checkbox. Disabling the import is useful if you want to save the pipeline or table in the
+  import configuration to import it at a later time.
 </Note>
 
 ### Step 3: Import transpiled entities
@@ -123,4 +124,4 @@ If you want to update or restart your transpilation, click on the **Reimport Pip
 
 ![Reimport](./img/alteryx-reimport.png)
 
-For support, please see [Getting help with Prophecy](/data-analysis/administration/getting-help/get-in-touch)
+For support, please see [Getting help with Prophecy](/data-analysis/administration/getting-help/get-in-touch).

@@ -497,7 +497,8 @@
                         "group": "Pipelines",
                         "pages": [
                           "api-reference/pipelines/trigger-pipeline-run",
-                          "api-reference/pipelines/get-pipeline-run-status"
+                          "api-reference/pipelines/get-pipeline-run-status",
+                          "api-reference/pipelines/run-data-tests"
                         ]
                       }
                     ]
@@ -809,9 +810,15 @@
                                   "data-engineering/fabrics/spark-provider/emr/emr-saml"
                                 ]
                               },
+                              {
+                                "group": "Livy",
+                                "pages": [
+                                  "data-engineering/fabrics/spark-provider/livy/livy",
+                                  "data-engineering/fabrics/spark-provider/livy/selective-sampling"
+                                ]
+                              },
                               "data-engineering/fabrics/spark-provider/dataproc",
                               "data-engineering/fabrics/spark-provider/synapsefabric",
-                              "data-engineering/fabrics/spark-provider/livy",
                               "data-engineering/fabrics/spark-provider/prophecy-managed"
                             ]
                           },
@@ -1133,20 +1140,17 @@
             "groups": [
               {
                 "group": "Import overview",
-                "pages": [
-                  "import-tool/index",
-                  "import-tool/migration"
-                ]
+                "pages": ["import-tool/index", "import-tool/migration"]
               },
-            {
+              {
                 "group": "Alteryx to SQL",
                 "pages": [
-                "import-tool/alteryx/alteryx-to-databricks-sql/alteryx-to-prophecy-sql",
-                "import-tool/alteryx/alteryx-to-databricks-sql/alteryx-to-databricks-sql",
-                "import-tool/alteryx/alteryx-to-databricks-sql/databricks-data-types",
-                "import-tool/alteryx/alteryx-to-databricks-sql/alteryx-connections",
-                "import-tool/alteryx/alteryx-to-databricks-sql/databricks-functions-mappings",
-                {
+                  "import-tool/alteryx/alteryx-to-databricks-sql/alteryx-to-prophecy-sql",
+                  "import-tool/alteryx/alteryx-to-databricks-sql/alteryx-to-databricks-sql",
+                  "import-tool/alteryx/alteryx-to-databricks-sql/databricks-data-types",
+                  "import-tool/alteryx/alteryx-to-databricks-sql/alteryx-connections",
+                  "import-tool/alteryx/alteryx-to-databricks-sql/databricks-functions-mappings",
+                  {
                     "group": "Tool mapping",
                     "pages": [
                       "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-tool-mapping",
@@ -1193,7 +1197,6 @@
                 "pages": [
                   "import-tool/alteryx/alteryx-to-spark/alteryx-to-spark",
                   "import-tool/alteryx/alteryx-to-spark/alteryx-components"
-
                 ]
               },
               {
