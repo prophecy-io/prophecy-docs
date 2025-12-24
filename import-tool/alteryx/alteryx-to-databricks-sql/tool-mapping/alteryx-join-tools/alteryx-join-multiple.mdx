@@ -1,0 +1,95 @@
+---
+title: Alteryx Join Multiple tool > Prophecy Join gem
+description: Mapping between Alteryx’s Join Multiple tool and the Prophecy Join gem
+---
+
+The [Alteryx Join Multiple tool](https://help.alteryx.com/current/en/designer/tools/join/join-multiple-tool.html) combines three or more datasets using either shared join fields or record position, producing a single joined output (full outer join by default).
+
+Prophecy implements similar logic through the Join gem, which supports multiple inputs and produces a single output dataset.
+
+## Automated migration results
+
+When Import detects an Alteryx Join Multiple tool:
+
+- It generates a single **Join** gem with multiple input ports.
+- For later inputs, Import may implement coalesced join logic to match Alteryx’s multi-input semantics (for example, `coalesce(in0.Name, in1.Name) = in2.Name`).
+- Join-field name conflicts are handled by aliasing fields under **Expressions** (for example, mapping `Name` from `in1` and `in2` to names like `Input_hash2_Name`) and using those aliases in join conditions.
+- For **Join by Record Position**, Import adds a SQL gem per input to generate `recordPositionForJoin`, then configures the Join gem to join on `recordPositionForJoin`.
+
+## Manually replicate in Prophecy
+
+1. Add a **Join** gem and use **Add port** to connect three or more inputs.
+2. Choose the join type (inner, left outer, right outer, full outer, semi, or anti).
+3. Configure join conditions for each additional input, selecting the join columns and comparison operator (such as `equals`).
+4. For joins with more than two inputs, you may need to implement join conditions using `coalesce(...)` (such as `coalesce(in0.Name, in1.Name) = in2.Name`).
+5. Under **Expressions**, alias join fields to resolve naming conflicts (for example, `Input_hash2_Name = in1.Name`) and use those aliased names in join conditions and output selection.
+
+## Configuration options
+
+### Alteryx Join Multiple
+
+- Add two or more input connections to the Join tool.
+- Choose whether to join by record position or by specific field(s).
+- For field-based joins, select the join field for each input. Multiple join fields can be used to refine matching.
+- Choose whether to return only records that meet all join criteria (inner join behavior) or all records with NULLs where joins do not match (full outer join behavior).
+- Configure Cartesian join handling: warnings or errors for multidimensional joins that may significantly increase row counts.
+- Rename, reorder, or exclude output columns using the configuration table.
+
+### Prophecy Join gem (multiple inputs)
+
+- Add three or more input datasets using **Add port** to connect additional inputs.
+- Select the join type (inner, left outer, right outer, full outer, semi, or anti).
+- For each additional input, define the join condition by selecting the join columns and comparison operator (for example, equals).
+- When later inputs must match against values from earlier inputs, use expressions such as `coalesce(in0.Name, in1.Name)` in the join condition.
+- Under **Expressions**, rename or alias join fields as needed (for example, `Input_hash2_Name = in1.Name`) to resolve naming conflicts.
+- Use expressions such as `in0.*`, `in1.*`, or `in2.* EXCEPT (CustomerID)` to control which columns are included in the output.
+
+### Join by record position in Prophecy
+
+To replicate a record-position join:
+
+- For each input dataset, add a **SQLStatement** gem that generates a positional index, such as `recordPositionForJoin`.
+- Join the outputs of the SQL gems using an **inner join** on `recordPositionForJoin`. In the Join gem, remove the helper column by adding an expression along the lines of the following:
+
+  ```
+  in1.* EXCEPT (recordPositionForJoin)
+  ```
+
+## Output behavior
+
+Alteryx Join Multiple produces a single joined output (full outer join by default).
+
+Prophecy’s Join gem also produces a single output dataset, with results determined by the selected join type and join conditions.
+
+## Known caveats
+
+- Join by record position requires generating a `recordPositionForJoin` column for each input prior to joining.
+- Field naming conflicts may require explicit aliasing under **Expressions** (for example, `Input_hash2_Name`) to keep join conditions unambiguous.
+- Coalesced join conditions (for example, `coalesce(in0.Name, in1.Name) = in2.Name`) can be harder to reason about and may require validation against expected match behavior.
+
+## Example
+
+### Alteryx
+
+1. Add a **Join Multiple** tool connected to `Customers`, `Orders`, and `Preferences`.
+2. Select **Join by Specific Fields** and select `CustomerID` for each column.
+
+### Prophecy
+
+1. Add a **Join** gem and configure it as a **Full Outer Join**.
+2. In the right pane, select **Add Port** (Join gems have two inputs by default).
+3. Connect `Customers`, `Orders`, and `Preferences` to the **Join** gem.
+
+4. Join the first two inputs on the shared key:
+
+   - First column: `Customers.CustomerID`
+   - Join condition: `equals`
+   - Second column: `Orders.CustomerID`
+
+5. For the third input, add a `custom_code` condition:
+
+   ```
+   coalesce(Customers.CustomerID, Orders.CustomerID) = Preferences.CustomerID
+   ```
+
+This configuration preserves all rows from all inputs while aligning records on `CustomerID`, matching Alteryx Join Multiple’s default full-outer behavior.

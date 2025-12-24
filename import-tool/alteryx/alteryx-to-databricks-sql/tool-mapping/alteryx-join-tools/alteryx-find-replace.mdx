@@ -1,0 +1,165 @@
+---
+title: Alteryx Find Replace tool > Prophecy Join gem + Reformat gem
+description: Mapping between Alteryx’s Find Replace tool and Prophecy's Join and Reformat gems.
+---
+
+The [Alteryx Find Replace tool](https://help.alteryx.com/current/en/designer/tools/join/find-replace-tool.html) updates field values by searching for text from a lookup table and replacing matches with new values. It supports exact matches, partial-string matches, and “replace or append” behavior using values from a secondary (R) dataset. This makes the tool well suited for standardizing abbreviations, misspellings, and other inconsistent text values.
+
+In Prophecy, this logic is implemented through a Join gem (to attach lookup entries) and a Reformat gem that applies SQL expressions such as `regexp_replace` or structured substitutions.
+
+<Note>
+For direct, single-pattern regular expression replacements that do not require a lookup table, you can use [Prophecy’s Regex gem](https://docs.prophecy.ai/data-analysis/gems/parse/regex#replace-configuration).
+</Note>
+
+## Automated migration results
+
+When Import encounters a Find Replace tool:
+
+- Lookup-table replacements are migrated to a Join gem followed by a Reformat gem that performs the find/replace logic.
+- Partial / pattern-based matching (Alteryx's “Any Part of Field” or “Beginning of Field”) may be expressed using SQL regex operations.
+- Append-field behavior is converted into additional output columns created in a Reformat gem using SQL expressions that select the appropriate lookup value.
+
+## Manually replicate in Prophecy
+
+To reproduce Alteryx Find Replace behavior in Prophecy for any scenario other than Append Fields to Record:
+
+1. Add two datasets:
+
+   - Find dataset: The dataset on which find and replace will be performed.
+   - Replace dataset: The dataset that provides the lookup information for find and replace.
+
+2. Add a Reformat gem for the Replace dataset.
+
+3. In the Reformat gem, add a target column called `_rules` or similar.
+
+4. In the function selector, choose **STRUCT**.
+
+5. Add arguments as custom code, such that each row in the lookup dataset produces a structured pair containing the text to find and the text to replace.
+
+   - `string_to_replace AS string_to_replace`
+
+   - `replacement_string AS replacement_string`
+
+6. Add a **Join** gem configured as a **Full Outer** Join with the Find dataset and Replace dataset as inputs.
+
+7. Add a **Reformat** gem for the combined dataset.
+
+8. In the **Reformat** gem, add a **Target Column** for the column where the find/replace operation should occur, configured as an `aggregate` function with the following parameters:
+
+   - Columns `target column` and`_rules` .
+   - `custom_code` with code along the following lines:
+
+   ```sql
+   (acc, rule) -> regexp_replace(acc, rule['string_to_replace'], rule['replacement_string'])`
+   ```
+
+   Here, `acc` is the evolving value being updated each time, and `rule` is an element of the `_rules` array created earlier with `STRUCT`.
+
+These steps approximate Alteryx’s behavior by building a list of rules, attaching them to each row, and iteratively applying each find/replace rule.
+
+### Manually replicate Append-field scenarios
+
+If Alteryx’s R-side values need to be added as new columns (rather than overwriting the existing field), construct a new column using the lookup value. When multiple rules may apply, a filtered or prioritized rule can be selected (Import uses a safe pattern such as `coalesce(...)` over a filtered rule array):
+
+```sql
+COALESCE( /* selected lookup value */, '{}' )
+```
+
+The final column reflects whichever lookup entry matched, consistent with Alteryx’s “Append Field(s) to Record.”
+
+## Configuration options
+
+### In Alteryx
+
+Configure two inputs:
+
+- **F Input:** dataset containing the field to update
+- **R Input:** lookup table containing find/replace values
+
+#### Find settings
+
+- Match mode: **Beginning of Field**, **Any Part of Field**, **Entire Field**
+- Parameters:
+  - **Find Within Field** (column from F)
+  - **Find Value** (column from R)
+- Optional: **Case Sensitive Find**, **Match Whole Word Only**
+
+#### Replace settings
+
+- **Replace Found Text With Value** (column from R)
+- Optional: **Replace Multiple Found Items** (“Any Part of Field” only)
+- **Append Field(s) to Record** (adds selected R-side columns)
+
+### In Prophecy
+
+To express this behavior:
+
+1. On the lookup dataset, create a `struct` containing find/replace values (Import uses `_rules`).
+2. Add a **Join** gem configured as **Full Outer Join** to join the lookup dataset with the main dataset.
+3. Add a **Reformat** gem.
+4. In the **Reformat** gem, add a target column with an expression similar to the following:
+
+   ```sql
+   aggregate(
+     _rules,
+     target_column,
+     (acc, rule) -> regexp_replace(acc, rule['word'], rule['replacement'])
+   )
+   ```
+
+   where `acc` is the accumulating value and`rule` is one entry in the lookup list.
+
+5. In the **Reformat** gem, select all columns other than `_rules` and `target_column`.
+
+For append-field behavior, add new output columns that select the matching replacement value (using `coalesce(...)` or a similar selection expression).
+
+## Output behavior
+
+- Alteryx applies replacements internally in the Designer engine.
+- Prophecy expresses the logic explicitly in SQL:
+  - Regex-based updates during SELECT
+  - Lookup-based updates after the Join
+  - Additional append columns created in Reformat
+
+The resulting dataset contains updated fields that reflect the same logical intent.
+
+## Known caveats
+
+- SQL regex syntax does not match Alteryx’s pattern-matching options exactly.
+- Prophecy uses a combination of Reformat and Join gems to perform the Find and Replace instead of one tool.
+- Multi-step or cascading replacements may require separate expressions.
+
+## Example
+
+### Alteryx Find Replace example
+
+**Goal:** Replace values in a target column using a lookup table, while preserving the original value when no match is found.
+
+- **Input data:** contains `code`
+- **Lookup table:** contains `OldCode`, `NewCode`
+- **Behavior:**
+  - If `code` matches `OldCode`, replace it with `NewCode`
+  - Otherwise, keep the original `code`
+
+### Prophecy equivalent (Join + Reformat)
+
+1. Connect an input dataset that contains a `code` column.
+
+2. Add a lookup dataset (`_rules`) as a rules structure that pairs each `OldCode` with its corresponding `NewCode`.
+
+3. Use a **Join** gem configured as a **Full Outer Join** to join the imput dataset to the lookup dataset.
+
+4. Add a **Reformat** gem and add `code` as a **Target Column** defined as a `aggregate` function with the following parameters:
+
+- The columns `_rules` and `code` .
+- `custom_code` defined as follows:
+
+  ```
+  aggregate(_rules,code,
+  	(acc, rule) -> regexp_replace(acc, rule['word'], rule['replacement'])
+  	)
+  ```
+
+  This expression implements Alteryx's “replace if found, otherwise keep original” behavior by applying all find/replace rules and preserving the original value when no replacement applies.
+
+2. Finalize output columns by selecting all original columns other than `code` (that is, excluding `_rules`).
