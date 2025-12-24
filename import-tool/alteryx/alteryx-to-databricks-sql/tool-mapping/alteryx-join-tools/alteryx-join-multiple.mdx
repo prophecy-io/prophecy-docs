@@ -38,8 +38,8 @@ When Import detects an Alteryx Join Multiple tool:
 ### Prophecy Join gem (multiple inputs)
 
 - Add three or more input datasets using **Add port** to connect additional inputs.
-- Select the join type (inner, left outer, right outer, full outer, semi, or anti).
-- For each additional input, define the join condition by selecting the join columns and comparison operator (for example, equals).
+- Select the join type.
+- For each additional input, define the join condition by selecting the join columns and comparison operator (such as `equals`).
 - When later inputs must match against values from earlier inputs, use expressions such as `coalesce(in0.Name, in1.Name)` in the join condition.
 - Under **Expressions**, rename or alias join fields as needed (for example, `Input_hash2_Name = in1.Name`) to resolve naming conflicts.
 - Use expressions such as `in0.*`, `in1.*`, or `in2.* EXCEPT (CustomerID)` to control which columns are included in the output.
@@ -48,8 +48,9 @@ When Import detects an Alteryx Join Multiple tool:
 
 To replicate a record-position join:
 
-- For each input dataset, add a **SQLStatement** gem that generates a positional index, such as `recordPositionForJoin`.
-- Join the outputs of the SQL gems using an **inner join** on `recordPositionForJoin`. In the Join gem, remove the helper column by adding an expression along the lines of the following:
+- For each input dataset, add a [RecordID gem](/data-analysis/gems/prepare/record-id) configured to generate a positional index, such as `recordPositionForJoin`.
+- Add a Join gem that joins the outputs of the RecordID gems configured as an **Inner Join** on `recordPositionForJoin`.
+- In the same Join gem, remove the helper column by adding an expression along the lines of the following:
 
   ```
   in1.* EXCEPT (recordPositionForJoin)

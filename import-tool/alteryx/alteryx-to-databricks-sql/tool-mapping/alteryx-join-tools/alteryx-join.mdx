@@ -46,8 +46,9 @@ When Import detects an Alteryx Join tool:
   - Right join/right outer join
   - Full join/full outer join
   - Cross join
-  - Natural inner join/natural left outer join/natural right outer join/natural full outer join
-- Define the join condition by selecting columns from each input and a comparison operator (for example, `equals`).
+  - Natural inner join
+  - Natural left outer join/natural right outer join/natural full outer join
+- Define the join condition by selecting columns from each input and a comparison operator (such as `equals`).
 - Under **Expressions**, select and rename output columns as needed (for example, target column `Right_Customer_ID` with expression `in1.CustomerID`).
 - You can also use expressions such as `in0.*` and `in1.* EXCEPT (CustomerID)` to manage output columns.
 
