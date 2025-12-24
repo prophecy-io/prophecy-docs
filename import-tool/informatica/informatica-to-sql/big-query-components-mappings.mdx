@@ -7,31 +7,29 @@ When you migrate an Informatica workflow to a Prophecy pipeline, the transpiler 
 
 Informatica components are a core part of the workflow. They perform data operations such as reading data from the source table, performing transformations, and writing data into the destination table.
 
-The following tables list all the Informatica components that Prophecy supports and the corresponding Prophecy gem it maps to in BigQuery SQL:
+The following tables list all the Informatica components that Prophecy supports and the corresponding Prophecy gem it maps to in BigQuery SQL
 
-| Informatica Component | Equivalent Prophecy Gems                                |
-| --------------------- | ------------------------------------------------------- |
-| Aggregator            | [Aggregate](/data-analysis/gems/transform/aggregate)    |
-| Teradata              | Table                                                   |
-| Oracle                | Source/Target                                           |
-| Flat File             | Source/Target                                           |
-| Expression            | [Reformat](/data-analysis/gems/prepare/reformat)        |
-| Filter                | [Filter](/data-analysis/gems/prepare/filter)            |
-| Input Transformation  | [Reformat](/data-analysis/gems/prepare/reformat)        |
-| Joiner                | [Join](/data-analysis/gems/join-split/join)             |
-| Lookup Procedure      | [Join](/data-analysis/gems/join-split/join)             |
-| Output Transformation | [Reformat](/data-analysis/gems/prepare/reformat)        |
-| Rank                  | [Window Function](/data-analysis/gems/transform/window) |
-| Router                | [Filter](/data-analysis/gems/prepare/filter)            |
-| Schema Transform      | [Reformat](/data-analysis/gems/prepare/reformat)        |
-| Sequence              | [Reformat](/data-analysis/gems/prepare/reformat)        |
-| Sort                  | [Order By](/data-analysis/gems/prepare/order-by)        |
-| Source Qualifier      | [Reformat](/data-analysis/gems/prepare/reformat)        |
-| Transaction Control   | Target                                                  |
-| Update Strategy       | Target                                                  |
+| Informatica Tool          | Equivalent Prophecy Gems                                    | Description                                                                                                                                                                                                                                                 |
+| ------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Aggregator**            | [Aggregate](https://docs.prophecy.io/analysts/aggregate)    | Functions such as `sum`, `count`, `min`, and `max` are applied in the Aggregate gem. **Group By** fields are explicitly listed in the Aggregate gem. Aggregates run as SQL `group by` operations on BigQuery.                                               |
+| **Teradata**              | [Table](https://docs.prophecy.io/analysts/table)            | Represents a table read or write in BigQuery. Configure connection and dataset name in the gem properties. Data type mappings may differ slightly; verify numeric precision.                                                                                |
+| **Oracle**                | [Source / Target](https://docs.prophecy.io/analysts/oracle) | Used for reading from or writing to Oracle tables. After import, ensure connection credentials are set in the Prophecy dataset configuration.                                                                                                               |
+| **Flat File**             | [Source / Target](https://docs.prophecy.io/analysts/csv)    | Equivalent to Informatica flat-file sources and targets. You define file paths and delimiters in the gem, not in the pipeline. Verify header and quote options after import.                                                                                |
+| **Expression**            | [Reformat](https://docs.prophecy.io/analysts/reformat)      | Each Informatica output port becomes a column expression in the Reformat gem. Write transformations using SQL syntax (`upper(col)`, `case when`, `cast`, and so on). Multiple Expression transformations may be combined into a single Reformat gem.        |
+| **Filter**                | [Filter](https://docs.prophecy.io/analysts/filter)          | Configure the filter condition in SQL syntax (e.g., `order_date > current_date - 30`). Equivalent to Informatica’s “Filter Condition.” Each Filter gem has one output path; you may need to use multiple filters to emulate Router logic.                   |
+| **Input Transformation**  | [Reformat](https://docs.prophecy.io/analysts/reformat)      | Used to rename or standardize incoming fields. Configure column expressions in the Reformat gem’s output schema.                                                                                                                                            |
+| **Joiner**                | [Join](https://docs.prophecy.io/analysts/join)              | Define join keys and join type (inner, left, right, full). The “Join Condition” property replaces the Informatica join expression. Ensure that both datasets are properly typed and joined on matching key fields.                                          |
+| **Lookup Procedure**      | [Join](https://docs.prophecy.io/analysts/join)              | Perform lookups using a Join gem and an auxiliary dataset. Use a left join and add conditional logic (`coalesce`) to substitute defaults when lookup values are missing.                                                                                    |
+| **Output Transformation** | [Reformat](https://docs.prophecy.io/analysts/reformat)      | Final field ordering or renaming before writing to a target is handled in Reformat. You can drop, reorder, or rename columns in the gem’s output schema panel.                                                                                              |
+| **Rank**                  | [Window Function](https://docs.prophecy.io/analysts/window) | Use the Window Function gem to define ranking and windowed calculations (e.g., `row_number() over (partition by region order by revenue DESC)`). Specify partition and order keys explicitly.                                                               |
+| **Router**                | [Filter](https://docs.prophecy.io/analysts/filter)          | Routers become one or more Filter gems. Each Filter gem defines one conditional output path; use a series of filters to represent multiple group conditions.                                                                                                |
+| **Schema Transform**      | [Reformat](https://docs.prophecy.io/analysts/reformat)      | Modify schema by adding, dropping, or renaming columns. Add new fields in the **Output Schema** tab, using expressions to derive values (e.g., `full_name = concat(first_name, ' ', last_name)`). Downstream gems update automatically when schema changes. |
+| **Sequence**              | [Reformat](https://docs.prophecy.io/analysts/reformat)      | Replace sequence logic with SQL expressions (`generate_uuid()`, `row_number()` window function). Prophecy does not manage persistent sequences; generate IDs within the pipeline or use a database sequence.                                                |
+| **Sort**                  | [Order By](https://docs.prophecy.io/analysts/order-by)      | Sorting occurs with an Order By gem. Specify columns and order (`asc`/`desc`). If your original mapping used “Sorted Input,” ensure the upstream Order By gem is preserved before aggregations.                                                             |
+| **Source Qualifier**      | [Reformat](https://docs.prophecy.io/analysts/reformat)      | The Source Qualifier becomes part of the read operation in the Prophecy pipeline. Any filters or derived columns in the Source Qualifier appear as SQL expressions in a Reformat gem following the dataset.                                                 |
+| **Transaction Control**   | [Target](https://docs.prophecy.io/analysts/source-target)   | Transaction or commit logic is handled at the dataset level. Prophecy writes data atomically using the underlying database’s transaction model. Explicit commit/rollback behavior is not exposed.                                                           |
+| **Update Strategy**       | [Target](https://docs.prophecy.io/analysts/source-target)   | Conditional inserts and updates are defined in Target gem configurations or using merge statements. Replace “DD_INSERT” / “DD_UPDATE” logic with SQL-based merge or conditional write patterns.                                                             |
 
-<Note>
-  If you don't see a particular component on this list, you can include custom abilities beyond
-  custom scripting. To learn more, see [Gem Builder for
-  SQL](/data-analysis/development/extensibility/sql-gem-builder).
-</Note>
+::::note
+If you don't see a particular component on this list, you can include custom abilities beyond custom scripting. To learn more, see [Gem Builder for SQL](https://docs.prophecy.io/analysts/gem-builder/).
+:::
