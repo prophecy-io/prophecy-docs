@@ -5,10 +5,10 @@ description: Mapping between Alteryx’s Find Replace tool and Prophecy's Join a
 
 The [Alteryx Find Replace tool](https://help.alteryx.com/current/en/designer/tools/join/find-replace-tool.html) updates field values by searching for text from a lookup table and replacing matches with new values. It supports exact matches, partial-string matches, and “replace or append” behavior using values from a secondary (R) dataset. This makes the tool well suited for standardizing abbreviations, misspellings, and other inconsistent text values.
 
-In Prophecy, this logic is implemented through a Join gem (to attach lookup entries) and a Reformat gem that applies SQL expressions such as `regexp_replace` or structured substitutions.
+In Prophecy, this logic is implemented through a [Join gem](/data-analysis/gems/join-split/join) (to attach lookup entries) and a [Reformat gem](/data-analysis/gems/prepare/reformat) that applies SQL expressions such as `regexp_replace` or structured substitutions.
 
 <Note>
-For direct, single-pattern regular expression replacements that do not require a lookup table, you can use [Prophecy’s Regex gem](https://docs.prophecy.ai/data-analysis/gems/parse/regex#replace-configuration).
+For direct, single-pattern regular expression replacements that do not require a lookup table, you can use [Prophecy’s Regex gem](/data-analysis/gems/parse/regex).
 </Note>
 
 ## Automated migration results

@@ -5,7 +5,7 @@ description: Mapping between Alteryx’s Join tool and the Prophecy Join gem
 
 The [Alteryx Join tool](https://help.alteryx.com/current/en/designer/tools/join/join-tool.html) combines two datasets by matching records on one or more key fields.
 
-Prophecy implements this functionality through the [Join gem](https://docs.prophecy.ai/data-analysis/gems/join-split/join), which joins two or more datasets at a time using explicit join conditions and a selectable join type.
+Prophecy implements this functionality through the [Join gem](/data-analysis/gems/join-split/join), which joins two or more datasets at a time using explicit join conditions and a selectable join type.
 
 Alteryx’s Join tool always produces three outputs (L, J, and R), representing unmatched left records, matched records, and unmatched right records.
 
@@ -56,7 +56,7 @@ When Import detects an Alteryx Join tool:
 
 To replicate a record-position join:
 
-- For each input dataset, add a [RecordID gem](https://docs.prophecy.ai/data-analysis/gems/prepare/record-id), which assigns a unique identifier to each row of a dataset, configured so that the Output Column Name is `recordPositionforJoin`.
+- For each input dataset, add a [RecordID gem](/data-analysis/gems/prepare/record-id), which assigns a unique identifier to each row of a dataset, configured so that the Output Column Name is `recordPositionforJoin`.
 
 - Add a Join gem that joins both input datasets, configured as an **Inner Join** on `recordPositionForJoin`.
 
