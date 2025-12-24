@@ -1,0 +1,124 @@
+---
+title: Analyzer
+description: Run Analyzer on exported workflows to preview migration outcomes, coverage, complexity, and supported patterns before performing a full import.
+---
+
+Prophecy supports the automatic import of a wide range of tools and functions from legacy ETL platforms. In some cases, you will need to tweak or adjust pipelines after Import. You can get a sense of exactly what Import supports by running Prophecy's Analyzer.
+
+Analyzer evaluates workflows exported from legacy ETL platforms and generates a detailed pre-migration assessment as an `.xlsx` workbook containing summary metrics, coverage details, pattern support, and complexity analysis.
+
+This analysis report helps you understand what to expect from Import: which tools and functions are supported, how much of the workflow is expected to migrate automatically, and how much post-Import customization will be needed in order for your pipelines to run. It provides five tabs: the [Summary tab](#summary-tab), the [Coverage tab](#coverage-tab), the [Patterns Support tab](#patterns-support-tab), the [Workflows Complexity tab](#workflows-complexity-tab), and the [Tool Type Complexity tab](#tool-type-complexity-tab).
+
+## Summary tab
+
+The **Summary** tab provides a high-level snapshot of overall migration readiness across all workflows included in the analysis. It consolidates Import coverage, pattern support, and workflow-level complexity into one view.
+
+| Section                 | What it shows                                                                                                                                                    |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Import coverage         | Provvides an overall percentage of workflows and tools supported by Import, along with details on how many workflows and tools will be successfully imported.    |
+| Import patterns support | Lists the number of unique tools and functions to be migrated. You can view details on tools and functions in the [Patterns Support tab](#patterns-support-tab). |
+| Workflow complexity     | Rates complexity as low, medium, or high: the lower the complexity, the less post-migration work will be needed.                                                 |
+
+## Coverage tab
+
+The **Coverage** tab provides workflow-by-workflow detail on what was successfully analyzed and what was not.
+
+### Workflows coverage
+
+Workflows coverage describes the percentage of workflows that Import can process successfully, in terms of the number of tools that can be imported and the number of tools that will fail.
+
+Example results:
+
+| Details/workflows           | Results |
+| --------------------------- | ------- |
+| Migration Status            | Success |
+| Tools Migrated Successfully | 297     |
+| Tools Migration Failed      | 33      |
+| Total Tool Occurrences      | 330     |
+| Tools Coverage              | 90%     |
+
+### Tools breakdown
+
+For each workflow, Analyzer lists tool types and its number of occurrences. This lets you identify pipelines that are dominated by certain patterns (such as many Joins or Filters).
+
+Example excerpt:
+
+- **Filter:** 63 occurrences
+- **Join:** 65 occurrences
+- **Union:** 40 occurrences
+- **Formula:** 37 occurrences
+- **Summarize:** 23 occurrences
+- **Db File Input:** 19 occurrences
+
+## Patterns support tab
+
+The **Patterns support** tab provides a detailed accounting of which tools and functions used in the workflow are supported by Import.
+
+### Tools
+
+Each tool encountered is listed with:
+
+- Tool name in ETL platform, such as Alteryx's "DateTimeNow."
+- Support status: supported or unsupported.
+- Number of times tool appears in workflow.
+
+### Function support
+
+Analyzer identifies functions used in the workflow and verifies whether each one can be mapped to Prophecy’s function set.
+
+Example details:
+
+- **Supported functions:** `coalesce`, `contains`, `isnull`, `substring`, `left`, `regex_replace`
+- **Unsupported functions:** `comparedictionary`
+- **Function-level support:** 85%
+
+## Workflows complexity tab
+
+The **Workflows complexity** tab explains how Analyzer derives its complexity classification.
+
+### How complexity is computed
+
+Analyzer assigns an **overall complexity score** (0–3) based on weighted factors:
+
+- **Workflow Size Complexity (20%)**
+
+  - ≤100 tools → score 1
+  - 101–250 tools → score 2
+  - > 250 tools → score 3
+
+- **Tool Type Complexity (50%)**
+
+  - Based on the difficulty and support status of each tool type.
+  - Workflows with only easy, supported tools receive lower scores.
+  - Workflows with advanced or unsupported tool types score higher
+
+- **Diagnostic Complexity (30%)**
+  - Based on the number of migrated gems that produce compilation diagnostics
+  - 0–5 errors → score 1
+  - 5–10 errors → score 2
+  - \> 10 errors → score 3
+
+The weighted score maps to:
+
+- **Low complexity**: 0–1
+- **Medium complexity**: 1–2
+- **High complexity**: 2–3
+
+### Example
+
+One workflow received:
+
+- Workflow size score: **3**
+- Tool type score: **2**
+- Diagnostic score: **1**
+- **Overall score:** 1.9 → **Medium**
+
+## Tool type complexity tab
+
+The **Tool type complexity** tab lists each tool encountered and its assigned complexity level. These complexity ratings reflect both Prophecy’s level of support for that tool and its typical migration difficulty.
+
+Example mapping:
+
+- **Easy:** Cleanse, DateTime, DateTimeNow, Db File Input, Db File Output, Disabled Container, Filter, Formula, Join, Select, Text Box, Union, Unique
+- **Medium:** Summarize
+- **Hard:** Multi Row Formula
