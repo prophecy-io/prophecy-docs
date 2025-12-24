@@ -151,14 +151,15 @@ The resulting dataset contains updated fields that reflect the same logical inte
 
 4. Add a **Reformat** gem and add `code` as a **Target Column** defined as a `aggregate` function with the following parameters:
 
-- The columns `_rules` and `code` .
-- `custom_code` defined as follows:
+  - The columns `_rules` and `code` .
+  - `custom_code` defined as follows:
 
-  ```
-  aggregate(_rules,code,
-  	(acc, rule) -> regexp_replace(acc, rule['word'], rule['replacement'])
+    ```
+    aggregate(_rules,code,
+  	(acc, rule) ->
+    regexp_replace(acc, rule['word'], rule['replacement'])
   	)
-  ```
+    ```
 
   This expression implements Alteryx's “replace if found, otherwise keep original” behavior by applying all find/replace rules and preserving the original value when no replacement applies.
 
