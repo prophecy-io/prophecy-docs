@@ -31,37 +31,37 @@ Use a **Reformat** gem to create or overwrite a target column.
 
 Choose the conversion direction:
 
-- **Date/Time format to string**
-- **String to Date/Time format**
+- Date/Time format to string
+- String to Date/Time format
 
 Configure:
 
-- **Language** for conversion (such as English, Chinese, or French)
-- **Field to convert**
-- **New column name** (or overwrite behavior, depending on workflow conventions)
-- **Format**
+- Language for conversion (such as English, Chinese, or French)
+- Field to convert
+- New column name (or overwrite behavior, depending on workflow conventions)
+- Format
   - For **Date/Time → string**: choose the output format for the new string column
   - For **string → Date/Time**: choose the format that matches the incoming string (for example, `yyyy-MM-dd hh:mm:ss`)
   - Optional: **Custom format** (enter a custom pattern and preview the output)
 
 ### In Prophecy (Reformat gem)
 
-- Connect the dataset with timestamps/strings to a **Reformat** gem.
-- In the Reformat gem, pick (or add) the **target column** you want to create/overwrite.
-- In the expression builder, select an appropriate date/time function and configure it.
+1. Connect the dataset with timestamps/strings to a **Reformat** gem.
+1. In the Reformat gem, pick (or add) the **target column** you want to create/overwrite.
+1. In the expression builder, select an appropriate date/time function and configure it.
 
 Common patterns include:
 
-For timestamp/date to formatted string, select **`date_format`** and configure the desired output format: `DATE_FORMAT(<timestamp_or_date_expr>, '<output_pattern>')`
+- For timestamp/date to formatted string, select **`date_format`** and configure the desired output format: `DATE_FORMAT(<timestamp_or_date_expr>, '<output_pattern>')`
 
-For string to timestamp, select **`to_timestamp`** and provide the input column and its incoming format: `TO_TIMESTAMP(<string_col>, '<input_pattern>')`
+- For string to timestamp, select **`to_timestamp`** and provide the input column and its incoming format: `TO_TIMESTAMP(<string_col>, '<input_pattern>')`
 
-For string to formatted string (via timestamp): nest the functions by first parsing the string, then formatting it: `DATE_FORMAT(TO_TIMESTAMP(<string_col>, '<input_pattern>'), '<output_pattern>')`.
+- For string to formatted string (via timestamp): nest the functions by first parsing the string, then formatting it: `DATE_FORMAT(TO_TIMESTAMP(<string_col>, '<input_pattern>'), '<output_pattern>')`.
 
 ## Output behavior
 
-- **Alteryx** can output either a string representation of the date/time or a date/time value, depending on the selected operation.
-- **Prophecy** outputs whatever type your expression returns:
+- Alteryx can output either a string representation of the date/time or a date/time value, depending on the selected operation.
+- Prophecy outputs whatever type your expression returns:
   - `TO_TIMESTAMP(...)` returns a timestamp type.
   - `DATE_FORMAT(...)` returns a string.
 
