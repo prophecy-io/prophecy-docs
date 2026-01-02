@@ -1178,6 +1178,16 @@
                           "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-oversample-field-tool"
                         ]
                       },
+                      {
+                        "group": "Alteryx Join tools",
+                        "pages": [
+                         "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-append-fields",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-find-replace",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-join",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-join-multiple",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-union"
+                        ]
+                      },
                       "import-tool/alteryx/alteryx-to-databricks-sql/databricks-performance-tuning"
                     ]
                   },
