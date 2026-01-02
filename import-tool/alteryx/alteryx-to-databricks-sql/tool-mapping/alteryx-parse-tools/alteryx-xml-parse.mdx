@@ -45,13 +45,13 @@ Configure the gem with:
 - Input column containing XML text
 - Select parsing method:
   - **Parse from sample record**. Prophecy uses the schema from the sample record you provide.
-  - **Parse from schema**. Prophecy uses the schema you provide in the form of a schema struct.
+  - **Parse from schema**. Prophecy uses the schema you provide.
 
 ## Output behavior
 
 Alteryx outputs a flattened, columnar dataset derived from the selected XML elements, optionally retaining the original XML field.
 
-Prophecy outputs all input columns plus a single _struct_ column containing parsed XML, which must be explicitly flattened using a downstream gem such as the [Reformat gem](/data-analysis/gems/prepare/reformat).
+Prophecy outputs all input columns plus a single [struct](https://docs.databricks.com/aws/en/sql/language-manual/data-types/struct-type) column containing parsed XML, which must be explicitly flattened using a downstream gem such as the [Reformat gem](/data-analysis/gems/prepare/reformat).
 
 ## Known caveats
 
