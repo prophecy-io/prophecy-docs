@@ -5,28 +5,24 @@ description: Mapping between Alteryx’s DateTime tool and Prophecy date/time fo
 
 The Alteryx [DateTime tool](https://help.alteryx.com/current/en/designer/tools/in-out-tools/date-time-now-tool.html) transforms date-time data to and from a variety of formats, including both expression-friendly and human-readable strings.
 
-In Prophecy, the same outcomes are typically implemented in a [Reformat gem](/data-analysis/gems/prepare/reformat) using `TO_TIMESTAMP` (parse string → timestamp) and `DATE_FORMAT` (timestamp → formatted string).
+In Prophecy, the same outcomes are typically implemented in a [Reformat gem](/data-analysis/gems/prepare/reformat) using `TO_TIMESTAMP` and `DATE_FORMAT`.
 
 ## Automated migration results
 
 When Import detects an Alteryx DateTime tool:
 
-- It typically generates a **Reformat** gem that rewrites the transformation.
-- **String → Date/Time** conversions are expressed with `TO_TIMESTAMP(<col>, '<pattern>')`.
-- **Date/Time → String** conversions are expressed with `DATE_FORMAT(<timestamp_expr>, '<pattern>')`.
+- Prophecy adds an initial Reformat gem that attempts multiple common date-time patterns using `CASE … TRY_TO_TIMESTAMP`. This safely converts mixed date and timestamp values into a single timestamp before further transformations.
+- In a subsequent Reformat gem, Prophecy either
+  - uses [`date_format`](https://docs.databricks.com/aws/en/sql/language-manual/functions/date_format) to format date or timestamp values as strings, or
+  - uses [`to_timestamp`](https://docs.databricks.com/aws/en/sql/language-manual/functions/to_timestamp) (optionally followed by `date_format`) to convertin string values into formatted date/time values.
 
 ## Manually replicate in Prophecy
 
-Use a **Reformat** gem and create/overwrite a target column using one of these patterns:
+Use a **Reformat** gem to create or overwrite a target column.
 
-- **String → timestamp**
-  - `TO_TIMESTAMP(<string_col>, '<incoming_pattern>')`
-- **Timestamp/date → formatted string**
-  - `DATE_FORMAT(<timestamp_or_date_expr>, '<output_pattern>')`
-
-If you are converting a string to a timestamp _and_ immediately formatting it as a string, nest the functions:
-
-- `DATE_FORMAT(TO_TIMESTAMP(<string_col>, '<incoming_pattern>'), '<output_pattern>')`
+1. Add a **Reformat** gem to the canvas.
+2. Add a **target column** (or select an existing column to overwrite).
+3. In the expression builder, select an appropriate date/time function and configure it.
 
 ## Configuration options
 
@@ -51,15 +47,15 @@ Then configure:
 
 - Connect the dataset with timestamps/strings to a **Reformat** gem.
 - In the Reformat gem, pick (or add) the **target column** you want to create/overwrite.
-- In the Visual Builder), choose:
-  - `TO_TIMESTAMP` for parsing an incoming string
-  - `DATE_FORMAT` for formatting a timestamp/date as a string
-- Provide the appropriate columns and pattern string(s).
+- In the expression builder, select an appropriate date/time function and configure it.
 
-Language / locale
+Common patterns include:
 
-- Alteryx: selectable per tool
-- Prophecy: depends on Databricks runtime settings; validate if parsing non-English month/day names.
+For timestamp/date to formatted string, select **`date_format`** and configure the desired output format: `DATE_FORMAT(<timestamp_or_date_expr>, '<output_pattern>')`
+
+For string to timestamp, select **`to_timestamp`** and provide the input column and its incoming format: `TO_TIMESTAMP(<string_col>, '<input_pattern>')`
+
+For string to formatted string (via timestamp): nest the functions by first parsing the string, then formatting it: `DATE_FORMAT(TO_TIMESTAMP(<string_col>, '<input_pattern>'), '<output_pattern>')`.
 
 ## Output behavior
 
@@ -72,7 +68,7 @@ Language / locale
 
 - **Locale-sensitive parsing/formatting:** If your input strings include month/day names in a specific language, confirm behavior in Prophecy since locale handling is runtime-dependent.
 - **Precision and database writes:** If you are formatting very precise timestamps for a database sink, verify that the target database type and connector behavior preserve the precision you expect (string formatting can also implicitly reduce precision).
-- **Pattern mismatches:** For string → timestamp conversions, the incoming pattern must match the input string exactly (otherwise parsing returns null or errors depending on runtime settings).
+- **Pattern mismatches:** For string to timestamp conversions, the incoming pattern must match the input string exactly (otherwise parsing returns null or errors depending on runtime settings).
 
 ## Example
 
