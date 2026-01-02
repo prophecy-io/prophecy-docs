@@ -3,9 +3,9 @@ title: Alteryx DateTime tool > Prophecy Reformat gem
 description: Mapping between Alteryx’s DateTime tool and Prophecy date/time formatting in the Reformat gem
 ---
 
-The Alteryx [DateTime tool](https://help.alteryx.com/current/en/designer/tools/in-out-tools/date-time-now-tool.html) transforms date-time data to and from a variety of formats, including both expression-friendly and human-readable strings.
+The Alteryx [DateTime tool](https://help.alteryx.com/current/en/designer/tools/parse/datetime-tool.html) transforms date-time data to and from a variety of formats, including both expression-friendly and human-readable strings.
 
-In Prophecy, the same outcomes are typically implemented in a [Reformat gem](/data-analysis/gems/prepare/reformat) using `TO_TIMESTAMP` and `DATE_FORMAT`.
+In Prophecy, the same outcomes are implemented in a [Reformat gem](/data-analysis/gems/prepare/reformat) using `TO_TIMESTAMP` and `DATE_FORMAT`.
 
 ## Automated migration results
 
@@ -14,15 +14,16 @@ When Import detects an Alteryx DateTime tool:
 - Prophecy adds an initial Reformat gem that attempts multiple common date-time patterns using `CASE … TRY_TO_TIMESTAMP`. This safely converts mixed date and timestamp values into a single timestamp before further transformations.
 - In a subsequent Reformat gem, Prophecy either
   - uses [`date_format`](https://docs.databricks.com/aws/en/sql/language-manual/functions/date_format) to format date or timestamp values as strings, or
-  - uses [`to_timestamp`](https://docs.databricks.com/aws/en/sql/language-manual/functions/to_timestamp) (optionally followed by `date_format`) to convertin string values into formatted date/time values.
+  - uses [`to_timestamp`](https://docs.databricks.com/aws/en/sql/language-manual/functions/to_timestamp) (optionally followed by `date_format`) to convert string values into formatted date/time values.
 
 ## Manually replicate in Prophecy
 
 Use a **Reformat** gem to create or overwrite a target column.
 
+1. If your input strings use mixed date/time formats, normalize them to timestamps before applying formatting.
 1. Add a **Reformat** gem to the canvas.
-2. Add a **target column** (or select an existing column to overwrite).
-3. In the expression builder, select an appropriate date/time function and configure it.
+1. Add a **target column** (or select an existing column to overwrite).
+1. In the expression builder, select an appropriate date/time function and configure it.
 
 ## Configuration options
 
@@ -33,9 +34,9 @@ Choose the conversion direction:
 - **Date/Time format to string**
 - **String to Date/Time format**
 
-Then configure:
+Configure:
 
-- **Language** for conversion (English, Chinese, French, etc.)
+- **Language** for conversion (such as English, Chinese, or French)
 - **Field to convert**
 - **New column name** (or overwrite behavior, depending on workflow conventions)
 - **Format**
@@ -66,8 +67,7 @@ For string to formatted string (via timestamp): nest the functions by first pars
 
 ## Known caveats
 
-- **Locale-sensitive parsing/formatting:** If your input strings include month/day names in a specific language, confirm behavior in Prophecy since locale handling is runtime-dependent.
-- **Precision and database writes:** If you are formatting very precise timestamps for a database sink, verify that the target database type and connector behavior preserve the precision you expect (string formatting can also implicitly reduce precision).
+- **Locale-sensitive parsing/formatting:** Prophecy relies on [Databricks SQL’s locale handling](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-collation) rather than an explicit language selector.
 - **Pattern mismatches:** For string to timestamp conversions, the incoming pattern must match the input string exactly (otherwise parsing returns null or errors depending on runtime settings).
 
 ## Example
