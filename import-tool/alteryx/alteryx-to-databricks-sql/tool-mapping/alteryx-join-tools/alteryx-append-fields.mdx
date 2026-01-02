@@ -1,0 +1,69 @@
+---
+title: Alteryx Append Fields tool > Prophecy Join gem
+description: Mapping between Alteryx’s Append Fields tool and the Prophecy Join gem
+---
+
+The [Alteryx Append Fields tool](https://help.alteryx.com/current/en/designer/tools/join/append-fields-tool.html) attaches every row from one dataset to every row of another.
+
+Prophecy implements equivalent behavior using the [Join gem](/data-analysis/gems/join-split/join).
+
+## Automated migration results
+
+When Import encounters an Alteryx Append tool, it recreates the behavior using a Join gem.
+
+Although the Alteryx Append tool behaves like a Cartesian join, Import does not emit a literal `CROSS JOIN`. Instead, it generates SQL that attaches the selected fields from the secondary input to each row of the primary input using a controlled join pattern. This approach avoids optimizer restrictions associated with explicit `CROSS JOIN`, preserves field-selection semantics, and ensures consistent behavior.
+
+- Prophecy generates a Join gem that combines the target and source streams.
+- The Join is configured with a constant condition (`1 = 1`), effectively performing a cross join between the two inputs.
+- All columns from both inputs are preserved (`in0.*` and `in1.*`), so each record from one stream is replicated for every record in the other stream, matching Alteryx Append semantics.
+- The resulting dataset is then available as a single downstream output in the Prophecy pipeline.
+
+## Manually replicate in Prophecy
+
+1. Add a **Join** gem configured as a **Cross Join**.
+2. Connect two datasets to the **Join** gem.
+3. Preview results in the Data Explorer.
+
+## Configuration options
+
+### Alteryx Append Fields tool
+
+- Attach the **Target** and **Source** streams to the **Append Fields** tool.
+- Optionally, deselect any Source fields you do not want replicated onto each Target row.
+
+### Prophecy Join gem
+
+Attach two datasets to a Join gem configured as a **Cross Join**.
+
+## Output behavior
+
+Alteryx produces a dataset where all combination pairs (Cartesian) or matched rows (key-based) are appended.
+
+Prophecy outputs combined rows that match Alteryx's logical intent.
+
+## Known caveats
+
+- Target and Source ports do not appear in Prophecy.
+- Prophecy often imports cross-joins as joins on a constant condition (such as `1 = 1`). This is an explicit representation of a cross join, and is used to preserve semantics and lineage while stabilizing planner behavior. The resulting data is identical to Alteryx’s no-key join or append behavior.
+- Cross joins can grow extremely large; ensure datasets are appropriately sized.
+
+## Example
+
+**Goal:** Add a simple `product_category` dataset to every record in a `daily_ production` log.
+
+### Alteryx Append tool example
+
+1. Add an **Append** tool to the canvas.
+1. Connect the `daily_production` dataset to the **T** (target) anchor.
+1. Connect the `product_category` dataset to the **S** (source) anchor.
+
+### Prophecy example
+
+In Prophecy, this operation is represented using a Join-based pattern that adds the selected fields from the secondary dataset to each row of the primary dataset.
+
+To reproduce this manually in Prophecy:
+
+1. Add a **Join** gem configured as a **Cross Join**.
+1. Connect the `daily_production` and `product_category` datasets to the **Join** gem.
+
+The output contains all rows from the primary dataset with the selected source fields appended.
