@@ -1,25 +1,22 @@
 ---
-title: Alteryx XML Parse Tool > Prophecy XML Parse gem
-id: alteryx-xml-parse
-sidebar_label: XML Parse Tool
-description: Mapping between Alteryx’s XML Parse Tool and Prophecy’s XML Parse Gem
-tags: [alteryx, xml, parse, semi-structured, analyst, import]
+title: Alteryx XML Parse Tool > Prophecy XMLParse gem
+description: Mapping between Alteryx's XML Parse Tool and Prophecy's XMLParse Gem
 ---
 
 The [Alteryx XML Parse tool](https://help.alteryx.com/current/en/designer/tools/parse/xml-parse-tool.html) extracts structured data from XML content stored in a field. It allows users to select which XML elements to parse, control whether child values or raw XML are returned, and determine how parsing errors are handled.
 
-Prophecy implements this functionality through the [XMLParse gem](/data-analysis/gems/parse/xml-parse.mdx).
+Prophecy implements this functionality through the [XMLParse gem](/data-analysis/gems/parse/xml-parse).
 
 ## Automated migration results
 
 When Import detects an Alteryx XML Parse tool:
 
-- It generates a Script gem containing XML parsing logic.
+- It generates a [Script gem](/data-analysis/gems/custom/script) containing XML parsing logic.
 - The generated script reproduces the XML extraction behavior inferred from the Alteryx configuration.
 
-:::note
-Alteryx's XML parsing works differently than Prophecy's XMLParse gem, which is why the XML Parse tool imports as a Script gem.
-:::
+<Note>
+Although Prophecy provides an XMLParse gem for XML extraction, Alteryx's XML Parse tool imports as a Script gem. This is because Alteryx performs implicit flattening and dynamic schema inference that cannot be represented directly in an XMLParse configuration.
+</Note>
 
 ## Manually replicate in Prophecy
 
@@ -27,9 +24,7 @@ For manually-created workflows, Prophecy recommends using the **XMLParse** gem:
 
 1. Add an **XMLParse** gem to the canvas.
 2. Select the column containing XML data.
-3. Select parsing method:
-   - Parse from sample record. Prophecy uses the schema from the sample record you provide.
-   - Parse from schema. Prophecy uses the schema you provide in the form of a schema struct.
+3. Select parsing method.
 
 ## Configuration options
 
@@ -49,20 +44,20 @@ Configure the gem with:
 
 - Input column containing XML text
 - Select parsing method:
-  - Parse from sample record. Prophecy uses the schema from the sample record you provide.
-  - Parse from schema. Prophecy uses the schema you provide in the form of a schema struct.
+  - **Parse from sample record**. Prophecy uses the schema from the sample record you provide.
+  - **Parse from schema**. Prophecy uses the schema you provide in the form of a schema struct.
 
 ## Output behavior
 
 Alteryx outputs a flattened, columnar dataset derived from the selected XML elements, optionally retaining the original XML field.
 
-Prophecy outputs all of the input columns and the parsed content as a struct data type.
+Prophecy outputs all input columns plus a single _struct_ column containing parsed XML, which must be explicitly flattened using a downstream gem such as the [Reformat gem](/data-analysis/gems/prepare/reformat).
 
 ## Known caveats
 
-- Automated migration uses a Script gem; users should validate results when replacing it with the XMLParse gem.
-- Prophecy requires explicit output column configuration; schemas are not implicitly inferred.
-- Invalid XML may fail parsing.
+- Automated migration uses a Script gem; validate results before replacing it with the XMLParse gem.
+- The XMLParse gem requires an explicit schema; dynamic or variable XML shapes may need manual adjustment.
+- Invalid or malformed XML may cause parsing failures unless handled upstream.
 
 ## Example
 
