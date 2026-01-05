@@ -1,0 +1,82 @@
+---
+title: Alteryx Union tool > Prophecy Union gem
+description: Mapping between Alteryx’s Union tool and the Prophecy Union gem
+---
+
+The [Alteryx Union tool](https://help.alteryx.com/current/en/designer/tools/join/union-tool.html) combines records from multiple input streams by column position or by column name. Prophecy's [UnionByName](/data-analysis/gems/join-split/union-by-name) and [Union](/data-analysis/gems/join-split/union) gems provide similar functionality for combining datasets.
+
+## Automated migration results
+
+When Import encounters a Union tool in an Alteryx workflow, it creates a UnionByName or Union gem in the Prophecy pipeline, depending on the Union tool's configuration.
+
+## Manually replicate in Prophecy
+
+To reproduce the row-stacking behavior of an Alteryx Union tool:
+
+1. Add either a **Union** or **UnionByName** gem to the canvas.
+2. Connect two or more input datasets.
+3. Choose the appropriate configuration:
+
+   - Use **Union** only when all inputs have identical column names and data types.
+   - Use **UnionByName** when schemas differ or when Alteryx was configured to output all fields.
+
+4. If schemas differ in type or naming, add upstream **Reformat** gems to standardize columns.
+5. Verify results in the Data Explorer.
+
+## Configuration options
+
+### Alteryx Union tool
+
+- Connect two or more datasets to the Union tool.
+- Configure how to align fields: automatically by name or position, or manually mapped and reordered using the configuration grid.
+- Choose behavior when input schemas do not match: warn, stop processing, or continue silently.
+- Choose whether to output all fields across inputs (filling missing values with nulls) or restrict the output to the common subset of fields.
+- If desired, designate an output order for the input datasets.
+
+### Prophecy Union
+
+- Connect datasets with **identical schemas** (matching column names and data types).
+- Choose to preserve or remove duplicate rows (configurable).
+
+### Prophecy UnionByName
+
+Choose either:
+
+- **Union by Name (No Missing Columns)** – all columns must exist in all inputs.
+- **Union by Name (Allow Missing Columns)** – missing columns are filled with nulls.
+
+## Output behavior
+
+The Alteryx Union tool produces a vertically stacked dataset from multiple inputs. Fields may be aligned by name, position, or manual mapping. Alteryx can continue, warn, or stop when schemas differ, and can output either all fields (filling missing values with nulls) or only the common subset.
+
+The Prophecy Union gem produces a vertically stacked dataset only when all inputs have identical schemas (matching column names and data types). Does not support missing columns. Used for cases when Alteryx outputs the common subset of fields.
+
+The Prophecy UnionByName gem produces a vertically stacked dataset by matching columns by name. Use for all other Alteryx Union configurations.
+
+## Known caveats
+
+- When column data types differ across inputs (such as `INTEGER` vs `STRING`), explicit casting may be required in a Reformat gem.
+- Alteryx runtime warnings and error-stopping behavior are not reproduced.
+- Manual field reordering logic in Alteryx may require explicit schema alignment upstream.
+
+## Example
+
+### Alteryx Union
+
+**Goal:** Combine hourly sensor readings from multiple devices into a single table.
+
+- Inputs:
+  - `sensor_id`
+  - `timestamp`
+  - `temperature`
+  - `humidity` (missing in some inputs)
+- Union is configured to align by name and output all fields.
+
+Alteryx stacks all rows and inserts nulls where a sensor does not report a field.
+
+### Prophecy equivalent
+
+- Add a UnionByName gem.
+- Connect all sensor datasets.
+
+The output contains all readings, aligned by column name.

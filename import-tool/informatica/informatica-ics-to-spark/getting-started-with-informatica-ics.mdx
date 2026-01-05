@@ -1,0 +1,87 @@
+---
+title: Migrate to Spark
+description: How to migrate from Informatica ICS to Prophecy
+---
+
+Prophecy's Transpiler lets you convert your Informatica Intelligent Cloud Services workflows into a Prophecy project.
+
+Prophecy automatically transpiles the Informatica Intelligent Cloud Services logic into a new Prophecy project, creating:
+
+- A Pipeline (the visual equivalent of an Informatica ICS mapping)
+- Transform components (for expressions, filters, joins, aggregations, etc.)
+- Schemas (derived from your source/target definitions)
+- Connections (mapped to Prophecy datasets)
+
+## Prerequisites
+
+To migrate workflows from Informatica ICS to Prophecy, you need to:
+
+- Ensure that the Informatica ICS Transpiler is enabled in your Prophecy environment.
+- Export the mappings, tasks, and connections as `.zip` or `.xml` bundles through **Administrator → Export Assets** in IICS.
+
+## Import IICS assets into Prophecy
+
+In Prophecy:
+
+1. Select the **Import** button in the left toolbar.
+1. In the page that opens, click **Import Bundle**.
+1. Select **Informatica Intelligent Cloud Services** under **Supported Formats**.
+1. Click **Next**.
+1. Give the bundle a name, such as `informatica_ics_import`.
+1. By default, Prophecy imports Informatica bundles as **Spark/Python** code. If desired, you can switch to **Spark/Scala**. To do so, click the **Change** button under **Language** and follow the steps in the modal.
+1. Select a **team** for the bundle. Team members will be able to access the bundle later.
+1. Either select or create a **project**. Projects are Git repositories where Prophecy pipelines and other assets are stored.
+1. Select or create the **Spark Fabric** that you will use with the bundle. (SQL fabrics are not supported.) See [Spark fabrics](/data-engineering/fabrics/spark-provider/databricks) for more information.
+1. Upload your exported `.zip` or `.json` files.
+
+## Validate uploaded files
+
+Next, you will validate and transpile the Informatica ICS files.
+
+In the page that opens:
+
+1. Select files in the left pane. (You can upload additional files if desired.)
+1. Prophecy assigns a pipeline name for each source mapping file, such as `NA_map_CS_STAGE_TXN_CBS_FPS`. You can change this name if desired.
+1. Click **Validate**. Prophecy displays a validation summary. The Transpile button will not be active until you validate.
+1. Click **Transpile**. Prophecy displays information on transpilation.
+1. Once transpilation completes, click **Import**.
+1. In the page that opens, confirm entities that will be created and click **Import**. (You can deselect any undesired entities before import.)
+1. Prophecy confirms that migration has been successful. Click **View Bundle Details** to view the transpiled bundle.
+
+## View generated pipelines
+
+Once the bundle has been imported, you can view the bundle's pipelines.
+
+To do so:
+
+1. Click **Metadata** in the left pane.
+1. Under **Projects**, click the link for the bundle's project. (This is the project that you chose or created above.)
+1. In the page that opens, click **Open in Editor**.
+
+You’ll see Informatica transformations represented as **Prophecy gems**. Unsupported or partially translated components will appear as [ToDo gems](/data-analysis/gems/custom/todo-gem), placeholders that mark where manual adjustments are required.
+
+## Troubleshooting
+
+The Validator may return one of the following errors:
+
+- **Tasks or mappings not successfully transpiled** (for example, unsupported transformations).
+- **References to connections or parameter sets** that exist in the Informatica ICS project but were not included in the uploaded files.
+
+You can still transpile an Informatica ICS project even if some components are not successfully validated. Any missing or unsupported objects will appear as **ToDo gems** in the resulting Prophecy pipeline.
+
+Example: If the validation summary lists a missing connection object (for example, `Target_Connection_Snowflake`), you can press the **Browse** button to upload the missing file. When you re-validate, the warning will disappear.
+
+### Connect data sources and validate outputs
+
+After reviewing the generated pipeline:
+
+1. If necessary, update [Source/Target gems](/data-engineering/gems/source-target) to connect to your datasets.
+2. Run output comparison tests between the Prophecy pipeline and the original Informatica ICS mapping to confirm that results match.
+
+### Report issues or gaps
+
+If you encounter issues after transpilation, share feedback with your Prophecy representative. Common issues include:
+
+- Transformations that were not successfully transpiled.
+- Configuration options that were not imported correctly.
+- Output differences between Prophecy and ICS.

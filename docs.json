@@ -9,616 +9,1120 @@
   },
   "favicon": "/favicon.png",
   "navigation": {
-    "dropdowns": [
+    "products": [
       {
-        "dropdown": "Data Analysis",
-        "icon": "/images/bar-chart-j.svg",
-        "tabs": [
+        "product": "Prophecy Documentation",
+        "icon": "/images/pipeline.svg",
+        "description": "Build and deploy data pipelines",
+        "dropdowns": [
           {
-            "tab": "Documentation",
-            "groups": [
+            "dropdown": "Data Analysis",
+            "icon": "/images/bar-chart-j.svg",
+            "tabs": [
               {
-                "group": "Getting started",
-                "pages": [
-                  "index",
-                  "data-analysis/getting-started/concepts",
-                  "data-analysis/getting-started/quick-start",
-                  "data-analysis/getting-started/create-project"
-                ]
-              },
-              {
-                "group": "AI",
-                "pages": [
+                "tab": "Documentation",
+                "groups": [
                   {
-                    "group": "Agent",
+                    "group": "Getting started",
                     "pages": [
-                      "data-analysis/ai/agent/agent",
+                      "index",
+                      "data-analysis/getting-started/concepts",
+                      "data-analysis/getting-started/quick-start",
+                      "data-analysis/getting-started/create-project"
+                    ]
+                  },
+                  {
+                    "group": "AI",
+                    "pages": [
                       {
-                        "group": "Chat",
+                        "group": "Agent",
                         "pages": [
-                          "data-analysis/ai/agent/chat/mentions",
-                          "data-analysis/ai/agent/chat/modes",
-                          "data-analysis/ai/agent/chat/upload-files",
-                          "data-analysis/ai/agent/chat/reset",
-                          "data-analysis/ai/agent/chat/revert",
-                          "data-analysis/ai/agent/chat/export"
+                          "data-analysis/ai/agent/agent",
+                          {
+                            "group": "Chat",
+                            "pages": [
+                              "data-analysis/ai/agent/chat/mentions",
+                              "data-analysis/ai/agent/chat/modes",
+                              "data-analysis/ai/agent/chat/upload-files",
+                              "data-analysis/ai/agent/chat/reset",
+                              "data-analysis/ai/agent/chat/revert",
+                              "data-analysis/ai/agent/chat/export"
+                            ]
+                          },
+                          "data-analysis/ai/agent/explore",
+                          "data-analysis/ai/agent/transform",
+                          {
+                            "group": "Documentation",
+                            "pages": [
+                              "data-analysis/ai/agent/documentation/documentation",
+                              "data-analysis/ai/agent/documentation/ctl-reference"
+                            ]
+                          }
                         ]
                       },
-                      "data-analysis/ai/agent/explore",
-                      "data-analysis/ai/agent/transform",
                       {
-                        "group": "Documentation",
+                        "group": "Copilot",
                         "pages": [
-                          "data-analysis/ai/agent/documentation/documentation",
-                          "data-analysis/ai/agent/documentation/ctl-reference"
+                          "data-analysis/ai/copilot/gem-expressions",
+                          "data-analysis/ai/copilot/gem-fixes",
+                          "data-analysis/ai/copilot/auto-documentation"
+                        ]
+                      },
+                      {
+                        "group": "Knowledge graph",
+                        "pages": [
+                          "data-analysis/ai/knowledge-graph/knowledge-graph",
+                          "data-analysis/ai/knowledge-graph/indexer"
+                        ]
+                      },
+                      "data-analysis/ai/llm-providers"
+                    ]
+                  },
+                  {
+                    "group": "Development",
+                    "pages": [
+                      {
+                        "group": "Studio",
+                        "pages": [
+                          "data-analysis/development/studio/studio",
+                          "data-analysis/development/studio/folders",
+                          "data-analysis/development/studio/canvas-annotations",
+                          "data-analysis/development/studio/containers"
+                        ]
+                      },
+                      {
+                        "group": "Runs",
+                        "pages": [
+                          "data-analysis/development/runs/execution",
+                          "data-analysis/development/runs/runtime-logs",
+                          {
+                            "group": "Data Explorer",
+                            "pages": [
+                              "data-analysis/development/runs/data-explorer/data-explorer",
+                              "data-analysis/development/runs/data-explorer/data-profile",
+                              {
+                                "group": "Charts",
+                                "pages": [
+                                  "data-analysis/development/runs/data-explorer/charts/charts",
+                                  "data-analysis/development/runs/data-explorer/charts/area-chart",
+                                  "data-analysis/development/runs/data-explorer/charts/bar-chart",
+                                  "data-analysis/development/runs/data-explorer/charts/candlestick-chart",
+                                  "data-analysis/development/runs/data-explorer/charts/line-chart",
+                                  "data-analysis/development/runs/data-explorer/charts/map-chart",
+                                  "data-analysis/development/runs/data-explorer/charts/pie-chart",
+                                  "data-analysis/development/runs/data-explorer/charts/scatter-chart"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      "data-analysis/development/pipeline-params",
+                      {
+                        "group": "Versioning",
+                        "pages": [
+                          "data-analysis/development/versioning/version-control",
+                          "data-analysis/development/versioning/git-storage-model",
+                          "data-analysis/development/versioning/conflicts",
+                          "data-analysis/development/versioning/clone-projects",
+                          "data-analysis/development/versioning/import-projects",
+                          "data-analysis/development/versioning/migrate-managed"
+                        ]
+                      },
+                      {
+                        "group": "Tests",
+                        "pages": [
+                          "data-analysis/development/tests/test-comparison",
+                          "data-analysis/development/tests/table-tests",
+                          "data-analysis/development/tests/project-tests"
+                        ]
+                      },
+                      {
+                        "group": "Extensibility",
+                        "pages": [
+                          "data-analysis/development/extensibility/dependencies",
+                          "data-analysis/development/extensibility/package-hub/package-hub",
+                          "data-analysis/development/extensibility/package-hub/template-hub",
+                          "data-analysis/development/extensibility/functions",
+                          "data-analysis/development/extensibility/stored-procedure",
+                          "data-analysis/development/extensibility/sql-gem-builder"
                         ]
                       }
                     ]
                   },
                   {
-                    "group": "Copilot",
+                    "group": "Environment",
                     "pages": [
-                      "data-analysis/ai/copilot/gem-expressions",
-                      "data-analysis/ai/copilot/gem-fixes",
-                      "data-analysis/ai/copilot/auto-documentation"
-                    ]
-                  },
-                  {
-                    "group": "Knowledge graph",
-                    "pages": [
-                      "data-analysis/ai/knowledge-graph/knowledge-graph",
-                      "data-analysis/ai/knowledge-graph/indexer"
-                    ]
-                  },
-                  "data-analysis/ai/llm-providers"
-                ]
-              },
-              {
-                "group": "Development",
-                "pages": [
-                  {
-                    "group": "Studio",
-                    "pages": [
-                      "data-analysis/development/studio/studio",
-                      "data-analysis/development/studio/folders",
-                      "data-analysis/development/studio/canvas-annotations",
-                      "data-analysis/development/studio/containers"
-                    ]
-                  },
-                  {
-                    "group": "Runs",
-                    "pages": [
-                      "data-analysis/development/runs/execution",
-                      "data-analysis/development/runs/runtime-logs",
                       {
-                        "group": "Data Explorer",
+                        "group": "Fabrics",
                         "pages": [
-                          "data-analysis/development/runs/data-explorer/data-explorer",
-                          "data-analysis/development/runs/data-explorer/data-profile",
+                          "data-analysis/environment/fabrics/prophecy-fabrics",
+                          "data-analysis/environment/fabrics/create-fabric"
+                        ]
+                      },
+                      {
+                        "group": "Connections",
+                        "pages": [
+                          "data-analysis/environment/connections/connections",
+                          "data-analysis/environment/connections/adls",
+                          "data-analysis/environment/connections/bigquery",
+                          "data-analysis/environment/connections/databricks",
+                          "data-analysis/environment/connections/gcs",
+                          "data-analysis/environment/connections/hana",
+                          "data-analysis/environment/connections/mongodb",
+                          "data-analysis/environment/connections/mssql",
+                          "data-analysis/environment/connections/onedrive",
+                          "data-analysis/environment/connections/oracle",
+                          "data-analysis/environment/connections/power-bi",
+                          "data-analysis/environment/connections/prophecy-managed",
+                          "data-analysis/environment/connections/redshift",
+                          "data-analysis/environment/connections/s3",
+                          "data-analysis/environment/connections/salesforce",
+                          "data-analysis/environment/connections/sftp",
+                          "data-analysis/environment/connections/sharepoint",
+                          "data-analysis/environment/connections/smartsheet",
+                          "data-analysis/environment/connections/smtp",
+                          "data-analysis/environment/connections/snowflake",
+                          "data-analysis/environment/connections/synapse",
+                          "data-analysis/environment/connections/tableau"
+                        ]
+                      },
+                      "data-analysis/environment/secrets/secrets"
+                    ]
+                  },
+                  {
+                    "group": "Collaboration",
+                    "pages": [
+                      "data-analysis/collaboration/project-sharing",
+                      "data-analysis/collaboration/project-replays",
+                      {
+                        "group": "Prophecy Apps",
+                        "pages": [
+                          "data-analysis/collaboration/prophecy-apps/apps",
+                          "data-analysis/collaboration/prophecy-apps/run-apps",
                           {
-                            "group": "Charts",
+                            "group": "Build apps",
                             "pages": [
-                              "data-analysis/development/runs/data-explorer/charts/charts",
-                              "data-analysis/development/runs/data-explorer/charts/area-chart",
-                              "data-analysis/development/runs/data-explorer/charts/bar-chart",
-                              "data-analysis/development/runs/data-explorer/charts/candlestick-chart",
-                              "data-analysis/development/runs/data-explorer/charts/line-chart",
-                              "data-analysis/development/runs/data-explorer/charts/map-chart",
-                              "data-analysis/development/runs/data-explorer/charts/pie-chart",
-                              "data-analysis/development/runs/data-explorer/charts/scatter-chart"
+                              "data-analysis/collaboration/prophecy-apps/app-builder",
+                              "data-analysis/collaboration/prophecy-apps/app-creation",
+                              "data-analysis/collaboration/prophecy-apps/app-components",
+                              "data-analysis/collaboration/prophecy-apps/app-settings"
                             ]
                           }
                         ]
                       }
                     ]
                   },
-                  "data-analysis/development/pipeline-params",
                   {
-                    "group": "Versioning",
+                    "group": "Production",
                     "pages": [
-                      "data-analysis/development/versioning/version-control",
-                      "data-analysis/development/versioning/git-storage-model",
-                      "data-analysis/development/versioning/conflicts",
-                      "data-analysis/development/versioning/clone-projects",
-                      "data-analysis/development/versioning/import-projects",
-                      "data-analysis/development/versioning/migrate-managed"
+                      {
+                        "group": "Scheduling",
+                        "pages": [
+                          "data-analysis/production/scheduling/scheduling",
+                          "data-analysis/production/scheduling/schedule-setup",
+                          "data-analysis/production/scheduling/triggers",
+                          "data-analysis/production/scheduling/alerts",
+                          "data-analysis/production/scheduling/pipeline-trigger-gem"
+                        ]
+                      },
+                      "data-analysis/production/publication",
+                      "data-analysis/production/monitoring"
+                    ]
+                  }
+                ]
+              },
+              {
+                "tab": "Gem reference",
+                "groups": [
+                  {
+                    "group": "Overview",
+                    "pages": [
+                      "data-analysis/gems/gems",
+                      "data-analysis/gems/data-types",
+                      {
+                        "group": "Visual expressions",
+                        "pages": [
+                          "data-analysis/gems/visual-expression-builder/visual-expression-builder",
+                          "data-analysis/gems/visual-expression-builder/use-the-visual-expression-builder",
+                          "data-analysis/gems/visual-expression-builder/visual-expression-builder-reference",
+                          "data-analysis/gems/visual-expression-builder/variant-schema"
+                        ]
+                      }
                     ]
                   },
                   {
-                    "group": "Tests",
+                    "group": "Sources and targets",
                     "pages": [
-                      "data-analysis/development/tests/test-comparison",
-                      "data-analysis/development/tests/table-tests",
-                      "data-analysis/development/tests/project-tests"
+                      "data-analysis/gems/source-target/source-target",
+                      "data-analysis/gems/source-target/adding-data-sources",
+                      {
+                        "group": "Tables (Warehouse)",
+                        "pages": [
+                          "data-analysis/gems/source-target/table/bigquery",
+                          "data-analysis/gems/source-target/table/databricks",
+                          "data-analysis/gems/source-target/table/prophecy-warehouse",
+                          "data-analysis/gems/source-target/table/upload-files",
+                          "data-analysis/gems/source-target/table/write-options"
+                        ]
+                      },
+                      {
+                        "group": "Tables (External systems)",
+                        "pages": [
+                          "data-analysis/gems/source-target/external-table/bigquery",
+                          "data-analysis/gems/source-target/external-table/databricks",
+                          "data-analysis/gems/source-target/external-table/mssql",
+                          "data-analysis/gems/source-target/external-table/mongodb",
+                          "data-analysis/gems/source-target/external-table/oracle",
+                          "data-analysis/gems/source-target/external-table/redshift",
+                          "data-analysis/gems/source-target/external-table/salesforce",
+                          "data-analysis/gems/source-target/external-table/snowflake",
+                          "data-analysis/gems/source-target/external-table/synapse",
+                          {
+                            "group": "SAP HANA",
+                            "pages": [
+                              "data-analysis/gems/source-target/external-table/hana/hana",
+                              "data-analysis/gems/source-target/external-table/hana/identity-columns"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "group": "File storage systems",
+                        "pages": [
+                          {
+                            "group": "File types",
+                            "pages": [
+                              "data-analysis/gems/source-target/file/file-types/csv",
+                              "data-analysis/gems/source-target/file/file-types/excel",
+                              "data-analysis/gems/source-target/file/file-types/parquet",
+                              "data-analysis/gems/source-target/file/file-types/json",
+                              "data-analysis/gems/source-target/file/file-types/xml",
+                              "data-analysis/gems/source-target/file/file-types/text",
+                              "data-analysis/gems/source-target/file/file-types/fixed-width"
+                            ]
+                          },
+                          "data-analysis/gems/source-target/file/adls",
+                          "data-analysis/gems/source-target/file/s3",
+                          "data-analysis/gems/source-target/file/gcs",
+                          "data-analysis/gems/source-target/file/databricks-volumes",
+                          "data-analysis/gems/source-target/file/sftp",
+                          "data-analysis/gems/source-target/file/onedrive",
+                          "data-analysis/gems/source-target/file/sharepoint",
+                          "data-analysis/gems/source-target/file/smartsheet"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Data processing",
+                    "pages": [
+                      {
+                        "group": "Transform",
+                        "pages": [
+                          "data-analysis/gems/transform/aggregate",
+                          "data-analysis/gems/transform/count-records",
+                          "data-analysis/gems/transform/dynamic-select",
+                          "data-analysis/gems/transform/encoder-decoder",
+                          "data-analysis/gems/transform/fuzzy-match",
+                          "data-analysis/gems/transform/pivot",
+                          "data-analysis/gems/transform/unpivot",
+                          "data-analysis/gems/transform/window"
+                        ]
+                      },
+                      {
+                        "group": "Prepare",
+                        "pages": [
+                          "data-analysis/gems/prepare/data-cleansing",
+                          "data-analysis/gems/prepare/deduplicate",
+                          "data-analysis/gems/prepare/filter",
+                          "data-analysis/gems/prepare/find-duplicates",
+                          "data-analysis/gems/prepare/flatten-schema",
+                          "data-analysis/gems/prepare/generate-rows",
+                          "data-analysis/gems/prepare/limit",
+                          "data-analysis/gems/prepare/masking",
+                          "data-analysis/gems/prepare/multi-column-edit",
+                          "data-analysis/gems/prepare/multi-column-rename",
+                          "data-analysis/gems/prepare/order-by",
+                          "data-analysis/gems/prepare/record-id",
+                          "data-analysis/gems/prepare/reformat"
+                        ]
+                      },
+                      {
+                        "group": "Join",
+                        "pages": [
+                          "data-analysis/gems/join-split/except",
+                          "data-analysis/gems/join-split/intersect",
+                          "data-analysis/gems/join-split/join",
+                          "data-analysis/gems/join-split/union",
+                          "data-analysis/gems/join-split/union-by-name"
+                        ]
+                      },
+                      {
+                        "group": "Spatial",
+                        "pages": [
+                          "data-analysis/gems/spatial/buffer",
+                          "data-analysis/gems/spatial/create-point",
+                          "data-analysis/gems/spatial/distance",
+                          "data-analysis/gems/spatial/heatmap",
+                          "data-analysis/gems/spatial/nearest-point",
+                          "data-analysis/gems/spatial/polybuild",
+                          "data-analysis/gems/spatial/simplify",
+                          "data-analysis/gems/spatial/spatial-match"
+                        ]
+                      },
+                      {
+                        "group": "Parse",
+                        "pages": [
+                          "data-analysis/gems/parse/json-parse",
+                          "data-analysis/gems/parse/regex",
+                          "data-analysis/gems/parse/text-to-column",
+                          "data-analysis/gems/parse/xml-parse"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Reporting",
+                    "pages": [
+                      {
+                        "group": "Report",
+                        "pages": [
+                          "data-analysis/gems/report/email",
+                          "data-analysis/gems/report/power-bi",
+                          "data-analysis/gems/report/tableau"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Advanced",
+                    "pages": [
+                      {
+                        "group": "Custom",
+                        "pages": [
+                          "data-analysis/gems/custom/todo-gem",
+                          "data-analysis/gems/custom/directory",
+                          "data-analysis/gems/custom/dynamic-input",
+                          "data-analysis/gems/custom/macro",
+                          "data-analysis/gems/custom/rest-api",
+                          "data-analysis/gems/custom/sql-statement",
+                          "data-analysis/gems/custom/stored-procedure",
+                          "data-analysis/gems/custom/script"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "tab": "API reference",
+                "groups": [
+                  {
+                    "group": "API documentation",
+                    "pages": ["api-reference/introduction"]
+                  },
+                  {
+                    "group": "Endpoints",
+                    "pages": [
+                      {
+                        "group": "Fabrics",
+                        "pages": [
+                          "api-reference/fabrics/create-a-new-fabric",
+                          "api-reference/fabrics/get-fabric-details",
+                          "api-reference/fabrics/update-an-existing-fabric",
+                          "api-reference/fabrics/delete-a-fabric"
+                        ]
+                      },
+                      {
+                        "group": "Connections",
+                        "pages": [
+                          {
+                            "group": "Properties",
+                            "pages": [
+                              "api-reference/connections/properties/redshift",
+                              "api-reference/connections/properties/s3",
+                              "api-reference/connections/properties/adls",
+                              "api-reference/connections/properties/synapse",
+                              "api-reference/connections/properties/bigquery",
+                              "api-reference/connections/properties/gcs",
+                              "api-reference/connections/properties/databricks",
+                              "api-reference/connections/properties/mssql",
+                              "api-reference/connections/properties/onedrive",
+                              "api-reference/connections/properties/power-bi",
+                              "api-reference/connections/properties/sharepoint",
+                              "api-reference/connections/properties/mongodb",
+                              "api-reference/connections/properties/oracle",
+                              "api-reference/connections/properties/salesforce",
+                              "api-reference/connections/properties/hana",
+                              "api-reference/connections/properties/sftp",
+                              "api-reference/connections/properties/smartsheet",
+                              "api-reference/connections/properties/smpt",
+                              "api-reference/connections/properties/snowflake",
+                              "api-reference/connections/properties/tableau"
+                            ]
+                          },
+                          "api-reference/connections/properties/kgconfig",
+                          "api-reference/connections/add-connection-to-fabric",
+                          "api-reference/connections/list-connections-per-fabric",
+                          "api-reference/connections/retrieve-connection-details",
+                          "api-reference/connections/update-connection",
+                          "api-reference/connections/delete-connection"
+                        ]
+                      },
+                      {
+                        "group": "Secrets",
+                        "pages": [
+                          {
+                            "group": "Properties",
+                            "pages": [
+                              "api-reference/secrets/properties/text",
+                              "api-reference/secrets/properties/binary",
+                              "api-reference/secrets/properties/username-password",
+                              "api-reference/secrets/properties/oauth"
+                            ]
+                          },
+                          "api-reference/secrets/add-secret-to-fabric",
+                          "api-reference/secrets/list-secrets-per-fabric",
+                          "api-reference/secrets/retrieve-secret-details",
+                          "api-reference/secrets/update-secret",
+                          "api-reference/secrets/delete-secret"
+                        ]
+                      },
+                      {
+                        "group": "Projects",
+                        "pages": ["api-reference/projects/deploy-project"]
+                      },
+                      {
+                        "group": "Pipelines",
+                        "pages": [
+                          "api-reference/pipelines/trigger-pipeline-run",
+                          "api-reference/pipelines/get-pipeline-run-status",
+                          "api-reference/pipelines/run-data-tests"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "tab": "Administration",
+                "groups": [
+                  {
+                    "group": "Platform",
+                    "pages": [
+                      "data-analysis/administration/platform/editions",
+                      "data-analysis/administration/platform/architecture",
+                      "data-analysis/administration/platform/prophecy-deployment"
+                    ]
+                  },
+                  {
+                    "group": "Setup",
+                    "pages": [
+                      "data-analysis/administration/setup/prophecy-express-guide",
+                      "data-analysis/administration/setup/prophecy-enterprise-guide",
+                      "data-analysis/administration/setup/databricks-partner-connect"
+                    ]
+                  },
+                  {
+                    "group": "Management",
+                    "pages": [
+                      {
+                        "group": "Teams",
+                        "pages": [
+                          "data-analysis/administration/management/teams/teams",
+                          {
+                            "group": "Settings",
+                            "pages": [
+                              "data-analysis/administration/management/teams/settings/ai",
+                              "data-analysis/administration/management/teams/settings/default-dependencies",
+                              "data-analysis/administration/management/teams/settings/project-creation-template"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "group": "Users",
+                        "pages": [
+                          "data-analysis/administration/management/users/team-user-provisioning",
+                          "data-analysis/administration/management/users/account-settings",
+                          {
+                            "group": "Access control",
+                            "pages": [
+                              "data-analysis/administration/management/users/access/role-based-access",
+                              "data-analysis/administration/management/users/access/team-based-access"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "group": "Authentication",
+                        "pages": [
+                          "data-analysis/administration/management/authentication/authentication",
+                          "data-analysis/administration/management/authentication/saml",
+                          "data-analysis/administration/management/authentication/azure-ad",
+                          "data-analysis/administration/management/authentication/google-sso",
+                          "data-analysis/administration/management/authentication/ldap",
+                          "data-analysis/administration/management/authentication/group-team-mapping"
+                        ]
+                      },
+                      {
+                        "group": "Cluster admin settings",
+                        "pages": [
+                          "data-analysis/administration/management/cluster-admin-settings/cluster-admin-settings",
+                          "data-analysis/administration/management/cluster-admin-settings/oauth-setup",
+                          "data-analysis/administration/management/cluster-admin-settings/copilot-settings"
+                        ]
+                      },
+
+                      {
+                        "group": "Usage and billing",
+                        "pages": [
+                          "data-analysis/administration/management/usage-billing/usage-billing",
+                          "data-analysis/administration/management/usage-billing/credits"
+                        ]
+                      },
+                      "data-analysis/administration/management/audit-logs"
+                    ]
+                  },
+                  {
+                    "group": "Help and resources",
+                    "pages": [
+                      "data-analysis/administration/getting-help/get-in-touch",
+                      {
+                        "group": "Support",
+                        "pages": [
+                          "data-analysis/administration/getting-help/submit-request",
+                          "data-analysis/administration/getting-help/troubleshooting",
+                          {
+                            "group": "Collect diagnostic data",
+                            "pages": [
+                              "data-analysis/administration/getting-help/prophecy-details",
+                              "data-analysis/administration/getting-help/spark-cluster-details",
+                              "data-analysis/administration/getting-help/har-file",
+                              "data-analysis/administration/getting-help/diagnostics",
+                              "data-analysis/administration/getting-help/copy-session-info"
+                            ]
+                          }
+                        ]
+                      },
+                      "data-analysis/administration/getting-help/security"
+                    ]
+                  }
+                ]
+              },
+              {
+                "tab": "Releases",
+                "groups": [
+                  {
+                    "group": "Releases",
+                    "pages": ["data-analysis/releases/2025"]
+                  },
+                  {
+                    "group": "Reference",
+                    "pages": [
+                      "data-analysis/releases/version-chart",
+                      "data-analysis/releases/version-support",
+                      "data-analysis/releases/find-version"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "dropdown": "Data Engineering",
+            "icon": "/images/code-square-a.svg",
+            "tabs": [
+              {
+                "tab": "Documentation",
+                "groups": [
+                  {
+                    "group": "Getting started",
+                    "pages": [
+                      "data-engineering/getting-started/quick-start",
+                      "data-engineering/getting-started/concepts"
+                    ]
+                  },
+                  {
+                    "group": "Development",
+                    "pages": [
+                      {
+                        "group": "Pipelines",
+                        "pages": [
+                          "data-engineering/development/pipelines/pipelines",
+                          "data-engineering/development/pipelines/configuration",
+                          "data-engineering/development/pipelines/pipeline-settings",
+                          "data-engineering/development/pipelines/secrets-configs"
+                        ]
+                      },
+                      "data-engineering/development/dataset",
+                      {
+                        "group": "Runs",
+                        "pages": [
+                          "data-engineering/development/runs/execution",
+                          "data-engineering/development/runs/data-sampling",
+                          "data-engineering/development/runs/conditional-execution"
+                        ]
+                      },
+                      {
+                        "group": "Explore",
+                        "pages": [
+                          "data-engineering/development/data-explorer/data-explorer",
+                          "data-engineering/development/data-explorer/data-profile"
+                        ]
+                      },
+                      "data-engineering/development/copilot/copilot",
+                      {
+                        "group": "Functions",
+                        "pages": [
+                          "data-engineering/development/functions/user-defined-functions",
+                          "data-engineering/development/functions/business-rules-engine/business-rules-engine"
+                        ]
+                      },
+                      {
+                        "group": "Streaming",
+                        "pages": [
+                          "data-engineering/development/spark-streaming/spark-streaming",
+                          "data-engineering/development/spark-streaming/streaming-transformations",
+                          {
+                            "group": "Streaming sources and targets",
+                            "pages": [
+                              "data-engineering/development/spark-streaming/streaming-sources-and-targets/streaming-file-gem",
+                              "data-engineering/development/spark-streaming/streaming-sources-and-targets/streaming-warehouse-gem",
+                              "data-engineering/development/spark-streaming/streaming-sources-and-targets/streaming-event-gem"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "group": "Models",
+                        "pages": [
+                          "data-engineering/development/models/models",
+                          "data-engineering/development/models/configuration",
+                          {
+                            "group": "Sources and targets",
+                            "pages": [
+                              "data-engineering/development/models/sources-target/sources-target",
+                              "data-engineering/development/models/sources-target/location"
+                            ]
+                          },
+                          {
+                            "group": "Target platforms",
+                            "pages": [
+                              "data-engineering/development/models/target-platforms/bigquery-target",
+                              "data-engineering/development/models/target-platforms/databricks-target",
+                              "data-engineering/development/models/target-platforms/snowflake-target"
+                            ]
+                          }
+                        ]
+                      },
+                      "data-engineering/development/best-practices"
+                    ]
+                  },
+                  {
+                    "group": "Production",
+                    "pages": [
+                      {
+                        "group": "CI/CD",
+                        "pages": [
+                          "data-engineering/ci-cd/reliable-ci-cd",
+                          "data-engineering/ci-cd/tests",
+                          "data-engineering/ci-cd/data-diff",
+                          {
+                            "group": "Deployment",
+                            "pages": [
+                              "data-engineering/ci-cd/deployment/deployment",
+                              "data-engineering/ci-cd/deployment/deploy-project",
+                              "data-engineering/ci-cd/deployment/use-external-release-tags"
+                            ]
+                          },
+                          {
+                            "group": "Git",
+                            "pages": [
+                              "data-engineering/ci-cd/git/git",
+                              "data-engineering/ci-cd/git/git-workflow",
+                              "data-engineering/ci-cd/git/git-resolve",
+                              "data-engineering/ci-cd/git/pull-request-templates",
+                              "data-engineering/ci-cd/git/best-practices"
+                            ]
+                          },
+                          {
+                            "group": "Prophecy Build Tool",
+                            "pages": [
+                              "data-engineering/ci-cd/prophecy-build-tool/prophecy-build-tool",
+                              "data-engineering/ci-cd/prophecy-build-tool/pbt-github-actions",
+                              "data-engineering/ci-cd/prophecy-build-tool/pbt-jenkins"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "group": "Orchestration",
+                        "pages": [
+                          "data-engineering/orchestration/databricks-jobs",
+                          "data-engineering/orchestration/multi-jobs-trigger",
+                          "data-engineering/orchestration/alternative-schedulers",
+                          {
+                            "group": "Pipeline Monitoring",
+                            "pages": [
+                              "data-engineering/orchestration/pipeline-monitoring/pipeline-monitoring",
+                              "data-engineering/orchestration/pipeline-monitoring/enable-pipeline-monitoring",
+                              "data-engineering/orchestration/pipeline-monitoring/use-pipeline-monitoring"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "group": "Lineage",
+                        "pages": [
+                          "data-engineering/lineage/lineage",
+                          "data-engineering/lineage/lineage-extractor"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Execution",
+                    "pages": [
+                      {
+                        "group": "Fabrics",
+                        "pages": [
+                          {
+                            "group": "Spark providers",
+                            "pages": [
+                              {
+                                "group": "Databricks",
+                                "pages": [
+                                  "data-engineering/fabrics/spark-provider/databricks/databricks",
+                                  "data-engineering/fabrics/spark-provider/databricks/databricks-serverless",
+                                  "data-engineering/fabrics/spark-provider/databricks/databricks-policies",
+                                  "data-engineering/fabrics/spark-provider/databricks/UCShared",
+                                  "data-engineering/fabrics/spark-provider/databricks/volumes-plibs",
+                                  "data-engineering/fabrics/spark-provider/databricks/whitelist-plibs"
+                                ]
+                              },
+                              {
+                                "group": "Amazon EMR",
+                                "pages": [
+                                  "data-engineering/fabrics/spark-provider/emr/emr",
+                                  "data-engineering/fabrics/spark-provider/emr/emr-job-sizes",
+                                  "data-engineering/fabrics/spark-provider/emr/emr-saml"
+                                ]
+                              },
+                              {
+                                "group": "Livy",
+                                "pages": [
+                                  "data-engineering/fabrics/spark-provider/livy/livy",
+                                  "data-engineering/fabrics/spark-provider/livy/selective-sampling"
+                                ]
+                              },
+                              "data-engineering/fabrics/spark-provider/dataproc",
+                              "data-engineering/fabrics/spark-provider/synapsefabric",
+                              "data-engineering/fabrics/spark-provider/prophecy-managed"
+                            ]
+                          },
+                          {
+                            "group": "SQL providers",
+                            "pages": [
+                              "data-engineering/fabrics/sql-provider/snowflake",
+                              "data-engineering/fabrics/sql-provider/databricks",
+                              "data-engineering/fabrics/sql-provider/bigquery"
+                            ]
+                          },
+                          "data-engineering/fabrics/secret-providers"
+                        ]
+                      },
+                      "data-engineering/fabrics/execution-metrics"
                     ]
                   },
                   {
                     "group": "Extensibility",
                     "pages": [
-                      "data-analysis/development/extensibility/dependencies",
-                      "data-analysis/development/extensibility/package-hub/package-hub",
-                      "data-analysis/development/extensibility/package-hub/template-hub",
-                      "data-analysis/development/extensibility/functions",
-                      "data-analysis/development/extensibility/stored-procedure",
-                      "data-analysis/development/extensibility/sql-gem-builder"
-                    ]
-                  }
-                ]
-              },
-              {
-                "group": "Environment",
-                "pages": [
-                  {
-                    "group": "Fabrics",
-                    "pages": [
-                      "data-analysis/environment/fabrics/prophecy-fabrics",
-                      "data-analysis/environment/fabrics/create-fabric"
-                    ]
-                  },
-                  {
-                    "group": "Connections",
-                    "pages": [
-                      "data-analysis/environment/connections/connections",
-                      "data-analysis/environment/connections/adls",
-                      "data-analysis/environment/connections/bigquery",
-                      "data-analysis/environment/connections/databricks",
-                      "data-analysis/environment/connections/gcs",
-                      "data-analysis/environment/connections/hana",
-                      "data-analysis/environment/connections/mongodb",
-                      "data-analysis/environment/connections/mssql",
-                      "data-analysis/environment/connections/onedrive",
-                      "data-analysis/environment/connections/oracle",
-                      "data-analysis/environment/connections/power-bi",
-                      "data-analysis/environment/connections/prophecy-managed",
-                      "data-analysis/environment/connections/redshift",
-                      "data-analysis/environment/connections/s3",
-                      "data-analysis/environment/connections/salesforce",
-                      "data-analysis/environment/connections/sftp",
-                      "data-analysis/environment/connections/sharepoint",
-                      "data-analysis/environment/connections/smartsheet",
-                      "data-analysis/environment/connections/smtp",
-                      "data-analysis/environment/connections/snowflake",
-                      "data-analysis/environment/connections/synapse",
-                      "data-analysis/environment/connections/tableau"
-                    ]
-                  },
-                  "data-analysis/environment/secrets/secrets"
-                ]
-              },
-              {
-                "group": "Collaboration",
-                "pages": [
-                  "data-analysis/collaboration/project-sharing",
-                  "data-analysis/collaboration/project-replays",
-                  {
-                    "group": "Prophecy Apps",
-                    "pages": [
-                      "data-analysis/collaboration/prophecy-apps/apps",
-                      "data-analysis/collaboration/prophecy-apps/run-apps",
                       {
-                        "group": "Build apps",
+                        "group": "Dependencies",
                         "pages": [
-                          "data-analysis/collaboration/prophecy-apps/app-builder",
-                          "data-analysis/collaboration/prophecy-apps/app-creation",
-                          "data-analysis/collaboration/prophecy-apps/app-components",
-                          "data-analysis/collaboration/prophecy-apps/app-settings"
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "group": "Production",
-                "pages": [
-                  {
-                    "group": "Scheduling",
-                    "pages": [
-                      "data-analysis/production/scheduling/scheduling",
-                      "data-analysis/production/scheduling/schedule-setup",
-                      "data-analysis/production/scheduling/triggers",
-                      "data-analysis/production/scheduling/alerts",
-                      "data-analysis/production/scheduling/pipeline-trigger-gem"
-                    ]
-                  },
-                  "data-analysis/production/publication",
-                  "data-analysis/production/monitoring"
-                ]
-              }
-            ]
-          },
-          {
-            "tab": "Gem reference",
-            "groups": [
-              {
-                "group": "Overview",
-                "pages": [
-                  "data-analysis/gems/gems",
-                  "data-analysis/gems/data-types",
-                  {
-                    "group": "Visual expressions",
-                    "pages": [
-                      "data-analysis/gems/visual-expression-builder/visual-expression-builder",
-                      "data-analysis/gems/visual-expression-builder/use-the-visual-expression-builder",
-                      "data-analysis/gems/visual-expression-builder/visual-expression-builder-reference",
-                      "data-analysis/gems/visual-expression-builder/variant-schema"
-                    ]
-                  }
-                ]
-              },
-              {
-                "group": "Sources and targets",
-                "pages": [
-                  "data-analysis/gems/source-target/source-target",
-                  "data-analysis/gems/source-target/adding-data-sources",
-                  {
-                    "group": "Tables (Warehouse)",
-                    "pages": [
-                      "data-analysis/gems/source-target/table/bigquery",
-                      "data-analysis/gems/source-target/table/databricks",
-                      "data-analysis/gems/source-target/table/prophecy-warehouse",
-                      "data-analysis/gems/source-target/table/upload-files",
-                      "data-analysis/gems/source-target/table/write-options"
-                    ]
-                  },
-                  {
-                    "group": "Tables (External systems)",
-                    "pages": [
-                      "data-analysis/gems/source-target/external-table/bigquery",
-                      "data-analysis/gems/source-target/external-table/databricks",
-                      "data-analysis/gems/source-target/external-table/mssql",
-                      "data-analysis/gems/source-target/external-table/mongodb",
-                      "data-analysis/gems/source-target/external-table/oracle",
-                      "data-analysis/gems/source-target/external-table/redshift",
-                      "data-analysis/gems/source-target/external-table/salesforce",
-                      "data-analysis/gems/source-target/external-table/snowflake",
-                      "data-analysis/gems/source-target/external-table/synapse",
-                      {
-                        "group": "SAP HANA",
-                        "pages": [
-                          "data-analysis/gems/source-target/external-table/hana/hana",
-                          "data-analysis/gems/source-target/external-table/hana/identity-columns"
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "group": "File storage systems",
-                    "pages": [
-                      {
-                        "group": "File types",
-                        "pages": [
-                          "data-analysis/gems/source-target/file/file-types/csv",
-                          "data-analysis/gems/source-target/file/file-types/excel",
-                          "data-analysis/gems/source-target/file/file-types/parquet",
-                          "data-analysis/gems/source-target/file/file-types/json",
-                          "data-analysis/gems/source-target/file/file-types/xml",
-                          "data-analysis/gems/source-target/file/file-types/text",
-                          "data-analysis/gems/source-target/file/file-types/fixed-width"
+                          "data-engineering/extensibility/dependencies/prophecy-libs",
+                          "data-engineering/extensibility/dependencies/spark-dependencies"
                         ]
                       },
-                      "data-analysis/gems/source-target/file/adls",
-                      "data-analysis/gems/source-target/file/s3",
-                      "data-analysis/gems/source-target/file/gcs",
-                      "data-analysis/gems/source-target/file/databricks-volumes",
-                      "data-analysis/gems/source-target/file/sftp",
-                      "data-analysis/gems/source-target/file/onedrive",
-                      "data-analysis/gems/source-target/file/sharepoint",
-                      "data-analysis/gems/source-target/file/smartsheet"
-                    ]
-                  }
-                ]
-              },
-              {
-                "group": "Data processing",
-                "pages": [
-                  {
-                    "group": "Transform",
-                    "pages": [
-                      "data-analysis/gems/transform/aggregate",
-                      "data-analysis/gems/transform/count-records",
-                      "data-analysis/gems/transform/dynamic-select",
-                      "data-analysis/gems/transform/encoder-decoder",
-                      "data-analysis/gems/transform/fuzzy-match",
-                      "data-analysis/gems/transform/pivot",
-                      "data-analysis/gems/transform/unpivot",
-                      "data-analysis/gems/transform/window"
-                    ]
-                  },
-                  {
-                    "group": "Prepare",
-                    "pages": [
-                      "data-analysis/gems/prepare/data-cleansing",
-                      "data-analysis/gems/prepare/deduplicate",
-                      "data-analysis/gems/prepare/filter",
-                      "data-analysis/gems/prepare/find-duplicates",
-                      "data-analysis/gems/prepare/flatten-schema",
-                      "data-analysis/gems/prepare/generate-rows",
-                      "data-analysis/gems/prepare/limit",
-                      "data-analysis/gems/prepare/masking",
-                      "data-analysis/gems/prepare/multi-column-edit",
-                      "data-analysis/gems/prepare/multi-column-rename",
-                      "data-analysis/gems/prepare/order-by",
-                      "data-analysis/gems/prepare/record-id",
-                      "data-analysis/gems/prepare/reformat"
-                    ]
-                  },
-                  {
-                    "group": "Join",
-                    "pages": [
-                      "data-analysis/gems/join-split/except",
-                      "data-analysis/gems/join-split/intersect",
-                      "data-analysis/gems/join-split/join",
-                      "data-analysis/gems/join-split/union",
-                      "data-analysis/gems/join-split/union-by-name"
-                    ]
-                  },
-                  {
-                    "group": "Spatial",
-                    "pages": [
-                      "data-analysis/gems/spatial/buffer",
-                      "data-analysis/gems/spatial/create-point",
-                      "data-analysis/gems/spatial/distance",
-                      "data-analysis/gems/spatial/heatmap",
-                      "data-analysis/gems/spatial/nearest-point",
-                      "data-analysis/gems/spatial/polybuild",
-                      "data-analysis/gems/spatial/simplify",
-                      "data-analysis/gems/spatial/spatial-match"
-                    ]
-                  },
-                  {
-                    "group": "Parse",
-                    "pages": [
-                      "data-analysis/gems/parse/json-parse",
-                      "data-analysis/gems/parse/regex",
-                      "data-analysis/gems/parse/text-to-column",
-                      "data-analysis/gems/parse/xml-parse"
-                    ]
-                  }
-                ]
-              },
-              {
-                "group": "Reporting",
-                "pages": [
-                  {
-                    "group": "Report",
-                    "pages": [
-                      "data-analysis/gems/report/email",
-                      "data-analysis/gems/report/power-bi",
-                      "data-analysis/gems/report/tableau"
-                    ]
-                  }
-                ]
-              },
-              {
-                "group": "Advanced",
-                "pages": [
-                  {
-                    "group": "Custom",
-                    "pages": [
-                      "data-analysis/gems/custom/todo-gem",
-                      "data-analysis/gems/custom/directory",
-                      "data-analysis/gems/custom/dynamic-input",
-                      "data-analysis/gems/custom/macro",
-                      "data-analysis/gems/custom/rest-api",
-                      "data-analysis/gems/custom/sql-statement",
-                      "data-analysis/gems/custom/stored-procedure",
-                      "data-analysis/gems/custom/script"
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "tab": "API reference",
-            "groups": [
-              {
-                "group": "API documentation",
-                "pages": ["api-reference/introduction"]
-              },
-              {
-                "group": "Endpoints",
-                "pages": [
-                  {
-                    "group": "Fabrics",
-                    "pages": [
-                      "api-reference/fabrics/create-a-new-fabric",
-                      "api-reference/fabrics/get-fabric-details",
-                      "api-reference/fabrics/update-an-existing-fabric",
-                      "api-reference/fabrics/delete-a-fabric"
-                    ]
-                  },
-                  {
-                    "group": "Connections",
-                    "pages": [
                       {
-                        "group": "Properties",
+                        "group": "Package Hub",
                         "pages": [
-                          "api-reference/connections/properties/redshift",
-                          "api-reference/connections/properties/s3",
-                          "api-reference/connections/properties/adls",
-                          "api-reference/connections/properties/synapse",
-                          "api-reference/connections/properties/bigquery",
-                          "api-reference/connections/properties/gcs",
-                          "api-reference/connections/properties/databricks",
-                          "api-reference/connections/properties/mssql",
-                          "api-reference/connections/properties/onedrive",
-                          "api-reference/connections/properties/power-bi",
-                          "api-reference/connections/properties/sharepoint",
-                          "api-reference/connections/properties/mongodb",
-                          "api-reference/connections/properties/oracle",
-                          "api-reference/connections/properties/salesforce",
-                          "api-reference/connections/properties/hana",
-                          "api-reference/connections/properties/sftp",
-                          "api-reference/connections/properties/smartsheet",
-                          "api-reference/connections/properties/smpt",
-                          "api-reference/connections/properties/snowflake",
-                          "api-reference/connections/properties/tableau"
+                          "data-engineering/extensibility/package-hub/package-hub",
+                          "data-engineering/extensibility/package-hub/use-imported-package"
                         ]
                       },
-                      "api-reference/connections/properties/kgconfig",
-                      "api-reference/connections/add-connection-to-fabric",
-                      "api-reference/connections/list-connections-per-fabric",
-                      "api-reference/connections/retrieve-connection-details",
-                      "api-reference/connections/update-connection",
-                      "api-reference/connections/delete-connection"
-                    ]
-                  },
-                  {
-                    "group": "Secrets",
-                    "pages": [
                       {
-                        "group": "Properties",
+                        "group": "Gem Builder",
                         "pages": [
-                          "api-reference/secrets/properties/text",
-                          "api-reference/secrets/properties/binary",
-                          "api-reference/secrets/properties/username-password",
-                          "api-reference/secrets/properties/oauth"
+                          "data-engineering/extensibility/gem-builder/spark-gem-builder",
+                          "data-engineering/extensibility/gem-builder/gem-builder-reference",
+                          "data-engineering/extensibility/gem-builder/gem-builder-ui",
+                          "data-engineering/extensibility/gem-builder/optimization-functions"
                         ]
-                      },
-                      "api-reference/secrets/add-secret-to-fabric",
-                      "api-reference/secrets/list-secrets-per-fabric",
-                      "api-reference/secrets/retrieve-secret-details",
-                      "api-reference/secrets/update-secret",
-                      "api-reference/secrets/delete-secret"
-                    ]
-                  },
-                  {
-                    "group": "Projects",
-                    "pages": ["api-reference/projects/deploy-project"]
-                  },
-                  {
-                    "group": "Pipelines",
-                    "pages": [
-                      "api-reference/pipelines/trigger-pipeline-run",
-                      "api-reference/pipelines/get-pipeline-run-status",
-                      "api-reference/pipelines/run-data-tests"
+                      }
                     ]
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "tab": "Administration",
-            "groups": [
-              {
-                "group": "Platform",
-                "pages": [
-                  "data-analysis/administration/platform/editions",
-                  "data-analysis/administration/platform/architecture",
-                  "data-analysis/administration/platform/prophecy-deployment"
-                ]
               },
               {
-                "group": "Setup",
-                "pages": [
-                  "data-analysis/administration/setup/prophecy-express-guide",
-                  "data-analysis/administration/setup/prophecy-enterprise-guide",
-                  "data-analysis/administration/setup/databricks-partner-connect"
-                ]
-              },
-              {
-                "group": "Management",
-                "pages": [
+                "tab": "Gem reference",
+                "groups": [
                   {
-                    "group": "Teams",
+                    "group": "Overview",
                     "pages": [
-                      "data-analysis/administration/management/teams/teams",
+                      "data-engineering/gems/gems",
+                      "data-engineering/gems/expression-builder"
+                    ]
+                  },
+                  {
+                    "group": "Sources and targets",
+                    "pages": [
                       {
-                        "group": "Settings",
+                        "group": "Catalog tables",
                         "pages": [
-                          "data-analysis/administration/management/teams/settings/ai",
-                          "data-analysis/administration/management/teams/settings/default-dependencies",
-                          "data-analysis/administration/management/teams/settings/project-creation-template"
+                          "data-engineering/gems/source-target/catalog-table/delta",
+                          "data-engineering/gems/source-target/catalog-table/hive",
+                          "data-engineering/gems/source-target/catalog-table/iceberg"
+                        ]
+                      },
+                      {
+                        "group": "File formats",
+                        "pages": [
+                          "data-engineering/gems/source-target/file/avro",
+                          "data-engineering/gems/source-target/file/csv",
+                          "data-engineering/gems/source-target/file/delta",
+                          "data-engineering/gems/source-target/file/fixed-format",
+                          "data-engineering/gems/source-target/file/json",
+                          "data-engineering/gems/source-target/file/kafka-stream",
+                          "data-engineering/gems/source-target/file/orc",
+                          "data-engineering/gems/source-target/file/parquet",
+                          "data-engineering/gems/source-target/file/seed",
+                          "data-engineering/gems/source-target/file/synthetic-data-generator",
+                          "data-engineering/gems/source-target/file/text",
+                          "data-engineering/gems/source-target/file/upload-file",
+                          "data-engineering/gems/source-target/file/xlsx",
+                          "data-engineering/gems/source-target/file/xml"
+                        ]
+                      },
+                      {
+                        "group": "Warehouses",
+                        "pages": [
+                          "data-engineering/gems/source-target/warehouse/bigquery",
+                          "data-engineering/gems/source-target/warehouse/cosmos",
+                          "data-engineering/gems/source-target/warehouse/jdbc",
+                          "data-engineering/gems/source-target/warehouse/mongodb",
+                          "data-engineering/gems/source-target/warehouse/redshift",
+                          "data-engineering/gems/source-target/warehouse/snowflake"
+                        ]
+                      },
+                      {
+                        "group": "Web applications",
+                        "pages": [
+                          "data-engineering/gems/source-target/web-apps/salesforce",
+                          "data-engineering/gems/source-target/web-apps/smartsheet"
+                        ]
+                      },
+                      "data-engineering/gems/source-target/lookup"
+                    ]
+                  },
+                  {
+                    "group": "Data processing",
+                    "pages": [
+                      {
+                        "group": "Transform",
+                        "pages": [
+                          "data-engineering/gems/transform/aggregate",
+                          "data-engineering/gems/transform/bulk-column-expressions",
+                          "data-engineering/gems/transform/bulk-column-rename",
+                          "data-engineering/gems/transform/column-parser",
+                          "data-engineering/gems/transform/data-cleansing",
+                          "data-engineering/gems/transform/data-quality-check",
+                          "data-engineering/gems/transform/deduplicate",
+                          "data-engineering/gems/transform/dynamic-replace",
+                          "data-engineering/gems/transform/dynamic-select",
+                          "data-engineering/gems/transform/filter",
+                          "data-engineering/gems/transform/flattenschema",
+                          "data-engineering/gems/transform/fuzzy-match",
+                          "data-engineering/gems/transform/limit",
+                          "data-engineering/gems/transform/order-by",
+                          "data-engineering/gems/transform/reformat",
+                          "data-engineering/gems/transform/sample-rows",
+                          "data-engineering/gems/transform/schema-transform",
+                          "data-engineering/gems/transform/set-operation",
+                          "data-engineering/gems/transform/unpivot",
+                          "data-engineering/gems/transform/window-function"
+                        ]
+                      },
+                      {
+                        "group": "Join/Split",
+                        "pages": [
+                          "data-engineering/gems/join-split/join",
+                          "data-engineering/gems/join-split/repartition",
+                          "data-engineering/gems/join-split/row-distributor",
+                          "data-engineering/gems/join-split/compare-columns"
                         ]
                       }
                     ]
                   },
                   {
-                    "group": "Users",
+                    "group": "Advanced",
                     "pages": [
-                      "data-analysis/administration/management/users/team-user-provisioning",
-                      "data-analysis/administration/management/users/account-settings",
                       {
-                        "group": "Access control",
+                        "group": "Custom",
                         "pages": [
-                          "data-analysis/administration/management/users/access/role-based-access",
-                          "data-analysis/administration/management/users/access/team-based-access"
+                          "data-engineering/gems/custom/delta-table-operations",
+                          "data-engineering/gems/custom/directory",
+                          "data-engineering/gems/custom/email",
+                          "data-engineering/gems/custom/email-data",
+                          "data-engineering/gems/custom/file-operation",
+                          "data-engineering/gems/custom/rest-api-enrich",
+                          "data-engineering/gems/custom/script",
+                          "data-engineering/gems/custom/sql-statement",
+                          "data-engineering/gems/custom/tableau"
+                        ]
+                      },
+                      {
+                        "group": "Machine Learning",
+                        "pages": [
+                          "data-engineering/gems/machine-learning/genaichatbot",
+                          "data-engineering/gems/machine-learning/ml-openai",
+                          "data-engineering/gems/machine-learning/ml-pinecone-lookup",
+                          "data-engineering/gems/machine-learning/ml-text-processing"
+                        ]
+                      },
+                      {
+                        "group": "Subgraph",
+                        "pages": [
+                          "data-engineering/gems/subgraph/subgraph",
+                          "data-engineering/gems/subgraph/basicSubgraph",
+                          "data-engineering/gems/subgraph/tableIterator",
+                          "data-engineering/gems/subgraph/while-iterator"
                         ]
                       }
                     ]
-                  },
+                  }
+                ]
+              },
+              {
+                "tab": "Administration",
+                "groups": [
                   {
-                    "group": "Authentication",
+                    "group": "Platform",
                     "pages": [
-                      "data-analysis/administration/management/authentication/authentication",
-                      "data-analysis/administration/management/authentication/saml",
-                      "data-analysis/administration/management/authentication/azure-ad",
-                      "data-analysis/administration/management/authentication/google-sso",
-                      "data-analysis/administration/management/authentication/ldap",
-                      "data-analysis/administration/management/authentication/group-team-mapping"
+                      "data-engineering/administration/platform/editions",
+                      "data-engineering/administration/platform/architecture",
+                      "data-engineering/administration/platform/prophecy-deployment"
                     ]
                   },
                   {
-                    "group": "Cluster admin settings",
+                    "group": "Setup",
                     "pages": [
-                      "data-analysis/administration/management/cluster-admin-settings/cluster-admin-settings",
-                      "data-analysis/administration/management/cluster-admin-settings/oauth-setup",
-                      "data-analysis/administration/management/cluster-admin-settings/copilot-settings"
+                      "data-engineering/administration/setup/prophecy-express-guide",
+                      "data-engineering/administration/setup/prophecy-enterprise-guide"
                     ]
                   },
+                  {
+                    "group": "Management",
+                    "pages": [
+                      {
+                        "group": "Teams",
+                        "pages": [
+                          "data-engineering/administration/management/teams/teams",
+                          {
+                            "group": "Settings",
+                            "pages": [
+                              "data-engineering/administration/management/teams/settings/ai",
+                              "data-engineering/administration/management/teams/settings/default-dependencies",
+                              "data-engineering/administration/management/teams/settings/spark",
+                              "data-engineering/administration/management/teams/settings/project-creation-template"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "group": "Users",
+                        "pages": [
+                          "data-engineering/administration/management/users/team-user-provisioning",
+                          "data-engineering/administration/management/users/account-settings",
+                          {
+                            "group": "Access control",
+                            "pages": [
+                              "data-engineering/administration/management/users/access/role-based-access",
+                              "data-engineering/administration/management/users/access/team-based-access"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "group": "Authentication",
+                        "pages": [
+                          "data-engineering/administration/management/authentication/authentication",
+                          "data-engineering/administration/management/authentication/saml",
+                          "data-engineering/administration/management/authentication/azure-ad",
+                          "data-engineering/administration/management/authentication/google-sso",
+                          "data-engineering/administration/management/authentication/ldap",
+                          "data-engineering/administration/management/authentication/group-team-mapping"
+                        ]
+                      },
+                      {
+                        "group": "Cluster admin settings",
+                        "pages": [
+                          "data-engineering/administration/management/cluster-admin-settings/cluster-admin-settings",
+                          "data-engineering/administration/management/cluster-admin-settings/oauth-setup",
+                          "data-engineering/administration/management/cluster-admin-settings/copilot-settings"
+                        ]
+                      },
 
-                  {
-                    "group": "Usage and billing",
-                    "pages": [
-                      "data-analysis/administration/management/usage-billing/usage-billing",
-                      "data-analysis/administration/management/usage-billing/credits"
-                    ]
-                  },
-                  "data-analysis/administration/management/audit-logs"
-                ]
-              },
-              {
-                "group": "Help and resources",
-                "pages": [
-                  "data-analysis/administration/getting-help/get-in-touch",
-                  {
-                    "group": "Support",
-                    "pages": [
-                      "data-analysis/administration/getting-help/submit-request",
-                      "data-analysis/administration/getting-help/troubleshooting",
                       {
-                        "group": "Collect diagnostic data",
+                        "group": "Usage and billing",
                         "pages": [
-                          "data-analysis/administration/getting-help/prophecy-details",
-                          "data-analysis/administration/getting-help/spark-cluster-details",
-                          "data-analysis/administration/getting-help/har-file",
-                          "data-analysis/administration/getting-help/diagnostics",
-                          "data-analysis/administration/getting-help/copy-session-info"
+                          "data-engineering/administration/management/usage-billing/usage-billing"
                         ]
-                      }
+                      },
+                      "data-engineering/administration/management/audit-logs"
                     ]
                   },
-                  "data-analysis/administration/getting-help/security"
+                  {
+                    "group": "Help and resources",
+                    "pages": [
+                      "data-engineering/administration/getting-help/get-in-touch",
+                      {
+                        "group": "Support",
+                        "pages": [
+                          "data-engineering/administration/getting-help/submit-request",
+                          {
+                            "group": "Collect diagnostic data",
+                            "pages": [
+                              "data-engineering/administration/getting-help/prophecy-details",
+                              "data-engineering/administration/getting-help/spark-cluster-details",
+                              "data-engineering/administration/getting-help/har-file",
+                              "data-engineering/administration/getting-help/diagnostics"
+                            ]
+                          }
+                        ]
+                      },
+                      "data-engineering/administration/getting-help/security"
+                    ]
+                  }
                 ]
-              }
-            ]
-          },
-          {
-            "tab": "Releases",
-            "groups": [
-              {
-                "group": "Releases",
-                "pages": ["data-analysis/releases/2025"]
               },
               {
-                "group": "Reference",
-                "pages": [
-                  "data-analysis/releases/version-chart",
-                  "data-analysis/releases/version-support",
-                  "data-analysis/releases/find-version"
+                "tab": "Releases",
+                "groups": [
+                  {
+                    "group": "Releases",
+                    "pages": ["data-engineering/releases/2025"]
+                  },
+                  {
+                    "group": "Reference",
+                    "pages": [
+                      "data-engineering/releases/version-chart",
+                      "data-engineering/releases/version-support",
+                      "data-engineering/releases/find-version"
+                    ]
+                  }
                 ]
               }
             ]
@@ -626,494 +1130,181 @@
         ]
       },
       {
-        "dropdown": "Data Engineering",
-        "icon": "/images/code-square-a.svg",
-        "tabs": [
+        "product": "Import Tool Documentation",
+        "icon": "/images/download-d.svg",
+        "description": "Import workflows from external tools into Prophecy",
+        "dropdowns": [
           {
-            "tab": "Documentation",
+            "dropdown": "Alteryx",
+            "icon": "/images/import/logo-alteryx.svg",
+            "groups": [
+              {
+                "group": "Import overview",
+                "pages": ["import-tool/index", "import-tool/migration"]
+              },
+              {
+                "group": "Alteryx to SQL",
+                "pages": [
+                  "import-tool/alteryx/alteryx-to-databricks-sql/alteryx-to-prophecy-sql",
+                  "import-tool/alteryx/alteryx-to-databricks-sql/alteryx-to-databricks-sql",
+                  "import-tool/alteryx/alteryx-to-databricks-sql/databricks-data-types",
+                  "import-tool/alteryx/alteryx-to-databricks-sql/alteryx-connections",
+                  "import-tool/alteryx/alteryx-to-databricks-sql/databricks-functions-mappings",
+                  {
+                    "group": "Tool mapping",
+                    "pages": [
+                      "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-tool-mapping",
+                      {
+                        "group": "Alteryx In/Out tools",
+                        "pages": [
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-in-out-tools/alteryx-browse-tool",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-in-out-tools/alteryx-datetime-now",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-in-out-tools/alteryx-directory-tool",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-in-out-tools/alteryx-input-data-tool",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-in-out-tools/alteryx-output-data-tool",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-in-out-tools/alteryx-text-input-tool"
+                        ]
+                      },
+                      {
+                        "group": "Alteryx Prep tools",
+                        "pages": [
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-data-cleansing-tool",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-filter-tool",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-formula-tool",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-imputation-tool",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-field-binning-tool",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-field-formula-tool",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-row-formula-tool",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-oversample-field-tool"
+                        ]
+                      },
+                      {
+                        "group": "Alteryx Join tools",
+                        "pages": [
+                         "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-append-fields",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-find-replace",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-join",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-join-multiple",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-union"
+                        ]
+                      },
+                      "import-tool/alteryx/alteryx-to-databricks-sql/databricks-performance-tuning"
+                    ]
+                  },
+                  {
+                    "group": "Troubleshooting",
+                    "pages": [
+                      "import-tool/alteryx/alteryx-to-databricks-sql/troubleshooting/troubleshooting",
+                      "import-tool/alteryx/alteryx-to-databricks-sql/troubleshooting/malformed-file",
+                      "import-tool/alteryx/alteryx-to-databricks-sql/troubleshooting/unsupported-function",
+                      "import-tool/alteryx/alteryx-to-databricks-sql/troubleshooting/unsupported-tool"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Alteryx to Spark",
+                "pages": [
+                  "import-tool/alteryx/alteryx-to-spark/alteryx-to-spark",
+                  "import-tool/alteryx/alteryx-to-spark/alteryx-components"
+                ]
+              },
+              {
+                "group": "Migration Analysis",
+                "pages": ["import-tool/alteryx/alteryx-migration-analysis"]
+              }
+            ]
+          },
+          {
+            "dropdown": "Informatica",
+            "icon": "/images/import/logo-informatica.svg",
             "groups": [
               {
                 "group": "Getting started",
                 "pages": [
-                  "data-engineering/getting-started/quick-start",
-                  "data-engineering/getting-started/concepts"
+                  "import-tool/informatica/informatica",
+                  "import-tool/informatica/getting-started-with-Informatica"
                 ]
               },
               {
-                "group": "Development",
+                "group": "Informatica to SQL",
                 "pages": [
-                  {
-                    "group": "Pipelines",
-                    "pages": [
-                      "data-engineering/development/pipelines/pipelines",
-                      "data-engineering/development/pipelines/configuration",
-                      "data-engineering/development/pipelines/pipeline-settings",
-                      "data-engineering/development/pipelines/secrets-configs"
-                    ]
-                  },
-                  "data-engineering/development/dataset",
-                  {
-                    "group": "Runs",
-                    "pages": [
-                      "data-engineering/development/runs/execution",
-                      "data-engineering/development/runs/data-sampling",
-                      "data-engineering/development/runs/conditional-execution"
-                    ]
-                  },
-                  {
-                    "group": "Explore",
-                    "pages": [
-                      "data-engineering/development/data-explorer/data-explorer",
-                      "data-engineering/development/data-explorer/data-profile"
-                    ]
-                  },
-                  "data-engineering/development/copilot/copilot",
-                  {
-                    "group": "Functions",
-                    "pages": [
-                      "data-engineering/development/functions/user-defined-functions",
-                      "data-engineering/development/functions/business-rules-engine/business-rules-engine"
-                    ]
-                  },
-                  {
-                    "group": "Streaming",
-                    "pages": [
-                      "data-engineering/development/spark-streaming/spark-streaming",
-                      "data-engineering/development/spark-streaming/streaming-transformations",
-                      {
-                        "group": "Streaming sources and targets",
-                        "pages": [
-                          "data-engineering/development/spark-streaming/streaming-sources-and-targets/streaming-file-gem",
-                          "data-engineering/development/spark-streaming/streaming-sources-and-targets/streaming-warehouse-gem",
-                          "data-engineering/development/spark-streaming/streaming-sources-and-targets/streaming-event-gem"
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "group": "Models",
-                    "pages": [
-                      "data-engineering/development/models/models",
-                      "data-engineering/development/models/configuration",
-                      {
-                        "group": "Sources and targets",
-                        "pages": [
-                          "data-engineering/development/models/sources-target/sources-target",
-                          "data-engineering/development/models/sources-target/location"
-                        ]
-                      },
-                      {
-                        "group": "Target platforms",
-                        "pages": [
-                          "data-engineering/development/models/target-platforms/bigquery-target",
-                          "data-engineering/development/models/target-platforms/databricks-target",
-                          "data-engineering/development/models/target-platforms/snowflake-target"
-                        ]
-                      }
-                    ]
-                  },
-                  "data-engineering/development/best-practices"
+                  "import-tool/informatica/informatica-to-sql/informatica-to-sql",
+                  "import-tool/informatica/informatica-to-sql/big-query-components-mappings",
+                  "import-tool/informatica/informatica-to-sql/big-query-data-types",
+                  "import-tool/informatica/informatica-to-sql/big-query-functions-mappings"
                 ]
               },
               {
-                "group": "Production",
+                "group": "Informatica to Spark",
                 "pages": [
-                  {
-                    "group": "CI/CD",
-                    "pages": [
-                      "data-engineering/ci-cd/reliable-ci-cd",
-                      "data-engineering/ci-cd/tests",
-                      "data-engineering/ci-cd/data-diff",
-                      {
-                        "group": "Deployment",
-                        "pages": [
-                          "data-engineering/ci-cd/deployment/deployment",
-                          "data-engineering/ci-cd/deployment/deploy-project",
-                          "data-engineering/ci-cd/deployment/use-external-release-tags"
-                        ]
-                      },
-                      {
-                        "group": "Git",
-                        "pages": [
-                          "data-engineering/ci-cd/git/git",
-                          "data-engineering/ci-cd/git/git-workflow",
-                          "data-engineering/ci-cd/git/git-resolve",
-                          "data-engineering/ci-cd/git/pull-request-templates",
-                          "data-engineering/ci-cd/git/best-practices"
-                        ]
-                      },
-                      {
-                        "group": "Prophecy Build Tool",
-                        "pages": [
-                          "data-engineering/ci-cd/prophecy-build-tool/prophecy-build-tool",
-                          "data-engineering/ci-cd/prophecy-build-tool/pbt-github-actions",
-                          "data-engineering/ci-cd/prophecy-build-tool/pbt-jenkins"
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "group": "Orchestration",
-                    "pages": [
-                      "data-engineering/orchestration/databricks-jobs",
-                      "data-engineering/orchestration/multi-jobs-trigger",
-                      "data-engineering/orchestration/alternative-schedulers",
-                      {
-                        "group": "Pipeline Monitoring",
-                        "pages": [
-                          "data-engineering/orchestration/pipeline-monitoring/pipeline-monitoring",
-                          "data-engineering/orchestration/pipeline-monitoring/enable-pipeline-monitoring",
-                          "data-engineering/orchestration/pipeline-monitoring/use-pipeline-monitoring"
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "group": "Lineage",
-                    "pages": [
-                      "data-engineering/lineage/lineage",
-                      "data-engineering/lineage/lineage-extractor"
-                    ]
-                  }
+                  "import-tool/informatica/informatica-to-spark/informatica-to-spark",
+                  "import-tool/informatica/informatica-to-spark/informatica-components"
                 ]
               },
               {
-                "group": "Execution",
+                "group": "Informatica ICS to SQL",
                 "pages": [
-                  {
-                    "group": "Fabrics",
-                    "pages": [
-                      {
-                        "group": "Spark providers",
-                        "pages": [
-                          {
-                            "group": "Databricks",
-                            "pages": [
-                              "data-engineering/fabrics/spark-provider/databricks/databricks",
-                              "data-engineering/fabrics/spark-provider/databricks/databricks-serverless",
-                              "data-engineering/fabrics/spark-provider/databricks/databricks-policies",
-                              "data-engineering/fabrics/spark-provider/databricks/UCShared",
-                              "data-engineering/fabrics/spark-provider/databricks/volumes-plibs",
-                              "data-engineering/fabrics/spark-provider/databricks/whitelist-plibs"
-                            ]
-                          },
-                          {
-                            "group": "Amazon EMR",
-                            "pages": [
-                              "data-engineering/fabrics/spark-provider/emr/emr",
-                              "data-engineering/fabrics/spark-provider/emr/emr-job-sizes",
-                              "data-engineering/fabrics/spark-provider/emr/emr-saml"
-                            ]
-                          },
-                          {
-                            "group": "Livy",
-                            "pages": [
-                              "data-engineering/fabrics/spark-provider/livy/livy",
-                              "data-engineering/fabrics/spark-provider/livy/selective-sampling"
-                            ]
-                          },
-                          "data-engineering/fabrics/spark-provider/dataproc",
-                          "data-engineering/fabrics/spark-provider/synapsefabric",
-                          "data-engineering/fabrics/spark-provider/prophecy-managed"
-                        ]
-                      },
-                      {
-                        "group": "SQL providers",
-                        "pages": [
-                          "data-engineering/fabrics/sql-provider/snowflake",
-                          "data-engineering/fabrics/sql-provider/databricks",
-                          "data-engineering/fabrics/sql-provider/bigquery"
-                        ]
-                      },
-                      "data-engineering/fabrics/secret-providers"
-                    ]
-                  },
-                  "data-engineering/fabrics/execution-metrics"
-                ]
-              },
-              {
-                "group": "Extensibility",
-                "pages": [
-                  {
-                    "group": "Dependencies",
-                    "pages": [
-                      "data-engineering/extensibility/dependencies/prophecy-libs",
-                      "data-engineering/extensibility/dependencies/spark-dependencies"
-                    ]
-                  },
-                  {
-                    "group": "Package Hub",
-                    "pages": [
-                      "data-engineering/extensibility/package-hub/package-hub",
-                      "data-engineering/extensibility/package-hub/use-imported-package"
-                    ]
-                  },
-                  {
-                    "group": "Gem Builder",
-                    "pages": [
-                      "data-engineering/extensibility/gem-builder/spark-gem-builder",
-                      "data-engineering/extensibility/gem-builder/gem-builder-reference",
-                      "data-engineering/extensibility/gem-builder/gem-builder-ui",
-                      "data-engineering/extensibility/gem-builder/optimization-functions"
-                    ]
-                  }
+                  "import-tool/informatica/informatica-ics-to-spark/getting-started-with-informatica-ics",
+                  "import-tool/informatica/informatica-ics-to-spark/informatica-ics-components"
                 ]
               }
             ]
           },
           {
-            "tab": "Gem reference",
+            "dropdown": "Ab Initio",
+            "icon": "/images/import/logo-abinitio.svg",
             "groups": [
               {
-                "group": "Overview",
-                "pages": ["data-engineering/gems/gems", "data-engineering/gems/expression-builder"]
-              },
-              {
-                "group": "Sources and targets",
+                "group": "Getting started",
                 "pages": [
-                  {
-                    "group": "Catalog tables",
-                    "pages": [
-                      "data-engineering/gems/source-target/catalog-table/delta",
-                      "data-engineering/gems/source-target/catalog-table/hive",
-                      "data-engineering/gems/source-target/catalog-table/iceberg"
-                    ]
-                  },
-                  {
-                    "group": "File formats",
-                    "pages": [
-                      "data-engineering/gems/source-target/file/avro",
-                      "data-engineering/gems/source-target/file/csv",
-                      "data-engineering/gems/source-target/file/delta",
-                      "data-engineering/gems/source-target/file/fixed-format",
-                      "data-engineering/gems/source-target/file/json",
-                      "data-engineering/gems/source-target/file/kafka-stream",
-                      "data-engineering/gems/source-target/file/orc",
-                      "data-engineering/gems/source-target/file/parquet",
-                      "data-engineering/gems/source-target/file/seed",
-                      "data-engineering/gems/source-target/file/synthetic-data-generator",
-                      "data-engineering/gems/source-target/file/text",
-                      "data-engineering/gems/source-target/file/upload-file",
-                      "data-engineering/gems/source-target/file/xlsx",
-                      "data-engineering/gems/source-target/file/xml"
-                    ]
-                  },
-                  {
-                    "group": "Warehouses",
-                    "pages": [
-                      "data-engineering/gems/source-target/warehouse/bigquery",
-                      "data-engineering/gems/source-target/warehouse/cosmos",
-                      "data-engineering/gems/source-target/warehouse/jdbc",
-                      "data-engineering/gems/source-target/warehouse/mongodb",
-                      "data-engineering/gems/source-target/warehouse/redshift",
-                      "data-engineering/gems/source-target/warehouse/snowflake"
-                    ]
-                  },
-                  {
-                    "group": "Web applications",
-                    "pages": [
-                      "data-engineering/gems/source-target/web-apps/salesforce",
-                      "data-engineering/gems/source-target/web-apps/smartsheet"
-                    ]
-                  },
-                  "data-engineering/gems/source-target/lookup"
+                  "import-tool/abinitio/abinitio",
+                  "import-tool/abinitio/getting-started-with-Abinitio"
                 ]
               },
               {
-                "group": "Data processing",
+                "group": "Components",
+                "pages": ["import-tool/abinitio/abinitio-components"]
+              },
+              {
+                "group": "Functions",
+                "pages": ["import-tool/abinitio/abinitio-functions"]
+              },
+              {
+                "group": "Plans",
+                "pages": ["import-tool/abinitio/abinitio-plans"]
+              },
+              {
+                "group": "Gems",
                 "pages": [
-                  {
-                    "group": "Transform",
-                    "pages": [
-                      "data-engineering/gems/transform/aggregate",
-                      "data-engineering/gems/transform/bulk-column-expressions",
-                      "data-engineering/gems/transform/bulk-column-rename",
-                      "data-engineering/gems/transform/column-parser",
-                      "data-engineering/gems/transform/data-cleansing",
-                      "data-engineering/gems/transform/data-quality-check",
-                      "data-engineering/gems/transform/deduplicate",
-                      "data-engineering/gems/transform/dynamic-replace",
-                      "data-engineering/gems/transform/dynamic-select",
-                      "data-engineering/gems/transform/filter",
-                      "data-engineering/gems/transform/flattenschema",
-                      "data-engineering/gems/transform/fuzzy-match",
-                      "data-engineering/gems/transform/limit",
-                      "data-engineering/gems/transform/order-by",
-                      "data-engineering/gems/transform/reformat",
-                      "data-engineering/gems/transform/sample-rows",
-                      "data-engineering/gems/transform/schema-transform",
-                      "data-engineering/gems/transform/set-operation",
-                      "data-engineering/gems/transform/unpivot",
-                      "data-engineering/gems/transform/window-function"
-                    ]
-                  },
-                  {
-                    "group": "Join/Split",
-                    "pages": [
-                      "data-engineering/gems/join-split/join",
-                      "data-engineering/gems/join-split/repartition",
-                      "data-engineering/gems/join-split/row-distributor",
-                      "data-engineering/gems/join-split/compare-columns"
-                    ]
-                  }
+                  "import-tool/abinitio/abinitio-gems/normalize",
+                  "import-tool/abinitio/abinitio-gems/sequence",
+                  "import-tool/abinitio/abinitio-gems/surrogate-key-generator"
                 ]
               },
               {
-                "group": "Advanced",
+                "group": "Troubleshooting",
                 "pages": [
-                  {
-                    "group": "Custom",
-                    "pages": [
-                      "data-engineering/gems/custom/delta-table-operations",
-                      "data-engineering/gems/custom/directory",
-                      "data-engineering/gems/custom/email",
-                      "data-engineering/gems/custom/email-data",
-                      "data-engineering/gems/custom/file-operation",
-                      "data-engineering/gems/custom/rest-api-enrich",
-                      "data-engineering/gems/custom/script",
-                      "data-engineering/gems/custom/sql-statement",
-                      "data-engineering/gems/custom/tableau"
-                    ]
-                  },
-                  {
-                    "group": "Machine Learning",
-                    "pages": [
-                      "data-engineering/gems/machine-learning/genaichatbot",
-                      "data-engineering/gems/machine-learning/ml-openai",
-                      "data-engineering/gems/machine-learning/ml-pinecone-lookup",
-                      "data-engineering/gems/machine-learning/ml-text-processing"
-                    ]
-                  },
-                  {
-                    "group": "Subgraph",
-                    "pages": [
-                      "data-engineering/gems/subgraph/subgraph",
-                      "data-engineering/gems/subgraph/basicSubgraph",
-                      "data-engineering/gems/subgraph/tableIterator",
-                      "data-engineering/gems/subgraph/while-iterator"
-                    ]
-                  }
+                  "import-tool/abinitio/trouble-shooting/missing-files",
+                  "import-tool/abinitio/trouble-shooting/trouble-shooting"
                 ]
               }
             ]
           },
           {
-            "tab": "Administration",
+            "dropdown": "DataStage",
+            "icon": "/images/import/logo-ibm.svg",
             "groups": [
               {
-                "group": "Platform",
+                "group": "Getting started",
                 "pages": [
-                  "data-engineering/administration/platform/editions",
-                  "data-engineering/administration/platform/architecture",
-                  "data-engineering/administration/platform/prophecy-deployment"
+                  "import-tool/datastage/datastage",
+                  "import-tool/datastage/getting-started-with-DataStage"
                 ]
               },
               {
-                "group": "Setup",
-                "pages": [
-                  "data-engineering/administration/setup/prophecy-express-guide",
-                  "data-engineering/administration/setup/prophecy-enterprise-guide"
-                ]
-              },
-              {
-                "group": "Management",
-                "pages": [
-                  {
-                    "group": "Teams",
-                    "pages": [
-                      "data-engineering/administration/management/teams/teams",
-                      {
-                        "group": "Settings",
-                        "pages": [
-                          "data-engineering/administration/management/teams/settings/ai",
-                          "data-engineering/administration/management/teams/settings/default-dependencies",
-                          "data-engineering/administration/management/teams/settings/spark",
-                          "data-engineering/administration/management/teams/settings/project-creation-template"
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "group": "Users",
-                    "pages": [
-                      "data-engineering/administration/management/users/team-user-provisioning",
-                      "data-engineering/administration/management/users/account-settings",
-                      {
-                        "group": "Access control",
-                        "pages": [
-                          "data-engineering/administration/management/users/access/role-based-access",
-                          "data-engineering/administration/management/users/access/team-based-access"
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "group": "Authentication",
-                    "pages": [
-                      "data-engineering/administration/management/authentication/authentication",
-                      "data-engineering/administration/management/authentication/saml",
-                      "data-engineering/administration/management/authentication/azure-ad",
-                      "data-engineering/administration/management/authentication/google-sso",
-                      "data-engineering/administration/management/authentication/ldap",
-                      "data-engineering/administration/management/authentication/group-team-mapping"
-                    ]
-                  },
-                  {
-                    "group": "Cluster admin settings",
-                    "pages": [
-                      "data-engineering/administration/management/cluster-admin-settings/cluster-admin-settings",
-                      "data-engineering/administration/management/cluster-admin-settings/oauth-setup",
-                      "data-engineering/administration/management/cluster-admin-settings/copilot-settings"
-                    ]
-                  },
-
-                  {
-                    "group": "Usage and billing",
-                    "pages": [
-                      "data-engineering/administration/management/usage-billing/usage-billing"
-                    ]
-                  },
-                  "data-engineering/administration/management/audit-logs"
-                ]
-              },
-              {
-                "group": "Help and resources",
-                "pages": [
-                  "data-engineering/administration/getting-help/get-in-touch",
-                  {
-                    "group": "Support",
-                    "pages": [
-                      "data-engineering/administration/getting-help/submit-request",
-                      {
-                        "group": "Collect diagnostic data",
-                        "pages": [
-                          "data-engineering/administration/getting-help/prophecy-details",
-                          "data-engineering/administration/getting-help/spark-cluster-details",
-                          "data-engineering/administration/getting-help/har-file",
-                          "data-engineering/administration/getting-help/diagnostics"
-                        ]
-                      }
-                    ]
-                  },
-                  "data-engineering/administration/getting-help/security"
-                ]
-              }
-            ]
-          },
-          {
-            "tab": "Releases",
-            "groups": [
-              {
-                "group": "Releases",
-                "pages": ["data-engineering/releases/2025"]
-              },
-              {
-                "group": "Reference",
-                "pages": [
-                  "data-engineering/releases/version-chart",
-                  "data-engineering/releases/version-support",
-                  "data-engineering/releases/find-version"
-                ]
+                "group": "Components",
+                "pages": ["import-tool/datastage/datastage-components"]
               }
             ]
           }
