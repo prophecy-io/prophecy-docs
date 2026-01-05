@@ -87,7 +87,8 @@
                           "data-analysis/development/studio/studio",
                           "data-analysis/development/studio/folders",
                           "data-analysis/development/studio/canvas-annotations",
-                          "data-analysis/development/studio/containers"
+                          "data-analysis/development/studio/containers",
+                          "data-analysis/development/studio/development-settings"
                         ]
                       },
                       {
@@ -1181,7 +1182,7 @@
                       {
                         "group": "Alteryx Join tools",
                         "pages": [
-                         "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-append-fields",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-append-fields",
                           "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-find-replace",
                           "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-join",
                           "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-join-multiple",
