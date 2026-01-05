@@ -572,7 +572,8 @@
                         "pages": [
                           "data-analysis/administration/management/cluster-admin-settings/cluster-admin-settings",
                           "data-analysis/administration/management/cluster-admin-settings/oauth-setup",
-                          "data-analysis/administration/management/cluster-admin-settings/copilot-settings"
+                          "data-analysis/administration/management/cluster-admin-settings/copilot-settings",
+                          "data-analysis/administration/management/cluster-admin-settings/feature-management"
                         ]
                       },
 
@@ -1072,7 +1073,8 @@
                         "pages": [
                           "data-engineering/administration/management/cluster-admin-settings/cluster-admin-settings",
                           "data-engineering/administration/management/cluster-admin-settings/oauth-setup",
-                          "data-engineering/administration/management/cluster-admin-settings/copilot-settings"
+                          "data-engineering/administration/management/cluster-admin-settings/copilot-settings",
+                          "data-engineering/administration/management/cluster-admin-settings/feature-management"
                         ]
                       },
 
