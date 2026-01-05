@@ -9,21 +9,21 @@ In Prophecy, the same outcomes are implemented using the [WindowFunction gem](/d
 
 ## Automated migration results
 
-When Import detects an Alteryx Running Total tool, it generates a WindowFunction gem configured to reproduce the cumulative calculation:
+When Import detects an Alteryx Running Total tool, it generates a WindowFunction gem that computes a sum for a selected column:
 
 - The selected value field is mapped to a `SUM` aggregation function.
-- Grouping fields are mapped to the **Partition by** configuration.
-- Row ordering is mapped to the **Order by** configuration.
+- Grouping fields map to the gem's **Partition by** configuration.
+- Row ordering maps to the gem's **Order by** configuration.
 
-The resulting column produces the same incremental behavior as the Running Total tool.
+The resulting column produces the same behavior as the Running Total tool.
 
 ## Manually replicate in Prophecy
 
 To reproduce Running Total behavior manually:
 
 1. Add a **WindowFunction** gem to the canvas.
-2. Configure **Partition by** fields if the running total should reset by group.
-3. Configure **Order by** fields (typically the same as Partition by) to define the row sequence.
+2. Configure **Partition by** column(s) if the running total should reset by group.
+3. Configure **Order by** column(s) (may be the same as column chosen for **Partition by**) to define the row sequence.
 4. Configure a target column and use a `SUM` expression for the running total.
 
 This produces a running calculation that updates row by row according to the specified ordering.
@@ -34,15 +34,15 @@ This produces a running calculation that updates row by row according to the spe
 
 Configure the tool by selecting:
 
-- Field for group by (optional)
-- Field for running total
+- Field for group by (optional).
+- Field for running total.
 
 ### In Prophecy (WindowFunction gem)
 
 Configure the WindowFunction gem by specifying:
 
-- **Partition by** columns (combine with Order by to mimic Alteryx group-by behavior)
-- **Order by** columns (use the same column as Partition by to mimic Alteryx group-by behavior)
+- **Partition by** columns (combine with **Order by** to mimic Alteryx group-by behavior)
+- **Order by** columns (use the same column as **Partition by** to mimic Alteryx group-by behavior)
 - **Window use**: running total target column with a `SUM` expression on the running-total field
 
 ## Output behavior
@@ -54,8 +54,8 @@ Results depend on row ordering; incorrect or missing ordering can change the out
 
 ## Known caveats
 
-- **Row order matters:** Running totals require a deterministic sort order. If the order is ambiguous, results may differ.
-- **Partitioning resets totals:** Partition-by fields restart the cumulative calculation, matching Alteryx’s group-by behavior.
+- **Row order:** Running totals require a deterministic sort order. If the order is ambiguous, results may differ.
+- **Partitioning resets totals:** **Partition by** fields restart the cumulative calculation, matching Alteryx's group-by behavior.
 
 ## Example
 
@@ -71,7 +71,7 @@ Results depend on row ordering; incorrect or missing ordering can change the out
 
 ### Alteryx Running Total tool
 
-Goal: Compute a running sum of `amount`, resetting for each `record_id`, ordered by `event_date`.
+Goal: Compute a running sum of `amount`, resetting for each new `record_id`, ordered by `event_date`.
 
 - Field for group by: `record_id`
 - Field for running total: `amount`
@@ -94,4 +94,4 @@ Configure a **WindowFunction** gem with:
 - Order by: `event_date`
 - Window use: add Target column `RunTot_amount`. Configure Expression as function > sum with column `amount` as parameter.
 
-The output matches the Running Total tool’s cumulative behavior.
+The output matches the Running Total tool's cumulative behavior.

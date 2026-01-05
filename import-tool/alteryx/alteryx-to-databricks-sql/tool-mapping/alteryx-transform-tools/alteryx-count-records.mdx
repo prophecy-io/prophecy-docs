@@ -1,0 +1,76 @@
+---
+title: Alteryx Count Records tool > Prophecy CountRecords gem
+description: Mapping between Alteryx's Count Records tool and Prophecy's CountRecords gem
+---
+
+The Alteryx [CountRecords tool](https://help.alteryx.com/current/en/designer/tools/transform/count-records-tool.html#count-records-tool) computes a row count.
+
+In Prophecy, the same outcomes are implemented using the [CountRecords gem](/data-analysis/gems/transform/count-records).
+
+## Automated migration results
+
+When Import detects an Alteryx Count Records tool, it generates a [Reformat gem](/data-analysis/gems/prepare/reformat) that computes a row count using an expression such as `count(1)`.
+
+This expression counts all input rows and preserves the semantics of the Alteryx Count Records tool.
+
+The resulting dataset contains a single row with the total record count.
+
+## Manually replicate in Prophecy
+
+To reproduce Count Records behavior manually:
+
+1. Add a **CountRecords** gem to the canvas.
+1. Connect the gem to the dataset whose rows should be counted.
+1. Select **Count total number of records**.
+
+This produces a single-row output containing the total number of records in the input dataset.
+
+## Configuration options
+
+### In Alteryx (Count Records tool)
+
+The Count Records tool requires no configuration. It always returns a global count of input rows.
+
+### In Prophecy (CountRecords gem)
+
+Select **Count total number of records**, which computes a global row count for the connected dataset.
+
+## Output behavior
+
+Both Alteryx’s Count Records tool and Prophecy’s CountRecords gem produce:
+
+- A single output row
+- A single column containing the total number of input records
+
+The count reflects the number of rows entering the tool, regardless of column values or nulls.
+
+## Known caveats
+
+Import may represent Count Records logic using a **Reformat** gem with an expression like `count(1)` rather than the CountRecords gem itself.Using a constant expression ensures that the count does not depend on any input column and mirrors Alteryx’s row-count semantics.
+
+
+## Example
+
+### Input dataset
+
+| record_id | event_date | amount |
+| --------- | ---------- | ------ |
+| 1         | 2025-01-01 | 10     |
+| 1         | 2025-01-05 | 5      |
+| 1         | 2025-01-10 | 7      |
+| 2         | 2025-01-03 | 4      |
+| 2         | 2025-01-07 | 6      |
+
+### Alteryx Count Records tool
+
+The tool counts all incoming rows.
+
+### Resulting output
+
+| count |
+| ----- |
+| 5     |
+
+### Prophecy equivalent (CountRecords gem)
+
+The CountRecords gem produces the same single-row output with a total count of `5`.
