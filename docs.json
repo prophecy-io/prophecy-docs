@@ -195,7 +195,13 @@
                           "data-analysis/environment/connections/tableau"
                         ]
                       },
-                      "data-analysis/environment/secrets/secrets"
+                      {
+                        "group": "Secrets",
+                        "pages": [
+                          "data-analysis/environment/secrets/secrets",
+                          "data-analysis/environment/secrets/databricks-secrets"
+                        ]
+                      }
                     ]
                   },
                   {
