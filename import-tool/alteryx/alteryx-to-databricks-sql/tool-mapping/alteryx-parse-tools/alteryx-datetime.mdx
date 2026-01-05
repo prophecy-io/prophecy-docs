@@ -52,9 +52,9 @@ Configure:
 
 Common patterns include:
 
-- For timestamp/date to formatted string, select **`date_format`** and configure the desired output format: `DATE_FORMAT(<timestamp_or_date_expr>, '<output_pattern>')`
+- For timestamp/date to formatted string, select `date_format` and configure the desired output format: `DATE_FORMAT(<timestamp_or_date_expr>, '<output_pattern>')`
 
-- For string to timestamp, select **`to_timestamp`** and provide the input column and its incoming format: `TO_TIMESTAMP(<string_col>, '<input_pattern>')`
+- For string to timestamp, select `to_timestamp` and provide the input column and its incoming format: `TO_TIMESTAMP(<string_col>, '<input_pattern>')`
 
 - For string to formatted string (via timestamp): nest the functions by first parsing the string, then formatting it: `DATE_FORMAT(TO_TIMESTAMP(<string_col>, '<input_pattern>'), '<output_pattern>')`.
 

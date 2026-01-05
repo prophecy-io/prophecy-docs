@@ -30,20 +30,19 @@ For manually-created workflows, Prophecy recommends using the **XMLParse** gem:
 
 ### In Alteryx (XML Parse tool)
 
-- Select field containing XML-formatted string.
-- Choose to keep or drop the original XML column.
-- Choose XML element to parse: Root, Auto Detect Child, Specific Child Name
-- Choose additional options:
-  - Return Child Values
-  - Return Outer XML
-  - Ignore XML Errors and Continue
+1. Select field containing XML-formatted string.
+1. Choose to keep or drop the original XML column.
+1. Choose XML element to parse: Root, Auto Detect Child, Specific Child Name
+1. Choose additional options:
+
+	- Return Child Values
+	- Return Outer XML
+	- Ignore XML Errors and Continue
 
 ### In Prophecy (XMLParse gem)
 
-Configure the gem with:
-
-- Input column containing XML text
-- Select parsing method:
+1. Select input column containing XML text
+1. Select parsing method:
   - **Parse from sample record**. Prophecy uses the schema from the sample record you provide.
   - **Parse from schema**. Prophecy uses the schema you provide.
 
