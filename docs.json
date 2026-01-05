@@ -141,7 +141,8 @@
                         "pages": [
                           "data-analysis/development/tests/test-comparison",
                           "data-analysis/development/tests/table-tests",
-                          "data-analysis/development/tests/project-tests"
+                          "data-analysis/development/tests/project-tests",
+                          "data-analysis/development/tests/unit-tests"
                         ]
                       },
                       {
