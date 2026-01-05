@@ -1,0 +1,85 @@
+---
+title: Alteryx Imputation tool > Prophecy Reformat + Join gems
+description: Mapping between Alteryx’s Imputation tool and equivalent Prophecy gems
+---
+
+The [Alteryx Imputation tool](https://help.alteryx.com/current/en/designer/tools/preparation/imputation-tool.html) replaces missing or special values with fixed values or aggregates such as mean, median, or mode.
+
+Prophecy accomplishes this using a combination of [Reformat gems](/data-analysis/gems/prepare/reformat) and [Join gems](/data-analysis/gems/join-split/join).
+
+## Automated migration results
+
+When Import encounters an Alteryx Imputation tool, it reconstructs imputation logic using a combination of Prophecy gems:
+
+- For _simple replacements_ (such as replace null with `"Unknown"` or `0`), Prophecy generates a Reformat gem that contains the appropriate `CASE WHEN` expressions.
+- For _aggregate-based replacements_ (such as replace null with `mean`, `median`, or `mode`), Prophecy:
+  - Uses a Reformat gem that computes the required aggregate values (such as `mean(column)`).
+  - Joins the results back to the dataset.
+  - Uses a Reformat gem to perform the final replacement using a `CASE WHEN` expression.
+
+## Manually replicate in Prophecy
+
+1. To manually reproduce Alteryx’s imputation behavior in Prophecy:
+
+   1. **For simple replacements**
+
+      Add a Reformat gem with `CASE` expression along the lines of:
+      `CASE WHEN <column> IS NULL THEN <replacement> ELSE <column> END`.
+
+   2. **For aggregate-based imputations**
+      - Add an Aggregate gem to compute the required statistic (such as `avg`, `min`, or `max`).
+      - Join the Aggregate gem back to the main dataset using a **Join** gem with no join keys.
+      - Use a Reformat gem to replace null values with the computed aggregate, using a `CASE` expression along the lines of: `CASE WHEN <column> IS NULL THEN <aggregated_column> ELSE <column> END`.
+   3. Preview results in the Data Explorer to verify that imputed values are applied correctly.
+
+## Configuration options
+
+In Alteryx, configuration includes:
+
+1. Selecting columns to impute.
+2. Choosing the replacement rule (a fixed value, `average`, `median`, or `mode`).
+
+In Prophecy, configuration involves:
+
+- (If necessary) configuring the **Aggregate** gem with the appropriate metrics and using the **Join** gem to merge aggregate results with the main dataset.
+- Writing a `CASE WHEN` expression in the **Reformat** gem to perform null replacement either as a value or as the result of the aggregation.
+
+The overall configuration replicates Alteryx’s options, but uses SQL-native constructs.
+
+## Output behavior
+
+The Alteryx Imputation tool outputs a cleaned dataset with selected values replaced according to the user-defined rules. All operations occur inside the Designer engine or on an Alteryx Server.
+
+In Prophecy, the Reformat and Join gems generate SQL queries that perform imputation at execution time in the SQL Warehouse.
+
+## Known caveats
+
+- While Alteryx uses one tool for aggregate imputations, Prophecy adds additional gems to the pipeline.
+- Non-null replacements (such as replacing `"N/A"` with a value) must be written using conditional expressions.
+
+## Example
+
+### Alteryx Imputation tool example
+
+Goal: Replace null values in the `sales` column with the `mean` for the column.
+
+Steps:
+
+1. Add Imputation tool to canvas.
+2. Select the `sales` column.
+3. Select **Null(s)** for **Incoming value to replace**.
+4. Select **Average** for **Replace with value**.
+
+   Alteryx computes the mean internally and overwrites null entries during the Imputation step.
+
+### Prophecy equivalent (Reformat + Aggregate + Join)
+
+Goal: Replicate null-to-mean replacement.
+
+Steps:
+
+1. Add an **Aggregate** gem to the canvas and create a column that computes the mean of `sales`, such as `sales_avg`.
+1. Add a **Join** gem to the canvas of type **Join**.
+1. Connect the dataset and **Aggregate** gem to the **Join** gem.
+1. Add a **Reformat** gem and define a conditional expression for `sales` such that if `sales` is null, use `sales_avg`; otherwise, retain original value.
+1. Confirm output using the [Data Explorer](/data-analysis/development/runs/data-explorer/data-profile).
