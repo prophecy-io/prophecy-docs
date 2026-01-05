@@ -1,0 +1,133 @@
+---
+title: Alteryx Weighted Average tool > Prophecy Reformat and Aggregate gems
+description: Mapping between Alteryx’s Weighted Average tool and equivalent implementations in Prophecy (Databricks SQL)
+---
+
+The [Alteryx Weighted Average tool](https://help.alteryx.com/current/en/designer/tools/transform/weighted-average-tool.html) computes a weighted average by multiplying a numeric value field by a numeric weight field, summing the results, and dividing by the sum of the weights. The result is written to a new output field (for example, `WeightedAverage`). Optionally, the calculation can be performed per group by selecting one or more grouping fields.
+
+In Prophecy, the same logic is implemented using either a [Reformat gem](/data-analysis/gems/prepare/reformat) (when no grouping is present) or an [Aggregate gem](/data-analysis/gems/transform/aggregate) (when grouping is present).
+
+## Automated migration results
+
+When Import detects an Alteryx Weighted Average tool, it applies one of two patterns:
+
+- **No grouping fields configured**: Import generates a Reformat gem that computes a single weighted average across the entire dataset.
+- **Grouping fields configured**: Import generates an Aggregate gem with the selected grouping fields under **Group by**, and a computed weighted-average expression.
+
+## Manually replicate in Prophecy
+
+### No grouping (overall weighted average)
+
+1. Add a Reformat gem.
+2. Add a new target column (for example, `WeightedAverage`).
+3. Use a guarded weighted-average expression:
+
+```sql
+CASE
+  WHEN sum(Units) = 0 THEN NULL
+  ELSE sum(UnitCost * Units) / sum(Units)
+END
+```
+
+### With grouping (weighted average per group)
+
+1. Add an Aggregate gem.
+2. Add the grouping field(s) under **Group by**.
+3. Add a computed output column (for example, `WeightedAverage`) using the same expression:
+
+```sql
+CASE
+  WHEN sum(Units) = 0 THEN NULL
+  ELSE sum(UnitCost * Units) / sum(Units)
+END
+```
+
+## Configuration options
+
+### Alteryx tool
+
+- Select value field: Numeric field to be averaged (for example, `UnitCost`).
+- Select weight field: Numeric field used as the weight (for example, `Units`).
+- Select output field name: Name of the new weighted-average output field (for example, `WeightedAverage`).
+- Select Grouping fields (optional): One or more fields used to compute a weighted average per group.
+
+### Prophecy gems
+
+#### Reformat gem (no grouping)
+
+- Create a new target column for the weighted average.
+- Define an expression of the form `sum(value * weight) / sum(weight)`.
+- Include a divide-by-zero guard (`CASE WHEN sum(weight) = 0 THEN NULL`) to match expected behavior.
+
+#### Aggregate gem (grouping enabled)
+
+- Add grouping fields under Group by.
+- Define a computed output column using the same guarded weighted-average expression.
+
+## Output behavior
+
+Alteryx produces a new output field containing the weighted average, either as a single value (no grouping) or one value per group.
+
+Prophecy produces:
+
+- A single-row result when implemented with a Reformat gem (no grouping), or
+- One row per group when implemented with an Aggregate gem.
+
+In both cases, the weighted average is computed as the sum of `(value × weight)` divided by the sum of `weight`.
+
+## Known caveats
+
+- **Zero or null weights**: If the sum of weights is zero, the expression must guard against division by zero. Returning `NULL` matches the typical “no meaningful weighted average” case.
+- **Null handling**: Behavior depends on how null values are treated in the expression. If needed, normalize or filter inputs upstream to match Alteryx expectations.
+- **Numeric types**: If value and weight fields are integers, consider casting to a decimal type to avoid unintended integer division.
+
+## Example
+
+### Alteryx Weighted Average example
+
+**Goal:** Compute a weighted average of unit cost using units as weights, optionally producing one result per region.
+
+- **Input data:** contains `UnitCost`, `Units`, and optionally `Region`
+- **Value field:** `UnitCost`
+- **Weight field:** `Units`
+- **Output field name:** `WeightedAverage`
+- **Behavior:**
+  - Multiply each `UnitCost` by its corresponding `Units`
+  - Sum the weighted values
+  - Divide by the sum of `Units`
+  - If the sum of `Units` is zero, return `NULL`
+  - If a grouping field (`Region`) is selected, compute the weighted average separately for each region
+
+### Prophecy equivalent (Reformat or Aggregate)
+
+#### No grouping (Reformat)
+
+1. Connect the input dataset containing `UnitCost` and `Units`.
+2. Add a **Reformat** gem.
+3. Add `WeightedAverage` as a **Target Column**.
+4. Define the target column using the following expression:
+
+	```
+   CASE
+     WHEN sum(Units) = 0 THEN NULL
+     ELSE sum(UnitCost * Units) / sum(Units)
+   END
+	```
+
+   This expression reproduces Alteryx’s weighted-average calculation across the full dataset while guarding against division by zero.
+
+#### With grouping (Aggregate)
+
+1. Connect the input dataset containing `UnitCost`, `Units`, and `Region`.
+2. Add an **Aggregate** gem.
+3. Configure **Group by** to include `Region`.
+4. Add `WeightedAverage` as a computed output column using the same expression:
+
+	```
+	CASE
+    WHEN sum(Units) = 0 THEN NULL
+    ELSE sum(UnitCost * Units) / sum(Units)
+	END
+	```
+
+This computes one weighted-average value per region, matching Alteryx’s grouped Weighted Average behavior.

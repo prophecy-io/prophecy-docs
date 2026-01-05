@@ -1,0 +1,108 @@
+---
+title: Alteryx Transpose tool > Prophecy Unpivot gem (Transpose gem deprecated)
+description: Mapping between Alteryx’s Transpose tool and Prophecy’s Unpivot gem (wide-to-long transformation in Databricks SQL)
+---
+
+The [Alteryx Transpose tool](https://help.alteryx.com/current/en/designer/tools/transform/transpose-tool.html) reshapes data from wide format to long format by converting selected Data Columns into two output columns—one holding the original column names and one holding their values—while preserving selected Key Columns as identifiers. In practice, this is the standard “columns to rows” operation: keep identifiers, stack a set of columns into `Name`/`Value`. :contentReference[oaicite:0]{index=0} */}
+
+In Prophecy, the equivalent operation is implemented by the [Unpivot gem](/data-analysis/gems/transform/unpivot). This functionality previously lived in Prophecy’s Transpose gem; that gem is still supported for existing pipelines, but Prophecy recommends using Unpivot going forward.
+
+## Automated migration results
+
+When Import detects an Alteryx Transpose tool, it generates a **Transpose** gem in the pipeline (even though Transpose is now functionally superseded by Unpivot). In other words:
+
+- Import may still emit the **Transpose** gem for compatibility with existing migration logic.
+- For new/hand-authored implementations, prefer the **Unpivot** gem (same conceptual configuration: key columns + data columns). :contentReference[oaicite:2]{index=2}
+
+## Manually replicate in Prophecy
+
+Use the **Unpivot** gem to reproduce Alteryx Transpose behavior.
+
+1. Add an **Unpivot** gem and connect your input dataset.
+2. Set **Key Columns** to the identifier fields you want preserved in every output row.
+3. Set **Data Columns** to the fields you want stacked into name/value pairs.
+4. (Optional) Enable **Use custom output column names** to rename the default `Name` and `Value` columns. :contentReference[oaicite:3]{index=3}
+
+## Configuration options
+
+### Alteryx tool
+
+Alteryx Transpose is configured by dividing fields into two sets:
+
+- **Key Columns**
+  - Columns that remain unchanged and are repeated for each transposed output row (identifiers). :contentReference[oaicite:4]{index=4}
+- **Data Columns**
+  - Columns that are converted into rows, producing two output columns commonly understood as “name” and “value.” :contentReference[oaicite:5]{index=5}
+
+Notes that affect outcomes:
+- Deselecting a field from **Data Columns** drops it from the output entirely. :contentReference[oaicite:6]{index=6}
+- If the selected data columns contain mixed types, the resulting value column may be coerced to a string type (a common gotcha in Transpose workflows). :contentReference[oaicite:7]{index=7}
+
+### Prophecy gems
+
+**Unpivot gem (preferred)**
+- **Key Columns**
+  - Preserved in output; functionally equivalent to Alteryx Key Columns. :contentReference[oaicite:8]{index=8}
+- **Data Columns**
+  - Unpivoted into two columns:
+    - Column-name column (default `Name`)
+    - Value column (default `Value`) :contentReference[oaicite:9]{index=9}
+- **Use custom output column names**
+  - Optionally rename `Name`/`Value` to domain-specific labels. :contentReference[oaicite:10]{index=10}
+
+**Transpose gem (deprecated name / legacy)**
+- Still documented and still runs in existing pipelines, but Prophecy recommends Unpivot for new implementations. :contentReference[oaicite:11]{index=11}
+
+## Output behavior
+
+Alteryx output:
+- All selected key columns are preserved.
+- The selected data columns are stacked into:
+  - a column containing the original field names (commonly understood as `Name`)
+  - a column containing the corresponding field values (commonly understood as `Value`). :contentReference[oaicite:12]{index=12}
+
+Prophecy output (Unpivot):
+- Preserves all key columns.
+- Produces a long-format table with:
+  - key columns
+  - `Name` (or a custom name) containing the original column names
+  - `Value` (or a custom name) containing the values
+- The output has more rows than the input (roughly: `input_rows × number_of_data_columns`, per group of key columns). :contentReference[oaicite:13]{index=13}
+
+## Known caveats
+
+- **Deprecated gem naming in migrated pipelines**: Import may generate a Transpose gem even though Unpivot is the current recommended gem. This is expected in migrated pipelines; for new work, use Unpivot. :contentReference[oaicite:14]{index=14}
+- **Mixed data types in the Value column**: If your chosen data columns mix numeric and string fields, the output `Value` column may be coerced to a string (and downstream numeric operations will require casting). :contentReference[oaicite:15]{index=15}
+- **Column selection is the transformation**: Transpose/Unpivot is very sensitive to which fields are treated as keys vs data. A “small” selection change materially changes row counts and meaning, so it’s worth calling this out explicitly in docs and reviews. :contentReference[oaicite:16]{index=16}
+
+## Example
+
+### Alteryx Transpose example
+
+**Goal:** Convert quarterly revenue columns into a long format so each row represents one region and one quarter, while preserving product identifiers.
+
+- **Input data:** contains `ProductID`, `ProductName`, `Region`, `Q1_Revenue`, `Q2_Revenue`, `Q3_Revenue`, `Q4_Revenue`
+- **Key columns:** `ProductID`, `ProductName`, `Region`
+- **Data columns:** `Q1_Revenue`, `Q2_Revenue`, `Q3_Revenue`, `Q4_Revenue`
+- **Behavior:**
+  - Preserve the key columns in every output row
+  - Output a column containing the original quarter name (`Q1_Revenue`, `Q2_Revenue`, etc.)
+  - Output a column containing the corresponding revenue value
+
+This produces one row per `(ProductID, ProductName, Region, Quarter)` combination.
+
+### Prophecy equivalent (Unpivot)
+
+1. Connect an input dataset containing:
+   - `ProductID`, `ProductName`, `Region`
+   - `Q1_Revenue`, `Q2_Revenue`, `Q3_Revenue`, `Q4_Revenue`
+2. Add an **Unpivot** gem.
+3. Configure **Key Columns** as:
+   - `ProductID`, `ProductName`, `Region`
+4. Configure **Data Columns** as:
+   - `Q1_Revenue`, `Q2_Revenue`, `Q3_Revenue`, `Q4_Revenue`
+5. (Optional) Enable **Use custom output column names** and rename:
+   - `Name` → `Quarter`
+   - `Value` → `Revenue`
+
+This reproduces Alteryx Transpose behavior by converting quarter-based columns into rows while preserving the identifying product and region fields.
