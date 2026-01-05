@@ -1,0 +1,150 @@
+---
+title: Migration overview
+description: A tutorial on using Ab Initio Transpiler
+---
+
+Transpiler in Prophecy allows large enterprises to easily upgrade their data integration stack from Ab Initio to modern cloud solutions that can run on data platforms like Databricks. Transpiler converts your existing workflows into low-code visuals and highly optimized open-source Spark code with an accuracy close to **80%**. This automation significantly reduces manual effort and costs associated with the migration process for large enterprises.
+
+We'll show you step-by-step how to use Transpiler for converting a simple graph/workflow that was designed in Ab Initio. By the end of this training, you'll have a basic understanding of Transpiler and its capabilities. Let's dig in!
+
+#### You will need
+
+- Ab Initio workflows
+- A [Databricks Fabric (Prophecy Managed)](data-engineering/fabrics/spark-provider/prophecy-managed)
+- GitHub Account (recommended)
+
+## 1. Export Ab Initio Files
+
+To use Transpiler for migrating a graph from Ab Initio, first you will need to have a pre-existing graph created in Ab Initio. Then you will have to export the graph artifacts from Ab Initio. After exporting, look for the below-mentioned files, as Transpiler will use them:
+
+- ** Mp files ** : Mp (meta programming) files contain information about the graph like components used in the graph, number of parallel instances and resource specifications for components in a graph as shown below:
+
+  ![Mp File](/import-tool/abinitio/img/mp_file.png)
+
+- ** Pset files ** : Pset (parameter set) files store and manage parameter values for the graph, thus allowing you to run the same graph differently by passing dynamic values at the run-time as shown below:
+
+  ![Pset File](/import-tool/abinitio/img/pset_file.png)
+
+- ** Xfr files ** : Xfr (transform) files contain transformation logic for the graph components. Example of a join component with the transform logic has been shown below:
+
+  ![Xfr File](/import-tool/abinitio/img/xfr_file.png)
+
+- ** Dml files **: Dml (data manipulation language) files are used to define the structure of the data records so that data is processed correctly inside the graph component. Example of a component is shown below that defines the schema of a table that will be read and processed.
+
+  ![Dml File](/import-tool/abinitio/img/dml_file.png)
+
+As you have access to all the Ab Initio files now, compress them in a zip folder (recommended) and let's try to use the same in Transpiler.
+
+## 2. Import Bundle
+
+To import a bundle into the Transpiler:
+
+1. Open the Transpiler interface from the left sidebar of Prophecy.
+1. Click **Import Bundle** to import a new bundle.
+
+### 2.1 Select Source Type
+
+![Source page](/import-tool/abinitio/img/source_page.png)
+
+Source Type refers to the Legacy ETL product from which we want to import the files into Prophecy. As you are using Ab Initio, select the same and click on the Next button.
+
+### 2.2 Enter Bundle Details
+
+![Package details](/import-tool/abinitio/img/package_details.png)
+
+Bundle in Transpiler is like a project where all the details like Ab Initio files, pipelines etc. will be stored for future reference. Creating a bundle is pretty straightforward. First, give a (1) name to your bundle. Select the (2) language in which you want the Transpiler to generate the open-source code for you. Then, select the (3) team to whom you want to have access to the bundle. More teams can be added later. Choose the (4) project where the Prophecy graph will be uploaded and (5) Git branch where all the open-source code will be stored. Finally, you have to select the (6) Fabric where the graph will run. We will be selecting Databricks fabric for now.
+
+### 2.3 Upload Artifacts
+
+![Upload artifacts](/import-tool/abinitio/img/upload_artifact.png)
+
+Upload the Ab Initio zip file that you want to transpile and click on the Next button.
+
+![Entity page](/import-tool/abinitio/img/entity_page.png)
+
+Now, you have to add the (1) mp file that you want to transpile. The Ab Initio graph will be converted to a [pipeline](/data-engineering/development/pipelines/pipelines) in Prophecy.
+
+![Add pipeline](/import-tool/abinitio/img/add_pipeline.png)
+
+(1) Provide a readable name to the pipeline. Also, add relevant (2) pset files to the mp file, so that Transpiler can read the parameters and generate the pipeline with high accuracy.
+
+** Note **: Configuration pset is required for transpiling generic Ab Initio frameworks. Stay tuned for more information on configuration psets coming soon.
+
+## 3. Validate and Transpile
+
+![Validate section](/import-tool/abinitio/img/validate.png)
+
+It is always advisable to (1) validate the uploaded files before running transpilation so that you know beforehand if any important files are missing. For higher Transpiler coverage, please make sure to upload the correct mp, pset, xfr and dml files before starting the transpilation process.
+
+![Validate warning](/import-tool/abinitio/img/validate_warning.png)
+
+Please feel free to ignore the warning message during validation if you are sure that all the Ab Initio files for the graph have been properly uploaded. Close the validation summary pop-up and click on the Transpile button after you are sure from your side.
+
+![Transpiler progress](/import-tool/abinitio/img/progress.png)
+
+Here, you can track the progress of the transpilation process. The total time taken to transpile depends on the complexity of the graph that you have uploaded. If the graph is simple, transpilation will take a few seconds but complex graphs can take several minutes.
+
+![Transpile complete](/import-tool/abinitio/img/transpile_complete.png)
+
+After the transpilation is complete, click on the Import button.
+
+![Resolve conflicts](/import-tool/abinitio/img/resolve_conflicts.png)
+
+The purpose of the above screen is to help you resolve conflicts if any components already exist in the project. Deselect the entities that are not required. As you are using a new project, click on the Continue button.
+
+## 4. Bundle Overview
+
+![Package overview](/import-tool/abinitio/img/package_overview.png)
+
+After the bundle is imported, you will be redirected to the overview section. Here, you will see the overall summary of the transpilation process. (1) shows the pipelines that were created in Prophecy. (2) shows the pipeline components - the individual transformation steps that we call "Components" - with a status column. In case the Transpiler was not able to read any Ab Initio component, the same would be displayed here with Failed status. (3) shows the overall transpiler coverage %.
+
+![Pipeline](/import-tool/abinitio/img/open_pipeline.png)
+
+Now click on the (1) icon to check the pipeline that has been transpiled by the Transpiler. Based on historical results, Prophecy Transpiler can convert the Ab Initio graphs correctly up to 80%.
+
+![Pipeline canvas](/import-tool/abinitio/img/pipeline_canvas.png)
+
+With the magic of Transpiler, the Ab Initio graph has been converted into a simple visual graph - a Pipeline. All Ab Initio components and functions will be mapped to equivalent Prophecy entities.
+
+![Pipeline code](/import-tool/abinitio/img/pipeline_code.png)
+
+Prophecy has also generated optimal high-performance open source Spark code for you.
+
+## 5. Run Pipeline
+
+![Pipeline fabric](/import-tool/abinitio/img/pipeline_fabric.png)
+
+To run the pipeline, let's first connect to a (1) fabric where the pipeline will be executed using the open-source Spark code.
+
+After the fabric is connected, let's change the file path of all the data components as Prophecy modernizes your legacy solutions to cloud alternatives. For this example, I will be reading files from Databricks, but you can connect any source of your choice.
+
+![Source filepath](/import-tool/abinitio/img/source_path.png)
+
+1. Click on the source component.
+1. Choose the file type from where you will read the data. This example reads from a CSV file stored in Databricks.
+1. Provide the file location that points to the correct file in Databricks.
+1. Click **Properties → Infer Schema** and verify whether the schema of the data is correct.
+1. Click on the **Preview → Load** to preview the data that is being read by the component. This helps you to crosscheck whether you are referring to the correct data table or not.
+1. If everything looks good, then go ahead and click on the Save button.
+
+Similarly, repeat the above steps for changing the file paths for all the source and target components in your pipeline.
+
+<Note>
+  A **Target** in Prophecy represents the data being written to a target storage location.
+</Note>
+
+![Run pipeline](/import-tool/abinitio/img/run_pipeline.png)
+
+Now run the pipeline by clicking on the **Run** button.
+
+![Interim data](/import-tool/abinitio/img/interim_data.png)
+
+After the pipeline runs successfully, you will be able to see the data at each stage by clicking the **interim** icon.
+
+## What's next?
+
+Great work! 🎉
+
+You've successfully migrated your first legacy graph to the cloud using Prophecy Transpiler in a few minutes without any manual help. Take a moment to appreciate your accomplishment 🥳.
+
+To continue learning and expanding your skills with Prophecy, explore other tutorials within our documentation, or apply your newfound knowledge to address real-world business challenges!
