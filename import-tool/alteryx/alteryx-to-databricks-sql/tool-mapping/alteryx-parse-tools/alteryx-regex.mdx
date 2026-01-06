@@ -1,6 +1,6 @@
 ---
 title: Alteryx RegEx Tool > Prophecy Regex Gem
-description: Mapping between Alteryx’s RegEx Tool and Prophecy’s Regex Gem
+description: Mapping between Alteryx's RegEx Tool and Prophecy's Regex Gem
 ---
 
 The Alteryx [RegEx tool](https://help.alteryx.com/current/en/designer/tools/parse/regex-tool.html) applies regular-expression logic to text fields in order to detect, extract, split, or transform string values. It supports four modes: Match, Parse, Replace, and Tokenize.
@@ -31,14 +31,12 @@ To reproduce Alteryx RegEx behavior manually:
 3. Specify regex pattern.
 4. Configure output columns (for Parse, Replace, or Tokenize) as needed.
 
-The Regex gem runs SQL-backed regex expressions under the hood but exposes configuration through a low-code interface.
-
 ## Configuration options
 
 ### In Alteryx (RegEx tool)
 
 1. Select column to parse.
-2. Enter or configure regular expression: Perl-compatible regex pattern, either entered manually or configured with menu.
+2. Enter or configure regular expression: Perl-compatible regex pattern.
 3. Choose whether or not to use case-insensitive matching.
 4. Select output method: Match, Parse, Replace, or Tokenize.
 5. For Replace, enter replacement string.
@@ -71,7 +69,7 @@ Goal: Extract phone-number components from a string like `"(212) 555-0199"`.
 ### Alteryx RegEx tool (Parse)
 
 1. Choose column with phone number.
-2. Enter **Regular Expression**: `(\d{3})[)\s-](\d{3})[-](\d{4})`.
+2. Enter or configure _regular expression_: `(\d{3})[)\s-](\d{3})[-](\d{4})`.
 3. Choose **Parse** for Output Method.
 
 Resulting fields: `AreaCode`, `Exchange`, `Number`
@@ -81,7 +79,8 @@ Resulting fields: `AreaCode`, `Exchange`, `Number`
 1. Select column to parse.
 2. Select **Parse** for **Output strategy**.
 3. Enter **Regex**: `(\d{3})[)\s-](\d{3})[-](\d{4})`
-- **Configured outputs**:
+
+Outputs:
 
 | New column name | Type | Regex Expression   |
 | ------------- | ----------- | ------ |

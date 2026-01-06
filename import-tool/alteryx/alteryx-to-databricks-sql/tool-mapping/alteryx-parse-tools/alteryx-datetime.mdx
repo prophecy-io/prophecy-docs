@@ -3,27 +3,27 @@ title: Alteryx DateTime tool > Prophecy Reformat gem
 description: Mapping between Alteryx’s DateTime tool and Prophecy date/time formatting in the Reformat gem
 ---
 
-The Alteryx [DateTime tool](https://help.alteryx.com/current/en/designer/tools/parse/datetime-tool.html) transforms date-time data to and from a variety of formats, including both expression-friendly and human-readable strings.
+The Alteryx [DateTime tool](https://help.alteryx.com/current/en/designer/tools/parse/datetime-tool.html) handles string to date-time and date-time to string conversions.
 
-In Prophecy, the same outcomes are implemented in a [Reformat gem](/data-analysis/gems/prepare/reformat) using `TO_TIMESTAMP` and `DATE_FORMAT`.
+Prophecy implements this functinality in a [Reformat gem](/data-analysis/gems/prepare/reformat) using the functions [`to_date`](https://docs.databricks.com/aws/en/sql/language-manual/functions/to_date), [`to_timestamp`](https://docs.databricks.com/aws/en/sql/language-manual/functions/to_timestamp) or [`date_format`](https://docs.databricks.com/aws/en/sql/language-manual/functions/date_format).
 
 ## Automated migration results
 
 When Import detects an Alteryx DateTime tool:
 
-- Prophecy adds an initial Reformat gem that attempts multiple common date-time patterns using `CASE … TRY_TO_TIMESTAMP`. This safely converts mixed date and timestamp values into a single timestamp before further transformations.
+- Prophecy adds an initial Reformat gem that attempts multiple common date-time patterns using `case … try_to_timestamp`. This safely converts mixed date and timestamp values into a single timestamp before further transformations.
 - In a subsequent Reformat gem, Prophecy either
-  - uses [`date_format`](https://docs.databricks.com/aws/en/sql/language-manual/functions/date_format) to format date or timestamp values as strings, or
-  - uses [`to_timestamp`](https://docs.databricks.com/aws/en/sql/language-manual/functions/to_timestamp) (optionally followed by `date_format`) to convert string values into formatted date/time values.
+  - Uses `date_format` to format date or timestamp values as strings, or
+  - Uses `to_timestamp` to parse string values into `timestamp` values.
 
 ## Manually replicate in Prophecy
 
 Use a **Reformat** gem to create or overwrite a target column.
 
-1. If your input strings use mixed date/time formats, normalize them to timestamps before applying formatting.
+1. If your input strings use mixed date-time formats, normalize them to timestamps before applying formatting.
 1. Add a **Reformat** gem to the canvas.
 1. Add a **target column** (or select an existing column to overwrite).
-1. In the expression builder, select an appropriate date/time function and configure it.
+1. In the expression builder, select an appropriate date-time function and configure it.
 
 ## Configuration options
 
@@ -48,22 +48,24 @@ Configure:
 
 1. Connect the dataset with timestamps/strings to a **Reformat** gem.
 1. In the Reformat gem, pick (or add) the **target column** you want to create/overwrite.
-1. In the expression builder, select an appropriate date/time function and configure it.
+1. In the expression builder, select an appropriate date-time function and configure it.
 
 Common patterns include:
 
-- For timestamp/date to formatted string, select `date_format` and configure the desired output format: `DATE_FORMAT(<timestamp_or_date_expr>, '<output_pattern>')`
+- For timestamp/date to formatted string, use `date_format` and configure the desired output format.
 
-- For string to timestamp, select `to_timestamp` and provide the input column and its incoming format: `TO_TIMESTAMP(<string_col>, '<input_pattern>')`
+- For string to date, use `to_date` and configure format for input string (such as `MMMM dd, yyyy`)
 
-- For string to formatted string (via timestamp): nest the functions by first parsing the string, then formatting it: `DATE_FORMAT(TO_TIMESTAMP(<string_col>, '<input_pattern>'), '<output_pattern>')`.
+- For string to timestamp, use `to_timestamp` and configure format for input string (such as `MMMM dd, yyyy`)
 
 ## Output behavior
 
-- Alteryx can output either a string representation of the date/time or a date/time value, depending on the selected operation.
+- Alteryx can output either a string representation of the date-time or a date-time value, depending on the selected operation.
 - Prophecy outputs whatever type your expression returns:
-  - `TO_TIMESTAMP(...)` returns a timestamp type.
-  - `DATE_FORMAT(...)` returns a string.
+
+  - `date_format(...)` returns a string.
+  - `to_timestamp(...)` returns a timestamp.
+  - `to_date` returns a date.
 
 ## Known caveats
 
@@ -72,33 +74,17 @@ Common patterns include:
 
 ## Example
 
-### Alteryx: String to Date/Time format
+Goal: Convert a string column called `dob` stored as `"December 16, 2025"` into a date-time value.
 
-Goal: Convert `DOB` stored as `"December 16, 2025"` into a date/time value and (optionally) standardize the output.
+### Alteryx: string to date-time format
 
 - Operation: **String to Date/Time format**
-- Field: `DOB`
+- Field: `dob`
 - Incoming format: `MMMM dd, yyyy`
 - New column: `dob_ts`
 
-### Prophecy equivalent: parse + format in a Reformat gem
+### Prophecy equivalent: Reformat gem
 
-Goal: Create a standardized string output like `2025-12-16` from the same `DOB` input.
+Goal: Create a `date` format like `2025-12-16` from the same `DOB` input.
 
-In a **Reformat** gem, add a new column (for example `dob_std`) with this expression:
-
-```sql
-DATE_FORMAT(
-  TO_TIMESTAMP(DOB, 'MMMM dd, yyyy'),
-  'yyyy-MM-dd'
-)
-```
-
-Custom “human-readable” output example (day-of-week + full month name):
-
-```sql
-DATE_FORMAT(
-  TO_TIMESTAMP(DOB, 'MMMM dd, yyyy'),
-  'EEEE, MMMM dd, yyyy'
-)
-```
+In a **Reformat** gem, add a Target Column called `dob_ts` and define it using a `to_date` function with the column `dob` and the value `dd-mm-yyyy` as arguments.
