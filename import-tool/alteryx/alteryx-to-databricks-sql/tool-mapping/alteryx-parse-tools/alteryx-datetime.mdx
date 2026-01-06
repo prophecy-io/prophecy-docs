@@ -16,6 +16,10 @@ When Import detects an Alteryx DateTime tool:
   - Uses `date_format` to format date or timestamp values as strings, or
   - Uses `to_timestamp` to parse string values into `timestamp` values.
 
+<Note>
+Alteryx implicitly converts timestamps to strings as needed in downstream tools. In some cases, Prophecy converts `timestamp` values back to strings to accomodate this behavior.
+</Note>
+
 ## Manually replicate in Prophecy
 
 Use a **Reformat** gem to create or overwrite a target column.
@@ -47,16 +51,16 @@ Configure:
 ### In Prophecy (Reformat gem)
 
 1. Connect the dataset with timestamps/strings to a **Reformat** gem.
-1. In the Reformat gem, pick (or add) the **target column** you want to create/overwrite.
+1. In the Reformat gem, pick (or add) the **Target Column** you want to create or overwrite.
 1. In the expression builder, select an appropriate date-time function and configure it.
 
 Common patterns include:
 
 - For timestamp/date to formatted string, use `date_format` and configure the desired output format.
 
-- For string to date, use `to_date` and configure format for input string (such as `MMMM dd, yyyy`)
+- For string to date, use `to_date` and configure format for the input string (such as `MMMM dd, yyyy`)
 
-- For string to timestamp, use `to_timestamp` and configure format for input string (such as `MMMM dd, yyyy`)
+- For string to timestamp, use `to_timestamp` and configure format for the input string (such as `MMMM dd, yyyy`)
 
 ## Output behavior
 
