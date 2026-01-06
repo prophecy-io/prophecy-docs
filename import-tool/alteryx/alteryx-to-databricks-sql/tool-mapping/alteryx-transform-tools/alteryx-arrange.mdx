@@ -7,17 +7,16 @@ Alteryx's [Arrange tool](https://help.alteryx.com/current/en/designer/tools/tran
 
 Prophecy implements this functionality using multiple [Reformat gems](/data-analysis/gems/prepare/reformat).
 
-
 Sample input:
 
-| RecordID | start_date | end_date   | cancel_date | user  |
+| recordid | start_date | end_date   | cancel_date | user_name  |
 | -------: | ---------- | ---------- | ----------- | ----- |
 |        1 | 10/14/2025 | 11/14/2025 | 12/14/2025  | Amy |
 |        2 | 10/08/2025 | 11/08/2025 | 12/08/2025  | Walter |
 
 Sample output:
 
-| Description | Date        | RecordID | user  |
+| Description | Date        | recordid | user_name  |
 | ----------- | ---------- | -------- | ----- |
 | Start date  | 10/14/2025 | 1        | Amy |
 | End date    | 11/14/2025 | 1        | Amy |
@@ -31,9 +30,9 @@ Sample output:
 
 When Import detects an Alteryx Arrange tool, it generates a sequence of Reformat gems to reproduce row-expansion behavior:
 
-- An initial Reformat gem creates an array of labeled row objects using `array` and `named_struct`. Each struct represents one output row derived from the original input row.
+- An initial Reformat gem creates an array of labeled row objects using `array` and `named_struct`. Each `struct` represents one output row derived from the original input row.
 
-- A second Reformat gem applies `explode` to the array, converting each struct into its own output row.
+- A second Reformat gem applies `explode` to the array, converting each `struct` into its own output row.
 
 - A final Reformat gem extracts fields from the exploded struct into standard output columns.
 
@@ -44,7 +43,7 @@ This approach mirrors the Arrange tool's “columns to rows” behavior using SQ
 To reproduce Arrange behavior manually:
 
 1. Add a **Reformat** gem to construct an array of row objects.
-2. Add a second **Reformat** gem that applies `EXPLODE` to that array.
+2. Add a second **Reformat** gem that applies `explode` to that array.
 3. Add a final **Reformat** gem to select fields from the exploded struct as output columns.
 
 This sequence converts multiple input columns into multiple output rows while preserving row-level context.
@@ -53,40 +52,38 @@ This sequence converts multiple input columns into multiple output rows while pr
 
 Configure the tool by:
 
-- Selecting the input fields to arrange
-- Defining how fields are grouped or labeled
-- Specifying whether other fields are carried through unchanged
+- Selecting the input fields to arrange.
+- Defining how fields are grouped or labeled.
+- Specifying whether other fields are carried through unchanged.
 
 The output is a row-expanded dataset where each arranged field produces a new row.
 
 ### In Prophecy (Reformat gems)
 
-Configuration is expressed through column expressions:
-
-- **Construct row objects** using `array` and `named_struct`
-- **Expand rows** using `explode`
-- **Extract fields** from the exploded struct into final columns
+- Add a Reformat gem to construct row objects using `array` and `named_struct`.
+- Connect a second Reformat gem to expand rows using `explode`.
+- Connect a third Reformat gem to extract fields from the exploded `struct` into final columns.
 
 Example construction pattern:
 
 ```sql
-ARRAY(
-  NAMED_STRUCT('x', CAST(X1 AS string), 'Description', 'Start'),
-  NAMED_STRUCT('x', CAST(X2 AS string), 'Description', 'End')
+array(
+  named_struct('x', cast(x1 as string), 'description', 'start'),
+  named_struct('x', cast(x2 as string), 'description', 'end')
 )
 ```
 
 Row expansion:
 
 ```sql
-EXPLODE(_consolidated_data_col)
+explode(_consolidated_data_col)
 ```
 
 Field extraction:
 
 ```
-description = _exploded_data_col.Description
-x           = _exploded_data_col.X
+description = _exploded_data_col.description
+x           = _exploded_data_col.x
 ```
 
 ## Output behavior
@@ -104,24 +101,44 @@ Row counts increase according to the number of arranged fields.
 
 ## Example
 
-### Input dataset (before Arrange)
+Goal: produce a dataset where each input row generates multiple output rows.
+
+### Input dataset
 
 Assume the input dataset contains one row per record, with multiple date fields stored in separate columns:
 
+{/* vale off */}
 | record_id | start_date | end_date   | cancel_date | user_name |
 | --------- | ---------- | ---------- | ----------- | --------- |
 | 1         | 10/14/2025 | 11/14/2025 | 12/14/2025  | Amy       |
 | 2         | 10/08/2025 | 11/08/2025 | 12/08/2025  | Priya     |
+{/* vale on */}
 
 ### Alteryx Arrange tool
 
-Goal: Convert the three date columns (`start_date`, `end_date`, `cancel_date`) into rows, with a descriptive label indicating the source of each date, while carrying through `record_id` and `user_name`.
+1. Select `record_id` and `user_name` as key fields.
+1. Configure output fields as follows:
+  - Column headers: `Description`, `Date`
+  - Row 1: Description: `Start Date`; Date: select `start_date`.
+  - Row 2: Description: `End Date`; Date: select `end_date`.
+  - Row 3: Description: `Cancel Date`; Date: select `cancel_date`.
 
-#### Resulting output (after Arrange)
+### Prophecy equivalent
 
-The Arrange tool produces a “long” dataset where each input row generates multiple output rows:
+1. Add a Reformat gem with a target column called `_consolidated_date` configured with an `array` function, and add three `named_struct` funtions as arguments, each configured with:
+  - One of the date columns, such as `start_date`.
+  - The following values: `description` and the name of the column rendered as a string (such as `Start Date`).
+1. In the same Reformat gem, add `record_id` and `user_name` as target columns (to carry these columns forward).
+1. Add a second Reformat gem with a target called `_exploded_date_col` configured with an `explode` function using `_consolidated_date` as an argument. Carry `record_id` and `user_name` forward.
+1. Add a third Reformat gem with two target columns, `description` and `date` each configured with columns referencing structs: `_exploded_data_col.Description` and `_exploded_data_col.date`. Carry `record_id` and `user_name` forward.
+1. Finally, add one more Reformat gem that selects only `description`, `date`, `record_id`, and `user_name`.
 
-| description | date_value | record_id | user_name |
+### Resulting output
+
+Each set of operations produces a dataset where each input row generates multiple output rows:
+
+{/* vale off */}
+| description | date | record_id | user_name |
 | ----------- | ---------- | --------- | --------- |
 | Start date  | 10/14/2025 | 1         | Amy       |
 | End date    | 11/14/2025 | 1         | Amy       |
@@ -129,13 +146,4 @@ The Arrange tool produces a “long” dataset where each input row generates mu
 | Start date  | 10/08/2025 | 2         | Priya     |
 | End date    | 11/08/2025 | 2         | Priya     |
 | Cancel date | 12/08/2025 | 2         | Priya     |
-
-### Prophecy equivalent
-
-In Prophecy, this shape is produced by:
-
-1. Constructing labeled row values from the original columns
-2. Expanding those values into multiple rows
-3. Emitting standard output columns (`description`, `date_value`) alongside the carried-through fields
-
-The end result matches the Arrange tool’s behavior: multiple labeled rows per original record, suitable for filtering, aggregation, or reporting.
+{/* vale on */}
