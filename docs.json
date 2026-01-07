@@ -197,10 +197,7 @@
                       },
                       {
                         "group": "Secrets",
-                        "pages": [
-                          "data-analysis/environment/secrets/secrets",
-                          "data-analysis/environment/secrets/databricks-secrets"
-                        ]
+                        "pages": ["data-analysis/environment/secrets/secrets"]
                       }
                     ]
                   },
