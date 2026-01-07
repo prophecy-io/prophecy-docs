@@ -57,10 +57,29 @@ In the **Properties** tab, set the file properties. These vary based on the file
 
 </Steps>
 
-## Location
+## Source location
 
-| Parameter                   | Description                                                                                                        |
-| --------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| Format type                 | Type of file to read or write, such as `csv` or `json`.                                                            |
-| Select or create connection | Select an existing SharePoint connection or [create a new one](/data-analysis/environment/connections/sharepoint). |
-| Filepath                    | Path to the file in SharePoint. <br/>Example: `/sites/sitename/SharedDocuments/file.csv`                           |
+| Parameter                   | Description                                                                                                                           |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| Select or create connection | Select an existing SharePoint connection or [create a new one](/data-analysis/environment/connections/sharepoint).                    |
+| File Path                   | Path to the file in SharePoint. <br/><br/>Example: `/sites/sitename/SharedDocuments/file.csv`                                         |
+| Examine                     | Automatically determine the file format, compression type (if any), properties, and schema of the file to read.                       |
+| Format type                 | Type of file to read, such as `csv` or `json`.                                                                                        |
+| Compression                 | The compression type of the file to read. <br /><br />Supported types: `uncompressed`,`gzip`, `zstd`, `lz4`, `zlib`, `snappy`, `lzop` |
+
+## Target location
+
+| Parameter                   | Description                                                                                                                                   |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| Select or create connection | Select an existing SharePoint connection or [create a new one](/data-analysis/environment/connections/sharepoint).                            |
+| File Path                   | Path to the file in SharePoint. <br/><br/>Example: `/sites/sitename/SharedDocuments/file.csv`                                                 |
+| Examine                     | If an existing file exists at the target path, click **Examine** to automatically determine the file format and compression type (if any).    |
+| Encryption Algorithm        | The encryption algorithm to use when writing the file.<br /><br />Supported algorithms: `AES-192`, `AES-296`, `BlowFish`                      |
+| Format type                 | Type of file to write, such as `csv` or `json`.                                                                                               |
+| Compression                 | The compression type to use when writing the file.<br /><br />Supported types: `uncompressed`,`gzip`, `zstd`, `lz4`, `zlib`, `snappy`, `lzop` |
+
+<Note>
+  Configure encryption in a Target gem to encrypt an entire file. Use the
+  [DataEncoderDecoder](/data-analysis/gems/transform/encoder-decoder) gem to encrypt individual
+  columns.
+</Note>

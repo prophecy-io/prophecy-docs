@@ -1,6 +1,6 @@
 <Callout icon="/images/icon.png" color="#FFC107">
 
-  This setup is applicable to Express and Enterprise Editions only.
+This setup is applicable to Express and Enterprise Editions only.
 
 Google SSO is automatically configured for Free and Professional Editions.
 
@@ -15,6 +15,10 @@ First, create a new OAuth client in Google.
 1. Create an **OAuth client** in Google Cloud Console.
 1. Collect the **Client ID** and **Client Secret**.
 1. Add Prophecy's **Redirect URI** to the OAuth client.
+
+   ```
+   https://<your_prophecy_url>/api/oauth/googleCallback
+   ```
 
 Next, add these values in Prophecy.
 
