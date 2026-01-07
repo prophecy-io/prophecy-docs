@@ -71,12 +71,20 @@ Complexity scores are derived from workflow size, tool types used, and the numbe
 
 Tool complexity reflects both support coverage and behavioral difficulty. For example, tools like Summarize are rated medium due to multiple configuration paths, while tools such as Multi Row Formula are rated hard due to ordering and row-dependency semantics.
 
+- Filter: Easy
+- Formula: Easy
+- Join: Easy
+- Select: Easy
+- Summarize: Medium
+- Multi Row Formula: Hard
+- Text Input: Easy
+
 ## Summary
 
 To summarize, running the Analyze tool before migration helps you:
 
 - **Estimate effort**: Identify complex workflows and unsupported tools ahead of time.
 - **Plan fixes**: Know which components will require manual conversion or adjustments.
-- **Reduce migration risk**: Catch potential blockers before investing in a full transpilation run.
+- **Reduce migration risk**: Catch potential blockers before investing in a full migration.
 - **Prioritize work**: Focus on the highest-value or lowest-effort workflows first.
 - **Estimate post-Import effort**: Complexity scores and diagnostics help predict how much manual adjustment will be needed after Import.
