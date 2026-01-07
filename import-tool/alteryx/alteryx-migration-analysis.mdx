@@ -5,11 +5,14 @@ description: Understand the outcome of your Alteryx transpilation
 
 Prophecy’s Analyze tool helps you preview the outcome of your Alteryx-to-Spark or Alteryx-to-SQL migration before you actually run the transpilation. This allows you to identify any gaps in tool or function coverage, understand workflow complexity, and anticipate any required fixes.
 
+The Analyze tool runs Prophecy’s **Analyzer engine** and presents the results during the Import workflow, so you can assess migration readiness before committing to a full transpilation.
+
+
 ## Overview
 
 The Analyze tool can help you understand the outcome of your Alteryx transpilation **before** running the transpilation. This is available during the [import](/import-tool/alteryx/alteryx-to-spark/alteryx-to-spark#import-pipelines) step of pipeline migration.
 
-1. Open the Transpiler interface from the left sidebar in Prophecy.
+1. Open the Import tool from the left sidebar in Prophecy.
 1. Click **Import Bundle** and begin the migration process.
 1. Upload your Alteryx workflows.
 1. At the bottom of the migration interface, click **Analyze**.
@@ -19,45 +22,55 @@ The Analyze tool can help you understand the outcome of your Alteryx transpilati
 ![Analyze option](./img/alteryx-analyze-feature.png)
 
 <Info>
-The analysis is based on the components Prophecy can currently migrate “out of the box.” Anything not yet supported is flagged so you can plan ahead.
+The analysis is based on the tools, functions, and patterns Prophecy can currently migrate “out of the box.” Anything not yet supported is flagged so you can plan ahead.
 </Info>
 
 ## Analysis report format
 
-When you run the analysis, Prophecy generates an Excel report that contains multiple tabs. When you open the file, you will see the following information:
+When you run the analysis, Prophecy generates an Excel report containing multiple tabs. Each tab highlights a different aspect of migration readiness, helping you understand both *what* will migrate and *how much effort* may be required after Import.
 
-| Tab                  | Description                                                                 |
-| -------------------- | --------------------------------------------------------------------------- |
-| Summary              | Provides the high-level summary of each tab in the Excel file.              |
-| Coverage             | Details a complete list workflows and tools that were or were not migrated. |
-| Patterns Support     | Outlines whether tools and functions are supported or not supported.        |
-| Workflows Complexity | Assigns a score to your workflow complexity.                                |
-| Tool Type Complexity | Assigns a score to each tool in terms of its complexity.                    |
+| Tab                      | Description                                                  |
+| ------------------------ | ------------------------------------------------------------ |
+| Summary              | Provides a high-level snapshot of overall migration readiness, including Import coverage, supported patterns, and workflow complexity. |
+| Coverage             | Details which workflows and tools can be processed successfully by Import, along with counts of migrated and unsupported components. |
+| Patterns Support     | Reports whether specific tools and functions used in your workflows are supported by Prophecy’s mapping patterns. |
+| Workflows Complexity | Assigns a low, medium, or high complexity rating to each workflow based on size, tool composition, and expected diagnostics. |
+| Tool Type Complexity | Rates individual tool types by migration difficulty, reflecting both support coverage and behavioral complexity. |
 
-<Tip>
-More comprehensive documentation for each tab is available in the Excel file itself.
-</Tip>
+### How to interpret the report
+
+- **Coverage** indicates whether workflows and tools can be imported end-to-end.
+- **Patterns Support** shows whether specific tools and functions have supported Prophecy equivalents.
+- **Complexity scores** help estimate post-Import effort: workflows with higher complexity typically require more manual review and adjustment after migration.
+
+<Tip> More detailed explanations for each tab, including calculation logic and definitions, are included directly in the Excel report. </Tip>
 
 ## Example: Summary tab
 
 Below is an example of what the **Summary** tab might look like for a migration from Alteryx → Spark Python.
 
-### Migration Copilot Coverage
+### Migration Copilot coverage
 
 - Overall Coverage: 26% of tools migrated successfully
 - Workflows: 1/1 migrated successfully (100%)
 - Tools: 6/23 migrated successfully (26%)
 
-### Migration Copilot Patterns Support
+### Migration Copilot patterns support
 
 - Unique Tools Supported: 11/11 (100%)
 - Unique Functions Supported: 1/1 (100%)
 
-### Workflows Complexity
+### Workflows complexity
+
+Complexity scores are derived from workflow size, tool types used, and the number of diagnostics produced during transpilation. Larger workflows, unsupported or advanced tools, and higher diagnostic counts increase complexity ratings.
 
 - Low: 0 workflows
 - Medium: 0 workflows
 - High: 1 workflow
+
+### Tool type complexity
+
+Tool complexity reflects both support coverage and behavioral difficulty. For example, tools like Summarize are rated medium due to multiple configuration paths, while tools such as Multi Row Formula are rated hard due to ordering and row-dependency semantics.
 
 ## Summary
 
@@ -67,3 +80,4 @@ To summarize, running the Analyze tool before migration helps you:
 - **Plan fixes**: Know which components will require manual conversion or adjustments.
 - **Reduce migration risk**: Catch potential blockers before investing in a full transpilation run.
 - **Prioritize work**: Focus on the highest-value or lowest-effort workflows first.
+- **Estimate post-Import effort**: Complexity scores and diagnostics help predict how much manual adjustment will be needed after Import.
