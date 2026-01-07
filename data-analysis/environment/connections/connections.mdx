@@ -34,17 +34,28 @@ In this diagram, the lines show relationships between entities. `||--||` indicat
 
 To configure a new connection in a Prophecy fabric:
 
-- Open the **Metadata** page from the left sidebar in Prophecy.
-- Navigate to the **Fabric** tab.
-- Open the fabric where you want to add the connection.
-- Navigate to the **Connections** tab.
-- Click **+ Add Connection**. This opens the **Create Connection** dialog.
-- Select a data provider from the list of connection types.
-- Click **Next** to open the connection details.
-- Configure the connection and save your changes.
+1. Open the **Metadata** page from the left sidebar in Prophecy.
+1. Navigate to the **Fabric** tab.
+1. Open the fabric where you want to add the connection.
+1. Navigate to the **Connections** tab.
+1. Click **+ Add Connection**. This opens the **Create Connection** dialog.
+1. Select a data provider from the list of connection types.
+1. Click **Next** to open the connection details.
+1. Configure the connection and save your changes.
 
 Learn about individual connection parameters in the connection's respective reference page.
 
+## View connection status
+
+Connection status indicates whether Prophecy can reach your data sources through network connectivity tests. Status appears in the **Connections** tab of your fabric.
+
+Each connection displays one of four statuses:
+
+- **Connected**: Network connectivity test passed. You can use the connection.
+- **Disconnected**: Network connectivity test failed. Common causes include a firewall blocking the connection or expired credentials.
+- **Inactive**: The connection hasn't been used within the past week. Prophecy suspends network connectivity testing for inactive connections to reduce overhead. Testing resumes automatically when you use the connection again.
+- **Not tested**: This indicates that Prophecy does not support network connectivity testing for this connection type.
+
 ## What's next
 
-Visit the following pages to learn more about available connections.
+Visit the following pages for details about individual connections.

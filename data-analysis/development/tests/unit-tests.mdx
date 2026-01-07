@@ -1,0 +1,98 @@
+---
+title: Unit tests
+description: Create unit tests to validate the input and output of individual gems
+---
+
+<Badge icon="circle-exclamation" color="orange" shape="rounded" size="sm">
+  Private Preview
+</Badge>
+
+<Callout icon="/images/icon.png" color="#FFC107">
+  Available for [Enterprise Edition](/data-engineering/administration/platform/editions) only.
+</Callout>
+
+Unit tests verify that a single component of your pipeline works correctly in isolation. When you create a unit test for a gem, you define specific input data and the expected output data or a set of predicates that must evaluate to true for the test to pass.
+
+Think of unit tests as a way to document and verify the behavior of each transformation step. For example, if you have a Join gem that combines customer and order data, you can create a unit test that:
+
+- Provides sample customer rows and order rows as input
+- Defines the expected joined output rows
+- Verifies that the join condition works correctly
+
+When you modify the Join gem's configuration later, running the unit test confirms that your changes didn't break the expected behavior. Unit tests catch errors early, before they affect downstream pipelines or production data.
+
+## Prerequisites
+
+Unit tests are available only for [Simplified PySpark](/data-analysis/development/projects/project-languages#simplified-pyspark) projects.
+
+## Types of unit tests
+
+You can configure two types of unit tests on gems.
+
+- [Output rows equality](#output-rows-equality): Compares the actual output rows against a saved snapshot of expected data.
+- [Output predicates](#output-predicates): Evaluates Spark expressions against output data to verify business rules and constraints.
+
+### Output rows equality
+
+Output rows equality tests compare the actual output rows against expected data you define. Use this test type when you need to verify that transformations produce identical results.
+
+1. Open the gem you want to test.
+2. Click **Unit Tests** in the gem configuration.
+3. Click **Create Test** to add a new unit test.
+4. In the **Settings** section, select **Output rows equality** from the dropdown.
+5. Click one or more columns in the left panel to add them to the **Selected Columns** table.
+6. Click **Create**.
+7. Define expected input data:
+   - Select an input port tab, such as `in0` or `in1`.
+   - Select the correct data type for each column you are testing.
+   - Click **+ Add Row** to add expected input rows.
+   - Enter values for each column.
+8. Define expected output data:
+   - Select the `out` port.
+   - Select the correct data type for each column you are testing.
+   - Click **+ Add Row** to add expected output rows.
+   - Enter values for each column.
+9. Click **Done** to save the unit test.
+
+### Output predicates
+
+Output predicates let you define expressions that must evaluate to true for the test to pass. Use predicates when you need to validate business rules, data constraints, or complex conditions rather than exact row matches.
+
+1. Open the gem you want to test.
+2. Click **Unit Tests** in the gem configuration.
+3. Click **Create Test** to add a new unit test.
+4. In the **Settings** section, select **Output predicates** from the dropdown.
+5. Click one or more columns in the left panel to add them to the **Selected Columns** table.
+6. Click **Create**.
+7. Define expected input data:
+   - Select an input port tab, such as `in0` or `in1`.
+   - Select the correct data type for each column you are testing.
+   - Click **+ Add Row** to add expected input rows.
+   - Enter values for each column.
+8. Add predicates for the output:
+   - In the predicates table, enter a **Predicate Name** in the first column. Use descriptive names that indicate what the predicate validates.
+   - Enter an expression in the **Expression** column. The expression must evaluate to a boolean value and return `true` for the test to pass.
+   - Click in an empty row below to add additional predicates if needed.
+9. Click **Done** to save the unit test.
+
+#### Example predicates
+
+Review the following example predicates to help you understand how to write predicates.
+
+| Predicate Name                    | Expression                                                  |
+| --------------------------------- | ----------------------------------------------------------- |
+| Amount is positive                | `amount > 0`                                                |
+| First name differs from last name | `first_name != last_name`                                   |
+| Order date in valid range         | `order_date >= '2024-01-01' AND order_date <= '2024-12-31'` |
+
+You can add multiple predicates to a single unit test. All predicates must evaluate to `true` for the test to pass.
+
+## Generate sample data automatically
+
+Enable automatic data generation to create test input data without manually entering rows. This option generates sample rows from upstream data.
+
+1. In the unit test configuration, toggle on **Generate Data**.
+2. Enter the number of rows to generate in the **Rows** field. Prophecy samples this many rows from the input data.
+3. Click **Create** to generate the sample input data.
+4. Review the generated sample input data. Edit the data if needed.
+5. Click **Done** to save the unit test.
