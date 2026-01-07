@@ -40,28 +40,49 @@ When you run the analysis, Prophecy generates an Excel report containing multipl
 
 - **Coverage** indicates whether workflows and tools can be imported end-to-end.
 - **Patterns Support** shows whether specific tools and functions have supported Prophecy equivalents.
-- **Complexity scores** help estimate post-Import effort: workflows with higher complexity typically require more manual review and adjustment after migration.
+- **Complexity scores** help estimate post-Import effort: workflows with higher complexity typically require more manual review and adjustment after migration. The overall complexity score is calculated using weighted contributions from workflow size, tool types, and diagnostics, with tool type complexity carrying the greatest influence.
 
 <Tip> More detailed explanations for each tab, including calculation logic and definitions, are included directly in the Excel report. </Tip>
 
-## Example: Summary tab
+## Summary tab
 
 Below is an example of what the **Summary** tab might look like for a migration from Alteryx → Spark Python.
 
-### Migration Copilot coverage
+### Migration coverage
 
-- Overall Coverage: 26% of tools migrated successfully
+- Import Coverage: 26% of tools migrated successfully
 - Workflows: 1/1 migrated successfully (100%)
 - Tools: 6/23 migrated successfully (26%)
 
-### Migration Copilot patterns support
+### Migration patterns support
 
 - Unique Tools Supported: 11/11 (100%)
 - Unique Functions Supported: 1/1 (100%)
 
 ### Workflows complexity
 
-Complexity scores are derived from workflow size, tool types used, and the number of diagnostics produced during transpilation. Larger workflows, unsupported or advanced tools, and higher diagnostic counts increase complexity ratings.
+In the Workflows Complexity tab, the report includes the following columns along with ratings for each.
+
+- Workflow name
+- Complexity classification (Low, Medium, High)
+- Overall complexity score
+- Workflow size complexity
+- Tool type complexity
+- Diagnostic complexity
+
+Workflow complexity is derived from three contributing factors that are evaluated independently and then combined into an overall score:
+
+- Workflow size complexity: reflects the number of tools in the workflow.
+
+- Tool type complexity: reflects the mix of simple, advanced, and unsupported tools.
+
+- Diagnostic complexity: reflects the number of compilation diagnostics produced during analysis.
+
+Each factor is scored separately and weighted to produce an overall complexity score:
+
+- Low: overall score between 0 and 1
+- Medium: overall score between 1 and 2
+- High: overall score between 2 and 3
 
 - Low: 0 workflows
 - Medium: 0 workflows
@@ -78,6 +99,58 @@ Tool complexity reflects both support coverage and behavioral difficulty. For ex
 - Summarize: Medium
 - Multi Row Formula: Hard
 - Text Input: Easy
+
+## Coverage tab
+
+For each workflow analyzed, the Coverage tab reports:
+
+- **Migration status**: whether the workflow can be processed by Import
+- **Tools migrated successfully**: number of tool occurrences that were successfully migrated
+- **Tools migration failed**: number of tool occurrences that could not be migrated
+- **Total tool occurrences**: total number of tools across the workflow
+- **Tools coverage**: percentage of tools successfully migrated
+- **Workflows coverage**: percentage of workflows successfully migrated across the analysis set
+
+Understanding workflow vs tool coverage:
+
+- **Workflows Coverage** represents the percentage of workflows that Import can process end-to-end. A workflow is considered successfully migrated even if one or more tools within the workflow fail to migrate.
+- **Tools Coverage** represents the percentage of individual tool occurrences that Import can migrate successfully across all analyzed workflows.
+
+As a result, it is possible for Workflows Coverage to be 100% while Tools Coverage is significantly lower.
+
+A tool marked as “migration failed” typically indicates that the tool or its configuration is not currently supported by Import and will require manual conversion after migration.
+
+The Tools breakdown section lists the number of occurrences of each tool type within each workflow. This helps you:
+
+- Identify workflows dominated by certain tool patterns
+- Understand why tool coverage may be high or low
+- Anticipate where most manual remediation effort will be required
+
+Tools that appear frequently in the breakdown and have higher tool type complexity ratings (for example, Summarize or Multi Row Formula) often contribute disproportionately to overall migration effort.
+
+## Patterns support tab
+
+Patterns Support reports whether the **types of tools and functions** used in your workflows have supported mappings in Prophecy. It does **not** reflect whether every individual tool instance can be migrated successfully.
+
+As a result, it is possible for Patterns Support to show 100% support even when Tools Coverage is significantly lower.
+
+Use the Patterns Support tab to:
+
+- Confirm whether custom expressions rely on unsupported functions.
+- Identify whether migration issues are due to unsupported patterns or configuration-specific behavior.
+- Prioritize review of tools that appear frequently in the workflow.
+
+The Patterns Support tab is divided into two sections:
+
+- **Tools**: evaluates whether each tool type used in the workflow has a supported migration pattern.
+- **Functions**: evaluates whether the expressions and functions used within tools can be mapped to Prophecy-supported equivalents.
+
+Occurrences indicate how many times a given tool or function appears across all analyzed workflows.
+
+Function occurrence counts are often higher than tool counts because a single tool (such as Formula or Filter) may reference multiple functions.
+
+A tool or function marked as **Supported** indicates that Prophecy has a defined mapping pattern for that tool or function. Individual tool instances may still require manual adjustment depending on configuration, data types, or interaction with other tools.
+
 
 ## Summary
 
