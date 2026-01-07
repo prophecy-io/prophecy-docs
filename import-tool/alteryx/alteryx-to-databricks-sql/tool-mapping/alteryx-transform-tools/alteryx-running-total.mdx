@@ -1,6 +1,6 @@
 ---
 title: Alteryx Running Total tool > Prophecy WindowFunction gem
-description: Mapping between Alteryx’s Running Total tool and cumulative calculations implemented using the Prophecy WindowFunction gem
+description: Mapping between Alteryx's Running Total tool and cumulative calculations implemented using the Prophecy WindowFunction gem
 ---
 
 The Alteryx [Running Total tool](https://help.alteryx.com/current/en/designer/tools/transform/running-total-tool.html) computes a running sum across rows, optionally resetting the calculation when a grouping field changes.
@@ -61,6 +61,7 @@ Results depend on row ordering; incorrect or missing ordering can change the out
 
 ### Input dataset
 
+{/* vale off */}
 | record_id | event_date | amount |
 | --------- | ---------- | ------ |
 | 1         | 2025-01-01 | 10     |
@@ -68,6 +69,7 @@ Results depend on row ordering; incorrect or missing ordering can change the out
 | 1         | 2025-01-10 | 7      |
 | 2         | 2025-01-03 | 4      |
 | 2         | 2025-01-07 | 6      |
+{/* vale on */}
 
 ### Alteryx Running Total tool
 
@@ -75,16 +77,6 @@ Goal: Compute a running sum of `amount`, resetting for each new `record_id`, ord
 
 - Field for group by: `record_id`
 - Field for running total: `amount`
-
-#### Resulting output
-
-| record_id | event_date | amount | RunTot_amount |
-| --------- | ---------- | ------ | ------------- |
-| 1         | 2025-01-01 | 10     | 10            |
-| 1         | 2025-01-05 | 5      | 15            |
-| 1         | 2025-01-10 | 7      | 22            |
-| 2         | 2025-01-03 | 4      | 4             |
-| 2         | 2025-01-07 | 6      | 10            |
 
 ### Prophecy equivalent (WindowFunction gem)
 
@@ -94,4 +86,14 @@ Configure a **WindowFunction** gem with:
 - Order by: `event_date`
 - Window use: add Target column `RunTot_amount`. Configure Expression as function > sum with column `amount` as parameter.
 
-The output matches the Running Total tool's cumulative behavior.
+#### Resulting output
+
+{/* vale off */}
+| record_id | event_date | amount | RunTot_amount |
+| --------- | ---------- | ------ | ------------- |
+| 1         | 2025-01-01 | 10     | 10            |
+| 1         | 2025-01-05 | 5      | 15            |
+| 1         | 2025-01-10 | 7      | 22            |
+| 2         | 2025-01-03 | 4      | 4             |
+| 2         | 2025-01-07 | 6      | 10            |
+{/* vale on */}

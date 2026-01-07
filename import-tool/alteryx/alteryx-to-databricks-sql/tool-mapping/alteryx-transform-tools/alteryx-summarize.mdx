@@ -1,25 +1,21 @@
 ---
 title: Alteryx Summarize Tool > Prophecy Aggregate, Reformat, and Deduplicate Gems
-description: Mapping between Alteryx’s Summarize tool and equivalent aggregation patterns in Prophecy
+description: Mapping between Alteryx's Summarize tool and equivalent aggregation patterns in Prophecy
 ---
 
 The Alteryx Summarize tool performs grouped and non-grouped aggregations by applying one or more “actions” (such as `group by`, `sum`, `count`, `median`, `concatenate`, `first`, `last`, and spatial summarizations) to selected fields, producing a summarized output table whose columns are defined by each action’s Output Field Name.
 
-When Import encounters an Alteryx Summarize tool, it analyzes the selected actions and converts the Summarize too into either an Aggregate, Deduplicate, or Reformat gem.
+When Import encounters an Alteryx Summarize tool, it analyzes the selected actions and converts the Summarize too into either an [Aggregate](/data-analysis/gems/transform/aggregate), [Deduplicate](/data-analysis/gems/prepare/deduplicate.), or [Reformat gem](/data-analysis/gems/prepare/reformat).
 
 ## Automated migration results
 
-When Propphecy imports a Summarize gem, it applies the following logic:
+When Propphecy imports a Summarize tool, it applies the following logic:
 
 - Summarize tools that include grouping and aggregation actions are migrated to an Aggregate gem.
 - Summarize tools that include grouping without additional aggregation are migrated to a Deduplicate gem.
 - Summarize tools that include non-grouped aggregation or positional actions are migrated to a Reformat gem.
 
 Summarize tools with multiple actions may be transpiled to multiple gems.
-
-Import preserves Alteryx Output Field Names as Prophecy output columns whenever possible. To match Alteryx semantics, especially around blank and null handling, Import may generate more explicit expressions than a user would typically write by hand (for example, conditional logic around `COUNT`, string aggregation, or spatial functions).
-
-Some Summarize actions—such as financial summarizations—are not directly supported by Prophecy and will require manual adjusting after import.
 
 ## Manually replicate in Prophecy
 
@@ -64,7 +60,86 @@ For certain actions (such as positional or distribution-based summarizations), r
 
 ## Known caveats
 
+- **Explicit expressions**. Import preserves Alteryx Output Field Names as Prophecy output columns whenever possible. To match Alteryx semantics, especially around blank and null handling, Import may generate more explicit expressions than a user would typically write by hand (for example, conditional logic around `COUNT`, string aggregation, or spatial functions).
 - **Ordering-dependent actions**. Summarize actions such as _First_ and _Last_ depend on record ordering. In Databricks SQL, ordering is not guaranteed unless explicitly defined, so results may differ from Alteryx when input order is significant.
 - **Blank vs null semantics**. Alteryx distinguishes between blank and null values. Databricks SQL does not make the same distinction by default, so imported expressions may include explicit logic to preserve Alteryx behavior.
 - **Statistical functions**. Some statistical summarizations (such as percentiles, variance, or mode) rely on Databricks SQL’s native implementations. Minor differences in definitions or tie-breaking behavior may occur.
 - **Financial calculations**. Financial Summarize actions (such as NPV or IRR) are not supported directly and will require manual adjusting after import.
+
+## Examples
+
+### Example: Grouped aggregation with multiple actions
+
+ An input dataset contains sales records with the following fields:
+
+- `Region`
+- `OrderDate`
+- `OrderAmount`
+- `OrderID`
+
+#### Alteryx (Summarize tool)
+
+In Alteryx, configure a Summarize tool with these actions:
+
+- **Group By** → `Region`
+- **Sum** → `OrderAmount` (Output Field Name: `TotalSales`)
+- **Count** → `OrderID` (Output Field Name: `OrderCount`)
+- **Max** → `OrderDate` (Output Field Name: `LastOrderDate`)
+
+The resulting output contains one row per `Region`, with total sales, number of orders, and the most recent order date.
+
+#### Prophecy (Aggregate gem)
+
+To reproduce this logic manually in Prophecy:
+
+1. Add an **Aggregate** gem to the canvas.
+1. Configure **Group by columns**:
+   - `Region`
+1. Configure aggregation expressions:
+   - `TotalSales` → `SUM(OrderAmount)`
+   - `OrderCount` → `COUNT(OrderID)`
+   - `LastOrderDate` → `MAX(OrderDate)`
+
+The Aggregate gem produces one row per `Region`, matching the intent of the Alteryx Summarize configuration.
+
+<note>
+Depending on input data quality, you may need to account for null handling explicitly (for example, using conditional logic if Alteryx’s blank-handling behavior is significant).
+</note>
+
+### Example: Grouping without aggregation
+
+#### Alteryx (Summarize tool)
+Configure the Summarize tool with a single action:
+
+- **Group By** → `CustomerID`
+The result is a single-row dataset representing global summary values.
+
+#### Prophecy (Deduplicate gem)
+
+Use a **Deduplicate** gem:
+
+1. Configure the deduplication key as `CustomerID`.
+1. Retain one row per unique customer.
+
+This reproduces Alteryx’s “group-only” Summarize behavior without computing metrics.
+
+### Example: Non-grouped summarization
+
+####  Alteryx (Summarize tool)
+Configure the Summarize tool to include no Group By actions and:
+
+- **Sum** → `OrderAmount` (Output Field Name: `TotalSales`)
+- **Count** → `OrderID` (Output Field Name: `OrderCount`)
+
+The output is a single-row table containing overall totals.
+
+#### Prophecy (Reformat gem)
+
+Use a **Reformat** gem:
+
+1. Add a Reformat gem with no grouping.
+1. Define output expressions:
+   - `TotalSales` → `SUM(OrderAmount)`
+   - `OrderCount` → `COUNT(OrderID)`
+
+The result is a single-row dataset representing global summary values.

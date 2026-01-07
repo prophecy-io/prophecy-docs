@@ -3,31 +3,29 @@ title: Alteryx Make Columns tool > Prophecy WindowFunction + Reformat + Script
 description: Mapping between Alteryx’s Make Columns tool and its imported representation in Prophecy
 ---
 
-The [Alteryx Make Columns tool](https://help.alteryx.com/current/en/designer/tools/transform/make-columns-tool.html) restructures row-oriented data into newly created columns by distributing incoming row values across columns in a configured, repeating sequence. The tool’s behavior depends on implicit row order rather than explicit grouping or keys.
+The [Alteryx Make Columns tool](https://help.alteryx.com/current/en/designer/tools/transform/make-columns-tool.html) restructures row-oriented data into newly created columns by distributing incoming row values across columns in a configured, repeating sequence. The tool's behavior depends on implicit row order rather than explicit grouping or keys.
 
 Because SQL-based execution engines do not assume stable row order by default, Prophecy reproduces this behavior by explicitly materializing row sequence, deriving internal grouping and position identifiers, and then reshaping the data.
 
 ## Automated migration results
 
-When Import detects an Alteryx Make Columns tool, it generates a multi-step pipeline rather than a single gem. This reflects the fact that Make Columns encodes several implicit assumptions—row order, column position, and grouping—that must be made explicit for deterministic execution.
+When Import detects an Alteryx Make Columns tool, it generates a multi-step pipeline:
 
-At a high level, Import performs the following steps:
-
-1. Prophecy first adds a [WindowFunction gem](/data-analysis/gems/transform/window) that generates a synthetic sequence column using `row_number()`, ordered by a constant (`1`). This allows for deterministic row ordering, making row position explicit for execution purposes even when no natural sort key exists.
-1. A second WindowFunction gem computes `count(1)` over the dataset in order to compute total record count.
+1. Prophecy first adds a [WindowFunction gem](/data-analysis/gems/transform/window) that generates a synthetic sequence column using `row_number()`, ordered by a constant (`1`). This allows for deterministic row ordering, making row position explicit for execution purposes.
+1. A second WindowFunction gem computes `count(1)` over the dataset to compute total record count.
 1. Next, a [Reformat gem](/data-analysis/gems/prepare/reformat) derives internal grouping and position identifiers by calculating:
-   - an internal group identifier that determines which rows belong to the same output record.
-   - an internal position identifier that determines which newly created column each value should populate.
-1. Next, a [Script gem](/data-analysis/gems/custom/script), using PySpark code, performs a grouped pivot using the derived identifiers, reconstructing the Make Columns output structure.
-1. A final Reformat gem drops all temporary sequencing, grouping, and position columns, leaving only the intended output.
+   - An internal group identifier that determines which rows belong to the same output record.
+   - An internal position identifier that determines which newly created column each value should populate.
+1. Next, a [Script gem](/data-analysis/gems/custom/script) uses PySpark code to perform a grouped pivot using the derived identifiers, reconstructing the Make Columns output structure.
+1. A final Reformat gem drops all temporary columns.
 
 The resulting dataset matches the structure and values produced by the Alteryx Make Columns tool.
 
 ## Manually replicate in Prophecy
 
-There is no single Prophecy gem that directly replicates Make Columns behavior. Alteryx users who rely on Make Columns can reproduce the same behavior in Prophecy by explicitly sequencing rows, deriving grouping and positional logic, and reshaping the data using pivoting or script-based transformations.
+Alteryx users who rely on Make Columns can reproduce the same behavior in Prophecy by explicitly sequencing rows, deriving grouping and positional logic, and reshaping the data using pivoting or script-based transformations.
 
-However, because Make Columns depends on implicit row order, we recommend using the above techniques only when you require row-position–based layout. In many cases, you can achieve the underlying analytical goal using grouping, aggregation, or pivoting based on explicit keys.
+However, because Make Columns depends on implicit row order, we recommend using the above techniques only when you require row-position–based layout. In many cases, you can achieve the underlying analytical goal using a combination of the [WindowFunction gem](/data-analysis/gems/transform/window), the [Aggregation gem](/data-analysis/gems/transform/aggregate), and the [Pivot gem](/data-analysis/gems/transform/unpivot).
 
 ## Configuration options
 
@@ -63,7 +61,6 @@ Both Alteryx’s Make Columns tool and the imported Prophecy pipeline:
 
 - Make Columns is inherently **row-order dependent**. Import must impose explicit ordering to preserve behavior.
 - The imported pipeline is intentionally verbose, prioritizing correctness and lineage clarity over compactness.
-- Intermediate columns (for sequencing, grouping, and positioning) are implementation details and are removed before output.
 - The Script gem is used in the imported pipeline because the required pivoting logic is most directly expressed this way across varying Make Columns configurations.
 
 ## Example
@@ -81,16 +78,9 @@ Both Alteryx’s Make Columns tool and the imported Prophecy pipeline:
 
 The Make Columns tool is configured to create two output columns. Values are filled **left to right**, wrapping to a new row after every two records.
 
-### Resulting output
-
-| Column_1 | Column_2 |
-| -------- | -------- |
-| A        | B        |
-| C        | D        |
-
 ### Prophecy equivalent
 
-Prophecy reproduces this behavior through the following steps:
+In Prophecy, you can reproduce this behavior through the following steps:
 
 1. In a WindowFunction gem, assign each input record an explicit row number (`_sequence_id`) to preserve order.
 2. In a second WindowFunction gem, calculate total records (`_total_records`) with `count()`.
@@ -98,3 +88,10 @@ Prophecy reproduces this behavior through the following steps:
 4. In the same Reformat gem, create a `_position_id` column defined as a `concat_ws` function with the following parameters: `_`, `'Column'`and `((_sequence_id - 1) % 2) + 1`.
 5.  In a Script gem, use the derived grouping and position columns in PySpark code to reshape the data, such that rows are grouped by `_group_id`, pivoted on `_position_id` ( `Column_1` and `Column_2`), and aggregated so that each group produces a single output row. For each pivoted column, perform a  simple aggregation (such as `max`) selects the single value associated with that group and position, using `_sequence_id` and `_total_records`  as supporting fields during the reshape.
 6. Remove helper columns, leaving only the final Make Columns output.
+
+### Resulting output
+
+| Column_1 | Column_2 |
+| -------- | -------- |
+| A        | B        |
+| C        | D        |

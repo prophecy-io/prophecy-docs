@@ -20,27 +20,18 @@ When Import detects an Alteryx Weighted Average tool, it applies one of two patt
 
 1. Add a Reformat gem.
 2. Add a new target column (for example, `WeightedAverage`).
-3. Use a guarded weighted-average expression:
-
-```sql
-CASE
-  WHEN sum(Units) = 0 THEN NULL
-  ELSE sum(UnitCost * Units) / sum(Units)
-END
-```
+3. Configure the column to use a `case...when...else` expression with
+  - `when` `sum` of `Units` equals `0`, then `null`.
+  - `else` `sum((UnitCost * Units)) / sum(Units)`
 
 ### With grouping (weighted average per group)
 
 1. Add an Aggregate gem.
-2. Add the grouping field(s) under **Group by**.
-3. Add a computed output column (for example, `WeightedAverage`) using the same expression:
+1. Add the grouping field(s) under **Group by**.
+1. Add a computed output column (for example, `WeightedAverage`) using the same `case...when...else` expression:
 
-```sql
-CASE
-  WHEN sum(Units) = 0 THEN NULL
-  ELSE sum(UnitCost * Units) / sum(Units)
-END
-```
+  - `when` `sum` of `Units` equals `0`, then `null`.
+  - `else` `sum((UnitCost * Units)) / sum(Units)`
 
 ## Configuration options
 
@@ -83,7 +74,7 @@ In both cases, the weighted average is computed as the sum of `(value × weight)
 
 ## Example
 
-### Alteryx Weighted Average example
+### Alteryx (Weighted Average tool)
 
 **Goal:** Compute a weighted average of unit cost using units as weights, optionally producing one result per region.
 
@@ -98,7 +89,7 @@ In both cases, the weighted average is computed as the sum of `(value × weight)
   - If the sum of `Units` is zero, return `NULL`
   - If a grouping field (`Region`) is selected, compute the weighted average separately for each region
 
-### Prophecy equivalent (Reformat or Aggregate)
+### Prophecy (Reformat or Aggregate gems)
 
 #### No grouping (Reformat)
 
