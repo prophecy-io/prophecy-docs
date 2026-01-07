@@ -5,7 +5,7 @@ description: Mapping between Alteryx's Summarize tool and equivalent aggregation
 
 The Alteryx Summarize tool performs grouped and non-grouped aggregations by applying one or more “actions” (such as `group by`, `sum`, `count`, `median`, `concatenate`, `first`, `last`, and spatial summarizations) to selected fields, producing a summarized output table whose columns are defined by each action’s Output Field Name.
 
-When Import encounters an Alteryx Summarize tool, it analyzes the selected actions and converts the Summarize too into either an [Aggregate](/data-analysis/gems/transform/aggregate), [Deduplicate](/data-analysis/gems/prepare/deduplicate.), or [Reformat gem](/data-analysis/gems/prepare/reformat).
+When Import encounters an Alteryx Summarize tool, it analyzes the selected actions and converts the Summarize tool into either an [Aggregate](/data-analysis/gems/transform/aggregate), a [Deduplicate gem](/data-analysis/gems/prepare/deduplicate.), or a [Reformat gem](/data-analysis/gems/prepare/reformat).
 
 ## Automated migration results
 
@@ -33,9 +33,9 @@ When configuring expressions manually, pay special attention to how Alteryx trea
 
 ### Alteryx Summarize tool
 
-In Alteryx, the Summarize tool is configured by selecting one or more **actions** for individual fields. Each action defines both the operation to perform (for example, _Group By_, _Sum_, _Count_, _Concatenate_, _First_, _Median_, or spatial and financial summarizations) and the resulting **Output Field Name**.
+In Alteryx, the Summarize tool is configured by selecting one or more **actions** for individual fields. Each action defines both the operation to perform (for example, _group by_, _sum_, _count_, _concatenate_, _first_, _median_, or spatial and financial summarizations) and the resulting **Output Field Name**.
 
-Multiple actions can be applied to the same field, and actions may be combined across fields. The presence or absence of _Group By_ actions determines whether the output is grouped (one row per unique key) or non-grouped (a single summary row).
+Multiple actions can be applied to the same field, and actions may be combined across fields. The presence or absence of _group by_ actions determines whether the output is grouped (one row per unique key) or non-grouped (a single summary row).
 
 Alteryx also applies implicit semantics for blanks, nulls, ordering, and data types, which influence how summarization results are computed.
 
@@ -60,11 +60,11 @@ For certain actions (such as positional or distribution-based summarizations), r
 
 ## Known caveats
 
-- **Explicit expressions**. Import preserves Alteryx Output Field Names as Prophecy output columns whenever possible. To match Alteryx semantics, especially around blank and null handling, Import may generate more explicit expressions than a user would typically write by hand (for example, conditional logic around `COUNT`, string aggregation, or spatial functions).
-- **Ordering-dependent actions**. Summarize actions such as _First_ and _Last_ depend on record ordering. In Databricks SQL, ordering is not guaranteed unless explicitly defined, so results may differ from Alteryx when input order is significant.
+- **Explicit expressions**. Import preserves Alteryx Output Field Names as Prophecy output columns whenever possible. To match Alteryx semantics, especially around blank and null handling, Import may generate more explicit expressions than a user would typically write by hand (for example, conditional logic around `count`, string aggregation, or spatial functions).
+- **Ordering-dependent actions**. Summarize actions such as _first_ and _last_ depend on record ordering. In Databricks SQL, ordering is not guaranteed unless explicitly defined, so results may differ from Alteryx when input order is significant.
 - **Blank vs null semantics**. Alteryx distinguishes between blank and null values. Databricks SQL does not make the same distinction by default, so imported expressions may include explicit logic to preserve Alteryx behavior.
 - **Statistical functions**. Some statistical summarizations (such as percentiles, variance, or mode) rely on Databricks SQL’s native implementations. Minor differences in definitions or tie-breaking behavior may occur.
-- **Financial calculations**. Financial Summarize actions (such as NPV or IRR) are not supported directly and will require manual adjusting after import.
+- **Financial calculations**. Financial Summarize actions (such as `npv` or `irr`) are not supported directly and will require manual adjusting after import.
 
 ## Examples
 
@@ -81,10 +81,10 @@ For certain actions (such as positional or distribution-based summarizations), r
 
 In Alteryx, configure a Summarize tool with these actions:
 
-- **Group By** → `Region`
-- **Sum** → `OrderAmount` (Output Field Name: `TotalSales`)
-- **Count** → `OrderID` (Output Field Name: `OrderCount`)
-- **Max** → `OrderDate` (Output Field Name: `LastOrderDate`)
+- **Group By**: `Region`
+- **Sum**: `OrderAmount` (Output Field Name: `TotalSales`)
+- **Count**: `OrderID` (Output Field Name: `OrderCount`)
+- **Max**: `OrderDate` (Output Field Name: `LastOrderDate`)
 
 The resulting output contains one row per `Region`, with total sales, number of orders, and the most recent order date.
 
