@@ -1,0 +1,71 @@
+---
+title: Development settings
+description: Configure development settings for your project
+---
+
+Development settings control how Prophecy processes your project during development. Access these settings from the Studio header by clicking the ellipses menu (`...`) and selecting **Development Settings**.
+
+You'll see the following settings:
+
+- [Variant interference data sampling limit](#variant-interference-data-sampling-limit)
+- [Backend language](#backend-language)
+- [Enable manual compilation](#enable-manual-compilation)
+
+## Variant interference data sampling limit
+
+This number controls the maximum number of records Prophecy parses to infer the schema of variant data types. The default limit is 100 records. Adjust this value based on your data characteristics:
+
+- **Increase the limit** for complex structures where 100 records may not capture all schema variations.
+- **Decrease the limit** for simple datasets where processing fewer records improves performance while maintaining schema accuracy.
+
+This setting applies globally to all variant schema inference operations in your project.
+
+## Backend language
+
+<Badge icon="circle-exclamation" color="orange" shape="rounded" size="sm">
+  Private Preview
+</Badge>
+
+This setting specifies the programming language used for project compilation and code generation. Currently, Prophecy supports **SQL** and **Python** as the backend language for data analysis projects.
+
+The backend language determines:
+
+- The syntax used in generated code
+- The runtime environment requirements
+- The project artifacts produced
+
+You can switch between the backend languages using the dropdown menu.
+
+<Note>
+
+When you switch your project's backend language (like from SQL to Python or vice versa), not every feature or configuration translates perfectly. For example:
+
+- Unit tests are only available for PySpark but not for SQL.
+- Some gems may not have an equivalent in the other language. If a gem can't be converted, you'll see an error stating that Prophecy does not support the gem in the current language.
+- Write modes can vary between languages. For example, `SCD2 Soft Delete` is only available for Python.
+- Macros in SQL do not have a direct Python equivalent, so switching may make some logic untranslatable or unavailable.
+
+Prophecy is actively developing these features and is aiming for full parity between languages in upcoming releases. As a best practice, **always save or commit your work before switching** so you can easily revert if something doesn't translate.
+
+</Note>
+
+## Enable manual compilation
+
+<Info>
+  To enable this feature, you must set `EDITOR_ON_DEMAND_COMPILATION: 'true'` in `cp-env-cm` of your
+  Prophecy deployment.
+</Info>
+
+This toggle controls whether Prophecy compiles your project automatically as you update your project.
+
+- **Disabled** (default): Prophecy compiles automatically. This provides immediate feedback on compilation errors and ensures your project remains in a functioning state.
+
+- **Enabled**: You compile the pipeline or project manually by clicking **Compile** in the Studio footer. Use manual compilation when working with large projects where automatic compilation slows down your workflow or any time you need more control over when compilation occurs.
+
+<Frame>![Manual compilation](/data-analysis/development/studio/img/manual-compilation.png)</Frame>
+
+<Warning>
+  With manual compilation enabled, your project may contain compilation errors that won't be
+  detected until you compile manually. Ensure you compile before running pipelines or deploying your
+  project.
+</Warning>
