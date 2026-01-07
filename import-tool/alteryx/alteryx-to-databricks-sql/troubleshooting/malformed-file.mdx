@@ -1,0 +1,47 @@
+---
+title: Malformed file
+description: Learn what to do when you import a malformed file
+---
+
+When you tranpile your Alteryx workflow file to a SQL project, it may get malformed if:
+
+- You manually edit the `yxmd` or `yxmc` file
+- A bad compression occurs on your `yxzp` file
+
+## Example
+
+You attempt to import an Alteryx workflow but get the following error:
+
+```shell
+Unable to load associated entities.
+```
+
+Then, when you click **Validate**, you get the following error:
+
+```shell
+Following files have incorrect format: /customers.yxmd
+```
+
+And, if you click **Transpile**, the transpilation fails and you get the following error:
+
+```shell
+Transpilation failed with exception: org.xml.sax.SAXParseException; lineNumber 181; columnNumber: 15; The element type "AlteryxDocument" must be terminated by the matching end tag "</alteryxDocument>".
+```
+
+## Solution
+
+- If you compressed your file, reopen your Alteryx workflow in your Alteryx Designer. Save the workflow as is, and do not compress it.
+
+- If you manually edited your Alteryx workflow file, assure each open tag has a closing tag. Your Alteryx file must follow XML syntax rules.
+
+  For example, if this is the beginning and end of the Alteryx workflow file from the [example](#example):
+
+  ```xml
+  <?xml version="1.0"?>
+  <AlteryxDocument yxmdVer="2022.3">
+  {/* many lines in between */}
+      </Events>
+    </Properties>
+  ```
+
+  Add `</alteryxDocument>` at the end of the file.

@@ -1,0 +1,54 @@
+---
+title: SurrogateKeyGenerator gem
+description: Add new column with monotonically-increasing surrogate key
+---
+
+The SurrogateKeyGenerator gem lets you add a _surrogate key_ column to an input dataset.
+
+A _surrogate key_ is simply a unique, monotonically-increasing integer that serves as a key column for datasets that do not have a key.
+
+To ensure that the key increments steadily across pipeline runs, the SurrogateKeyGenerator gem uses a file, known as the _key file_ to store the last used key. For example, if the file lists the last used key as `5000`, the next row will start at `5001`. Once the pipeline run completes, the gem writes the last value used to the key file, so that the next run starts there.
+
+## Parameters
+
+To configure the SurrogateKeyGenerator gem, add the gem to the canvas, link it to an upstream gem, and enter information for the following parameters:
+
+| Parameter                    | Description                                        |
+| ---------------------------- | -------------------------------------------------- |
+| Surrogate Column Name        | The name for the new surrogate key column.         |
+| Key File Path                | Path to key-tracking file.                         |
+| Key Initial Value (optional) | The starting value for the surrogate key sequence. |
+
+## Example
+
+This example adds a new surrogate key column (`customer_sk`) to a customer dimension DataFrame.
+
+The example:
+
+- Creates a new column called `customer_sk`.
+- Looks for a file located at `/mnt/keys/customer_sk.seq`
+- Starts key generation at `1`.
+
+### Input schema
+
+| Column name | Type   |
+| ----------- | ------ |
+| customer_id | string |
+| name        | string |
+| email       | string |
+
+### Gem configuration
+
+| Parameter             | Example Value               |
+| --------------------- | --------------------------- |
+| Surrogate Column Name | `customer_sk`               |
+| Key File Path         | `/mnt/keys/customer_sk.seq` |
+| Key Initial Value     | `1`                         |
+
+### Output
+
+| customer_sk | customer_id | name       | email             |
+| ----------- | ----------- | ---------- | ----------------- |
+| 1           | C123        | Alice Wong | `alice@example.com` |
+| 2           | C456        | Omar Davis | `omar@example.com`  |
+| 3           | C789        | Priya Shah | `priya@example.com` |
