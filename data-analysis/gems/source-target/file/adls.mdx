@@ -65,14 +65,16 @@ Use the table below to understand how to configure each option.
 
 | Parameter                                            | Description                                                                                                                                                                                                                                                  |
 | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Format type                                          | Type of file to read, such as csv or json.                                                                                                                                                                                                                   |
 | Select or create connection                          | Select an existing ADLS connection or [create a new one](/data-analysis/environment/connections/adls).                                                                                                                                                       |
 | Choose Path or Configuration                         | Choose between the following options.<ul><li>**Filepath**: Read one file from a specified file path.</li><li>**Configuration**: Dynamically read files provided by a [file arrival/change trigger](/data-analysis/production/scheduling/triggers).</li></ul> |
-| Filepath<br/>_Filepath option only_                  | Path to the file in the ADLS container. Supports wildcards. <br/>Example: `abfss://container-name@account-name.dfs.core.windows.net/temp/dir/*.csv`                                                                                                          |
+| File Path<br/>_Filepath option only_                 | Path to the file in the ADLS container. Supports wildcards. <br/>Example: `abfss://container-name@account-name.dfs.core.windows.net/temp/dir/*.csv`                                                                                                          |
+| Examine                                              | Automatically determine the file format, compression type (if any), properties, and schema of the file to read.                                                                                                                                              |
 | Select Configuration<br/>_Configuration option only_ | File arrival/change trigger [configuration](/data-analysis/production/scheduling/triggers#trigger-configuration) that provides the added or modified files for that run.                                                                                     |
 | Include filename Column                              | Appends a column containing the source filename for each row in the output table.                                                                                                                                                                            |
 | Delete files after successfully processed            | Deletes objects after they are successfully read.                                                                                                                                                                                                            |
 | Move files after successfully processed              | Moves objects to a specified directory after they are successfully read.                                                                                                                                                                                     |
+| Format type                                          | Type of file to read, such as csv or json.                                                                                                                                                                                                                   |
+| Compression                                          | The compression type of the file to read. <br /><br />Supported types: `uncompressed`,`gzip`, `zstd`, `lz4`, `zlib`, `snappy`, `lzop`                                                                                                                        |
 
 ### Configuration
 
@@ -88,8 +90,17 @@ For the same reason, you'll see an error if you try to infer the schema in the *
 
 When setting up an ADLS Target gem, you need to set the location and file type to correctly write the file.
 
-| Parameter                   | Description                                                                                                                               |
-| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| Format type                 | Type of file to write, such as csv or json.                                                                                               |
-| Select or create connection | Select an existing ADLS connection or [create a new one](/data-analysis/environment/connections/adls).                                    |
-| Filepath                    | ADLS path where the output file will be written. <br/>Example: `abfss://container-name@account-name.dfs.core.windows.net/data/orders.csv` |
+| Parameter                   | Description                                                                                                                                   |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| Select or create connection | Select an existing ADLS connection or [create a new one](/data-analysis/environment/connections/adls).                                        |
+| File Path                   | ADLS path where the output file will be written. <br/>Example: `abfss://container-name@account-name.dfs.core.windows.net/data/orders.csv`     |
+| Examine                     | If an existing file exists at the target path, click **Examine** to automatically determine the file format and compression type (if any).    |
+| Encryption Algorithm        | The encryption algorithm to use when writing the file.<br /><br />Supported algorithms: `AES-192`, `AES-296`, `BlowFish`                      |
+| Format type                 | Type of file to write, such as csv or json.                                                                                                   |
+| Compression                 | The compression type to use when writing the file.<br /><br />Supported types: `uncompressed`,`gzip`, `zstd`, `lz4`, `zlib`, `snappy`, `lzop` |
+
+<Note>
+  Configure encryption in a Target gem to encrypt an entire file. Use the
+  [DataEncoderDecoder](/data-analysis/gems/transform/encoder-decoder) gem to encrypt individual
+  columns.
+</Note>

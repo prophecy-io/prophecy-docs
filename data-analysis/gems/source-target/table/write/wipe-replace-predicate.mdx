@@ -1,0 +1,50 @@
+---
+title: Wipe and Replace Rows Per Predicate
+description: Replace all the rows in a partition that match a predicate
+---
+
+Update records that match conditions defined in the **Use Predicate** parameter. Instead of updating individual rows, it replaces the entire partition of the table that matches the given predicate. The predicate defines which rows in the target table should be fully replaced with the incoming data.
+
+## Parameters
+
+| Parameter                                          | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Use Predicate                                      | Lets you add conditions that specify when to apply the merge.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| Use a condition to filter data or incremental runs | Enables applying conditions for filtering the incoming data into the table.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| (Advanced) On Schema Change                        | Specifies how schema changes should be handled during the merge process.<ul><li><strong>ignore</strong>: Newly added columns will not be written to the model. This is the default option.</li><li><strong>fail</strong>: Triggers an error message when the source and target schemas diverge.</li><li><strong>append_new_columns</strong>: Append new columns to the existing table.</li><li><strong>sync_all_columns</strong>: Adds any new columns to the existing table, and removes any columns that are now missing. Includes data type changes. This option uses the output of the previous gem.</li></ul> |
+
+## Example: Update trips from January 5th onwards
+
+When any record from January 5th onwards needs updating, ALL records from that date forward are dropped and replaced with the incoming data. Records from before January 5th remain unchanged.
+
+**Predicate**: `DATE >= '2024-01-05'`
+
+<div class="table-example">
+
+**Incoming table**
+
+| TRIP_ID | STATUS | DATE       |
+| ------- | ------ | ---------- |
+| 201     | Closed | 2024-01-05 |
+| 203     | Closed | 2024-01-10 |
+
+**Existing table**
+
+| TRIP_ID | VEHICLE_ID | DATE       | STATUS |
+| ------- | ---------- | ---------- | ------ |
+| 201     | 101        | 2024-01-05 | Open   |
+| 202     | 102        | 2023-12-20 | Open   |
+| 203     | 103        | 2024-01-10 | Open   |
+| 204     | 104        | 2024-01-15 | Open   |
+
+**Updated table**
+
+| TRIP_ID | VEHICLE_ID | DATE       | STATUS |
+| ------- | ---------- | ---------- | ------ |
+| 201     | 101        | 2024-01-05 | Closed |
+| 203     | 103        | 2024-01-10 | Closed |
+| 202     | 102        | 2023-12-20 | Open   |
+
+Notice that ALL trips from January 5th onwards (`201`, `203`, and `204`) were dropped and replaced with only the incoming records (`201` and `203`), while trip `202` (from December 20th) remained unchanged.
+
+</div>

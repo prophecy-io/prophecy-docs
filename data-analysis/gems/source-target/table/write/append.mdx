@@ -1,0 +1,44 @@
+---
+title: Append Row
+description: Always add incoming rows to the existing table
+---
+
+Adds new rows to the existing table without modifying existing data. No deduplication is performed, so you may end up with duplicate records.
+
+<Info>
+  This strategy is best used when unique keys aren't required. For key-based updates, use one of the
+  Merge options instead.
+</Info>
+
+## Example: Add daily trips
+
+Daily trips are appended so that historical trips remain intact.
+
+<div class="table-example">
+
+**Incoming table**
+
+| TRIP_ID | VEHICLE_ID | DATE       |
+| ------- | ---------- | ---------- |
+| 301     | 201        | 2024-01-15 |
+| 302     | 202        | 2024-01-15 |
+
+**Existing table**
+
+| TRIP_ID | VEHICLE_ID | DATE       |
+| ------- | ---------- | ---------- |
+| 101     | 101        | 2024-01-14 |
+| 102     | 102        | 2024-01-14 |
+
+**Updated table**
+
+| TRIP_ID | VEHICLE_ID | DATE       |
+| ------- | ---------- | ---------- |
+| 101     | 101        | 2024-01-14 |
+| 102     | 102        | 2024-01-14 |
+| 301     | 201        | 2024-01-15 |
+| 302     | 202        | 2024-01-15 |
+
+Notice that the new trips (`301` and `302`) are added to the existing table without modifying the original records (`101` and `102`).
+
+</div>

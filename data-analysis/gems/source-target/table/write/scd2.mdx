@@ -1,0 +1,70 @@
+---
+title: SCD2
+description: Track historical changes by adding new rows
+---
+
+The **Merge - SCD2** write mode tracks historical changes by adding new rows instead of updating existing ones. This lets you preserve a complete history, since every change generates a new entry rather than erasing old information. To be specific:
+
+- New rows are added for incoming records with unique keys that don't exist in the target table.
+- For records matching existing unique keys, a new row is added only when the incoming data differs from the existing record.
+- New rows are assigned a start date and a `null` end date (indicating it's currently valid).
+- If the unique key of the new record matched an existing record, the existing row is assigned an end date to mark when it stopped being valid.
+- This creates a complete timeline showing how data evolved over time.
+
+## Parameters
+
+| Parameter                                                         | Description                                                                                                                                                  |
+| ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Unique Key                                                        | Column(s) used to match existing records in the target dataset. In many cases, the unique key will be equivalent to your table's primary key, if applicable. |
+| Invalidate deleted rows                                           | When enabled, records that match deleted rows will be marked as no longer valid.                                                                             |
+| Determine new records by checking timestamp column                | Recognizes new records by the time from the **Updated at** column that you define.                                                                           |
+| Determine new records by looking for differences in column values | Recognizes new records based on a change of values in one or more specified columns.                                                                         |
+
+## Example: Route assignment history
+
+Each time a vehicle changes routes, a new row is added to preserve history. In this case, **Determine new records by checking timestamp column** is enabled, and `ASSIGNED_AT` is the timestamp column.
+
+<div class="table-example">
+
+**Incoming table**
+
+| VEHICLE_ID | ROUTE   | ASSIGNED_AT |
+| ---------- | ------- | ----------- |
+| 101        | Route B | 2024-01-15  |
+
+**Existing table**
+
+| VEHICLE_ID | ROUTE   | ASSIGNED_AT | valid_from | valid_to |
+| ---------- | ------- | ----------- | ---------- | -------- |
+| 101        | Route A | 2024-01-01  | 2024-01-01 | NULL     |
+
+**Updated table**
+
+| VEHICLE_ID | ROUTE   | ASSIGNED_AT | valid_from | valid_to   |
+| ---------- | ------- | ----------- | ---------- | ---------- |
+| 101        | Route A | 2024-01-01  | 2024-01-01 | 2024-01-15 |
+| 101        | Route B | 2024-01-15  | 2024-01-15 | NULL       |
+
+Notice that the original Route A record now has an end date (`2024-01-15` taken from the `ASSIGNED_AT` column) and a new Route B record was added with a null end date, preserving the complete history of route assignments.
+
+</div>
+
+## Parameters (PySpark only)
+
+<Badge icon="circle-exclamation" color="orange" shape="rounded" size="sm">
+  Private Preview
+</Badge>
+
+When PySpark is the project language, the SCD2 write mode includes the following configuration options.
+
+| Parameter                                     | Description                                                                                                                                                                                   | Default    |
+| --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| Key Columns                                   | Column(s) used to identify unique records. These columns remain constant across all versions of a record and are used to match incoming data with existing rows.                              | None       |
+| Historic Columns                              | Column(s) that change over time and require historical tracking. When values in these columns differ between incoming and existing records, a new row is created.                             | None       |
+| From Time Column                              | Column that stores the start time indicating when a row becomes valid. This timestamp marks the beginning of the validity period for that record version.                                     | None       |
+| To Time Column                                | Column that stores the end time indicating when a row stops being valid. Set to `null` for the current active version of a record.                                                            | None       |
+| Create Min Max Flags                          | When enabled, creates flag columns to identify the first (minimum) and last (maximum) entries for each unique key. Useful for quickly identifying historical boundaries.                      | false      |
+| Name of the column used as min/old-value flag | Column name for the minimum flag. Set to `true` (or `1` depending on flag values) for the first historical entry of each key.                                                                 | min_flag   |
+| Name of the column used as max/latest flag    | Column name for the maximum flag. Set to `true` (or `1` depending on flag values) for the most recent active entry of each key.                                                               | max_flag   |
+| Flag values                                   | Format for min and max flag values. Options are `true/false` (boolean) or `0/1` (numeric).                                                                                                    | true/false |
+| Enable Soft Delete                            | When enabled, deleted records from the source are treated as Type 2 changes. The target table updates the deleted record's end time instead of removing the row, preserving deletion history. | false      |

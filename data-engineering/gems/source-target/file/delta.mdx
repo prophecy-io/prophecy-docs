@@ -31,10 +31,10 @@ A Delta (Delta Lake) file type:
 
 ## Parameters
 
-| Parameter | Tab | Description |
-| --------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Location | Location | File path to read from or write to the Delta file. |
-| Schema | Properties | Schema to apply on the loaded data. In the Source gem, you can define or edit the schema visually or in JSON code. In the Target gem, you can view the schema visually or as JSON code. |
+| Parameter | Tab        | Description                                                                                                                                                                             |
+| --------- | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Location  | Location   | File path to read from or write to the Delta file.                                                                                                                                      |
+| Schema    | Properties | Schema to apply on the loaded data. In the Source gem, you can define or edit the schema visually or in JSON code. In the Target gem, you can view the schema visually or as JSON code. |
 
 ## Source
 
@@ -42,15 +42,13 @@ The Source gem reads data from Delta files and allows you to optionally specify 
 
 ### Source properties
 
-| Property name | Description | Default |
-| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
-| Description | Description of your dataset. | None |
-| Read timestamp | Time travel to a specific timestamp. This value is between the first commit timestamp and the latest commit timestamp in the table. | None |
-| Read version | Time travel to a specific version of the table. This value is an interger between the minimum and maximum version of the table. By default, the Source gem fetches the most recent version of each row if you don't use a time travel option. | None |
+| Property name  | Description                                                                                                                                                                                                                                   | Default |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| Description    | Description of your dataset.                                                                                                                                                                                                                  | None    |
+| Read timestamp | Time travel to a specific timestamp. This value is between the first commit timestamp and the latest commit timestamp in the table.                                                                                                           | None    |
+| Read version   | Time travel to a specific version of the table. This value is an interger between the minimum and maximum version of the table. By default, the Source gem fetches the most recent version of each row if you don't use a time travel option. | None    |
 
-<Note>
-You can only select `Read Timestamp` or `Read Version`, not both.
-</Note>
+<Note>You can only select `Read Timestamp` or `Read Version`, not both.</Note>
 
 ### Example
 
@@ -59,7 +57,8 @@ You can only select `Read Timestamp` or `Read Version`, not both.
 ### Compiled code
 
 <Tip>
-To see the compiled code of your project, [switch to the Code view](/data-engineering/development/pipelines/pipelines#project-editor) in the project header.
+  To see the compiled code of your project, [switch to the Code
+  view](/data-engineering/development/pipelines/pipelines#project-editor) in the project header.
 </Tip>
 
 #### Without time travel
@@ -137,26 +136,26 @@ The Target gem writes data to Delta files and allows you to optionally specify t
 
 ### Target properties
 
-| Property name | Description | Default |
+| Property name                              | Description                                                                                                                                              | Default |
 | ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| Description | Description of your dataset. | None |
-| Write Mode | How to handle existing data. For a list of the possible values, see [Supported write modes](#supported-write-modes). | `error` |
-| Overwrite table schema | Whether to overwrite the schema of the Delta table with the schema of the incoming `DataFrame`. | false |
-| Merge `DataFrame` schema into table schema | Whether to automatically add any columns present in the `DataFrame` but not in the target table to the end of the schema as part of a write transaction. | false |
-| Partition Columns | List of columns to partition the Delta table by. | None |
-| Overwrite partition predicate | Selectively overwrite the data that satisfies the given where clause expression. | None |
-| Optimize write | Whether to optimize the Spark partition sizes based on the actual data. | false |
+| Description                                | Description of your dataset.                                                                                                                             | None    |
+| Write Mode                                 | How to handle existing data. For a list of the possible values, see [Supported write modes](#supported-write-modes).                                     | `error` |
+| Overwrite table schema                     | Whether to overwrite the schema of the Delta table with the schema of the incoming `DataFrame`.                                                          | false   |
+| Merge `DataFrame` schema into table schema | Whether to automatically add any columns present in the `DataFrame` but not in the target table to the end of the schema as part of a write transaction. | false   |
+| Partition Columns                          | List of columns to partition the Delta table by.                                                                                                         | None    |
+| Overwrite partition predicate              | Selectively overwrite the data that satisfies the given where clause expression.                                                                         | None    |
+| Optimize write                             | Whether to optimize the Spark partition sizes based on the actual data.                                                                                  | false   |
 
 ### Supported write modes
 
-| Write mode | Description |
-| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| error | If the data already exists, throw an exception. |
-| overwrite | If the data already exists, overwrite the data with the contents of the `DataFrame`. |
-| append | If the data already exists, append the contents of the `DataFrame`. |
-| ignore | If the data already exists, do nothing with the contents of the `DataFrame`. This is similar to the `CREATE TABLE IF NOT EXISTS` clause in SQL. |
-| merge | Use the Delta `merge` command to insert, delete and update data. For more information, see [Delta MERGE](#delta-merge). |
-| scd2 merge | Store and manage the current and historical data over time. For more information, see [Delta MERGE](#delta-merge). |
+| Write mode | Description                                                                                                                                     |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| error      | If the data already exists, throw an exception.                                                                                                 |
+| overwrite  | If the data already exists, overwrite the data with the contents of the `DataFrame`.                                                            |
+| append     | If the data already exists, append the contents of the `DataFrame`.                                                                             |
+| ignore     | If the data already exists, do nothing with the contents of the `DataFrame`. This is similar to the `CREATE TABLE IF NOT EXISTS` clause in SQL. |
+| merge      | Use the Delta `merge` command to insert, delete and update data. For more information, see [Delta MERGE](#delta-merge).                         |
+| scd2 merge | Store and manage the current and historical data over time. For more information, see [Delta MERGE](#delta-merge).                              |
 
 ### Target Example
 
@@ -165,7 +164,8 @@ The Target gem writes data to Delta files and allows you to optionally specify t
 ### Compiled code
 
 <Tip>
-To see the compiled code of your project, [switch to the Code view](/data-engineering/development/pipelines/pipelines#project-editor) in the project header.
+  To see the compiled code of your project, [switch to the Code
+  view](/data-engineering/development/pipelines/pipelines#project-editor) in the project header.
 </Tip>
 
 <CodeGroup>
@@ -215,32 +215,34 @@ You can upsert data from a source `DataFrame` into a target Delta table by using
 
 ### SCD1
 
-The following lists the properties in an SCD1 MERGE condition where Delta tables do not retain its history.
+The following lists the properties in an SCD1 MERGE condition where Delta tables do not retain historical data.
 
 #### Properties
 
-| Property name | Description | Default |
-| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| Source Alias | Alias to use for the source `DataFrame`. | `source` |
-| Target Alias | Alias to use for existing target Delta table. | `taret` |
-| Merge condition | Condition to merge data from source `DataFrame` to target table. Delta can perform an update, delete, or insert action. | None |
-| When Matched Update Action | Update the row from your Source gem that exists in your Target gem based on your `When Matched Update Condition` property. | `update` |
-| When Matched Update Condition | Additional condition for updating a row. If you specify a condition, it must evaluate to `true` for the Target gem to update the row. | None |
-| When Matched Update Expressions | Expressions for setting the values of columns that the Target gem needs to update. | None |
-| When Matched Delete Action | Delete rows if your `When Matched Delete Condition` property and the optional additional condition evaluates to `true`. Delete removes the data from the latest version of the Delta table but does not remove it from the physical storage until you explicitily vacuum the old versions. To learn more, see [Remove files no longer referenced by a Delta table](https://docs.delta.io/latest/delta-utility.html#-delta-vacuum) | `ignore` |
-| When Matched Delete Condition | Additional condition for deleting a row. If you specify a condition, it must evaluate to `true` for the Target gem to delete the row. | False |
-| When Not Matched Action | Action to perform if the row from your Source gem is not present in your Target gem based on your `When Not Matched Condition` property. | `insert` |
-| When Not Matched Condition | Condition for inserting a row. If you specify a condition, it must evaluate to `true` for the Target gem to insert a new row. | None |
-| When Not Matched Expressions | Expressions for setting the values of columns that the Target gem needs to update. | None |
+| Property name                   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                    | Default  |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| Source Alias                    | Alias to use for the source `DataFrame`.                                                                                                                                                                                                                                                                                                                                                                                                       | `source` |
+| Target Alias                    | Alias to use for existing target Delta table.                                                                                                                                                                                                                                                                                                                                                                                                  | `taret`  |
+| Merge condition                 | Condition to merge data from source `DataFrame` to target table. Delta can perform an update, delete, or insert action.                                                                                                                                                                                                                                                                                                                        | None     |
+| When Matched Update Action      | Update the row from your Source gem that exists in your Target gem based on your `When Matched Update Condition` property.                                                                                                                                                                                                                                                                                                                     | `update` |
+| When Matched Update Condition   | Additional condition for updating a row. If you specify a condition, it must evaluate to `true` for the Target gem to update the row.                                                                                                                                                                                                                                                                                                          | None     |
+| When Matched Update Expressions | Expressions for setting the values of columns that the Target gem needs to update. <br /><br/>If you add some expressions, enable the **Update Remaining Columns from Source** checkbox to also update all remaining columns from the source `DataFrame`.                                                                                                                                                                                      | None     |
+| When Matched Delete Action      | Delete rows if your `When Matched Delete Condition` property and the optional additional condition evaluates to `true`. <br /><br />Delete removes the data from the latest version of the Delta table but does not remove it from the physical storage until you explicitily vacuum the old versions. To learn more, see [Remove files no longer referenced by a Delta table](https://docs.delta.io/latest/delta-utility.html#-delta-vacuum). | `ignore` |
+| When Matched Delete Condition   | Additional condition for deleting a row. If you specify a condition, it must evaluate to `true` for the Target gem to delete the row.                                                                                                                                                                                                                                                                                                          | False    |
+| When Not Matched Action         | Action to perform if the row from your Source gem is not present in your Target gem based on your `When Not Matched Condition` property.                                                                                                                                                                                                                                                                                                       | `insert` |
+| When Not Matched Condition      | Condition for inserting a row. If you specify a condition, it must evaluate to `true` for the Target gem to insert a new row.                                                                                                                                                                                                                                                                                                                  | None     |
+| When Not Matched Expressions    | Expressions for setting the values of columns that the Target gem needs to update.                                                                                                                                                                                                                                                                                                                                                             | None     |
 
 <Note>
 
 1. You must set at least one action out of update, delete or insert.
 1. A merge operation fails if multiple rows of the source `DataFrame` matches and the merge attempts to update the same rows of the target Delta table. You can place deduplicate gems before your Target gem if you expect duplicate rows in your Source gem.
+
 </Note>
 
 <Tip>
-When possible, provide predicates on the partition columns for a partitioned Delta table because predicates can significantly speed up the operations.
+  When possible, provide predicates on the partition columns for a partitioned Delta table because
+  predicates can significantly speed up the operations.
 </Tip>
 
 #### Example
@@ -255,12 +257,11 @@ And, you want to make the following updates to the table:
 
 The following shows the output and configurations for an SCD1 merge:
 
-
-
 #### Compiled code
 
 <Tip>
-To see the compiled code of your project, [switch to the Code view](/data-engineering/development/pipelines/pipelines#project-editor) in the project header.
+  To see the compiled code of your project, [switch to the Code
+  view](/data-engineering/development/pipelines/pipelines#project-editor) in the project header.
 </Tip>
 
 <CodeGroup>
@@ -321,27 +322,26 @@ The following lists the properties in an SCD2 MERGE condition where Delta tables
 
 #### Parameters
 
-| Property name | Description | Default |
-| --------------------------------------------- | ---------------------------------------------------------------------------------- | ------- |
-| Key Columns | List of key columns to remain constant. | None |
-| Historic Columns | List of columns to change over time and maintain its history. | None |
-| From time column | Time from which a particular row is valid. | None |
-| To time column | Time till which a particular row is not valid anymore. | None |
-| Name of the column used as min/old-value flag | Column to store the flag as `true` for the first entry of a particular key. | None |
-| Name of the column used as max/latest flag | Column to store the flag as `true` for the last entry of a particular key. | None |
-| Flag values | Format of the min and max flag. Possible values are: `true/false`, or `0/1`. | None |
+| Property name                                 | Description                                                                  | Default |
+| --------------------------------------------- | ---------------------------------------------------------------------------- | ------- |
+| Key Columns                                   | List of key columns to remain constant.                                      | None    |
+| Historic Columns                              | List of columns to change over time and maintain its history.                | None    |
+| From time column                              | Time from which a particular row is valid.                                   | None    |
+| To time column                                | Time till which a particular row is not valid anymore.                       | None    |
+| Name of the column used as min/old-value flag | Column to store the flag as `true` for the first entry of a particular key.  | None    |
+| Name of the column used as max/latest flag    | Column to store the flag as `true` for the last entry of a particular key.   | None    |
+| Flag values                                   | Format of the min and max flag. Possible values are: `true/false`, or `0/1`. | None    |
 
 #### Example
 
 Continuing from [the SCD1 example](#upsert-example), you can use the Delta log to capture the historical `customer_zip_code` at the row-level.
 The following shows the output and configurations for an SCD2 merge:
 
-
-
 #### Compiled code
 
 <Tip>
-To see the compiled code of your project, [switch to the Code view](/data-engineering/development/pipelines/pipelines#project-editor) in the project header.
+  To see the compiled code of your project, [switch to the Code
+  view](/data-engineering/development/pipelines/pipelines#project-editor) in the project header.
 </Tip>
 
 <CodeGroup>
@@ -498,12 +498,12 @@ object writeDeltaSCD2 {
 Continuing from [the SCD2 example](#scd2-example), you use the Delta log to capture the historical `customer_zip_code` at the column-level.
 The following shows the output and configurations for an SCD3 merge:
 
-
-
 <Tip>
-To see the compiled code of your project, [switch to the Code view](/data-engineering/development/pipelines/pipelines#project-editor) in the project header.
+  To see the compiled code of your project, [switch to the Code
+  view](/data-engineering/development/pipelines/pipelines#project-editor) in the project header.
 </Tip>
 
 <Info>
-To learn more about how Prophecy uses the Delta file type, see [Prophecy with Delta — making data lakehouses easier](https://www.prophecy.io/blog/prophecy-with-delta-making-data-lakehouse-easier).
+  To learn more about how Prophecy uses the Delta file type, see [Prophecy with Delta — making data
+  lakehouses easier](https://www.prophecy.io/blog/prophecy-with-delta-making-data-lakehouse-easier).
 </Info>
