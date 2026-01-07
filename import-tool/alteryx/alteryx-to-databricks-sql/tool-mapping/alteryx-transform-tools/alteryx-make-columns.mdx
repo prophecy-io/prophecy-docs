@@ -9,12 +9,12 @@ Because SQL-based execution engines do not assume stable row order by default, P
 
 ## Automated migration results
 
-When Import detects an Alteryx Make Columns tool, it generates a **multi-step pipeline** rather than a single gem. This reflects the fact that Make Columns encodes several implicit assumptions—row order, column position, and grouping—that must be made explicit for deterministic execution.
+When Import detects an Alteryx Make Columns tool, it generates a multi-step pipeline rather than a single gem. This reflects the fact that Make Columns encodes several implicit assumptions—row order, column position, and grouping—that must be made explicit for deterministic execution.
 
 At a high level, Import performs the following steps:
 
-1. Prophecy first adds a [WindowFunction gem](/data-analysis/gems/transform/window) that generates a synthetic sequence column using `row_number()`, ordered by a constant (`1`). This allows for deterministic row ordering, making row position explicit for execution purposes, even when no natural sort key exists.
-1. A second WindowFunction gem computes `count(1)` over the dataset in order to **compute total record count**. This value is included as part of Import's aggregation scaffolding and may be used by downstream steps.
+1. Prophecy first adds a [WindowFunction gem](/data-analysis/gems/transform/window) that generates a synthetic sequence column using `row_number()`, ordered by a constant (`1`). This allows for deterministic row ordering, making row position explicit for execution purposes even when no natural sort key exists.
+1. A second WindowFunction gem computes `count(1)` over the dataset in order to compute total record count.
 1. Next, a [Reformat gem](/data-analysis/gems/prepare/reformat) derives internal grouping and position identifiers by calculating:
    - an internal group identifier that determines which rows belong to the same output record.
    - an internal position identifier that determines which newly created column each value should populate.
@@ -43,7 +43,7 @@ These options implicitly rely on input row order.
 
 ### In Prophecy (WindowFunction, Reformat, Script gems)
 
-There is no single configuration surface. Instead, configuration is distributed across:
+Configuration is distributed across:
 
 - WindowFunction gems (row sequencing and record counts)
 - Reformat gems (grouping and position logic)

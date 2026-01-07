@@ -9,9 +9,9 @@ In Prophecy, the same outcomes are implemented using the [CountRecords gem](/dat
 
 ## Automated migration results
 
-When Import detects an Alteryx Count Records tool, it generates a [Reformat gem](/data-analysis/gems/prepare/reformat) that computes a row count using an expression such as `count(1)`. (This expression counts all input rows and preserves the semantics of the Alteryx Count Records tool.)
+When Import detects an Alteryx Count Records tool, it generates a [Reformat gem](/data-analysis/gems/prepare/reformat) that computes a row count using an expression such as `count(1)`.
 
-The resulting dataset contains a single row with the total record count.
+This expression counts all input rows and preserves the semantics of the Alteryx Count Records tool.
 
 ## Manually replicate in Prophecy
 
@@ -20,8 +20,6 @@ To reproduce Count Records behavior manually:
 1. Add a **CountRecords** gem to the canvas.
 1. Connect the gem to the dataset whose rows should be counted.
 1. Select **Count total number of records**.
-
-This produces a single-row output containing the total number of records in the input dataset.
 
 ## Configuration options
 
@@ -44,7 +42,7 @@ The count reflects the number of rows entering the tool, regardless of column va
 
 ## Known caveats
 
-Import may represent Count Records logic using a **Reformat** gem with an expression like `count(1)` rather than the CountRecords gem itself. Using a constant expression ensures that the count does not depend on any input column and mirrors Alteryx's row-count semantics.
+Import may represent Count Records logic using a **Reformat** gem with an expression like `count(1)` rather than the CountRecords gem itself. Using a constant expression ensures that the count does not depend on any input column and mirrors Alteryx’s row-count semantics.
 
 ## Example
 
