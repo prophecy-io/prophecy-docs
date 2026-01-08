@@ -1,0 +1,78 @@
+---
+title: Alteryx Dynamic Rename Tool > Prophecy MultiColumnRename gem
+description: Mapping between Alteryx’s Dynamic Rename tool and Prophecy’s MultiColumnRename gem
+---
+
+The [Alteryx Dynamic Rename tool](https://help.alteryx.com/current/en/designer/tools/developer/dynamic-rename-tool.html) renames one or more columns based on rules, formulas, or metadata derived from the incoming dataset. It is commonly used to standardize column names, apply prefixes or suffixes, replace text patterns, or dynamically rename fields based on position or content.
+
+In Prophecy, the equivalent behavior is implemented using the [MultiColumnRename gem](/data-analysis/gems/prepare/multi-column-rename). This gem enables rule-based renaming across multiple columns at once, supporting pattern replacement, prefix/suffix application, and other bulk renaming operations without requiring per-column configuration.
+
+## Automated migration results
+
+When Import encounters an Alteryx Dynamic Rename tool, it generates a **MultiColumnRename** gem configured to reproduce the detected renaming logic.
+
+In typical migrations:
+
+- Columns selected by the Dynamic Rename tool are mapped to the MultiColumnRename input scope.
+- Rename rules (such as prefix, suffix, or find-and-replace patterns) are translated into the corresponding bulk rename configuration.
+- The resulting dataset preserves column order while applying the updated field names.
+
+Dynamic Rename configurations that rely on complex formulas or metadata-driven logic may require manual review after import.
+
+## Manually replicate in Prophecy
+
+To manually reproduce Dynamic Rename behavior:
+
+1. Add a **MultiColumnRename** gem to the canvas.
+2. Select the set of columns you want to rename.
+3. Choose the appropriate rename strategy (for example, add prefix/suffix or replace text).
+4. Define the rename rule to match the intended naming pattern.
+5. Apply the configuration and connect the output to downstream gems.
+
+## Configuration options
+
+### Column selection
+
+- **Alteryx:** Columns can be selected explicitly or dynamically based on field metadata.
+- **Prophecy:** One or more columns are selected as a group for bulk renaming.
+
+### Rename strategy
+
+- **Alteryx:** Supports renaming via fixed rules, formulas, position-based logic, or metadata-derived names.
+- **Prophecy:** Supports rule-based renaming such as prefixing, suffixing, and pattern replacement across multiple columns.
+
+### Text replacement behavior
+
+- **Alteryx:** Allows find-and-replace operations within column names, optionally using expressions.
+- **Prophecy:** Supports replacing matching substrings within column names using declarative rules.
+
+### Output handling
+
+- **Alteryx:** Renamed fields replace the original field names in the output schema.
+- **Prophecy:** Renamed columns replace original names while preserving column order and downstream compatibility.
+
+## Output behavior
+
+- **Alteryx:** Outputs the incoming dataset with column names updated according to the configured dynamic rules.
+- **Prophecy:** Outputs a dataset with renamed columns applied uniformly across the selected set of fields.
+
+## Known caveats
+
+- **Formula-driven renames:** Dynamic Rename configurations that depend on complex expressions or runtime metadata may not fully translate and should be validated post-import.
+- **Column ordering:** While both tools preserve column order, downstream dependencies should be reviewed after renaming to ensure references remain valid.
+- **Scope differences:** Alteryx supports some rename patterns tied to field position that may need approximation when implemented as bulk rules.
+
+## Example
+
+### Alteryx
+
+Use the Dynamic Rename tool to add a prefix such as `src_` to all incoming fields, standardizing column names before further processing.
+
+### Prophecy
+
+1. Add a **MultiColumnRename** gem.
+2. Select all target columns.
+3. Configure a prefix rule with value `src_`.
+4. Apply the transformation.
+
+The resulting dataset contains the same fields with updated names, functionally equivalent to the Alteryx Dynamic Rename output.
