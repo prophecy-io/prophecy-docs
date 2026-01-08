@@ -1,0 +1,78 @@
+---
+title: Alteryx JSON Parse Tool > Prophecy JSONParse gem
+description: Mapping between Alteryx’s JSON Parse tool and Prophecy’s JSONParse gem
+---
+
+The [Alteryx JSON Parse tool](https://help.alteryx.com/current/en/designer/tools/developer/json-parse-tool.html) parses JSON-formatted text stored in a field and converts it into structured columns. It is commonly used to expand API responses, embedded JSON strings, or semi-structured data into a tabular schema for downstream processing.
+
+In Prophecy, equivalent functionality is provided by the [JSONParse gem](/data-analysis/gems/parse/json-parse). This gem parses JSON content into structured columns or nested structures, enabling downstream transformations using standard schema-aware operations.
+
+## Automated migration results
+
+When Import encounters an Alteryx JSON Parse tool, it generates a **JSONParse** gem configured to reproduce the detected parsing behavior.
+
+In typical migrations:
+
+- The source column containing JSON text is mapped to the JSONParse input.
+- Parsed fields are expanded into columns or nested structures based on the inferred JSON schema.
+- Output columns reflect the same logical structure as the Alteryx JSON Parse result.
+
+JSON Parse configurations that rely on highly variable or malformed JSON may require manual validation after import.
+
+## Manually replicate in Prophecy
+
+To manually reproduce JSON Parse behavior:
+
+1. Add a **JSONParse** gem to the canvas.
+2. Select the column containing the JSON string.
+3. Configure the parsing mode to expand fields into structured columns.
+4. Review the inferred schema and adjust parsing settings if needed.
+5. Connect the output to downstream gems.
+
+## Configuration options
+
+### Input column
+
+- **Alteryx:** Select the field containing valid JSON text.
+- **Prophecy:** Specify the column whose values should be parsed as JSON.
+
+### Schema handling
+
+- **Alteryx:** Automatically derives fields from the JSON structure, with options to control how arrays and nested objects are handled.
+- **Prophecy:** Infers schema from the JSON content and represents nested objects as structs or expanded columns, depending on configuration.
+
+### Error handling
+
+- **Alteryx:** Invalid JSON values may result in null outputs or parsing errors depending on configuration.
+- **Prophecy:** Invalid or malformed JSON values are handled according to the gem’s parsing rules and may produce nulls or errors that should be reviewed.
+
+### Output structure
+
+- **Alteryx:** Outputs structured fields derived from the JSON, replacing the original text field or appending new fields.
+- **Prophecy:** Outputs a dataset with parsed JSON fields available as structured columns for downstream use.
+
+## Output behavior
+
+- **Alteryx:** Produces a tabular dataset where JSON content has been converted into fields.
+- **Prophecy:** Produces a dataset with schema-aware columns derived from the parsed JSON content.
+
+## Known caveats
+
+- **Schema variability:** Highly variable JSON structures can lead to wide or nested schemas that may require downstream normalization.
+- **Arrays:** JSON arrays may need additional handling if row-level expansion is required.
+- **Input validity:** Both tools assume valid JSON; malformed input should be cleaned or validated upstream.
+
+## Example
+
+### Alteryx
+
+Use the JSON Parse tool to expand a column containing API response JSON into individual fields for analysis.
+
+### Prophecy
+
+1. Add a **JSONParse** gem.
+2. Select the JSON string column as input.
+3. Review the inferred schema.
+4. Apply the transformation.
+
+The resulting dataset contains structured columns corresponding to the fields in the original JSON content, matching the behavior of the Alteryx JSON Parse tool.

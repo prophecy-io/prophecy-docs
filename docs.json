@@ -1218,6 +1218,17 @@
                           "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-union"
                         ]
                       },
+                      {
+                        "group": "Alteryx Developer tools",
+                        "pages": [
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-developer-tools/alteryx-base64-encoder",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-developer-tools/alteryx-dynamic-rename",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-developer-tools/alteryx-download",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-developer-tools/alteryx-dynamic-select",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-developer-tools/alteryx-dynamic-input",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-developer-tools/alteryx-json-parse-tool"
+                        ]
+                      },
                       "import-tool/alteryx/alteryx-to-databricks-sql/databricks-performance-tuning"
                     ]
                   },

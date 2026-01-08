@@ -1,0 +1,78 @@
+---
+title: Alteryx Dynamic Input Tool > Prophecy DynamicInput gem
+description: Mapping between Alteryx’s Dynamic Input tool and Prophecy’s DynamicInput gem
+---
+
+The [Alteryx Dynamic Input tool](https://help.alteryx.com/current/en/designer/tools/developer/dynamic-input-tool.html) reads data from files, tables, or endpoints whose locations or names are determined dynamically from incoming fields. It is commonly used to parameterize file paths, table names, or query inputs so that workflows can ingest variable data sources at runtime.
+
+In Prophecy, equivalent behavior is implemented using the [DynamicInput gem](/data-analysis/gems/custom/dynamic-input). This gem enables pipelines to resolve input sources dynamically based on upstream values, allowing runtime-controlled ingestion without hard-coding source locations.
+
+## Automated migration results
+
+When Import encounters an Alteryx Dynamic Input tool, it generates a **DynamicInput** gem configured to mirror the detected dynamic source behavior.
+
+In typical migrations:
+
+- The base connection or source template is preserved.
+- Incoming fields used to parameterize file paths, table names, or source identifiers are mapped to DynamicInput parameters.
+- The resulting pipeline resolves the input source at runtime using upstream values rather than a fixed source definition.
+
+Dynamic Input configurations that rely on complex string manipulation or external metadata may require manual review after import.
+
+## Manually replicate in Prophecy
+
+To manually reproduce Dynamic Input behavior:
+
+1. Add a **DynamicInput** gem to the canvas.
+2. Configure the base connection or source type.
+3. Define which parts of the source (for example, file path or table name) should be parameterized.
+4. Map upstream fields to those parameters.
+5. Preview or validate the resolved input before connecting downstream gems.
+
+## Configuration options
+
+### Source parameterization
+
+- **Alteryx:** Allows file paths, table names, or queries to be dynamically constructed from incoming fields.
+- **Prophecy:** Allows portions of the input source definition to be dynamically resolved using upstream values.
+
+### Execution scope
+
+- **Alteryx:** Can execute once per incoming row, resolving a different input source for each record.
+- **Prophecy:** Supports per-row dynamic resolution when upstream data is connected, with execution semantics determined by pipeline structure.
+
+### Connection handling
+
+- **Alteryx:** Uses a predefined input configuration as a template and substitutes dynamic values at runtime.
+- **Prophecy:** Uses a base source configuration with dynamic parameters injected during execution.
+
+### Schema handling
+
+- **Alteryx:** Assumes compatible schemas across dynamically loaded inputs.
+- **Prophecy:** Expects schema compatibility; inconsistent schemas may require downstream normalization or validation.
+
+## Output behavior
+
+- **Alteryx:** Outputs records read from dynamically resolved input sources into the workflow.
+- **Prophecy:** Outputs datasets ingested from runtime-resolved sources, flowing into downstream transformations.
+
+## Known caveats
+
+- **Schema consistency:** Dynamic inputs should share compatible schemas to avoid downstream failures.
+- **Execution semantics:** Per-row dynamic inputs can significantly affect performance and should be reviewed carefully.
+- **Validation limits:** Because sources are resolved at runtime, previewing all possible inputs may not be feasible.
+
+## Example
+
+### Alteryx
+
+Use the Dynamic Input tool to read multiple files whose paths are supplied by an upstream list of filenames.
+
+### Prophecy
+
+1. Add a **DynamicInput** gem.
+2. Configure the base input source.
+3. Parameterize the file path using an upstream column.
+4. Execute the pipeline to ingest each dynamically resolved input.
+
+The resulting dataset reflects data read from dynamically determined sources, matching the functional behavior of the Alteryx Dynamic Input tool.
