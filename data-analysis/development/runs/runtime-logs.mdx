@@ -3,11 +3,16 @@ title: Runtime logs
 description: View information about each operation performed during a pipeline run
 ---
 
-Runtime logs are generated in real time during pipeline execution and provide a step-by-step trace of how each transformation or action was performed.
+Runtime logs are generated in real time during pipeline execution and persisted after the run completes. They
+provide a step-by-step trace of how each transformation or action was performed.
 
 These logs help you quickly identify which steps succeeded or failed, how long each step took, and whether the execution followed the expected sequence. They're also useful for reviewing pipelines you didn't build yourself, so you can see what happened during the run.
 
+Runtime logs, along with associated pipeline state and interims, are persisted for a limited period of time. During this period, they are automatically restored when you return to the IDE. This allows you to revisit recent pipeline runs without rerunning them or keeping the log view open.
+
 ## Log entries
+
+Runtime logs are persisted beyond the active browser session. When you reopen a project or return to the IDE later, logs from recent pipeline runs are restored from persistent storage and displayed in the Runtime Logs view.
 
 You can open runtime logs from the information footer at the bottom of the project editor. Each log entry provides structured details that help you trace execution and diagnose issues. Logs include:
 
@@ -27,7 +32,7 @@ When an error occurs, the message usually comes directly from the execution engi
 
 ## Log UI
 
-In the Runtime Logs tab, you have several tools to help you navigate and analyze your logs effectively.
+In the Runtime Logs tab, you have several tools to help you navigate and analyze your logs effectively. Closing Runtime Logs does not clear log data. If you close the Runtime Logs tab and reopen it later, the logs from recent runs are restored from persistent storage.
 
 1. **Filter logs by keywords**: Find specific information by entering search terms
 1. **Sort logs**: Organize logs chronologically
@@ -35,6 +40,8 @@ In the Runtime Logs tab, you have several tools to help you navigate and analyze
 1. **Download logs**: Save logs to your machine as a text file
 1. **Expand log screen**: Display a larger view of your logs
 1. **Clear all logs**: Remove log information for previous runs
+
+If you navigate to Runtime Logs from the Observability tab, Prophecy restores the corresponding runtime logs from persistent storage rather than starting with an empty log view.
 
 ![Runtime logs](/data-analysis/development/runs/img/runtime-logs.png)
 
@@ -57,6 +64,12 @@ If you have access to your Databricks workspace:
    - Start and end times
    - Error messages
    - Execution plan or profile
+
+## Log retention
+
+To balance observability with performance, runtime logs, pipeline state, and interims are retained for a limited period of time. Logs are automatically restored while they remain within the retention window, after which older data may be removed.
+
+Retention is constrained by time and/or total log size to avoid excessive storage and ensure the IDE remains responsive. The exact limits are determined by the execution environment and system configuration.
 
 ## What's next
 
