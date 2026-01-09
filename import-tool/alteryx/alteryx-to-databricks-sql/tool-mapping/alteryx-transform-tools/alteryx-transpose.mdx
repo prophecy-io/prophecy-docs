@@ -3,17 +3,17 @@ title: Alteryx Transpose tool > Prophecy Unpivot Gem
 description: Mapping between Alteryx’s Transpose tool and Prophecy’s Unpivot gem.
 ---
 
-The [Alteryx Transpose tool](https://help.alteryx.com/current/en/designer/tools/transform/transpose-tool.html) reshapes data from wide format to long format by converting selected Data Columns into two output columns—one holding the original column names and one holding their values—while preserving selected Key Columns as identifiers. In practice, this is the standard “columns to rows” operation: keep identifiers, stack a set of columns into `Name`/`Value`.
+The [Alteryx Transpose tool](https://help.alteryx.com/current/en/designer/tools/transform/transpose-tool.html) reshapes data from wide format to long format by converting selected Data Columns into two output columns—one holding the original column names (`Name`) and one holding their values (`Value`)—while preserving selected Key Columns as identifiers. 
 
 In Prophecy, the equivalent operation is implemented by the [Unpivot gem](/data-analysis/gems/transform/unpivot).
 
 <note>
-This functionality was previously provided by Prophecy’s Transpose gem; that gem is still supported for existing pipelines, but Prophecy recommends using Unpivot moving forward.
+This functionality was previously provided by Prophecy's Transpose gem; that gem is still supported for existing pipelines, but Prophecy recommends using Unpivot moving forward.
 </note>
 
 ## Automated migration results
 
-When Import detects an Alteryx Transpose tool, it generates a **Transpose** gem in the pipeline (even though Transpose is now functionally superseded by Unpivot).
+When Import detects an Alteryx Transpose tool, it generates a **Transpose** gem.
 
 ## Manually replicate in Prophecy
 
@@ -31,11 +31,7 @@ Use the Unpivot gem to reproduce Alteryx Transpose behavior.
 Alteryx Transpose is configured by dividing fields into two sets:
 
 - **Key Columns**: Columns that remain unchanged and are repeated for each transposed output row (identifiers).
-- **Data Columns**: Columns that are converted into rows, producing two output columns commonly understood as “name” and “value.”
-
-Notes that affect outcomes:
-- Deselecting a field from **Data Columns** drops it from the output entirely.
-- If the selected data columns contain mixed types, the resulting value column may be coerced to a string type.
+- **Data Columns**: Columns that are converted into rows, producing two output columns: `Name` and `Value`.
 
 ### Prophecy
 
@@ -45,7 +41,6 @@ Select **Data Columns**. Functionally equivalent to Alteryx data columns. The co
 
 Optionally, select **Use custom output column names for Name & Value pairs** and enter names for the new columns.
 
-
 ## Output behavior
 
 In both platforms:
@@ -53,12 +48,11 @@ In both platforms:
 - Selected data columns are stacked into:
   - a column containing the original field names (`Name`)
   - a column containing the corresponding field values (`Value`).
-- The output has more rows than the input (roughly: `input_rows × number_of_data_columns`, per group of key columns).
+- The output has more rows than the input.
 
 ## Known caveats
 
-- **Deprecated gem naming in migrated pipelines**: Import may generate a Transpose gem even though Unpivot is the current recommended gem.
-- **Column selection is the transformation**: Transpose/Unpivot is very sensitive to which fields are treated as keys vs data. A “small” selection change can materially changes row count and meaning.
+**Deprecated gem naming in migrated pipelines**: Import may generate a Transpose gem even though Unpivot is the current recommended gem.
 
 ## Example
 
