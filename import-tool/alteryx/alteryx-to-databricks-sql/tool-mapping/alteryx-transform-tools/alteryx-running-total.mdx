@@ -11,7 +11,7 @@ In Prophecy, the same outcomes are implemented using the [WindowFunction gem](/d
 
 When Import detects an Alteryx Running Total tool, it generates a WindowFunction gem that computes a sum for a selected column:
 
-- The selected value field is mapped to a `SUM` aggregation function.
+- The selected value field is mapped to a `sum` aggregation function.
 - Grouping fields map to the gem's **Partition by** configuration.
 - Row ordering maps to the gem's **Order by** configuration.
 
@@ -43,7 +43,7 @@ Configure the WindowFunction gem by specifying:
 
 - **Partition by** columns (combine with **Order by** to mimic Alteryx group-by behavior)
 - **Order by** columns (use the same column as **Partition by** to mimic Alteryx group-by behavior)
-- **Window use**: running total target column with a `SUM` expression on the running-total field
+- **Window use**: running total target column with a `sum` expression on the running-total field
 
 ## Output behavior
 
