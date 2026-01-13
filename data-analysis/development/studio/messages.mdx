@@ -1,0 +1,31 @@
+---
+title: Status messages
+description: Understand messages that appear in the Studio
+---
+
+Status messages appear in Studio to indicate what Prophecy is doing behind the scenes as you make changes or run your pipeline. You'll see these messages in the bottom-right corner or the center of the Studio canvas.
+
+## Reference
+
+You'll see the following messages in Studio.
+
+| Message                        | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Initializing project**       | Prophecy is loading project files and setting up the Studio environment. This message blocks interaction with the canvas until initialization completes.                                                                                                                                                                                                                                                                                                                    |
+| **Processing changes**         | Prophecy has received your edits and is checking for side effects that need to be handled. The system identifies dependencies and updates related project files automatically. <br/><br/>For example, adding a table from the Environment tab to the pipeline canvas also creates an entry in `sources.yml`.                                                                                                                                                                |
+| **Generating code**            | Prophecy is converting your visual pipeline into SQL files. During this process, Prophecy: <ul><li>Scans all gems in the current pipeline for changes.</li><li>Generates SQL code for each gem.</li><li>For custom macro gems, executes the `apply` method you implemented in a separate sandbox environment.</li></ul> Code generation runs automatically when you modify gems. Duration depends on the number of gems and complexity of transformations in your pipeline. |
+| **Compiling**                  | Prophecy is performing checks and computing output schemas for each gem's output. Compilation happens automatically after code generation.                                                                                                                                                                                                                                                                                                                                  |
+| **DBT initialization**         | Prophecy is preparing the [dbt environment](https://docs.getdbt.com/docs/introduction) for your project (since Prophecy uses dbt behind the scenes for transformations). Before running pipelines, Prophecy: <ul><li>Creates a sandbox environment loaded with all project files.</li><li>Updates the sandbox with recent changes.</li><li>Compiles models using dbt to produce final runnable SQL code.</li></ul> This message appears when you start a pipeline run.      |
+| **Running**                    | Prophecy is executing your pipeline. This includes orchestrating the run, managing dependencies, and coordinating execution across different components.                                                                                                                                                                                                                                                                                                                    |
+| **Running query in warehouse** | Prophecy is executing SQL queries directly in your data warehouse. Different parts of your pipeline run in different environments: <ul><li>SQL transformations execute in your SQL warehouse.</li><li>Orchestration, data ingestion, and data egress operations run through Prophecy Automate.</li></ul>                                                                                                                                                                    |
+
+## Duration
+
+Status messages may remain visible longer in large projects because:
+
+- More gems require more code generation.
+- Complex dependencies need more processing time.
+- Larger schemas take longer to compute.
+- More files need to be synchronized with the dbt sandbox.
+
+If a message persists for an unusually long time, try refreshing the page. If the problem persists, [contact support](/data-analysis/administration/getting-help/get-in-touch).
