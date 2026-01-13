@@ -27,8 +27,7 @@
                     "pages": [
                       "index",
                       "data-analysis/getting-started/concepts",
-                      "data-analysis/getting-started/quick-start",
-                      "data-analysis/getting-started/create-project"
+                      "data-analysis/getting-started/quick-start"
                     ]
                   },
                   {
@@ -82,12 +81,20 @@
                     "group": "Development",
                     "pages": [
                       {
+                        "group": "Projects",
+                        "pages": [
+                          "data-analysis/development/projects/create-project",
+                          "data-analysis/development/projects/project-languages"
+                        ]
+                      },
+                      {
                         "group": "Studio",
                         "pages": [
                           "data-analysis/development/studio/studio",
                           "data-analysis/development/studio/folders",
                           "data-analysis/development/studio/canvas-annotations",
                           "data-analysis/development/studio/containers",
+                          "data-analysis/development/studio/development-settings",
                           "data-analysis/development/studio/messages"
                         ]
                       },
@@ -135,7 +142,8 @@
                         "pages": [
                           "data-analysis/development/tests/test-comparison",
                           "data-analysis/development/tests/table-tests",
-                          "data-analysis/development/tests/project-tests"
+                          "data-analysis/development/tests/project-tests",
+                          "data-analysis/development/tests/unit-tests"
                         ]
                       },
                       {
@@ -188,7 +196,10 @@
                           "data-analysis/environment/connections/tableau"
                         ]
                       },
-                      "data-analysis/environment/secrets/secrets"
+                      {
+                        "group": "Secrets",
+                        "pages": ["data-analysis/environment/secrets/secrets"]
+                      }
                     ]
                   },
                   {
@@ -264,7 +275,19 @@
                           "data-analysis/gems/source-target/table/databricks",
                           "data-analysis/gems/source-target/table/prophecy-warehouse",
                           "data-analysis/gems/source-target/table/upload-files",
-                          "data-analysis/gems/source-target/table/write-options"
+                          {
+                            "group": "Write options",
+                            "pages": [
+                              "data-analysis/gems/source-target/table/write/write-options",
+                              "data-analysis/gems/source-target/table/write/wipe-replace-table",
+                              "data-analysis/gems/source-target/table/write/append",
+                              "data-analysis/gems/source-target/table/write/upsert",
+                              "data-analysis/gems/source-target/table/write/wipe-replace-partitions",
+                              "data-analysis/gems/source-target/table/write/wipe-replace-predicate",
+                              "data-analysis/gems/source-target/table/write/scd2",
+                              "data-analysis/gems/source-target/table/write/delete-insert"
+                            ]
+                          }
                         ]
                       },
                       {
@@ -289,8 +312,21 @@
                         ]
                       },
                       {
-                        "group": "File storage systems",
+                        "group": "Files",
                         "pages": [
+                          {
+                            "group": "File storage systems",
+                            "pages": [
+                              "data-analysis/gems/source-target/file/adls",
+                              "data-analysis/gems/source-target/file/s3",
+                              "data-analysis/gems/source-target/file/gcs",
+                              "data-analysis/gems/source-target/file/databricks-volumes",
+                              "data-analysis/gems/source-target/file/sftp",
+                              "data-analysis/gems/source-target/file/onedrive",
+                              "data-analysis/gems/source-target/file/sharepoint",
+                              "data-analysis/gems/source-target/file/smartsheet"
+                            ]
+                          },
                           {
                             "group": "File types",
                             "pages": [
@@ -302,15 +338,7 @@
                               "data-analysis/gems/source-target/file/file-types/text",
                               "data-analysis/gems/source-target/file/file-types/fixed-width"
                             ]
-                          },
-                          "data-analysis/gems/source-target/file/adls",
-                          "data-analysis/gems/source-target/file/s3",
-                          "data-analysis/gems/source-target/file/gcs",
-                          "data-analysis/gems/source-target/file/databricks-volumes",
-                          "data-analysis/gems/source-target/file/sftp",
-                          "data-analysis/gems/source-target/file/onedrive",
-                          "data-analysis/gems/source-target/file/sharepoint",
-                          "data-analysis/gems/source-target/file/smartsheet"
+                          }
                         ]
                       }
                     ]
@@ -572,7 +600,8 @@
                         "pages": [
                           "data-analysis/administration/management/cluster-admin-settings/cluster-admin-settings",
                           "data-analysis/administration/management/cluster-admin-settings/oauth-setup",
-                          "data-analysis/administration/management/cluster-admin-settings/copilot-settings"
+                          "data-analysis/administration/management/cluster-admin-settings/copilot-settings",
+                          "data-analysis/administration/management/cluster-admin-settings/feature-management"
                         ]
                       },
 
@@ -1072,7 +1101,8 @@
                         "pages": [
                           "data-engineering/administration/management/cluster-admin-settings/cluster-admin-settings",
                           "data-engineering/administration/management/cluster-admin-settings/oauth-setup",
-                          "data-engineering/administration/management/cluster-admin-settings/copilot-settings"
+                          "data-engineering/administration/management/cluster-admin-settings/copilot-settings",
+                          "data-engineering/administration/management/cluster-admin-settings/feature-management"
                         ]
                       },
 
@@ -1177,6 +1207,16 @@
                           "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-field-formula-tool",
                           "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-row-formula-tool",
                           "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-oversample-field-tool"
+                        ]
+                      },
+                      {
+                        "group": "Alteryx Join tools",
+                        "pages": [
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-append-fields",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-find-replace",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-join",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-join-multiple",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-union"
                         ]
                       },
                       "import-tool/alteryx/alteryx-to-databricks-sql/databricks-performance-tuning"
@@ -1331,5 +1371,11 @@
     "playground": {
       "display": "simple"
     }
-  }
+  },
+  "redirects": [
+    {
+      "source": "/data-analysis/gems/source-target/table/write/write-options",
+      "destination": "/data-analysis/gems/source-target/table/write/write-options"
+    }
+  ]
 }

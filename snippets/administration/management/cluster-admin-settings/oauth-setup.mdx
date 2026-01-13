@@ -1,6 +1,6 @@
 <Callout icon="/images/icon.png" color="#FFC107">
 
-Available on the [Enterprise Edition](/data-engineering/administration/platform/editions) only.
+Available for the [Express and Enterprise Editions](/data-engineering/administration/platform/editions) only.
 
 </Callout>
 
@@ -100,8 +100,14 @@ Create an OAuth 2.0 client in Google Cloud Console:
 3. Go to **APIs & Services** > **Credentials**.
 4. Click **Create Credentials** > **OAuth client ID**.
 5. Configure the OAuth consent screen if prompted.
-6. Select the application type and configure authorized redirect URIs.
-7. Save the generated client ID and secret for use in Prophecy.
+6. Select the application type.
+7. Add the following redirect URI:
+
+   ```
+   https://<your_prophecy_url>/metadata/oauthCallback
+   ```
+
+8. Save the generated client ID and secret for use in Prophecy.
 
 For detailed instructions, see [Setting up OAuth 2.0](https://support.google.com/cloud/answer/6158849) in the Google Cloud documentation.
 
