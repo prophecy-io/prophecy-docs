@@ -46,7 +46,7 @@ You must [manually configure your schedule](https://docs.prophecy.io/analysts/sc
    | Team               | Create or choose the team who will access the bundle.                                                                                         |
    | Project            | Create or choose the [project](https://docs.prophecy.io/projects) for the bundle. <br/>Prophecy filters this list by projects written in SQL. |
    | Branch             | Select the Git branch where you want to upload your code.                                                                                     |
-   | Sql Fabric         | Choose the SQL [fabric](https://docs.prophecy.io/fabrics/) to attach your datasets and schedules to.                                          |
+   | SQL Fabric         | Choose the SQL [fabric](https://docs.prophecy.io/fabrics/) to attach your datasets and schedules to.                                          |
 
 1. Click **Next**.
 
@@ -64,8 +64,6 @@ Next, configure how Prophecy imports your pipelines:
 
    In the left sidebar, Prophecy lists the files you uploaded in the previous section, which are automatically staged to import. If you upload additional Informatica files on this page, you have to manually stage them to import. All unstaged files can be viewed in the **Pending** tab of the left sidebar.
 
-1. Click **Analyze**. In the page that opens, click **Download Analysis Report** to view information on mappings, transformations, functions, and other elements to be imported.
-
 1. Click **Validate**.
 
    You must validate your pipeline before you can start transpilation. When you click **Validate**, Prophecy confirms that files to be imported are valid.
@@ -82,13 +80,13 @@ To import the transpiled entities:
 
    ![ImportTranspiledEntities](/import-tool/informatica/informatica-to-sql/img/informatica-import-transpiled-entities.png)
 
-1. Click **Import**.
+1. Click **Import** in the **Choose entities to create** dialog.
 
 1. In the dialog that opens, click **View Bundle Details**.
 
 ### Review Prophecy project
 
-If there isn't an equivalent gem or function for a transformation, Prophecy inserts a placeholder [**ToDo** gem](https://docs.prophecy.io/analysts/development/gems/custom/todo/) in your pipeline. Later, you can write a script or SQL statement to achieve required functionality.
+If there isn't an equivalent gem or function for a transformation, Prophecy inserts a placeholder [**ToDo** gem](/data-analysis/gems/custom/todo-gem) in your pipeline. Later, you can write a script or SQL statement to achieve required functionality.
 
 ### Review bundle metadata
 
