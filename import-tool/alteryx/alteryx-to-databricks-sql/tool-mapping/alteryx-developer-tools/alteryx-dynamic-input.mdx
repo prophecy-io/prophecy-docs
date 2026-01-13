@@ -5,6 +5,13 @@ description: Mapping between Alteryx’s Dynamic Input tool and Prophecy’s Dyn
 
 The [Alteryx Dynamic Input tool](https://help.alteryx.com/current/en/designer/tools/developer/dynamic-input-tool.html) reads data from files, tables, or endpoints whose locations or names are determined dynamically from incoming fields. It is commonly used to parameterize file paths, table names, or query inputs so that workflows can ingest variable data sources at runtime.
 
+In Alteryx, Dynamic Input is commonly used in two distinct ways:
+
+- to dynamically modify **file paths or table names** based on incoming fields, and
+- to dynamically modify **SQL queries** (for example, replacing literal values or updating `WHERE` clauses).
+
+Import handles both patterns, though SQL-based configurations may require closer review after migration.
+
 In Prophecy, equivalent behavior is implemented using the [DynamicInput gem](/data-analysis/gems/custom/dynamic-input). This gem enables pipelines to resolve input sources dynamically based on upstream values, allowing runtime-controlled ingestion without hard-coding source locations.
 
 ## Automated migration results
@@ -16,8 +23,9 @@ In typical migrations:
 - The base connection or source template is preserved.
 - Incoming fields used to parameterize file paths, table names, or source identifiers are mapped to DynamicInput parameters.
 - The resulting pipeline resolves the input source at runtime using upstream values rather than a fixed source definition.
+- When Dynamic Input is used to modify a SQL query (for example, replacing literal strings or updating WHERE clauses), Import preserves the base query and configures the DynamicInput gem to apply the detected string replacement logic at runtime. Dynamic Input configurations that rely on complex string manipulation or external metadata may require manual review after import.
 
-Dynamic Input configurations that rely on complex string manipulation or external metadata may require manual review after import.
+More complex SQL clause–level updates (such as targeted WHERE clause replacement or stored procedure updates) should be reviewed to confirm that the generated configuration matches the original intent.
 
 ## Manually replicate in Prophecy
 
@@ -25,9 +33,11 @@ To manually reproduce Dynamic Input behavior:
 
 1. Add a **DynamicInput** gem to the canvas.
 2. Configure the base connection or source type.
-3. Define which parts of the source (for example, file path or table name) should be parameterized.
+3. Define which parts of the source should be parameterized (for example, file paths, table names, or literal values within a SQL query).
 4. Map upstream fields to those parameters.
 5. Preview or validate the resolved input before connecting downstream gems.
+
+When replicating SQL-based Dynamic Input behavior, begin with the same base query used in Alteryx, then apply dynamic replacements to literal values or clauses using upstream fields. Validate the resolved query carefully, especially when multiple rows may produce different query variants.
 
 ## Configuration options
 
@@ -35,6 +45,8 @@ To manually reproduce Dynamic Input behavior:
 
 - **Alteryx:** Allows file paths, table names, or queries to be dynamically constructed from incoming fields.
 - **Prophecy:** Allows portions of the input source definition to be dynamically resolved using upstream values.
+
+**SQL text parameterization:** Alteryx can dynamically replace literal values or clauses within a SQL statement. Prophecy supports similar behavior by parameterizing query text within the DynamicInput configuration.
 
 ### Execution scope
 
@@ -61,14 +73,18 @@ To manually reproduce Dynamic Input behavior:
 - **Schema consistency:** Dynamic inputs should share compatible schemas to avoid downstream failures.
 - **Execution semantics:** Per-row dynamic inputs can significantly affect performance and should be reviewed carefully.
 - **Validation limits:** Because sources are resolved at runtime, previewing all possible inputs may not be feasible.
+- **File format support:** Prophecy does not read Alteryx `.yxdb` files directly. Dynamic Input configurations that reference `.yxdb` sources must be reimplemented using supported file formats or database sources.
+- **SQL scope differences:** Alteryx provides fine-grained UI controls for updating specific SQL clauses. In Prophecy, you achieve equivalent behavior is achieved by writing queries with dynamic inputs.
 
-## Example
+## Examples
 
-### Alteryx
+### Example: Read multiple files
+
+#### Read multiple files in Alteryx
 
 Use the Dynamic Input tool to read multiple files whose paths are supplied by an upstream list of filenames.
 
-### Prophecy
+#### Read multiple files in Prophecy
 
 1. Add a **DynamicInput** gem.
 2. Configure the base input source.
@@ -76,3 +92,39 @@ Use the Dynamic Input tool to read multiple files whose paths are supplied by an
 4. Execute the pipeline to ingest each dynamically resolved input.
 
 The resulting dataset reflects data read from dynamically determined sources, matching the functional behavior of the Alteryx Dynamic Input tool.
+
+### Example: SQL-based Dynamic Input
+
+#### SQL-based dynamic input in Alteryx
+
+Use the Dynamic Input tool to modify a SQL query based on an incoming field value.
+
+For example, an upstream dataset provides a `City` column. In the Dynamic Input tool:
+
+1. Select **Modify SQL Query**.
+2. Click **Add > Replace a specific string**.
+3. Enter:
+   - **Text to replace:** `Arvada`
+   - **Replacement field:** `City`
+
+At runtime, Alteryx replaces the literal value in the SQL query using the value from the incoming `City` field.
+
+#### SQL-based dynamic input in Prophecy
+
+To reproduce this behavior in Prophecy:
+
+1. Add a **DynamicInput** gem.
+
+2. Using the Visual Builder, enter the following SQL query:
+
+   ```
+   SELECT * FROM Stores WHERE Stores.[City] = 'Arvada'
+   ```
+
+2. Under **Replace a Specific String**, enter `Arvada` for **Text to Replace** and select the column `City` for **Replacement Field**.
+
+3. Connect the upstream dataset that supplies the replacement value.
+
+4. Validate the resolved query to confirm that the correct value is substituted at runtime.
+
+The resulting pipeline dynamically updates the SQL query based on upstream values, producing behavior functionally equivalent to the Alteryx Dynamic Input configuration.
