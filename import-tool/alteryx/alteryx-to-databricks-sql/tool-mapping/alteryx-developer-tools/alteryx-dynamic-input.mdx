@@ -41,27 +41,9 @@ When replicating SQL-based Dynamic Input behavior, begin with the same base quer
 
 ## Configuration options
 
-### Source parameterization
+In Alteryx, you configure the Dynamic Input tool by selecting an input data source template (file, table, or SQL query) and specifying how that source should be modified using values from incoming fields. Choose whether to read a list of data sources or to modify a SQL query, and then define the field-driven actions (such as changing a file path or replacing a specific string in a query).
 
-- **Alteryx:** Allows file paths, table names, or queries to be dynamically constructed from incoming fields.
-- **Prophecy:** Allows portions of the input source definition to be dynamically resolved using upstream values.
-
-**SQL text parameterization:** Alteryx can dynamically replace literal values or clauses within a SQL statement. Prophecy supports similar behavior by parameterizing query text within the DynamicInput configuration.
-
-### Execution scope
-
-- **Alteryx:** Can execute once per incoming row, resolving a different input source for each record.
-- **Prophecy:** Supports per-row dynamic resolution when upstream data is connected, with execution semantics determined by pipeline structure.
-
-### Connection handling
-
-- **Alteryx:** Uses a predefined input configuration as a template and substitutes dynamic values at runtime.
-- **Prophecy:** Uses a base source configuration with dynamic parameters injected during execution.
-
-### Schema handling
-
-- **Alteryx:** Assumes compatible schemas across dynamically loaded inputs.
-- **Prophecy:** Expects schema compatibility; inconsistent schemas may require downstream normalization or validation.
+In Prophecy, you congigure the Dynamic Input gem by defining a base input source and selecting how dynamic resolution should occur. You can configure the gem to dynamically read data from multiple files by parameterizing file paths using upstream fields, or to modify SQL queries by parameterizing portions of the query text. Upstream fields supply the runtime values used to resolve the final input source.
 
 ## Output behavior
 
@@ -70,11 +52,9 @@ When replicating SQL-based Dynamic Input behavior, begin with the same base quer
 
 ## Known caveats
 
-- **Schema consistency:** Dynamic inputs should share compatible schemas to avoid downstream failures.
-- **Execution semantics:** Per-row dynamic inputs can significantly affect performance and should be reviewed carefully.
-- **Validation limits:** Because sources are resolved at runtime, previewing all possible inputs may not be feasible.
+- **Schema handling: Alteryx assumes compatible schemas across dynamically loaded inputs. Prophecy expects schema compatibility; inconsistent schemas may require downstream normalization or validation.
 - **File format support:** Prophecy does not read Alteryx `.yxdb` files directly. Dynamic Input configurations that reference `.yxdb` sources must be reimplemented using supported file formats or database sources.
-- **SQL scope differences:** Alteryx provides fine-grained UI controls for updating specific SQL clauses. In Prophecy, you achieve equivalent behavior is achieved by writing queries with dynamic inputs.
+- **Building SQL clauses:** Alteryx provides fine-grained UI controls for updating specific SQL clauses. In Prophecy, you achieve equivalent behavior is achieved by writing queries with dynamic inputs.
 
 ## Examples
 
