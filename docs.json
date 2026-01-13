@@ -94,7 +94,8 @@
                           "data-analysis/development/studio/folders",
                           "data-analysis/development/studio/canvas-annotations",
                           "data-analysis/development/studio/containers",
-                          "data-analysis/development/studio/development-settings"
+                          "data-analysis/development/studio/development-settings",
+                          "data-analysis/development/studio/messages"
                         ]
                       },
                       {
