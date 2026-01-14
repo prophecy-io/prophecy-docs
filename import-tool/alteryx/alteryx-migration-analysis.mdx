@@ -5,7 +5,6 @@ description: Understand the outcome of your Alteryx transpilation
 
 Prophecy's Analyze tool helps you preview the outcome of your Alteryx-to-Spark or Alteryx-to-SQL migration before you actually run Import. This tool produces a report that lets you identify gaps in tool or function coverage, understand workflow complexity, and anticipate any required fixes.
 
-
 ## Overview
 
 Analyze is available during the [import](/import-tool/alteryx/alteryx-to-spark/alteryx-to-spark#import-pipelines) process.
@@ -31,7 +30,7 @@ The analysis is based on the tools, functions, and patterns Prophecy can current
 
 ## Analysis report format
 
-The analysis report contains multiple tabs, each of which highlight a different aspect of migration readiness, helping you understand both _what_ will migrate and _how much effort_ may be required after Import.
+The analysis report contains multiple tabs, each of which highlights a different aspect of migration readiness, helping you understand both _what_ will migrate and _how much effort_ may be required after Import.
 
 | Tab                      | Description                                                  |
 | ------------------------ | ------------------------------------------------------------ |
@@ -45,24 +44,7 @@ The analysis report contains multiple tabs, each of which highlight a different 
 
 ## Summary tab
 
-The Summary tab includes the following sections, each summarizing results across all analyzed workflows: migration coverage for workflows and tools, patterns support for tools and functions, and workflow complexity classifications indicating expected migration effort.
-
-### Migration coverage example
-
-- **Import Coverage**: 26% of tools migrated successfully
-- **Workflows**: 1/1 migrated successfully (100%)
-- **Tools**: 6/23 migrated successfully (26%)
-
-### Migration patterns support example
-
-- **Unique Tools** supported: 11/11 (100%)
-- **Unique Functions** supported: 1/1 (100%)
-
-### Workflows complexity example
-
-- **Low**: 0 workflows
-- **Medium**: 0 workflows
-- **High**: 1 workflow
+The Summary tab provides a high-level summary of three other tabs: import coverage for workflows and tools, patterns support for tools and functions, and workflow complexity classifications indicating expected migration effort. For details on these topics, click their respective tabs.
 
 ## Coverage tab
 
@@ -72,23 +54,55 @@ For each workflow analyzed, the Coverage tab reports:
 - **Tools Migrated Successfully**: number of tool occurrences that can be successfully migrated.
 - **Tools Migration Failed**: number of tool occurrences that cannot be migrated (and which will require adjustments after Import).
 - **Total Tool Occurrences**: total number of tools in the workflow.
-- **Tools Coverage**: percentage of tools successfully migrated.
 - **Workflows Coverage**: percentage of workflows that can be successfully migrated.
+- **Tools Coverage**: percentage of tools successfully migrated.
 
-Understanding workflow vs tool coverage:
-
-- **Workflows Coverage** represents the percentage of workflows that Import can process end-to-end. A workflow is considered successfully migrated even if one or more tools within the workflow fail to migrate.
-- **Tools Coverage** represents the percentage of individual tool occurrences that Import can migrate successfully.
-
-Patterns Support reflects availability of mappings, not guaranteed successful migration. As a result, it is possible for Workflows Coverage to be 100% while Tools Coverage is significantly lower.
+Coverage reflects availability of mappings, not guaranteed successful migration. As a result, it is possible for Workflows Coverage to be 100% while Tools Coverage is significantly lower.
 
 A tool marked as “migration failed” typically indicates that the tool or its configuration is not currently supported by Import and will require manual conversion after migration.
 
-The Tools breakdown section lists the number of occurrences of each tool type within each workflow. This helps you:
+### Workflows coverage
 
-- Identify workflows dominated by certain tool patterns
-- Understand why tool coverage may be high or low
-- Anticipate where most manual remediation effort will be required
+This section describes the percentage of workflows that Import can process end-to-end. A workflow is considered successfully migrated even if one or more tools within the workflow fail to migrate.
+
+Sample output:
+
+| Details / Workflows         | Workflow name |
+| --------------------------- | ------------- |
+| Migration Status            | Success       |
+| Tools Migrated Successfully | 47            |
+| Tools Migration Failed      | 283           |
+| Total Tool Occurrences      | 330           |
+| Tools Coverage              | 14%           |
+| Workflows Coverage          | 100%          |
+| Tools Coverage              | 14%           |
+
+### Tools Coverage
+
+This section lists the number of individual tool occurrences that Import can migrate successfully.
+
+Sample output:
+
+| Tools/Workflows | Number of instances |
+| --------------- | ------------------- |
+| Cleanse         | 1                   |
+| DateTime        | 3                   |
+| Db File Input   | 19                  |
+| Db File Output  | 1                   |
+| Filter          | 63                  |
+| Formula         | 37                  |
+| Join            | 65                  |
+| Select          | 39                  |
+| Summarize       | 23                  |
+| Union           | 40                  |
+
+### Tools breakdown
+
+The Tools breakdown section of the Summary tab lists the number of occurrences of each tool type within each workflow. This helps you:
+
+- Identify workflows dominated by certain tool patterns.
+- Understand why tool coverage may be high or low.
+- Anticipate where most manual remediation effort will be required.
 
 Sample output:
 
@@ -107,7 +121,7 @@ Tools that appear frequently and have higher tool type complexity ratings (for e
 
 Patterns Support reports whether the **types of tools and functions** in your workflows have supported mappings in Prophecy. It does **not** reflect whether every individual tool instance can be migrated successfully.
 
-The Patterns Support tab is divided into two sections:
+The Patterns Support features two sections:
 
 - **Tools**: evaluates whether each tool type used in the workflow has a supported migration pattern.
 - **Functions**: evaluates whether the expressions and functions used within tools can be mapped to Prophecy-supported equivalents.
@@ -140,22 +154,24 @@ Each factor is scored separately with a rating of 1 (lower complexity) to 3 (hig
 
 This tab rates tools according to support coverage and behavioral difficulty. For example, Alteryx tools such as Summarize are rated medium due to multiple configuration paths, while Alteryx tools such as Multi Row Formula are rated hard due to ordering and row-dependency semantics.
 
-Example of tool ratings:
+Sample output:
 
-- Filter: Easy
-- Formula: Easy
-- Join: Easy
-- Select: Easy
-- Summarize: Medium
-- Multi Row Formula: Hard
-- Text Input: Easy
+| Tool               | Complexity |
+| ------------------ | ---------- |
+| Filter             | Easy       |
+| Formula            | Easy       |
+| Join               | Easy       |
+| Select             | Easy       |
+| Summarize          | Medium     |
+| Text Box           | Easy       |
+| Union              | Easy       |
+| Unique             | Easy       |
 
-## Summary
+## Summary of Analyze tool
 
 To summarize, running the Analyze tool before migration helps you:
 
-- **Estimate effort**: Identify complex workflows and unsupported tools ahead of time.
+- **Estimate effort**: Identify complex workflows and unsupported tools ahead of time; complexity scores and diagnostics help predict how much manual adjustment will be needed after Import.
 - **Plan fixes**: Know which components will require manual conversion or adjustments.
 - **Reduce migration risk**: Catch potential blockers before investing in a full migration.
 - **Prioritize work**: Focus on the highest-value or lowest-effort workflows first.
-- **Estimate post-Import effort**: Complexity scores and diagnostics help predict how much manual adjustment will be needed after Import.
