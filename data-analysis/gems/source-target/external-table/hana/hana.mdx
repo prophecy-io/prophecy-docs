@@ -95,10 +95,12 @@ Control how data is written into the target table during each run of the pipelin
 | Wipe & Replace Table                           | Deletes the existing table and creates a new one with the incoming data.         |
 | Write Fresh Table; Error if Exists             | Creates a new table, and fails if a table with the same name already exists.     |
 | Append Row                                     | Inserts all incoming rows to the existing table without modifying existing data. |
-| Merge - Upsert Row                             | Update if keys match, insert if not.                                             |
-| Merge - Update Row                             | Only update columns where key matches.                                           |
-| Merge - Delete Row                             | Delete rows where key matches.                                                   |
-| Merge - Delete Row if Exists; Otherwise Insert | Delete rows where key matches, otherwise insert a new row.                       |
+| Merge - Upsert Row                             | Updates if keys match, insert if not.                                            |
+| Merge - SCD 2                                  | Stores and manages the current and historical data over time.                    |
+| Merge - Update Row                             | Only updates columns where key matches.                                          |
+| Merge - Delete Row                             | Deletes rows where key matches.                                                  |
+| Merge - Delete Row if Exists; Otherwise Insert | Deletes rows where key matches, otherwise insert a new row.                      |
+| Merge - Delete Row if Exists; then Insert      | Deletes rows where key matches and always inserts new rows.                      |
 
 #### Advanced options
 
