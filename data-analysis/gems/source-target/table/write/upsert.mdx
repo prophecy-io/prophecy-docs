@@ -1,0 +1,52 @@
+---
+title: Upsert Row
+description: Update existing rows or insert new rows
+---
+
+If a row with the same key exists, it is updated. Otherwise, a new row is inserted. You can also limit updates to specific columns, so only selected values are changed in matching rows.
+
+## Parameters
+
+| Parameter                                          | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Unique Key                                         | Column(s) used to match existing records in the target dataset. In many cases, the unique key will be equivalent to your table's primary key, if applicable.                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| Use Predicate                                      | Lets you add conditions that specify when to apply the merge.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| Use a condition to filter data or incremental runs | Enables applying conditions for filtering the incoming data into the table.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| Merge Columns                                      | Specifies which columns to update during the merge. If empty, the merge includes all columns.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| Exclude Columns                                    | Defines columns that should be excluded from the merge operation.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| (Advanced) On Schema Change                        | Specifies how schema changes should be handled during the merge process.<ul><li><strong>ignore</strong>: Newly added columns will not be written to the model. This is the default option.</li><li><strong>fail</strong>: Triggers an error message when the source and target schemas diverge.</li><li><strong>append_new_columns</strong>: Append new columns to the existing table.</li><li><strong>sync_all_columns</strong>: Adds any new columns to the existing table, and removes any columns that are now missing. Includes data type changes. This option uses the output of the previous gem.</li></ul> |
+
+## Example: Update vehicle type only
+
+When an incoming `VEHICLE_ID` matches an existing one, vehicle type information is updated while registration dates remain unchanged. The merge column is explicitly set to `TYPE`.
+
+<div class="table-example">
+
+**Incoming table**
+
+| VEHICLE_ID | TYPE |
+| ---------- | ---- |
+| 101        | Tram |
+| 102        | Bus  |
+| 104        | Bus  |
+
+**Existing table**
+
+| VEHICLE_ID | TYPE  | REGISTERED_AT |
+| ---------- | ----- | ------------- |
+| 101        | Bus   | 2023-12-01    |
+| 102        | Train | 2023-12-02    |
+| 103        | Bus   | 2023-12-03    |
+
+**Updated table**
+
+| VEHICLE_ID | TYPE | REGISTERED_AT |
+| ---------- | ---- | ------------- |
+| 101        | Tram | 2023-12-01    |
+| 102        | Bus  | 2023-12-02    |
+| 103        | Bus  | 2023-12-03    |
+| 104        | Bus  | null          |
+
+Notice that only the `TYPE` column was updated for vehicles `101` and `102` while the `REGISTERED_AT` values remained unchanged. Additionally, note that vehicle `103` remained unchanged since it didn't match a vehicle in the incoming data. Finally, vehicle `104` was inserted, and no data was added to the `REGISTERED_AT` column.
+
+</div>
