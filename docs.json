@@ -125,7 +125,13 @@
                           }
                         ]
                       },
-                      "data-analysis/development/pipeline-params",
+                      {
+                        "group": "Parameters",
+                        "pages": [
+                          "data-analysis/development/parameters/parameter-sets",
+                          "data-analysis/development/parameters/usage"
+                        ]
+                      },
                       {
                         "group": "Versioning",
                         "pages": [
