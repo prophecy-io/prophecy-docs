@@ -1382,6 +1382,10 @@
     {
       "source": "/data-analysis/gems/source-target/table/write/write-options",
       "destination": "/data-analysis/gems/source-target/table/write/write-options"
+    },
+    {
+      "source": "/data-analysis/development/pipeline-params",
+      "destination": "/data-analysis/development/parameters/parameter-sets"
     }
   ]
 }
