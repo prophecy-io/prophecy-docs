@@ -3,7 +3,7 @@ title: Parameter sets
 description: Organize project and pipeline variables into reusable parameter sets
 ---
 
-Parameter sets group related variables together, allowing you to switch between different configurations for environments, regions, tenants, or other scenarios. You can create parameter sets for both project parameters and pipeline parameters.
+Parameter sets group related variables together, allowing you to switch between different configurations for environments, regions, tenants, or other scenarios. You can create parameter sets at the project level or the pipeline level.
 
 ## Project parameters vs pipeline parameters
 
@@ -16,7 +16,7 @@ The key difference between project and pipeline parameters is how string express
 - **Pipeline parameters**: String expressions are evaluated at runtime. If you define a pipeline parameter called `concat("first_name", "last_name")`, the value injected during usage is `first_namelast_name`.
 - **Project parameters**: String expressions remain as literal strings. If you define a project parameter as `concat("first_name", "last_name")`, its usage remains as `concat("first_name", "last_name")`.
 
-Use pipeline parameters when you need dynamic evaluation of expressions. Use project parameters when you need to pass literal string values or share constants across pipelines.
+This discrepancy will be resolved in a future release.
 
 <Info>
   If a pipeline parameter and a project parameter share the same name, the pipeline parameter takes
@@ -60,6 +60,61 @@ To create a new parameter set:
 7. Toggle **Active** to make this set the active configuration.
 8. Click **Save**.
 
+## Select parameter sets
+
+### Project-level
+
+When you publish a project, you can choose which project-level parameter set to use. This allows you to publish different configurations for different environments or use cases without modifying the project code.
+
+#### Publishing
+
+To select a project parameter set when publishing:
+
+1. Open the project and click **Publish**.
+2. In the **Version details** dialog, find the **Choose Project Parameter Set** dropdown.
+3. Select the parameter set you want to use for this publication.
+4. Complete the publication process.
+
+The selected project parameter set applies to all deployed pipelines.
+
+### Pipeline-level
+
+When you schedule a pipeline, you can choose which pipeline-level parameter set to use for that schedule. This lets you run the same pipeline with different configurations on different schedules.
+
+#### Scheduling
+
+To select a pipeline parameter set when scheduling:
+
+1. Open the pipeline and navigate to **Scheduling**.
+2. Create a new schedule or edit an existing one.
+3. In the schedule configuration, find the **Choose Pipeline Parameter Set** dropdown.
+4. Select the parameter set you want to use for this schedule.
+5. Configure other schedule settings such as frequency and time.
+6. Save the schedule.
+
+Each schedule can use a different pipeline parameter set, allowing you to run the same pipeline with different configurations at different times.
+
+#### Prophecy Apps
+
+You can select a parameter set when creating a Prophecy App or modify it afterward in app settings. This determines which parameter values the app uses when it runs.
+
+To select a parameter set when creating an app:
+
+1. Click **+ Add Entity** and select **App**.
+2. In the **Create App** dialog, find the **Parameter Set** dropdown.
+3. Select the parameter set you want to use for this app.
+4. Complete the app creation process.
+
+To change the parameter set for an existing app:
+
+1. Open the app.
+2. Click the settings icon or open **App Settings**.
+3. Find the **Choose Parameter Set** dropdown.
+4. Select the parameter set you want to use.
+5. Click **Save**.
+
+The selected parameter set applies to all app runs until you change it in app settings.
+
 ## Currency example
 
 This example demonstrates using parameter sets to handle currency conversions across different regions.
@@ -82,140 +137,3 @@ Reference these project parameters in your pipelines using configuration variabl
 
 - When `EUR` is active, `currency` resolves to `EUR` and `fx_rate_table` resolves to `fx_rates_eur`.
 - When `default` is active, `currency` resolves to `USD` and `fx_rate_table` resolves to `fx_rates_usd`.
-
-## Common parameter set patterns
-
-### Per-environment configuration
-
-Use parameter sets to switch between development, staging, and production environments:
-
-- `env`: `dev`, `staging`, or `prod`
-- `catalog`: Environment-specific catalog name
-- `schema`: Environment-specific schema
-- `secrets_scope`: Environment-specific secrets scope
-- `base_path`: Environment-specific base path
-- `mode`: `incremental` or `full`
-
-### Multi-tenant or client-specific
-
-Configure pipelines for different tenants or clients:
-
-- `tenant_id`: Unique identifier for the tenant
-- `source_bucket`: Tenant-specific source bucket
-- `destination_schema`: Tenant-specific destination schema
-- `row_filter`: Tenant-specific filter, such as `"customer_id IN (...)"`
-
-### Geography and compliance
-
-Handle regional rules and compliance requirements:
-
-- `region`: `EU`, `US`, or `APAC`
-- `gdpr_masking`: `true` or `false`
-- `retention_days`: `365` or `90`
-- `holiday_calendar`: `EU_ECB` or `US_FED`
-
-### Currency and locale transforms
-
-Configure currency and date formatting:
-
-- `currency`: `EUR` or `USD`
-- `fx_rate_table`: Reference to foreign exchange rate table
-- `date_locale`: `dd/MM/yyyy` or `MM/dd/yyyy`
-
-### Time windowing and backfills
-
-Control time-based processing:
-
-- `run_type`: `backfill` or `schedule`
-- `start_date`: Start date for backfill
-- `end_date`: End date for backfill
-- `watermark_strategy`: `high_watermark` or `event_time`
-- `lateness_grace_period_hours`: `24` or `72`
-- `upsert_on_keys`: Array such as `["order_id","event_time"]`
-
-### Source and system variants
-
-Handle schema evolution and system changes:
-
-- `source_version`: `v1` or `v2`
-- `feature_flags`: Array such as `["use_new_status_mapping"]`
-- `column_mapping_ref`: Reference such as `"mappings/2025-12.json"`
-- `source_system`: `snowflake`, `bigquery`, or `s3`
-- `conn_profile`: Connection profile name such as `"sales_ro"`
-- `extract_method`: `jdbc`, `api`, or `cdc`
-
-### Partitioning and performance
-
-Configure workload sizing and partitioning:
-
-- `shuffle_partitions`: `200` or `800`
-- `executor_memory`: `"8g"`
-- `trigger`: `availableNow` or `processingTime(5 minutes)`
-- `partition_keys`: Array such as `["dt","region"]`
-- `target_partitions`: `96`
-- `merge_strategy`: `dynamic` or `coalesce`
-
-### Incremental strategy
-
-Configure change data capture and idempotency:
-
-- `cdc_mode`: `debezium`, `timestamp`, or `checksum`
-- `pk`: Array such as `["id"]`
-- `change_cols`: Array such as `["updated_at"]`
-- `run_id`: Unique identifier for the run
-- `idempotency_key`: Key for idempotent operations
-- `skip_empty_commits`: `true`
-
-### Data quality and governance
-
-Set data quality thresholds and PII handling:
-
-- `null_rate_max`: `0.01`
-- `duplicate_rate_max`: `0.001`
-- `fail_on_dq_violation`: `true`
-- `pii_masking`: `hash`, `tokenize`, or `none`
-- `allow_columns`: Array such as `["city","age_band"]`
-- `dataset_owner`: Email such as `"quality@company"`
-- `tags`: Array such as `["gold","finance"]`
-
-### Output publishing
-
-Configure sink choices and downstream publishing:
-
-- `publish_to`: `delta`, `parquet`, or `iceberg`
-- `compaction`: `true`
-- `optimize_zorder`: Array such as `["customer_id","dt"]`
-- `subscriptions`: Array such as `["bi.feed","risk.api"]`
-- `publish_mode`: `append`, `upsert`, or `replace`
-
-### Logging and troubleshooting
-
-Control verbosity and retry policies:
-
-- `log_level`: `INFO` or `DEBUG`
-- `sample_ratio`: `0.01`
-- `emit_metrics`: `true`
-- `max_retries`: `3`
-- `backoff_ms`: `500`
-- `dead_letter_topic`: `"etl.dlq"`
-
-### Testing and rollout
-
-Configure A/B testing and validation:
-
-- `canary_percent`: `5`
-- `treatment_variant`: `A` or `B`
-- `guardrail_metric`: `"dup_rate"`
-- `dry_run`: `true`
-- `validation_checks`: Array such as `["schema","dq","rowcount_delta<=5%"]`
-
-### Business slicing
-
-Configure product, brand, or line of business runs:
-
-- `lob`: `retail` or `commercial`
-- `brand`: Array such as `["alpha","beta"]`
-- `country`: `DE`, `US`, or `IN`
-- `segment`: `premium` or `mass`
-- `min_tenure_days`: `90`
-- `feature_set`: `"v3"`
