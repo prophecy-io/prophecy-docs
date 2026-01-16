@@ -74,11 +74,29 @@ To add and activate a new parameter set, you need to:
 
 ## Select parameter sets
 
-### Project-level
+After you define your parameter sets, you must select which set to apply when running your pipeline. Choosing a set determines which values Prophecy uses during execution.
 
-When you publish a project, you can choose which project-level parameter set to use. This allows you to publish different configurations for different environments or use cases without modifying the project code.
+### Scheduling
 
-#### Publishing
+When you [schedule](/data-analysis/production/scheduling/scheduling) a pipeline, you can choose which pipeline-level parameter set to use for that schedule. This lets you run the same pipeline with different configurations on different schedules.
+
+To select a pipeline parameter set when scheduling:
+
+1. Open the pipeline and navigate to **Scheduling**.
+2. Create a new schedule or edit an existing one.
+3. In the schedule configuration, find the **Choose Pipeline Parameter Set** dropdown.
+4. Select the parameter set you want to use for this schedule.
+5. Configure other schedule settings, such as frequency and time.
+6. Save the schedule.
+
+<Note>
+  Because a schedule only controls a single pipeline, you can only select pipeline parameter sets
+  here. The project parameter set will be determined when you publish the project.
+</Note>
+
+### Publishing
+
+When you [publish](/data-analysis/production/publication) a project, you can choose which project-level parameter set to use. This allows you to publish different configurations to different environments without modifying the project.
 
 To select a project parameter set when publishing:
 
@@ -87,26 +105,9 @@ To select a project parameter set when publishing:
 3. Select the parameter set you want to use for this publication.
 4. Complete the publication process.
 
-The selected project parameter set applies to all deployed pipelines.
+The selected project parameter set applies to all deployed pipelines in the published project. Pipeline parameter sets selected for schedules also apply to those scheduled runs. If a pipeline parameter and a project parameter share the same name, the pipeline parameter value takes precedence.
 
-### Pipeline-level
-
-When you schedule a pipeline, you can choose which pipeline-level parameter set to use for that schedule. This lets you run the same pipeline with different configurations on different schedules.
-
-#### Scheduling
-
-To select a pipeline parameter set when scheduling:
-
-1. Open the pipeline and navigate to **Scheduling**.
-2. Create a new schedule or edit an existing one.
-3. In the schedule configuration, find the **Choose Pipeline Parameter Set** dropdown.
-4. Select the parameter set you want to use for this schedule.
-5. Configure other schedule settings such as frequency and time.
-6. Save the schedule.
-
-Each schedule can use a different pipeline parameter set, allowing you to run the same pipeline with different configurations at different times.
-
-#### Prophecy Apps
+### Running Prophecy Apps
 
 You can select a parameter set when creating a Prophecy App or modify it afterward in app settings. This determines which parameter values the app uses when it runs.
 
@@ -125,27 +126,49 @@ To change the parameter set for an existing app:
 4. Select the parameter set you want to use.
 5. Click **Save**.
 
-The selected parameter set applies to all app runs until you change it in app settings.
+The selected parameter set applies to all app runs by default unless the end user provides their own values.
 
-## Currency example
+<Note>
 
-This example demonstrates using parameter sets to handle currency conversions across different regions.
+Each Prophecy App runs a single pipeline, which can use both project parameters and pipeline parameters. When configuring an app, you select a pipeline parameter set to control the pipeline parameters. Project parameters are handled separately:
 
-### Create project parameters
+- For interactive app runs, project parameters use the active project parameter set.
+- For scheduled app runs, project parameters use the project parameter set selected when you published the project.
 
-1. Open **Parameters** in the project header.
-2. Select **Project Parameters**.
-3. In the `default` parameter set, add a variable named `currency` with value `USD`.
-4. Add a variable named `fx_rate_table` with value `fx_rates_usd`.
-5. Click **+ Add Parameter Set** and name it `EUR`.
-6. In the `EUR` set, add `currency` with value `EUR`.
-7. Add `fx_rate_table` with value `fx_rates_eur`.
-8. Toggle **Active** on the `EUR` set.
-9. Click **Save**.
+</Note>
 
-### Use in pipelines
+## Example
 
-Reference these project parameters in your pipelines using configuration variables. The active parameter set determines which values are used:
+This example demonstrates how to use parameter sets to process sales data for different global regions.
 
-- When `EUR` is active, `currency` resolves to `EUR` and `fx_rate_table` resolves to `fx_rates_eur`.
-- When `default` is active, `currency` resolves to `USD` and `fx_rate_table` resolves to `fx_rates_usd`.
+When you switch regions, you often need to change more than one piece of information at a time. In this scenario, we use two parameters that must stay in sync:
+
+- `currency`: Labels the final report (for example, **USD** or **EUR**).
+- `fx_rate_table`: Tells the pipeline which database table contains the specific exchange rates for that region.
+
+By grouping these into parameter sets, you ensure that when you switch sets, pipelines use both the correct label and the correct exchange rates.
+
+### 1. Define the default values (USA)
+
+First, set up your standard operating values in the default set:
+
+1. Open **Parameters** in the project header and select **Project Parameters**.
+1. Click **+ Add Variable** and name it `currency`.
+1. Set the value to `USD`.
+1. Click **+ Add Variable** again and name it `fx_rate_table`.
+1. Set the value to `fx_rates_usd`.
+1. Click **Save**.
+
+After saving the set of variables, you can reference `currency` and `fx_rate_table` in any pipeline in the project. Your pipeline will use the default set values by default for interactive runs.
+
+### 2. Create a regional override (Europe)
+
+Next, create a set for your European operations:
+
+1. Click **+ Add Parameter Set** and name it `Europe`.
+1. In the `Europe` set, change the value of `currency` to `EUR`.
+1. Set the value of `fx_rate_table` to `fx_rates_eur`.
+1. Toggle **Active** to make this set the active configuration.
+1. Click **Save**.
+
+By switching the active set to `Europe`, you update your entire project to handle European data without manually changing every pipeline component.
