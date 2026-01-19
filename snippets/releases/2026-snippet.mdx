@@ -1,0 +1,54 @@
+<Update label="Prophecy 4.2.4" description="January 6, 2026" tags={["Data Analysis"]}>
+
+## Parameter sets
+
+You can now create parameter sets to assign values to variables for different environments or deployment scenarios. Parameters can be global (project-level) or local (pipeline-level). You'll be able to select the appropriate parameter set during project deployment or app runs.
+
+<Frame>![Parameter sets](/data-analysis/development/img/parameter-set.png)</Frame>
+
+## Source and target file enhancements
+
+We've made several enhancements to the source and target gems for file storage systems:
+
+- **Compression**: Source gems can now read compressed files and target gems can now write compressed files in the following formats: `gzip`, `zstd`, `lz4`, `zlib`, `snappy`, and `lzop`.
+- **Examine**: Gems now have an **Examine** button in the **Location** tab. When you click the Examine button, Prophecy reads a small sample of the file to automatically determine the file format, compression type (if any), and schema.
+- **Encryption**: Target gems can now write encrypted files using the following encryption methods: `AES-192`, `AES-296`, and `BlowFish`. Source gems cannot read encrypted files.
+
+## PySpark for data analysis projects
+
+<Badge icon="circle-exclamation" color="orange" shape="rounded" size="sm">
+  Private Preview
+</Badge>
+
+Prophecy now offers [Simplified PySpark](/data-analysis/development/projects/project-languages#simplified-pyspark) for data analysis. This project type abstracts PySpark into a simple, data analysis interface. You can switch between SQL and PySpark project types in the [development settings](/data-analysis/development/studio/development-settings) of a project.
+
+We've also added support for [unit tests](/data-analysis/development/tests/unit-tests) for PySpark projects. In future releases, we will support unit tests for SQL projects as well.
+
+## SAP HANA target gem
+
+The [SAP HANA target gem](/data-analysis/gems/source-target/external-table/hana/hana) now supports **Delete and Insert** and **SCD2** write modes.
+
+</Update>
+
+<Update label="Prophecy 4.2.4" description="January 6, 2026" tags={["Data Engineering"]}>
+
+## ProphecySparkBasicsPython v0.2.54
+
+This new version of the ProphecySparkBasicsPython package includes the following enhancements:
+
+- Added support for bulk updating target columns during [SCD1 Delta merge](/data-engineering/gems/source-target/file/delta#scd1). This way, you don't have to write individual update expressions for each column.
+- Added support for lateral column aliases in [Reformat](data-engineering/gems/transform/reformat) and [Join](/data-engineering/gems/join-split/join) gems. Lateral column aliasing in PySpark allows you to reuse a column alias defined earlier in the same clause.
+
+</Update>
+
+<Update label="Prophecy 4.2.4" description="January 6, 2026" tags={["Administration"]}>
+
+## Fabric creation improvements
+
+When you create a fabric, you no longer need to select the "type" of fabric to create. Instead, Prophecy has a unified fabric that lets you configure settings based on the compute provider, rather than the fabric type. For example, you can now use a Databricks fabric to run both SQL and PySpark pipelines.
+
+## Feature management
+
+We've added a new [Feature Management](/data-engineering/administration/management/cluster-admin-settings/feature-management) tab to the Admin settings. This tab allows you to enable or disable various features in your Prophecy deployment through the Prophecy UI.
+
+</Update>
