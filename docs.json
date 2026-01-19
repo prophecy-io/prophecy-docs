@@ -646,7 +646,7 @@
                 "groups": [
                   {
                     "group": "Releases",
-                    "pages": ["data-analysis/releases/2025"]
+                    "pages": ["data-analysis/releases/2026", "data-analysis/releases/2025"]
                   },
                   {
                     "group": "Reference",
@@ -1144,7 +1144,7 @@
                 "groups": [
                   {
                     "group": "Releases",
-                    "pages": ["data-engineering/releases/2025"]
+                    "pages": ["data-engineering/releases/2026", "data-engineering/releases/2025"]
                   },
                   {
                     "group": "Reference",
