@@ -99,16 +99,16 @@ Assume the input dataset contains one row per record, with multiple date fields 
 
 1. Select `record_id` and `user_name` as key fields.
 1. Configure output fields as follows:
-  - Column headers: `Description`, `Date`
-  - Row 1: Description: `Start Date`; Date: select `start_date`.
-  - Row 2: Description: `End Date`; Date: select `end_date`.
-  - Row 3: Description: `Cancel Date`; Date: select `cancel_date`.
+    - Column headers: `Description`, `Date`
+    - Row 1: Description: `Start Date`; Date: select `start_date`.
+    - Row 2: Description: `End Date`; Date: select `end_date`.
+    - Row 3: Description: `Cancel Date`; Date: select `cancel_date`.
 
 ### Prophecy equivalent
 
 1. Add a Reformat gem with a target column called `_consolidated_date` configured with an `array` function, and add three `named_struct` funtions as arguments, each configured with:
-  - One of the date columns, such as `start_date`.
-  - The following values: `description` and the name of the column rendered as a string (such as `Start Date`).
+    - One of the date columns, such as `start_date`.
+    - The following values: `description` and the name of the column rendered as a string (such as `Start Date`).
 1. In the same Reformat gem, add `record_id` and `user_name` as target columns (to carry these columns forward).
 1. Add a second Reformat gem with a target called `_exploded_date_col` configured with an `explode` function using `_consolidated_date` as an argument. Carry `record_id` and `user_name` forward.
 1. Add a third Reformat gem with two target columns, `description` and `date` each configured with columns referencing structs: `_exploded_data_col.Description` and `_exploded_data_col.date`. Carry `record_id` and `user_name` forward.

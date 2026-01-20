@@ -12,7 +12,7 @@ In Prophecy, the same logic is implemented using either a [Reformat gem](/data-a
 When Import detects an Alteryx Weighted Average tool, it applies one of two patterns:
 
 - **No grouping fields configured**: Import generates a Reformat gem that computes a single weighted average across the entire dataset.
-- **Grouping fields configured**: Import generates an Aggregate gem with the selected grouping fields under **Group by**, and a computed weighted-average expression.
+- **Grouping fields configured**: Import generates an Aggregate gem with the selected grouping fields under **Group by** and a computed weighted-average expression.
 
 ## Manually replicate in Prophecy
 
@@ -21,8 +21,8 @@ When Import detects an Alteryx Weighted Average tool, it applies one of two patt
 1. Add a Reformat gem.
 2. Add a new target column (for example, `WeightedAverage`).
 3. Configure the column to use a `case...when...else` expression with
-  - `when` `sum` of `Units` equals `0`, then `null`.
-  - `else` `sum((UnitCost * Units)) / sum(Units)`
+    - `when` `sum` of `Units` equals `0`, then `null`.
+    - `else` `sum((UnitCost * Units)) / sum(Units)`
 
 ### With grouping (weighted average per group)
 
@@ -37,7 +37,7 @@ When Import detects an Alteryx Weighted Average tool, it applies one of two patt
 
 ### Alteryx tool
 
-- Select value field: Numeric field to be averaged (for example, `UnitCost`).
+- **Select value field**: Numeric field to be averaged (for example, `UnitCost`).
 - Select weight field: Numeric field used as the weight (for example, `Units`).
 - Select output field name: Name of the new weighted-average output field (for example, `WeightedAverage`).
 - Select Grouping fields (optional): One or more fields used to compute a weighted average per group.
