@@ -5,7 +5,7 @@ description: Mapping between Alteryx’s Arrange tool and equivalent transformat
 
 Alteryx's [Arrange tool](https://help.alteryx.com/current/en/designer/tools/transform/arrange-tool.html) expands columns into rows for reporting, charting, or analytics purposes, adding descriptions to new rows.
 
-Prophecy implements this functionality using multiple [Reformat gems](/data-analysis/gems/prepare/reformat).
+Prophecy implements this exact functionality using multiple [Reformat gems](/data-analysis/gems/prepare/reformat), but for many operations, we recommend using the [Unpivot gem](/data-analysis/gems/transform/unpivot), especially if adding manual desriptions is not required behavior.
 
 ## Automated migration results
 
@@ -19,7 +19,7 @@ When Import detects an Alteryx Arrange tool, it generates a sequence of Reformat
 
 This approach mirrors the Arrange tool's “columns to rows” behavior using SQL-native constructs.
 
-## Configuration options
+## Manually replicate in Prophecy
 
 To reproduce Arrange behavior manually:
 
@@ -28,6 +28,10 @@ To reproduce Arrange behavior manually:
 3. Add a final **Reformat** gem to select fields from the exploded struct as output columns.
 
 This sequence converts multiple input columns into multiple output rows while preserving row-level context.
+
+In many cases, you may prefer using the [Unpivot gem](/data-analysis/gems/transform/unpivot) for simple columns-to-rows reshaping. Unpivot provides a more concise way to normalize wide datasets when all columns represent the same type of value.
+
+## Configuration options
 
 ### In Alteryx (Arrange tool)
 
@@ -39,11 +43,20 @@ Configure the tool by:
 
 The output is a row-expanded dataset where each arranged field produces a new row.
 
+### Prophecy (Unpivot gem)
+You can accomplish most of what you want from the Arrange tool using the Unpivot gem.
+
+1. Add an **Unpivot** gem to the canvas.
+1. For **Key Columns**, select columns that should remain fixed for each record (these columns identify each record and are preserved as unpivoted rows).
+2. For **Data Columns**, select columns whose values should be converted into rows.
+3. Select the **Use custom output column names for Name & Value pairs** checkbox.
+4. Rename the **Name** output column to a label that describes what the original column names represent.
+5. Rename the **Value** output column to a label that describes the measured values.
+6. Save and run the gem.
+
 ### In Prophecy (Reformat gems)
 
-- Add a Reformat gem to construct row objects using `array` and `named_struct`.
-- Connect a second Reformat gem to expand rows using `explode`.
-- Connect a third Reformat gem to extract fields from the exploded `struct` into final columns.
+For exact Arrange tool behavior (including, for example, rewritten descriptions), configure multiple Reformat gems using the following patterns.
 
 Example construction pattern:
 
@@ -66,6 +79,9 @@ Field extraction:
 description = _exploded_data_col.description
 x           = _exploded_data_col.x
 ```
+
+
+
 
 ## Output behavior
 
@@ -106,13 +122,15 @@ Assume the input dataset contains one row per record, with multiple date fields 
 
 ### Prophecy equivalent
 
-1. Add a Reformat gem with a target column called `_consolidated_date` configured with an `array` function, and add three `named_struct` funtions as arguments, each configured with:
-    - One of the date columns, such as `start_date`.
-    - The following values: `description` and the name of the column rendered as a string (such as `Start Date`).
-1. In the same Reformat gem, add `record_id` and `user_name` as target columns (to carry these columns forward).
-1. Add a second Reformat gem with a target called `_exploded_date_col` configured with an `explode` function using `_consolidated_date` as an argument. Carry `record_id` and `user_name` forward.
-1. Add a third Reformat gem with two target columns, `description` and `date` each configured with columns referencing structs: `_exploded_data_col.Description` and `_exploded_data_col.date`. Carry `record_id` and `user_name` forward.
-1. Finally, add one more Reformat gem that selects only `description`, `date`, `record_id`, and `user_name`.
+1. Add an **Unpivot** gem.
+2. For **Key Columns**, select `record_id` and `user_name`.
+3. For **Data Columns**, select: `start_date`, `end_date` and `cancel_date`.
+4. Select **Use custom output column names for Name & Value pairs**.
+5. Rename the **Name** column to `description`.
+6. Rename the **Value** column to `date`.
+7. Save and run the gem.
+
+At this point your output will be structurally correct, but `description` will be `start_date`, `end_date`, `cancel_date`. To change these names, use a Reformat gem.
 
 ### Resulting output
 
