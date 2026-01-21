@@ -3,9 +3,9 @@ title: Alteryx Arrange Tool > Prophecy Reformat Gem
 description: Mapping between Alteryx’s Arrange tool and equivalent transformations using Prophecy's Reformat gem
 ---
 
-Alteryx's [Arrange tool](https://help.alteryx.com/current/en/designer/tools/transform/arrange-tool.html) expands columns into rows for reporting, charting, or analytics purposes, adding descriptions to new rows.
+Alteryx's [Arrange tool](https://help.alteryx.com/current/en/designer/tools/transform/arrange-tool.html) expands columns into rows for reporting, charting, or analytics purposes, adding descriptions to new rows. (This action is often called "unpivoting.")
 
-Prophecy implements this exact functionality using multiple [Reformat gems](/data-analysis/gems/prepare/reformat), but for many operations, we recommend using the [Unpivot gem](/data-analysis/gems/transform/unpivot), especially if adding manual desriptions is not required behavior.
+Prophecy can implement this exact functionality using multiple [Reformat gems](/data-analysis/gems/prepare/reformat), but for many operations, we recommend using the [Unpivot gem](/data-analysis/gems/transform/unpivot), especially if adding manual desriptions is not required behavior.
 
 ## Automated migration results
 
@@ -79,9 +79,6 @@ Field extraction:
 description = _exploded_data_col.description
 x           = _exploded_data_col.x
 ```
-
-
-
 
 ## Output behavior
 
