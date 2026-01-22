@@ -5,7 +5,7 @@ description: Mapping between Alteryx’s Arrange tool and equivalent transformat
 
 Alteryx's [Arrange tool](https://help.alteryx.com/current/en/designer/tools/transform/arrange-tool.html) expands columns into rows for reporting, charting, or analytics purposes, adding descriptions to new rows. (This action is often called "unpivoting.")
 
-Prophecy can implement this exact functionality using multiple [Reformat gems](/data-analysis/gems/prepare/reformat), but for many operations, we recommend using the [Unpivot gem](/data-analysis/gems/transform/unpivot), especially if adding manual desriptions is not required behavior.
+Prophecy implements this functionality using the [Unpivot gem](/data-analysis/gems/transform/unpivot).
 
 ## Automated migration results
 
@@ -17,19 +17,16 @@ When Import detects an Alteryx Arrange tool, it generates a sequence of Reformat
 
 - A final Reformat gem extracts fields from the exploded struct into standard output columns.
 
-This approach mirrors the Arrange tool's “columns to rows” behavior using SQL-native constructs.
+Import uses this pattern to preserve lineage and ensure stable behavior across SQL dialects and execution environments. For new development, the Unpivot gem provides the same outcome with clearer intent and simpler configuration.
 
 ## Manually replicate in Prophecy
 
-To reproduce Arrange behavior manually:
+To manually replicate the Arrange tool using the Unpivot gem:
 
-1. Add a **Reformat** gem to construct an array of row objects.
-2. Add a second **Reformat** gem that applies `explode` to that array.
-3. Add a final **Reformat** gem to select fields from the exploded struct as output columns.
-
-This sequence converts multiple input columns into multiple output rows while preserving row-level context.
-
-In many cases, you may prefer using the [Unpivot gem](/data-analysis/gems/transform/unpivot) for simple columns-to-rows reshaping. Unpivot provides a more concise way to normalize wide datasets when all columns represent the same type of value.
+1. Add an **Unpivot** gem to the canvas.
+1. Select **Key Columns**.
+1. Select **Data Columns**.
+1. If desired, check **Use custom output column names for Name & Value pairs** and assign column names.
 
 ## Configuration options
 
@@ -44,19 +41,15 @@ Configure the tool by:
 The output is a row-expanded dataset where each arranged field produces a new row.
 
 ### Prophecy (Unpivot gem)
-You can accomplish most of what you want from the Arrange tool using the Unpivot gem.
 
-1. Add an **Unpivot** gem to the canvas.
-1. For **Key Columns**, select columns that should remain fixed for each record (these columns identify each record and are preserved as unpivoted rows).
-2. For **Data Columns**, select columns whose values should be converted into rows.
-3. Select the **Use custom output column names for Name & Value pairs** checkbox.
-4. Rename the **Name** output column to a label that describes what the original column names represent.
-5. Rename the **Value** output column to a label that describes the measured values.
-6. Save and run the gem.
+Configure the Unpivot gem by 
+- Selecting key columns.
+- Selecting data columns.
+- Renaming columns as desired.
 
 ### In Prophecy (Reformat gems)
 
-For exact Arrange tool behavior (including, for example, rewritten descriptions), configure multiple Reformat gems using the following patterns.
+For exact Arrange tool behavior, configure multiple Reformat gems using the following patterns.
 
 Example construction pattern:
 
@@ -84,8 +77,7 @@ x           = _exploded_data_col.x
 
 - Alteryx outputs multiple rows per input row, with labels indicating the source field.
 - Prophecy produces the same row expansion by exploding an array of structs, then emitting standard columns.
-
-Row counts increase according to the number of arranged fields.
+- Row counts increase according to the number of arranged fields.
 
 ## Known caveats
 
