@@ -41,9 +41,9 @@ Configure the tool by selecting:
 
 Configure the WindowFunction gem by specifying:
 
-- **Partition by** columns: combine with **Order by** to mimic Alteryx group-by behavior.
-- **Order by** columns: use the same column as **Partition by** to mimic Alteryx group-by behavior.
-- **Window use**: running total target column with a `sum` expression on the running-total field.
+- **Partition by** columns: the grouping keys that reset the running total (mirrors the Running Total tool's “Group by”).
+- **Order by** columns: the columns that define row sequence within each group.
+- **Window use**: create the running total target column using a `sum` window expression over the running-total field.
 
 ## Output behavior
 
