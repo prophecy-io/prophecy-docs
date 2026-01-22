@@ -23,8 +23,8 @@ To reproduce Running Total behavior manually:
 
 1. Add a **WindowFunction** gem to the canvas.
 2. Configure **Partition by** column(s) if the running total should reset by group.
-3. Configure **Order by** column(s) (may be the same as column chosen for **Partition by**) to define the row sequence.
-4. Configure a target column and use a `SUM` expression for the running total.
+3. Configure **Order by** column(s) to define the row sequence.
+4. Configure a target column and use a `sum` expression for the running total.
 
 This produces a running calculation that updates row by row according to the specified ordering.
 
