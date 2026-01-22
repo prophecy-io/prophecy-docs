@@ -22,9 +22,9 @@ The resulting column produces the same behavior as the Running Total tool.
 To reproduce Running Total behavior manually:
 
 1. Add a **WindowFunction** gem to the canvas.
-2. Configure **Partition by** column(s) if the running total should reset by group.
-3. Configure **Order by** column(s) to define the row sequence.
-4. Configure a target column and use a `sum` expression for the running total.
+1. Configure **Order by** column(s) to define the row sequence.
+1. Configure **Partition by** column(s) if the running total should reset by group.
+1. Configure a target column and use a `sum` expression for the running total.
 
 This produces a running calculation that updates row by row according to the specified ordering.
 
@@ -34,15 +34,15 @@ This produces a running calculation that updates row by row according to the spe
 
 Configure the tool by selecting:
 
-- Field for group by (optional).
-- Field for running total.
+- Field(s) for **Group By** (optional).
+- Field for **Create Running Total**.
 
 ### In Prophecy (WindowFunction gem)
 
-Configure the WindowFunction gem by specifying:
+Configure the **WindowFunction** gem by specifying:
 
 - **Partition by** columns: the grouping keys that reset the running total (mirrors the Running Total tool's “Group by”).
-- **Order by** columns: the columns that define row sequence within each group.
+- **Order by** columns: the columns that define row sequence.
 - **Window use**: create the running total target column using a `sum` window expression over the running-total field.
 
 ## Output behavior
@@ -52,10 +52,9 @@ Configure the WindowFunction gem by specifying:
 
 Results depend on row ordering; incorrect or missing ordering can change the output.
 
-## Known caveats
+## Known caveat
 
-- **Row order:** Running totals require a deterministic sort order. If the order is ambiguous, results may differ.
-- **Partitioning resets totals:** **Partition by** fields restart the cumulative calculation, matching Alteryx's group-by behavior.
+**Row order:** Running totals require a deterministic sort order. If the order is ambiguous, results may differ.
 
 ## Example
 
