@@ -128,8 +128,9 @@
                       {
                         "group": "Parameters",
                         "pages": [
-                          "data-analysis/development/parameters/parameter-sets",
-                          "data-analysis/development/parameters/usage"
+                          "data-analysis/development/parameters/parameters",
+                          "data-analysis/development/parameters/usage",
+                          "data-analysis/development/parameters/parameter-sets"
                         ]
                       },
                       {
@@ -1385,7 +1386,7 @@
     },
     {
       "source": "/data-analysis/development/pipeline-params",
-      "destination": "/data-analysis/development/parameters/parameter-sets"
+      "destination": "/data-analysis/development/parameters/parameters"
     }
   ]
 }

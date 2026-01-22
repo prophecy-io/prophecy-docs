@@ -1,31 +1,16 @@
 ---
-title: Using parameters
-description: Reference parameters in pipelines, gems, and Prophecy Apps
+title: Use parameters
+description: Reference parameters in pipelines and Prophecy Apps
 ---
 
 Parameters let you define reusable variables that are injected into your pipeline at runtime. Instead of hard-coding values such as dates or file paths, you can reference parameters.
 
-Parameters are useful for:
-
-- Keeping values consistent throughout the pipeline.
-- Enabling user-entered fields in [Prophecy Apps](/data-analysis/collaboration/prophecy-apps/apps).
-- Configuring pipelines for multiple execution environments such as development or production.
-
 Once you create parameters, they are available as _configuration variables_ in [gems](/data-analysis/gems/gems) wherever you can select a visual expression. You can also reference parameters using Jinja syntax in code expressions.
 
-## Parameter scope
-
-Pipeline parameters are defined at the pipeline level. This means:
-
-- They are available only within the pipeline where they are created.
-- They cannot be accessed from other pipelines in the same project.
-
-Project parameters are shared across all pipelines in a project. Use project parameters when you need variables that can be reused across multiple pipelines.
-
-<Info>
-  If a pipeline parameter and a project parameter share the same name, the value of the pipeline
-  parameter takes precedence within that pipeline.
-</Info>
+<Note>
+  This page covers how to use _existing_ parameters. To learn how to create and define new
+  parameters, see the parameters [overview](/data-analysis/development/parameters/parameters).
+</Note>
 
 ## Use parameters in pipelines
 
@@ -44,22 +29,6 @@ By default, the parameter's value will be used for the expression, though this v
 ## Use parameters in Prophecy Apps
 
 Parameters are useful in both [creating](/data-analysis/collaboration/prophecy-apps/app-creation) and [consuming](/data-analysis/collaboration/prophecy-apps/run-apps) Prophecy applications. To use parameters in a Prophecy App, add an input field and select the parameter for **Configuration field**.
-
-## Supported data types
-
-Prophecy supports the following data types for parameters:
-
-| Data type      | Description                                                                           |
-| -------------- | ------------------------------------------------------------------------------------- |
-| Array          | A list of values of the same type, added one by one in a multi-value input field.     |
-| Date           | A calendar date in `dd-mm-yyyy` format, chosen using a date picker.                   |
-| String         | A plain text value, entered via a single-line text input.                             |
-| Boolean        | A true or false value, selected from a dropdown.                                      |
-| Int            | A 32-bit integer entered in a numeric field.                                          |
-| Double         | A 64-bit floating-point number entered in a numeric field.                            |
-| Long           | A 64-bit integer entered in a numeric field.                                          |
-| Float          | A 32-bit floating-point number entered in a numeric field.                            |
-| SQL Expression | A SQL expression, either configured through dropdown menus or entered as custom code. |
 
 ## Array example
 
