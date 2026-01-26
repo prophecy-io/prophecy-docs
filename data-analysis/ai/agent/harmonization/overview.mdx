@@ -1,17 +1,21 @@
 ---
 title: Harmonization
-description: Automate data harmonization using the Prophecy Harmonization Agent
+description: Automate data standardization with harmonization
 ---
 
-Data harmonization transforms disparate source data into a standardized schema. Source systems often use different naming conventions, data types, and structures for similar concepts. Harmonization resolves these differences by mapping source columns to target columns, applying transformations to align data types and formats, and validating data quality.
+Data harmonization transforms disparate source data into a standardized schema.
+
+Source systems often use different naming conventions, data types, and structures to represent the same type of data. For example, you might have the exact same survey hosted on different systems, each which produce different output data **with the same type of information**. To merge this data into a single dataset, you need to harmonize the data.
+
+The Harmonization Agent does so by mapping source columns to target columns, applying transformations to align data types and formats, and validating data quality.
 
 ## How does the Harmonization Agent work?
 
-The Harmonization Agent uses AI to infer mappings between source schemas and a target [Common Data Model](#common-data-model) (CDM). It analyzes source data structure, column names, data types, and sample values to determine how source columns map to target columns. The agent generates SQL transformations that implement these mappings and applies data profiling to validate source data quality.
+The Harmonization Agent uses AI to infer mappings between source schemas and a target [Common Data Model](#common-data-model) (CDM) that you define.
 
-The agent learns from [reference pipelines](#reference-pipelines) that contain previously validated transformation logic. When harmonizing a new source, it compares the source schema to patterns in reference pipelines to make deterministic decisions where possible. For novel mappings or ambiguous cases, it proposes transformations with confidence scores for human review.
+To do this, the agent learns from [reference pipelines](#reference-pipelines) that contain previously validated transformation logic. When harmonizing a new source, it compares the source schema to patterns in reference pipelines to make deterministic transformation decisions.
 
-A human-in-the-loop review process ensures mappings, transformations, and data quality outcomes are validated before finalization. This approach balances automation with accuracy, allowing the agent to handle routine mappings while requiring human oversight for complex or uncertain cases.
+Prophecy encourages a [human-in-the-loop](#human-in-the-loop-validation) approach. For each source-target mapping, you can review confidence scores. For lower confidence transformations, you may want to double check the agent's decision. Additionally, each mapping has corresponding data quality tests that should be reviewed as part of the validation process.
 
 After review and validation, the harmonized pipeline becomes a production-ready asset that can be scheduled and deployed.
 
@@ -25,30 +29,8 @@ Reference pipelines contain previously implemented transformation logic that map
 
 When you create a reference pipeline, you manually map columns from a source system to the CDM and implement any required transformations. The agent analyzes these mappings to understand patterns such as column name equivalencies, common transformation types, and data type conversions. When harmonizing a new source with similar characteristics, the agent applies these patterns to generate mappings and transformations automatically.
 
-## Inference and learning
-
-The agent uses multiple signals to infer mappings between source and target schemas.
-
-Column name similarity analysis compares source column names to target column names using semantic matching. The agent recognizes variations such as abbreviations, different word orders, and naming conventions. For example, it can map `as_of_date` to `as_of_date`, `asOfDate` to `as_of_date`, or `date_as_of` to `as_of_date`.
-
-Data type analysis examines source data types and sample values to determine appropriate target data types and transformations. If a source column contains dates stored as strings, the agent infers that a date parsing transformation is required.
-
-Reference pipeline pattern matching compares the current source schema to schemas in reference pipelines. When similarities are detected, the agent applies the same mapping and transformation patterns used in those pipelines.
-
-Confidence scoring assigns a confidence level to each inferred mapping based on the strength of the signals. High-confidence mappings require minimal review, while low-confidence mappings are flagged for human validation.
-
 ## Human-in-the-loop validation
 
-The review process allows users to validate agent-generated mappings and transformations before finalization. During review, you can see how each source column was mapped to the target schema, the transformations applied, the agent's confidence score for each mapping, and the reasoning behind each decision.
-
-You can adjust mappings manually, modify transformations, or reject mappings that don't meet requirements. This feedback improves the reliability of harmonized output and informs future harmonization runs. When you validate a mapping, the agent learns from that decision and applies similar logic in subsequent runs.
+The review process allows users to validate agent-generated mappings and transformations before finalization. During review, you can see how each source column was mapped to the target schema, the transformations applied, the agent's confidence score for each mapping, and the data quality tests that were applied.
 
 The review step ensures that business logic and domain-specific requirements are correctly implemented. While the agent handles routine mappings efficiently, human oversight catches edge cases and ensures that transformations align with business rules.
-
-## Data profiling and quality validation
-
-The agent profiles source data to identify quality issues before transformation. It analyzes data distributions, null rates, value ranges, and patterns to detect anomalies that could affect downstream analytics.
-
-Data quality validations are applied during transformation to ensure that output data meets specified criteria. These validations can include checks for required fields, data type correctness, value ranges, and referential integrity. When validations fail, the agent flags the issues for review.
-
-Profiling results inform mapping decisions. If a source column has high null rates or unusual value distributions, the agent may flag it for review or suggest data cleansing transformations.
