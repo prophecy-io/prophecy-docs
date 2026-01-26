@@ -1402,6 +1402,10 @@
     {
       "source": "/data-engineering/fabrics/sql-provider/bigquery",
       "destination": "/data-analysis/environment/connections/bigquery"
+    },
+    {
+      "source": "/data-analysis/environment/fabrics/create-fabric",
+      "destination": "/data-analysis/environment/fabrics/prophecy-fabrics"
     }
   ]
 }
