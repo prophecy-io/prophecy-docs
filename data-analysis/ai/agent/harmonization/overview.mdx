@@ -7,17 +7,13 @@ Data harmonization transforms disparate source data into a standardized schema.
 
 Source systems often use different naming conventions, data types, and structures to represent the same type of data. For example, you might have the exact same survey hosted on different systems, each which produce different output data **with the same type of information**. To merge this data into a single dataset, you need to harmonize the data.
 
-The Harmonization Agent does so by mapping source columns to target columns, applying transformations to align data types and formats, and validating data quality.
+The Harmonization Agent does this for you by transforming source columns to expected target columns while validating data quality.
 
 ## How does the Harmonization Agent work?
 
-The Harmonization Agent uses AI to infer mappings between source schemas and a target [Common Data Model](#common-data-model) (CDM) that you define.
+The Harmonization Agent uses AI to infer mappings between source schemas and a target [Common Data Model](#common-data-model) (CDM) that you define. While the agent can assume a mapping to get your data in the right format, we highly recommend providing a [reference pipeline](#reference-pipelines) to "teach" the agent how to transform your data. When you provide a reference pipeline, the agent compares the source schema to patterns in reference pipelines to make informed transformation decisions.
 
-To do this, the agent learns from [reference pipelines](#reference-pipelines) that contain previously validated transformation logic. When harmonizing a new source, it compares the source schema to patterns in reference pipelines to make deterministic transformation decisions.
-
-Prophecy encourages a [human-in-the-loop](#human-in-the-loop-validation) approach. For each source-target mapping, you can review confidence scores. For lower confidence transformations, you may want to double check the agent's decision. Additionally, each mapping has corresponding data quality tests that should be reviewed as part of the validation process.
-
-After review and validation, the harmonized pipeline becomes a production-ready asset that can be scheduled and deployed.
+Once the agent has generated the harmonized pipeline, Prophecy encourages a [human-in-the-loop](#human-in-the-loop-validation) approach. For each source-target mapping, you can review confidence scores and double check each transformation. Additionally, you can review the data quality test outcomes for each mapping. After review and validation, the harmonized pipeline becomes a production-ready asset that can be scheduled and deployed.
 
 ## Common Data Model
 
@@ -25,9 +21,9 @@ A Common Data Model (CDM) defines the target schema that all source data must co
 
 ## Reference pipelines
 
-Reference pipelines contain previously implemented transformation logic that maps source data to the CDM. The Harmonization Agent uses these pipelines as learning input to infer how similar source data should be transformed.
+Optionally, you can build a reference pipeline that transforms source data and maps it to your CDM. The Harmonization Agent can use this pipeline to learn how similar source data should be transformed.
 
-When you create a reference pipeline, you manually map columns from a source system to the CDM and implement any required transformations. The agent analyzes these mappings to understand patterns such as column name equivalencies, common transformation types, and data type conversions. When harmonizing a new source with similar characteristics, the agent applies these patterns to generate mappings and transformations automatically.
+For example, the agent can reference patterns such as column name equivalencies, common transformation types, and data type conversions. When harmonizing a new source with similar characteristics, the agent applies these patterns to generate mappings and transformations automatically.
 
 ## Human-in-the-loop validation
 
