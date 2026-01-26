@@ -1,17 +1,17 @@
 ---
-title: Alteryx Make Columns tool > Prophecy WindowFunction + Reformat + Script Gems
+title: Alteryx Make Columns tool > Prophecy WindowFunction + Reformat + Aggregation Gems
 description: Mapping between Alteryx’s Make Columns tool and its imported representation in Prophecy
 ---
 
-The [Alteryx Make Columns tool](https://help.alteryx.com/current/en/designer/tools/transform/make-columns-tool.html) restructures row-oriented data into newly created columns by distributing incoming row values across columns in a configured, repeating sequence. The tool's behavior depends on implicit row order rather than explicit grouping or keys.
+The [Alteryx Make Columns tool](https://help.alteryx.com/current/en/designer/tools/transform/make-columns-tool.html) lays out rows of one or more related fields across a fixed number of output columns, optionally partitioned by grouping fields. Within each group, values are distributed positionally, making the tool primarily suited for reporting layouts or matrix-style ingestion. Make Columns is a positional layout transform; it does not aggregate or map values by category.
 
-Because SQL-based execution engines do not assume stable row order by default, Prophecy reproduces this behavior by explicitly materializing row sequence, deriving internal grouping and position identifiers, and then reshaping the data.
+The Make Columns tool's behavior depends on implicit row order. Because SQL-based execution engines do not assume stable row order by default, Prophecy reproduces this behavior by explicitly materializing row sequence, deriving internal grouping and position identifiers, and then reshaping the data.
 
 ## Automated migration results
 
 When Import detects an Alteryx Make Columns tool, it generates a multi-step pipeline:
 
-1. Prophecy first adds a [WindowFunction gem](/data-analysis/gems/transform/window) that generates a synthetic sequence column using `row_number()`, ordered by a constant (`1`). This allows for deterministic row ordering, making row position explicit for execution purposes.
+1. Prophecy first adds a [WindowFunction gem](/data-analysis/gems/transform/window) that generates a synthetic sequence column using `row_number()`, ordered by a constant (`1`), which forces a deterministic but arbitrary ordering when no explicit sort field is available.
 1. A second WindowFunction gem computes `count(1)` over the dataset to compute total record count.
 1. Next, a [Reformat gem](/data-analysis/gems/prepare/reformat) derives internal grouping and position identifiers by calculating:
    - An internal group identifier that determines which rows belong to the same output record.
@@ -23,9 +23,61 @@ The resulting dataset matches the structure and values produced by the Alteryx M
 
 ## Manually replicate in Prophecy
 
-Alteryx users who rely on Make Columns can reproduce the same behavior in Prophecy by explicitly sequencing rows, deriving grouping and positional logic, and reshaping the data using pivoting or script-based transformations.
+While Import uses a Script gem to express this pivot generically, the same results can be reproduced using SQL-based gems when the number of columns is fixed.
 
-However, because Make Columns depends on implicit row order, we recommend using the above techniques only when you require row-position–based layout. In many cases, you can achieve the underlying analytical goal using a combination of the [WindowFunction gem](/data-analysis/gems/transform/window), the [Aggregation gem](/data-analysis/gems/transform/aggregate), and the [Pivot gem](/data-analysis/gems/transform/pivot).
+Both **Arrange horizontally** and **Arrange vertically** use the same pivot step. The difference lies only in how row positions are calculated before aggregation.
+
+### Shared setup
+
+Add a **WindowFunction** gem ordered by the field(s) that define row order and a column called `_sequence_id` configured with the function `row_number`.
+
+### Arrange horizontally
+
+Add a **Reformat** gem and create a column called `_group_id` configured with the following custom code:
+
+```sql
+floor((_sequence_id - 1) / <Number of columns>)
+```
+
+In the same **Reformat** gem, create a column called `_position_id` configured with the following custom code:
+
+```sql
+((_sequence_id - 1) % <Number of columns>) + 1
+```
+
+### Arrange vertically
+
+Add a second **WindowFunction** gem and a column called `_total_records` configured with the function `count(1)`.
+
+Add a **Reformat** gem and create a column called `_rows_per_column` configured with the following custom code:
+
+```sql
+ceil(_total_records / <Number of columns>)
+```
+
+In the same **Reformat** gem, create a column called `_position_id` configured with the following custom code:
+
+```sql
+floor((_sequence_id - 1) / _rows_per_column) + 1
+```
+In that same **Reformat** gem, create a column called `_group_id` configured with the following custom code:
+
+```sql
+((_sequence_id - 1) % _rows_per_column)
+```
+
+### Pivot into columns (both modes)
+
+To pivot into columns, add an **Aggregate** gem grouped by `_group_id`, and create four output columns-- `Column_1_name`, `Column_2_name`, `Column_3_name`, `Column_4_name`--configured as follows:
+
+| Column name     | Expression                                      |
+| --------------- | ----------------------------------------------- |
+| `Column_1_name` | `max(case when _position_id = 1 then Name end)` |
+| `Column_2_name` | `max(case when _position_id = 2 then Name end)` |
+| `Column_3_name` | `max(case when _position_id = 3 then Name end)` |
+| `Column_4_name` | `max(case when _position_id = 4 then Name end)` |
+
+This step is identical for both Arrange horizontally and Arrange vertically.
 
 ## Configuration options
 
@@ -35,17 +87,17 @@ Configuration options include:
 
 - Number of columns to create
 - Column naming pattern
-- Whether to fill columns row-by-row or in repeating groups
+- Whether to arrange values horizontally (row-major) or vertically (column-major)
 
 These options implicitly rely on input row order.
 
-### In Prophecy (WindowFunction, Reformat, Script gems)
+### In Prophecy (WindowFunction, Reformat, Aggregate gems)
 
 Configuration is distributed across:
 
-- WindowFunction gems (row sequencing and record counts)
-- Reformat gems (grouping and position logic)
-- A Script gem (pivot logic) that uses PySpark to group rows into fixed-size batches and pivot each batch into a single wide row based on column position.
+- A WindowFunction gem (row sequencing and record counts).
+- A Reformat gem (grouping and position derivation).
+- An Aggregate gem (conditional pivot by position).
 
 Each component corresponds to a specific aspect of the original Alteryx configuration.
 
@@ -67,7 +119,7 @@ Both Alteryx’s Make Columns tool and the imported Prophecy pipeline:
 
 ### Input dataset
 
-| row_id | value |
+| row_id | name |
 | ------ | ----- |
 | 1      | A     |
 | 2      | B     |
@@ -76,18 +128,36 @@ Both Alteryx’s Make Columns tool and the imported Prophecy pipeline:
 
 ### Alteryx Make Columns tool
 
-The Make Columns tool is configured to create two output columns. Values are filled **left to right**, wrapping to a new row after every two records.
+Choose `2` for **Number of Columns** and choose **Arrange Horizontally**. Leave **Grouping Fields** blank.
+
+ Values are filled **left to right**, wrapping to a new row after every two records.
 
 ### Prophecy equivalent
 
-In Prophecy, you can reproduce this behavior through the following steps:
+In Prophecy, you can reproduce this behavior as follows:
 
-1. In a WindowFunction gem, assign each input record an explicit row number (`_sequence_id`) to preserve order.
-2. In a second WindowFunction gem, calculate total records (`_total_records`) with `count()`.
-3. In a Reformat gem, create a `_group_id` column defined as a `floor` function with the following parameter `(_sequence_id - 1) / 2`.
-4. In the same Reformat gem, create a `_position_id` column defined as a `concat_ws` function with the following parameters: `_`, `'Column'`and `((_sequence_id - 1) % 2) + 1`.
-5.  In a Script gem, use the derived grouping and position columns in PySpark code to reshape the data, such that rows are grouped by `_group_id`, pivoted on `_position_id` ( `Column_1` and `Column_2`), and aggregated so that each group produces a single output row. For each pivoted column, perform a  simple aggregation (such as `max`) selects the single value associated with that group and position, using `_sequence_id` and `_total_records`  as supporting fields during the reshape.
-6. Remove helper columns, leaving only the final Make Columns output.
+1. Add a **WindowFunction** gem ordered by `value`, and create a column called `_sequence_id` configured with the function `row_number()`.
+
+2. Add a **Reformat** gem and create a column called `_group_id` configured with the following expression:
+
+   ```sql
+   floor((_sequence_id - 1) / 2)
+   ```
+
+3. In the same **Reformat** gem, create a column called `_position_id` configured with the following expression:
+
+   ```sql
+   ((_sequence_id - 1) % 2) + 1
+   ```
+
+4. To pivot into columns, add an **Aggregate** gem grouped by `_group_id`, and create two output columns—`Column_1` and `Column_2`—configured as follows:
+
+   | Column name | Expression                                      |
+   | ----------- | ----------------------------------------------- |
+   | `Column_1`  | `max(case when _position_id = 1 then name end)` |
+   | `Column_2`  | `max(case when _position_id = 2 then name end)` |
+
+5. Remove helper columns, leaving only the final Make Columns output.
 
 ### Resulting output
 
