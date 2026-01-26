@@ -37,6 +37,7 @@ Once you save your project as a draft, you have the option to Publish that versi
 | Version details                 | Copilot automatically populates the version details, but you can edit the version number or description if necessary.                                                                                  |
 | Changes that will be published  | Prophecy lists the saved drafts that include changes to be reflected in the new published version.                                                                                                     |
 | Select the fabric(s) to publish | Prophecy creates a new project deployment for each fabric. If a deployment already exists, it is updated. To see your deployments, review the [Monitoring](/data-analysis/production/monitoring) page. |
+| Choose project parameter set    | Select the project [parameter set](/data-analysis/development/parameters/parameter-sets) to use for the deployment. This allows you to publish different configurations to different environments.     |
 
 Prophecy lets you publish different versions of a project to different fabrics. This might be useful if you want `Version 1` published on a development fabric and `Version 2` published on a production fabric. (You cannot publish two different versions to the same fabric.)
 
@@ -47,6 +48,7 @@ Follow the steps below to understand how to publish your project from the Prophe
 1. Click **Publish** from the project header.
 1. Review the version details and the changes to be published.
 1. Select one or more fabrics to publish to.
+1. In the **Choose Project Parameter Set** dropdown, select the project [parameter set](/data-analysis/development/parameters/parameter-sets) that will be applied to all pipelines that will be deployed in this project.
 1. Click **Publish**.
 
 <Note>
