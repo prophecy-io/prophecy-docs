@@ -125,7 +125,14 @@
                           }
                         ]
                       },
-                      "data-analysis/development/pipeline-params",
+                      {
+                        "group": "Parameters",
+                        "pages": [
+                          "data-analysis/development/parameters/parameters",
+                          "data-analysis/development/parameters/usage",
+                          "data-analysis/development/parameters/parameter-sets"
+                        ]
+                      },
                       {
                         "group": "Versioning",
                         "pages": [
@@ -1376,6 +1383,10 @@
     {
       "source": "/data-analysis/gems/source-target/table/write/write-options",
       "destination": "/data-analysis/gems/source-target/table/write/write-options"
+    },
+    {
+      "source": "/data-analysis/development/pipeline-params",
+      "destination": "/data-analysis/development/parameters/parameters"
     }
   ]
 }
