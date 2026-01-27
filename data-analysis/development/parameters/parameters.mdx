@@ -1,0 +1,103 @@
+---
+title: Overview
+description: Reuse values for flexible pipeline execution
+---
+
+Parameters let you dynamically control values in pipelines. Instead of hard-coding values into your pipeline, you define them once as parameters and reference them wherever needed. At runtime, you choose which values to use.
+
+Use parameters when a value:
+
+- Changes between environments (for example, dev vs. prod).
+- Should differ between pipeline schedules.
+- Is shared across multiple pipelines.
+- Will correspond to user-entered fields in [Prophecy Apps](/data-analysis/collaboration/prophecy-apps/apps).
+
+## High-level workflow
+
+Using parameters in Prophecy follows a simple flow:
+
+1. Define parameters to declare the values your pipeline expects.
+1. Reference parameters inside gems in pipelines.
+1. Run pipelines using a specific set of parameter values.
+
+This page focuses on step 1: defining parameters.
+
+## What are parameters?
+
+A parameter is a named placeholder for a value that may change between runs.
+
+For example, instead of hard-coding a file path in the pipeline, such as `s3://my-bucket/prod/customers/`, you define a parameter called `customers_path` and assign it the value `s3://my-bucket/prod/customers/`.
+
+Inside the pipeline, you reference the parameter rather than the literal value. Parameters are defined in parameter sets, which group related variables together.
+
+Every project and pipeline has a default parameter set, which serves as the baseline definition. You can later create additional parameter sets—for example, one for development and one for production—without redefining the parameters themselves.
+
+## Types of parameters
+
+Prophecy supports two scopes for parameters:
+
+- Project parameters
+- Pipeline parameters
+
+The scope determines where a parameter can be used and how it behaves at runtime.
+
+| Parameter type      | Description                                                                                                                                                                                                                                    |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Project parameters  | Shared across all pipelines in a project.<br/><br/>String expressions remain as literal strings. If you define a project parameter as `concat("first_name", "last_name")`, its usage remains as `concat("first_name", "last_name")`.<br/><br/> |
+| Pipeline parameters | Specific to a single pipeline.<br/><br/>String expressions are evaluated at runtime. If you define a pipeline parameter called `concat("first_name", "last_name")`, the value injected during usage is `first_namelast_name`.<br/><br/>        |
+
+<Note>
+  If a pipeline parameter and a project parameter share the same name, the pipeline parameter takes
+  precedence within that pipeline.
+</Note>
+
+<Info>The difference in evaluation behavior will be resolved in a future release.</Info>
+
+### Supported data types
+
+Prophecy supports the following data types for **pipeline parameters**:
+
+| Data type      | Description                                                                           |
+| -------------- | ------------------------------------------------------------------------------------- |
+| Array          | A list of values of the same type, added one by one in a multi-value input field.     |
+| Date           | A calendar date in `dd-mm-yyyy` format, chosen using a date picker.                   |
+| String         | A plain text value, entered via a single-line text input.                             |
+| Boolean        | A true or false value, selected from a dropdown.                                      |
+| Int            | A 32-bit integer entered in a numeric field.                                          |
+| Double         | A 64-bit floating-point number entered in a numeric field.                            |
+| Long           | A 64-bit integer entered in a numeric field.                                          |
+| Float          | A 32-bit floating-point number entered in a numeric field.                            |
+| SQL Expression | A SQL expression, either configured through dropdown menus or entered as custom code. |
+
+## Define parameters
+
+You first define parameters by adding variables to the default parameter set. You must define values for default parameters.
+
+### Define pipeline parameters
+
+1. Open the relevant pipeline in Studio.
+1. In the project header, click **Parameters**.
+1. Ensure the **Pipeline Parameters** tab is selected.
+1. Click **+ Add Variable**.
+1. Enter a name and a value for the variable.
+1. Click **Save**.
+
+### Define project parameters
+
+You can define project parameters in either of the following ways:
+
+- **Option 1:** In the left sidebar, click on the current project parameter set.
+- **Option 2:** In the project header of an open pipeline, open **Parameters** and switch to the **Project Parameters** tab.
+
+After you open the parameter dialog:
+
+1. Click **+ Add Variable**.
+1. Enter a name and a value for the variable.
+1. Click **Save**.
+
+## What's next?
+
+Now that you understand how parameters are defined, continue with:
+
+- [Embedding these parameters](/data-analysis/development/parameters/usage) in your pipelines.
+- [Creating additional parameter sets](/data-analysis/development/parameters/parameter-sets) at the project or pipeline level.
