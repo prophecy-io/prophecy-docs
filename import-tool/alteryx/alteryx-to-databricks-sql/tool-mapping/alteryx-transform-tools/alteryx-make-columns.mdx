@@ -23,7 +23,7 @@ The resulting dataset matches the structure and values produced by the Alteryx M
 
 ## Manually replicate in Prophecy
 
-While Import uses a Script gem to express this pivot generically, the same results can be reproduced using SQL-based gems when the number of columns is fixed.
+While Import uses a Script gem to express this pivot generically using PySpark, the same results can be reproduced using SQL-based gems when the number of columns is fixed.
 
 Both **Arrange horizontally** and **Arrange vertically** use the same pivot step. The difference lies only in how row positions are calculated before aggregation.
 
@@ -157,7 +157,7 @@ In Prophecy, you can reproduce this behavior as follows:
    | `Column_1`  | `max(case when _position_id = 1 then name end)` |
    | `Column_2`  | `max(case when _position_id = 2 then name end)` |
 
-5. Remove helper columns, leaving only the final Make Columns output.
+5. In a Reformat gem, remove helper columns such as `group_id`, leaving only the final Make Columns output.
 
 ### Resulting output
 
