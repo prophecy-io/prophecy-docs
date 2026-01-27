@@ -50,6 +50,7 @@
                           },
                           "data-analysis/ai/agent/explore",
                           "data-analysis/ai/agent/transform",
+                          "data-analysis/ai/agent/harmonization/overview",
                           {
                             "group": "Documentation",
                             "pages": [
@@ -125,7 +126,14 @@
                           }
                         ]
                       },
-                      "data-analysis/development/pipeline-params",
+                      {
+                        "group": "Parameters",
+                        "pages": [
+                          "data-analysis/development/parameters/parameters",
+                          "data-analysis/development/parameters/usage",
+                          "data-analysis/development/parameters/parameter-sets"
+                        ]
+                      },
                       {
                         "group": "Versioning",
                         "pages": [
@@ -166,34 +174,45 @@
                         "group": "Fabrics",
                         "pages": [
                           "data-analysis/environment/fabrics/prophecy-fabrics",
-                          "data-analysis/environment/fabrics/create-fabric"
+                          {
+                            "group": "Create a fabric",
+                            "pages": [
+                              "data-analysis/environment/fabrics/create-fabrics/databricks",
+                              "data-analysis/environment/fabrics/create-fabrics/bigquery"
+                            ]
+                          }
                         ]
                       },
                       {
                         "group": "Connections",
                         "pages": [
                           "data-analysis/environment/connections/connections",
-                          "data-analysis/environment/connections/adls",
-                          "data-analysis/environment/connections/bigquery",
-                          "data-analysis/environment/connections/databricks",
-                          "data-analysis/environment/connections/gcs",
-                          "data-analysis/environment/connections/hana",
-                          "data-analysis/environment/connections/mongodb",
-                          "data-analysis/environment/connections/mssql",
-                          "data-analysis/environment/connections/onedrive",
-                          "data-analysis/environment/connections/oracle",
-                          "data-analysis/environment/connections/power-bi",
-                          "data-analysis/environment/connections/prophecy-managed",
-                          "data-analysis/environment/connections/redshift",
-                          "data-analysis/environment/connections/s3",
-                          "data-analysis/environment/connections/salesforce",
-                          "data-analysis/environment/connections/sftp",
-                          "data-analysis/environment/connections/sharepoint",
-                          "data-analysis/environment/connections/smartsheet",
-                          "data-analysis/environment/connections/smtp",
-                          "data-analysis/environment/connections/snowflake",
-                          "data-analysis/environment/connections/synapse",
-                          "data-analysis/environment/connections/tableau"
+                          {
+                            "group": "Data ingress/egress",
+                            "pages": [
+                              "data-analysis/environment/connections/adls",
+                              "data-analysis/environment/connections/bigquery",
+                              "data-analysis/environment/connections/databricks",
+                              "data-analysis/environment/connections/gcs",
+                              "data-analysis/environment/connections/hana",
+                              "data-analysis/environment/connections/mongodb",
+                              "data-analysis/environment/connections/mssql",
+                              "data-analysis/environment/connections/onedrive",
+                              "data-analysis/environment/connections/oracle",
+                              "data-analysis/environment/connections/power-bi",
+                              "data-analysis/environment/connections/prophecy-managed",
+                              "data-analysis/environment/connections/redshift",
+                              "data-analysis/environment/connections/s3",
+                              "data-analysis/environment/connections/salesforce",
+                              "data-analysis/environment/connections/sftp",
+                              "data-analysis/environment/connections/sharepoint",
+                              "data-analysis/environment/connections/smartsheet",
+                              "data-analysis/environment/connections/smtp",
+                              "data-analysis/environment/connections/snowflake",
+                              "data-analysis/environment/connections/synapse",
+                              "data-analysis/environment/connections/tableau"
+                            ]
+                          }
                         ]
                       },
                       {
@@ -646,7 +665,7 @@
                 "groups": [
                   {
                     "group": "Releases",
-                    "pages": ["data-analysis/releases/2025"]
+                    "pages": ["data-analysis/releases/2026", "data-analysis/releases/2025"]
                   },
                   {
                     "group": "Reference",
@@ -854,11 +873,7 @@
                           },
                           {
                             "group": "SQL providers",
-                            "pages": [
-                              "data-engineering/fabrics/sql-provider/snowflake",
-                              "data-engineering/fabrics/sql-provider/databricks",
-                              "data-engineering/fabrics/sql-provider/bigquery"
-                            ]
+                            "pages": ["data-engineering/fabrics/sql-provider/snowflake"]
                           },
                           "data-engineering/fabrics/secret-providers"
                         ]
@@ -1144,7 +1159,7 @@
                 "groups": [
                   {
                     "group": "Releases",
-                    "pages": ["data-engineering/releases/2025"]
+                    "pages": ["data-engineering/releases/2026", "data-engineering/releases/2025"]
                   },
                   {
                     "group": "Reference",
@@ -1384,6 +1399,22 @@
     {
       "source": "/data-analysis/gems/source-target/table/write/write-options",
       "destination": "/data-analysis/gems/source-target/table/write/write-options"
+    },
+    {
+      "source": "/data-analysis/development/pipeline-params",
+      "destination": "/data-analysis/development/parameters/parameters"
+    },
+    {
+      "source": "/data-engineering/fabrics/sql-provider/databricks",
+      "destination": "/data-analysis/environment/connections/databricks"
+    },
+    {
+      "source": "/data-engineering/fabrics/sql-provider/bigquery",
+      "destination": "/data-analysis/environment/connections/bigquery"
+    },
+    {
+      "source": "/data-analysis/environment/fabrics/create-fabric",
+      "destination": "/data-analysis/environment/fabrics/prophecy-fabrics"
     }
   ]
 }
