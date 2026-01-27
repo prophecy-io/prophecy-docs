@@ -1,11 +1,11 @@
 ---
-title: Log gem
+title: Log Gem
 description: Emit structured execution and custom log events from a pipeline
 ---
 
-The Log gem lets you emit **structured log events** from a pipeline as a dataset that you can query.
+The Log gem lets you emit structured log events from a pipeline as a dataset that you can query.
 
-Rather than logging row-level data, the Log gem records **step-level execution events**—such as when a component starts and finishes running—along with optional custom messages. This makes it useful for auditing, debugging, performance analysis, and operational reporting.
+The Log gem records step-level execution events—such as when a component starts and finishes running—along with optional custom messages. This makes it useful for auditing, debugging, performance analysis, and operational reporting.
 
 Each log record captures a timestamped event tied to a specific pipeline run and component.
 
@@ -18,7 +18,7 @@ By default, the Log gem emits **lifecycle events** for the upstream component it
 
 The `finish` event includes a compact summary of record counts (read, written, rejected) at the boundary being logged.
 
-In addition, the Log gem supports **custom log messages** that you can emit during execution.
+In addition, the Log gem supports custom log messages that you can emit during execution.
 
 ## Log output schema
 
@@ -37,7 +37,7 @@ The Log gem produces a dataset with the following columns:
 
 When configuring the Log gem, you select the **type of original component being logged** (for example, Join, Rollup, Assign Keys).
 
-This selection does **not** change the output schema. Instead, it provides semantic context that determines how the log events are interpreted by the system and UI. For example:
+This selection does not change the output schema. Instead, it provides semantic context that determines how the log events are interpreted by the system and UI. For example:
 
 - For **joins**, record counts are interpreted as join output volumes.
 - For **rollups**, small output counts may be expected due to aggregation.
@@ -89,4 +89,4 @@ The Log gem is commonly used to:
 - Add human-readable annotations to complex pipelines.
 - Produce a persistent, execution log for reporting or monitoring.
 
-In short, the Log gem turns pipeline execution into structured data that you can inspect, analyze, and reason about just like any other dataset.
+In short, the Log gem turns pipeline execution into structured data that you can inspect and analyze.
