@@ -1,0 +1,108 @@
+---
+title: Alteryx Cross Tab tool > Prophecy Pivot gem
+description: Mapping between Alteryx’s Cross Tab tool and Prophecy’s Pivot gem
+---
+
+The Alteryx [Cross Tab tool](https://help.alteryx.com/current/en/designer/tools/transform/cross-tab-tool.html) reshapes data by converting row values into columns, typically aggregating values in the process. It is commonly used to create summary-style tables for reporting and analysis.
+
+In Prophecy, the same outcome is implemented using the [Pivot gem](/data-analysis/gems/transform/pivot), which performs SQL-backed pivot operations over grouped data.
+
+## Automated migration results
+
+When Import detects an Alteryx Cross Tab tool, it generates a **Pivot** gem configured to match the Cross Tab settings:
+
+- Group-by fields in Alteryx are mapped to the Pivot gem's **Row Grouping Settings**.
+- The selected **Column Headers** field in Alteryx is used as the pivot column.
+- The **Values for New Columns** field is used as the pivot value.
+- The selected aggregation method (for example, `Sum`, `Count`, `Min`, or `Max`) is mapped to the Pivot gem’s aggregation function.
+- Output column names are derived from the pivoted values.
+
+The resulting dataset has one row per group and one column per distinct pivot value, matching the Cross Tab output shape.
+
+## Manually replicate in Prophecy
+
+To reproduce Cross Tab behavior manually:
+
+1. Add a **Pivot** gem to the canvas.
+2. Configure the **Group by** columns (these define the output row grain).
+3. Select the column whose values should become output columns.
+4. Select the column containing values to aggregate.
+5. Choose an appropriate aggregation function.
+
+## Configuration options
+
+### In Alteryx (Cross Tab tool)
+
+Configure the tool by selecting:
+
+- **Group data by these values** (row identifiers)
+- **New column headers** (field whose values become column names)
+- **Values for new columns** (field to aggregate)
+- **Aggregation method** (Sum, Count, Min, Max, First, etc.)
+- Optional: handling of nulls and missing combinations
+
+### In Prophecy (Pivot gem)
+
+Configure the Pivot gem by specifying:
+
+- **Row Grouping Settings** (corresponding to Alteryx group-by fields)
+- **Pivot Column Settings** (values become output column names)
+- **Value for New Columns** (values to aggregate)
+
+The Pivot gem expresses this logic as a SQL pivot under the hood, but exposes configuration through a low-code interface.
+
+## Output behavior
+
+- Alteryx outputs one row per group, with new columns created from distinct values in the pivot field.
+- Prophecy outputs the same wide, pivoted structure, with one column per pivot value and aggregated results in each cell.
+
+If a particular group does not contain a given pivot value, the corresponding output cell is null unless otherwise configured.
+
+## Known caveats
+
+- **Dynamic columns:** Both tools generate output columns based on data values. Changes in the underlying data can alter the output schema.
+- **Aggregation required:** Pivoting inherently involves aggregation; non-aggregated values must be reduced using an aggregation function.
+- **Wide outputs:** Large numbers of pivot values can result in very wide schemas, which may impact readability or downstream processing.
+- **Null handling:** Missing combinations typically produce nulls and may require downstream handling.
+
+## Example
+
+Goal: Create one row per `order_id`, with separate columns for each `category`, summing `amount`.
+
+### Input dataset
+
+{/* vale off */}
+| order_id | category | amount |
+|---------:|----------|-------:|
+| 1        | A        | 10     |
+| 1        | B        | 5      |
+| 2        | A        | 7      |
+| 2        | B        | 3      |
+{/* vale on */}
+
+### Alteryx Cross Tab tool
+
+- Group data by: `order_id`
+- New column headers: `category`
+- Values for new columns: `amount`
+- Aggregation method: Sum
+
+### Prophecy equivalent (Pivot gem)
+
+Configure a **Pivot** gem with:
+
+- Group by: `order_id`
+- Pivot column: `category`
+- Value column: `amount`
+- Aggregation: `sum`
+
+The resulting output matches the Cross Tab tool's behavior.
+
+### Resulting output
+
+{/* vale off */}
+| order_id | A  | B |
+|---------:|---:|--:|
+| 1        | 10 | 5 |
+| 2        | 7  | 3 |
+{/* vale on */}

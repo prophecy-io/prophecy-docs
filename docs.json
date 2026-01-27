@@ -1234,6 +1234,19 @@
                           "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-union"
                         ]
                       },
+                      {
+                        "group": "Alteryx Transform tools",
+                        "pages": [
+                         "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-transform-tools/alteryx-arrange",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-transform-tools/alteryx-count-records",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-transform-tools/alteryx-cross-tab",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-transform-tools/alteryx-make-columns",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-transform-tools/alteryx-running-total",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-transform-tools/alteryx-summarize",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-transform-tools/alteryx-transpose",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-transform-tools/alteryx-weighted-average"
+                        ]
+                      },
                       "import-tool/alteryx/alteryx-to-databricks-sql/databricks-performance-tuning"
                     ]
                   },
