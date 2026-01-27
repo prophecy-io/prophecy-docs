@@ -22,12 +22,32 @@ Alteryx implicitly converts timestamps to strings as needed in downstream tools.
 
 ## Manually replicate in Prophecy
 
-Use a **Reformat** gem to create or overwrite a target column.
+### Parse string values into timestamp values
 
-1. If your input strings use mixed date-time formats, normalize them to timestamps before applying formatting.
-1. Add a **Reformat** gem to the canvas.
-1. Add a **target column** (or select an existing column to overwrite).
-1. In the expression builder, select an appropriate date-time function and configure it.
+Use this when your input column is a string, especially if formats are mixed.
+
+1. Add a Reformat gem.
+2. Create a new column (such as`ts_normalized`) and parse the string into a timestamp. If formats vary, try multiple patterns and take the first successful parse:
+
+```
+COALESCE(
+  TRY_TO_TIMESTAMP(raw_dt, 'yyyy-MM-dd HH:mm:ss'),
+  TRY_TO_TIMESTAMP(raw_dt, 'yyyy-MM-dd'),
+  TRY_TO_TIMESTAMP(raw_dt, 'MM/dd/yyyy'),
+  TRY_TO_TIMESTAMP(raw_dt, 'MMMM d, yyyy')
+)
+```
+
+### Format date or timestamp values as strings
+
+Use this when your input column is already a **date** or **timestamp** and you need a **string output** (for display, export, downstream systems).
+
+1. Add a Reformat gem.
+2. Create a new column (such as `dt_formatted`) and format the date/timestamp using the desired output pattern:
+
+```
+DATE_FORMAT(ts_normalized, 'yyyy-MM-dd')
+```
 
 ## Configuration options
 
@@ -58,9 +78,9 @@ Common patterns include:
 
 - For timestamp/date to formatted string, use `date_format` and configure the desired output format.
 
-- For string to date, use `to_date` and configure format for the input string (such as `MMMM dd, yyyy`)
+- For string to date, use `to_date` and configure format for the input string (such as `MMMM dd, yyyy`).
 
-- For string to timestamp, use `to_timestamp` and configure format for the input string (such as `MMMM dd, yyyy`)
+- For string to timestamp, use `to_timestamp` and configure format for the input string (such as `MMMM dd, yyyy`).
 
 ## Output behavior
 
@@ -73,7 +93,7 @@ Common patterns include:
 
 ## Known caveats
 
-- **Locale-sensitive parsing/formatting:** Prophecy relies on [Databricks SQL’s locale handling](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-collation) rather than an explicit language selector.
+- **Locale-sensitive parsing/formatting:** Prophecy relies on [Databricks SQL's locale handling](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-collation) rather than an explicit language selector.
 - **Pattern mismatches:** For string to timestamp conversions, the incoming pattern must match the input string exactly (otherwise parsing returns null or errors depending on runtime settings).
 
 ## Example
