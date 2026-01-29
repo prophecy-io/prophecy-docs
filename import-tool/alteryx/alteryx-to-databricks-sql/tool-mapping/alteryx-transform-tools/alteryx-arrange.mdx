@@ -1,0 +1,137 @@
+---
+title: Alteryx Arrange Tool > Prophecy Reformat Gem
+description: Mapping between Alteryx’s Arrange tool and equivalent transformations using Prophecy's Reformat gem
+---
+
+Alteryx's [Arrange tool](https://help.alteryx.com/current/en/designer/tools/transform/arrange-tool.html) expands columns into rows for reporting, charting, or analytics purposes, adding descriptions to new rows. (This action is often called "unpivoting.")
+
+Prophecy implements this functionality using the [Unpivot gem](/data-analysis/gems/transform/unpivot).
+
+## Automated migration results
+
+When Import detects an Alteryx Arrange tool, it generates a sequence of Reformat gems to reproduce row-expansion behavior:
+
+- An initial Reformat gem creates an array of labeled row objects using `array` and `named_struct`. Each `struct` represents one output row derived from the original input row.
+
+- A second Reformat gem applies `explode` to the array, converting each `struct` into its own output row.
+
+- A final Reformat gem extracts fields from the exploded struct into standard output columns.
+
+Import uses this pattern to preserve lineage and ensure stable behavior across SQL dialects and execution environments. For new development, the Unpivot gem provides the same outcome with clearer intent and simpler configuration.
+
+## Manually replicate in Prophecy
+
+To manually replicate the Arrange tool using the Unpivot gem:
+
+1. Add an **Unpivot** gem to the canvas.
+1. Select **Key Columns**.
+1. Select **Data Columns**.
+1. If desired, check **Use custom output column names for Name & Value pairs** and assign column names.
+
+## Configuration options
+
+### In Alteryx (Arrange tool)
+
+Configure the tool by:
+
+- Selecting the input fields to arrange.
+- Defining how fields are grouped or labeled.
+- Specifying whether other fields are carried through unchanged.
+
+The output is a row-expanded dataset where each arranged field produces a new row.
+
+### Prophecy (Unpivot gem)
+
+Configure the Unpivot gem by 
+- Selecting key columns.
+- Selecting data columns.
+- Renaming columns as desired.
+
+### In Prophecy (Reformat gems)
+
+For exact Arrange tool behavior, configure multiple Reformat gems using the following patterns.
+
+Example construction pattern:
+
+```sql
+array(
+  named_struct('x', cast(x1 as string), 'description', 'start'),
+  named_struct('x', cast(x2 as string), 'description', 'end')
+)
+```
+
+Row expansion:
+
+```sql
+explode(_consolidated_data_col)
+```
+
+Field extraction:
+
+```
+description = _exploded_data_col.description
+x           = _exploded_data_col.x
+```
+
+## Output behavior
+
+- Alteryx outputs multiple rows per input row, with labels indicating the source field.
+- Prophecy produces the same row expansion by exploding an array of structs, then emitting standard columns.
+- Row counts increase according to the number of arranged fields.
+
+## Known caveats
+
+- **Multiple-step implementation:** Arrange behavior is expressed across several Reformat gems rather than a single tool.
+- **Type normalization:** Import may cast values (for example, to `string`) to ensure consistent struct schemas.
+- **Intermediate columns:** Temporary columns (such as `_consolidated_data_col` and `_exploded_data_col`) are used internally and removed in the final output.
+
+## Example
+
+Goal: produce a dataset where each input row generates multiple output rows.
+
+### Input dataset
+
+Assume the input dataset contains one row per record, with multiple date fields stored in separate columns:
+
+{/* vale off */}
+| record_id | start_date | end_date   | cancel_date | user_name |
+| --------- | ---------- | ---------- | ----------- | --------- |
+| 1         | 10/14/2025 | 11/14/2025 | 12/14/2025  | Amy       |
+| 2         | 10/08/2025 | 11/08/2025 | 12/08/2025  | Priya     |
+{/* vale on */}
+
+### Alteryx Arrange tool
+
+1. Select `record_id` and `user_name` as key fields.
+1. Configure output fields as follows:
+    - Column headers: `Description`, `Date`
+    - Row 1: Description: `Start Date`; Date: select `start_date`.
+    - Row 2: Description: `End Date`; Date: select `end_date`.
+    - Row 3: Description: `Cancel Date`; Date: select `cancel_date`.
+
+### Prophecy equivalent
+
+1. Add an **Unpivot** gem.
+2. For **Key Columns**, select `record_id` and `user_name`.
+3. For **Data Columns**, select: `start_date`, `end_date` and `cancel_date`.
+4. Select **Use custom output column names for Name & Value pairs**.
+5. Rename the **Name** column to `description`.
+6. Rename the **Value** column to `date`.
+7. Save and run the gem.
+
+At this point your output will be structurally correct, but `description` will be `start_date`, `end_date`, `cancel_date`. To change these names, use a Reformat gem.
+
+### Resulting output
+
+Each set of operations produces a dataset where each input row generates multiple output rows:
+
+{/* vale off */}
+| description | date | record_id | user_name |
+| ----------- | ---------- | --------- | --------- |
+| Start date  | 10/14/2025 | 1         | Amy       |
+| End date    | 11/14/2025 | 1         | Amy       |
+| Cancel date | 12/14/2025 | 1         | Amy       |
+| Start date  | 10/08/2025 | 2         | Priya     |
+| End date    | 11/08/2025 | 2         | Priya     |
+| Cancel date | 12/08/2025 | 2         | Priya     |
+{/* vale on */}
