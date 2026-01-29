@@ -1,6 +1,6 @@
 ---
 title: Alteryx DateTime tool > Prophecy Reformat gem
-description: Mapping between Alteryx’s DateTime tool and Prophecy date/time formatting in the Reformat gem
+description: Mapping between Alteryx's DateTime tool and Prophecy date/time formatting in the Reformat gem
 ---
 
 The Alteryx [DateTime tool](https://help.alteryx.com/current/en/designer/tools/parse/datetime-tool.html) handles string to date-time and date-time to string conversions.
@@ -12,9 +12,7 @@ Prophecy implements this functinality in a [Reformat gem](/data-analysis/gems/pr
 When Import detects an Alteryx DateTime tool:
 
 - Prophecy adds an initial Reformat gem that attempts multiple common date-time patterns using `case … try_to_timestamp`. This safely converts mixed date and timestamp values into a single timestamp before further transformations.
-- In a subsequent Reformat gem, Prophecy either
-  - Uses `date_format` to format date or timestamp values as strings, or
-  - Uses `to_timestamp` to parse string values into `timestamp` values.
+- In a subsequent Reformat gem, Prophecy either uses `date_format` to format date or timestamp values as strings, or uses `to_timestamp` to parse string values into `timestamp` values.
 
 <Note>
 Alteryx implicitly converts timestamps to strings as needed in downstream tools. In some cases, Prophecy converts `timestamp` values back to strings to accomodate this behavior.
@@ -22,32 +20,24 @@ Alteryx implicitly converts timestamps to strings as needed in downstream tools.
 
 ## Manually replicate in Prophecy
 
-### Parse string values into timestamp values
+### Parse string types to timestamp values
 
-Use this when your input column is a string, especially if formats are mixed.
-
-1. Add a Reformat gem.
-2. Create a new column (such as`ts_normalized`) and parse the string into a timestamp. If formats vary, try multiple patterns and take the first successful parse:
-
-```
-COALESCE(
-  TRY_TO_TIMESTAMP(raw_dt, 'yyyy-MM-dd HH:mm:ss'),
-  TRY_TO_TIMESTAMP(raw_dt, 'yyyy-MM-dd'),
-  TRY_TO_TIMESTAMP(raw_dt, 'MM/dd/yyyy'),
-  TRY_TO_TIMESTAMP(raw_dt, 'MMMM d, yyyy')
-)
-```
-
-### Format date or timestamp values as strings
-
-Use this when your input column is already a **date** or **timestamp** and you need a **string output** (for display, export, downstream systems).
+Use when your input column is a `string` and you need a `timestamp`.
 
 1. Add a Reformat gem.
-2. Create a new column (such as `dt_formatted`) and format the date/timestamp using the desired output pattern:
+2. Create a new column (such as`ts_normalized`) configured with a `coalesce` function with arguments similar to the following:
+    - **Function**: `try_to_timestamp`.
+    - **Column**: column with strings to be parsed, such as `join_date`.
+    - **Format**:  Timestamp format, such as `yyyy-mm-dd hh:mm:ss`,`yyyy-mm-d`,`mm/dd/yyy`, `mmmm d, yyyy`.
 
-```
-DATE_FORMAT(ts_normalized, 'yyyy-MM-dd')
-```
+### Format date or timestamp types as strings
+
+Use when your input column is already a `date` or `timestamp` and you need a `string` output (for display, export, or downstream systems).
+
+1. Add a Reformat gem.
+2. Create a new column (such as `dt_formatted`) configured with a `date_format` function with arguments similar to the following:
+    - **Column**: column with strings to be parsed, such as `join_date`.
+    - **Format**:  Timestamp format, such as `yyyy-mm-dd hh:mm:ss`,`yyyy-mm-d`,`mm/dd/yyy`, `mmmm d, yyyy`.
 
 ## Configuration options
 
@@ -77,9 +67,7 @@ Configure:
 Common patterns include:
 
 - For timestamp/date to formatted string, use `date_format` and configure the desired output format.
-
 - For string to date, use `to_date` and configure format for the input string (such as `MMMM dd, yyyy`).
-
 - For string to timestamp, use `to_timestamp` and configure format for the input string (such as `MMMM dd, yyyy`).
 
 ## Output behavior
@@ -109,6 +97,4 @@ Goal: Convert a string column called `dob` stored as `"December 16, 2025"` into 
 
 ### Prophecy equivalent: Reformat gem
 
-Goal: Create a `date` format like `2025-12-16` from the same `DOB` input.
-
-In a **Reformat** gem, add a Target Column called `dob_ts` and define it using a `to_date` function with the column `dob` and the value `dd-mm-yyyy` as arguments.
+In a **Reformat** gem, add a **Target Column** called `dob_ts` defined with a `to_date` function with the column `dob` and the value `dd-mm-yyyy` as arguments.
