@@ -3,20 +3,18 @@ title: Log Gem
 description: Emit structured execution and custom log events from a pipeline
 ---
 
-The Log gem lets you emit structured log events from a pipeline as a dataset that you can query.
+The Log gem lets you emit structured log events from a pipeline as a dataset that you can query. Each log record captures a timestamped event tied to a specific pipeline run and component.
 
-The Log gem records step-level execution events—such as when a component starts and finishes running—along with optional custom messages. This makes it useful for auditing, debugging, performance analysis, and operational reporting.
-
-Each log record captures a timestamped event tied to a specific pipeline run and component.
+<note>
+The Log gem supports Ab Initio logging during project import. If you are building pipelines directly in Prophecy, you will usually not need this gem.
+</note>
 
 ## What the Log gem records
 
-By default, the Log gem emits **lifecycle events** for the upstream component it is attached to:
+By default, the Log gem emits lifecycle event for the upstream component it is attached to:
 
-- A `start` event when the component begins execution
-- A `finish` event when execution completes
-
-The `finish` event includes a compact summary of record counts (read, written, rejected) at the boundary being logged.
+- A `start` event when the component begins execution.
+- A `finish` event when execution completes.
 
 In addition, the Log gem supports custom log messages that you can emit during execution.
 
@@ -35,7 +33,7 @@ The Log gem produces a dataset with the following columns:
 
 ## Component type and interpretation
 
-When configuring the Log gem, you select the **type of original component being logged** (for example, Join, Rollup, Assign Keys).
+When configuring the Log gem, you select the **type of original component being logged**: `General`, `Join`, `Rollup`, or `Assign Keys`.
 
 This selection does not change the output schema. Instead, it provides semantic context that determines how the log events are interpreted by the system and UI. For example:
 
@@ -49,44 +47,7 @@ This metadata enables consistent logging while allowing different operation type
 
 In addition to automatic lifecycle events, you can emit custom log messages using:
 
-- `write_to_log`: Emits intermediate log events during execution. These appear in the *Intermediate Event Log* tab for the gem.
-- `final_log_output`: Emits a final, explicit log message summarizing the outcome of the component.
+- **Intermediate Event Logs**: Emits intermediate log events during execution.
+- **Final Event Logs**: Emits a final, explicit log message summarizing the outcome of the component.
 
-Both options allow you to specify:
-
-- `event_type`
-- `event_text`
-
-These custom events use the same schema as lifecycle events and are written to the same log output.
-
-## Example
-
-This example logs execution details for an upstream Aggregate gem named `customer_purchase_summary`.
-
-The Aggregate gem produces a single-row summary by computing:
-
-- `sum(total_purchases)`
-- `first(customer_name)`
-- `first(email)`
-
-### Example log output
-{/* vale off */}
-| node      | timestamp               | component                 | event_type | event_text                                        |
-| --------- | ----------------------- | ------------------------- | ---------- | ------------------------------------------------- |
-| 0127-…-58 | 2026-01-27 16:23:06.117 | customer_purchase_summary | start      | NA                                                |
-| 0127-…-58 | 2026-01-27 16:23:06.134 | customer_purchase_summary | finish     | 1 records read1 records written0 records rejected |
-{/* vale on */}
-Because the upstream Aggregate collapses all input rows into a single summary row, the logged record counts reflect that output grain.
-
-## Typical use cases
-
-The Log gem is commonly used to:
-
-- Audit pipeline execution (did a step start and finish?).
-- Track record volumes across joins, rollups, and transformations.
-- Detect unexpected changes in data shape or size.
-- Measure per-step execution duration.
-- Add human-readable annotations to complex pipelines.
-- Produce a persistent, execution log for reporting or monitoring.
-
-In short, the Log gem turns pipeline execution into structured data that you can inspect and analyze.
+These custom events use the same schema as lifecycle events and are written to the same output.
