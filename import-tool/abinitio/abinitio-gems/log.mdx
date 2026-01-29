@@ -11,7 +11,7 @@ The Log gem supports Ab Initio logging during import. If you are building pipeli
 
 ## What the Log gem records
 
-By default, the Log gem emits lifecycle events for the upstream component it is attached to:
+By default, the Log gem emits lifecycle event for the upstream component it is attached to:
 
 - A `start` event when the component begins execution.
 - A `finish` event when execution completes.
@@ -33,15 +33,19 @@ The Log gem produces a dataset with the following columns:
 
 ## Component type and interpretation
 
-When configuring the Log gem, you select the **type of original component being logged**: `General`, `Join`, `Rollup`, or `Assign Keys`.
+When configuring the Log gem, you select the **type of original component being logged**: `General`, `Join`, `Rollup`, or `Assign Keys`. This selection does not change the output schema. Instead, it provides semantic context that determines how the log events are interpreted by the system and UI.
 
-This selection does not change the output schema. Instead, it provides semantic context that determines how the log events are interpreted by the system and UI. For example:
+For example:
 
 - For **joins**, record counts are interpreted as join output volumes.
 - For **rollups**, small output counts may be expected due to aggregation.
 - For **key assignment**, read and written counts are typically expected to match.
 
 This metadata enables consistent logging while allowing different operation types to be analyzed appropriately.
+
+<Note>
+These options reflect Ab Initio logging semantics rather than Prophecy gem types, so imported projects can preserve Ab Initio's operational logging behavior.
+</Note>
 
 ## Custom log events
 
