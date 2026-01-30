@@ -1,0 +1,57 @@
+---
+title: Log Gem
+description: Emit structured execution and custom log events from a pipeline
+---
+
+The Log gem lets you emit structured log events from a pipeline as a dataset that you can query. Each log record captures a timestamped event tied to a specific pipeline run and component.
+
+<Note>
+The Log gem supports Ab Initio logging during import. If you are building pipelines directly in Prophecy, you will usually not need this gem.
+</Note>
+
+## What the Log gem records
+
+By default, the Log gem emits lifecycle event for the upstream component it is attached to:
+
+- A `start` event when the component begins execution.
+- A `finish` event when execution completes.
+
+In addition, the Log gem supports custom log messages that you can emit during execution.
+
+## Log output schema
+
+The Log gem produces a dataset with the following columns:
+
+| Column name  | Description                                                  |
+| ------------ | ------------------------------------------------------------ |
+| `node`         | Unique identifier for the pipeline run or execution context. |
+| `timestamp`    | Time at which the log event occurred.                        |
+| `component`    | Name of the upstream component being logged.                 |
+| `subcomponent` | Optional finer-grained identifier (for example, a phase within a component). |
+| `event_type`   | Type of event (for example, `start`, `finish`, or a custom value). |
+| `event_text`   | Free-form message describing the event.                      |
+
+## Component type and interpretation
+
+When configuring the Log gem, you select the **type of original component being logged**: `General`, `Join`, `Rollup`, or `Assign Keys`. This selection does not change the output schema. Instead, it provides semantic context that determines how the log events are interpreted by the system and UI.
+
+For example:
+
+- For **joins**, record counts are interpreted as join output volumes.
+- For **rollups**, small output counts may be expected due to aggregation.
+- For **key assignment**, read and written counts are typically expected to match.
+
+This metadata enables consistent logging while allowing different operation types to be analyzed appropriately.
+
+<Note>
+These options reflect Ab Initio logging semantics rather than Prophecy gem types, so imported projects can preserve Ab Initio's operational logging behavior.
+</Note>
+
+## Custom log events
+
+In addition to automatic lifecycle events, you can emit custom log messages using:
+
+- **Intermediate Event Logs**: Emits intermediate log events during execution.
+- **Final Event Logs**: Emits a final, explicit log message summarizing the outcome of the component.
+
+These custom events use the same schema as lifecycle events and are written to the same output.
