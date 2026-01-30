@@ -25,69 +25,57 @@ To fix this, **update Prophecy to version 4.2.0.1 or later**, which adds support
 
 </Info>
 
-## Basic Info
+## Initial setup
 
-The **Basic Info** tab includes the following parameters:
+The initial setup for a Databricks fabric involves authenticating Prophecy's connection to Databricks.
 
-| Parameter              | Description                                                                                                    |
-| ---------------------- | -------------------------------------------------------------------------------------------------------------- |
-| Name                   | Name used to identify the project.                                                                             |
-| Description (Optional) | Description of the project.                                                                                    |
-| Team                   | Each fabric is associated with one team. All team members will be able to access the fabric in their projects. |
+<Steps>
+<Step title="Create a new fabric entity">
+Begin by creating a new fabric entity in Prophecy.
 
-## Providers
+1. From the left sidebar, click the **+** sign.
+1. On the Create Entity page, select **Fabric**.
 
-The **Providers** tab lets you configure the execution environment settings.
+</Step>
 
-| Parameter     | Description                                                       |
-| ------------- | ----------------------------------------------------------------- |
-| Provider Type | Type of fabric to create (in this case, Spark).                   |
-| Provider      | Provider of the execution environment (in this case, Databricks). |
+<Step title="Fill in the Basic Info tab">
+The **Basic Info** tab lets you define the key identifiers of the fabric.
 
-### Credentials
+1. Provide a name for the fabric.
+1. (Optional) Provide a description for the fabric.
+1. Select a [team](/data-analysis/administration/management/teams/teams) that can access the fabric.
+1. Click **Continue**.
 
-Fill out the credentials section to verify your Databricks credentials.
+</Step>
 
-| Parameter                | Description                                                                                                                                                                                                                                                                                                                                                                                                    |
-| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Databricks Workspace URL | The URL that points to the workspace that the fabric will use as the execution environment.                                                                                                                                                                                                                                                                                                                    |
-| Authentication Method    | The method Prophecy will use to authenticate Databricks connections. Access level is tied to the authenticated user's permissions. At minimum, the authenticated user must have permission to attach clusters in Databricks to use the connection in Prophecy. Some [policies](https://docs.databricks.com/aws/en/admin/clusters/policy-families) additionally require Databricks Workspace Admin permissions. |
+<Step title="Fill in the Providers tab">
+The **Providers** tab allows you to configure the SQL warehouse provider you want to use. You cannot change the fabric provider after you create the fabric.
 
-#### Authentication methods
+1. Under **Provider**, select **Databricks**.
+1. Enter your Databricks Workspace URL.
 
-Prophecy supports multiple [Databricks authentication methods](https://docs.databricks.com/aws/en/dev-tools/auth).
+   Example: `https://dbc-<workspace-id>.cloud.databricks.com`.
 
-| Method                | Description                                                                                                                                                                                     |
-| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Personal Access Token | Provide a Databricks Personal Access Token to authenticate the connection. Each user who connects to the fabric will have to provide their own PAT. Prophecy auto-refreshes PATs for AAD users. |
-| OAuth                 | Log in with your Databricks account information. Each user who connects to the fabric will have to log in individually.                                                                         |
+1. Select the authentication method you want to use.
 
-#### OAuth methods
+   <Note>
+     For detailed instructions, see [Authentication methods](#authentication-methods). Additionally,
+     read about some [policies](https://docs.databricks.com/aws/en/admin/clusters/policy-families)
+     that require Databricks Workspace Admin permissions.
+   </Note>
 
-There are two different OAuth methods for Databricks OAuth:
+1. Click **Complete** to save the fabric.
 
-| Method                        | Authenticated Identity                                                                                  |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------- |
-| User-based OAuth (U2M)        | Each user signs in with their own Databricks account. Access is scoped to the individual's permissions. |
-| Service Principal OAuth (M2M) | Uses a shared service principal identity. Suitable for automation and scheduling.                       |
+</Step>
+</Steps>
 
-When you configure a Databricks fabric and select OAuth, the OAuth method is **automatically determined** by the context.
+After you finish the initial setup, you can add job sizes and update additional settings in the fabric. Open the fabric from the metadata page to edit the fabric.
 
-- Interactive pipeline execution always uses U2M. U2M cannot be used for scheduled pipeline runs.
-- Scheduled jobs in deployed projects always use M2M. To schedule jobs using the fabric, you **must** provide a Service Principal Client ID and Service Principal Client Secret during fabric setup.
+## Add job sizes
 
-<Info>
-  To leverage OAuth for a Databricks Spark fabric, you or an admin must first create a corresponding
-  [app
-  registration](/data-engineering/administration/management/cluster-admin-settings/oauth-setup). The
-  fabric will always use the default Databricks app registration.
-</Info>
-
-### Job Sizes
+In the **Jobs** tab of a Databricks fabric, Prophecy includes a single job size by default that uses [Databricks Runtime 14.3](https://docs.databricks.com/aws/en/compute#databricks-runtime). You can modify this default configuration or define additional job sizes using the Prophecy UI.
 
 Job sizes define the cluster configurations that Prophecy can spawn to run pipelines. We recommend choosing the smallest machine types and the fewest nodes necessary for your use case to optimize cost and performance.
-
-By default, Prophecy includes a single job size that uses [Databricks Runtime 14.3](https://docs.databricks.com/aws/en/compute#databricks-runtime). You can modify this default configuration or define additional job sizes using the Prophecy UI.
 
 To create or update a job size, use the form view or switch to the JSON editor to paste your existing compute configuration from Databricks.
 
@@ -105,6 +93,10 @@ When using Unity Catalog clusters with standard (formerly shared) access mode, n
 If using **Auto** for the cluster access mode, you may encounter different pipeline behavior in Prophecy depending on the cluster Databricks allocates to you.
 
 </Warning>
+
+## Advanced settings
+
+In the **Advanced** tab of a Databricks fabric, you can configure the following settings.
 
 ### Prophecy Library
 
@@ -134,3 +126,33 @@ Prophecy libraries are Scala and Python libraries that extend the functionality 
 Prophecy supports Databricks volumes. When you run a Python or Scala pipeline via a job, you must bundle them as whl/jar artifacts. These artifacts must then be made accessible to the Databricks job in order to use them as a library installed on the cluster. You can designate a path to a volume for uploading the whl/jar files under Artifacts.
 
 ![Artifact settings](/data-engineering/fabrics/spark-provider/img/dbx-fabric-settings.png)
+
+## Authentication methods
+
+Prophecy supports multiple [Databricks authentication methods](https://docs.databricks.com/aws/en/dev-tools/auth).
+
+| Method                | Description                                                                                                                                                                                     |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Personal Access Token | Provide a Databricks Personal Access Token to authenticate the connection. Each user who connects to the fabric will have to provide their own PAT. Prophecy auto-refreshes PATs for AAD users. |
+| OAuth                 | Log in with your Databricks account information. Each user who connects to the fabric will have to log in individually.                                                                         |
+
+### OAuth methods
+
+There are two different OAuth methods for Databricks OAuth:
+
+| Method                        | Authenticated Identity                                                                                  |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------- |
+| User-based OAuth (U2M)        | Each user signs in with their own Databricks account. Access is scoped to the individual's permissions. |
+| Service Principal OAuth (M2M) | Uses a shared service principal identity. Suitable for automation and scheduling.                       |
+
+When you configure a Databricks fabric and select OAuth, the OAuth method is **automatically determined** by the context.
+
+- Interactive pipeline execution always uses U2M. U2M cannot be used for scheduled pipeline runs.
+- Scheduled jobs in deployed projects always use M2M. To schedule jobs using the fabric, you **must** provide a Service Principal Client ID and Service Principal Client Secret during fabric setup.
+
+<Info>
+  To leverage OAuth for a Databricks Spark fabric, you or an admin must first create a corresponding
+  [app
+  registration](/data-engineering/administration/management/cluster-admin-settings/oauth-setup). The
+  fabric will always use the default Databricks app registration.
+</Info>
