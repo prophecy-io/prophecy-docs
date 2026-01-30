@@ -1,11 +1,11 @@
 ---
-title: 'Run apps'
+title: 'Consume analyses'
 description: 'Learn how to use applications that have been shared with you'
 ---
 
 A Prophecy App is a visual application built on top of a Prophecy pipeline. When you run a Prophecy App, you execute the underlying pipeline using your own parameters.
 
-![Prophecy Config UI](/data-analysis/collaboration/prophecy-apps/img/prophecy-app-ui.png)
+![Prophecy Config UI](/data-analysis/production/analysis/img/prophecy-app-ui.png)
 
 ## Configs
 
@@ -69,10 +69,19 @@ If a project is shared with your team, you **cannot** edit pipelines or Prophecy
   access](/data-analysis/administration/management/users/access/team-based-access).
 </Info>
 
+## Running
+
+<Warning>
+  When you run a Prophecy App, the entire underlying pipeline is executed—not just the components
+  visible in the app. This means any additional transformations, tables, or other components
+  included in the pipeline will also run, even if they're not exposed in the app interface. Be
+  mindful of how you design the pipeline to ensure app users only trigger the intended logic.
+</Warning>
+
 ## What's next
 
 To learn more about how Prophecy Apps work behind the scenes, explore the following pages.
 
-- [Create a Prophecy App](/data-analysis/collaboration/prophecy-apps/app-creation)
+- [Create a Prophecy App](/data-analysis/production/analysis/create-analysis)
 - [Define pipeline parameters](/data-analysis/development/pipeline-params)
 - [Publish a project](/data-analysis/production/publication)
