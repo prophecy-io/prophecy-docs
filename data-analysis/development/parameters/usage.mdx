@@ -1,6 +1,6 @@
 ---
 title: Use parameters
-description: Reference parameters in pipelines and Prophecy Apps
+description: Reference parameters in pipelines and analysis dashboards
 ---
 
 Parameters let you define reusable variables that are injected into your pipeline at runtime. Instead of hard-coding values such as dates or file paths, you can reference parameters.
@@ -22,13 +22,13 @@ To use parameters in pipelines:
 
 You can use Jinja syntax to add parameters as configuration variables in the Code tab. To do so, use the following syntax: `{{ var('disc_rate') }}`. You can also use Jinja syntax in the Visual tab by using the Custom code expression. For more information on Jinja variables, see [dbt's documentation on Jinja](https://docs.getdbt.com/reference/dbt-jinja-functions/var).
 
-By default, the parameter's value will be used for the expression, though this value can be overwritten in both pipeline gems and Prophecy Apps.
+By default, the parameter's value will be used for the expression, though this value can be overwritten in both pipeline gems and analysis dashboards.
 
 > Example: If you create a parameter called `start_date` with a value of _2025-09-01_, you can use it in a Filter gem to include only rows where `order_date` >= `start_date`. When the pipeline runs, it injects the parameter's value into the filter expression.
 
-## Use parameters in Prophecy Apps
+## Use parameters in analysis dashboards
 
-Parameters are useful in both [creating](/data-analysis/production/analysis/create-analysis) and [consuming](/data-analysis/production/analysis/consume-analysis) Prophecy applications. To use parameters in a Prophecy App, add an input field and select the parameter for **Configuration field**.
+Parameters are useful in both [creating](/data-analysis/production/analysis/create-analysis) and [consuming](/data-analysis/production/analysis/consume-analysis) analysis dashboards. To use parameters in an analysis, add an input field and select the parameter for **Configuration field**.
 
 ## Array example
 
@@ -62,10 +62,10 @@ Next, you'll filter your dataset to only include rows where the `region` column 
 9. Add a Target table gem called `sales_transactions_by_region` and connect it to the Filter gem.
 10. Click **Save**.
 
-### Create a Prophecy App to adjust region filters
+### Create an analysis dashboard to adjust region filters
 
-1. Add a Prophecy App called `regional_sales`.
-2. Add a title for the app.
+1. Create an analysis for the `regional_sales` pipeline.
+2. Add a title for the analysis.
 3. Select **Interactive > Checkbox Group**.
 4. Select `region_list` for **Configuration field**.
 5. Add a region in **Default value**, such as `US-East`.
@@ -74,7 +74,7 @@ Next, you'll filter your dataset to only include rows where the `region` column 
 8. In the **Inspect** tab, choose `sales_transactions_by_region`.
 9. Select columns to display.
 
-When the app runs, users can check boxes to select their desired regions. For example, a sales team in Latin America might select `Mexico`, `LAC`,`Brazil`, and `Andean` to view their focus regions.
+When the analysis runs, users can check boxes to select their desired regions. For example, a sales team in Latin America might select `Mexico`, `LAC`,`Brazil`, and `Andean` to view their focus regions.
 
 ## Date example
 
@@ -102,9 +102,9 @@ This example uses a dataset with timestamped sales data. You can use two **Date*
 7. Add a Target table gem called `snapshot_by_date` and connect it to the Filter gem.
 8. Click **Save**.
 
-### Create a Prophecy App with date fields
+### Create an analysis dashboard with date fields
 
-1. Add a Prophecy App called `sales_snapshot`.
+1. Create an analysis for the `sales_snapshot` pipeline.
 2. Add a title.
 3. Select **Interactive > Date Field**.
 4. For **Configuration field**, choose `start_date`.
@@ -113,7 +113,7 @@ This example uses a dataset with timestamped sales data. You can use two **Date*
 7. In the **Inspect** tab, choose `snapshot_by_date`.
 8. Select columns to display.
 
-When the app runs, users can select their own values for `start_date` and `end_date`.
+When the analysis runs, users can select their own values for `start_date` and `end_date`.
 
 ## String example
 
@@ -142,10 +142,10 @@ Next, you'll filter your dataset based on the `customer_type` parameter.
 7. Add a Target table gem called `filtered_customers` and connect it to the Reformat gem.
 8. Click **Save**.
 
-### Create a Prophecy App to select customer groups
+### Create an analysis dashboard to select customer groups
 
-1. Add a Prophecy App called `customer_segment`.
-2. Add a title for the app.
+1. Create an analysis for the `customer_segment` pipeline.
+2. Add a title for the analysis.
 3. Select **Interactive > Dropdown**.
 4. Give the dropdown a label.
 5. Select `customer_type` for **Configuration field**.
@@ -153,11 +153,11 @@ Next, you'll filter your dataset based on the `customer_type` parameter.
 7. In the **Inspect** tab, choose `filtered_customers`.
 8. Select the columns to display.
 
-When the app runs, users can switch the `customer_type` parameter from `Premium` to `Standard` (or another category) to explore different customer groups.
+When the analysis runs, users can switch the `customer_type` parameter from `Premium` to `Standard` (or another category) to explore different customer groups.
 
 ## Boolean example
 
-This example uses a dataset of customer reviews, in which reviews older than 5 years are designated as `archived`, using a column called `archived_reviews` with Boolean values. You can use a Boolean parameter to create a Prophecy App that lets users choose whether to include archived reviews.
+This example uses a dataset of customer reviews, in which reviews older than 5 years are designated as `archived`, using a column called `archived_reviews` with Boolean values. You can use a Boolean parameter to create an analysis dashboard that lets users choose whether to include archived reviews.
 
 First, you'll set up an `include_archived` parameter, which will be a Boolean value.
 
@@ -181,24 +181,24 @@ Next, you'll create a Filter gem that uses the `include_archived` parameter in a
 6. Add a Target table gem called `prod_filtered_archived` and connect it to the Filter gem.
 7. Click **Save**.
 
-The output of this gem will only include rows where `include_archived` is false. In the steps below, you'll create a Prophecy App that lets users change `include_archived` to true.
+The output of this gem will only include rows where `include_archived` is false. In the steps below, you'll create an analysis dashboard that lets users change `include_archived` to true.
 
-### Create a Prophecy App to show archived data
+### Create an analysis dashboard to show archived data
 
-1. Add a Prophecy App called Reviews.
-2. Add a **Title** for the app.
+1. Create an analysis for the `reviews` pipeline.
+2. Add a **Title** for the analysis.
 3. Add a **Toggle** that uses `include_archived` as a **Configuration** field, with a label reading `Include archived reviews?`.
 4. Open the **Data Integration** dropdown and select **Data Preview**.
 5. In the **Inspect** tab, choose `prod_filtered_archived` for **Data table**.
 6. Select columns to display.
 
-When the app runs, users can toggle `Include archived reviews?` to include archived reviews in results.
+When the analysis runs, users can toggle `Include archived reviews?` to include archived reviews in results.
 
 ## Double example
 
 This example uses a dataset that includes a column called `discount_rate` that applies a discount for customers in certain cases.
 
-You can use a Double parameter inside a Prophecy App that lets users adjust this rate.
+You can use a Double parameter inside an analysis dashboard that lets users adjust this rate.
 
 First, you'll set up a `discount_rate` parameter of type `Double`.
 
@@ -221,10 +221,10 @@ Next, you'll create a Reformat gem that uses the `discount_rate` parameter in an
 5. Add a Target table gem called `products_discounted` and connect it to the Reformat gem.
 6. Click **Save**.
 
-### Create a Prophecy App to show discounted products
+### Create an analysis dashboard to show discounted products
 
-1. Add a Prophecy App called `products_with_reviews`.
-2. Add a title for the app.
+1. Create an analysis for the `products_with_reviews` pipeline.
+2. Add a title for the analysis.
 3. Select **Interactive > Number Input**.
 4. Select `discount_rate` for **Configuration field**.
 5. Give the field a label.
@@ -232,7 +232,7 @@ Next, you'll create a Reformat gem that uses the `discount_rate` parameter in an
 7. In the Inspect tab, select `products_discounted` for **Data table**.
 8. Select columns to display.
 
-When the app runs, users can enter their own rate for `discount_rate`.
+When the analysis runs, users can enter their own rate for `discount_rate`.
 
 ## Long example
 
@@ -258,17 +258,17 @@ This example uses a dataset for a telecom company that includes aggregated usage
 6. Add a **Table** gem called `usage_over_cap` and connect it to the **Filter** gem.
 7. Click **Save**.
 
-### Create a Prophecy App to adjust the cap
+### Create an analysis dashboard to adjust the cap
 
-1. Add a Prophecy App called `usage_cap_monitor`.
-2. Add a title for the app.
+1. Create an analysis for the `usage_cap_monitor` pipeline.
+2. Add a title for the analysis.
 3. Select **Interactive > Number Input**.
 4. Select `usage_cap_mb` for **Configuration field** and label it **Monthly Cap (MB)**.
 5. Open **Data Integration > Data Preview**.
 6. In the **Inspect** tab, choose `usage_over_cap` for **Data table**.
 7. Select columns to display (e.g., `subscriber_id`, `total_usage_mb`, `billing_period`).
 
-When the app runs, users can raise or lower the cap by changing `usage_cap_mb` to see which subscribers are affected.
+When the analysis runs, users can raise or lower the cap by changing `usage_cap_mb` to see which subscribers are affected.
 
 ## Float example
 
@@ -297,10 +297,10 @@ Next, you'll use the `temperature_threshold` parameter to filter your data.
 7. Add a Table gem called `filtered_temperature` and connect it to the Filter gem.
 8. Click **Save**.
 
-### Create a Prophecy App to adjust sensitivity
+### Create an analysis dashboard to adjust sensitivity
 
-1. Add a Prophecy App called `temperature_monitor`.
-2. Add a title for the app.
+1. Create an analysis for the `temperature_monitor` pipeline.
+2. Add a title for the analysis.
 3. Select **Interactive > Number Input**.
 4. Select `temperature_threshold` for **Configuration field**.
 5. Give the field a label, such as **Temperature Threshold**.
@@ -308,7 +308,7 @@ Next, you'll use the `temperature_threshold` parameter to filter your data.
 7. In the **Inspect** tab, choose `filtered_temperature`.
 8. Select columns to display.
 
-When the app runs, users can adjust `temperature_threshold` to make filtering more or less sensitive.
+When the analysis runs, users can adjust `temperature_threshold` to make filtering more or less sensitive.
 
 ## Best practices
 

@@ -1,42 +1,43 @@
 ---
 title: 'Overview'
-description: 'Create and consume insights from your data'
+description: 'Transform raw data into actionable insights with interactive dashboards'
 ---
 
-When you build a pipeline for data analysis, you want to end up with consumable insights powered by your data. Analysis dashboards are the quick way to get from data to insights: just ask the Prophecy Agent to build one for you.
+Analysis dashboards let you review and visualize data from any step of a pipeline. To quickly move from raw data to visualization, describe the insights you need, and the Agent automatically generates both the underlying data pipeline and the resulting analysis. You can iteratively refine the Agent's output until the results meet your requirements.
 
-**For analysts building insights**: Get from raw data to shareable analysis in minutes. Use the Prophecy Agent to generate both the pipeline and dashboard together—no need to build data transformations by hand or export to separate BI tools for basic visualizations.
+For production-grade workflows, you can combine the speed of AI with the oversight of your data team. Data engineers can optimize Agent-generated pipelines to ensure data integrity and performance. Then, multiple business users can interact with the final dashboards to explore data independently within the guardrails established by the engineering team.
 
-**For teams consuming insights**: Eliminate the bottleneck between data engineering and business users. Instead of creating duplicate pipelines or waiting for engineers to modify code, teams can reuse pipelines across different scenarios, reduce errors through built-in validation, and collaborate with standardized processes.
-
-![Prophecy App Example](/data-analysis/production/analysis/img/prophecy-apps-example.png)
+<Note>
+  Before Prophecy 4.2.5, analysis dashboards were known as Prophecy Apps. We have renamed this
+  feature to tightly couple the concept of analysis to the concept of a pipeline. Functionality
+  remains largely the same; however, now you can interact with the analysis using Prophecy Agents.
+</Note>
 
 ## Use cases
 
-Analysis dashboards can be static (always showing results from the same data) or interactive (showing results based on user input). We'll explore both types and explain use cases for each.
+There are two primary ways to use analysis dashboards:
 
-## Static dashboards
+- [Fixed dashboards](#fixed-dashboards): Always run the pipeline on the same sources. The data may change, but the pipeline is always the same.
+- [Interactive dashboards](#interactive-dashboards): Show results based on user input. Depending on how you build the dashboard, users can do things like upload their own data or change the parameters of the pipeline.
 
-Static dashboards display results from pipeline runs without requiring user input. They're perfect when you want to:
+### Fixed dashboards
 
-- Share a specific analysis or report with stakeholders.
+Fixed dashboards display results from pipeline runs without requiring user input. They're perfect when you want to:
+
 - Preview pipeline outputs before publishing to BI tools.
 - Schedule regular reports with different parameter configurations.
+- Share a specific analysis or report with stakeholders.
 
-More specifically, you can:
+When you create an analysis, you'll only include **data** and **content** components in the dashboard. You won't include any interactive components.
 
-- Preview and download pipeline output data in tabular format.
-- Visualize intermediate and output data via charts and graphs.
-
-## Interactive dashboards
+### Interactive dashboards
 
 Interactive dashboards let users customize inputs and run pipelines on demand. They're ideal when you want to:
 
-- Eliminate the bottleneck between data engineering and business users.
 - Enable team members to answer their own questions without writing code.
 - Provide guardrails that guide users toward correct, tested execution paths.
 
-How does it do so? You can:
+To make a dashboard interactive, you'll need to include **interactive** components as you build it. Interactive components let users:
 
 - Upload custom data to replace pipeline input sources.
 - Set pipeline parameters (dates, thresholds, regions) through simple form fields.
@@ -44,6 +45,5 @@ How does it do so? You can:
 
 ## What's next?
 
-- Learn how to build a dashboard
-- Learn how to share a dashboard
-- Learn how to consume a dashboard
+- Follow the tutorial to [create an analysis](/data-analysis/production/analysis/create-analysis) or review different [analysis components](/data-analysis/production/analysis/analysis-components).
+- Learn how users can [consume analyses](/data-analysis/production/analysis/consume-analysis) that you have shared with them.
