@@ -25,10 +25,13 @@ Alteryx implicitly converts timestamps to strings as needed in downstream tools.
 Use when your input column is a `string` and you need a `timestamp`.
 
 1. Add a Reformat gem.
-2. Create a new column (such as`ts_normalized`) configured with a `coalesce` function with arguments similar to the following:
-    - **Function**: `try_to_timestamp`.
+2. Create a new column (such as`ts_normalized`) configured with a function with a `try_to_timestamp` function with the following arguments:
     - **Column**: column with strings to be parsed, such as `join_date`.
     - **Format**:  Timestamp format, such as `yyyy-mm-dd hh:mm:ss`,`yyyy-mm-d`,`mm/dd/yyy`, `mmmm d, yyyy`.
+
+<Tip>
+For mixed-format columns, you can configure the new column with a `coalesce` function with multiple `try_to_timestamp` functions as arguments.
+</Tip>
 
 ### Format date or timestamp types as strings
 
