@@ -1,0 +1,46 @@
+---
+title: Wireless connections
+description: Simplify complex pipelines by hiding visual connections while preserving execution logic
+---
+
+Wireless connections let you hide visual lines between gems on the canvas while retaining the logical connection between gems.
+
+This option lets you reduce visual clutter, making  large or evolving pipelines easier to read.
+
+## Make connections wireless
+
+You can convert wired connections into wireless ones from a gem's [action menu](https://docs.prophecy.ai/data-analysis/gems/gems#action-menu).
+
+To make a connection wireless:
+
+1. Click the gem whose connection you want to modify.
+1. Open the gem's action menu (⋯).
+1. Select one of the following options:
+   - **Make incoming connection wireless**
+   - **Make outgoing connection wireless**
+
+The visual line disappears, but the data flow between the gems is preserved.
+
+For gems with multiple incoming or outgoing connections, you can make all connections wireless by choosing a **Make incoming connections wireless** or **Make outgoing connections wireless** option.
+
+## Restore wired connections
+
+To restore visual connections:
+
+1. Click the gem with wireless connections.
+1. Open the action menu (⋯).
+1. Select:
+   - **Make incoming connection wired**, or
+   - **Make outgoing connection wired**
+
+The visual connection lines are restored.
+
+## When to use wireless connections
+
+Wireless connections are most effective when:
+
+- Pipelines contain many parallel branches or long cross-canvas connections.
+- You want to reorganize or refactor a pipeline without rearranging large sections of the canvas.
+- Visual clarity is more important than showing every physical connection.
+
+Wireless connections affect only the canvas presentation. They do not change execution order, data dependencies, or runtime behavior.
