@@ -1234,6 +1234,14 @@
                           "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-union"
                         ]
                       },
+                                             {
+                        "group": "Alteryx Parse tools",
+                        "pages": [
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-parse-tools/alteryx-datetime",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-parse-tools/alteryx-regex",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-parse-tools/alteryx-xml-parse"
+                        ]
+                      },
                       {
                         "group": "Alteryx Transform tools",
                         "pages": [
