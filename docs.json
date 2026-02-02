@@ -431,7 +431,8 @@
                         "pages": [
                           "data-analysis/gems/report/email",
                           "data-analysis/gems/report/power-bi",
-                          "data-analysis/gems/report/tableau"
+                          "data-analysis/gems/report/tableau",
+                          "data-analysis/gems/report/visualize"
                         ]
                       }
                     ]
