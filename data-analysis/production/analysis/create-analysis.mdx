@@ -16,8 +16,6 @@ In this tutorial, you will:
 - Update the analysis dashboard to include [interactive components](/data-analysis/production/analysis/analysis-components).
 - Run the analysis from the end user perspective.
 
-![Run Prophecy App results](/data-analysis/production/analysis/img/prophecy-app-run.png)
-
 ## Prerequisites
 
 To complete this tutorial, you will need Prophecy 4.2.5 or later.
@@ -105,7 +103,7 @@ To add interactive components to the analysis, you'll need to embed a pipeline p
 
 In this section, you'll define a pipeline parameter called `region`. The parameter will capture the region that the user selects, allowing the pipeline to filter transactions based on the region the user wants to see.
 
-1. Open the pipeline that will be used for the app.
+1. Open the pipeline tied to the analysis.
 1. Click **default** in the project header to open the parameter settings.
 1. Open the **Pipeline Parameters** tab.
 1. In the default parameter set, click **+ Add Parameter**.
@@ -144,7 +142,7 @@ Add a Text Input component to allow the end user to enter the region they want t
 1. For the **Label**, enter `Region`.
 1. Drag the Text Input component above the bar chart visualization.
 
-## Run the app
+## Run the analysis
 
 Let's return to the analysis preview so we can test the new component.
 
@@ -153,7 +151,7 @@ Let's return to the analysis preview so we can test the new component.
 1. Click the **Run** button.
 1. Review the bar chart to see the total sales by product category for the West region.
 
-![Run Prophecy App results](/data-analysis/production/analysis/img/prophecy-app-run.png)
+![Analysis results](/data-analysis/production/analysis/img/prophecy-app-run.png)
 
 <Warning>
   When the analysis runs, Prophecy actually executes the entire underlying pipeline. This means any
@@ -164,7 +162,7 @@ Let's return to the analysis preview so we can test the new component.
 
 ## Share the dashboard
 
-Access to analyses is controlled by Prophecy's team-based permission model. If your team owns a project, you have full edit access. This means that you can build, edit, and delete Prophecy Apps in the project.
+Access to analyses is controlled by Prophecy's team-based permission model. If your team owns a project, you have full edit access. This means that you can build, edit, and delete analyses in the project.
 
 If a project is shared with your team, you **cannot** edit any pipeline's or analysis's structure. However, you can **run** analyses from the shared project. This ensures that your data engineering team can share pipelines they developed without exposing them to changes.
 
