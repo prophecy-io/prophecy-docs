@@ -24,8 +24,6 @@ To complete this tutorial, you will need Prophecy 4.2.5 or later.
 
 You'll start with a sample dataset that contains information about home technology sales transactions. Then, you will prompt the Agent to create a pipeline that results in an insight about the data.
 
-![App pipeline](/data-analysis/production/analysis/img/app-pipeline.png)
-
 ### Add source data
 
 1. Open the **Source/Target** gem category.
@@ -91,6 +89,8 @@ The Agent:
 - Create a new [analysis](/data-analysis/production/analysis/overview) that links to the pipeline.
 - Includes the bar chart which uses input data from the Visualize gem.
 
+![Send Agent prompt](/data-analysis/production/analysis/img/prompt-analysis.png)
+
 At this point, you will already have a pipeline and a baseline analysis dashboard. You can keep asking the Agent to transform the data to answer different questions, or you can continue to build on the analysis yourself.
 
 When you switch between the pipeline tab and the analysis tab, the same Agent session remains open.
@@ -129,7 +129,7 @@ Next, add a Filter gem to the pipeline. To make the filter condition dynamic, yo
   This expression is equivalent to `Region = {{ var('region') }}` in the Code view.
 </Tip>
 
-![Configure visual expression to use parameter](/data-analysis/production/analysis/img/visual-expression-parameter.png)
+![Configure visual expression to use parameter](/data-analysis/production/analysis/img/filter-region.png)
 
 ### Add a Text Input component
 
@@ -150,8 +150,6 @@ Let's return to the analysis preview so we can test the new component.
 1. In the **Region** field, enter `West`.
 1. Click the **Run** button.
 1. Review the bar chart to see the total sales by product category for the West region.
-
-![Analysis results](/data-analysis/production/analysis/img/prophecy-app-run.png)
 
 <Warning>
   When the analysis runs, Prophecy actually executes the entire underlying pipeline. This means any
