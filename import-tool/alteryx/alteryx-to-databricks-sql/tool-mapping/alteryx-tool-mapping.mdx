@@ -123,9 +123,9 @@ The following table lists mappings for Alteryx [In-Database tools](https://help.
 
 For the most part, Import processes Alteryx In-Database tools in the same way it processes their standard equivalents. For example, when you import a workflow that uses a Filter In-DB tool, Import converts it to a standard Filter gem; Import preserves filtering logic, but execution does not occur in the original database.
 
-Prophecy's [_fabrics_](/data-analysis/environment/fabrics/prophecy-fabrics) provide functionality analogous to Alteryx's In-Database tools for fabric-supported platforms such as Databricks. When a pipeline runs on a Databricks fabric, transformations execute directly within the Databricks SQL engine. This is similar in spirit to how Alteryx In-Database tools push execution into the connected database.
-
-Users who rely on In-Database tools and want equivalent execution behavior in Prophecy should run their pipelines on a supported fabric such as Databricks.
+<Note>
+Prophecy workflows always execute in the configured [fabric](/data-analysis/environment/fabrics/prophecy-fabrics); unlike Alteryx, there is no separate “In-DB” toolset or execution mode.
+</Note>
 
 | Alteryx Tool                                                 | Prophecy                                                     | Description                                                  |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
