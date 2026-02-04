@@ -95,6 +95,17 @@ At this point, you will already have a pipeline and a baseline analysis dashboar
 
 When you switch between the pipeline tab and the analysis tab, the same Agent session remains open.
 
+<Tip>
+
+If you would like to create an analysis without the Agent, you have two options:
+
+- Hover the pipeline in the project browser and select the **Create analysis** icon.
+- Click the **+** plus icon in the canvas header and select **Create analysis**.
+
+<Frame>![Create analysis icon](/data-analysis/production/analysis/img/add-analysis.png)</Frame>
+
+</Tip>
+
 ## Add interactive components
 
 To add interactive components to the analysis, you'll need to embed a pipeline parameter in the pipeline. [Pipeline parameters](/data-analysis/development/pipeline-params) enable dynamic behavior in pipelines by allowing values to be set at runtime. In this case, pipeline parameter values are set by the end user when they run the analysis.
@@ -123,13 +134,15 @@ Next, add a Filter gem to the pipeline. To make the filter condition dynamic, yo
    - Click **Select expression > Column** and select the `Region` column.
    - Click **Select operator** and select **equals**.
    - Click **Select expression > Configuration Variable** and select the `region` parameter.
+
+   <Frame>
+     ![Configure visual expression to use
+     parameter](/data-analysis/production/analysis/img/filter-region.png)
+   </Frame>
+
+   <Tip>This expression is equivalent to `Region = {{ var('region') }}` in the Code view.</Tip>
+
 1. Click **Save**.
-
-<Tip>
-  This expression is equivalent to `Region = {{ var('region') }}` in the Code view.
-</Tip>
-
-![Configure visual expression to use parameter](/data-analysis/production/analysis/img/filter-region.png)
 
 ### Add a Text Input component
 
@@ -152,7 +165,7 @@ Let's return to the analysis preview so we can test the new component.
 1. Review the bar chart to see the total sales by product category for the West region.
 
 <Warning>
-  When the analysis runs, Prophecy actually executes the entire underlying pipeline. This means any
+  When the analysis runs, Prophecy always executes the entire underlying pipeline. This means any
   additional transformations, tables, or other components included in the pipeline will also run,
   even if they're not exposed in the dashboard. Be mindful of how you design the pipeline to ensure
   your dashboard triggers only the intended logic.
