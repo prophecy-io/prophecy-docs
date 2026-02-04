@@ -40,22 +40,37 @@ For interactive development, the default set is active unless you manually activ
 
 ## Create parameter sets
 
-To create a new parameter set, you first need to define the variables in the **default** parameter set.
+Each project and pipeline has a default parameter set. Follow the steps below to create a new parameter set.
 
-1. Open **Parameters** from the project header.
-2. Select either **Project Parameters** or **Pipeline Parameters**.
-3. Add variables to the set by clicking **+ Add Variable**.
-4. Enter values for each variable, or leave them empty to inherit from the default set.
-5. Click **Save**.
+<Steps>
+<Step title="Open parameter settings">
 
-To add and activate a new parameter set, you need to:
+Open parameter settings from the default set or the pipeline menu.
 
-1. Open **Parameters** from the project header.
-2. Click **+ Add Parameter Set**.
-3. Enter a name for the parameter set.
-4. Assign values to the variables or leave them empty to inherit the default.
-5. Toggle **Active** to make this set the active configuration.
-6. Click **Save**.
+<Frame>
+  ![Arrows to the default set and the pipeline
+  menu](/data-analysis/development/parameters/img/open-parameters.png)
+</Frame>
+
+</Step>
+<Step title="Define default values">
+
+- Select either **Project Parameters** or **Pipeline Parameters**.
+- Add variables to the set by clicking **+ Add Variable**.
+- Enter values for each variable or choose to inherit from the default set.
+- Click **Save**.
+
+</Step>
+<Step title="Add and activate a new parameter set">
+
+- Click **+ Add Parameter Set**.
+- Enter a name for the parameter set.
+- Assign values to the variables or leave them empty to inherit the default.
+- Toggle **Active** to make this set the active configuration.
+- Click **Save**.
+
+</Step>
+</Steps>
 
 ## Example
 
@@ -72,7 +87,7 @@ By grouping these into parameter sets, you ensure that when you switch sets, pip
 
 First, set up your standard operating values in the default set:
 
-1. Open **Parameters** in the project header and select **Project Parameters**.
+1. Open the parameter settings.
 1. Click **+ Add Variable** and name it `currency`.
 1. Set the value to `USD`.
 1. Click **+ Add Variable** again and name it `fx_rate_table`.

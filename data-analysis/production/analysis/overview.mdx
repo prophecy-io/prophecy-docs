@@ -5,17 +5,19 @@ description: 'Transform raw data into actionable insights with interactive dashb
 
 Analysis dashboards let you review and visualize data from any step of a pipeline. You can quickly move from raw data to visualization by describing the insights you need to the Agent, which automatically generates both the underlying pipeline and the resulting analysis. You can iteratively refine the Agent's output until the results meet your requirements.
 
-For production-grade workflows, you can integrate oversight from your data team into this process. Data engineers can optimize Agent-generated pipelines to ensure data integrity and performance. Multiple business users can then interact with the final dashboards to explore data independently within the guardrails established by the engineering team.
+For production workflows, you can integrate oversight from your data team into this process. Data engineers can optimize Agent-generated pipelines to ensure data integrity and performance. Multiple business users can then interact with the final dashboards to explore data independently within the guardrails established by the engineering team.
 
 <Note>
   Before Prophecy 4.2.5, analysis dashboards were known as Prophecy Apps. We have renamed this
-  feature to couple analysis with pipelines. Functionality
-  remains largely the same; however, now you can interact with the analysis using Prophecy Agents.
+  feature to more strongly couple analysis with pipelines. Functionality remains largely the same;
+  however, now you can interact with the analysis using Prophecy Agents.
 </Note>
 
 ## Use cases
 
-There are two primary ways to use analysis dashboards:
+You can build an analysis dashboard to serve a variety of use cases. We'll highlight two mental models for building analyses here; this can help you decide how to create the analysis that best serves your requirements.
+
+You can think about creating analyses in two ways:
 
 - [Fixed dashboards](#fixed-dashboards): Always run the pipeline on the same sources. The data may change, but the pipeline is always the same.
 - [Interactive dashboards](#interactive-dashboards): Show results based on user input. Depending on how you build the dashboard, users can do things like upload their own data or change the parameters of the pipeline.
@@ -28,7 +30,7 @@ Fixed dashboards display results from pipeline runs without requiring user input
 - Schedule regular reports with different parameter configurations.
 - Share a specific analysis or report with stakeholders.
 
-When you create a fixed dashboard, you include include **data** and **content** components. You don't include any interactive components.
+When you create a fixed dashboard, you include **data** and **content** components. You don't include any interactive components.
 
 ### Interactive dashboards
 
