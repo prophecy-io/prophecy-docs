@@ -221,31 +221,18 @@
                     ]
                   },
                   {
-                    "group": "Collaboration",
-                    "pages": [
-                      "data-analysis/collaboration/project-sharing",
-                      "data-analysis/collaboration/project-replays",
-                      {
-                        "group": "Prophecy Apps",
-                        "pages": [
-                          "data-analysis/collaboration/prophecy-apps/apps",
-                          "data-analysis/collaboration/prophecy-apps/run-apps",
-                          {
-                            "group": "Build apps",
-                            "pages": [
-                              "data-analysis/collaboration/prophecy-apps/app-builder",
-                              "data-analysis/collaboration/prophecy-apps/app-creation",
-                              "data-analysis/collaboration/prophecy-apps/app-components",
-                              "data-analysis/collaboration/prophecy-apps/app-settings"
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
                     "group": "Production",
                     "pages": [
+                      {
+                        "group": "Analysis",
+                        "pages": [
+                          "data-analysis/production/analysis/overview",
+                          "data-analysis/production/analysis/create-analysis",
+                          "data-analysis/production/analysis/analysis-components",
+                          "data-analysis/production/analysis/analysis-settings",
+                          "data-analysis/production/analysis/consume-analysis"
+                        ]
+                      },
                       {
                         "group": "Scheduling",
                         "pages": [
@@ -258,6 +245,13 @@
                       },
                       "data-analysis/production/publication",
                       "data-analysis/production/monitoring"
+                    ]
+                  },
+                  {
+                    "group": "Collaboration",
+                    "pages": [
+                      "data-analysis/collaboration/project-sharing",
+                      "data-analysis/collaboration/project-replays"
                     ]
                   }
                 ]
@@ -437,7 +431,8 @@
                         "pages": [
                           "data-analysis/gems/report/email",
                           "data-analysis/gems/report/power-bi",
-                          "data-analysis/gems/report/tableau"
+                          "data-analysis/gems/report/tableau",
+                          "data-analysis/gems/report/visualize"
                         ]
                       }
                     ]
@@ -1406,6 +1401,30 @@
     {
       "source": "/data-analysis/environment/fabrics/create-fabric",
       "destination": "/data-analysis/environment/fabrics/prophecy-fabrics"
+    },
+    {
+      "source": "/data-analysis/collaboration/prophecy-apps/apps",
+      "destination": "/data-analysis/production/analysis/overview"
+    },
+    {
+      "source": "/data-analysis/collaboration/prophecy-apps/run-apps",
+      "destination": "/data-analysis/production/analysis/consume-analysis"
+    },
+    {
+      "source": "/data-analysis/collaboration/prophecy-apps/app-builder",
+      "destination": "/data-analysis/production/analysis/create-analysis"
+    },
+    {
+      "source": "/data-analysis/collaboration/prophecy-apps/app-creation",
+      "destination": "/data-analysis/production/analysis/create-analysis"
+    },
+    {
+      "source": "/data-analysis/collaboration/prophecy-apps/app-components",
+      "destination": "/data-analysis/production/analysis/analysis-components"
+    },
+    {
+      "source": "/data-analysis/collaboration/prophecy-apps/app-settings",
+      "destination": "/data-analysis/production/analysis/analysis-settings"
     }
   ]
 }
