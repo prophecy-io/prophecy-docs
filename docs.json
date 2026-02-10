@@ -50,6 +50,7 @@
                           },
                           "data-analysis/ai/agent/explore",
                           "data-analysis/ai/agent/transform",
+                          "data-analysis/ai/agent/harmonization/overview",
                           {
                             "group": "Documentation",
                             "pages": [
@@ -1228,6 +1229,27 @@
                           "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-union"
                         ]
                       },
+                                             {
+                        "group": "Alteryx Parse tools",
+                        "pages": [
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-parse-tools/alteryx-datetime",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-parse-tools/alteryx-regex",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-parse-tools/alteryx-xml-parse"
+                        ]
+                      },
+                      {
+                        "group": "Alteryx Transform tools",
+                        "pages": [
+                         "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-transform-tools/alteryx-arrange",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-transform-tools/alteryx-count-records",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-transform-tools/alteryx-cross-tab",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-transform-tools/alteryx-make-columns",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-transform-tools/alteryx-running-total",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-transform-tools/alteryx-summarize",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-transform-tools/alteryx-transpose",
+                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-transform-tools/alteryx-weighted-average"
+                        ]
+                      },
                       "import-tool/alteryx/alteryx-to-databricks-sql/databricks-performance-tuning"
                     ]
                   },
@@ -1317,6 +1339,7 @@
               {
                 "group": "Gems",
                 "pages": [
+                  "import-tool/abinitio/abinitio-gems/log",
                   "import-tool/abinitio/abinitio-gems/normalize",
                   "import-tool/abinitio/abinitio-gems/sequence",
                   "import-tool/abinitio/abinitio-gems/surrogate-key-generator"
