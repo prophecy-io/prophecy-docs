@@ -1,0 +1,189 @@
+---
+title: 'Create an analysis'
+description: 'Follow this tutorial to build your first analysis'
+---
+
+Depending on your use case, analysis can be as simple as a single visualization or as complex as a dashboard with multiple interactive components. This page walks you through using the Agent to create a simple analysis and then building a more complex dashboard from that starting point.
+
+## Objectives
+
+In this tutorial, you will:
+
+- Add source data to the pipeline.
+- Ask the Agent to create a pipeline that produces a specific visualization.
+- Prompt the Agent to add a visualization to a new analysis.
+- Embed a [pipeline parameter](/data-analysis/development/pipeline-params) in the generated pipeline.
+- Update the analysis dashboard to include [interactive components](/data-analysis/production/analysis/analysis-components).
+- Run the analysis from the end user perspective.
+
+## Prerequisites
+
+To complete this tutorial, you will need Prophecy 4.2.5 or later.
+
+## Create the pipeline
+
+You'll start with a sample dataset that contains information about home technology sales transactions. Then, you will prompt the Agent to create a pipeline that results in an insight about the data.
+
+### Add source data
+
+1. Open the **Source/Target** gem category.
+2. Click **Table**. This adds a new Table gem to the canvas.
+3. Hover over the gem and click **Open**.
+4. Select **+ New Table**.
+5. For **Type and Format**, choose **Seed**.
+6. Name the seed `home_tech_transactions`.
+7. For the **Seed path**, choose **seeds**. Prophecy saves your seed file in this folder of the project repository.
+8. Click **Next**.
+9. In the **Properties** tab, paste the following data.
+
+   ```csv expandable
+   Date,Transaction_ID,Product_Category,Region,Units_Sold,Unit_Price,Discount_Applied
+   2026-01-01,TXN1001,Smart Speakers,North,5,120.00,0.10
+   2026-01-01,TXN1002,Security Cameras,West,2,250.00,0.00
+   2026-01-02,TXN1003,Smart Lighting,East,12,25.00,0.05
+   2026-01-02,TXN1004,Smart Speakers,South,3,120.00,0.00
+   2026-01-03,TXN1005,Thermostats,North,8,180.00,0.15
+   2026-01-03,TXN1006,Security Cameras,East,4,250.00,0.10
+   2026-01-04,TXN1007,Smart Lighting,West,20,25.00,0.20
+   2026-01-04,TXN1008,Smart Speakers,North,2,120.00,0.00
+   2026-01-05,TXN1009,Thermostats,South,5,180.00,0.00
+   2026-01-05,TXN1010,Security Cameras,West,1,250.00,0.05
+   2026-01-06,TXN1011,Smart Lighting,North,15,25.00,0.00
+   2026-01-06,TXN1012,Smart Speakers,East,6,120.00,0.10
+   2026-01-07,TXN1013,Thermostats,West,3,180.00,0.10
+   2026-01-07,TXN1014,Security Cameras,South,2,250.00,0.00
+   2026-01-08,TXN1015,Smart Lighting,East,25,25.00,0.15
+   2026-01-08,TXN1016,Smart Speakers,North,4,120.00,0.00
+   2026-01-09,TXN1017,Thermostats,North,6,180.00,0.05
+   2026-01-09,TXN1018,Security Cameras,West,3,250.00,0.00
+   2026-01-10,TXN1019,Smart Lighting,South,10,25.00,0.00
+   2026-01-10,TXN1020,Smart Speakers,East,8,120.00,0.20
+   2026-01-11,TXN1021,Thermostats,East,4,180.00,0.00
+   2026-01-11,TXN1022,Security Cameras,North,2,250.00,0.10
+   2026-01-12,TXN1023,Smart Lighting,West,30,25.00,0.10
+   2026-01-12,TXN1024,Smart Speakers,South,5,120.00,0.00
+   2026-01-13,TXN1025,Thermostats,West,7,180.00,0.15
+   2026-01-13,TXN1026,Security Cameras,East,3,250.00,0.00
+   2026-01-14,TXN1027,Smart Lighting,North,12,25.00,0.05
+   2026-01-14,TXN1028,Smart Speakers,West,4,120.00,0.00
+   2026-01-15,TXN1029,Thermostats,South,6,180.00,0.10
+   ```
+
+10. Click **Next**.
+11. Click **Load Data** to preview the data in tabular format.
+12. Click **Save**.
+
+### Generate transformation logic
+
+In the Chat interface, ask the Agent to create a pipeline that results in a bar chart showing the total sales by product category.
+
+```text wrap
+Visualize sales performance per product category in @home_tech_transactions
+```
+
+The Agent:
+
+- Transforms the data to aggregate the total sales by product category.
+- Creates a [bar chart visualization](/data-analysis/development/runs/data-explorer/charts/charts) of the data.
+- Adds a [Visualize gem](/data-analysis/gems/report/visualize) to the canvas.
+- Create a new [analysis](/data-analysis/production/analysis/overview) that links to the pipeline.
+- Includes the bar chart which uses input data from the Visualize gem.
+
+![Send Agent prompt](/data-analysis/production/analysis/img/prompt-analysis.png)
+
+At this point, you will already have a pipeline and a baseline analysis dashboard. You can keep asking the Agent to transform the data to answer different questions, or you can continue to build on the analysis yourself.
+
+When you switch between the pipeline tab and the analysis tab, the same Agent session remains open.
+
+<Tip>
+
+If you would like to create an analysis without the Agent, you have two options:
+
+- Hover the pipeline in the project browser and select the **Create analysis** icon.
+- Click the **+** plus icon in the canvas header and select **Create analysis**.
+
+<Frame>![Create analysis icon](/data-analysis/production/analysis/img/add-analysis.png)</Frame>
+
+</Tip>
+
+## Add interactive components
+
+To add interactive components to the analysis, you'll need to embed a pipeline parameter in the pipeline. [Pipeline parameters](/data-analysis/development/pipeline-params) enable dynamic behavior in pipelines by allowing values to be set at runtime. In this case, pipeline parameter values are set by the end user when they run the analysis.
+
+### Create a pipeline parameter
+
+In this section, you'll define a pipeline parameter called `region`. The parameter will capture the region that the user selects, allowing the pipeline to filter transactions based on the region the user wants to see.
+
+1. Open the pipeline tied to the analysis.
+1. Click **default** in the project header to open the parameter settings.
+1. Open the **Pipeline Parameters** tab.
+1. In the default parameter set, click **+ Add Parameter**.
+1. Name the parameter `region`.
+1. Set the parameter type to `String`.
+1. Click **Select expression > Value**.
+1. Enter `North` as the default value to be used during [interactive pipeline runs](/data-analysis/development/runs/execution).
+1. Click **Save**.
+
+### Add a filter
+
+Next, add a Filter gem to the pipeline. To make the filter condition dynamic, you'll use the pipeline parameter in the gem.
+
+1. Add a **Filter** gem directly after the Source gem and before the next gem (generated by the Agent).
+1. Open the **Filter** gem configuration.
+1. For the filter condition:
+   - Click **Select expression > Column** and select the `Region` column.
+   - Click **Select operator** and select **equals**.
+   - Click **Select expression > Configuration Variable** and select the `region` parameter.
+
+   <Frame>
+     ![Configure visual expression to use
+     parameter](/data-analysis/production/analysis/img/filter-region.png)
+   </Frame>
+
+   <Tip>This expression is equivalent to `Region = {{ var('region') }}` in the Code view.</Tip>
+
+1. Click **Save**.
+
+### Add a Text Input component
+
+Add a Text Input component to allow the end user to enter the region they want to see.
+
+1. Open the analysis dashboard that the Agent created.
+1. Click **Edit**.
+1. Open the **Interactive** dropdown and select **Text Input**.
+1. In the **Inspect** tab, for the **Configuration field**, select the `region` parameter.
+1. For the **Label**, enter `Region`.
+1. Drag the Text Input component above the bar chart visualization.
+
+## Run the analysis
+
+Let's return to the analysis preview so we can test the new component.
+
+1. From the analysis, click **Back to Preview**.
+1. In the **Region** field, enter `West`.
+1. Click the **Run** button.
+1. Review the bar chart to see the total sales by product category for the West region.
+
+<Warning>
+  When the analysis runs, Prophecy always executes the entire underlying pipeline. This means any
+  additional transformations, tables, or other components included in the pipeline will also run,
+  even if they're not exposed in the dashboard. Be mindful of how you design the pipeline to ensure
+  your dashboard triggers only the intended logic.
+</Warning>
+
+## Share the dashboard
+
+Access to analyses is controlled by Prophecy's team-based permission model. If your team owns a project, you have full edit access. This means that you can build, edit, and delete analyses in the project.
+
+If a project is shared with your team, you **cannot** edit any pipeline's or analysis's structure. However, you can **run** analyses from the shared project. This ensures that your data engineering team can share pipelines they developed without exposing them to changes.
+
+<Info>
+  To learn more, reference the documentation on [team-based
+  access](/data-analysis/administration/management/users/access/team-based-access).
+</Info>
+
+## What's next
+
+To address your specific business requirements, leverage more complex [components](/data-analysis/production/analysis/analysis-components) to construct robust analysis dashboards.
+
+To learn about the end user experience, see [consume analyses](/data-analysis/production/analysis/consume-analysis).
