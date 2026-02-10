@@ -16,10 +16,6 @@ You can now quickly gain insight about your data by asking the Agent to create d
 
 <Info>Analysis dashboards were built on Prophecy Apps, which are now deprecated.</Info>
 
-## Runtime log persistence
-
-Prophecy now persists runtime logs and historical run data indefinitely. This way, you can audit your pipeline runs from all time. Learn more about [runtime logs](/data-analysis/development/runs/runtime-logs) and [observability](/data-analysis/production/monitoring).
-
 ## Visual container enhancements
 
 [Visual containers](/data-analysis/development/studio/containers) let you organize related gems in your pipeline for easier navigation and understanding. We now support nesting containers within other containers.
@@ -31,6 +27,11 @@ Prophecy now persists runtime logs and historical run data indefinitely. This wa
 ## Spark version support
 
 Prophecy now supports Spark 4.0. Previously, only Spark 3.5 and earlier were supported.
+
+## Prophecy Library versions
+
+- ProphecyLibsPython 2.1.10
+- ProphecyLibsScala 9.0.0
 
 </Update>
 
@@ -74,6 +75,11 @@ This new version of the ProphecySparkBasicsPython package includes the following
 
 - Added support for bulk updating target columns during [SCD1 Delta merge](/data-engineering/gems/source-target/file/delta#scd1). This way, you don't have to write individual update expressions for each column.
 - Added support for lateral column aliases in [Reformat](data-engineering/gems/transform/reformat) and [Join](/data-engineering/gems/join-split/join) gems. Lateral column aliasing in PySpark allows you to reuse a column alias defined earlier in the same clause.
+
+## Prophecy Library versions
+
+- ProphecyLibsPython 2.1.9
+- ProphecyLibsScala 8.16.0
 
 </Update>
 
