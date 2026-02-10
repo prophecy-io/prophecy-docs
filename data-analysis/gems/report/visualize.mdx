@@ -1,0 +1,27 @@
+---
+title: Visualize
+description: Add checkpoints to your pipeline to capture data for analysis dashboards
+---
+
+The Visualize gem doesn't perform any data transformations. Instead, it marks a point in your pipeline where you want to capture data to display in an [analysis dashboard](/data-analysis/production/analysis/overview). This gem lets you report data outcomes without having to materialize the data in your data warehouse or another data storage location.
+
+## Input and output
+
+The Visualize gem passes through input data exactly as is.
+
+## Parameters
+
+Open the Visualize gem configuration and select the analysis to add the data to.
+
+There are other ways to accomplish this, depending on your workflow:
+
+- When building the analysis, you can choose any existing Visualize gem from the pipeline for data integration components.
+- As you chat with the Prophecy Agent, you can prompt it to add the data from the Visualize gem to an analysis.
+
+In all cases, the Visualize gem **must be present** in the pipeline.
+
+## Data persistence
+
+Because the Visualize gem does not persist or materialize data, you must run the analysis (running the pipeline) to populate data components in the dashboard. **The data isn't saved anywhere.** To persist data without running the pipeline, use a [Table gem](/data-analysis/gems/source-target/source-target) instead of a Visualize gem. This way, Prophecy writes the data to your data warehouse and can use that table as the source for the dashboard.
+
+Evaluate your use case to determine whether it's more beneficial to materialize the data (higher storage cost) or run the pipeline each time (higher compute cost).
