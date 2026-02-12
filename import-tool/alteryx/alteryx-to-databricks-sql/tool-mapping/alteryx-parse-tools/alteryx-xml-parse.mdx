@@ -1,0 +1,99 @@
+---
+title: Alteryx XML Parse Tool > Prophecy XMLParse gem
+description: Mapping between Alteryx's XML Parse Tool and Prophecy's XMLParse Gem
+---
+
+The [Alteryx XML Parse tool](https://help.alteryx.com/current/en/designer/tools/parse/xml-parse-tool.html) extracts structured data from XML content stored in a field. It allows users to select which XML elements to parse, control whether child values or raw XML are returned, and determine how parsing errors are handled.
+
+Prophecy implements this functionality through the [XMLParse gem](/data-analysis/gems/parse/xml-parse).
+
+## Automated migration results
+
+When Import detects an Alteryx XML Parse tool:
+
+- It generates a [Script gem](/data-analysis/gems/custom/script) containing XML parsing logic.
+- The generated script reproduces the XML extraction behavior inferred from the Alteryx configuration.
+
+<Note>
+While Prophecy provides an XMLParse gem for XML extraction, Alteryx's XML Parse tool imports as a Script gem. This is because Alteryx performs implicit flattening and dynamic schema inference that cannot be represented directly in an XMLParse configuration.
+</Note>
+
+## Manually replicate in Prophecy
+
+For manually-created workflows, Prophecy recommends using the **XMLParse** gem:
+
+1. Add an **XMLParse** gem to the canvas.
+1. Select the column containing XML data.
+1. Select parsing method.
+
+## Configuration options
+
+### In Alteryx (XML Parse tool)
+
+1. Select field containing XML-formatted string.
+1. Choose to keep or drop the original XML column.
+1. Choose XML element to parse: Root, Auto Detect Child, Specific Child Name
+1. Choose additional options:
+
+	- Return Child Values
+	- Return Outer XML
+	- Ignore XML Errors and Continue
+
+### In Prophecy (XMLParse gem)
+
+1. Select input column containing XML text
+1. Select parsing method:
+    - **Parse from sample record**. Prophecy uses the schema from the sample record you provide.
+    - **Parse from schema**. Prophecy uses the schema you provide.
+
+## Output behavior
+
+Alteryx outputs a flattened, columnar dataset derived from the selected XML elements, optionally retaining the original XML field.
+
+Prophecy outputs all input columns plus a single [struct](https://docs.databricks.com/aws/en/sql/language-manual/data-types/struct-type) column containing parsed XML, which must be explicitly flattened using a downstream gem such as the [Reformat gem](/data-analysis/gems/prepare/reformat).
+
+## Known caveats
+
+- Automated migration uses a Script gem; validate results before replacing it with the XMLParse gem.
+- The XMLParse gem requires an explicit schema; dynamic or variable XML shapes may need manual adjustment.
+- Invalid or malformed XML may cause parsing failures unless handled upstream.
+
+## Example
+
+Goal: Parse `<Order>` elements from XML stored in the `order_xml` field.
+
+### Alteryx XML Parse example
+
+1. Add an **XML Parse** tool.
+1. Enter `order_xml` for **Field with XML data**:
+1. Leave **Include in Output** unchecked.
+1. Select **Specific Child Name** for **XML element to parse**.
+1. Enter `Order` for child name.
+1. Check **Return Child Values**.
+
+Result: One output column per child element under `<Order>`.
+
+### Prophecy equivalent (XMLParse gem)
+
+1. Add an **XMLParse** gem.
+1. Choose **Parse from sample record**.
+1. Enter the following for **Sample XML record to parse schema from**:
+    ```<Order><OrderID>1001</OrderID><CustomerID>C123</CustomerID><OrderDate>2025-01-15</OrderDate></Order>```
+
+When you run the gem, it outputs column of type `struct` with the following named fields inside it:
+
+| Field name | Type   | Example value |
+| ---------- | ------ | ------------- |
+| CustomerID | string | `C123`        |
+| OrderDate  | string | `2025-01-15`  |
+| OrderID    | int    | `1001`        |
+
+If you want the parsed XML fields to appear as top-level columns, add a **Reformat** gem after the XMLParse gem and extract each field from the `struct` using dot notation:
+
+| Target column | Expression                    |
+| ------------- | ----------------------------- |
+| `customerid`    | `order_xml_parsed.CustomerID` |
+| `orderdate`     | `order_xml_parsed.OrderDate`  |
+| `orderid`       | `order_xml_parsed.OrderID`    |
+
+After this step, the fields behave like standard top-level columns.
