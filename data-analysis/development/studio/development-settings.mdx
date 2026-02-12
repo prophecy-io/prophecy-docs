@@ -10,6 +10,7 @@ You'll see the following settings:
 - [Variant interference data sampling limit](#variant-interference-data-sampling-limit)
 - [Backend language](#backend-language)
 - [Use original project browser layout](#use-original-project-browser-layout)
+- [Show models](#show-models)
 - [Enable manual compilation](#enable-manual-compilation)
 
 ## Variant interference data sampling limit
@@ -52,9 +53,15 @@ Prophecy is actively developing these features and is aiming for full parity bet
 
 ## Use original project browser layout
 
-When you open a project, the chat panel appears on the left and the Project Browser panel appears on the right.
+When you open a project, the Chat panel appears on the left and the Project Browser panel appears on the right.
 
 You can reverse this layout by clicking **Use Original Project Browser Layout**.
+
+## Show models
+
+Many pipeline transformations are compiled into models under the hood. If you are working on a pipeline, you can view and edit the code of underlying dbt models in a pipeline. (You cannot visually edit these underlying models).
+
+To view the dbt models created in the backend for pipelines in SQL projects, click **Show Models**.
 
 ## Enable manual compilation
 
