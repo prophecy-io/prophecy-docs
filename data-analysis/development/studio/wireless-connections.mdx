@@ -5,7 +5,9 @@ description: Simplify complex pipelines by hiding visual connections while prese
 
 Wireless connections let you hide visual lines between gems on the canvas while retaining the logical connection between gems.
 
-This option lets you reduce visual clutter, making  large or evolving pipelines easier to read.
+This option lets you reduce visual clutter, making large or evolving pipelines easier to read.
+
+Wireless connections affect only the canvas presentation. They do not change execution order, data dependencies, or runtime behavior.
 
 ## Make connections wireless
 
@@ -14,7 +16,7 @@ You can convert wired connections into wireless ones from a gem's [action menu](
 To make a connection wireless:
 
 1. Click the gem whose connection you want to modify.
-1. Open the gem's action menu (⋯).
+1. Open the gem's action menu (`...`).
 1. Select one of the following options:
 
    - **Make incoming connection wireless**.
@@ -48,5 +50,3 @@ Wireless connections are most effective when:
 - Pipelines contain many parallel branches or long cross-canvas connections.
 - You want to reorganize or refactor a pipeline without rearranging large sections of the canvas.
 - Visual clarity is more important than showing every physical connection.
-
-Wireless connections affect only the canvas presentation. They do not change execution order, data dependencies, or runtime behavior.
