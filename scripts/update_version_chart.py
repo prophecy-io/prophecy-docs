@@ -40,7 +40,7 @@ def get_versions_for_tag(repo, tag_name):
         python_prophecy_automate_version_regex = r'pythonProphecyAutomateVersion\s*=\s*"([^"]+)"'
         automate_version = re.findall(python_prophecy_automate_version_regex, file_contents)
         if len(automate_version) != 1:
-            return  # ignore for now if we can't find missing old versions
+            automate_version = [""]  # many old versions did not have a prophecy automate version. don't fail if we can't find it
 
         create_date = get_commit_date(repo, tag_name)
         if tag_name in LTS_VERSIONS:
@@ -58,9 +58,9 @@ def get_versions_for_tag(repo, tag_name):
             end_of_support_date = create_date + relativedelta(months=6)
         ver_dict = {
             "prophecy_version": tag_name,
-            "automate_version": automate_version[0],
             "scala_version": scala_version[0],
             "python_version": python_version[0],
+            "automate_version": automate_version[0],
             "date": create_date.strftime('%Y/%m/%d'),
             "end_of_support_date": end_of_support_date.strftime('%Y/%m/%d')
         }
@@ -79,9 +79,9 @@ def parse_existing_row(row_line):
         return None
     return {
         "prophecy_version": parts[1],
-        "automate_version": parts[2],
-        "scala_version": parts[3],
-        "python_version": parts[4],
+        "scala_version": parts[2],
+        "python_version": parts[3],
+        "automate_version": parts[4],
         "date": parts[5],
         "end_of_support_date": parts[6]
     }
@@ -135,9 +135,9 @@ def update_version_chart_file(docs_repo_path):
         else:
             existing = existing_versions[prophecy_version]
             # Check if any field has changed
-            if (existing["automate_version"] != new_version["automate_version"] or
-                existing["scala_version"] != new_version["scala_version"] or
+            if (existing["scala_version"] != new_version["scala_version"] or
                 existing["python_version"] != new_version["python_version"] or
+                existing["automate_version"] != new_version["automate_version"] or
                 existing["date"] != new_version["date"] or
                 existing["end_of_support_date"] != new_version["end_of_support_date"]):
                 existing_versions[prophecy_version] = new_version
@@ -161,9 +161,9 @@ def update_version_chart_file(docs_repo_path):
     # Create rows for all versions
     all_rows = ["| {} | {} | {} | {} | {} | {} |\n".format(
         v['prophecy_version'].ljust(len(delimiter_parts[1].strip())),
-        v['automate_version'].ljust(len(delimiter_parts[2].strip())),
-        v['scala_version'].ljust(len(delimiter_parts[3].strip())),
-        v['python_version'].ljust(len(delimiter_parts[4].strip())),
+        v['scala_version'].ljust(len(delimiter_parts[2].strip())),
+        v['python_version'].ljust(len(delimiter_parts[3].strip())),
+        v['automate_version'].ljust(len(delimiter_parts[4].strip())),
         v['date'].ljust(len(delimiter_parts[5].strip())),
         v['end_of_support_date'].ljust(len(delimiter_parts[6].strip()))
     ) for v in sorted_versions]
