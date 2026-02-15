@@ -51,14 +51,14 @@
                           "data-analysis/ai/agent/explore",
                           "data-analysis/ai/agent/transform",
                           "data-analysis/ai/agent/harmonization/overview",
-                          "data-analysis/ai/agent/agent-governance.mdx",
                           {
                             "group": "Documentation",
                             "pages": [
                               "data-analysis/ai/agent/documentation/documentation",
                               "data-analysis/ai/agent/documentation/ctl-reference"
                             ]
-                          }
+                          },
+                          "data-analysis/ai/agent/agent-governance"
                         ]
                       },
                       {
