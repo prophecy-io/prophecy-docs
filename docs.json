@@ -51,6 +51,7 @@
                           "data-analysis/ai/agent/explore",
                           "data-analysis/ai/agent/transform",
                           "data-analysis/ai/agent/harmonization/overview",
+                          "data-analysis/ai/agent/agent-governance.mdx",
                           {
                             "group": "Documentation",
                             "pages": [

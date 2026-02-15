@@ -21,6 +21,62 @@ The Agent handles three primary intents throughout the pipeline development life
 
 Use the Agent to search your data warehouse, preview datasets, and validate data quality before building transformations. During transformation, describe data operations in natural language to generate gems and modify pipeline logic. After completing your pipeline, automatically generate documentation in Markdown that describe your project structure and pipeline logic.
 
+## Agent architecture
+
+The Prophecy Agent is built on a specialized version of Claude Code and operates directly within your active Prophecy project. It combines large language model reasoning with structured access to your project assets, metadata, and connected data fabric.
+
+Unlike a standalone chatbot, the Agent is connected to Prophecy's knowledge graph and development environment. This allows it to understand:
+
+- Your project's structure (pipelines, analyses, datasets, documentation).
+- Schema metadata and dataset relationships.
+- Version-controlled project artifacts.
+
+### Tool-based execution
+
+The Agent does not generate text alone. It uses a set of internal tools to take concrete actions inside your project, including:
+
+- Querying your connected warehouse.
+- Retrieving metadata and sample data.
+- Compiling and validating code.
+- Running pipelines.
+- Creating and editing project artifacts.
+
+When the Agent executes SQL or runs a pipeline, it does so under the permissions of the user who invoked it. All warehouse interactions respect existing access controls and governance policies.
+
+### Project boundary
+
+The Agent operates strictly within the currently active project.
+
+It can:
+
+- Create and refactor pipelines.
+- Generate and update analyses.
+- Modify documentation.
+- Edit datasets and other project artifacts.
+
+It cannot:
+
+- Create or delete projects.
+- Perform platform-level administrative actions.
+- Interact with external Prophecy APIs outside the project scope.
+
+All Agent activity remains contained within the project where it is invoked.
+
+### Single-agent editing
+
+Only one Agent session can edit a project at a time. Collaborative agent editing across multiple users is not supported.
+
+### Human in the loop
+
+The Agent proposes and applies changes inside your project, but you remain in control. You can:
+
+- Inspect every transformation.
+- Validate data samples.
+- Modify generated logic.
+- Re-run pipelines as needed.
+
+The Agent accelerates development, but it does not replace review. Every change remains visible, versioned, and fully editable within Prophecy.
+
 ```mermaid
 graph TD
     A[Start Project] --> B[Find Data Sources]
