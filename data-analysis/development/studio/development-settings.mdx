@@ -3,12 +3,16 @@ title: Development settings
 description: Configure development settings for your project
 ---
 
-Development settings control how Prophecy processes your project during development. Access these settings from the Studio header by clicking the ellipses menu (`...`) and selecting **Development Settings**.
+Development settings control how Prophecy processes your project during development. 
+
+To access these settings, click the arrow to the right of your project's name in the Studio header and select **Development Settings**.
 
 You'll see the following settings:
 
 - [Variant interference data sampling limit](#variant-interference-data-sampling-limit)
 - [Backend language](#backend-language)
+- [Use original project browser layout](#use-original-project-browser-layout)
+- [Show models](#show-models)
 - [Enable manual compilation](#enable-manual-compilation)
 
 ## Variant interference data sampling limit
@@ -48,6 +52,18 @@ When you switch your project's backend language (like from SQL to Python or vice
 Prophecy is actively developing these features and is aiming for full parity between languages in upcoming releases. As a best practice, **always save or commit your work before switching** so you can easily revert if something doesn't translate.
 
 </Note>
+
+## Use original project browser layout
+
+When you open a project, the Chat panel appears on the left and the Project Browser panel appears on the right.
+
+You can reverse this layout by clicking the **Use Original Project Browser Layout** toggle.
+
+## Show models
+
+Many pipeline transformations are compiled into models under the hood. If you are working on a pipeline, you can view and edit the code of underlying dbt models in a pipeline. (You cannot visually edit these underlying models).
+
+To view the dbt models created in the backend for pipelines in SQL projects, click the **Show Models** toggle.
 
 ## Enable manual compilation
 
