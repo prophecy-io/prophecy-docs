@@ -26,9 +26,17 @@ All changes remain fully visible and editable in the project editor.
 
 The Transform Agent can retrieve metadata and limited data samples to validate generated transformations.
 
-When executing SQL or running pipelines, the Agent operates under the permissions of the user who invoked it. 
+When executing SQL or running pipelines, the Agent operates under the permissions of the user who invoked it.
 
 When generating output tables or executing write operations, changes take effect immediately in the connected warehouse under the invoking user’s permissions. Existing warehouse access controls and governance policies are always enforced.
+
+## Model architecture
+
+The Transform Agent is built on a specialized deployment of Claude Code and is optimized for Anthropic Opus 4.5.
+
+Prophecy augments model reasoning with structured tool access to project artifacts, metadata, and connected warehouse systems. The model is not used in isolation; all actions are mediated through Prophecy’s execution layer and project boundaries.
+
+Enterprise customers may configure approved Anthropic endpoints in supported deployment environments. Using alternative models may affect output quality.
 
 ## Prerequisites
 
