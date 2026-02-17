@@ -5,13 +5,15 @@ description: Transform data sources using the Prophecy Agent
 
 import { WistiaVideo } from '/snippets/react/wistia-video.jsx';
 
-You can use the Prophecy Agent to generate transformations based on natural language prompts. When you describe a data operation, the Agent adds the corresponding gems to the pipeline and provides a summary of the changes in the chat interface.
+You can use the Prophecy Agent to generate transformations based on natural language prompts. When you describe a data operation, the Transform Agent generates the corresponding gems in the pipeline and summarizes the applied changes in the chat interface.
 
 The following sections describe how to add transformations, review modifications, and restore previous versions of the pipeline.
 
+The Transform Agent runs in the default agent mode for a project. If your team has enabled Harmonization mode, the Transform Agent must be re-enabled in team settings before transformations can be generated.
+
 ## What the Transform Agent can modify
 
-The Transform Agent operates within a [project](/data-analysis/development/projects/create-project). It can:
+The Transform Agent operates strictly within the active [project](/data-analysis/development/projects/create-project). It can:
 
 - Create and refactor pipelines.
 - Generate and update analyses.
@@ -22,9 +24,11 @@ All changes remain fully visible and editable in the project editor.
 
 ## Execution model
 
-The Transform Agent may retrieve metadata and limited data samples to validate transformations and ensure correctness.
+The Transform Agent can retrieve metadata and limited data samples to validate generated transformations.
 
-When executing SQL or running pipelines, the Agent operates under the permissions of the user who invoked it. Existing warehouse access controls and governance policies are always enforced.
+When executing SQL or running pipelines, the Agent operates under the permissions of the user who invoked it. 
+
+When generating output tables or executing write operations, changes take effect immediately in the connected warehouse under the invoking user’s permissions. Existing warehouse access controls and governance policies are always enforced.
 
 ## Prerequisites
 
@@ -63,7 +67,7 @@ To revert changes or try another transformation from a previous state, select **
 
 ## Create output tables
 
-After adding various data transformations in your pipeline, ask the Agent to save the result as a table. The Agent writes the data to the default database and schema in your connected fabric. This allows you to persist results and reuse them in downstream workflows.
+After adding various data transformations in your pipeline, ask the Agent to save the result as a table. The Agent writes the output to the default database and schema configured for your connected fabric. This allows you to persist results and reuse them in downstream workflows.
 
 <Warning>
   If you have multiple pipelines or pipeline branches that do not terminate with tables, the Agent
@@ -72,7 +76,7 @@ After adding various data transformations in your pipeline, ask the Agent to sav
 
 ## Project history
 
-All changes made by the Agent are saved in the project [version history](/data-analysis/development/versioning/version-control). Commits will be clearly marked as authored by the Agent.
+All changes made by the Agent are saved in the project [version history](/data-analysis/development/versioning/version-control). Commits are clearly marked as authored by the Agent.
 
 <Note>
   If you did not save your project before interacting with the Agent, Prophecy will automatically
