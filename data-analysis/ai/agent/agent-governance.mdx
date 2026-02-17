@@ -1,0 +1,26 @@
+---
+title: Agent governance and data access
+description: How the Prophecy Agent interacts with your data and respects access controls
+---
+
+The Prophecy Agent operates within your selected deployment environment and respects existing access controls. This page explains how data is accessed, executed, and stored when using the Agent.
+
+## Storage and environment
+
+The Agent runs inside your Prophecy deployment environment.
+
+Prophecy stores:
+
+- Agent chat history.
+- Project metadata (pipelines, analyses, schemas, configurations).
+- Version-controlled project artifacts.
+
+These items are stored within your selected Prophecy deployment environment.
+
+## Execution model
+
+The Agent may retrieve metadata and execute queries against connected data platforms to validate transformations and run pipelines.
+
+When the Agent executes SQL or runs a pipeline, it operates under the permissions of the user who invoked it. All reads and writes respect existing warehouse access controls, role-based permissions, and organizational governance policies.
+
+If the user has permission to read from or write to specific tables, the Agent can perform those operations within that scope.

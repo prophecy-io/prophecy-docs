@@ -50,6 +50,7 @@
                           },
                           "data-analysis/ai/agent/explore",
                           "data-analysis/ai/agent/transform",
+                          "data-analysis/ai/agent/analyses",
                           "data-analysis/ai/agent/harmonization/overview",
                           {
                             "group": "Documentation",
@@ -57,7 +58,8 @@
                               "data-analysis/ai/agent/documentation/documentation",
                               "data-analysis/ai/agent/documentation/ctl-reference"
                             ]
-                          }
+                          },
+                          "data-analysis/ai/agent/agent-governance"
                         ]
                       },
                       {
