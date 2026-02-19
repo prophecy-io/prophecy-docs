@@ -9,7 +9,7 @@ When you describe your intent, the Agent inspects your active project, searches 
 
 ## Why use the Agent?
 
-The Agent accelerates pipeline development by compressing the traditional development process into a single natural language interaction.
+The Agent accelerates pipeline development by reducing the manual steps required to build and modify data workflows.
 
 Instead of navigating multiple interfaces, you describe intent. The Agent translates that intent into concrete, inspectable project changes within your active environment.
 
@@ -22,18 +22,19 @@ The Agent operates within the currently active project and under the permissions
 - All SQL execution and pipeline runs occur under your existing credentials.
 - All changes remain visible, versioned, and editable within Prophecy.
 
-Prophecy supports multiple agent modes depending on your workflow.
+Prophecy includes specialized agents for transformation, harmonization, and documentation workflows. The Transform Agent runs separately from the Documentation and Harmonization Agents. To use the Harmonization Agent or Documentation Agent, you must disable the Transform Agent. (Harmonization and Documentation can be used without disabling one another.)
 
-- [Transform Agent mode](/data-analysis/ai/agent/transform) (default) — The primary development mode for building and modifying pipelines, analyses, and documentation using natural language.
-- [Harmonization Agent mode](/data-analysis/ai/agent/harmonization/overview) — Automates mapping source data to a defined Common Data Model (CDM).
+- [Transform Agent](/data-analysis/ai/agent/transform) (default) — Builds and modifies pipelines, analyses, and documentation using natural language.
+- [Harmonization Agent](/data-analysis/ai/agent/harmonization/overview) — Automates mapping source data to a defined Common Data Model (CDM).
+- [Documentation Agent](/data-analysis/ai/agent/documentation/documentation) — Generates complete project and pipeline documentation.
 
 ## Workflow
 
-Agent workflows vary depending on the active agent mode.
+Agent workflows vary depending on the active agent.
 
 ### Transform Agent workflow (default)
 
-In Transform Agent mode, the Agent focuses on building and modifying [pipelines](/data-analysis/), [analyses](/data-analysis/ai/agent/analyses), and related project artifacts within the active project.
+The Transform Agent focuses on building and modifying [pipelines](/data-analysis/), [analyses](/data-analysis/ai/agent/analyses), and related project artifacts within the active project.
 
 When you submit a request, the Agent:
 
@@ -43,17 +44,16 @@ When you submit a request, the Agent:
 - Validates transformations and project structure.
 - Surfaces changes for review.
 
-In Transform Agent mode, the Agent supports three primary intents throughout the pipeline development lifecycle:
+The Transform Agent supports two primary intents throughout the pipeline development lifecycle:
 
 - [Exploration](/data-analysis/ai/agent/explore) for discovering and understanding data sources.
 - [Transformation](/data-analysis/ai/agent/transform) for building and modifying pipeline logic.
-- [Documentation](/data-analysis/ai/agent/documentation/documentation) for generating complete project and pipeline documentation.
 
-Use the Agent to search your data warehouse, preview datasets, and validate data quality before building transformations. During transformation, describe data operations in natural language to generate gems and modify pipeline logic. After completing your pipeline, automatically generate documentation in Markdown that describe your project structure and pipeline logic.
+Use the Agent to search your data warehouse, preview datasets, and validate data quality before building transformations. During transformation, describe data operations in natural language to generate gems and modify pipeline logic.
 
 ### Harmonization workflow
 
-In Harmonization Agent mode, the [Harmonization Agent](/data-analysis/ai/agent/harmonization/overview) focuses on mapping source schemas to a defined Common Data Model (CDM).
+The [Harmonization Agent](/data-analysis/ai/agent/harmonization/overview) focuses on mapping source schemas to a defined Common Data Model (CDM).
 
 The workflow typically includes:
 
@@ -63,9 +63,9 @@ The workflow typically includes:
 
 ## Agent architecture
 
-The Prophecy Agent operates within Prophecy’s structured execution environment and is equipped with tools to query warehouses, compile code, run pipelines, and modify project artifacts directly. 
+The Prophecy Agent operates within Prophecy’s structured execution environment and is equipped with tools to query warehouses, compile code, run pipelines, and modify project artifacts directly.
 
-Rather than generating text alone, the Agent uses controlled internal tools to inspect, modify, and validate project assets within the active project.
+Rather than generating text alone, the Agent uses controlled internal tools to inspect, modify, and validate project assets directly within the active project.
 
 This enables the Agent to reason over:
 
@@ -161,7 +161,7 @@ graph TD
 </Accordion>
 
 <Accordion title="Transform data automatically to match a defined schema">
-  In Harmonization mode, you can define a Common Data Model (CDM) and generate mappings that conform input data to the CDM. Learn more in the [Harmonization](/data-analysis/ai/agent/harmonization/overview) documentation.
+  The Harmonization Agent lets you define a Common Data Model (CDM) and generate mappings that conform input data to the CDM. Learn more in the [Harmonization](/data-analysis/ai/agent/harmonization/overview) documentation.
 </Accordion>
 
 <Accordion title="Remove redundant steps and improve readability">
