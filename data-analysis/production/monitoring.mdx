@@ -1,20 +1,15 @@
 ---
-title: 'Monitoring'
-description: 'Review your deployed projects, scheduled pipelines, and run history'
+title: Monitoring
+description: Review your deployed projects, scheduled pipelines, and run history
 ---
 
 The **Observability** interface in Prophecy lets you monitor your deployed projects, review scheduled pipelines, and audit run history. You'll be able to view all projects and pipelines that your teams own.
 
+To access, click **Observability** (the line graph icon) in the left sidebar.
+
 ## Deployed Projects
 
-The **Deployed Projects** tab in the Observability interface shows all projects that have been [published](/data-analysis/development/versioning/version-control) to Prophecy fabrics. It gives you visibility into release versions and recent execution status at the project level.
-
-Use the following filters to narrow the results.
-
-| Field              | Description                                                           |
-| ------------------ | --------------------------------------------------------------------- |
-| **Search project** | Search for a project by name.                                         |
-| **Fabric**         | Filter results by the fabric (such as `AnalystDBX`, `devDatabricks`). |
+The **Deployed Projects** tab in the Observability interface shows all projects that have been [published](/data-analysis/development/versioning/version-control) to Prophecy fabrics. It lets you view details on release versions and recent execution status at the project level.
 
 For each project deployment, Prophecy provides the following information.
 
@@ -27,23 +22,22 @@ For each project deployment, Prophecy provides the following information.
 | **Last Run**        | Time since the most recent pipeline execution in the project.                     |
 | **Last Run Status** | Success or failure of the last run.                                               |
 
+Use the following filters to narrow the results:
+
+| Field              | Description                                                           |
+| ------------------ | --------------------------------------------------------------------- |
+| **Search project** | Search for a project by name.                                         |
+| **Fabric**         | Filter results by the fabric (such as `AnalystDBX`, `devDatabricks`). |
+
 <Info>
-  When a project is published to multiple fabrics, an individual project deployment is created for
+  When a project is published to multiple fabrics, Prophecy creates an individual project deployment for
   each fabric. You will see all of these deployments in the Deployed Projects page. You cannot
   revert or delete a project deployment.
 </Info>
 
 ## Scheduled Pipelines
 
-The **Scheduled Pipelines** tab in the Observability interface displays all pipelines configured with a schedule across environments. It provides visibility into their execution frequency and recent run outcomes. Use this page to verify that pipelines are scheduled correctly and identify patterns of success or failure.
-
-Use the following filters to narrow the results.
-
-| Field               | Description                                                 |
-| ------------------- | ----------------------------------------------------------- |
-| **Search pipeline** | Search by pipeline name.                                    |
-| **Fabric**          | Filter by fabric.                                           |
-| **Project**         | Filter by the project that contains the scheduled pipeline. |
+The **Scheduled Pipelines** tab in the Observability interface displays all pipelines configured with a schedule across environments. It provides details on pipeline execution frequency and recent run outcomes. Use this page to verify that pipelines are scheduled correctly and to identify patterns of success or failure.
 
 For each scheduled pipeline, Prophecy provides the following information.
 
@@ -59,6 +53,14 @@ For each scheduled pipeline, Prophecy provides the following information.
   You may see multiple rows for the same pipeline if the parent project is deployed to multiple
   fabrics.
 </Info>
+
+Use the following filters to narrow the results:
+
+| Field               | Description                                                 |
+| ------------------- | ----------------------------------------------------------- |
+| **Search pipeline** | Search by pipeline name.                                    |
+| **Fabric**          | Filter by fabric.                                           |
+| **Project**         | Filter by the project that contains the scheduled pipeline. |
 
 ## Run History
 

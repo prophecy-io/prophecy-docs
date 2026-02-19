@@ -19,8 +19,8 @@ Once you create parameters, they are available as _configuration variables_ in g
 To access parameters in a gem:
 
 1. Open any [gem](/data-analysis/gems/) that uses visual or code expressions, such as a [Filter](/data-analysis/gems/prepare/filter) or [Reformat](/data-analysis/gems/prepare/reformat).
-1. In the Visual mode, select **Configuration Variables** from the visual expression builder. You'll see a list of all existing parameters in your project.
-1. In the Code mode, use Jinja syntax instead. Use the following syntax to reference a parameter: `{{ var('parameter_name') }}`.
+1. In Visual mode, select **Configuration Variables** from the visual expression builder. You'll see a list of all existing parameters in your project.
+1. In Code mode, use Jinja syntax instead. Use the following syntax to reference a parameter: `{{ var('parameter_name') }}`.
 
    <Tip>
      You can also use Jinja syntax in the visual expression builder by including a custom code
@@ -66,7 +66,7 @@ Next, you'll filter your dataset to only include rows where the `region` column 
 
 #### Adjust region from a dashboard
 
-Now you can select the parameter in an [analysis dashboard](/data-analysis/production/analysis/overview) so end users can select the regions they want to see in a report.
+You can now select the parameter in an [analysis dashboard](/data-analysis/production/analysis/overview) so that end users can select the regions they want to see in a report.
 
 1. Create an analysis for the `regional_sales` pipeline.
 2. Add a title for the analysis.
