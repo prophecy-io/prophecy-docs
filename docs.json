@@ -76,8 +76,7 @@
                           "data-analysis/ai/knowledge-graph/knowledge-graph",
                           "data-analysis/ai/knowledge-graph/indexer"
                         ]
-                      },
-                      "data-analysis/ai/llm-providers"
+                      }
                     ]
                   },
                   {
