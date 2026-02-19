@@ -28,9 +28,9 @@ A parameter is a named placeholder for a value that may change between runs.
 
 For example, instead of hard-coding a file path in the pipeline, such as `s3://my-bucket/prod/customers/`, you define a parameter called `customers_path` and assign it the value `s3://my-bucket/prod/customers/`.
 
-Inside the pipeline, you reference the parameter rather than the literal value. Parameters are defined in parameter sets, which group related variables together.
+Inside the pipeline, you reference the parameter rather than the literal value.
 
-Every project and pipeline has a default parameter set, which serves as the baseline definition. You can later create additional parameter sets—for example, one for development and one for production—without redefining the parameters themselves.
+Parameters are defined in [parameter sets](/data-analysis/development/parameters/parameter-sets), which group related parameters together. Every project and pipeline has a default parameter set, which serves as the baseline definition. You can later create additional parameter sets—for example, one for development and one for production—without redefining the parameters themselves.
 
 ## Types of parameters
 
@@ -47,11 +47,8 @@ The scope determines where a parameter can be used and how it behaves at runtime
 | Pipeline parameters | Specific to a single pipeline.<br/><br/>String expressions are evaluated at runtime. If you define a pipeline parameter called `concat("first_name", "last_name")`, the value injected during usage is `first_namelast_name`.<br/><br/>        |
 
 <Note>
-  If a pipeline parameter and a project parameter share the same name, the pipeline parameter takes
-  precedence within that pipeline.
+  If a pipeline parameter and a project parameter share the same name, the pipeline parameter overrides the project parameter.
 </Note>
-
-<Info>The difference in evaluation behavior will be resolved in a future release.</Info>
 
 ### Supported data types
 
@@ -71,7 +68,7 @@ Prophecy supports the following data types for **pipeline parameters**:
 
 ## Define parameters
 
-You first define parameters by adding variables to the default parameter set. You must define values for default parameters.
+You intiially define parameters by adding variables to the default parameter set. You must define values for default parameters.
 
 To define project or pipeline parameters:
 
@@ -92,5 +89,5 @@ To define project or pipeline parameters:
 
 Now that you understand how parameters are defined, continue with:
 
-- [Embedding these parameters](/data-analysis/development/parameters/usage) in your pipelines.
+- [Using these parameters](/data-analysis/development/parameters/usage) in your pipelines and analyses.
 - [Creating additional parameter sets](/data-analysis/development/parameters/parameter-sets) at the project or pipeline level.

@@ -1,6 +1,6 @@
 ---
 title: Deploy parameter sets
-description: Choose which parameter values are used when pipelines and apps run
+description: Choose which parameter values are used when pipelines and analyses run
 ---
 
 A parameter set is a named collection of values for multiple parameters. You can create parameter sets at the project level or the pipeline level.
@@ -94,7 +94,7 @@ First, set up your standard operating values in the default set:
 1. Set the value to `fx_rates_usd`.
 1. Click **Save**.
 
-After saving the set of variables, you can reference `currency` and `fx_rate_table` in any pipeline in the project. Your pipeline will use the default set values by default for interactive runs.
+After saving the set of variables, you can reference `currency` and `fx_rate_table` in any pipeline in the project. By default, your pipeline will use these values for interactive runs.
 
 ### Create a regional override (Europe)
 
@@ -110,7 +110,7 @@ By switching the active set to `Europe`, you update your entire project to handl
 
 ## Select parameter sets at runtime
 
-How you select a parameter set depends on how the pipeline or app is executed.
+How you select a parameter set depends on how the pipeline or analysis is executed.
 
 ### On-demand pipeline runs
 
@@ -118,7 +118,7 @@ Interactive pipeline runs use the active parameter set for both project and pipe
 
 ### On-demand analysis runs
 
-You can select a parameter set when [creating an analysis dashboard](/data-analysis/production/analysis/create-analysis) or modify it afterward in [analysis settings](/data-analysis/production/analysis/analysis-settings). This determines which pipeline parameter values the app uses when it runs. On-demand app runs always use values from the active project parameter set.
+You can select a parameter set when [creating an analysis dashboard](/data-analysis/production/analysis/create-analysis) or modify it afterward in [analysis settings](/data-analysis/production/analysis/analysis-settings). This determines which pipeline parameter values the analysis uses when it runs. On-demand analysis runs always use values from the active project parameter set.
 
 ### Pipeline schedules
 
