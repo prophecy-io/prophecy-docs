@@ -1,0 +1,127 @@
+---
+title: "Build a marketing funnel with the Agent"
+description: "Use the Prophecy Agent to generate a complete funnel analysis and campaign strategy from a single prompt"
+---
+
+Marketing teams often struggle to unify campaign, revenue, and demographic data to understand conversion performance and identify high-value audience segments. In this tutorial, you will use the Prophecy Agent to build a complete funnel analysis and generate a data-backed segmentation strategy — from a single prompt.
+
+## Build a funnel conversion analysis
+
+Begin by pointing the Agent to your marketing data in Databricks.
+
+In the Agent prompt bar, enter:
+
+```
+Build a funnel conversion analysis for the existing campaigns.
+```
+
+As the Agent works, it:
+
+- Searches your connected fabric for relevant marketing datasets.
+- Explains each step it is taking.
+- Displays the files and metadata it uses to reason about your request.
+- Generates a complete pipeline to support the analysis.
+
+From a single prompt, the Agent builds an end-to-end workflow that:
+
+- Reads data from all funnel stages.
+- Combines and reshapes datasets.
+- Calculates key conversion metrics.
+- Produces analysis-ready outputs.
+
+You do not need to manually add gems, configure joins, or write SQL. The Agent handles the implementation while you focus on intent.
+
+### Inspect and refine the workflow
+
+The Agent does not operate as a black box.
+
+You can:
+
+- Open and inspect every transformation stage.
+- Validate schemas and data samples.
+- Modify or refine logic in any gem.
+- Adjust calculations or filters as needed.
+
+The generated pipeline also creates marketing KPIs and a dashboard. For example, you can view:
+
+- Total revenue generated.
+- Number of cars sold.
+- Month-over-month revenue trends.
+- Email-to-sale funnel conversion rates.
+- Performance across campaigns.
+
+All logic remains fully visible and editable in the pipeline editor.
+
+## Schedule the pipeline
+
+Once you’re satisfied with the analysis, you can automate it.
+
+To schedule the pipeline to run daily:
+
+1. Click the ellipses (**⋯**) in the top-right corner of the pipeline editor.
+1. Select **Schedule**.
+1. Configure the run frequency and save.
+
+The pipeline will now refresh automatically, keeping your funnel metrics up to date.
+
+## Create a new campaign using segmentation
+
+Next, create a new campaign with improved targeting.
+
+In Prophecy, the object you create is called a **pipeline**, even if you refer to it conceptually as a workflow.
+
+### Add demographic data
+
+To perform segmentation, upload a vendor-provided demographic dataset.
+
+1. Drag and drop the Excel file directly into the UI.
+1. Prophecy automatically creates a table from the file.
+1. Add this dataset to your existing pipeline.
+
+You are now ready to use the Agent for audience segmentation.
+
+### Generate recommended segments
+
+Enter the following prompt:
+
+```
+Using this demographic data, recommend good segments for a marketing campaign.
+```
+
+The Agent analyzes historical campaign performance alongside demographic attributes. It may identify patterns such as:
+
+- High-converting geographic regions.
+- Age or income-based segments with strong revenue performance.
+- Behavioral differences across campaign types.
+
+For example, the Agent might determine:
+
+- Affluent buyers convert at a slightly lower rate.
+- However, they generate significantly higher revenue per sale.
+
+Based on these insights, the Agent proposes a recommended campaign strategy supported by data.
+
+## Adjust the time horizon
+
+By default, the analysis may examine multiple years of historical data — for example, four years of campaign performance.
+
+You can easily refine this scope:
+
+1. Open the relevant gem in the pipeline.
+1. Modify the filter condition to restrict data to the last year.
+1. Save and re-run the pipeline.
+
+Because all transformations are visible, you maintain full control over how insights are generated.
+
+## Conclusion
+
+With the Prophecy Agent, you can:
+
+- Build a complete funnel conversion analysis from a single prompt.
+- Automatically generate KPIs and dashboards.
+- Schedule recurring runs.
+- Upload external demographic data.
+- Generate actionable campaign segmentation strategies.
+- Inspect, validate, and refine every transformation step.
+
+The Agent not only prepares and transforms your data — it helps you turn that data into usable, explainable business insights.
