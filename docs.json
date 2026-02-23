@@ -89,6 +89,7 @@
                           "data-analysis/development/projects/project-languages"
                         ]
                       },
+                      "data-analysis/development/pipelines/data-analysis-pipelines",
                       {
                         "group": "Studio",
                         "pages": [
