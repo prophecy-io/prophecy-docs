@@ -59,6 +59,7 @@
                               "data-analysis/ai/agent/documentation/ctl-reference"
                             ]
                           },
+                          "data-analysis/ai/agent/prompting-best-practices",
                           "data-analysis/ai/agent/agent-governance"
                         ]
                       },

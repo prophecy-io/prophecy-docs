@@ -1,36 +1,33 @@
 ---
-title: Prompting Best Practices
+title: Prompting best practices
 description: Guidance for working effectively with the Prophecy Agent using natural language
 ---
 
-The Prophecy Agent enables you to build and modify pipelines, analyses, and documentation using natural language. Like any development tool, it performs best when provided with clear intent, structured context, and opportunities for review.
+The Prophecy Agent enables you to build and modify pipelines, analyses, and documentation using natural language. Like any agent, it performs best when you provide the Agent with clear intent, structured context, and opportunities for review.
 
 This guide outlines practical techniques for working effectively with the Transform, Harmonization, and Documentation Agents.
 
 ## Why prompting best practices matter
 
-The Agent translates natural language into concrete project changes such as adding gems, generating mappings, or updating analyses. Clear, well-structured prompts improve:
+The Agent responds to prompts by implementing concrete project changes such as adding gems, generating mappings, or updating analyses.
+
+Clear, well-structured prompts improve:
 
 - Accuracy of generated transformations.
 - Consistency of pipeline logic.
 - Efficiency of iteration.
 - Alignment with business requirements.
 
-Effective prompting combines natural language interaction with disciplined data engineering practices.
-
 ## Be specific and explicit
 
-Describe exactly what you want the Agent to do. Avoid vague requests.
-
+Describe exactly what you want the Agent to do.
 Instead of:
 
-> Clean the data
+> "Clean the data"
 
 Use:
 
-```
-Remove duplicate records based on `customer_id`, filter to orders from 2024, and replace null values in `email` with `'unknown@example.com'`
-```
+> Remove duplicate records based on `customer_id`, filter to orders from 2024, and replace null values in `email` with `'unknown@example.com'`
 
 When prompting the Transform Agent, specify:
 
@@ -42,11 +39,25 @@ When prompting the Transform Agent, specify:
 
 Specific instructions reduce ambiguity and improve reliability.
 
+## Common prompting patterns
+
+Prophecy's agents supports common data workflow actions, including:
+
+- Finding and previewing datasets.
+- Filtering and cleaning records.
+- Joining and transforming tables.
+- Parsing semi-structured data.
+- Aggregating results.
+- Generating visualizations.
+- Saving outputs as tables.
+
+Thinking in these discrete actions can help you structure clear, effective prompts.
+
 ## Build pipelines incrementally
 
-For complex workflows, generate transformations step by step instead of requesting an entire multi-stage pipeline at once.
+For multi-stage workflows, we recommend generating transformations step by step instead of all at once. Incremental development produces more reliable results and makes each stage easier to validate, refine, and debug.
 
-A structured approach may look like:
+For example, a structured approach might look like:
 
 1. Add source tables to the canvas.
 2. Join datasets.
@@ -57,21 +68,21 @@ A structured approach may look like:
 
 After each step:
 
-- Use **Inspect** to review modified gems (highlighted in yellow)
-- Validate both input and output data
-- Confirm the transformation matches your intent
-
-Incremental development improves traceability and simplifies debugging.
+- Use **Inspect** to review modified gems (these gems are highlighted in yellow).
+- Validate both input and output data.
+- Confirm the transformation matches your intent.
 
 ## Use @ mentions to reference project assets
 
-Use the `@` symbol to reference specific tables or gems in your project.
+Use the `@` symbol to reference specific tables or gems in your project. See [@ mentions](/data-analysis/ai/agent/chat/mentions.mdx) for more details.
 
 Examples:
 
-- Aggregate the `@orders_cleaned` gem by month.
-- Add a filter after `@last_join` to include only records where `region = 'West'`.
-- Show a sample of `@daily_sales`.
+> Aggregate the `@orders_cleaned` table by month.
+
+> Add a filter after `@last_join` to include only records where `region = 'West'`.
+
+> Show a sample of `@daily_sales`.
 
 Referencing project assets explicitly helps the Agent identify the correct objects and reduces unintended modifications.
 
@@ -81,52 +92,39 @@ If you need structured output, state that explicitly.
 
 Examples:
 
-- Return only the SQL query.
-- Save the final result as a table.
-- Provide a summary of the pipeline in bullet points.
-- Generate documentation for the current pipeline.
+> Return only the SQL query.
+
+> Save the final result as a table.
+
+> Provide a summary of the pipeline in bullet points.
+
+> Generate documentation for the current pipeline.
 
 Clear output expectations reduce follow-up clarification and rework.
 
-The Agent can also generate visualizations when prompted clearly (for example, “Create a bar chart of monthly sales from @orders_cleaned”).
+The Agent can also generate visualizations when prompted clearly, as in
 
-## Provide context for complex migrations
-
-When migrating existing SQL, SAS, or other legacy logic, include structured context:
-
-- Source tables with full paths.
-- Step-by-step transformation logic.
-- Join conditions and filters.
-- Column derivation rules.
-- Expected output schema.
-
-Providing both a plain-English description and reference SQL improves alignment between legacy logic and the generated Prophecy pipeline.
-
-For semi-structured fields (such as JSON columns), providing a representative sample of the data improves extraction and parsing accuracy.
-
-Plan to iterate. Migration workflows typically require validation against sample data and comparison with expected results.
+> Create a bar chart of monthly sales from @orders_cleaned.
 
 ## Use descriptive column and gem names
 
-Descriptive names improve the Agent's ability to generate accurate logic.
+Descriptive names improve the Agent's ability to generate accurate logic. If source data contains unclear labels, consider renaming columns early in the pipeline to improve downstream suggestions.
 
-Prefer:
+Use names such as:
 
 - `customer_email`
 - `order_date`
 - `total_amount`
 
-Over ambiguous names such as:
+Avoid ambiguous names such as:
 
 - `col1`
 - `field_a`
 - `x`
 
-If source data contains unclear labels, consider renaming columns early in the pipeline to improve downstream suggestions.
-
 ## Inspect, validate, and restore
 
-The Agent assists development, but validation remains your responsibility.
+The Agent assists development, but you should always validate results.
 
 After each generated change:
 
@@ -146,20 +144,6 @@ Prompting best practices apply across all Prophecy Agents, with slight variation
 - **Documentation Agent** — Specify the scope (pipeline, analysis, or project) and desired level of detail for generated documentation.
 
 Understanding the active agent mode helps you structure prompts effectively.
-
-## Common prompting patterns
-
-Prophecy's agents supports common data workflow actions, including:
-
-- Finding and previewing datasets.
-- Filtering and cleaning records.
-- Joining and transforming tables.
-- Parsing semi-structured data.
-- Aggregating results.
-- Generating visualizations.
-- Saving outputs as tables.
-
-Thinking in these discrete actions can help you structure clear, effective prompts.
 
 ## Summary
 
