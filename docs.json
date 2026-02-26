@@ -1467,6 +1467,18 @@
     {
       "source": "/data-analysis/collaboration/prophecy-apps/app-settings",
       "destination": "/data-analysis/production/analysis/analysis-settings"
+    },
+        {
+      "source": "/data-analysis/ai/copilot/gem-expressions",
+      "destination": "/data-analysis/gems/copilot/gem-expressions"
+    },
+    {
+      "source": "/data-analysis/ai/copilot/gem-fixes",
+      "destination": "/data-analysis/gems/copilot/gem-fixes"
+    },
+    {
+      "source": "/data-analysis/ai/copilot/auto-documentation",
+      "destination": "/data-analysis/gems/copilot/auto-documentation"
     }
   ]
 }
