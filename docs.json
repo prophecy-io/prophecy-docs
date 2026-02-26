@@ -60,7 +60,8 @@
                             ]
                           },
                           "data-analysis/ai/agent/prompting-best-practices",
-                          "data-analysis/ai/agent/agent-governance"
+                          "data-analysis/ai/agent/agent-governance",
+                          "data-analysis/ai/agent/llm-support"
                         ]
                       },
                       {
