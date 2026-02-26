@@ -59,7 +59,8 @@
                               "data-analysis/ai/agent/documentation/ctl-reference"
                             ]
                           },
-                          "data-analysis/ai/agent/agent-governance"
+                          "data-analysis/ai/agent/agent-governance",
+                          "data-analysis/ai/agent/llm-support"
                         ]
                       },
                       {
