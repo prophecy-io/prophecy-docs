@@ -31,12 +31,17 @@
                     ]
                   },
                   {
-                    "group": "AI",
+                    "group": "Build with Agent",
                     "pages": [
                       {
-                        "group": "Agent",
+                        "group": "Overview",
                         "pages": [
-                          "data-analysis/ai/agent/agent",
+                          "data-analysis/ai/agent/agent"
+                        ]
+                      },
+                      {
+                        "group": "Core workflows",
+                        "pages": [
                           {
                             "group": "Chat",
                             "pages": [
@@ -50,7 +55,12 @@
                           },
                           "data-analysis/ai/agent/explore",
                           "data-analysis/ai/agent/transform",
-                          "data-analysis/ai/agent/analyses",
+                          "data-analysis/ai/agent/analyses"
+                        ]
+                      },
+                      {
+                        "group": "Advanced capabilities",
+                        "pages": [
                           "data-analysis/ai/agent/harmonization/overview",
                           {
                             "group": "Documentation",
@@ -58,24 +68,21 @@
                               "data-analysis/ai/agent/documentation/documentation",
                               "data-analysis/ai/agent/documentation/ctl-reference"
                             ]
-                          },
+                          }
+                        ]
+                      },
+                      {
+                        "group": "Governance & configuration",
+                        "pages": [
                           "data-analysis/ai/agent/agent-governance",
-                          "data-analysis/ai/agent/llm-support"
-                        ]
-                      },
-                      {
-                        "group": "Copilot",
-                        "pages": [
-                          "data-analysis/ai/copilot/gem-expressions",
-                          "data-analysis/ai/copilot/gem-fixes",
-                          "data-analysis/ai/copilot/auto-documentation"
-                        ]
-                      },
-                      {
-                        "group": "Knowledge graph",
-                        "pages": [
-                          "data-analysis/ai/knowledge-graph/knowledge-graph",
-                          "data-analysis/ai/knowledge-graph/indexer"
+                          "data-analysis/ai/agent/llm-support",
+                          {
+                            "group": "Knowledge graph",
+                            "pages": [
+                              "data-analysis/ai/knowledge-graph/knowledge-graph",
+                              "data-analysis/ai/knowledge-graph/indexer"
+                            ]
+                          }
                         ]
                       }
                     ]
@@ -269,6 +276,14 @@
                     "pages": [
                       "data-analysis/gems/gems",
                       "data-analysis/gems/data-types",
+                      {
+                        "group": "Copilot for gems",
+                        "pages": [
+                          "data-analysis/ai/copilot/gem-expressions",
+                          "data-analysis/ai/copilot/gem-fixes",
+                          "data-analysis/ai/copilot/auto-documentation"
+                        ]
+                      },
                       {
                         "group": "Visual expressions",
                         "pages": [
