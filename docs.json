@@ -179,6 +179,16 @@
                     ]
                   },
                   {
+                        "group": "Explore and visualize",
+                        "pages": [
+                          "data-analysis/production/analysis/overview",
+                          "data-analysis/production/analysis/create-analysis",
+                          "data-analysis/production/analysis/analysis-components",
+                          "data-analysis/production/analysis/analysis-settings",
+                          "data-analysis/production/analysis/consume-analysis"
+                        ]
+                      },
+                  {
                     "group": "Platform setup",
                     "pages": [
                       {
@@ -233,18 +243,8 @@
                     ]
                   },
                   {
-                    "group": "Production",
+                    "group": "Run and share",
                     "pages": [
-                      {
-                        "group": "Analysis",
-                        "pages": [
-                          "data-analysis/production/analysis/overview",
-                          "data-analysis/production/analysis/create-analysis",
-                          "data-analysis/production/analysis/analysis-components",
-                          "data-analysis/production/analysis/analysis-settings",
-                          "data-analysis/production/analysis/consume-analysis"
-                        ]
-                      },
                       {
                         "group": "Scheduling",
                         "pages": [
@@ -1446,27 +1446,27 @@
     },
     {
       "source": "/data-analysis/collaboration/prophecy-apps/apps",
-      "destination": "/data-analysis/production/analysis/overview"
+      "destination": "/data-analysis/analysis/overview"
     },
     {
       "source": "/data-analysis/collaboration/prophecy-apps/run-apps",
-      "destination": "/data-analysis/production/analysis/consume-analysis"
+      "destination": "/data-analysis/analysis/consume-analysis"
     },
     {
       "source": "/data-analysis/collaboration/prophecy-apps/app-builder",
-      "destination": "/data-analysis/production/analysis/create-analysis"
+      "destination": "/data-analysis/analysis/create-analysis"
     },
     {
       "source": "/data-analysis/collaboration/prophecy-apps/app-creation",
-      "destination": "/data-analysis/production/analysis/create-analysis"
+      "destination": "/data-analysis/analysis/create-analysis"
     },
     {
       "source": "/data-analysis/collaboration/prophecy-apps/app-components",
-      "destination": "/data-analysis/production/analysis/analysis-components"
+      "destination": "/data-analysis/analysis/analysis-components"
     },
     {
       "source": "/data-analysis/collaboration/prophecy-apps/app-settings",
-      "destination": "/data-analysis/production/analysis/analysis-settings"
+      "destination": "/data-analysis/analysis/analysis-settings"
     },
         {
       "source": "/data-analysis/ai/copilot/gem-expressions",
@@ -1479,6 +1479,26 @@
     {
       "source": "/data-analysis/ai/copilot/auto-documentation",
       "destination": "/data-analysis/gems/copilot/auto-documentation"
-    }
+    },
+    {
+  "source": "/data-analysis/development/analyses/overview",
+  "destination": "/data-analysis/analyses/overview"
+},
+{
+  "source": "/data-analysis/development/analyses/create-analysis",
+  "destination": "/data-analysis/analyses/create-analysis"
+},
+{
+  "source": "/data-analysis/development/analyses/analysis-components",
+  "destination": "/data-analysis/analyses/analysis-components"
+},
+{
+  "source": "/data-analysis/development/analyses/analysis-settings",
+  "destination": "/data-analysis/analyses/analysis-settings"
+},
+{
+  "source": "/data-analysis/development/analyses/consume-analysis",
+  "destination": "/data-analysis/analyses/consume-analysis"
+}
   ]
 }
