@@ -88,7 +88,7 @@
                     ]
                   },
                   {
-                    "group": "Development",
+                    "group": "Build pipelines",
                     "pages": [
                       {
                         "group": "Projects",
@@ -179,7 +179,7 @@
                     ]
                   },
                   {
-                    "group": "Environment",
+                    "group": "Platform setup",
                     "pages": [
                       {
                         "group": "Fabrics",
