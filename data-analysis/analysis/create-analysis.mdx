@@ -13,7 +13,7 @@ In this tutorial, you will:
 - Ask the Agent to create a pipeline that produces a specific visualization.
 - Prompt the Agent to add a visualization to a new analysis.
 - Embed a [pipeline parameter](/data-analysis/development/pipeline-params) in the generated pipeline.
-- Update the analysis dashboard to include [interactive components](/data-analysis/production/analysis/analysis-components).
+- Update the analysis dashboard to include [interactive components](/data-analysis/analysis/analysis-components).
 - Run the analysis from the end user perspective.
 
 ## Prerequisites
@@ -86,10 +86,10 @@ The Agent:
 - Transforms the data to aggregate the total sales by product category.
 - Creates a [bar chart visualization](/data-analysis/development/runs/data-explorer/charts/charts) of the data.
 - Adds a [Visualize gem](/data-analysis/gems/report/visualize) to the canvas.
-- Create a new [analysis](/data-analysis/production/analysis/overview) that links to the pipeline.
+- Create a new [analysis](/data-analysis/analysis/overview) that links to the pipeline.
 - Includes the bar chart which uses input data from the Visualize gem.
 
-![Send Agent prompt](/data-analysis/production/analysis/img/prompt-analysis.png)
+![Send Agent prompt](/data-analysis/analysis/img/prompt-analysis.png)
 
 At this point, you will already have a pipeline and a baseline analysis dashboard. You can keep asking the Agent to transform the data to answer different questions, or you can continue to build on the analysis yourself.
 
@@ -102,7 +102,7 @@ If you would like to create an analysis without the Agent, you have two options:
 - Hover over the pipeline in the project browser and select the **Create analysis** icon.
 - Click the **+** plus icon in the canvas header and select **Create analysis**.
 
-<Frame>![Create analysis icon](/data-analysis/production/analysis/img/add-analysis.png)</Frame>
+<Frame>![Create analysis icon](/data-analysis/analysis/img/add-analysis.png)</Frame>
 
 </Tip>
 
@@ -137,7 +137,7 @@ Next, add a Filter gem to the pipeline. To make the filter condition dynamic, yo
 
    <Frame>
      ![Configure visual expression to use
-     parameter](/data-analysis/production/analysis/img/filter-region.png)
+     parameter](/data-analysis/analysis/img/filter-region.png)
    </Frame>
 
    <Tip>This expression is equivalent to `Region = {{ var('region') }}` in the Code view.</Tip>
@@ -184,6 +184,6 @@ If a project is shared with your team, you **cannot** edit any pipeline's or ana
 
 ## What's next
 
-To address your specific business requirements, leverage more complex [components](/data-analysis/production/analysis/analysis-components) to construct robust analysis dashboards.
+To address your specific business requirements, leverage more complex [components](/data-analysis/analysis/analysis-components) to construct robust analysis dashboards.
 
-To learn about the end user experience, see [consume analyses](/data-analysis/production/analysis/consume-analysis).
+To learn about the end user experience, see [consume analyses](/data-analysis/analysis/consume-analysis).
