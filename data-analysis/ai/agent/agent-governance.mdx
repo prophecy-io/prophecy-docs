@@ -19,7 +19,7 @@ graph TD
     R -->|Approved| E[Deterministic execution on connected data platform]
     R -->|Rejected / Iterate| S
     E --> P[Executes under invoking user's permissions<br/>(RBAC / warehouse controls)]
- ```
+```
 
 ## Storage and environment
 
@@ -55,7 +55,7 @@ graph TD
     B --> L[Send prompt to configured LLM endpoint<br/>(customer gateway or Prophecy-managed)]
     L --> R[LLM returns suggested logic]
     R --> A2[Agent presents suggestions for review<br/>(no execution by LLM)]
-```
+    ```
 
 ## Execution model
 
