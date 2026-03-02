@@ -5,6 +5,22 @@ description: How the Prophecy Agent interacts with your data and respects access
 
 The Prophecy Agent operates within your selected deployment environment and respects existing access controls. This page explains how data is accessed, executed, and stored when using the Agent.
 
+## Key principles
+
+- The Agent generates transformation logic and suggestions, but you review and approve all changes before pipelines are deployed or run in production.
+- The Agent operates only within your configured Prophecy deployment and connected data platforms.
+- You can inspect all generated transformations in visual, SQL, or documentation form before execution. You maintain full control over whether changes are applied.
+
+```mermaid
+graph TD
+    U[User] --> A[Prophecy Agent<br/>(runs within your deployment)]
+    A --> S[Generate transformation suggestions<br/>(SQL / Gems / analyses)]
+    S --> R[User review & approval<br/>(Visual / SQL / Documentation)]
+    R -->|Approved| E[Deterministic execution on connected data platform]
+    R -->|Rejected / Iterate| S
+    E --> P[Executes under invoking user's permissions<br/>(RBAC / warehouse controls)]
+ ```
+
 ## Storage and environment
 
 The Agent runs inside your Prophecy deployment environment.
@@ -15,12 +31,38 @@ Prophecy stores:
 - Project metadata (pipelines, analyses, schemas, configurations).
 - Version-controlled project artifacts.
 
-These items are stored within your selected Prophecy deployment environment.
+These items remain within your Prophecy deployment environment.
+
+## LLM interaction
+
+When generating suggestions, the Agent may include project metadata in prompts sent to the configured language model. This metadata may include:
+
+- Table and column names
+- Schemas and data types
+- Transformation code within the current project
+
+The agent does not include sample data by default. Using sample data can only be enabled by an administrator.
+
+```mermaid
+graph TD
+    A[Prophecy Agent] --> B[Build prompt using project context]
+    B --> M[Project metadata<br/>(tables, columns, schemas, types)]
+    B --> C[Existing transformation code<br/>(within current project)]
+    B --> I[User instructions]
+    B --> O{Sample data enabled?}
+    O -->|No (default)| X[No sample data included]
+    O -->|Yes (admin-controlled)| D[Include limited sample data]
+    B --> L[Send prompt to configured LLM endpoint<br/>(customer gateway or Prophecy-managed)]
+    L --> R[LLM returns suggested logic]
+    R --> A2[Agent presents suggestions for review<br/>(no execution by LLM)]
+```
 
 ## Execution model
 
-The Agent may retrieve metadata and execute queries against connected data platforms to validate transformations and run pipelines.
+The Agent generates transformation logic within your Prophecy deployment environment.
 
-When the Agent executes SQL or runs a pipeline, it operates under the permissions of the user who invoked it. All reads and writes respect existing warehouse access controls, role-based permissions, and organizational governance policies.
+When validating transformations or running pipelines, execution occurs deterministically on your connected data platform and under the permissions of the user who invoked the Agent.
 
-If the user has permission to read from or write to specific tables, the Agent can perform those operations within that scope.
+All reads and writes respect existing warehouse access controls, role-based permissions, and organizational governance policies.
+
+The Agent does not independently access external systems or perform actions outside your configured data platforms.
