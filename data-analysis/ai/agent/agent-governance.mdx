@@ -13,12 +13,12 @@ The Prophecy Agent operates within your selected deployment environment and resp
 
 ```mermaid
 graph TD
-    U[User] --> A[Prophecy Agent<br/>(runs within your deployment)]
-    A --> S[Generate transformation suggestions<br/>(SQL / Gems / analyses)]
-    S --> R[User review & approval<br/>(Visual / SQL / Documentation)]
+    U[User] --> A["Prophecy Agent<br/>(runs within your deployment)"]
+    A --> S["Generate transformation suggestions<br/>(SQL / Gems / Analyses)"]
+    S --> R[User review & approval<br/>Visual / SQL / Documentation]
     R -->|Approved| E[Deterministic execution on connected data platform]
     R -->|Rejected / Iterate| S
-    E --> P[Executes under invoking user's permissions<br/>(RBAC / warehouse controls)]
+    E --> P["Executes under invoking user's permissions<br/>(RBAC / warehouse controls)"]
 ```
 
 ## Storage and environment
@@ -46,15 +46,15 @@ The agent does not include sample data by default. Using sample data can only be
 ```mermaid
 graph TD
     A[Prophecy Agent] --> B[Build prompt using project context]
-    B --> M[Project metadata<br/>(tables, columns, schemas, types)]
-    B --> C[Existing transformation code<br/>(within current project)]
+    B --> M["Project metadata<br/>(tables, columns, schemas, types)""]
+    B --> C["Existing transformation code<br/>(within current project")]
     B --> I[User instructions]
     B --> O{Sample data enabled?}
-    O -->|No (default)| X[No sample data included]
-    O -->|Yes (admin-controlled)| D[Include limited sample data]
-    B --> L[Send prompt to configured LLM endpoint<br/>(customer gateway or Prophecy-managed)]
+    O -->|"No (default)| X[No sample data included"]
+    O -->|"Yes (admin-controlled)| D[Include limited sample data"]
+    B --> L["Send prompt to configured LLM endpoint<br/>(customer gateway or Prophecy-managed)""]
     L --> R[LLM returns suggested logic]
-    R --> A2[Agent presents suggestions for review<br/>(no execution by LLM)]
+    R --> A2["Agent presents suggestions for review<br/>(no execution by LLM)""]
 ```
 
 ## Execution model
