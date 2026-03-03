@@ -28,7 +28,9 @@ These items remain within your Prophecy deployment environment.
 
 ## LLM interaction
 
-When generating suggestions, the Agent may include project metadata in prompts sent to the configured language model. This metadata may include:
+When generating suggestions, the Agent may include project metadata in prompts sent to the configured language model. 
+
+This metadata may include:
 
 - Table and column names
 - Schemas and data types
@@ -40,8 +42,6 @@ The agent does not include sample data by default. Using sample data can only be
 
 The Agent generates transformation logic within your Prophecy deployment environment.
 
-When validating transformations or running pipelines, execution occurs deterministically on your connected data platform and under the permissions of the user who invoked the Agent.
-
-All reads and writes respect existing warehouse access controls, role-based permissions, and organizational governance policies.
+When validating transformations or running pipelines, execution occurs deterministically on your connected data platform and under the permissions of the user who invoked the Agent. All reads and writes respect existing warehouse access controls, role-based permissions, and organizational governance policies.
 
 The Agent does not independently access external systems or perform actions outside your configured data platforms.
