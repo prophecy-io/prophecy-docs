@@ -11,7 +11,7 @@ In self-hosted environments, enabling the Transform agent requires configuration
 
 ### Supported versions
 
-the Transform agent (v4) is supported only in Prophecy 4.2.5.3 and later.
+The Transform agent (v4) is supported only in Prophecy 4.2.5.3 and later.
 
 Earlier versions (4.2.5.2 and below) do not expose the configuration options required to enable the agent.
 
@@ -69,10 +69,6 @@ Configure the Anthropic API key used by the Transform agent in the Prophecy UI.
   }
 }
 ```
-
-Configure the Anthropic API key in the Prophecy Admin UI.
-
-Some deployments also provide the key to the SQL sandbox runtime through the sql-sandbox-config-map.
 
 </Step>
 <Step title="Update sandbox resources">
@@ -138,7 +134,7 @@ Replace the following placeholders with values appropriate for your cluster:
 </Step>
 <Step title="Restart services">
 
-Restart Prophecy services to apply the SQL sandbox configuration.
+Restart Prophecy services to apply the SQL sandbox configuration:
 
 ```bash
 kubectl rollout restart deploy edweb-prophecy -n <namespace>
