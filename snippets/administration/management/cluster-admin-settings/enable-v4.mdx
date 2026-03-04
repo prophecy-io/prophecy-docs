@@ -75,6 +75,17 @@ Configure the Anthropic API key used by Transform Agent in the Prophecy UI.
 The key must be configured in the Admin UI.
 
 </Step>
+<Step title="Update sandbox resources">
+
+The new model requires increased memory resources for the SQL sandbox.
+
+1. Navigate to Settings > Admin > Config.
+1. Scroll to the Sandbox Config section.
+1. Update the SQL Sandbox Memory settings to the following values:
+    - Requests: 3GB
+    - Limit: 4GB
+
+</Step>
 <Step title="Configure SQL sandbox runtime">
 
 Create or update the SQL sandbox configuration ConfigMap.
