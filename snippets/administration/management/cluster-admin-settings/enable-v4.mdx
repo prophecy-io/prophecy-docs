@@ -1,6 +1,6 @@
 ---
-title: Enable Transform Agent (Copilot v4) in self-hosted Prophecy
-description: Configure Transform Agent (Copilot v4) in a self-hosted Prophecy deployment.
+title: Enable Transform Agent in self-hosted Prophecy
+description: Configure Transform Agent in a self-hosted Prophecy deployment.
 ---
 
 The Transform Agent (v4) enables AI-assisted transformation workflows in Prophecy by connecting the SQL sandbox runtime to an external large language model provider. It allows the Agent to generate and reason about transformation logic using models hosted outside the Prophecy cluster.
@@ -124,6 +124,8 @@ Replace the following placeholders with values appropriate for your cluster:
 - `<nodes CIDR>`
 - `<service CIDR>`
 
+</Step>
+<Step title="Configure SQL sandbox runtime">
 ## Restart services
 
 Restart Prophecy services to apply the SQL sandbox configuration.
@@ -133,13 +135,12 @@ kubectl rollout restart deploy edweb-prophecy -n <namespace>
 ```
 
 </Step>
-</Steps>
 
-## Verify the configuration
+<Step title="Verify the configuration">
 
-### Verify SQL sandbox connectivity
+**Verify SQL sandbox connectivity**
 
-Enter a SQL sandbox pod and test external connectivity.
+- Enter a SQL sandbox pod and test external connectivity.
 
 ```bash
 curl https://api.anthropic.com -I
@@ -157,21 +158,23 @@ or
 HTTP 401
 ```
 
-Either response confirms network connectivity to the Anthropic API.
+- Either response confirms network connectivity to the Anthropic API.
 
-### Verify SQL sandbox configuration
+**Verify SQL sandbox configuration**
 
-Confirm the ConfigMap contains the expected variables.
+- Confirm the ConfigMap contains the expected variables.
 
 ```bash
 kubectl get configmap sql-sandbox-config-map -n <namespace> -o yaml
 ```
 
-Verify the following fields appear in the output:
+- Verify the following fields appear in the output:
 
-- `ANTHROPIC_API_KEY`
-- `CLAUDE_MODEL`
-- `KNOWLEDGE_GRAPH_BASE_URL`
+    - `ANTHROPIC_API_KEY`
+    - `CLAUDE_MODEL`
+    - `KNOWLEDGE_GRAPH_BASE_URL`
+</Step>
+</Steps>
 
 ## Troubleshooting
 
