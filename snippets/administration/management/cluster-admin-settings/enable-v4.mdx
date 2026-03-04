@@ -1,19 +1,17 @@
 ---
-title: Enable Transform Agent in self-hosted Prophecy
-description: Configure Transform Agent in a self-hosted Prophecy deployment.
+title: Enable the Transform agent in self-hosted Prophecy
+description: Configure the Transform agent in a self-hosted Prophecy deployment.
 ---
 
 The Transform Agent (v4) enables AI-assisted transformation workflows in Prophecy by connecting the SQL sandbox runtime to an external large language model provider. It allows the Agent to generate and reason about transformation logic using models hosted outside the Prophecy cluster.
 
-In self-hosted environments, enabling Transform Agent requires configuration in both the Prophecy Admin UI and the Kubernetes environment that runs the SQL sandbox. This guide explains the supported versions, prerequisites, configuration steps, and validation checks required to enable the agent.
+In self-hosted environments, enabling the Transform agent requires configuration in both the Prophecy Admin UI and the Kubernetes environment that runs the SQL sandbox. This guide explains the supported versions, prerequisites, configuration steps, and validation checks required to enable the agent.
 
 ## Version requirements
 
 ### Supported versions
 
-Transform Agent (Copilot v4) is supported only in:
-
-- Prophecy 4.2.5.3 and later.
+the Transform agent (v4) is supported only in Prophecy 4.2.5.3 and later.
 
 Earlier versions (4.2.5.2 and below) do not expose the configuration options required to enable the agent.
 
@@ -21,18 +19,18 @@ Verify your version before continuing.
 
 ## Prerequisites
 
-Ensure the following requirements are met before enabling Transform Agent:
+Ensure the following requirements are met before enabling the Transform agent:
 
 - Prophecy 4.2.5.3 or later.
 - Cluster admin access to the Prophecy UI.
 - Kubernetes access using `kubectl`.
 - Copilot already enabled.
-- Access to an Anthropic API key.
+- Access to an Anthropic API key. Supported model: claude-opus-4-5
 - Knowledge Graph services deployed if lineage features are required.
 
 ## Architecture overview
 
-Transform Agent relies on several internal services and an external LLM provider.
+the Transform agent relies on several internal services and an external LLM provider.
 ```
 
 Prophecy UI
@@ -58,7 +56,7 @@ Key dependencies include:
 <Steps>
 <Step title="Configure LLM credentials in the UI">
 
-Configure the Anthropic API key used by Transform Agent in the Prophecy UI.
+Configure the Anthropic API key used by the Transform agent in the Prophecy UI.
 
 1. Navigate to **Settings → Admin → Copilot Settings**.
 2. Open **Available AI Models**.
@@ -72,7 +70,9 @@ Configure the Anthropic API key used by Transform Agent in the Prophecy UI.
 }
 ```
 
-The key must be configured in the Admin UI.
+Configure the Anthropic API key in the Prophecy Admin UI.
+
+Some deployments also provide the key to the SQL sandbox runtime through the sql-sandbox-config-map.
 
 </Step>
 <Step title="Update sandbox resources">
@@ -136,8 +136,7 @@ Replace the following placeholders with values appropriate for your cluster:
 - `<service CIDR>`
 
 </Step>
-<Step title="Configure SQL sandbox runtime">
-## Restart services
+<Step title="Restart services">
 
 Restart Prophecy services to apply the SQL sandbox configuration.
 
@@ -189,7 +188,7 @@ kubectl get configmap sql-sandbox-config-map -n <namespace> -o yaml
 
 ## Troubleshooting
 
-### Transform Agent option not visible
+### Transform agent option not visible
 
 Cause:
 
@@ -221,7 +220,7 @@ Provide these logs when contacting support.
 
 ## Preflight checklist
 
-Before enabling Transform Agent, confirm the following:
+Before enabling the Transform agent, confirm the following:
 
 - Prophecy version is 4.2.5.3 or later.
 - Anthropic API key is configured in the Admin UI.
