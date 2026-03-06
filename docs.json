@@ -1432,10 +1432,6 @@
       "permanent": true
     },
     {
-      "source": "/data-analysis/gems/source-target/table/write/write-options",
-      "destination": "/data-analysis/gems/source-target/table/write/write-options"
-    },
-    {
       "source": "/data-analysis/development/pipeline-params",
       "destination": "/data-analysis/development/parameters/parameters"
     },
@@ -1502,10 +1498,6 @@
 {
   "source": "/data-analysis/development/analyses/analysis-settings",
   "destination": "/data-analysis/analyses/analysis-settings"
-},
-{
-  "source": "/data-analysis/development/analyses/consume-analysis",
-  "destination": "/data-analysis/analyses/consume-analysis"
 },
 {
   "source": "/data-analysis/development/analyses/consume-analysis",
