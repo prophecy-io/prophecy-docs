@@ -1508,7 +1508,7 @@
   "destination": "/import-tool/alteryx/alteryx-to-prophecy-sql/data-type-mapping"
 },
 {
-  "source": "/import-tool/aalteryx/alteryx-to-databricks-sql/databricks-functions-mappings",
+  "source": "/import-tool/alteryx/alteryx-to-databricks-sql/databricks-functions-mappings",
   "destination": "/import-tool/alteryx/alteryx-to-prophecy-sql/function-mapping"
 }
   ]
