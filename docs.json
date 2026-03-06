@@ -1207,10 +1207,11 @@
                 "group": "Alteryx to SQL",
                 "pages": [
                   "import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-to-prophecy-sql",
+                  "import-tool/alteryx/alteryx-to-prophecy-sql/sql-dialect-differences",
                   "import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-to-databricks-sql",
-                  "import-tool/alteryx/alteryx-to-prophecy-sql/databricks-data-types",
+                  "import-tool/alteryx/alteryx-to-prophecy-sql/data-type-mapping",
                   "import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-connections",
-                  "import-tool/alteryx/alteryx-to-prophecy-sql/databricks-functions-mappings",
+                  "import-tool/alteryx/alteryx-to-prophecy-sql/function-mapping",
                   {
                     "group": "Tool mapping",
                     "pages": [
@@ -1505,6 +1506,18 @@
 {
   "source": "/data-analysis/development/analyses/consume-analysis",
   "destination": "/data-analysis/analyses/consume-analysis"
+},
+{
+  "source": "/data-analysis/development/analyses/consume-analysis",
+  "destination": "/data-analysis/analyses/consume-analysis"
+},
+{
+  "source": "/import-tool/alteryx/alteryx-to-databricks-sql/databricks-data-types",
+  "destination": "/import-tool/alteryx/alteryx-to-prophecy-sql/data-type-mapping"
+},
+{
+  "source": "/import-tool/aalteryx/alteryx-to-databricks-sql/databricks-functions-mappings",
+  "destination": "/import-tool/alteryx/alteryx-to-prophecy-sql/function-mapping"
 }
   ]
 }
