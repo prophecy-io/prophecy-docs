@@ -1191,7 +1191,7 @@
         ]
       },
       {
-        "product": "Import Tool Documentation",
+        "product": "Import Workflows",
         "icon": "/images/download-d.svg",
         "description": "Import workflows from external tools into Prophecy",
         "dropdowns": [
@@ -1206,80 +1206,80 @@
               {
                 "group": "Alteryx to SQL",
                 "pages": [
-                  "import-tool/alteryx/alteryx-to-databricks-sql/alteryx-to-prophecy-sql",
-                  "import-tool/alteryx/alteryx-to-databricks-sql/alteryx-to-databricks-sql",
-                  "import-tool/alteryx/alteryx-to-databricks-sql/databricks-data-types",
-                  "import-tool/alteryx/alteryx-to-databricks-sql/alteryx-connections",
-                  "import-tool/alteryx/alteryx-to-databricks-sql/databricks-functions-mappings",
+                  "import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-to-prophecy-sql",
+                  "import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-to-databricks-sql",
+                  "import-tool/alteryx/alteryx-to-prophecy-sql/databricks-data-types",
+                  "import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-connections",
+                  "import-tool/alteryx/alteryx-to-prophecy-sql/databricks-functions-mappings",
                   {
                     "group": "Tool mapping",
                     "pages": [
-                      "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-tool-mapping",
+                      "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-tool-mapping",
                       {
                         "group": "Alteryx In/Out tools",
                         "pages": [
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-in-out-tools/alteryx-browse-tool",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-in-out-tools/alteryx-datetime-now",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-in-out-tools/alteryx-directory-tool",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-in-out-tools/alteryx-input-data-tool",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-in-out-tools/alteryx-output-data-tool",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-in-out-tools/alteryx-text-input-tool"
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-browse-tool",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-datetime-now",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-directory-tool",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-input-data-tool",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-output-data-tool",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-text-input-tool"
                         ]
                       },
                       {
                         "group": "Alteryx Prep tools",
                         "pages": [
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-data-cleansing-tool",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-filter-tool",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-formula-tool",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-imputation-tool",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-field-binning-tool",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-field-formula-tool",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-row-formula-tool",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-oversample-field-tool"
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-data-cleansing-tool",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-filter-tool",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-formula-tool",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-imputation-tool",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-field-binning-tool",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-field-formula-tool",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-row-formula-tool",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-oversample-field-tool"
                         ]
                       },
                       {
                         "group": "Alteryx Join tools",
                         "pages": [
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-append-fields",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-find-replace",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-join",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-join-multiple",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-union"
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-join-tools/alteryx-append-fields",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-join-tools/alteryx-find-replace",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-join-tools/alteryx-join",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-join-tools/alteryx-join-multiple",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-join-tools/alteryx-union"
                         ]
                       },
                                              {
                         "group": "Alteryx Parse tools",
                         "pages": [
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-parse-tools/alteryx-datetime",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-parse-tools/alteryx-regex",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-parse-tools/alteryx-xml-parse"
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-parse-tools/alteryx-datetime",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-parse-tools/alteryx-regex",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-parse-tools/alteryx-xml-parse"
                         ]
                       },
                       {
                         "group": "Alteryx Transform tools",
                         "pages": [
-                         "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-transform-tools/alteryx-arrange",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-transform-tools/alteryx-count-records",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-transform-tools/alteryx-cross-tab",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-transform-tools/alteryx-make-columns",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-transform-tools/alteryx-running-total",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-transform-tools/alteryx-summarize",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-transform-tools/alteryx-transpose",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-transform-tools/alteryx-weighted-average"
+                         "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-arrange",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-count-records",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-cross-tab",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-make-columns",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-running-total",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-summarize",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-transpose",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-weighted-average"
                         ]
                       },
-                      "import-tool/alteryx/alteryx-to-databricks-sql/databricks-performance-tuning"
+                      "import-tool/alteryx/alteryx-to-prophecy-sql/databricks-performance-tuning"
                     ]
                   },
                   {
                     "group": "Troubleshooting",
                     "pages": [
-                      "import-tool/alteryx/alteryx-to-databricks-sql/troubleshooting/troubleshooting",
-                      "import-tool/alteryx/alteryx-to-databricks-sql/troubleshooting/malformed-file",
-                      "import-tool/alteryx/alteryx-to-databricks-sql/troubleshooting/unsupported-function",
-                      "import-tool/alteryx/alteryx-to-databricks-sql/troubleshooting/unsupported-tool"
+                      "import-tool/alteryx/alteryx-to-prophecy-sql/troubleshooting/troubleshooting",
+                      "import-tool/alteryx/alteryx-to-prophecy-sql/troubleshooting/malformed-file",
+                      "import-tool/alteryx/alteryx-to-prophecy-sql/troubleshooting/unsupported-function",
+                      "import-tool/alteryx/alteryx-to-prophecy-sql/troubleshooting/unsupported-tool"
                     ]
                   }
                 ]
@@ -1425,6 +1425,11 @@
     }
   },
   "redirects": [
+     {
+      "source": "/import-tool/alteryx/alteryx-to-databricks-sql/:path*",
+      "destination": "/import-tool/alteryx/alteryx-to-prophecy-sql/:path*",
+      "permanent": true
+    },
     {
       "source": "/data-analysis/gems/source-target/table/write/write-options",
       "destination": "/data-analysis/gems/source-target/table/write/write-options"
