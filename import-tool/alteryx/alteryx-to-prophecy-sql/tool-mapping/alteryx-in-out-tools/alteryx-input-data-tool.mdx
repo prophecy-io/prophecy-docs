@@ -7,17 +7,17 @@ The [Alteryx Input Data tool](https://help.alteryx.com/current/en/designer/tools
 
 In Prophecy, this functionality is handled by two gems, depending on where the data is stored:
 
-- **Table gem** – for data stored in the [Databricks SQL Warehouse](/data-analysis/environment/fabrics/create-fabrics/databricks) defined in your fabric.
+- **Table gem** – for data stored in your [SQL Warehouse](data-analysis/environment/fabrics/create-fabrics) defined in your fabric.
 - **Source gem** – for tables in external systems or data stored in locations that Prophecy Automate can read as files (CSV, Parquet, JSON, XML, Excel, and so on).
 
-See [Alteryx Connection mapping to Databricks SQL](/import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-connections) for an overview of how Prophecy connections relate to Alteryx's Input and Output tools.
+See [Alteryx Connection mapping](/import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-connections) for an overview of how Prophecy connections relate to Alteryx's Input and Output tools.
 
 ## Automated migration results
 
 The importer preserves basic configuration when determinable, using the following logic:
 
 - If the Alteryx pipeline reads from a local file path, Prophecy creates an SFTP source with the same file path.
-- If the Alteryx pipeline uses query based source, Prophecy creates a Databricks catalog table source.
+- If the Alteryx pipeline uses query based source, Prophecy creates a catalog table source.
 
 Migration cannot fully preserve:
 
@@ -61,7 +61,7 @@ Alteryx loads data locally and often displays full datasets during preview. The 
 
 Prophecy outputs a logical reference that turns into a SQL query during preview or execution. Important differences:
 
-- **Data is never loaded locally** — all reads occur through the Databricks SQL Warehouse.
+- **Data is never loaded locally** — all reads occur through the SQL Warehouse.
 - **Preview results** may be truncated due to warehouse row limits or permissions.
 - **Schema is warehouse-defined** — type inference may differ from Alteryx’s local behavior.
 
@@ -93,7 +93,7 @@ Workflow:
 
 ### Prophecy Table / Source gem example
 
-Goal: Load the same dataset using Databricks SQL.
+Goal: Load the same dataset using SQL.
 
 **Configuration (Source gem):**
 

@@ -3,9 +3,9 @@ title: Working in Prophecy SQL as an Alteryx User
 description: Move from Alteryx to Prophecy
 ---
 
-This page serves as the starting point for the Migrate to Databricks SQL section. It introduces how Alteryx workflows translate into Prophecy on Databricks.
+This page serves as the starting point for the Migrate to SQL section. It introduces how Alteryx workflows translate into Prophecy.
 
-Alteryx and Prophecy both use a visual, low-code approach to transformations. The key difference is the engine beneath your work. In Alteryx, workflows run inside the Designer engine. In Prophecy, the same visual pipelines run on Databricks SQL, which offers distributed execution and efficient performance on larger datasets.
+Alteryx and Prophecy both use a visual, low-code approach to transformations. The key difference is the engine beneath your work. In Alteryx, workflows run inside the Designer engine. In Prophecy, the same visual pipelines run in Databricks or BigQuery, which offers distributed execution and efficient performance on larger datasets.
 
 This documentation section provides reference material for users moving from Alteryx to Prophecy: [a step-by-step migration tutorial](/import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-to-prophecy-sql), [tool mappings](/import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-tool-mapping/), [function mappings](/import-tool/alteryx/alteryx-to-prophecy-sql/function-mapping), [connection mappings](/import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-connections), [data type mappings](/import-tool/alteryx/alteryx-to-prophecy-sql/data-type-mapping), [information on performance tuning](/import-tool/alteryx/alteryx-to-prophecy-sql/databricks-performance-tuning), and [troubleshooting](/import-tool/alteryx/alteryx-to-prophecy-sql/troubleshooting/troubleshooting).
 
@@ -25,7 +25,7 @@ You log into your Prophecy workspace in the browser. Pipelines, datasets, and co
 
 In Alteryx, you often read directly from local files or shared folders. In Prophecy, you can still work with files (such as CSV, Excel, JSON, and XML) the same way but the files are stored in Databricks Volumes or cloud storage rather than on your personal machine.
 
-The experience is similar (upload a file, configure the Source gem, preview the data), but the storage lives inside the workspace (the Databricks environment where your pipelines run) so that pipelines run consistently in testing and production.
+The experience is similar (upload a file, configure the Source gem, preview the data), but the storage lives inside the workspace so that pipelines run consistently in testing and production.
 
 **In Alteryx:**
 You drag an Input Data tool onto the canvas and either select a data file (such as CSV or Excel), or configure a database connection.
@@ -49,7 +49,7 @@ You build similar logical sequences using [Filter](/data-analysis/gems/prepare/f
 You click “Run,” inspect intermediate results, adjust formulas, and rerun until satisfied.
 
 **In Prophecy:**
-You run the pipeline in a SQL warehouse for on-demand testing. In production, you monitor logs and execution plans through the Prophecy interface or Databricks UI. Iteration cycles may sometimes be a bit slower, but far more reliable for large data. You’ll rely more on sampling and smaller test runs for quick checks.
+You run the pipeline in a SQL warehouse for on-demand testing. In production, you monitor logs and execution plans through the Prophecy interface. Iteration cycles may sometimes be a bit slower, but far more reliable for large data. You’ll rely more on sampling and smaller test runs for quick checks.
 
 ## Documenting or sharing your work
 
@@ -73,7 +73,7 @@ All collaboration happens through Git, although Prophecy requires no knowledge o
 If a job fails on Alteryx Server, you check logs in the Gallery or local output files.
 
 **In Prophecy:**
-You view run histories and logs in the Prophecy or Databricks job interface, with full access to Spark logs, cluster metrics, and lineage tracking.
+You view run histories and logs in Prophecy, with full access to Spark logs, cluster metrics, and lineage tracking.
 
 ## Iterate and reuse work
 
@@ -97,10 +97,10 @@ You commit and push your branch. Your work is stored safely in Git and ready for
 You publish completed workflows to **Alteryx Server** or the **Gallery** to automate runs. Scheduling, credentials, and runtime settings are configured through the Server interface. Each workflow is stored as a versioned file, and promotion between environments (dev, test, prod) often involves exporting and re-importing `.yxzp` packages manually.
 
 **In Prophecy:**
-You deploy pipelines directly to **Databricks jobs** from within Prophecy. Scheduling and runtime configurations are stored alongside the pipeline in Git, ensuring that deployments are repeatable and version-controlled. Promotion between environments is managed through Git branches or pull requests rather than manual package transfers, resulting in consistent, auditable releases.
+You deploy pipelines from within Prophecy. Scheduling and runtime configurations are stored alongside the pipeline in Git, ensuring that deployments are repeatable and version-controlled. Promotion between environments is managed through Git branches or pull requests rather than manual package transfers, resulting in consistent, auditable releases.
 
 ## Conclusion
 
-Overall, your development process remains visual and tool-driven. Behind the scenes, Databricks SQL acts as a stable, scalable execution layer for the same kinds of transformations you already build in Alteryx.
+Overall, your development process remains visual and tool-driven. Behind the scenes, SQL acts as a stable, scalable execution layer for the same kinds of transformations you already build in Alteryx.
 
 For support, please see [Getting help with Prophecy](/data-analysis/administration/getting-help/get-in-touch).
