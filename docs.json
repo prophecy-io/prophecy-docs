@@ -182,11 +182,11 @@
                   {
                         "group": "Explore and visualize",
                         "pages": [
-                          "data-analysis/production/analysis/overview",
-                          "data-analysis/production/analysis/create-analysis",
-                          "data-analysis/production/analysis/analysis-components",
-                          "data-analysis/production/analysis/analysis-settings",
-                          "data-analysis/production/analysis/consume-analysis"
+                          "data-analysis/analysis/overview",
+                          "data-analysis/analysis/create-analysis",
+                          "data-analysis/analysis/analysis-components",
+                          "data-analysis/analysis/analysis-settings",
+                          "data-analysis/analysis/consume-analysis"
                         ]
                       },
                   {
