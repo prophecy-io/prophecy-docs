@@ -1,8 +1,8 @@
 ---
 title: Snowflake
-description: Connect Prophecy to your Snowflake warehouse
+description: Learn how to connect to Snowflake
 ---
-A Snowflake fabric connects Prophecy to your Snowflake warehouse so pipelines can execute SQL transformations and read or write data.
+A Snowflake connection allows Prophecy to access tables in your Snowflake account and execute queries using a Snowflake virtual warehouse. This page explains how to use and configure a Snowflake connection in Prophecy.
 
 <Callout icon="/images/icon.png" color="#FFC107">
 
@@ -14,10 +14,10 @@ Available for [Express and Enterprise Editions](/data-engineering/administration
 
 Before creating the Snowflake fabric, ensure you have:
 
-- A Snowflake account URL
-- A Snowflake warehouse to execute queries
-- A role with permissions to use the warehouse and access the database, schema, and stage
-- A stage with read and write permissions
+- A Snowflake account URL.
+- A Snowflake warehouse to execute queries.
+- A role with permissions to use the warehouse and access the database, schema, and stage.
+- A stage with read and write permissions.
 
 ## Creating a Snowflake fabric
 
@@ -101,8 +101,7 @@ Click **Complete** to save the fabric.
 </Steps>
 
 <Note>
-To add [secrets](/data-analysis/environment/secrets/secrets) and
-[connections](/data-analysis/environment/connections/connections) to your fabric, you need to save
+To add [secrets](/data-analysis/environment/secrets/secrets) and [connections](/data-analysis/environment/connections/connections) to your fabric, you need to save
 the fabric first.
 </Note>
 

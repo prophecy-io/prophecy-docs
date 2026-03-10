@@ -3,7 +3,9 @@ title: Snowflake
 description: Learn how to connect with Snowflake
 ---
 
-Learn how to set up and use a Snowflake connection in Prophecy. With a Snowflake connection, you can read from and write to your Snowflake data warehouse using Source and Target gems, browse data in the Environment browser, and run pipelines that process Snowflake data.
+Learn how to set up and use a Snowflake connection in Prophecy. With a Snowflake connection, you can read from and write to tables in your Snowflake account using Source and Target gems, browse data in the Environment browser, and process Snowflake data within Prophecy pipelines.
+
+Snowflake can also be configured as a fabric SQL warehouse, where it executes pipeline transformations. This page describes how to configure a Snowflake connection for accessing data. To learn about using Snowflake as a compute engine, see [Create a Snowflake fabric](/data-analysis/environment/fabrics/create-fabrics/snowflake).
 
 ## Prerequisites
 
@@ -12,22 +14,34 @@ When you create a Snowflake connection in Prophecy, all data operations—such a
 - `SELECT`, `INSERT`, `UPDATE`, and `DELETE` on the tables used in your Prophecy pipelines.
 - `OWNERSHIP` on the table, if Prophecy needs to alter or replace it.
 
-Additionally, Prophecy writes data to Snowflake by uploading Parquet files to a stage. This requires:
+When writing data through a Snowflake connection, Prophecy uploads Parquet files to a stage before loading them into Snowflake tables. This requires:
 
 - `CREATE FILE FORMAT` in the target schema.
 - `USAGE` on any file formats used for reading/writing Parquet files.
 - Write access to your user stage
 
+## Connection type
+
+### Connection type
+
+Snowflake can be used in two ways within Prophecy.
+
+| Connection type               | Description                                                  |
+| ----------------------------- | ------------------------------------------------------------ |
+| **SQL Warehouse connection**  | Snowflake acts as the compute engine for a fabric and executes pipeline SQL transformations. To learn more about SQL Warehouse connections, visit [Prophecy fabrics](/data-analysis/environment/fabrics/prophecy-fabrics). |
+| **Ingress/Egress connection** | Snowflake is used only as a data source or target. Pipelines read from or write to Snowflake tables while transformations run in another warehouse. |
+
 ## Feature support
 
 The table below outlines whether the connection supports certain Prophecy features.
 
-| Feature                                                                                    | Supported |
-| ------------------------------------------------------------------------------------------ | --------- |
-| Read data with a [Source gem](/data-analysis/gems/source-target/external-table/snowflake)  | Yes       |
-| Write data with a [Target gem](/data-analysis/gems/source-target/external-table/snowflake) | Yes       |
-| Browse data in the [Environment browser](/data-analysis/development/studio/studio#sidebar) | Yes       |
-| Index tables in the [Knowledge Graph](/data-analysis/ai/knowledge-graph/knowledge-graph)   | No        |
+| Feature                            | SQL Warehouse | Ingress/Egress |
+| ---------------------------------- | ------------- | -------------- |
+| Run SQL queries                    | Yes           | No             |
+| Read data with Source gem          | Yes           | Yes            |
+| Write data with Target gem         | Yes           | Yes            |
+| Browse data in Environment browser | Yes           | Yes            |
+| Index tables in Knowledge Graph    | No            | No             |
 
 ## Connection parameters
 
@@ -39,13 +53,13 @@ To create a connection with Snowflake, enter the following parameters:
 | Account               | URL of your Snowflake account<br />Example: `https://<orgname>-<account_name>.snowflakecomputing.com`                                           |
 | Database              | Default database for reading and writing data                                                                                                   |
 | Schema                | Default schema for reading and writing data                                                                                                     |
-| Warehouse             | Name of the SQL warehouse to use for the connection                                                                                             |
+| Warehouse             | Name of the Snowflake virtual warehouse used to execute queries for this connection.                                                                                             |
 | Role                  | Snowflake [role](https://docs.snowflake.com/en/user-guide/security-access-control-overview) of the user to connect<br />Example: `ACCOUNTADMIN` |
 | Authentication method | Enter your Snowflake username and use a [secret](/data-analysis/environment/secrets/secrets) to enter your password.                            |
 
 ## Data type mapping
 
-When Prophecy processes data from Snowflake using SQL warehouses, it converts Snowflake-specific data types to formats compatible with your target warehouse. This table shows how [Snowflake data types](https://docs.snowflake.com/en/sql-reference/intro-summary-data-types) are transformed for Databricks and BigQuery.
+When Snowflake data is processed in pipelines running on other SQL warehouses (such as Databricks or BigQuery), Prophecy converts Snowflake-specific data types to compatible types. This table shows how [Snowflake data types](https://docs.snowflake.com/en/sql-reference/intro-summary-data-types) are transformed for Databricks and BigQuery.
 
 | Snowflake     | Databricks                      | BigQuery                        |
 | ------------- | ------------------------------- | ------------------------------- |
