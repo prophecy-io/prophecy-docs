@@ -1,0 +1,154 @@
+<Callout icon="/images/icon.png" color="#FFC107">
+
+Available for the [Express and Enterprise Editions](/data-engineering/administration/platform/editions) only.
+
+</Callout>
+
+Spark Connection Management is an administrative dashboard that gives you visibility into Spark sessions and clusters initiated by Prophecy. You use it to find active compute resources, understand where they originate, and investigate resources that may be running longer than expected.
+
+## Prerequisites
+
+To access feature management, you must be logged in as a Prophecy cluster admin.
+
+## View Spark connections
+
+1. Sign in to Prophecy as a cluster admin.
+
+2. In the navigation menu, go to **Settings** > **Admin**.
+
+3. Select the **Spark Connection Management** tab.
+
+## What you can use it for
+
+You can use the dashboard to do the following:
+
+- View all Spark sessions and clusters initiated by Prophecy.
+- Identify clusters that are idle, ramping up, or actively used.
+- Troubleshoot long-running compute resources.
+- Determine which fabric, team, or user spawned a session.
+- Locate clusters or sessions so you can terminate them in Databricks or Livy.
+
+## Workspace summary
+
+The top section of the dashboard shows a summary of explored workspaces.
+
+The summary includes the following fields:
+
+| Column        | Description                       |
+|---------------|-----------------------------------|
+| Total Workspaces** | Total number of workspaces configured in the environment. |
+- **Successful Workspaces** | Workspaces that were successfully explored. |
+- **Failed Workspaces** | Workspaces where cluster or session discovery failed. |
+
+For example, the summary may show `Total Workspaces: 43`, `Successful Workspaces: 14`, and `Failed Workspaces: 29`.
+
+Workspaces may represent onboarding, internal development, staging, or production environments.
+
+## Workspace summary sections
+
+### Databricks Clusters
+
+This section shows Databricks clusters discovered across workspaces.
+
+It includes the following columns:
+
+| Column        | Description                       |
+|---------------|-----------------------------------|
+| **URL** | Workspace URL. |
+| **Active Count** | Number of active sessions. |
+| **Total Count** | Total sessions discovered. |
+
+### Livy Clusters
+
+This section shows Livy endpoints and session activity.
+
+It includes the following columns:
+
+| Column        | Description                       |
+|---------------|-----------------------------------|
+| **URL** | Workspace URL. |
+| **Active Count** | Number of active sessions. |
+| **Total Count** | Total sessions discovered. |
+
+### Failed Clusters
+
+This section lists workspaces where Prophecy failed to retrieve cluster or session information.
+
+It includes the following columns:
+
+| Column        | Description                       |
+|---------------|-----------------------------------|
+| **Workspace URL** | Workspace that could not be explored. |
+| **Fabric Name** | Associated fabric. |
+| **Provider Type** | Compute provider. |
+
+Provider types shown in this section can include Databricks, Livy, Dataproc, EMR, and Synapse.
+
+### Fabric Provider Summary
+
+This section shows which compute providers are associated with each fabric.
+
+It includes the following columns:
+
+| Column        | Description                       |
+|---------------|-----------------------------------|
+| **Fabric Name**  | Fabric identifier. |
+| **User Name**    | Compute provider used by the fabric.    |
+
+Supported provider types include Databricks, Livy, Dataproc, EMR, and Synapse.
+
+## Active compute resources
+
+The dashboard provides detailed information about clusters and sessions that are currently running.
+
+### Databricks Clusters
+
+This section displays Spark clusters running in Databricks.
+
+It includes the following columns:
+
+| Column        | Description                       |
+|---------------|-----------------------------------|
+| **Fabric Name**  | Fabric that initiated the session. |
+| **User Name**    | User who triggered the session.    |
+| **Team**         | Team associated with the session.  |
+| **Session Name** | Name of the Databricks cluster.               |
+| **State**        | Current cluster state.             |
+
+
+### Livy Sessions
+
+This section displays active Livy Spark sessions.
+
+It includes the following columns:
+
+| Column        | Description                       |
+|---------------|-----------------------------------|
+| **Fabric Name**  | Fabric that initiated the session. |
+| **User Name**    | User who triggered the session.    |
+| **Team**         | Team associated with the session.  |
+| **Session Name** | Name of the session.               |
+| **State**        | Current session state.             |
+
+## Refresh the dashboard
+
+You can manually refresh the dashboard by selecting the refresh icon at the top of the page.
+
+Refreshing re-scans connected workspaces for active clusters and sessions.
+
+## Troubleshooting
+
+Spark Connection Management is designed primarily for troubleshooting situations where Spark clusters or sessions remain active longer than expected.
+
+After you identify a resource, you can navigate to the relevant external platform to terminate it. In Databricks, you can terminate or restart clusters. In Livy, you can terminate sessions.
+
+## Example scenario
+
+A Spark pipeline run fails, but the cluster remains active.
+
+To investigate and resolve the issue:
+
+1. Open **Spark Connection Management**.
+2. Identify the cluster associated with the fabric and team.
+3. Locate the cluster in the Databricks workspace.
+4. Manually terminate the cluster.

@@ -635,7 +635,8 @@
                           "data-analysis/administration/management/cluster-admin-settings/cluster-admin-settings",
                           "data-analysis/administration/management/cluster-admin-settings/oauth-setup",
                           "data-analysis/administration/management/cluster-admin-settings/copilot-settings",
-                          "data-analysis/administration/management/cluster-admin-settings/feature-management"
+                          "data-analysis/administration/management/cluster-admin-settings/feature-management",
+                          "data-analysis/administration/management/cluster-admin-settings/cluster-admin-settings"
                         ]
                       },
 
