@@ -29,9 +29,9 @@ Pipelines appear in the project browser alongside other project artifacts.
 
 ![Pipeline example](/data-analysis/development/pipelines/img/pipeline.png)
 
-## Building a pipeline
+## Build a pipeline
 
-### Using the Transform Agent
+### Build a pipeline with the Transform Agent
 
 The [Transform Agent](/data-analysis/ai/agent/transform) can generate or modify pipelines using natural language. The Agent accelerates development, but all transformations remain visible and editable.
 
@@ -42,7 +42,7 @@ When using the Agent, you:
 - Inspect compiled SQL.
 - Validate results before finalizing changes.
 
-### Building visually on the canvas
+### Build a visually in the pipeline canvas
 
 You can also create a pipeline from the project browser by clicking **+** to the right of **Pipelines**.
 
@@ -51,7 +51,7 @@ When creating a pipeline, you provide:
 - **Pipeline name** — A unique name within the project.
 - **Directory path** — The location where the pipeline is stored in the project.
 
-## Modifying pipelines
+## Modify pipelines
 
 Once you have created a pipeline, you can:
 
@@ -60,6 +60,30 @@ Once you have created a pipeline, you can:
 - Preview results using the [Data Explorer](/data-analysis/development/runs/data-explorer/data-explorer).
 - Inspect SQL in code view.
 - Run the pipeline.
+
+## Rename pipeline
+
+To rename a pipeline:
+
+1. Hover over the pipeline in the Project Explorer.
+2. Click the **Rename** icon.
+3. Enter a new pipeline name and click **Rename**.
+
+![Rename pipeline](/data-analysis/development/pipelines/img/rename-pipeline.png)
+
+## Duplicate pipeline
+
+You can duplicate entire pipelines.
+
+To duplicate a pipeline:
+
+1. Open the Pipeline in Studio.
+2. Click **...** menu in the upper-right corner of the [pipeline canvas](/data-analysis/development/studio/studio#pipeline-canvas).
+3. Click **Duplicate** in the dialog box.
+
+The duplicated pipeline opens in the pipeline canvas. By default, the pipeline is named `<pipeline-name>_copy`.
+
+![Duplicate pipeline menu](/data-analysis/development/pipelines/img/duplicate-pipeline.png)
 
 ## Execution and validation
 
