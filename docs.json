@@ -95,7 +95,8 @@
                         "group": "Projects",
                         "pages": [
                           "data-analysis/development/projects/create-project",
-                          "data-analysis/development/projects/project-languages"
+                          "data-analysis/development/projects/project-languages",
+                          "data-analysis/development/projects/export-code"
                         ]
                       },
                       "data-analysis/development/pipelines/data-analysis-pipelines",
