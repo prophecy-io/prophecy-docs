@@ -861,7 +861,7 @@
                                 "group": "Databricks",
                                 "pages": [
                                   "data-engineering/fabrics/spark-provider/databricks/databricks",
-                                  "data-engineering/fabrics/spark-provider/databricks/job-size-unified-fabric",
+                                  "data-engineering/fabrics/spark-provider/databricks/job-size-fabric",
                                   "data-engineering/fabrics/spark-provider/databricks/databricks-serverless",
                                   "data-engineering/fabrics/spark-provider/databricks/databricks-policies",
                                   "data-engineering/fabrics/spark-provider/databricks/UCShared",

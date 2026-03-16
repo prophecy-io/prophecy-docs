@@ -1,9 +1,9 @@
 ---
-title: Configuring job sizes in unified fabrics
-description: Define reusable Databricks job cluster configurations at the unified fabric level for projects that create Databricks jobs from the Prophecy UI.
+title: Configuring job sizes in fabrics
+description: Define reusable Databricks job cluster configurations at the fabric level for projects that create Databricks jobs from the Prophecy UI.
 ---
 
-Databricks job cluster sizes are configured at the unified fabric level and reused by projects that run Databricks jobs through the Prophecy UI. This approach centralizes compute configuration so projects can use consistent cluster settings when creating jobs.
+Databricks job cluster sizes can be configured at the fabric level and reused by projects that run Databricks jobs through the Prophecy UI. This approach centralizes compute configuration so projects can use consistent cluster settings when creating jobs.
 
 Instead of defining cluster details separately for each project, you define job sizes once in the fabric configuration. Projects connected to that fabric then select from the available job sizes when creating Databricks jobs.
 
@@ -11,17 +11,15 @@ Instead of defining cluster details separately for each project, you define job 
 
 You must define job sizes when creating Databricks jobs from the Prophecy UI.
 
-This requirement applies particularly to PySpark (P4B) projects and projects that use a unified fabric connected to Databricks.
+This requirement applies particularly to PySpark (P4B) projects and projects that use a Databricks fabric.
 
-## Configure job sizes in a unified fabric
+## Configure job sizes in a fabric
 
-To configure job sizes from the unified fabric settings:
+To configure job sizes in a fabric:
 
-1. Create or open a unified fabric.
-2. Complete the required fabric setup.
-3. Open **Fabric Settings**.
-4. Navigate to the **Jobs** tab.
-5. Define one or more Job Sizes.
+1. Open **Fabric Settings**.
+1. Navigate to the **Jobs** tab.
+1. Define one or more Job Sizes.
 
 After configuration, these job sizes become available to projects that use the fabric.
 
@@ -55,7 +53,7 @@ Projects created before this configuration change may not support Databricks job
 
 These projects must meet the following conditions:
 
-- The project uses a unified fabric.
+- The project uses a unified fabric (a fabric created after Prophecy 4.2.4).
 - The fabric contains at least one configured job size.
 
 If these conditions are not met, you may need to update the fabric configuration before creating Databricks jobs.
@@ -67,7 +65,7 @@ Job sizes are defined once at the fabric level and reused by all projects connec
 Example configuration hierarchy:
 
 ```
-Unified Fabric
+Fabric
 └ Job Sizes
 ↓
 Projects
