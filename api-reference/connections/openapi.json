@@ -191,7 +191,7 @@
                   },
                   "isDefaultWarehouseConnection": {
                     "type": "boolean",
-                    "description": "Whether this connection is the default SQL warehouse connection in the fabric.\n\nThis field can only be set to `true` for Databricks and BigQuery connections."
+                    "description": "Whether this connection is the default SQL warehouse connection in the fabric.\n\nThis field can only be set to `true` for Databricks, BigQuery, and Snowflake connections."
                   },
                   "properties": {
                     "type": "object",
