@@ -16,7 +16,7 @@ A fabric is a Prophecy entity that contains all of the connection information yo
 
 A fabric connects to a SQL engine that runs your pipeline transformations. This compute engine executes the SQL queries and performs the data transformations that your pipelines generate.
 
-You access compute through your primary SQL warehouse connection, such as Databricks SQL, BigQuery, or Prophecy In Memory.
+You access compute through your primary SQL warehouse connection, such as Databricks SQL, BigQuery, Snowflake, or Prophecy In Memory.
 
 ### Data storage
 
@@ -53,7 +53,7 @@ Prophecy fabrics are provisioned differently depending on your [Prophecy edition
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Free & Professional Editions | Each user automatically receives a personal fabric that is linked to their team. These fabrics run on **Prophecy In Memory**, and all execution is fully managed by Prophecy. Usage is billed in credits.                               |
 | Express Edition              | Users create fabrics manually and connect them to their own Databricks SQL warehouse. Prophecy Automate is included, while Databricks costs are managed separately by the user.                                                         |
-| Enterprise Edition           | Users create fabrics manually and can connect to any external SQL engine supported by Prophecy, including Databricks SQL warehouse and BigQuery. Prophecy Automate is included, and warehouse costs are managed separately by the user. |
+| Enterprise Edition           | Users create fabrics manually and can connect to any external SQL engine supported by Prophecy, including Databricks SQL warehouse, BigQuery, and Snowflake. Prophecy Automate is included, and warehouse costs are managed separately by the user. |
 
 <Note>Free and Professional Editions do not support creating new fabrics.</Note>
 
@@ -72,6 +72,7 @@ For **data analysis** in SQL, we support the following SQL warehouse providers:
 | Prophecy In Memory                                                             | Exclusive to Free and Professional Editions. This warehouse is fully managed by Prophecy and powered by DuckDB. All pipeline transformations execute using the DuckDB SQL dialect. |
 | [Databricks SQL](/data-analysis/environment/fabrics/create-fabrics/databricks) | Supported in Express and Enterprise Editions. Connect your own Databricks SQL warehouse to run pipeline transformations.                                                           |
 | [Google BigQuery](/data-analysis/environment/fabrics/create-fabrics/bigquery)  | Supported in Enterprise Edition. Connect to your BigQuery environment to run pipeline transformations.                                                                             |
+| [Snowflake](/data-analysis/environment/fabrics/create-fabrics/snowflake)       | Supported in Enterprise Edition. Connect to your Snowflake environment to run pipeline transformations.                                                            |
 
 <Note>
   The warehouse you choose provides the compute and determines the SQL dialect for all pipelines in
