@@ -1,0 +1,51 @@
+---
+title: Export compiled code
+description: Export compiled SQL for an entire project or a single pipeline as a ZIP file.
+---
+
+Export compiled code lets you download the SQL generated from your pipelines. This is useful when you want to review the SQL produced by Prophecy, run it outside Prophecy, or share it with other teams working directly in the warehouse.
+
+You start the export from the project menu in the Studio header. During export, you choose whether to download code for the entire project or for a single pipeline, and Prophecy packages the compiled SQL into a ZIP file.
+
+## Export compiled code
+
+1. Click the arrow to the right of your project’s name in the Studio header.
+2. Select **Export Compiled Code** from the menu.
+3. In the dialog box, choose whether to download code for the entire project or for a single pipeline.
+4. Click **Download Zip File**.
+
+The ZIP file contains compiled SQL for the selected project or pipeline.
+
+## Exported file structure
+
+The downloaded ZIP file contains a folder for the project. Inside the project folder, each pipeline appears in its own subfolder.
+
+Each pipeline folder contains one or more SQL files generated from the pipeline.
+
+Example structure:
+
+```
+
+my_project/
+test_pipeline/
+test_pipeline__customer_culture_join.sql
+test_pipeline__demographics_culture.sql
+test_pipeline__popular_song_by_country.sql
+
+```
+
+SQL files use the naming pattern:
+
+```
+<pipeline_name>__<gem_name>.sql
+
+```
+The first part of the file name is the pipeline name. The second part corresponds to the gem used to generate the compiled SQL.
+
+When a pipeline branches, multiple SQL files can be generated. Each file represents compiled SQL for a specific path in the pipeline graph.
+
+For example:
+
+- `test_pipeline__demographics_culture.sql` corresponds to the `demographics_culture` aggregation gem.
+- `test_pipeline__popular_song_by_country.sql` corresponds to the `popular_song_by_country` gem.
+- `test_pipeline__customer_culture_join.sql` corresponds to the `customer_culture_join` join gem that feeds downstream branches.
