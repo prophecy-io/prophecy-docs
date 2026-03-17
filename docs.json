@@ -95,7 +95,8 @@
                         "group": "Projects",
                         "pages": [
                           "data-analysis/development/projects/create-project",
-                          "data-analysis/development/projects/project-languages"
+                          "data-analysis/development/projects/project-languages",
+                          "data-analysis/development/projects/export-code"
                         ]
                       },
                       "data-analysis/development/pipelines/data-analysis-pipelines",
@@ -200,7 +201,8 @@
                             "group": "Create a fabric",
                             "pages": [
                               "data-analysis/environment/fabrics/create-fabrics/databricks",
-                              "data-analysis/environment/fabrics/create-fabrics/bigquery"
+                              "data-analysis/environment/fabrics/create-fabrics/bigquery",
+                              "data-analysis/environment/fabrics/create-fabrics/snowflake"
                             ]
                           }
                         ]
