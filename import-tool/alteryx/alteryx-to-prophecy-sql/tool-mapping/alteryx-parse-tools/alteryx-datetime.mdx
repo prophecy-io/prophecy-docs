@@ -5,7 +5,13 @@ description: Mapping between Alteryx's DateTime tool and Prophecy date/time form
 
 The Alteryx [DateTime tool](https://help.alteryx.com/current/en/designer/tools/parse/datetime-tool.html) handles string to date-time and date-time to string conversions.
 
-Prophecy implements this functinality in a [Reformat gem](/data-analysis/gems/prepare/reformat) using the functions [`to_date`](https://docs.databricks.com/aws/en/sql/language-manual/functions/to_date), [`to_timestamp`](https://docs.databricks.com/aws/en/sql/language-manual/functions/to_timestamp) or [`date_format`](https://docs.databricks.com/aws/en/sql/language-manual/functions/date_format).
+Prophecy implements this functionality in a [Reformat gem]() using SQL date and timestamp functions such as:
+
+| Databricks SQL                                               | BigQuery                                                     |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [`to_date`](https://docs.databricks.com/aws/en/sql/language-manual/functions/to_date) | [`DATE`](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#date) |
+| [`to_timestamp`](https://docs.databricks.com/aws/en/sql/language-manual/functions/to_timestamp) | [`TIMESTAMP`](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#timestamp) |
+| [`date_format`](https://docs.databricks.com/aws/en/sql/language-manual/functions/date_format) | [`FORMAT_TIMESTAMP`](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#format_timestamp) |
 
 ## Automated migration results
 
@@ -16,7 +22,15 @@ When Import detects an Alteryx DateTime tool:
 
 <Note>
 Alteryx implicitly converts timestamps to strings as needed in downstream tools. In some cases, Prophecy converts `timestamp` values back to strings to accomodate this behavior.
+
+The exact SQL functions generated may differ depending on the execution engine. For example:
+
+- Databricks SQL commonly uses functions such as `to_timestamp` and `date_format`.
+- BigQuery commonly uses functions such as `TIMESTAMP`, `DATE`, `FORMAT_TIMESTAMP`, and `PARSE_TIMESTAMP`.
+
+However, the overall logic of the transformation remains the same.
 </Note>
+
 
 ## Manually replicate in Prophecy
 
@@ -84,7 +98,7 @@ Common patterns include:
 
 ## Known caveats
 
-- **Locale-sensitive parsing/formatting:** Prophecy relies on [Databricks SQL's locale handling](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-collation) rather than an explicit language selector.
+- **Locale-sensitive parsing/formatting:** Prophecy relies on the locale and formatting behavior of the underlying SQL engine (such as Databricks SQL or BigQuery).
 - **Pattern mismatches:** For string to timestamp conversions, the incoming pattern must match the input string exactly (otherwise parsing returns null or errors depending on runtime settings).
 
 ## Example

@@ -15,9 +15,15 @@ For direct, single-pattern regular expression replacements that do not require a
 
 When Import encounters a Find Replace tool:
 
-- Lookup-table replacements are migrated to a Join gem followed by a Reformat gem that performs the find/replace logic.
+- Lookup-table replacements are migrated to a **Join gem** followed by a transformation that performs the find/replace logic.
+  - For imports into Databricks SQL, this logic is typically implemented in a **Reformat gem**.
+  - For imports into BigQuery environments, Import may instead generate a **SQL Statement gem** that expresses the replace logic as a SQL query including all columns.
 - Partial / pattern-based matching (Alteryx's “Any Part of Field” or “Beginning of Field”) may be expressed using SQL regex operations.
 - Append-field behavior is converted into additional output columns created in a Reformat gem using SQL expressions that select the appropriate lookup value.
+
+<Note>
+When importing workflows for **BigQuery**, some Replace expressions cannot be represented directly in a Reformat gem. In these cases Import generates a **SQL Statement gem** containing the equivalent SQL transformation. This ensures that the replacement logic operates correctly across all columns in the dataset.
+</Note>
 
 ## Manually replicate in Prophecy
 
@@ -117,9 +123,11 @@ For append-field behavior, add new output columns that select the matching repla
 
 - Alteryx applies replacements internally in the Designer engine.
 - Prophecy expresses the logic explicitly in SQL:
-  - Regex-based updates during SELECT
-  - Lookup-based updates after the Join
-  - Additional append columns created in Reformat
+    - Regex-based updates during SELECT
+    - Lookup-based updates after the Join
+    - Additional append columns created in Reformat
+
+In BigQuery environments, the transformation may appear as a **SQL Statement gem** instead of a Reformat gem when the replace logic must be expressed as a full SQL query.
 
 The resulting dataset contains updated fields that reflect the same logical intent.
 
@@ -128,6 +136,7 @@ The resulting dataset contains updated fields that reflect the same logical inte
 - SQL regex syntax does not match Alteryx’s pattern-matching options exactly.
 - Prophecy uses a combination of Reformat and Join gems to perform the Find and Replace instead of one tool.
 - Multi-step or cascading replacements may require separate expressions.
+- When importing workflows for **BigQuery**, some Find Replace operations are implemented using a **SQL Statement gem** instead of a Reformat gem.
 
 ## Example
 

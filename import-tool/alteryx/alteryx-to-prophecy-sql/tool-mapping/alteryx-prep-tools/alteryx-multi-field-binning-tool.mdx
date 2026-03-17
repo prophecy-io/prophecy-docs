@@ -9,7 +9,7 @@ Prophecy does not provide a single binning gem; instead, binning is achieved usi
 
 ## Automated migration results
 
-When Alteryx performs multi-field binning, it hides a lot of internal steps. After import, Prophecy expands those hidden operations into several explicit SQL transformations. Prophecy translates Alteryx’s high-level UI behavior into the individual SQL operations required to run at scale on Databricks.
+When Alteryx performs multi-field binning, it hides a lot of internal steps. After import, Prophecy expands those hidden operations into several explicit SQL transformations. Prophecy translates Alteryx’s high-level UI behavior into individual SQL operations.
 
 When Import encounters a Multi-Field Binning tool:
 
@@ -61,7 +61,7 @@ In Prophecy, the Reformat gem produces the same effect by computing bin values a
 
 ## Known caveats
 
-Alteryx uses its own internal method for computing quantile boundaries, which may differ from the percentile functions available in Databricks SQL (such as `percentile` or `percentile_approx`). As a result, tile boundaries may vary slightly between the two platforms, especially with small or highly skewed datasets.
+Alteryx uses its own internal method for computing quantile boundaries, which may differ from the percentile functions available in SQL (such as `percentile` or `percentile_approx`). As a result, tile boundaries may vary slightly between the two platforms, especially with small or highly skewed datasets.
 
 ## Example
 
