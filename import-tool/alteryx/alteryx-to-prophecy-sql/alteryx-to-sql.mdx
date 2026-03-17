@@ -1,6 +1,6 @@
 ---
-title: Migrate to Databricks SQL
-description: How to migrate from Alteryx to SQL
+title: Migrate to SQL (Databricks and BigQuery)
+description: How to migrate Alteryx workflows to SQL using Databricks or BigQuery fabrics
 ---
 
 When you create an Alteryx bundle for a SQL project in the Prophecy transpiler, you can analyze, change, and validate your migration before the transpilation begins.
@@ -31,13 +31,28 @@ To export an Alteryx workflow from the Alteryx Designer:
 
 </details>
 
+## Differences between Databricks and BigQuery import
+
+The SQL dialect generated during import depends on the selected fabric:
+
+- **Databricks fabric → Databricks SQL**
+- **BigQuery fabric → BigQuery SQL**
+
+You cannot change the SQL dialect after transpilation without recreating the bundle.
+
+While the migration workflow is the same, some behaviors differ depending on the selected fabric:
+
+- **SQL syntax**: Generated SQL follows the target engine (Databricks or BigQuery).
+- **Tool support**: Some Alteryx tools may map differently depending on engine capabilities.
+
 ## Procedure
 
-### Step 1: Create a bundle
+<Steps>
+<Step title="Create a bundle">
 
-Start with creating a new bundle in the Transpiler.
+Start with creating a new Import bundle.
 
-1. On the left navigation bar, click the **Transpiler icon** (arrow pointing down in a circle).
+1. On the left navigation bar, click the **Import icon** (arrow pointing down in a circle).
 1. At the top of the page, click **Import Bundle**.
 1. In the **Source Type** tab, select **Alteryx**.
 1. Click **Next**.
@@ -50,7 +65,7 @@ Start with creating a new bundle in the Transpiler.
    | Team               | Create or select the team that will be able to access the bundle.                                                                                                |
    | Project            | Create or select the project where Prophecy will add migrated pipelines.<br />The project you choose must have the same language and team defined in the bundle. |
    | Branch             | Select the Git branch where the migration will appear. <br />The Transpiler will not commit directly to the `main` branch of the project repository.             |
-   | SQL Fabric         | Choose the [fabric](/data-analysis/environment/fabrics/prophecy-fabrics) the Transpiler will use to run Prophecy pipelines.                                      |
+   | SQL Fabric         | Choose the [fabric](/data-analysis/environment/fabrics/prophecy-fabrics) that determines the SQL dialect and execution engine for your migrated pipelines.<br /><br />- Select a **Databricks** fabric to generate Databricks SQL.<br />- Select a **BigQuery** fabric to generate BigQuery SQL.                                      |
 
 1. Click **Next**.
 1. In the **Upload Files** tab, upload the Alteryx files you want to migrate.
@@ -59,7 +74,9 @@ Start with creating a new bundle in the Transpiler.
 
 1. Click **Next**. The Transpilation step opens.
 
-### Step 2: Configure the transpilation
+</Step>
+
+<Step title="Configure Import details">
 
 Configure how Prophecy imports your workflows.
 
@@ -86,7 +103,8 @@ Configure how Prophecy imports your workflows.
   import configuration to import it at a later time.
 </Note>
 
-### Step 3: Import transpiled entities
+</Step>
+<Step title="Import transpiled entities">
 
 Import the transpiled entities into your project.
 
@@ -98,7 +116,8 @@ Import the transpiled entities into your project.
 
 ![Reimport](./img/alteryx-import-transpiled-entities.png)
 
-### Step 4: Review Prophecy project
+</Step>
+<Step title="Review Prophecy project">
 
 Verify and adjust transformations as needed. If there isn't an equivalent gem for a certain transformation, Prophecy inserts a placeholder gem in your pipeline where you can write your own SQL statements to achieve the required functionality.
 
@@ -112,13 +131,19 @@ To see the bundle metadata, which includes information about all of the imported
 
 You can review the pipelines, jobs, tables, function, coverage, status, source, language, project, and fabric of the bundle in the right tile. You can open any entity in a new tab in the project editor by clicking on the entity.
 
-### Step 6: Testing
+</Step>
+
+<Step title="Testing">
 
 Open your bundle and run your pipeline to verify that it writes the same output as your Alteryx workflow. If not, modify or add additional gems to make the output the same.
 
 Before you deploy your project into production, we recommend you to run both your Alteryx workflow and Prophecy pipeline in parallel for at least two weeks. This helps you see if Prophecy consistently produces the same output as Alteryx.
 
-### Step 7: Reimport pipelines
+</Step>
+
+</Steps>
+
+### Reimport pipelines
 
 If you want to update or restart your transpilation, click on the **Reimport Pipeline** button on the Transpiler page.
 

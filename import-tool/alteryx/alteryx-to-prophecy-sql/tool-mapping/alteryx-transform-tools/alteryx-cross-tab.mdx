@@ -5,6 +5,8 @@ description: Mapping between Alteryx’s Cross Tab tool and Prophecy’s Pivot g
 
 The Alteryx [Cross Tab tool](https://help.alteryx.com/current/en/designer/tools/transform/cross-tab-tool.html) reshapes data by converting row values into columns, typically aggregating values in the process. It is commonly used to create summary-style tables for reporting and analysis.
 
+In Prophecy, pivot operations are implemented using SQL-style pivot transformations. These transformations require an aggregation step, even when the input data has only one value per group.
+
 In Prophecy, the same outcome is implemented using the [Pivot gem](/data-analysis/gems/transform/pivot), which performs SQL-backed pivot operations over grouped data.
 
 ## Automated migration results
@@ -14,7 +16,8 @@ When Import detects an Alteryx Cross Tab tool, it generates a **Pivot** gem conf
 - Group-by fields in Alteryx are mapped to the Pivot gem's **Row Grouping Settings**.
 - The selected **Column Headers** field in Alteryx is used as the pivot column.
 - The **Values for New Columns** field is used as the pivot value.
-- The selected aggregation method (for example, `Sum`, `Count`, `Min`, or `Max`) is mapped to the Pivot gem’s aggregation function.
+- The selected aggregation method (for example, `Sum`, `Count`, `Min`, `Max`, `First`, or `Last`) is mapped to the Pivot gem’s aggregation function.
+    - In **BigQuery environments**, the `First` and `Last` aggregation methods are not supported directly during pivot operations. When these options are detected, Import generates a **Reformat gem** to compute the `FIRST`/`LAST` logic before applying the Pivot transformation.
 - Output column names are derived from the pivoted values.
 
 The resulting dataset has one row per group and one column per distinct pivot value, matching the Cross Tab output shape.
@@ -51,6 +54,10 @@ Configure the Pivot gem by specifying:
 
 The Pivot gem expresses this logic as a SQL pivot under the hood, but exposes configuration through a low-code interface.
 
+<Note>
+When importing workflows for **BigQuery**, the Cross Tab aggregation options **First** and **Last** are implemented using a **Reformat gem** before the Pivot operation. This ensures that the correct value is selected prior to reshaping the dataset.
+</Note>
+
 ## Output behavior
 
 - Alteryx outputs one row per group, with new columns created from distinct values in the pivot field.
@@ -64,6 +71,7 @@ If a particular group does not contain a given pivot value, the corresponding ou
 - **Aggregation required:** Pivoting inherently involves aggregation; non-aggregated values must be reduced using an aggregation function.
 - **Wide outputs:** Large numbers of pivot values can result in very wide schemas, which may impact readability or downstream processing.
 - **Null handling:** Missing combinations typically produce nulls and may require downstream handling.
+- **First/Last aggregation in BigQuery:** Because BigQuery does not support `FIRST` or `LAST` directly within pivot operations, in BigQuery contexts, Import introduces a **Reformat gem** to compute the correct value before pivoting.
 
 ## Example
 
