@@ -1208,9 +1208,9 @@
               {
                 "group": "Alteryx to SQL",
                 "pages": [
-                  "import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-to-prophecy-sql",
+                  "import-tool/alteryx/alteryx-to-prophecy-sql/getting-started-prophecy-alteryx",
+                 "import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-to-sql",
                   "import-tool/alteryx/alteryx-to-prophecy-sql/sql-dialect-differences",
-                  "import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-to-databricks-sql",
                   "import-tool/alteryx/alteryx-to-prophecy-sql/data-type-mapping",
                   "import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-connections",
                   "import-tool/alteryx/alteryx-to-prophecy-sql/function-mapping",
@@ -1432,6 +1432,14 @@
       "source": "/import-tool/alteryx/alteryx-to-databricks-sql/:path*",
       "destination": "/import-tool/alteryx/alteryx-to-prophecy-sql/:path*",
       "permanent": true
+    },
+    {
+      "source": "/import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-to-databricks-sql",
+      "destination": "/import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-to-sql"
+    },
+    {
+      "source": "/import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-to-prophecy-sql",
+      "destination": "/import-tool/alteryx/alteryx-to-prophecy-sql/getting-started-prophecy-alteryx"
     },
     {
       "source": "/data-analysis/development/pipeline-params",

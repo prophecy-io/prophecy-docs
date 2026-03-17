@@ -31,7 +31,14 @@ To export an Alteryx workflow from the Alteryx Designer:
 
 </details>
 
-## Differences between Databricks and BigQuery migrations
+## Differences between Databricks and BigQuery import
+
+The SQL dialect generated during import depends on the selected fabric:
+
+- **Databricks fabric → Databricks SQL**
+- **BigQuery fabric → BigQuery SQL**
+
+You cannot change the SQL dialect after transpilation without recreating the bundle.
 
 While the migration workflow is the same, some behaviors differ depending on the selected fabric:
 
@@ -42,14 +49,6 @@ While the migration workflow is the same, some behaviors differ depending on the
 
 <Steps>
 <Step title="Create a bundle">
-
-<Note>
-The SQL dialect used during transpilation depends entirely on the selected fabric:
-- Databricks fabric → Databricks SQL
-- BigQuery fabric → BigQuery SQL
-
-You cannot change the SQL dialect after transpilation without recreating the bundle.
-</Note>
 
 Start with creating a new Import bundle.
 
@@ -66,7 +65,7 @@ Start with creating a new Import bundle.
    | Team               | Create or select the team that will be able to access the bundle.                                                                                                |
    | Project            | Create or select the project where Prophecy will add migrated pipelines.<br />The project you choose must have the same language and team defined in the bundle. |
    | Branch             | Select the Git branch where the migration will appear. <br />The Transpiler will not commit directly to the `main` branch of the project repository.             |
-   | SQL Fabric         | Choose the [fabric](/data-analysis/environment/fabrics/prophecy-fabrics) that determines the SQL dialect and execution engine for your migrated pipelines.<br /><br />- Select a Databricks fabric to generate Databricks SQL.<br />- Select a BigQuery fabric to generate BigQuery SQL.                                      |
+   | SQL Fabric         | Choose the [fabric](/data-analysis/environment/fabrics/prophecy-fabrics) that determines the SQL dialect and execution engine for your migrated pipelines.<br /><br />- Select a **Databricks** fabric to generate Databricks SQL.<br />- Select a **BigQuery** fabric to generate BigQuery SQL.                                      |
 
 1. Click **Next**.
 1. In the **Upload Files** tab, upload the Alteryx files you want to migrate.
