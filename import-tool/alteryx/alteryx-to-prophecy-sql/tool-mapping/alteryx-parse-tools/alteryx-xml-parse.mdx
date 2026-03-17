@@ -50,7 +50,7 @@ For manually-created workflows, Prophecy recommends using the **XMLParse** gem:
 
 Alteryx outputs a flattened, columnar dataset derived from the selected XML elements, optionally retaining the original XML field.
 
-Prophecy outputs all input columns plus a single [struct](https://docs.databricks.com/aws/en/sql/language-manual/data-types/struct-type) column containing parsed XML, which must be explicitly flattened using a downstream gem such as the [Reformat gem](/data-analysis/gems/prepare/reformat).
+Prophecy outputs all input columns plus a single **struct** column containing parsed XML data. This column represents a nested object with named fields, which can be explicitly flattened using a downstream gem such as the [Reformat gem](/data-analysis/gems/prepare/reformat).
 
 ## Known caveats
 
@@ -88,7 +88,7 @@ When you run the gem, it outputs column of type `struct` with the following name
 | OrderDate  | string | `2025-01-15`  |
 | OrderID    | int    | `1001`        |
 
-If you want the parsed XML fields to appear as top-level columns, add a **Reformat** gem after the XMLParse gem and extract each field from the `struct` using dot notation:
+If you want the parsed XML fields to appear as top-level columns, add a **Reformat** gem after the XMLParse gem and extract each field from the nested `struct` using dot notation:
 
 | Target column | Expression                    |
 | ------------- | ----------------------------- |
