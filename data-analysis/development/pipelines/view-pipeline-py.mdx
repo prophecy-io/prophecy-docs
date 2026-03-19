@@ -1,0 +1,98 @@
+---
+title: View pipeline Python file
+description: Understand how the pipeline.py file defines pipeline structure and execution order.
+---
+
+The `pipeline.py` file defines the structure of a pipeline as code. It acts as the code-based representation of the visual pipeline graph, allowing you to understand how steps are connected and executed.
+
+Previous versions of this file used task-based structure; Prophecy now uses a graph-based model for this file. Instead of organizing logic by tasks, the pipeline is now defined as a set of processes connected through dependencies, which determine execution order.
+
+## Overview
+
+The `pipeline.py` file serves as the source of truth for generating the pipeline graph. It defines how pipeline steps relate to each other.
+
+<Note>
+There is not always a one-to-one mapping between gems and nodes. Some gems may be grouped into an execution unit.
+</Note>
+
+In this model:
+
+- Nodes (vertices) represent steps in the pipeline, such as data sources, transformations, models, or outputs.
+- Edges represent dependencies between steps, indicating execution flow.
+
+## How the pipeline is defined
+
+The file defines pipelines using a declarative graph structure.
+
+- Nodes are represented by `Process` objects.
+- Edges (connections) are created using the `>>` operator.
+- The graph structure is captured using context management.
+
+For example:
+```
+
+source >> transform >> sink
+
+```
+defines the following execution flow:
+```
+
+source → transform → sink
+
+```
+
+## How to access the file
+
+You can view the `pipeline.py` file in the [Project Browser](/data-analysis/development/studio/studio#project-browser/) while in [Code view](/data-analysis/development/studio/studio#visual-code-toggle).
+
+1. Go to **Project**.
+2. Select **Pipelines**.
+3. Open the `.py` file listed under **Pipelines**.
+
+## How to use this file
+
+You can use the `pipeline.py` file to:
+
+- Understand pipeline structure.
+- Determine execution order based on dependencies.
+- Inspect how processes are connected in the graph.
+
+This file is informational and reflects how the pipeline is defined internally.
+
+## How it differs from the previous model
+
+Previously, pipelines were organized by tasks, and execution order could be inferred from the task structure.
+
+In the current model:
+
+- The structure is organized by process instead of task.
+- Execution order is determined by the dependency graph between processes.
+- The underlying execution logic has not changed.
+- Only the representation has changed from task-based to graph-based.
+
+## Relationship to the visual pipeline
+
+The `pipeline.py` file is the code counterpart of the visual pipeline graph.
+
+- It provides the structural definition used to render the graph.
+- You can use it to understand how different steps are connected.
+- It reflects execution flow through explicit dependencies.
+- Gems generally map to processes.
+- In some cases, multiple gems may be grouped into a single execution unit instead of a one-to-one mapping.
+
+## CI/CD considerations
+
+This file is not intended for CI/CD usage.
+
+## Editing the file
+
+You can edit the `pipeline.py` file directly, but we recommend using the Agent to modify it.
+
+## Classes
+
+| Class               | What it Represents                | What to Look For                                             |
+| ---------------------- | --------------------------------- | ------------------------------------------------------------ |
+| **`Pipeline`**         | The overall pipeline definition   | Wraps the entire pipeline. Everything inside defines the pipeline structure. Think of this as “the full workflow” |
+| **`PipelineArgs`**     | Basic metadata about the pipeline | `label`: pipeline name<br/><br/>`version`: pipeline version<br/><br/>Optional settings (such as layout) |
+| **`Process`**          | A single step in the pipeline     | Each process is one operation (such as `Transform`, `Visualize`, or  `Email`)<br/><br/> `name` identifies the step- `properties` defines what the step does |
+| **Connections (`>>`)** | The flow of data between steps    | `A >> B` means “A feeds into B.”<br/><br/>Defines order and dependencies.<br/><br/>Chains show the path data follows. |

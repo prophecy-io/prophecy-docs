@@ -100,6 +100,7 @@
                         ]
                       },
                       "data-analysis/development/pipelines/data-analysis-pipelines",
+                      "data-analysis/development/pipelines/view-pipeline-py",
                       {
                         "group": "Studio",
                         "pages": [
