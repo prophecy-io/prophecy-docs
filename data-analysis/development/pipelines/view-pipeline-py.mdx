@@ -40,6 +40,24 @@ defines the following execution flow:
 source → transform → sink
 
 ```
+### Example
+
+The following snipped represents a pipeline that runs a transformation (`sales_by_region`) and then sends the results via email. The connection `transform >> email` shows that the email step depends on the transformation output. See [classes](#classes) for an explanation of classes.
+
+```Python
+with Pipeline(args) as pipeline:
+    transform = Process(
+        name="sales_by_region",
+        properties=ModelTransform(modelName="sales_by_region")
+    )
+
+    email = Process(
+        name="send_report",
+        properties=Email(subject="Sales रिपोर्ट", to="team@example.com")
+    )
+
+    transform >> email
+```
 
 ## How to access the file
 
@@ -93,6 +111,6 @@ You can edit the `pipeline.py` file directly, but we recommend using the Agent t
 | Class               | What it Represents                | What to Look For                                             |
 | ---------------------- | --------------------------------- | ------------------------------------------------------------ |
 | **`Pipeline`**         | The overall pipeline definition   | Wraps the entire pipeline. Everything inside defines the pipeline structure. Think of this as “the full workflow” |
-| **`PipelineArgs`**     | Basic metadata about the pipeline | `label`: pipeline name<br/><br/>`version`: pipeline version<br/><br/>Optional settings (such as layout) |
-| **`Process`**          | A single step in the pipeline     | Each process is one operation (such as `Transform`, `Visualize`, or  `Email`)<br/><br/> `name` identifies the step- `properties` defines what the step does |
+| **`PipelineArgs`**     | Basic metadata about the pipeline | `label`: pipeline name<br/><br/>`version`: pipeline version<br/><br/>Optional settings (such as `layout`) |
+| **`Process`**          | A single step in the pipeline     | Each process is one operation (such as `Transform`, `Visualize`, or  `Email`).<br/><br/> `name` identifies the step- `properties` defines what the step does. |
 | **Connections (`>>`)** | The flow of data between steps    | `A >> B` means “A feeds into B.”<br/><br/>Defines order and dependencies.<br/><br/>Chains show the path data follows. |
