@@ -117,3 +117,11 @@ Seeds are lightweight CSV datasets defined in your project. Seeds are source-onl
 ## Reusing and sharing tables
 
 After you create a table in Prophecy, you can reuse its configuration across your entire project. All created tables appear in the [Project](/data-analysis/development/studio/studio) tab in the left sidebar. To make tables available to other teams, you can share your project as a package in the [Package Hub](/data-analysis/development/extensibility/package-hub/package-hub). Other users will be able to use the shared table configuration, provided they have the necessary permissions in Snowflake to access the underlying data.
+
+## Limitations
+
+Currently, Snowflake tables do not support:
+
+- Case-sensitive identifiers.
+- Creating new partitioned tables.
+- Modifying partitioning of existing tables.
