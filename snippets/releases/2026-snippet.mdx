@@ -40,6 +40,14 @@ Projects created before this change may not support Databricks job creation unti
 
 This update ensures that cluster configurations are managed centrally and reused consistently across projects.
 
+## Scala JAR support for Spark 3.x and 4.x
+
+Scala pipeline projects [now generate version-specific JARs for Spark 3.x and Spark 4.x runtimes](/data-engineering/extensibility/dependencies/spark-dependencies#scala-jar-selection-for-spark-3-x-and-spark-4-x). Prophecy automatically selects the appropriate JAR based on the target cluster runtime.
+
+This change ensures compatibility across environments using different Scala versions (2.12 for Spark 3.x and 2.13 for Spark 4.x), eliminating runtime errors caused by binary incompatibility.
+
+To support this, pipeline builds now use Maven profiles to produce JARs for each supported Scala version from a single codebase. 
+
 </Update>
 
 <Update label="Prophecy 4.2.5" description="February 10, 2026" tags={["Data Analysis"]}>
