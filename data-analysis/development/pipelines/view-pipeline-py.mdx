@@ -112,5 +112,5 @@ You can edit the `pipeline.py` file directly, but we recommend using the Agent t
 | ---------------------- | --------------------------------- | ------------------------------------------------------------ |
 | **`Pipeline`**         | The overall pipeline definition   | Wraps the entire pipeline. Everything inside defines the pipeline structure. Think of this as “the full workflow” |
 | **`PipelineArgs`**     | Basic metadata about the pipeline | `label`: pipeline name<br/><br/>`version`: pipeline version<br/><br/>Optional settings (such as `layout`) |
-| **`Process`**          | A single step in the pipeline     | Each process is one operation (such as `Transform`, `Visualize`, or  `Email`).<br/><br/> `name` identifies the step- `properties` defines what the step does. |
+| **`Process`**          | A step in the pipeline (may combine multiple gems)     | Each process is one operation (such as `Transform`, `Visualize`, or  `Email`).<br/><br/> `name` identifies the step- `properties` defines what the step does. |
 | **Connections (`>>`)** | The flow of data between steps    | `A >> B` means “A feeds into B.”<br/><br/>Defines order and dependencies.<br/><br/>Chains show the path data follows. |
