@@ -99,8 +99,13 @@
                           "data-analysis/development/projects/export-code"
                         ]
                       },
-                      "data-analysis/development/pipelines/data-analysis-pipelines",
-                      "data-analysis/development/pipelines/view-pipeline-py",
+                      {
+                        "group": "Pipelines",
+                        "pages": [
+                        "data-analysis/development/pipelines/data-analysis-pipelines",
+                        "data-analysis/development/pipelines/view-pipeline-py"
+                        ]
+                      },
                       {
                         "group": "Studio",
                         "pages": [
