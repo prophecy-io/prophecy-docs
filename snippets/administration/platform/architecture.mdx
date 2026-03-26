@@ -64,21 +64,15 @@ Prophecy can accommodate a wide variety of architectures beyond this diagram. Fo
 
 ## What is Prophecy Automate?
 
-Prophecy Automate is the native runtime available across all Prophecy editions. This runtime provides the following core capabilities:
+Prophecy Automate is the native runtime available across all Prophecy editions. It extends pipeline execution by providing orchestration, external data handling, and observability for both SQL and PySpark pipelines.
 
-- **Ingress/Egress**: Supports reading from and writing to databases (Snowflake, Oracle, etc.) and other data providers (SharePoint, Tableau, etc.).
+- **Ingress / Egress**: Automate enables pipelines to interact with external systems such as databases, file storage, and APIs.
 
-- **Orchestration**: Coordinates pipeline logic beyond what's possible in dbt core. Orchestration includes pipeline scheduling with time-based and trigger-based execution, orchestration APIs for programmatic control, and dynamic operations like the DynamicInput gem (which runs SQL queries that update automatically based on incoming data) and the Directory gem (which lists files and folders in a specified location).
+- **Orchestration**: Automate manages pipeline execution across environments through time-based and trigger-based scheduling, as well as orchestration APIs for programmatic control. It also supports dynamic execution patterns through features like the [DynamicInput gem](/data-analysis/gems/custom/dynamic-input), which adapts queries based on incoming data, and the [Directory gem](/data-analysis//gems/custom/directory), which enumerates files and folders from storage systems.
 
-- **Observe**: Integrates monitoring and observability features that allow you to view preserve pipeline run history, track project deployments, and view active pipeline schedules.
+- **Observe**: Automate provides visibility into pipeline activity, including run history and status tracking, project deployment tracking, and monitoring of active pipeline schedules.
 
 ![Prophecy Automate connections diagram](/snippets/administration/platform/img/arch-prophecy-automate.png)
-
-<Info>
-  Prophecy Automate is only accessible via [Prophecy
-  fabrics](/data-analysis/environment/fabrics/prophecy-fabrics) for SQL projects and does not
-  integrate with Spark-based projects.
-</Info>
 
 ## Supported compute engines
 
