@@ -824,7 +824,8 @@
                             "pages": [
                               "data-engineering/ci-cd/prophecy-build-tool/prophecy-build-tool",
                               "data-engineering/ci-cd/prophecy-build-tool/pbt-github-actions",
-                              "data-engineering/ci-cd/prophecy-build-tool/pbt-jenkins"
+                              "data-engineering/ci-cd/prophecy-build-tool/pbt-jenkins",
+                              "data-engineering/ci-cd/prophecy-build-tool/pbt-prophecy-automate"
                             ]
                           }
                         ]
