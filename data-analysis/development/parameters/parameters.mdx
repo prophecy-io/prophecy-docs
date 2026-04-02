@@ -43,7 +43,7 @@ The scope determines where a parameter can be used and how it behaves at runtime
 
 | Parameter type      | Description                                                                                                                                                                                                                                    |
 | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Project parameters  | Shared across all pipelines in a project.<br/><br/>String expressions remain as literal strings. If you define a project parameter as `concat("first_name", "last_name")`, its usage remains as `concat("first_name", "last_name")`.<br/><br/> |
+| Project parameters  | Shared across all pipelines in a project.Project parameters now support concrete types. Values are interpreted based on their content. <br/><br/>For example, expressions like `concat("first_name", "last_name")` are recognized as valid SQL and evaluated accordingly, rather than treated as literal strings. |
 | Pipeline parameters | Specific to a single pipeline.<br/><br/>String expressions are evaluated at runtime. If you define a pipeline parameter called `concat("first_name", "last_name")`, the value injected during usage is `first_namelast_name`.<br/><br/>        |
 
 <Note>
