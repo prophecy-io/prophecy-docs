@@ -35,27 +35,6 @@ To install and run the Prophecy Build Tool, you need:
 - `python >=3.7` (Recommended 3.9.13)
 - `pyspark` (Recommended 3.3.0)
 
-### Runtime compatibility
-
-The PBT produces artifacts (such as Python wheels and Spark job packages) that run within your execution environment (for example, Databricks or Spark clusters).
-
-Because these artifacts execute outside of Prophecy's control plane, their compatibility depends on the underlying system configuration, including operating system, CPU architecture, Python version, and Spark runtime.
-
-The following matrix outlines supported environments for the prophecy-automate runtime used in PBT-built artifacts:
-
-| Capability / Requirement | Linux x86_64     | Linux aarch64 (Graviton) |
-| ------------------------ | ---------------- | ------------------------ |
-| Wheel available          | ✔                | ✔                        |
-| Minimum glibc            | 2.28 (Rocky 8)   | 2.28 (Rocky 8)           |
-| Minimum Linux kernel     | 3.17+            | 3.17+                    |
-| Python 3.10              | ✔ (DBR 14)       | ✔ (DBR 14)               |
-| Python 3.11              | ✔ (DBR 15)       | ✔ (DBR 15)               |
-| Python 3.12              | ✔ (DBR 16)       | ✔ (DBR 16)               |
-| Spark 3.3–3.5            | ✔                | ✔                        |
-| Tableau target support   | ✔                | ✖                        |
-| Build method             | Docker (Rocky 8) | Docker (cross-compile)   |
-| Spark 4.x                | Not yet supported    | Not yet supported            |
-
 ### Using generated wheel artifacts
 
 The Prophecy Build Tool (PBT) generates Python wheel (`.whl`) files as part of the build process. These artifacts must be available in the execution environment where your pipeline runs.
