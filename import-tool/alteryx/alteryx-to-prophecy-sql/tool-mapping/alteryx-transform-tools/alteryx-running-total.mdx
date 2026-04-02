@@ -1,0 +1,98 @@
+---
+title: Alteryx Running Total tool > Prophecy WindowFunction Gem
+description: Mapping between Alteryx's Running Total tool and cumulative calculations implemented using the Prophecy WindowFunction gem
+---
+
+The Alteryx [Running Total tool](https://help.alteryx.com/current/en/designer/tools/transform/running-total-tool.html) computes a running sum across rows, optionally segmenting running sums into groups.
+
+In Prophecy, the same outcomes are implemented using the [WindowFunction gem](/data-analysis/gems/transform/window).
+
+## Automated migration results
+
+When Import detects an Alteryx Running Total tool, it generates a WindowFunction gem that computes a sum for a selected column:
+
+- The selected value field is mapped to a `sum` aggregation function.
+- Grouping fields map to the gem's **Partition by** configuration.
+- Row ordering maps to the gem's **Order by** configuration.
+
+The resulting column produces the same behavior as the Running Total tool.
+
+## Manually replicate in Prophecy
+
+To reproduce Running Total behavior manually:
+
+1. Add a **WindowFunction** gem to the canvas.
+1. Configure **Order by** column(s) to define the row sequence.
+1. Configure **Partition by** column(s) if the running total should reset by group.
+1. Configure a target column and use a `sum` expression for the running total.
+
+This produces a running calculation that updates row by row according to the specified ordering.
+
+## Configuration options
+
+### In Alteryx (Running Total tool)
+
+Configure the tool by selecting:
+
+- Field(s) for **Group By** (optional).
+- Field for **Create Running Total**.
+
+### In Prophecy (WindowFunction gem)
+
+Configure the **WindowFunction** gem by specifying:
+
+- **Partition by** columns: the grouping keys that reset the running total (mirrors the Running Total tool's “Group by”).
+- **Order by** columns: the columns that define row sequence.
+- **Window use**: create the running total target column using a `sum` window expression over the running-total field.
+
+## Output behavior
+
+- Alteryx outputs a new column containing the cumulative value for each row.
+- Prophecy outputs a derived column whose value reflects the cumulative aggregation over the defined window.
+
+Results depend on row ordering; incorrect or missing ordering can change the output.
+
+## Known caveat
+
+**Row order:** Running totals require a deterministic sort order. If the order is ambiguous, results may differ.
+
+## Example
+
+### Input dataset
+
+{/* vale off */}
+| record_id | event_date | amount |
+| --------- | ---------- | ------ |
+| 1         | 2025-01-01 | 10     |
+| 1         | 2025-01-05 | 5      |
+| 1         | 2025-01-10 | 7      |
+| 2         | 2025-01-03 | 4      |
+| 2         | 2025-01-07 | 6      |
+{/* vale on */}
+
+### Alteryx Running Total tool
+
+Goal: Compute a running sum of `amount`, resetting for each new `record_id`, ordered by `event_date`.
+
+- Field for group by: `record_id`
+- Field for running total: `amount`
+
+### Prophecy equivalent (WindowFunction gem)
+
+Configure a **WindowFunction** gem with:
+
+- Partition by: `record_id`
+- Order by: `event_date`
+- Window use: add Target column `RunTot_amount`. Configure Expression as function > sum with column `amount` as parameter.
+
+#### Resulting output
+
+{/* vale off */}
+| record_id | event_date | amount | RunTot_amount |
+| --------- | ---------- | ------ | ------------- |
+| 1         | 2025-01-01 | 10     | 10            |
+| 1         | 2025-01-05 | 5      | 15            |
+| 1         | 2025-01-10 | 7      | 22            |
+| 2         | 2025-01-03 | 4      | 4             |
+| 2         | 2025-01-07 | 6      | 10            |
+{/* vale on */}

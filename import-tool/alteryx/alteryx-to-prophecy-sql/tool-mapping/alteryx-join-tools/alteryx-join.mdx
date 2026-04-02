@@ -1,0 +1,104 @@
+---
+title: Alteryx Join tool > Prophecy Join gem
+description: Mapping between Alteryx’s Join tool and the Prophecy Join gem
+---
+
+The [Alteryx Join tool](https://help.alteryx.com/current/en/designer/tools/join/join-tool.html) combines two datasets by matching records on one or more key fields.
+
+Prophecy implements this functionality through the [Join gem](/data-analysis/gems/join-split/join), which joins two or more datasets at a time using explicit join conditions and a selectable join type.
+
+Alteryx's Join tool always produces three outputs (L, J, and R), representing unmatched left records, matched records, and unmatched right records.
+
+Prophecy's Join gem produces a single output and requires the user to explicitly select a desired join type.
+
+## Automated migration results
+
+When Import detects an Alteryx Join tool:
+
+- It generates a Join gem with multiple input ports.
+- In the case of Join by Record Position, Import adds a SQLStatement gem for each input to generate a `recordPositionForJoin` column, then configures the Join gem to join on `recordPositionForJoin`.
+
+## Manually replicate in Prophecy
+
+1. Add a **Join** gem to the canvas.
+2. Connect two datasets and configure:
+   - Join type
+   - Join condition(s)
+3. Add additional Join gems to merge further datasets into the intermediate result.
+4. Validate schema and row counts after each join.
+
+## Configuration options
+
+### Alteryx Join tool
+
+- Add two or more input connections to the Join tool.
+- Choose whether to join by record position or by specific field(s).
+- For field-based joins, select the join field for each input.
+- Optionally add additional join fields to refine the match condition.
+- Rename output fields and adjust data types as needed.
+
+### Prophecy Join gem
+
+- Add two or more input datasets using **Add port** to connect additional inputs.
+- Select a join type:
+  - Inner join
+  - Left join/left outer join
+  - Right join/right outer join
+  - Full join/full outer join
+  - Cross join
+  - Natural inner join
+  - Natural left outer join/natural right outer join/natural full outer join
+- Define the join condition by selecting columns from each input and a comparison operator (such as `equals`).
+- Under **Expressions**, select and rename output columns as needed (for example, target column `Right_Customer_ID` with expression `in1.CustomerID`).
+- You can also use expressions such as `in0.*` and `in1.* EXCEPT (CustomerID)` to manage output columns.
+
+### Join by record position in Prophecy
+
+To replicate a record-position join:
+
+- For each input dataset, add a [RecordID gem](/data-analysis/gems/prepare/record-id), which assigns a unique identifier to each row of a dataset, configured so that the Output Column Name is `recordPositionforJoin`.
+
+- Add a Join gem that joins both input datasets, configured as an **Inner Join** on `recordPositionForJoin`.
+
+- In the same Join gem, remove `recordPositionforJoin` by adding an expression such as the following:
+
+  ```
+  in1.* EXCEPT (recordPositionForJoin)
+  ```
+
+  This ensures that the gem outputs all columns except for `recordPositionforJoin`.
+
+## Output behavior
+
+- Alteryx’s Join tool always produces three outputs (L, J, and R), representing unmatched left records, matched records, and unmatched right records.
+
+- Prophecy’s Join gem produces a single output and requires the user to explicitly select a join type.
+
+## Known caveats
+
+- Alteryx’s Join tool always produces three outputs (L, J, and R), while Prophecy’s Join gem produces a single output based on the selected join type.
+- Reproducing Alteryx’s **R output** requires a right outer join followed by filtering for unmatched rows; the same is true for **L output**.
+- Join order can affect performance and intermediate dataset size in chained joins.
+- When manually configuring, column name conflicts must be resolved explicitly after joins.
+
+## Example
+
+**Goal:** Compare sales and quota data by representative and month, identifying matched records and unmatched rows from each input.
+
+### Alteryx
+
+Join `Sales` and `Quota` on `RepID` and `Month`.
+
+- **J output:** matching sales and quota records
+- **L output:** sales without a matching quota
+- **R output:** quotas without a matching sale
+
+Alteryx produces all three outputs automatically.
+
+### Prophecy
+
+To produce **J output**, join `Sales` (`in0`) and `Quota` (`in1`) using the **Join** gem with an **Inner Join** with join conditions on `RepID` and `Month` .
+
+To reproduce Alteryx's **L output**, configure a **Left Outer Join** on `RepID` and `Month`, then filter for rows where the right-side join key is `NULL`.
+
+To reproduce Alteryx's **R output**, configure a **Right Outer Join** on `RepID` and `Month`, then filter for rows where the left-side join key is `NULL`.

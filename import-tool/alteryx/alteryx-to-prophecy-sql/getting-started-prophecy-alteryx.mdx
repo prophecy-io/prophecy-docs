@@ -1,0 +1,104 @@
+---
+title: Getting Started in Prophecy for Alteryx Users
+description: Move from Alteryx to Prophecy
+---
+
+Alteryx and Prophecy both use a visual, low-code approach to transformations. The key difference is the engine beneath your work. In Alteryx, workflows run inside the Designer engine. In Prophecy, the same visual pipelines run in Databricks or BigQuery, which offers distributed execution and efficient performance on larger datasets.
+
+This documentation section provides reference material for users moving from Alteryx to Prophecy: [a step-by-step migration tutorial](/import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-to-prophecy-sql), [tool mappings](/import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-tool-mapping/), [function mappings](/import-tool/alteryx/alteryx-to-prophecy-sql/function-mapping), [connection mappings](/import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-connections), [data type mappings](/import-tool/alteryx/alteryx-to-prophecy-sql/data-type-mapping), [information on performance tuning](/import-tool/alteryx/alteryx-to-prophecy-sql/databricks-performance-tuning), and [troubleshooting](/import-tool/alteryx/alteryx-to-prophecy-sql/troubleshooting/troubleshooting).
+
+The rest of this page describes how common Alteryx processes, such as opening projects, connecting to data, cleaning, testing, and deploying, translate into Prophecy’s environment.
+
+## Open your workspace
+
+In Alteryx, workflows live as files (`.yxmd`, `.yxzp`) that execute locally or on Alteryx Server. In Prophecy, everything lives in Git and runs natively on Databricks or another platform.
+
+**In Alteryx:**
+You open Designer, and load your `.yxmd` or `.yxzp` workflows from your local folder or a network drive.
+
+**In Prophecy:**
+You log into your Prophecy workspace in the browser. Pipelines, datasets, and configurations are stored in Git; you open your branch directly from the Prophecy interface.
+
+## Connect to data sources
+
+In Alteryx, you often read directly from local files or shared folders. In Prophecy, you can still work with files (such as CSV, Excel, JSON, and XML) the same way but the files are stored in Databricks Volumes or cloud storage rather than on your personal machine.
+
+The experience is similar (upload a file, configure the Source gem, preview the data), but the storage lives inside the workspace so that pipelines run consistently in testing and production.
+
+**In Alteryx:**
+You drag an Input Data tool onto the canvas and either select a data file (such as CSV or Excel), or configure a database connection.
+
+**In Prophecy:**
+You add a Source gem to the visual canvas. You can [upload CSV, JSON, text, Excel, and XML files](/data-engineering/gems/source-target/file/upload-file) and you can connect to other data sources through JDBC or a cloud connector (Snowflake, Redshift, Delta, and so on).
+
+## Clean and transform data
+
+Because Prophecy executes pipelines on a distributed SQL warehouse, operations like filtering and aggregating typically run faster than they do in Alteryx Designer, especially on larger datasets. Performance improvements come from the underlying engine's parallelism, columnar storage, and automatic optimization.
+
+**In Alteryx:**
+You chain tools like Filter → Formula → Summarize, testing each with a Browse tool and re-running.
+
+**In Prophecy:**
+You build similar logical sequences using [Filter](/data-analysis/gems/prepare/filter), [Aggregate](/data-analysis/gems/transform/aggregate), [Reformat](/data-analysis/gems/prepare/reformat), and other gems. You can preview sample data for each gem using Propehecy's [Data Explorer](/data-engineering/development/data-explorer/data-explorer).
+
+## Test and debug
+
+**In Alteryx:**
+You click “Run,” inspect intermediate results, adjust formulas, and rerun until satisfied.
+
+**In Prophecy:**
+You run the pipeline in a SQL warehouse for on-demand testing. In production, you monitor logs and execution plans through the Prophecy interface. Iteration cycles may sometimes be a bit slower, but far more reliable for large data. You’ll rely more on sampling and smaller test runs for quick checks.
+
+## Documenting or sharing your work
+
+**In Alteryx:**
+Documentation often lives in annotations or shared screenshots.
+
+**In Prophecy:**
+Each pipeline is tied to Git, so documentation happens naturally through commit messages, descriptions, and version history. You can also generate Markdown-based documentation or include comments directly in the SQL code.
+
+## Collaboration and review
+
+**In Alteryx:**
+You might email `.yxmd` files or use Alteryx Server to share workflows. Version control is mostly manual.
+
+**In Prophecy:**
+All collaboration happens through Git, although Prophecy requires no knowledge of using Git directly. Prophecy coordinates pushing your branch and opening a pull request. Teammates can review changes visually and in code. This replaces shared folders with a formal, trackable workflow.
+
+## Monitor and troubleshoot
+
+**In Alteryx:**
+If a job fails on Alteryx Server, you check logs in the Gallery or local output files.
+
+**In Prophecy:**
+You view run histories and logs in Prophecy, with full access to Spark logs, cluster metrics, and lineage tracking.
+
+## Iterate and reuse work
+
+**In Alteryx:**
+You might copy parts of workflows or create macros for reuse.
+
+**In Prophecy:**
+You can reuse components programmatically, since they live in code.
+
+## Save/commit work
+
+**In Alteryx:**
+You save and close your workflow. It’s a file on your computer.
+
+**In Prophecy:**
+You commit and push your branch. Your work is stored safely in Git and ready for review, deployment, or rollback.
+
+## Deploy and schedule
+
+**In Alteryx:**
+You publish completed workflows to **Alteryx Server** or the **Gallery** to automate runs. Scheduling, credentials, and runtime settings are configured through the Server interface. Each workflow is stored as a versioned file, and promotion between environments (dev, test, prod) often involves exporting and re-importing `.yxzp` packages manually.
+
+**In Prophecy:**
+You deploy pipelines from within Prophecy. Scheduling and runtime configurations are stored alongside the pipeline in Git, ensuring that deployments are repeatable and version-controlled. Promotion between environments is managed through Git branches or pull requests rather than manual package transfers, resulting in consistent, auditable releases.
+
+## Conclusion
+
+Overall, your development process remains visual and tool-driven. Behind the scenes, SQL acts as a stable, scalable execution layer for the same kinds of transformations you already build in Alteryx.
+
+For support, please see [Getting help with Prophecy](/data-analysis/administration/getting-help/get-in-touch).

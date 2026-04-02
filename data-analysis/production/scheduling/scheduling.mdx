@@ -5,9 +5,9 @@ description: 'Automate your pipeline runs using schedules'
 
 Prophecy supports the following ways to automate pipeline execution.
 
-- **Built-in scheduler**: Use [Prophecy Automate](/data-analysis/administration/platform/architecture) to orchestrate pipelines directly in the UI.
-- **Pipeline gem**: Configure the [Pipeline gem](/data-analysis/production/scheduling/pipeline-trigger-gem) to start pipeline runs from a gem in the canvas.
-- **API-based automation**: Call the [Trigger Pipeline API](/api-reference/pipelines/trigger-pipeline-run) to start pipelines from external systems.
+- **Built-in scheduler**: Use [Prophecy Automate](/data-analysis/administration/platform/architecture) to orchestrate pipelines from the UI.
+- **Pipeline gem**: Configure the [Pipeline gem](/data-analysis/production/scheduling/pipeline-trigger-gem) to start pipeline runs from a gem.
+- **API**: Call the [Trigger Pipeline API](/api-reference/pipelines/trigger-pipeline-run) to start pipelines from external systems.
 
 This page describes how to use the **built-in scheduler** in SQL projects.
 
@@ -18,7 +18,9 @@ In Prophecy, a schedule automates the execution of a single pipeline in a projec
 - When the pipeline should run. Prophecy supports time-based or file-based [triggers](/data-analysis/production/scheduling/triggers).
 - Optional [email alerts](/data-analysis/production/scheduling/alerts) to report the outcome of the pipeline run.
 
-To schedule multiple pipelines, create a separate schedule for each one. You can enable or disable schedules individually, but enabling a schedule doesn't activate it. An enabled schedule becomes active only when the parent project is published. Similarly, disabling a schedule also requires republishing the project, since schedule status is part of the deployment configuration.
+To schedule multiple pipelines, create a separate schedule for each one. You can enable or disable schedules individually, but enabling a schedule doesn't activate it.
+
+An enabled schedule becomes active **only when the parent project is published**. Similarly, disabling a schedule also requires republishing the project, since schedule status is part of the deployment configuration.
 
 ## Schedule activation
 

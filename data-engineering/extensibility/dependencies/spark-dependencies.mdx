@@ -71,6 +71,50 @@ When you connect a pipeline to a cluster, dependencies are automatically install
 
 ![Update Spark cluster](/data-engineering/extensibility/dependencies/img/synth_0_1_requirements.png)
 
+### Scala JAR selection for Spark 3.x and Spark 4.x
+
+Scala pipeline projects generate different JAR names for Spark 3.x and Spark 4.x runtimes. This allows Prophecy to automatically select the correct JAR based on the target cluster runtime.
+
+Spark 4.0 (Databricks Runtime 17+, Dataproc 3.x) uses Scala 2.13 instead of Scala 2.12. These versions are binary-incompatible, so a JAR compiled for one cannot run on the other and may produce errors such as `NoClassDefFoundError: scala/Serializable`.
+
+To support both runtimes, Prophecy builds version-specific JARs from the same pipeline project using Maven profiles.
+
+#### JAR naming
+
+JAR names now include the Scala version:
+
+| Before | After |
+| --- | --- |
+| `MyPipeline-1.0.jar` | `MyPipeline_2.12-1.0.jar` (Spark 3.x) |
+| — | `MyPipeline_2.13-1.0.jar` (Spark 4.x) |
+
+Prophecy automatically selects the appropriate JAR at runtime.
+
+#### Maven profiles
+
+The project `pom.xml` includes profiles for each Scala version:
+
+| Profile ID | Scala Version | Spark Version | Active by Default |
+| --- | --- | --- | --- |
+| `scala-2.12` | `2.12.15` | `3.5.0` | Yes |
+| `scala-2.13` | `2.13.14` | `4.0.0` | No |
+
+The `scala-2.12` profile remains active by default for existing Spark 3.x workloads.
+
+#### Required actions
+
+This applies only to Scala pipeline projects.
+
+**All Scala pipeline users**:
+- Open each pipeline once in the Prophecy UI to trigger code regeneration.
+- Confirm that the `pom.xml` file includes Maven profiles.
+
+**Cross-project dependencies**: Re-release upstream projects so downstream projects resolve the updated JAR names.
+
+**Standalone projects**: No action is required.
+
+Use `scala-2.12` for Spark 3.x runtimes and `scala-2.13` for Spark 4.x runtimes.
+
 ## Storage
 
 Dependencies are natively saved within your build system files. For example, if you're using Scala, dependencies are saved in the

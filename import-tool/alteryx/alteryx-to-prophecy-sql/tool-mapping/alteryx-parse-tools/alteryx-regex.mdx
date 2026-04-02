@@ -1,0 +1,89 @@
+---
+title: Alteryx RegEx Tool > Prophecy Regex Gem
+description: Mapping between Alteryx's RegEx Tool and Prophecy's Regex Gem
+---
+
+The Alteryx [RegEx tool](https://help.alteryx.com/current/en/designer/tools/parse/regex-tool.html) applies regular-expression logic to text fields in order to detect, extract, split, or transform string values. It supports four modes: Match, Parse, Replace, and Tokenize.
+
+Prophecy implements this functionality through the [Regex gem](/data-analysis/gems/parse/regex). The gem supports the same four operation types, with slight differences in output structure and overwrite behavior.
+
+## Automated migration results
+
+When Import detects an Alteryx RegEx tool:
+
+- It generates a **Regex** gem in Prophecy.
+- The selected Alteryx operation (Match, Parse, Replace, or Tokenize) is mapped directly to the corresponding Regex gem action.
+- The regex pattern is copied exactly, except in a small subset of cases where Alteryx's regex patterns differ from Prophecy's regex patterns.
+- Capture groups are expanded into output columns when using **Parse**.
+- Because Prophecy's Replace does not overwrite existing columns, in these cases Prophecy adds a downstream Reformat gem to remove replaced columns.
+
+## Manually replicate in Prophecy
+
+To reproduce Alteryx RegEx behavior manually:
+
+1. Add a **Regex** gem to the canvas.
+1. Select column to parse.
+2. Select the **Output strategy** that matches the Alteryx configuration:
+   - Match
+   - Parse
+   - Replace
+   - Tokenize
+3. Specify regex pattern.
+4. Configure output columns (for Parse, Replace, or Tokenize) as needed.
+
+## Configuration options
+
+### In Alteryx (RegEx tool)
+
+1. Select column to parse.
+2. Enter or configure regular expression: Perl-compatible regex pattern.
+3. Choose whether or not to use case-insensitive matching.
+4. Select output method: Match, Parse, Replace, or Tokenize.
+5. For Replace, enter replacement string.
+6. For Parse/Tokenize, configure output fields.
+
+### In Prophecy (Regex gem)
+
+1. Select column to parse
+2. Select output strategy: Match, Parse, Replace, or Tokenize
+3. Enter Regex pattern manually (Prophecy provides common patterns for reference).
+4. Choose whether or not to use case-insensitive matching.
+5. Configure names and options for output columns, depending on output strategy.
+
+## Output behavior
+
+- Alteryx output structure varies by mode.
+- Prophecy always produces a single output dataset with added or expanded columns depending on the selected operation.
+
+## Known caveats
+
+- **Boolean vs numeric flags:** Match results differ in type (Boolean vs 1/0). To mimic Alteryx behavior, cast to Boolean in a downstream gem.
+- **Overwrite behavior:** Replace operations append new columns in Prophecy; Alteryx workflows may overwrite fields.
+- **Regex entry**: Prophecy does not provide a regex builder UI; you enter regex manually using drawing on common reference patterns provided in the gem.
+- **Regex engine differences**: Alteryx uses Perl Compatible Regular Expressions (PCRE); Prophecy uses Java regular expressions.
+
+## Example
+
+Goal: Extract phone-number components from a string like `"(212) 555-0199"`.
+
+### Alteryx RegEx tool (Parse)
+
+1. Choose column with phone number.
+2. Enter or configure _regular expression_: `(\d{3})[)\s-](\d{3})[-](\d{4})`.
+3. Choose **Parse** for Output Method.
+
+Resulting fields: `AreaCode`, `Exchange`, `Number`
+
+### Prophecy equivalent (Regex gem)
+
+1. Select column to parse.
+2. Select **Parse** for **Output strategy**.
+3. Enter **Regex**: `(\d{3})[)\s-](\d{3})[-](\d{4})`.
+
+Output:
+
+| New column name | Type | Regex Expression   |
+| ------------- | ----------- | ------ |
+| `area_code`          | String   | (\d{3}) |
+| `exchange`          |  String   | (\d{3}) |
+| `number`          | String      | (\d{4}) |

@@ -1,4 +1,4 @@
-import git
+﻿import git
 import argparse
 import re
 import os
@@ -30,14 +30,17 @@ def get_versions_for_tag(repo, tag_name):
         prophecy_libs_version_regex = r'prophecyLibsVersion\s*=\s*"([^"]+)"'
         scala_version = re.findall(prophecy_libs_version_regex, file_contents)
         if len(scala_version) != 1:
-            #print("prophecyLibsVersion not found.")
             return  # ignore for now if we can't find missing old versions
 
         python_prophecy_libs_version_regex = r'pythonProphecyLibsVersion\s*=\s*"([^"]+)"'
         python_version = re.findall(python_prophecy_libs_version_regex, file_contents)
         if len(python_version) != 1:
-            #print("pythonProphecyLibsVersion not found.")
             return  # ignore for now if we can't find missing old versions
+
+        python_prophecy_automate_version_regex = r'pythonProphecyAutomateVersion\s*=\s*"([^"]+)"'
+        automate_version = re.findall(python_prophecy_automate_version_regex, file_contents)
+        if len(automate_version) != 1:
+            automate_version = [""]  # many old versions did not have a prophecy automate version. don't fail if we can't find it
 
         create_date = get_commit_date(repo, tag_name)
         if tag_name in LTS_VERSIONS:
@@ -57,6 +60,7 @@ def get_versions_for_tag(repo, tag_name):
             "prophecy_version": tag_name,
             "scala_version": scala_version[0],
             "python_version": python_version[0],
+            "automate_version": automate_version[0],
             "date": create_date.strftime('%Y/%m/%d'),
             "end_of_support_date": end_of_support_date.strftime('%Y/%m/%d')
         }
@@ -70,14 +74,16 @@ def get_versions_for_tag(repo, tag_name):
 def parse_existing_row(row_line):
     """Parse a table row line into a version dictionary."""
     parts = [p.strip() for p in row_line.split("|")]
-    if len(parts) < 6 or not parts[1] or parts[1].startswith("Prophecy"):
+    # 6 data columns => 8 parts when splitting by '|': leading empty + 6 cells + trailing empty
+    if len(parts) < 8 or not parts[1] or parts[1].startswith("Prophecy"):
         return None
     return {
         "prophecy_version": parts[1],
         "scala_version": parts[2],
         "python_version": parts[3],
-        "date": parts[4],
-        "end_of_support_date": parts[5]
+        "automate_version": parts[4],
+        "date": parts[5],
+        "end_of_support_date": parts[6]
     }
 
 
@@ -88,7 +94,7 @@ def update_version_chart_file(docs_repo_path):
     with open(version_chart_file, 'r') as file:
         lines = file.readlines()
 
-    # Find the table header row (line with "Prophecy version | [Prophecy Scala libs]")
+    # Find the table header row
     header_end_index = None
     table_header_index = None
     delimiter_index = None
@@ -131,6 +137,7 @@ def update_version_chart_file(docs_repo_path):
             # Check if any field has changed
             if (existing["scala_version"] != new_version["scala_version"] or
                 existing["python_version"] != new_version["python_version"] or
+                existing["automate_version"] != new_version["automate_version"] or
                 existing["date"] != new_version["date"] or
                 existing["end_of_support_date"] != new_version["end_of_support_date"]):
                 existing_versions[prophecy_version] = new_version
@@ -152,12 +159,13 @@ def update_version_chart_file(docs_repo_path):
     delimiter_parts = delimiter.split("|")
 
     # Create rows for all versions
-    all_rows = ["| {} | {} | {} | {} | {} |\n".format(
+    all_rows = ["| {} | {} | {} | {} | {} | {} |\n".format(
         v['prophecy_version'].ljust(len(delimiter_parts[1].strip())),
         v['scala_version'].ljust(len(delimiter_parts[2].strip())),
         v['python_version'].ljust(len(delimiter_parts[3].strip())),
-        v['date'].ljust(len(delimiter_parts[4].strip())),
-        v['end_of_support_date'].ljust(len(delimiter_parts[5].strip()))
+        v['automate_version'].ljust(len(delimiter_parts[4].strip())),
+        v['date'].ljust(len(delimiter_parts[5].strip())),
+        v['end_of_support_date'].ljust(len(delimiter_parts[6].strip()))
     ) for v in sorted_versions]
 
     # Combine: header (includes table header + delimiter) + all rows

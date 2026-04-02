@@ -34,7 +34,7 @@ The [knowledge graph](/data-analysis/ai/knowledge-graph/knowledge-graph) indexer
 
 ## Charts improvements
 
-Now, when you configure a chart in a [Prophecy App](/data-analysis/collaboration/prophecy-apps/apps) or in the [Data Explorer](/data-analysis/development/runs/data-explorer/data-explorer), you can change the colors used in the chart.
+Now, when you configure a chart in a [Prophecy App](/data-analysis/analysis/overview) or in the [Data Explorer](/data-analysis/development/runs/data-explorer/data-explorer), you can change the colors used in the chart.
 
 <Frame>
   ![Charts color picker](/data-analysis/development/runs/data-explorer/charts/img/chart-colors.png)
@@ -242,7 +242,7 @@ You can now [move projects](/data-analysis/development/versioning/migrate-manage
 
 ## Enhancements
 
-- You can now enable or disable [auto-run](/data-analysis/collaboration/prophecy-apps/app-settings) for Prophecy Apps in the app settings.
+- You can now enable or disable [auto-run](/data-analysis/analysis/analysis-settings) for Prophecy Apps in the app settings.
 - When you open a gem, you can now collapse the **Ports** panel of the gem configuration dialog.
 - [Write strategies](/data-analysis/gems/source-target/table/write/write-options) for Table gems have been renamed. However, they are still mapped to the same dbt configs under the hood (Changed in 4.1.3.9).
 - We've enhanced the [lineage extractor](/data-engineering/lineage/lineage-extractor) Python tool to be able to extract lineage from pipelines in SQL projects in Excel and OpenLineage format (Added in 4.1.3.10).
@@ -324,7 +324,7 @@ You can now define and call [stored procedures](/data-analysis/gems/custom/store
 ## Enhancements
 
 - Prophecy uses temporary tables to process data from external systems in a SQL warehouse. Previously, these tables were written and then removed, which meant you could briefly see them in your warehouse. Now, they use **ephemeral materialization**, so they only exist during execution and no longer appear in your warehouse.
-- You can now overwrite a Table gem using the [File Upload component](/data-analysis/collaboration/prophecy-apps/app-components#file-upload) in a Prophecy App. Previously, you could only overwrite Source gems. (Added in 4.1.2.2).
+- You can now overwrite a Table gem using the [File Upload component](/data-analysis/analysis/analysis-components#file-upload) in a Prophecy App. Previously, you could only overwrite Source gems. (Added in 4.1.2.2).
 
 </Update>
 
