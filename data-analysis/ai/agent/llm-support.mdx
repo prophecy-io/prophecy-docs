@@ -1,0 +1,65 @@
+---
+title: Supported AI models
+description: Supported models, endpoint providers, and plan requirements for Prophecy AI Agents.
+---
+
+Prophecy AI Agents are engineered and optimized for a single model configuration to ensure consistent reasoning quality, transformation accuracy, and reliability.
+
+This document defines supported models, allowed endpoint providers, and billing requirements for Agents, as well as explicitly unsupported configurations.
+
+## Supported model
+
+Prophecy Agents support Anthropic Opus 4.5 only.
+
+The agent architecture, reasoning workflows, and transformation logic are tuned specifically for this model. No other base models are supported.
+
+## Alternative Claude endpoints
+
+<Callout icon="/images/icon.png" color="#FFC107">
+  Applicable to the [Enterprise Edition](/data-analysis/administration/platform/editions) only.
+</Callout>
+
+Enterprise customers may choose to use their own Anthropic-hosted model endpoint instead of the Prophecy-managed endpoint.
+
+Customer-provided Anthropic endpoints are supported through the following providers:
+
+- Anthropic Console
+- Amazon Bedrock
+- Google Vertex AI
+- Microsoft Foundry
+
+When using a customer-provided endpoint, only PAYG, API-token-based Anthropic models are allowed.
+
+## Lower-tier models (strongly discouraged)
+
+Customers can use lower-cost Anthropic models, such as Haiku or Sonnet, but this is strongly discouraged.
+
+Using lower-tier models will significantly degrade agent performance, including:
+
+- Lower reasoning accuracy.
+- Weaker transformations.
+- Higher failure rates.
+
+Prophecy Agents are optimized specifically for Anthropic Opus 4.5, and using alternative models introduces substantial quality risk.
+
+## Endpoint billing and authentication requirements
+
+Only PAYG, API-token-based Anthropic models are supported.
+
+Based on supported providers, authentication mechanisms include:
+
+- API key
+- API key or AWS credentials
+- GCP credentials
+- API key or Microsoft Entra ID
+
+Anthropic flat monthly or per-user plans, including Claude Code licensing, are not supported and cannot be connected to Prophecy.
+
+## Unsupported endpoints and plans
+
+The following endpoints and plans are not supported:
+
+- Databricks model endpoints.
+- Anthropic flat monthly or per-user plans (for example, Claude Code licensing).
+
+Prophecy does not support configuration outside of PAYG, API-token-based Anthropic models.

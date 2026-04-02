@@ -35,7 +35,34 @@ To install and run the Prophecy Build Tool, you need:
 - `python >=3.7` (Recommended 3.9.13)
 - `pyspark` (Recommended 3.3.0)
 
-## Installation
+### Using generated wheel artifacts
+
+The Prophecy Build Tool (PBT) generates Python wheel (`.whl`) files as part of the build process. These artifacts must be available in the execution environment where your pipeline runs.
+
+Depending on your setup, you may need to install or provide the wheel manually.
+
+#### Local or ad-hoc execution
+
+If you are running jobs locally or outside a managed deployment pipeline, install the wheel file before execution:
+
+```
+pip install dist/<your-wheel>.whl
+```
+
+Alternatively, when using Spark:
+
+```
+spark-submit --py-files dist/<your-wheel>.whl ...
+```
+
+#### Databricks or cluster environments
+
+Ensure the wheel is either:
+
+- attached as a cluster library, or
+- included in your deployment process.
+
+## Install PBT
 
 To install the Prophecy Build Tool, run:
 

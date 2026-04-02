@@ -1,0 +1,87 @@
+---
+title: Alteryx Transpose tool > Prophecy Unpivot Gem
+description: Mapping between Alteryx’s Transpose tool and Prophecy’s Unpivot gem
+---
+
+The [Alteryx Transpose tool](https://help.alteryx.com/current/en/designer/tools/transform/transpose-tool.html) reshapes data from wide format to long format by converting selected Data Columns into two output columns—one holding the original column names (`Name`) and one holding their values (`Value`)—while preserving selected Key Columns as identifiers.
+
+In Prophecy, the equivalent operation is implemented by the [Unpivot gem](/data-analysis/gems/transform/unpivot).
+
+<Note>
+This functionality was previously provided by Prophecy's Transpose gem; that gem is still supported for existing pipelines, but Prophecy recommends using Unpivot moving forward.
+</Note>
+
+## Automated migration results
+
+When Import detects an Alteryx Transpose tool, it generates a **Transpose** gem.
+
+## Manually replicate in Prophecy
+
+Use the Unpivot gem to reproduce Alteryx Transpose behavior.
+
+1. Add an **Unpivot** gem and connect your input dataset.
+1. Set **Key Columns** to the identifier fields you want preserved in every output row.
+1. Set **Data Columns** to the fields you want stacked into name/value pairs.
+1. (Optional) Enable **Use custom output column names** to rename the default `Name` and `Value` columns.
+
+## Configuration options
+
+### Alteryx
+
+Alteryx Transpose is configured by dividing fields into two sets:
+
+- **Key Columns**: Columns that remain unchanged and are repeated for each transposed output row (identifiers).
+- **Data Columns**: Columns that are converted into rows, producing two output columns: `Name` and `Value`.
+
+### Prophecy
+
+Select **Key Columns**. Functionally equivalent to Alteryx key columns. Select all columns that you want to keep as identifiers for each row. These serve as unique identifiers and are preserved unchanged in output, helping to maintain the relationship between the original and transformed data.
+
+Select **Data Columns**. Functionally equivalent to Alteryx data columns. The columns contain the actual data values to be transformed from wide format (multiple columns) to long format (single column). These columns will be transformed into two new columns: one containing the column names and another containing their values.
+
+Optionally, select **Use custom output column names for Name & Value pairs** and enter names for the new columns.
+
+## Output behavior
+
+In both platforms:
+- All selected key columns are preserved.
+- Selected data columns are stacked into:
+  - a column containing the original field names (`Name`)
+  - a column containing the corresponding field values (`Value`).
+- The output has more rows than the input.
+
+## Known caveats
+
+**Deprecated gem naming in migrated pipelines**: Import may generate a Transpose gem even though Unpivot is the current recommended gem.
+
+## Example
+
+Goal: Convert quarterly revenue columns into a long format so each row represents one region and one quarter, while preserving product identifiers.
+
+Input data: columns `ProductID`, `ProductName`, `Region`, `Q1_Revenue`, `Q2_Revenue`, `Q3_Revenue`, `Q4_Revenue`
+
+### Alteryx (Transform tool)
+
+1. Select `ProductID`, `ProductName`, and `Region` as key columns.
+1. Select `Q1_Revenue`, `Q2_Revenue`, `Q3_Revenue`, and `Q4_Revenue` as data columns.
+
+### Prophecy (Unpivot gem)
+
+3. Under **Key Columns**, select `ProductID`, `ProductName`, and `Region`.
+4. Under **Data Columns**, select `Q1_Revenue`, `Q2_Revenue`, `Q3_Revenue`, `Q4_Revenue`
+5. (Optional) Enable **Use custom output column names** and rename:
+   - `Name` → `Quarter`
+   - `Value` → `Revenue`
+
+### Output
+
+| ProductID | ProductName | Region | Name   | Value |
+| ------------- | --------------- | ---------- | ---------- | --------- |
+| 1      | Alpha Widget    | North      | Q1_Revenue | 12000     |
+| 2      | Beta Widget     | South      | Q1_Revenue | 9800      |
+|1     | Alpha Widget    | North      | Q2_Revenue | 13500     |
+| 2      | Beta Widget     | South      | Q2_Revenue | 10200     |
+| 1    | Alpha Widget    | North      | Q3_Revenue | 14200     |
+| 2     | Beta Widget     | South      | Q3_Revenue | 11000     |
+| 1      | Alpha Widget    | North      | Q4_Revenue | 16000     |
+| 1      | Beta Widget     | South      | Q4_Revenue | 12500     |

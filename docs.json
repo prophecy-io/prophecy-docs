@@ -31,12 +31,18 @@
                     ]
                   },
                   {
-                    "group": "AI",
+                    "group": "Build with Agent",
                     "pages": [
                       {
-                        "group": "Agent",
+                        "group": "Overview",
                         "pages": [
                           "data-analysis/ai/agent/agent",
+                          "data-analysis/ai/agent/prompting-best-practices"
+                        ]
+                      },
+                      {
+                        "group": "Core workflows",
+                        "pages": [
                           {
                             "group": "Chat",
                             "pages": [
@@ -50,6 +56,13 @@
                           },
                           "data-analysis/ai/agent/explore",
                           "data-analysis/ai/agent/transform",
+                          "data-analysis/ai/agent/analyses"
+                        ]
+                      },
+                      {
+                        "group": "Advanced capabilities",
+                        "pages": [
+                          "data-analysis/ai/agent/harmonization/overview",
                           {
                             "group": "Documentation",
                             "pages": [
@@ -60,31 +73,37 @@
                         ]
                       },
                       {
-                        "group": "Copilot",
+                        "group": "Governance & configuration",
                         "pages": [
-                          "data-analysis/ai/copilot/gem-expressions",
-                          "data-analysis/ai/copilot/gem-fixes",
-                          "data-analysis/ai/copilot/auto-documentation"
+                          "data-analysis/ai/agent/agent-governance",
+                          "data-analysis/ai/agent/llm-support",
+                          {
+                            "group": "Knowledge graph",
+                            "pages": [
+                              "data-analysis/ai/knowledge-graph/knowledge-graph",
+                              "data-analysis/ai/knowledge-graph/indexer"
+                            ]
+                          }
                         ]
-                      },
-                      {
-                        "group": "Knowledge graph",
-                        "pages": [
-                          "data-analysis/ai/knowledge-graph/knowledge-graph",
-                          "data-analysis/ai/knowledge-graph/indexer"
-                        ]
-                      },
-                      "data-analysis/ai/llm-providers"
+                      }
                     ]
                   },
                   {
-                    "group": "Development",
+                    "group": "Build pipelines",
                     "pages": [
                       {
                         "group": "Projects",
                         "pages": [
                           "data-analysis/development/projects/create-project",
-                          "data-analysis/development/projects/project-languages"
+                          "data-analysis/development/projects/project-languages",
+                          "data-analysis/development/projects/export-code"
+                        ]
+                      },
+                      {
+                        "group": "Pipelines",
+                        "pages": [
+                        "data-analysis/development/pipelines/data-analysis-pipelines",
+                        "data-analysis/development/pipelines/view-pipeline-py"
                         ]
                       },
                       {
@@ -95,7 +114,8 @@
                           "data-analysis/development/studio/canvas-annotations",
                           "data-analysis/development/studio/containers",
                           "data-analysis/development/studio/development-settings",
-                          "data-analysis/development/studio/messages"
+                          "data-analysis/development/studio/messages",
+                          "data-analysis/development/studio/wireless-connections"
                         ]
                       },
                       {
@@ -125,7 +145,14 @@
                           }
                         ]
                       },
-                      "data-analysis/development/pipeline-params",
+                      {
+                        "group": "Parameters",
+                        "pages": [
+                          "data-analysis/development/parameters/parameters",
+                          "data-analysis/development/parameters/usage",
+                          "data-analysis/development/parameters/parameter-sets"
+                        ]
+                      },
                       {
                         "group": "Versioning",
                         "pages": [
@@ -160,40 +187,62 @@
                     ]
                   },
                   {
-                    "group": "Environment",
+                        "group": "Explore and visualize",
+                        "pages": [
+                          "data-analysis/analysis/overview",
+                          "data-analysis/analysis/create-analysis",
+                          "data-analysis/analysis/analysis-components",
+                          "data-analysis/analysis/analysis-settings",
+                          "data-analysis/analysis/consume-analysis"
+                        ]
+                      },
+                  {
+                    "group": "Platform setup",
                     "pages": [
                       {
                         "group": "Fabrics",
                         "pages": [
                           "data-analysis/environment/fabrics/prophecy-fabrics",
-                          "data-analysis/environment/fabrics/create-fabric"
+                          {
+                            "group": "Create a fabric",
+                            "pages": [
+                              "data-analysis/environment/fabrics/create-fabrics/databricks",
+                              "data-analysis/environment/fabrics/create-fabrics/bigquery",
+                              "data-analysis/environment/fabrics/create-fabrics/snowflake"
+                            ]
+                          }
                         ]
                       },
                       {
                         "group": "Connections",
                         "pages": [
                           "data-analysis/environment/connections/connections",
-                          "data-analysis/environment/connections/adls",
-                          "data-analysis/environment/connections/bigquery",
-                          "data-analysis/environment/connections/databricks",
-                          "data-analysis/environment/connections/gcs",
-                          "data-analysis/environment/connections/hana",
-                          "data-analysis/environment/connections/mongodb",
-                          "data-analysis/environment/connections/mssql",
-                          "data-analysis/environment/connections/onedrive",
-                          "data-analysis/environment/connections/oracle",
-                          "data-analysis/environment/connections/power-bi",
-                          "data-analysis/environment/connections/prophecy-managed",
-                          "data-analysis/environment/connections/redshift",
-                          "data-analysis/environment/connections/s3",
-                          "data-analysis/environment/connections/salesforce",
-                          "data-analysis/environment/connections/sftp",
-                          "data-analysis/environment/connections/sharepoint",
-                          "data-analysis/environment/connections/smartsheet",
-                          "data-analysis/environment/connections/smtp",
-                          "data-analysis/environment/connections/snowflake",
-                          "data-analysis/environment/connections/synapse",
-                          "data-analysis/environment/connections/tableau"
+                          {
+                            "group": "Data ingress/egress",
+                            "pages": [
+                              "data-analysis/environment/connections/adls",
+                              "data-analysis/environment/connections/bigquery",
+                              "data-analysis/environment/connections/databricks",
+                              "data-analysis/environment/connections/gcs",
+                              "data-analysis/environment/connections/hana",
+                              "data-analysis/environment/connections/mongodb",
+                              "data-analysis/environment/connections/mssql",
+                              "data-analysis/environment/connections/onedrive",
+                              "data-analysis/environment/connections/oracle",
+                              "data-analysis/environment/connections/power-bi",
+                              "data-analysis/environment/connections/prophecy-managed",
+                              "data-analysis/environment/connections/redshift",
+                              "data-analysis/environment/connections/s3",
+                              "data-analysis/environment/connections/salesforce",
+                              "data-analysis/environment/connections/sftp",
+                              "data-analysis/environment/connections/sharepoint",
+                              "data-analysis/environment/connections/smartsheet",
+                              "data-analysis/environment/connections/smtp",
+                              "data-analysis/environment/connections/snowflake",
+                              "data-analysis/environment/connections/synapse",
+                              "data-analysis/environment/connections/tableau"
+                            ]
+                          }
                         ]
                       },
                       {
@@ -203,30 +252,7 @@
                     ]
                   },
                   {
-                    "group": "Collaboration",
-                    "pages": [
-                      "data-analysis/collaboration/project-sharing",
-                      "data-analysis/collaboration/project-replays",
-                      {
-                        "group": "Prophecy Apps",
-                        "pages": [
-                          "data-analysis/collaboration/prophecy-apps/apps",
-                          "data-analysis/collaboration/prophecy-apps/run-apps",
-                          {
-                            "group": "Build apps",
-                            "pages": [
-                              "data-analysis/collaboration/prophecy-apps/app-builder",
-                              "data-analysis/collaboration/prophecy-apps/app-creation",
-                              "data-analysis/collaboration/prophecy-apps/app-components",
-                              "data-analysis/collaboration/prophecy-apps/app-settings"
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "group": "Production",
+                    "group": "Run and share",
                     "pages": [
                       {
                         "group": "Scheduling",
@@ -241,6 +267,13 @@
                       "data-analysis/production/publication",
                       "data-analysis/production/monitoring"
                     ]
+                  },
+                  {
+                    "group": "Collaboration",
+                    "pages": [
+                      "data-analysis/collaboration/project-sharing",
+                      "data-analysis/collaboration/project-replays"
+                    ]
                   }
                 ]
               },
@@ -252,6 +285,14 @@
                     "pages": [
                       "data-analysis/gems/gems",
                       "data-analysis/gems/data-types",
+                      {
+                        "group": "Copilot for gems",
+                        "pages": [
+                          "data-analysis/ai/copilot/gem-expressions",
+                          "data-analysis/ai/copilot/gem-fixes",
+                          "data-analysis/ai/copilot/auto-documentation"
+                        ]
+                      },
                       {
                         "group": "Visual expressions",
                         "pages": [
@@ -419,7 +460,8 @@
                         "pages": [
                           "data-analysis/gems/report/email",
                           "data-analysis/gems/report/power-bi",
-                          "data-analysis/gems/report/tableau"
+                          "data-analysis/gems/report/tableau",
+                          "data-analysis/gems/report/visualize"
                         ]
                       }
                     ]
@@ -782,7 +824,8 @@
                             "pages": [
                               "data-engineering/ci-cd/prophecy-build-tool/prophecy-build-tool",
                               "data-engineering/ci-cd/prophecy-build-tool/pbt-github-actions",
-                              "data-engineering/ci-cd/prophecy-build-tool/pbt-jenkins"
+                              "data-engineering/ci-cd/prophecy-build-tool/pbt-jenkins",
+                              "data-engineering/ci-cd/prophecy-build-tool/pbt-prophecy-automate"
                             ]
                           }
                         ]
@@ -854,11 +897,7 @@
                           },
                           {
                             "group": "SQL providers",
-                            "pages": [
-                              "data-engineering/fabrics/sql-provider/snowflake",
-                              "data-engineering/fabrics/sql-provider/databricks",
-                              "data-engineering/fabrics/sql-provider/bigquery"
-                            ]
+                            "pages": ["data-engineering/fabrics/sql-provider/snowflake"]
                           },
                           "data-engineering/fabrics/secret-providers"
                         ]
@@ -1161,7 +1200,7 @@
         ]
       },
       {
-        "product": "Import Tool Documentation",
+        "product": "Import Workflows",
         "icon": "/images/download-d.svg",
         "description": "Import workflows from external tools into Prophecy",
         "dropdowns": [
@@ -1176,47 +1215,69 @@
               {
                 "group": "Alteryx to SQL",
                 "pages": [
-                  "import-tool/alteryx/alteryx-to-databricks-sql/alteryx-to-prophecy-sql",
-                  "import-tool/alteryx/alteryx-to-databricks-sql/alteryx-to-databricks-sql",
-                  "import-tool/alteryx/alteryx-to-databricks-sql/databricks-data-types",
-                  "import-tool/alteryx/alteryx-to-databricks-sql/alteryx-connections",
-                  "import-tool/alteryx/alteryx-to-databricks-sql/databricks-functions-mappings",
+                  "import-tool/alteryx/alteryx-to-prophecy-sql/getting-started-prophecy-alteryx",
+                 "import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-to-sql",
+                  "import-tool/alteryx/alteryx-to-prophecy-sql/sql-dialect-differences",
+                  "import-tool/alteryx/alteryx-to-prophecy-sql/data-type-mapping",
+                  "import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-connections",
+                  "import-tool/alteryx/alteryx-to-prophecy-sql/function-mapping",
                   {
                     "group": "Tool mapping",
                     "pages": [
-                      "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-tool-mapping",
+                      "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-tool-mapping",
                       {
                         "group": "Alteryx In/Out tools",
                         "pages": [
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-in-out-tools/alteryx-browse-tool",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-in-out-tools/alteryx-datetime-now",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-in-out-tools/alteryx-directory-tool",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-in-out-tools/alteryx-input-data-tool",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-in-out-tools/alteryx-output-data-tool",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-in-out-tools/alteryx-text-input-tool"
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-browse-tool",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-datetime-now",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-directory-tool",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-input-data-tool",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-output-data-tool",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-text-input-tool"
                         ]
                       },
                       {
                         "group": "Alteryx Prep tools",
                         "pages": [
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-data-cleansing-tool",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-filter-tool",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-formula-tool",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-imputation-tool",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-field-binning-tool",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-field-formula-tool",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-row-formula-tool",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-prep-tools/alteryx-oversample-field-tool"
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-data-cleansing-tool",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-filter-tool",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-formula-tool",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-imputation-tool",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-field-binning-tool",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-field-formula-tool",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-row-formula-tool",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-oversample-field-tool"
                         ]
                       },
                       {
                         "group": "Alteryx Join tools",
                         "pages": [
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-append-fields",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-find-replace",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-join",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-join-multiple",
-                          "import-tool/alteryx/alteryx-to-databricks-sql/tool-mapping/alteryx-join-tools/alteryx-union"
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-join-tools/alteryx-append-fields",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-join-tools/alteryx-find-replace",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-join-tools/alteryx-join",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-join-tools/alteryx-join-multiple",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-join-tools/alteryx-union"
+                        ]
+                      },
+                                             {
+                        "group": "Alteryx Parse tools",
+                        "pages": [
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-parse-tools/alteryx-datetime",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-parse-tools/alteryx-regex",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-parse-tools/alteryx-xml-parse"
+                        ]
+                      },
+                      {
+                        "group": "Alteryx Transform tools",
+                        "pages": [
+                         "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-arrange",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-count-records",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-cross-tab",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-make-columns",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-running-total",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-summarize",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-transpose",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-weighted-average"
                         ]
                       },
                       {
@@ -1236,10 +1297,10 @@
                   {
                     "group": "Troubleshooting",
                     "pages": [
-                      "import-tool/alteryx/alteryx-to-databricks-sql/troubleshooting/troubleshooting",
-                      "import-tool/alteryx/alteryx-to-databricks-sql/troubleshooting/malformed-file",
-                      "import-tool/alteryx/alteryx-to-databricks-sql/troubleshooting/unsupported-function",
-                      "import-tool/alteryx/alteryx-to-databricks-sql/troubleshooting/unsupported-tool"
+                      "import-tool/alteryx/alteryx-to-prophecy-sql/troubleshooting/troubleshooting",
+                      "import-tool/alteryx/alteryx-to-prophecy-sql/troubleshooting/malformed-file",
+                      "import-tool/alteryx/alteryx-to-prophecy-sql/troubleshooting/unsupported-function",
+                      "import-tool/alteryx/alteryx-to-prophecy-sql/troubleshooting/unsupported-tool"
                     ]
                   }
                 ]
@@ -1319,6 +1380,7 @@
               {
                 "group": "Gems",
                 "pages": [
+                  "import-tool/abinitio/abinitio-gems/log",
                   "import-tool/abinitio/abinitio-gems/normalize",
                   "import-tool/abinitio/abinitio-gems/sequence",
                   "import-tool/abinitio/abinitio-gems/surrogate-key-generator"
@@ -1384,9 +1446,98 @@
     }
   },
   "redirects": [
+     {
+      "source": "/import-tool/alteryx/alteryx-to-databricks-sql/:path*",
+      "destination": "/import-tool/alteryx/alteryx-to-prophecy-sql/:path*",
+      "permanent": true
+    },
     {
-      "source": "/data-analysis/gems/source-target/table/write/write-options",
-      "destination": "/data-analysis/gems/source-target/table/write/write-options"
-    }
+      "source": "/import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-to-databricks-sql",
+      "destination": "/import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-to-sql"
+    },
+    {
+      "source": "/import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-to-prophecy-sql",
+      "destination": "/import-tool/alteryx/alteryx-to-prophecy-sql/getting-started-prophecy-alteryx"
+    },
+    {
+      "source": "/data-analysis/development/pipeline-params",
+      "destination": "/data-analysis/development/parameters/parameters"
+    },
+    {
+      "source": "/data-engineering/fabrics/sql-provider/databricks",
+      "destination": "/data-analysis/environment/connections/databricks"
+    },
+    {
+      "source": "/data-engineering/fabrics/sql-provider/bigquery",
+      "destination": "/data-analysis/environment/connections/bigquery"
+    },
+    {
+      "source": "/data-analysis/environment/fabrics/create-fabric",
+      "destination": "/data-analysis/environment/fabrics/prophecy-fabrics"
+    },
+    {
+      "source": "/data-analysis/collaboration/prophecy-apps/apps",
+      "destination": "/data-analysis/analysis/overview"
+    },
+    {
+      "source": "/data-analysis/collaboration/prophecy-apps/run-apps",
+      "destination": "/data-analysis/analysis/consume-analysis"
+    },
+    {
+      "source": "/data-analysis/collaboration/prophecy-apps/app-builder",
+      "destination": "/data-analysis/analysis/create-analysis"
+    },
+    {
+      "source": "/data-analysis/collaboration/prophecy-apps/app-creation",
+      "destination": "/data-analysis/analysis/create-analysis"
+    },
+    {
+      "source": "/data-analysis/collaboration/prophecy-apps/app-components",
+      "destination": "/data-analysis/analysis/analysis-components"
+    },
+    {
+      "source": "/data-analysis/collaboration/prophecy-apps/app-settings",
+      "destination": "/data-analysis/analysis/analysis-settings"
+    },
+        {
+      "source": "/data-analysis/ai/copilot/gem-expressions",
+      "destination": "/data-analysis/gems/copilot/gem-expressions"
+    },
+    {
+      "source": "/data-analysis/ai/copilot/gem-fixes",
+      "destination": "/data-analysis/gems/copilot/gem-fixes"
+    },
+    {
+      "source": "/data-analysis/ai/copilot/auto-documentation",
+      "destination": "/data-analysis/gems/copilot/auto-documentation"
+    },
+    {
+  "source": "/data-analysis/development/analyses/overview",
+  "destination": "/data-analysis/analyses/overview"
+},
+{
+  "source": "/data-analysis/development/analyses/create-analysis",
+  "destination": "/data-analysis/analyses/create-analysis"
+},
+{
+  "source": "/data-analysis/development/analyses/analysis-components",
+  "destination": "/data-analysis/analyses/analysis-components"
+},
+{
+  "source": "/data-analysis/development/analyses/analysis-settings",
+  "destination": "/data-analysis/analyses/analysis-settings"
+},
+{
+  "source": "/data-analysis/development/analyses/consume-analysis",
+  "destination": "/data-analysis/analyses/consume-analysis"
+},
+{
+  "source": "/import-tool/alteryx/alteryx-to-databricks-sql/databricks-data-types",
+  "destination": "/import-tool/alteryx/alteryx-to-prophecy-sql/data-type-mapping"
+},
+{
+  "source": "/import-tool/alteryx/alteryx-to-databricks-sql/databricks-functions-mappings",
+  "destination": "/import-tool/alteryx/alteryx-to-prophecy-sql/function-mapping"
+}
   ]
 }

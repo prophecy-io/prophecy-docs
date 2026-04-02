@@ -1,0 +1,111 @@
+---
+title: Alteryx Output Data Tool > Prophecy Target Gem
+description: Mapping between Alteryx’s Output Data Tool and Prophecy’s Target Gem
+---
+
+The [Alteryx Output Data tool](https://help.alteryx.com/current/en/designer/tools/in-out-tools/output-data-tool.html) and the [Prophecy Target gem](/data-analysis/gems/source-target/source-target) both write data from a workflow or pipeline to an external destination.
+
+In Alteryx, the Output Data tool writes to files, databases, or network locations using local paths or DSN-based connections.
+
+In Prophecy, the Target gem writes to cloud storage or database tables with Prophecy Automate, using workspace-managed credentials and standardized configuration options.
+
+See [Alteryx Connection mapping to Databricks SQL](/import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-connections) for an overview of how Prophecy connections relate to Alteryx's Input and Output tools.
+
+## Automated migration results
+
+When you import an Alteryx workflow that includes the Output Data tool, Prophecy generates a **Target gem** as follows:
+
+- Input/Output tools that read **files** will be converted to SFTP Source/Target gems as placeholders.
+- Input/Output tools that read **tables** will be converted to Databricks Source/Target gems as placeholders.
+
+After migration, you will need to configure these Target gems for your environment's output locations.
+
+Local or network paths from Alteryx must be replaced with cloud or catalog destinations accessible to Prophecy Automate.
+
+## Manually replicate in Prophecy
+
+To manually recreate an Alteryx Output Data tool:
+
+1. Add a Target gem to the canvas.
+2. Select the output format and destination—cloud path or database table—using workspace-managed secrets or configured connections.
+3. Choose the appropriate write mode (overwrite, append, or merge) depending on how the target data should be updated.
+4. Adjust the output schema if writing into an existing table to ensure column alignment.
+
+## Configuration options
+
+In Alteryx, the Output Data tool writes directly from the Designer engine to a local file, network share, or database using DSNs, mapped drives, or desktop-accessible paths. You select the format, specify overwrite or append behavior, and choose a file type.
+
+In Prophecy, the Target gem writes data out of the SQL warehouse using Prophecy Automate at execution time. Output destinations include cloud storage paths (such as Databricks Volumes, S3, ADLS, or GCS) and database tables reachable through secrets-managed JDBC configurations. Write modes include overwrite, append, and in some cases merge/upsert operations (depending on the target type).
+
+To replicate Alteryx’s output choices, configure Target gems so that they point to a cloud or JDBC destination that the Warehouse can access and choose a cloud-supported format such as Delta, Parquet, or CSV.
+
+<Tip title="Schema alignment">
+When writing to an existing table, column names, order, and types must match the warehouse table. Adjust gems upstream if needed.
+</Tip>
+
+## Output behavior
+
+Alteryx writes data immediately from the local Designer engine to the specified destination. Results appear on the local machine, network drive, or on-premises database at the moment the tool executes.
+
+Prophecy does not write data during design time. All writes occur when the pipeline executes.
+
+Output order and partitioning may vary depending on the underlying storage system and execution plan. You can use wildcards (`*`) in paths.
+
+## Known caveats
+
+Alteryx workflows that depend on writing to local folders or network drives must be updated to cloud-accessible paths.
+
+YXDB outputs do not have direct equivalents and must be replaced with supported formats.
+
+Overwrite behavior may differ from Alteryx, especially for managed tables. Verify write mode settings to avoid unexpected truncation or merge behavior.
+
+Prophecy replaces DSNs with workspace-managed secrets and connection objects that must be configured before pipeline execution.
+
+Writing to an existing database table requires schema alignment and sufficient permissions.
+
+Prophecy does not support Alteryx's group-based outputs.
+
+## Examples
+
+### Alteryx Output Data tool example
+
+Goal: Write a CSV to a shared network folder.
+
+Configuration:
+
+- File path: \\corp-share\output\sales_clean.csv
+- Max Records Per File: 1
+- File Format: Comma Separated Value (CSV)
+- Delimiters: ,
+- First Row Contains Field Names: selected
+- Quote Output Fields: Auto
+- Code Page: Unicode UTF-8
+- Line Ending Style: Windows
+- Write BOM: selected
+
+### Prophecy Target gem example
+
+Goal: Write a cleaned dataset to a BigQuery table.
+
+Configuration:
+
+- Target: Bigquery
+- Target location/Format type: big query
+- Target location/Connection: Select or create BigQuery connection
+- Target location/Dataset: analytics
+- Target location/Name: sales_clean
+- Properties/Description: Cleaned sales data
+- Properties/Write Mode: Overwrite
+
+Alternative CSV example:
+
+- Target Type: S3 file
+- Target location/Format type: CSV
+- Target location/Connection: Select or create Amazon S3 connection
+- Target location/File path: /mnt/processed/sales/sales_clean.csv
+- Properties/Description: Cleaned sales data.
+- Separator: ,
+- Header: selected
+- Null Value: null (default)
+- Allow Empty Column Names: selected
+- File Encoding: UTF-8

@@ -1,0 +1,60 @@
+---
+title: Google BigQuery
+description: Connect Prophecy to your Google BigQuery environment
+---
+
+<Callout icon="/images/icon.png" color="#FFC107">
+
+Available on the [Enterprise Edition](/data-engineering/administration/platform/editions) only.
+
+</Callout>
+
+To create a fabric using Google BigQuery as the provider, follow the steps below.
+
+<Steps>
+<Step title="Create a new fabric entity">
+Begin by creating a new fabric entity in Prophecy.
+
+1. From the left sidebar, click the **+** sign.
+1. On the Create Entity page, select **Fabric**.
+
+</Step>
+
+<Step title="Fill in the Basic Info tab">
+The **Basic Info** tab lets you define the key identifiers of the fabric.
+
+1. Provide a name for the fabric.
+1. (Optional) Provide a description for the fabric.
+1. Select a [team](/data-analysis/administration/management/teams/teams) that can access the fabric.
+1. Click **Continue**.
+
+</Step>
+
+<Step title="Select the provider">
+
+The **Providers** tab allows you to choose a SQL warehouse provider. You cannot change the fabric provider after you create the fabric.
+
+1. Under **Provider**, select **BigQuery**.
+
+</Step>
+<Step title="Fill in the Connections tab">
+
+The **Connections** tab allows you to store your credentials to various external data providers for reuse while attached to the fabric.
+
+- Under **SQL Warehouse Connection**, click **+ Connect SQL Warehouse**.
+- Select **BigQuery** as the connection type and configure the [connection details](/data-analysis/environment/connections/bigquery).
+
+<Info>
+  You can add [Data Ingress/Egress Connections](/data-analysis/environment/connections/connections)
+  to your fabric if you want, but these are not required.
+</Info>
+
+</Step>
+
+<Step title="Save the fabric">Click **Complete** to save the fabric.</Step>
+
+</Steps>
+
+import EditFabric from '/snippets/misc/edit-fabric.mdx';
+
+<EditFabric />
