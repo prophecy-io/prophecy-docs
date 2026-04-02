@@ -50,14 +50,26 @@ The scope determines where a parameter can be used and how it behaves at runtime
   If a pipeline parameter and a project parameter share the same name, the pipeline parameter overrides the project parameter.
 </Note>
 
+### Parameter storage and editing
+
+All parameters are defined in `parameters.py`. If a parameter can be represented in `dbt.yaml`, it is also written there. Otherwise, it remains only in `parameters.py`.
+
+This enables support for richer data types that are not compatible with YAML.
+
+Parameters can be edited through:
+
+- The visual editor
+- `parameters.py`
+- `dbt.yaml` (when supported)
+
 ### Supported data types
 
-Prophecy supports the following data types for **pipeline parameters**:
+Prophecy supports typed parameters at both the project and pipeline level.
 
 | Data type      | Description                                                                           |
 | -------------- | ------------------------------------------------------------------------------------- |
-| Array          | A list of values of the same type, added one by one in a multi-value input field.     |
-| Date           | A calendar date in `dd-mm-yyyy` format, chosen using a date picker.                   |
+| Array          | A list of values of the same type, added one by one in a multi-value input field. Stored in `parameters.py`.   |
+| Date           | A calendar date in `dd-mm-yyyy` format, chosen using a date picker. Stored in `parameters.py`.             |
 | String         | A plain text value, entered via a single-line text input.                             |
 | Boolean        | A true or false value, selected from a dropdown.                                      |
 | Int            | A 32-bit integer entered in a numeric field.                                          |
@@ -84,6 +96,29 @@ To define project or pipeline parameters:
 1. Click **+ Add Variable**.
 1. Enter a name and a value for the variable.
 1. Click **Save**.
+
+### Usage (precedence and selection)
+
+At runtime, you can use both project and pipeline parameters.
+
+When multiple values are defined, parameters are resolved in the following order (lowest to highest priority):
+
+1. Default project parameter set
+2. Custom project parameter set
+3. Default pipeline parameter set
+4. Custom pipeline parameter set
+
+### Migration behavior
+
+Project parameters have been enhanced as as version `4.2.7`. If you created project parameters in earlier versions, Prophecy automatically migrates them to the new system.
+
+During migration:
+
+- Values in double quotes are treated as strings
+- Numeric values are inferred as numeric types
+- Values are parsed using a SQL parser:
+    - If valid SQL → stored as SQL expression
+    - Otherwise → treated as string
 
 ## What's next?
 
