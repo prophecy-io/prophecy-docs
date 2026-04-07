@@ -86,15 +86,32 @@ All remaining rows are routed to `out1`.
 
 You can route based on properties of the entire dataset.
 
-Output out0 uses the condition `Count < row_limit`.
+Output `out0` uses the condition `Count < row_limit`.
 
-If the dataset has fewer rows than `row_limit`, all rows are routed to out0. Otherwise, they continue to the next output.
+If the dataset has fewer rows than `row_limit`, all rows are routed to `out0`. Otherwise, they continue to the next output.
 
 This approach is useful for alerting when data volume is too low, routing to fallback logic, and enforcing data quality thresholds.
 
+## Limitations
+
+- Output order affects behavior because earlier conditions take priority over later ones.
+- A condition that always evaluates to `true` captures all rows and prevents later outputs from receiving data.
+- Dataset-level conditions such as using `Count` do not split rows. They route all rows or no rows.
+- You must account for empty dataframes in downstream logic.
+- If an earlier condition always evaluates to `true`, all rows will be routed to that output and later outputs will not receive any data.
+
+## Example use cases
+
+You can use the Conditional gem for these scenarios:
+
+- Data splitting, such as routing high and low values to different branches
+- Exception handling
+- Alerts or guardrails, such as reacting to a low row count
+- Branching pipeline logic
+
 ## Filter vs Conditional gem
 
-Both the Filter gem and the Conditional gem evaluate conditions on a dataset, but they serve different purposes.
+Both the [Filter gem](/data-analysis/gems/prepare/filter) and the Conditional gem evaluate conditions on a dataset, but they serve different purposes.
 
 ### Key differences
 
@@ -114,7 +131,7 @@ For example, with `OrderAmount > 1000`, only rows with `OrderAmount > 1000` rema
 
 ### When to use Conditional gem
 
-Use Conditional gem when you want to route rows to different paths based on conditions.
+Use the Conditional gem when you want to route rows to different paths based on conditions.
 
 For example, when output out0 uses `OrderAmount > 1000` and output out1 has no condition, rows with `OrderAmount > 1000` go to out0, and all remaining rows go to out1.
 
@@ -132,20 +149,3 @@ The Conditional gem decides where data goes.
 Use the Filter gem for simple filtering.
 
 Use the Conditional gem when you need branching or control flow in your pipeline.
-
-## Limitations
-
-- Output order affects behavior because earlier conditions take priority over later ones.
-- A condition that always evaluates to `true` captures all rows and prevents later outputs from receiving data.
-- Dataset-level conditions such as using `Count` do not split rows. They route all rows or no rows.
-- You must account for empty dataframes in downstream logic.
-- If an earlier condition always evaluates to `true`, all rows will be routed to that output and later outputs will not receive any data.
-
-## Example use cases
-
-You can use the Conditional gem for these scenarios:
-
-- Data splitting, such as routing high and low values to different branches
-- Exception handling
-- Alerts or guardrails, such as reacting to a low row count
-- Branching pipeline logic
