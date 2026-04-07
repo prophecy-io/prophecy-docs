@@ -9,16 +9,16 @@ The following tables list all the Alteryx functions that Prophecy supports and t
 
 ## Conditional
 
-When you import conditional Alteryx functions into Prophecy, the logic of your formulas stays the same, but the syntax changes, because SQL engines such as Databricks SQL and BigQuery use `CASE` expressions instead of `IF/IIF/Switch`. Prophecy's import makes these conversions for you.
+When you import conditional Alteryx functions into Prophecy, the logic of your formulas stays the same, but the syntax changes, because SQL engines such as Databricks SQL and BigQuery use `case` expressions instead of `IF/IIF/Switch`. Prophecy's import makes these conversions for you.
 
-When reading or debugging generated SQL, you should recognize the `CASE` functions below as the Databricks equivalent of Alteryx's conditional functions.
+When reading or debugging generated SQL, you should recognize the `case` functions below as the SQL equivalent of Alteryx's conditional functions.
 
 | Alteryx Function                             | Equivalent SQL Function              | Notes                                                                                                                                                                               |
 | -------------------------------------------- | ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `IF c THEN t ELSE f ENDIF`                   | `CASE WHEN THEN ELSE END`                       | `CASE_WHEN` is equivalent to `IF`; `ENDIF` is equivalent to `END`.                                                                                                                  |
-| `IF c THEN t ELSEIF c2 THEN t2 ELSE f ENDIF` | `CASE WHEN c THEN t WHEN c2 THEN t2 ELSE f END` | `CASE_WHEN` is equivalent to `IF`; `ENDIF` is equivalent to `END`. In Alteryx, you chain conditions with `ELSEIF`. In Databrick SQL, each `ELSEIF` becomes another `WHEN … THEN …`. |
-| `IIF`                                        | `CASE WHEN c THEN t ELSE f END`                 | In Alteryx, `IFF` serves as a shorthand for `IF ... ELSE`. In Databricks SQL, `IFF` is equivalent to a `CASE` with one condition.                                                   |
-| `SWITCH`                                     | `CASE WHEN c THEN t WHEN c2 THEN t2 ... END`    | In Alteryx, `SWITCH` tests one case against several possibilities. In Databricks SQL, this is expressed as a `CASE` with multiple `WHEN … THEN …` clauses.                          |
+| `IF c THEN t ELSE f ENDIF`                   | `case when then else end`                       | `case_when` is equivalent to `if`; `endif` is equivalent to `END`.                                                                                                                  |
+| `IF c THEN t ELSEIF c2 THEN t2 ELSE f ENDIF` | `case when c then t when c2 then t2 else f end` | `case_when` is equivalent to `if`; `endif` is equivalent to `end`. In Alteryx, you chain conditions with `elseif`. in SQL, each `elseif` becomes another `when … then …`. |
+| `IIF`                                        | `case when c then t else f end`                 | In Alteryx, `iff` serves as a shorthand for `if ... else`. In SQL, `iff` is equivalent to a `case` with one condition.                                                   |
+| `SWITCH`                                     | `case when c then t when c2 then t2 ... end`    | In Alteryx, `switch` tests one case against several possibilities. In SQL, this is expressed as a `case` with multiple `when … then …` clauses.                          |
 
 ## Conversions
 
@@ -117,10 +117,10 @@ Alteryx uses named bitwise functions (such as `BinaryAnd` and `BinaryOr`), while
 
 ## Range and bound functions
 
-There are a number of similarities between how Alteryx and Databricks SQL in terms of range and bound functions, but also some important differencees:
+There are a number of similarities between how Alteryx and SQL engines in terms of range and bound functions, but also some important differencees:
 
 - `between` works directly; syntax just shifts to SQL form.
-- `Bound` requires an explicit `CASE` statement.
+- `Bound` requires an explicit `case` statement.
 - `Max` and `Min` are direct equivalents.
 - `MaxIDX` and `MinIDX` in Alteryx identify the _position_ of a value, but in Databricks SQL you use sorting or window functions (`row_number() over (...)`) to achieve the same result.
 
@@ -132,6 +132,7 @@ There are a number of similarities between how Alteryx and Databricks SQL in ter
 | `MaxIDX`         | `array_max()`                                                | `array_max()`                                                | In both engines, this applies to arrays rather than datasets. To find the row containing the max value, use `order by ... desc limit 1` or a window function. |
 | `Min`            | `min()`                                                      | `min()`                                                      | Exact mapping. In BigQuery, nulls are ignored by default.    |
 | `MinIDX`         | `array_min()`                                                | `array_min()`                                                | Like `MaxIDX`, this applies to arrays rather than datasets. To find the row with the minimum value, use `order by ... asc limit 1` or a window function. |
+
 ## Operators
 
 | Alteryx Function                                                         | Equivalent SQL Function | Notes                                                      |
@@ -153,7 +154,8 @@ There are a number of similarities between how Alteryx and Databricks SQL in ter
 
 Specialized functions have similar conceptual mappings across SQL engines, but differences arise in indexing, null handling, and how arrays are processed. These differences are especially important when translating positional logic from Alteryx.
 
-- **Indexing:** Alteryx uses zero-based indices; SQL arrays are **1-based**.
+- **Indexing:** Alteryx uses zero-based indices. BigQuery arrays are 0-based (using OFFSET), but Databricks SQL arrays are 1-based.
+
 - **Null handling:** `NULL()` is a callable function in Alteryx, but a literal in SQL.
 - **TOPNIDX:** In Alteryx it finds the _position_ of the top N value; in SQL you’ll use sorting or `row_number()` to replicate.
 
@@ -177,7 +179,7 @@ Key differences across SQL engines:
 - **Function coverage:** Some Alteryx string functions have no direct equivalent and require workarounds or UDFs.
 - **Substring & trimming:** Similar core functions exist, but syntax and edge-case behavior may differ slightly.
 
-| Alteryx                                                   | Databricks SQL                              | Big Query                                           | Notes                                                        |
+| Alteryx                                                   | Databricks SQL                              | BigQuery                                           | Notes                                                        |
 | --------------------------------------------------------- | ------------------------------------------- | --------------------------------------------------- | ------------------------------------------------------------ |
 | `Contains`                                                | `contains()`                                | `STRPOS(col, substring) > 0`                        | Databricks SQL is case-sensitive by default unless you apply `lower()` or `upper()`. BigQuery does not have a `contains()` function; use `STRPOS`. |
 | `CountWords`                                              | `size()` and `split()`                      | `ARRAY_LENGTH(SPLIT(col, ' '))`                     | No direct equivalent in SQL. For Databricks, split the string into tokens and use `size(split(col, ' '))` to count space-delimited words. BigQuery has equivalent functionality but different function names. |
@@ -185,13 +187,13 @@ Key differences across SQL engines:
 | `EndsWith`                                                | `col LIKE '%pattern'`                       | `col LIKE '%pattern'`                               | SQL uses `LIKE`; remember to escape special characters and use `%` wildcards. |
 | `FindNth`                                                 | No native equivalent                        | No native equivalent                                | Requires workaround in both engines.                         |
 | `FindString`                                              | `locate(substring, col)`                    | `STRPOS(col, substring)`                            | `locate(substring, col)` is the Databricks SQL equivalent. It returns the 1-based position of the substring. BigQuery returns 1-based position; 0 if not found. |
-| `GetLeft`/`Left`                                          | `substring(col, 1, n)`                      | `substr(col, 1, n)`                                 | Alteryx’s `Left`/`GetLeft` is 0-based, but SQL substring positions start at 1. Databricks and Big Query have equivalent functions with slightly different names. |
-| `GetPart`                                                 | `element_at(split(col, ' '), n)`            | `element_at(split(col, ' '), n)`                    | Split the string into an array, then use `element_at()` to retrieve the part. SQL arrays are 1-based: `GetPart(col, n)` → `element_at(split(col, ' '), n+1)` if Alteryx’s index is 0-based. |
+| `GetLeft`/`Left`                                          | `substring(col, 1, n)`                      | `substr(col, 1, n)`                                 | Alteryx’s `Left`/`GetLeft` is 0-based, but SQL substring positions start at 1. Databricks and BigQuery have equivalent functions with slightly different names. |
+| `GetPart`                                                 | `element_at(split(col, ' '), n)`            | `split(col, ' ')[offset(n-1)]`                | Split the string into an array, then use `element_at()` to retrieve the part. SQL arrays are 1-based: `GetPart(col, n)` → `element_at(split(col, ' '), n+1)` if Alteryx’s index is 0-based. |
 | `GetRight`/`Right`                                        | `substring(col, length(col)-n+1, n)`        | `substring(col, length(col)-n+1, n)`                | SQL lacks `RIGHT()` by default; emulate with `substring()`.  |
 | `GetWord`                                                 | `element_at(split(col, ' '), n)`            | `SPLIT(col, ' ')[OFFSET(n-1)]`                      | Split into an array first, then use `element_at()` (1-based indexing). BigQuery arrays are 0-based with `OFFSET`; this is a key difference from Databricks. |
 | `Length`                                                  | `length()`                                  | `length()`                                          | Exact mapping.                                               |
 | `LowerCase`                                               | `lower()`                                   | `lower()`                                           | Exact mapping.                                               |
-| `MD5_ASCII`,`MD5_UNICODE`, `MD5_UTF8`                     | `md5()`                                     |                                                     | Databricks SQL does not distinguish between ASCII, Unicode, or UTF-8 variants in its hash functions. `md5()` is the single equivalent for `MD5_ASCII`, `MD5_UNICODE`, and `MD5_UTF8`. |
+| `MD5_ASCII`,`MD5_UNICODE`, `MD5_UTF8`                     | `md5()`                                     | `md5()`                                               | SQL does not distinguish between ASCII, Unicode, or UTF-8 variants in its hash functions. `md5()` is the single equivalent for `md5_ascii`, `md5_unicode`, and `md5_utf8`. |
 | `PadLeft`                                                 | `lpad(col, n, 'char')`                      | `LPAD()`                                            | Exact mapping.                                               |
 | `PadRight`                                                | `rpad(col, n, 'char'`                       | `RPAD()`                                            | Exact mapping.                                               |
 | `REGEX_CountMatches`                                      | `size(split(col, regex)) - 1`               | `ARRAY_LENGTH(REGEXP_EXTRACT_ALL<br/>(col, regex))` | No built-in counter; emulate with `split()` and `size()`. BigQuery has `REGEXP_EXTRACT_ALL`, making this cleaner. |
@@ -208,4 +210,4 @@ Key differences across SQL engines:
 | `TrimLeft`                                                | `ltrim()`                                   | `ltrim()`                                           | Exact mapping.                                               |
 | `TrimRight`                                               | `rtrim()`                                   | `rtrim()`                                           | Exact mapping.                                               |
 | `Uppercase`                                               | `upper()`                                   | `upper()`                                           | Exact mapping.                                               |
-| `UuidCreate`                                              | `rtrim()`                                   | `rtrim()`                                           | Exact mapping.                                               |
+| `UuidCreate`                                              | `uuid()`                                   | `generate_uuid()`                                           | Exact mapping.                                               |
