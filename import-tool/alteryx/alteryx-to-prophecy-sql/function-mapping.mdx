@@ -3,9 +3,9 @@ title: Function mapping
 description: List of supported Alteryx functions and how they map to Prophecy SQL
 ---
 
-While importing Alteryx workflows to Prophecy pipelines, Prophecy converts Alteryx functions into equivalent Databricks SQL functions.
+While importing Alteryx workflows to Prophecy pipelines, Prophecy converts Alteryx functions into equivalent SQL functions for Databricks or BigQuery. The SQL dialect used in imported pipelines is determined by the target platform you select during import. If you import into Databricks, Prophecy generates Databricks SQL. If you import into BigQuery, it generates BigQuery SQL.
 
-The following tables list all the Alteryx functions that Prophecy supports and the corresponding Prophecy function they map to in Databricks SQL.
+The following tables list all the Alteryx functions that Prophecy supports and their corresponding SQL functions. If a table does not specify Databricks or BigQuery, functionality is equivalent for both dialects.
 
 ## Conditional
 
@@ -104,14 +104,14 @@ Alteryx offers a large catalog of dedicated math functions, many of which map di
 
 ## Bitwise
 
-Alteryx uses named bitwise functions (such as `BinaryAnd` and `BinaryOr`), while Databricks SQL relies primarily on native operators (`&`, `|`, `<<`, `>>`) and a small set of helper functions. The mappings are direct, with no semantic differences.
+Alteryx uses named bitwise functions (such as `BinaryAnd` and `BinaryOr`), while SQL relies primarily on native operators (`&`, `|`, `<<`, `>>`) and a small set of helper functions. The mappings are direct, with no semantic differences.
 
 | Alteryx Function | Equivalent SQL Function | Notes                                            |
 | ---------------- | ---------------------------------- | ------------------------------------------------ |
-| `BinaryAnd`      | `\&`                               | No `Binary` keyword necessary in Databricks SQL. |
-| `BinaryNot`      | `bitwise_not`                      | No `Binary` keyword necessary in Databricks SQL. |
-| `BinaryOr`       | `\|`                               | No `Binary` keyword necessary in Databricks SQL. |
-| `BinaryXOR`      | `bitwiseXOR`                       | No `Binary` keyword necessary in Databricks SQL. |
+| `BinaryAnd`      | `\&`                               | No `Binary` keyword necessary in SQL. |
+| `BinaryNot`      | `bitwise_not`                      | No `Binary` keyword necessary in SQL. |
+| `BinaryOr`       | `\|`                               | No `Binary` keyword necessary in SQL. |
+| `BinaryXOR`      | `bitwiseXOR`                       | No `Binary` keyword necessary in SQL. |
 | `ShiftLeft`      | `<<`                               | Exact mapping.                                   |
 | `ShiftRight`     | `>>`                               | Exact mapping.                                   |
 
@@ -119,20 +119,19 @@ Alteryx uses named bitwise functions (such as `BinaryAnd` and `BinaryOr`), while
 
 There are a number of similarities between how Alteryx and Databricks SQL in terms of range and bound functions, but also some important differencees:
 
-- `BETWEEN` works directly; syntax just shifts to SQL form.
+- `between` works directly; syntax just shifts to SQL form.
 - `Bound` requires an explicit `CASE` statement.
-- `MAX()` and `MIN()` are direct equivalents.
-- `MaxIDX` and `MinIDX` in Alteryx identify the _position_ of a value, but in Databricks SQL you’d use sorting or window functions (`ROW_NUMBER() OVER (...)`) to achieve the same result.
+- `Max` and `Min` are direct equivalents.
+- `MaxIDX` and `MinIDX` in Alteryx identify the _position_ of a value, but in Databricks SQL you use sorting or window functions (`row_number() over (...)`) to achieve the same result.
 
-| Alteryx Function | Equivalent Databricks SQL Function                            | Notes                                                                                                                                 |
-| ---------------- | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `Between`        | `between()`                                                   | In Alteryx, `Between([x], 10, 20)`; in Databricks SQL, `x BETWEEN 10 AND 20`.                                                         |
-| `Bound`          | `CASE WHEN x < min THEN min WHEN x > max THEN max ELSE x END` | Databricks SQL has no single `Bound` function; you replicate the behavior with a CASE expression to “clamp” the value inside a range. |
-| `Max`            | `max()`                                                       | In Databricks SQL, nulls are ignored by default.                                                                                      |
-| `MaxIDX`         | `array_max()`                                                 | Applies to arrays rather than datasets. To find the row containing the max value, you’d instead use `ORDER BY ... DESC LIMIT 1`.      |
-| `Min`            | `min()`                                                       | In Databricks SQL, nulls are ignored by default.                                                                                      |
-| `MinIDX`         | `array_min()`                                                 | Like `array_max()`, applies to arrays. To find the row with the minimum value, use `ORDER BY ... ASC LIMIT 1`.                        |
-
+| Alteryx Function | Equivalent Databricks SQL Function                           | Equivalent BigQuery SQL Function                             | Notes                                                        |
+| ---------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| `Between`        | `between()`                                                  | `between`                                                    | In Alteryx, `Between([x], 10, 20)`; in SQL, `x between 10 and 20`. |
+| `Bound`          | `case when x < min then min when x > max then max else x end` | `case when x < min then min when x > max then max else x end` | BigQuery, like Databricks SQL, has no single `bound` function; use a `case` expression to clamp the value inside a range. |
+| `Max`            | `max()`                                                      | `max()`                                                      | Exact mapping. BigQuery ignores nulls by default.    |
+| `MaxIDX`         | `array_max()`                                                | `array_max()`                                                | In both engines, this applies to arrays rather than datasets. To find the row containing the max value, use `order by ... desc limit 1` or a window function. |
+| `Min`            | `min()`                                                      | `min()`                                                      | Exact mapping. In BigQuery, nulls are ignored by default.    |
+| `MinIDX`         | `array_min()`                                                | `array_min()`                                                | Like `MaxIDX`, this applies to arrays rather than datasets. To find the row with the minimum value, use `order by ... asc limit 1` or a window function. |
 ## Operators
 
 | Alteryx Function                                                         | Equivalent SQL Function | Notes                                                      |
@@ -152,19 +151,19 @@ There are a number of similarities between how Alteryx and Databricks SQL in ter
 
 ## Specialized
 
-Specialized functions in Databricks SQL have a number of similarities to those in Alteryx, but with some key differences:
+Specialized functions have similar conceptual mappings across SQL engines, but differences arise in indexing, null handling, and how arrays are processed. These differences are especially important when translating positional logic from Alteryx.
 
-- **Indexing:** Alteryx uses zero-based indices; Databricks SQL arrays are **1-based**.
+- **Indexing:** Alteryx uses zero-based indices; SQL arrays are **1-based**.
 - **Null handling:** `NULL()` is a callable function in Alteryx, but a literal in SQL.
-- **TOPNIDX:** In Alteryx it finds the _position_ of the top N value; in SQL you’ll use sorting or `ROW_NUMBER()` to replicate.
+- **TOPNIDX:** In Alteryx it finds the _position_ of the top N value; in SQL you’ll use sorting or `row_number()` to replicate.
 
-| Alteryx Function | Equivalent Databricks SQL Function                    | Notes                                                                                                                                                                                                                                                                                                                                                                                                 |
-| ---------------- | ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Coalesce`       | `coalesce()`                                          | Alteryx evaluates left-to-right; Databricks SQL follows standard SQL semantics.                                                                                                                                                                                                                                                                                                                       |
-| `GetVal`         | `element_at()`                                        | In Alteryx, `GetVal(list, index)` retrieves the element at a 0-based index. In Databricks SQL, `element_at(array, index)` is 1-based. So `GetVal([x], 0)` corresponds to `element_at(x, 1)` in Databricks SQL.                                                                                                                                                                                        |
-| `NULL`           | `coalesce()`                                          | Alteryx allows `NULL()` as a function that returns a null value. In Databricks SQL, `NULL` is a literal (no parentheses). To substitute default values for nulls, use `coalesce()`.                                                                                                                                                                                                                   |
-| `TOPNIDX`        | `array_sort`(), `element_at()` and `array_position()` | No direct equivalent. `TOPNIDX` returns the 0-based index of the Nth largest value from a list. In Databricks SQL, you’d first build an array and then combine `sort_array()` (descending), `element_at()` to get the Nth largest value, and `array_position()` to find its (1-based) index. For top-N _rows_ rather than values within a row, use `ORDER BY … LIMIT n` or a window function instead. |
-| `UrlEncode`      | `url_encode()`                                        | Case sensitivity in Databricks SQL follows normal function naming (`url_encode`, not `UrlEncode`).                                                                                                                                                                                                                                                                                                    |
+| Alteryx Function | Equivalent Databricks SQL Function                    | Equivalent BigQuery SQL Function                             | Notes                                                        |
+| ---------------- | ----------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| `Coalesce`       | `coalesce()`                                          | `coalesce()`                                                 | Exact mapping across engines.                                |
+| `GetVal`         | `element_at()`                                        | `array[...] [offset(index)]`                                 | Alteryx uses 0-based indexing. Databricks SQL arrays are 1-based (`element_at(x, 1)` = first element). BigQuery arrays use 0-based indexing with `offset`, so `getval(x, 0)` → `x[offset(0)]`. |
+| `NULL`           | `coalesce()` or `NULL` literal                                     | `coalesce()` or `NULL` literal                               | For both dialects, `NULL` is a literal (not a function). Use `coalesce()` to replace nulls. |
+| `TOPNIDX`        | `array_sort()`, `element_at()` and `array_position()` | `ARRAY_SORT()`, `ARRAY_REVERSE()`, `OFFSET`, `ARRAY_POSITION()` (or workaround) | No direct equivalent. In BigQuery, you typically sort an array, optionally reverse it for descending order, then use `OFFSET(n-1)` to access the Nth value. Finding position may require `ARRAY_POSITION()` or additional logic. |
+| `UrlEncode`      | `url_encode()`                                        | No direct equivalent.                                       | BigQuery does not have a built-in `url_encode` function; requires UDF or external processing. |
 
 ## String
 
