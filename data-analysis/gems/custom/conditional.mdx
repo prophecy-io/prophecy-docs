@@ -9,7 +9,7 @@ You can use this gem when you need branching logic in a pipeline. This includes 
 
 ## How it works
 
-Each output port has a condition that evaluates to `true` or `false`. Conditions are evaluated from top to bottom. Each row is routed to the first output whose condition evaluates to `true`.
+Each output port has a condition that evaluates to `true` or `false`. Conditions are evaluated from top to bottom. Each row is routed to the first output whose condition evaluates to `true`. Any rows that do not match earlier conditions are routed to the final output port.
 
 After a row is routed to an output, it is not evaluated against later outputs.
 
@@ -18,7 +18,9 @@ The Conditional gem supports both row-level routing and dataset-level routing:
 - Row-level routing splits data based on column values.
 - Dataset-level routing supports control-flow decisions using aggregate conditions such as `count` or `sum`.
 
-Dataset-level conditions may evaluate the same way for all rows. If the condition is `true`, all rows are routed to that output. If the condition is `false`, no rows are routed to that output.
+Dataset-level conditions (such as using `count`) evaluate the same way for all rows: If the condition is `true`, all rows are routed to that output. If the condition is `false`, no rows are routed to that output.
+
+The final output port acts as a default (else) route. Any rows that do not match earlier conditions are routed to the last output.
 
 ## Use the Conditional gem
 
@@ -48,33 +50,36 @@ Aggregations applied downstream of an empty branch may still produce rows. For e
 Assume you have the following orders table.
 
 <div class="table-example">
-OrderId	Customer	OrderAmount	Region
-1001	Asha	450	West
-1002	Mateo	1250	East
-1003	Priya	800	West
-1004	Jordan	2100	North
+| OrderId | Customer | OrderAmount | Region |
+|--------:|----------|------------:|--------|
+| 1001    | Asha     | 450         | West   |
+| 1002    | Mateo    | 1250        | East   |
+| 1003    | Priya    | 800         | West   |
+| 1004    | Jordan   | 2100        | North  |
 </div>
 
 Suppose you configure the Conditional gem with two outputs.
 
 Output `out0` uses the condition `OrderAmount > 1000`.
 
-Output `out1` has no condition.
+Output `out1` is the default (else) route.
 
-Rows where `OrderAmount > 1000` are routed to out0.
+Rows where `OrderAmount > 1000` are routed to `out0`.
 
 <div class="table-example">
-OrderId	Customer	OrderAmount	Region
-1002	Mateo	1250	East
-1004	Jordan	2100	North
+| OrderId | Customer | OrderAmount | Region |
+|--------:|----------|------------:|--------|
+| 1002    | Mateo    | 1250        | East   |
+| 1004    | Jordan   | 2100        | North  |
 </div>
 
 All remaining rows are routed to `out1`.
 
 <div class="table-example">
-OrderId	Customer	OrderAmount	Region
-1001	Asha	450	West
-1003	Priya	800	West
+| OrderId | Customer | OrderAmount | Region |
+|--------:|----------|------------:|--------|
+| 1001    | Asha     | 450         | West   |
+| 1003    | Priya    | 800         | West   |
 </div>
 
 ## Example with dataset-level condition
@@ -134,6 +139,7 @@ Use the Conditional gem when you need branching or control flow in your pipeline
 - A condition that always evaluates to `true` captures all rows and prevents later outputs from receiving data.
 - Dataset-level conditions such as using `Count` do not split rows. They route all rows or no rows.
 - You must account for empty dataframes in downstream logic.
+- If an earlier condition always evaluates to `true`, all rows will be routed to that output and later outputs will not receive any data.
 
 ## Example use cases
 
