@@ -288,9 +288,9 @@
                       {
                         "group": "Copilot for gems",
                         "pages": [
-                          "data-analysis/ai/copilot/gem-expressions",
-                          "data-analysis/ai/copilot/gem-fixes",
-                          "data-analysis/ai/copilot/auto-documentation"
+                          "data-analysis/gems/copilot/gem-expressions",
+                          "data-analysis/gems/copilot/gem-fixes",
+                          "data-analysis/gems/copilot/auto-documentation"
                         ]
                       },
                       {

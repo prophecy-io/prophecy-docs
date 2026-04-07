@@ -51,7 +51,7 @@ Assume you have the following orders table.
 
 <div class="table-example">
 | OrderId | Customer | OrderAmount | Region |
-|--------:|----------|------------:|--------|
+|--------|----------|------------|--------|
 | 1001    | Asha     | 450         | West   |
 | 1002    | Mateo    | 1250        | East   |
 | 1003    | Priya    | 800         | West   |
@@ -68,7 +68,7 @@ Rows where `OrderAmount > 1000` are routed to `out0`.
 
 <div class="table-example">
 | OrderId | Customer | OrderAmount | Region |
-|--------:|----------|------------:|--------|
+|--------|----------|------------|--------|
 | 1002    | Mateo    | 1250        | East   |
 | 1004    | Jordan   | 2100        | North  |
 </div>
@@ -77,7 +77,7 @@ All remaining rows are routed to `out1`.
 
 <div class="table-example">
 | OrderId | Customer | OrderAmount | Region |
-|--------:|----------|------------:|--------|
+|--------|----------|------------|--------|
 | 1001    | Asha     | 450         | West   |
 | 1003    | Priya    | 800         | West   |
 </div>
