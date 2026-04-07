@@ -3,38 +3,32 @@ title: SQL dialect differences
 description: Behavioral differences between Databricks SQL and BigQuery when importing Alteryx workflows into Prophecy
 ---
 
-When you import Alteryx workflows into Prophecy using the Transpiler, the resulting pipeline is expressed in **Prophecy SQL**. Prophecy SQL represents the logical operations from your Alteryx workflow and is then executed on the underlying SQL engine configured for your environment.
+When you import Alteryx workflows into Prophecy, the workflow logic is translated into SQL and executed on the target engine configured for your environment. The resulting queries reflect the original transformations but follow the syntax and behavior of the selected platform, such as Databricks or BigQuery.
 
-Prophecy SQL pipelines can execute in **Databricks** or **Google BigQuery**. In most cases, imported workflows behave the same regardless of the execution engine. However, some differences in SQL dialects can affect how queries behave or how objects are referenced.
+Differences in SQL dialects can affect how queries behave and how objects are referenced. This page highlights key differences between Databricks SQL and BigQuery to help you understand how imported workflows behave after migration.
 
-This page highlights key conceptual differences between these engines so you can better understand how imported workflows may behave after migration.
+### Key differences
 
-## Overview
-
-Prophecy SQL provides a consistent interface for authoring pipelines, but execution ultimately occurs on the configured compute engine. This means that the generated SQL must conform to the syntax and behavior of the selected dialect.
-
-In practice, the flow looks like this:
-
-```
-Alteryx workflow
-↓
-Prophecy SQL pipeline
-↓
-Databricks OR BigQuery execution
-
-```
-
-While most transformations and tool mappings are engine-independent, some behavior may differ between SQL dialects.
+| Area             | Databricks SQL                      | BigQuery               | Notes                                                        |
+| ---------------- | ----------------------------------- | ---------------------- | ------------------------------------------------------------ |
+| Array indexing   | 1-based                             | 0-based (`offset`)     | This affects array access and positional logic (for example, `element_at(x, 1)` vs `x[OFFSET(0)]`). |
+| Regex engine     | Java regex                          | RE2                    | BigQuery’s RE2 engine does not support backtracking or some advanced patterns available in Java regex. |
+| Casting behavior | `cast` (may error on invalid input) | `cast` and `safe_cast` | `safe_cast` returns `null` instead of failing on invalid conversions. |
+| Function naming  | `substring`, `locate`               | `substr`, `strpos`     | Function names and signatures may differ slightly between engines. |
 
 ## At a glance
 
 | Area | Databricks SQL | BigQuery |
-|---|---|---|---|
+|---|---|---|
 | Object naming | Uses `catalog.schema.table` structure | Uses `project.dataset.table` structure |
 | SQL dialect | Based on Spark SQL | Uses GoogleSQL |
 | Data types | Spark-compatible types | GoogleSQL types |
 | Temporary objects | Temporary views and tables supported | Temporary tables with dataset rules |
 | Query execution | Runs on Databricks compute clusters or SQL warehouses | Runs on BigQuery managed execution environment |
+| Array indexing   | 1-based                  | 0-based (`OFFSET`)     |
+| Regex engine     | Java regex               | RE2 (limited features) |
+| Casting behavior | `CAST`, some workarounds | `SAFE_CAST` available  |
+| Function naming  | `substring`, `locate`    | `substr`, `strpos`     |
 
 ## Naming and object references
 
@@ -108,9 +102,16 @@ Table creation semantics may vary between SQL engines. For example:
 - Some require explicit dataset or schema specification.
 - Some enforce stricter constraints on table overwrites or merges.
 
-FILL IN INFORMATION HERE ABOUT WRITE BEHAVIOR DIFFERENCES BETWEEN DATABRICKS AND BIGQUERY.
+Databricks supports `create or replace table`.
 
-## Performance and cost considerations
+BigQuery supports similar semantics but requires:
+
+- dataset specification
+- stricter overwrite behavior in some cases
+
+BigQuery may require explicit dataset existence before writes.
+
+## Performance considerations
 
 Execution models differ between engines, which may affect pipeline performance or cost.
 
@@ -121,7 +122,17 @@ For example:
 
 These differences do not change the logical structure of your imported pipeline, but they may influence how you optimize workloads in production.
 
-FILL IN INFORMATION HERE ABOUT PERFORMANCE OR COST CONSIDERATIONS.
+## Cost considerations
+
+Databricks:
+
+- cluster-based execution.
+- performance depends on cluster size/configuration.
+
+BigQuery:
+
+- serverless execution.
+- cost based on data scanned.
 
 ## What remains consistent
 
@@ -137,8 +148,7 @@ In most cases, you can import an Alteryx workflow once and run it on either Data
 
 For more detailed information, see:
 
-- **Data type mapping**
-- **Function mapping**
-- **Connection mapping**
-- **Tool mapping**
-```
+- [Function mapping](/import-tool/alteryx/alteryx-to-prophecy-sql/function-mapping)
+- [Data type mapping](/import-tool/alteryx/alteryx-to-prophecy-sql/function-mapping)
+- [Connection type mapping](/import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-connections)
+- [Tool mapping](/import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-tool-mapping)
