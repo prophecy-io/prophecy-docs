@@ -48,3 +48,43 @@ The follow table results when you use the following filter condition: `DatePredi
 | 2025-03-04     | 14                 | 72              | 9         | Sunny     |
 
 </div>
+
+## Filter vs Conditional gem
+
+The Filter gem and [the Conditional gem](/data-analysis/gems/custom/conditional) both evaluate conditions on a dataset, but they serve different purposes.
+
+### Key differences
+
+|               | Filter gem                                               | Conditional gem                                     |
+| ------------- | -------------------------------------------------------- | --------------------------------------------------- |
+| Purpose       | Reduce data                                              | Route data                                          |
+| Outputs       | One output                                               | Two or more outputs                                 |
+| Behavior      | Keeps rows that match the condition and removes the rest | Sends rows to different outputs based on conditions |
+| Routing       | No routing                                               | Yes (multiple paths)                                |
+| Order matters | No                                                       | Yes (first matching output wins)                    |
+
+### When to use the Filter gem
+
+Use Filter gem when you want to **keep only the rows that match a condition** and remove the rest.
+
+For example, using the condition `OrderAmount > 1000`, the Filter gem returns only the rows where `OrderAmount` is greater than 1000, and removes all other rows from the pipeline.
+
+### When to use the Conditional gem
+
+Use Conditional gem when you want to **route rows to different paths** based on conditions.
+
+For example, if `out0` is configured with the condition `OrderAmount > 1000` and `out1` has no condition, then rows where `OrderAmount` is greater than 1000 are routed to `out0`, while all remaining rows are routed to `out1`.
+
+### Row-level vs dataset-level behavior
+
+- **Filter gem** always operates at the **row level**
+- **Conditional gem** can operate at:
+  - **row level** (e.g., `OrderAmount > 1000`)
+  - **dataset level** (e.g., `Count < threshold`)
+
+### Summary
+
+- **Filter gem** → keeps what matches
+- **Conditional gem** → decides where data goes
+
+Use the Filter gem for simple filtering. Use the Conditional em when you need branching or control flow in your pipeline.
