@@ -592,7 +592,8 @@
                     "pages": [
                       "data-analysis/administration/setup/prophecy-express-guide",
                       "data-analysis/administration/setup/prophecy-enterprise-guide",
-                      "data-analysis/administration/setup/databricks-partner-connect"
+                      "data-analysis/administration/setup/databricks-partner-connect",
+                      "data-analysis/administration/setup/configure-endpoint"
                     ]
                   },
                   {
