@@ -397,7 +397,8 @@
                           "data-analysis/gems/transform/fuzzy-match",
                           "data-analysis/gems/transform/pivot",
                           "data-analysis/gems/transform/unpivot",
-                          "data-analysis/gems/transform/window"
+                          "data-analysis/gems/transform/window",
+                          "data-analysis/gems/transform/weighted-average"
                         ]
                       },
                       {

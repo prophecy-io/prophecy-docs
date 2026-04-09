@@ -1,0 +1,53 @@
+---
+title: Weighted Average
+description: Calculate the weighted average of a numeric field using another numeric field as the weight
+---
+
+import Execution from '/snippets/gem-execution-engine.mdx';
+
+<Execution execution_engine="the SQL warehouse" />
+
+## Overview
+
+Use the Weighted Average gem to calculate the weighted average of a numeric field by using another numeric field as the weight. You can also calculate weighted averages separately for groups of records.
+
+<GemExample gemName="WeightedAverage" />
+
+## Prerequisites
+
+Add `prophecy_basics` package version 1.0.11 or higher to your project.
+
+## Parameters
+
+| Parameter | Description |
+| --------- | ----------- |
+| Value Field (Numeric) | Select the numeric field that contains the values to average. |
+| Weight Field (Numeric) | Select the numeric field that contains the weights used in the calculation. When all records have the same weight, the result is equivalent to a standard average. |
+| Output Field Name | Enter the name of the output field that stores the calculated weighted average. |
+| Grouping Fields (Optional) | Optionally select one or more fields to calculate the weighted average separately for each group. If you do not select grouping fields, the gem calculates a single weighted average across all input records. |
+
+## How it works
+
+The weighted average is calculated as:
+
+$$
+\frac{\sum (value \times weight)}{\sum weight}
+$$
+
+Each value is multiplied by its corresponding weight. The results are summed, and that sum is divided by the total weight.
+
+If you specify grouping fields, the gem performs this calculation independently for each group.
+
+## Output
+
+If you do not select grouping fields, the gem returns a single row with the weighted average.
+
+If you select grouping fields, the gem returns one row per group with the weighted average.
+
+The output includes the selected grouping fields, if any, and the calculated weighted average using the specified output field name.
+
+## Notes
+
+- Both the Value Field and Weight Field must be numeric.
+- When weights are equal across all records, the result is the same as a standard average.
+- Grouping fields are optional and allow per-group calculations.
