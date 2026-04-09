@@ -1,9 +1,9 @@
 ---
-title: Conditional
+title: Condition
 description: Route rows from one input model to multiple outputs based on ordered conditional logic.
 ---
 
-The Conditional gem routes rows from an input model to one of two or more outputs based on conditions that you define for each output port. It evaluates those conditions in order and sends each row to the first output whose condition is satisfied.
+The Condition gem routes rows from an input model to one of two or more outputs based on conditions that you define for each output port. It evaluates those conditions in order and sends each row to the first output whose condition is satisfied.
 
 You can use this gem when you need branching logic in a pipeline. This includes splitting datasets, handling exceptions, adding alerts or guardrails, and implementing control flow based on dataset-level checks such as row counts or sums.
 
@@ -22,9 +22,9 @@ Dataset-level conditions (such as using `count`) evaluate the same way for all r
 
 The final output port acts as a default (else) route. Any rows that do not match earlier conditions are routed to the last output.
 
-## Use the Conditional gem
+## Use the Condition gem
 
-1. Add a **Conditional** gem to your pipeline.
+1. Add a **Condition** gem to your pipeline from the **Custom** category.
 2. Connect an input to the gem.
 3. Define a condition for each output port by using the condition builder. The condition builder supports columns, functions, parameters, and expressions.
 4. Click **Add Routing Rule** or the **+** to add more output ports when you need additional branches.
@@ -35,7 +35,7 @@ The gem starts with two output ports by default.
 
 ## Condition types
 
-Conditional gem conditions can reference [pipeline parameters and project parameters](/data-analysis/development/parameters/parameters).
+Condition gem conditions can reference [pipeline parameters and project parameters](/data-analysis/development/parameters/parameters).
 
 You can define row-level conditions such as `OrderAmount > 1000` or dataset-level conditions such as `count < threshold`.
 
@@ -58,7 +58,7 @@ Assume you have the following orders table.
 | 1004    | Jordan   | 2100        | North  |
 </div>
 
-Suppose you configure the Conditional gem with two outputs.
+Suppose you configure the Condition gem with two outputs.
 
 Output `out0` uses the condition `OrderAmount > 1000`.
 
@@ -102,20 +102,20 @@ This approach is useful for alerting when data volume is too low, routing to fal
 
 ## Example use cases
 
-You can use the Conditional gem for these scenarios:
+You can use the Condition gem for these scenarios:
 
 - Data splitting, such as routing high and low values to different branches
 - Exception handling
 - Alerts or guardrails, such as reacting to a low row count
 - Branching pipeline logic
 
-## Filter vs Conditional gem
+## Filter vs Condition gem
 
-Both the [Filter gem](/data-analysis/gems/prepare/filter) and the Conditional gem evaluate conditions on a dataset, but they serve different purposes.
+Both the [Filter gem](/data-analysis/gems/prepare/filter) and the Condition gem evaluate conditions on a dataset, but they serve different purposes.
 
 ### Key differences
 
-| Filter gem | Conditional gem |
+| Filter gem | Condition gem |
 |------------|----------------|
 | Reduce data | Route data |
 | One output | Two or more outputs |
@@ -129,23 +129,23 @@ Use the Filter gem when you want to keep only the rows that match a condition an
 
 For example, with `OrderAmount > 1000`, only rows with `OrderAmount > 1000` remain, and all other rows are removed from the pipeline.
 
-### When to use Conditional gem
+### When to use Condition gem
 
-Use the Conditional gem when you want to route rows to different paths based on conditions.
+Use the Condition gem when you want to route rows to different paths based on conditions.
 
 For example, when output out0 uses `OrderAmount > 1000` and output out1 has no condition, rows with `OrderAmount > 1000` go to out0, and all remaining rows go to out1.
 
 ### Dataset-level vs row-level behavior
 
 - The Filter gem always operates at the row level.
-- The Conditional gem can operate at the row level and the dataset level.
+- The Condition gem can operate at the row level and the dataset level.
 
 ### Summary
 
 The Filter gem keeps what matches.
 
-The Conditional gem decides where data goes.
+The Condition gem decides where data goes.
 
 Use the Filter gem for simple filtering.
 
-Use the Conditional gem when you need branching or control flow in your pipeline.
+Use the Condition gem when you need branching or control flow in your pipeline.

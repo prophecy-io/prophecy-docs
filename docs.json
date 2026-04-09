@@ -480,7 +480,7 @@
                           "data-analysis/gems/custom/sql-statement",
                           "data-analysis/gems/custom/stored-procedure",
                           "data-analysis/gems/custom/script",
-                         "data-analysis/gems/custom/conditional"
+                          "data-analysis/gems/custom/condition"
                         ]
                       }
                     ]
