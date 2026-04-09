@@ -1,0 +1,65 @@
+---
+title: Imputation
+description: Replace specified values in numeric fields with calculated or user-defined replacement values
+---
+
+import Execution from '/snippets/gem-execution-engine.mdx';
+import GemExample from '/snippets/interactive-gem.mdx';
+
+<Execution execution_engine="the SQL warehouse" />
+
+## Overview
+
+Use the Imputation gem to replace a specified value in one or more numeric fields with a replacement value. You can use it to handle missing or placeholder values before downstream analysis or modeling.
+
+For example, you can replace null values in sales fields with the average of the remaining values so those missing values do not distort later calculations.
+
+## Prerequisites
+
+- Add `prophecy_basics` package version 1.0.11 or higher to your project.
+
+## Parameters
+
+| Parameter | Description |
+| --------- | ----------- |
+| Fields to impute | Select one or more numeric fields to update. |
+| Incoming value to replace | Choose which value should be replaced in the selected fields.<ul><li>Null</li><li>User-specified value</li></ul>If you choose User-specified value, the **Value to Replace** field appears. |
+| Value to Replace | Enter the value to replace when **Incoming value to replace** is set to User-specified value. |
+| Replace with value | Choose the value used for replacement.<ul><li>Average</li><li>Median</li><li>Mode</li><li>User-specified value</li></ul>If you choose User-specified value, the **Replacement value** field appears. |
+| Replacement value | Enter the replacement value when **Replace with value** is set to User-specified value. |
+| Include imputed value indicator field | Add an indicator field for each imputed column that shows whether a value was imputed. |
+| Output imputed values as a separate field | Keep the original field unchanged and write the imputed result to a new field. |
+
+## How it works
+
+The gem scans the selected fields and looks for values that match the configured **Incoming value to replace** setting.
+
+Matching values are replaced using the selected method:
+
+- Average: Replaces with the mean of valid values in the field, excluding the value being replaced.
+- Median: Replaces with the middle value in the field, excluding the value being replaced.
+- Mode: Replaces with the most frequently occurring value in the field, excluding the value being replaced.
+- User-specified value: Replaces with the value you provide.
+
+The calculation is performed independently for each selected field.
+
+## Output
+
+By default, the output contains the original data stream with imputed values written back into the selected fields.
+
+When **Include imputed value indicator field** is enabled, an additional field is added for each imputed field to indicate whether the value was imputed.
+
+Naming pattern: `<original_field>_Indicator`
+
+When **Output imputed values as a separate field** is enabled, the original field is preserved and a new field is added with the imputed result.
+
+Naming pattern: `<original_field>_ImputedValue`
+
+If both options are selected, both additional fields are included.
+
+## Notes
+
+- This gem is intended for numeric fields.
+- Imputation is calculated separately for each selected field.
+- When using Average, Median, or Mode, the replacement statistic is calculated using valid values only, excluding the value being replaced.
+- If **Output imputed values as a separate field** is not selected, the original field is overwritten with the imputed result.

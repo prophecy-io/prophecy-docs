@@ -1,0 +1,66 @@
+---
+title: RunningTotal
+description: Calculate running totals for selected numeric columns.
+---
+
+import Execution from '/snippets/gem-execution-engine.mdx';
+
+<Execution execution_engine="the SQL warehouse" />
+
+## Overview
+
+Use the RunningTotal gem to calculate running totals for selected numeric columns. You can also configure optional partitioning and row ordering for the calculation.
+
+This gem is useful when you want to control how running total calculations are grouped and ordered across your data.
+
+## Prerequisites
+
+- Add `prophecy_basics` package version 1.0.11 or higher to your project.
+
+## Parameters
+
+| Parameter | Description |
+| --------- | ----------- |
+| Columns for running total | Select the columns to include in the running total calculation. |
+| Partition by (optional) | Optionally select fields to partition the calculation. |
+| Order rows for calculation (optional) | Configure how rows are ordered for the calculation. This section includes **Order By Columns** and **Sort strategy**. |
+| Output column prefix (optional) | Enter a prefix for the output columns. |
+
+## Order rows for calculation
+
+Use **Order By Columns** to select the columns used to order rows for the calculation.
+
+Use **Sort strategy** to choose one of the following options:
+
+- ascending nulls first
+- ascending nulls last
+- descending nulls first
+- descending nulls last
+
+## Example
+
+Let's say you have the following dataset.
+
+<div class="table-example">
+
+| Record | Value |
+| ------ | ----- |
+| A      | 10    |
+| B      | 12    |
+| C      | 4     |
+
+</div>
+
+If you select **Value** in **Columns for running total**, the gem calculates a cumulative total across the rows.
+
+### Result
+
+<div class="table-example">
+
+| Record | Value | RunningTotal_Value |
+| ------ | ----- | ------------------ |
+| A      | 10    | 10                 |
+| B      | 12    | 22                 |
+| C      | 4     | 26                 |
+
+</div>
