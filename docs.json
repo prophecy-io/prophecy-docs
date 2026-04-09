@@ -526,6 +526,7 @@
                               "api-reference/connections/properties/sharepoint",
                               "api-reference/connections/properties/mongodb",
                               "api-reference/connections/properties/oracle",
+                              "api-reference/connections/properties/postgres",
                               "api-reference/connections/properties/salesforce",
                               "api-reference/connections/properties/hana",
                               "api-reference/connections/properties/sftp",
