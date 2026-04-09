@@ -394,8 +394,8 @@
                         "pages": [
                           "data-analysis/gems/transform/aggregate",
                           "data-analysis/gems/transform/count-records",
-                          "data-analysis/gems/transform/dynamic-select",
                           "data-analysis/gems/transform/encoder-decoder",
+                          "data-analysis/gems/transform/dynamic-select",
                           "data-analysis/gems/transform/fuzzy-match",
                           "data-analysis/gems/transform/pivot",
                           "data-analysis/gems/transform/unpivot",
