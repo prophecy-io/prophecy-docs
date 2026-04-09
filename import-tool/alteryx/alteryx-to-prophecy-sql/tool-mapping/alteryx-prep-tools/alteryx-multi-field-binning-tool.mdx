@@ -1,0 +1,79 @@
+---
+title: Alteryx Multi-Field Binning tool > Prophecy Reformat + Join gems
+description: Mapping between Alteryx’s Multi-Field Binning tool and equivalent Prophecy gems
+---
+
+The [Alteryx Multi-Field Binning tool](https://help.alteryx.com/current/en/designer/tools/preparation/multi-field-binning-tool.html) assigns bins to selected columns based on fixed intervals or quantile-based tiles.
+
+Prophecy does not provide a single binning gem; instead, binning is achieved using a combination of SQL logic inside the [Reformat gem](/data-analysis/gems/prepare/reformat) and, when quantiles or aggregates are required, a [Join](/data-analysis/gems/join-split/join) gem to merge metrics back into the dataset.
+
+## Automated migration results
+
+When Alteryx performs multi-field binning, it hides a lot of internal steps. After import, Prophecy expands those hidden operations into several explicit SQL transformations. Prophecy translates Alteryx’s high-level UI behavior into individual SQL operations.
+
+When Import encounters a Multi-Field Binning tool:
+
+- For **fixed interval binning**, Import creates a **Reformat** gem containing SQL `CASE WHEN` expressions assigning bin labels or numeric bin IDs.
+- For **quantile or tile-based binning**, Prophecy:
+  - Generates an Aggregate or Window Function step to compute quantile boundaries.
+  - Inserts a Join gem to attach the computed boundaries to the row-level data.
+  - Creates a Reformat gem that applies `CASE WHEN` logic comparing values to those boundaries.
+- Multi-column binning is split into separate SQL expressions per column.
+- If a binning mode cannot be directly translated, Import flags the step for review.
+
+## Manually replicate in Prophecy
+
+To manually recreate Multi-Field Binning in Prophecy:
+
+1. **For fixed-range bins** (simple manual binning)
+
+   - Add a **Reformat** gem.
+   - Define a `CASE WHEN` expression per column that assigns bins based on numeric ranges.
+
+2. **For quantile or tile-based bins**
+
+   - Compute "cut points" using an **Aggregate** gem.
+   - Use a **Join** gem to add the cut points to the dataset.
+   - Add a **Reformat** gem to apply bin assignment logic referencing the cut points.
+
+3. Validate the resulting bin assignments in the Data Explorer.
+
+## Configuration options
+
+In Alteryx, configuration includes:
+
+- Selecting numeric fields to bin.
+- Choosing a binning method (equal intervals, quantiles/tiles, custom bin boundaries).
+
+In Prophecy, configuration includes:
+
+- Defining binning logic per column inside the Reformat gem using SQL `CASE WHEN` expressions to assign interval-based bins.
+- Configuring quantile boundaries (when needed) in an Aggregate or Window Function step using SQL percentile functions.
+- Implementing Aggregate + Join steps to merge boundary values.
+
+Both environments support binning multiple fields, but Prophecy expresses the logic explicitly in SQL.
+
+## Output behavior
+
+The Alteryx Multi-Field Binning tool outputs the original dataset with new bin or tile fields appended. Each input column receives a corresponding output bin field based on the selected method.
+
+In Prophecy, the Reformat gem produces the same effect by computing bin values at execution time within the SQL Warehouse. Quantile-based bins rely on subqueries or joined aggregate results. Binning logic appears in the SELECT clause of the generated SQL.
+
+## Known caveats
+
+Alteryx uses its own internal method for computing quantile boundaries, which may differ from the percentile functions available in SQL (such as `percentile` or `percentile_approx`). As a result, tile boundaries may vary slightly between the two platforms, especially with small or highly skewed datasets.
+
+## Example
+
+### Alteryx Multi-Field Binning example
+
+Goal: Assign sales into 4 quartiles.
+
+Alteryx computes quartile boundaries and outputs a new `sales_tile` field containing a bin number from 1–4.
+
+### Prophecy equivalent (Reformat + Aggregate + Join)
+
+Goal: Perform the same quartile assignment.
+
+Use an Aggregate or Window Function step to compute quartile boundaries for `sales`, join the result back, then assign bins in a Reformat gem using:
+`CASE WHEN sales < q1 THEN 1 WHEN sales < q2 THEN 2 WHEN sales < q3 THEN 3 ELSE 4 END`.

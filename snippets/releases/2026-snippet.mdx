@@ -1,3 +1,55 @@
+<Update label="Prophecy 4.2.6" description="March 15, 2026" tags={["Data Analysis"]}>
+
+## Snowflake fabrics
+
+You can now [create fabrics that use Snowflake as the SQL warehouse for executing pipelines](/data-analysis/environment/fabrics/create-fabrics/snowflake). Snowflake fabrics allow SQL pipelines to run directly in your Snowflake environment.
+
+Snowflake fabrics are available for users who connect Prophecy to their own compute infrastructure. Once a Snowflake fabric is created, projects can run SQL pipelines using Snowflake as the execution engine.
+
+<Note>
+Currently, Snowflake fabrics do not support case sensitivity, creating new partitioned tables, or modifying the partitioning of existing tables.
+</Note>
+
+## Import Alteryx workflows to BigQuery SQL
+
+You can now migrate Alteryx workflows to BigQuery SQL using a BigQuery fabric. During import, the selected fabric determines the SQL dialect, allowing you to generate pipelines that run natively on BigQuery in addition to Databricks.
+
+## Rename and duplicate pipelines
+
+You can now [rename pipelines directly from the Project Explorer](/data-analysis/development/pipelines/data-analysis-pipelines#rename-pipeline) and [duplicate existing pipelines from the Studio canvas](/data-analysis/development/pipelines/data-analysis-pipelines#duplicate-pipeline). Duplicating a pipeline creates a copy of the entire pipeline structure, allowing you to reuse and modify existing workflows more quickly.
+
+## Export compiled SQL
+
+You can now [export the compiled SQL generated from your pipelines](/data-analysis/development/projects/export-code). This allows you to review the SQL produced by Prophecy, run it directly in your warehouse environment, or share it with teams working outside Prophecy.
+
+## New graph-based pipeline format
+
+[Pipeline Python files](/data-analysis/development/pipelines/view-pipeline-py) now use a graph-based structure instead of a task-based format. This improves clarity by showing how steps relate to one another, especially in pipelines with branching or multiple dependencies.
+
+</Update>
+
+<Update label="Prophecy 4.2.6" description="March 15, 2026" tags={["Data Engineering"]}>
+
+## Databricks job sizes are now configured in fabrics
+
+Databricks job cluster sizes are now configured at the fabric level. This change is part of the new unified fabric model and centralizes cluster configuration for projects that create Databricks jobs.
+
+To create Databricks jobs from the Prophecy UI, you must first define one or more job sizes in the fabric settings.
+
+Projects created before this change may not support Databricks job creation until job sizes are defined in the associated fabric.
+
+This update ensures that cluster configurations are managed centrally and reused consistently across projects.
+
+## Scala JAR support for Spark 3.x and 4.x
+
+Scala pipeline projects [now generate version-specific JARs for Spark 3.x and Spark 4.x runtimes](/data-engineering/extensibility/dependencies/spark-dependencies#scala-jar-selection-for-spark-3-x-and-spark-4-x). Prophecy automatically selects the appropriate JAR based on the target cluster runtime.
+
+This change ensures compatibility across environments using different Scala versions (2.12 for Spark 3.x and 2.13 for Spark 4.x), eliminating runtime errors caused by binary incompatibility.
+
+To support this, pipeline builds now use Maven profiles to produce JARs for each supported Scala version from a single codebase. 
+
+</Update>
+
 <Update label="Prophecy 4.2.5" description="February 10, 2026" tags={["Data Analysis"]}>
 
 ## Huge improvements to the Agent
