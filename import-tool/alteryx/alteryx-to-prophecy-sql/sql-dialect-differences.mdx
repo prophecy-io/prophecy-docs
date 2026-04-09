@@ -1,0 +1,154 @@
+---
+title: SQL dialect differences
+description: Behavioral differences between Databricks SQL and BigQuery when importing Alteryx workflows into Prophecy
+---
+
+When you import Alteryx workflows into Prophecy, the workflow logic is translated into SQL and executed on the target engine configured for your environment. The resulting queries reflect the original transformations but follow the syntax and behavior of the selected platform, such as Databricks or BigQuery.
+
+Differences in SQL dialects can affect how queries behave and how objects are referenced. This page highlights key differences between Databricks SQL and BigQuery to help you understand how imported workflows behave after migration.
+
+### Key differences
+
+| Area             | Databricks SQL                      | BigQuery               | Notes                                                        |
+| ---------------- | ----------------------------------- | ---------------------- | ------------------------------------------------------------ |
+| Array indexing   | 1-based                             | 0-based (`offset`)     | This affects array access and positional logic (for example, `element_at(x, 1)` vs `x[OFFSET(0)]`). |
+| Regex engine     | Java regex                          | RE2                    | BigQuery’s RE2 engine does not support backtracking or some advanced patterns available in Java regex. |
+| Casting behavior | `cast` (may error on invalid input) | `cast` and `safe_cast` | `safe_cast` returns `null` instead of failing on invalid conversions. |
+| Function naming  | `substring`, `locate`               | `substr`, `strpos`     | Function names and signatures may differ slightly between engines. |
+
+## At a glance
+
+| Area | Databricks SQL | BigQuery |
+|---|---|---|
+| Object naming | Uses `catalog.schema.table` structure | Uses `project.dataset.table` structure |
+| SQL dialect | Based on Spark SQL | Uses GoogleSQL |
+| Data types | Spark-compatible types | GoogleSQL types |
+| Temporary objects | Temporary views and tables supported | Temporary tables with dataset rules |
+| Query execution | Runs on Databricks compute clusters or SQL warehouses | Runs on BigQuery managed execution environment |
+| Array indexing   | 1-based                  | 0-based (`OFFSET`)     |
+| Regex engine     | Java regex               | RE2 (limited features) |
+| Casting behavior | `CAST`, some workarounds | `SAFE_CAST` available  |
+| Function naming  | `substring`, `locate`    | `substr`, `strpos`     |
+
+## Naming and object references
+
+Different engines organize database objects differently.
+
+Databricks SQL typically references tables using a hierarchical structure:
+
+```
+
+catalog.schema.table
+
+```
+
+BigQuery references tables using a project and dataset structure:
+
+```
+
+project.dataset.table
+
+```
+
+When migrating workflows, you may need to adjust how tables are referenced or ensure the correct project, catalog, schema, or dataset exists in the target environment.
+
+For details on configuring these connections, see **Connection mapping**.
+
+## Type coercion and casting
+
+Both Databricks SQL and BigQuery support implicit type conversions, but the exact casting rules and supported data types may differ.
+
+Examples include:
+
+- Differences in how numeric precision and scale are handled.
+- Variations in timestamp precision and timezone behavior.
+- Differences in string-to-number conversions.
+
+See **Data type mapping** for a detailed comparison of how Alteryx data types translate into each SQL dialect.
+
+## Date and time behavior
+
+Date and timestamp handling may vary across SQL engines.
+
+Potential differences include:
+
+- Default timezone behavior.
+- Timestamp precision.
+- Available date/time functions.
+
+If your Alteryx workflow performs extensive date manipulation, you should verify that the resulting SQL behaves as expected in the target engine.
+
+See **Function mapping** for more details.
+
+## NULL handling and comparisons
+
+SQL engines may differ in how they treat `NULL` values in expressions, comparisons, and sorting.
+
+Examples include:
+
+- Ordering behavior for `NULL` values in `ORDER BY`.
+- Conditional logic involving `NULL` comparisons.
+- Differences in functions that handle missing values.
+
+FILL IN INFORMATION HERE ABOUT SPECIFIC NULL SEMANTIC DIFFERENCES.
+
+## Table creation and write behavior
+
+Imported workflows may create or overwrite tables depending on the configuration of Target gems.
+
+Table creation semantics may vary between SQL engines. For example:
+
+- Some engines support **CREATE OR REPLACE TABLE** semantics.
+- Some require explicit dataset or schema specification.
+- Some enforce stricter constraints on table overwrites or merges.
+
+Databricks supports `create or replace table`.
+
+BigQuery supports similar semantics but requires:
+
+- dataset specification
+- stricter overwrite behavior in some cases
+
+BigQuery may require explicit dataset existence before writes.
+
+## Performance considerations
+
+Execution models differ between engines, which may affect pipeline performance or cost.
+
+For example:
+
+- Databricks queries execute on clusters or SQL warehouses.
+- BigQuery queries execute using a serverless model with usage-based pricing.
+
+These differences do not change the logical structure of your imported pipeline, but they may influence how you optimize workloads in production.
+
+## Cost considerations
+
+Databricks:
+
+- cluster-based execution.
+- performance depends on cluster size/configuration.
+
+BigQuery:
+
+- serverless execution.
+- cost based on data scanned.
+
+## What remains consistent
+
+Despite dialect differences, most aspects of imported workflows remain the same:
+
+- Tool mappings from Alteryx to Prophecy SQL remain consistent across engines.
+- Pipeline structure and transformations remain unchanged.
+- The Prophecy authoring experience is identical regardless of execution engine.
+
+In most cases, you can import an Alteryx workflow once and run it on either Databricks SQL or BigQuery with minimal changes.
+
+## Related pages
+
+For more detailed information, see:
+
+- [Function mapping](/import-tool/alteryx/alteryx-to-prophecy-sql/function-mapping)
+- [Data type mapping](/import-tool/alteryx/alteryx-to-prophecy-sql/function-mapping)
+- [Connection type mapping](/import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-connections)
+- [Tool mapping](/import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-tool-mapping)

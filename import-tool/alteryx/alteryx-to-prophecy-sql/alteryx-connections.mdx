@@ -1,0 +1,62 @@
+---
+title: Connection mapping
+description: Explains how Alteryx connections map to Prophecy
+---
+
+Alteryx workflows use [Input and Output tools](https://help.alteryx.com/current/en/designer/tools/in-out-tools.html#in-out-tools) to connect to external data providers. Prophecy works similarly through [Source and Target gems](/data-analysis/gems/source-target/source-target), which leverage [connections](/data-analysis/environment/fabrics/prophecy-fabrics#connections) stored in Prophecy fabrics.
+
+When you import Alteryx workflows into the Transpiler, connection handling varies depending on the connection type. Some connections are natively supported, while others will require custom code or other workarounds.
+
+## Prophecy connections
+
+Instead of embedding usernames, passwords, and file paths directly inside a workflow, Prophecy uses [connections](/data-analysis/environment/fabrics/prophecy-fabrics#connections). These connections:
+
+- Point to a specific data provider, including databases and file storage.
+- Manage authentication via OAuth, secrets, certificates, keys, and other methods.
+- Can be reused across multiple pipelines, so you don’t need to re-enter credentials multiple times throughout the project.
+
+When you bring Alteryx workflows into Prophecy using the Transpiler, the tool can convert the structure of your workflow, but it cannot automatically reproduce your original connection details. This means Source/Target gems created by the Transpiler will not run automatically until you configure them. In other words, you need to re-establish your data ingress (inputs) and egress (outputs) in Prophecy before your pipeline can run end-to-end.
+
+<Info>
+For a complete list of available connection types, see [Connections](/data-analysis/environment/fabrics/prophecy-fabrics#connections).
+</Info>
+
+## Planning the migration
+
+When planning your migration, make sure to:
+
+1. Take note of all of the data input and output in your Alteryx workflow.
+2. Review the [supported connections](/data-analysis/environment/fabrics/prophecy-fabrics#connections) in Prophecy and evaluate whether you can leverage these connections.
+3. Create a plan for what to do after migration if your connection is not yet supported.
+
+## Manual connection configuration
+
+When you use the Transpiler to migrate Alteryx workflows:
+
+- Input/Output tools that read **files** will be converted to SFTP Source/Target gems as placeholders.
+- Input/Output tools that read **tables** will be converted to Databricks Source/Target gems as placeholders.
+
+These gems **will not run automatically** after the migration. At minimum, you will have to create new connections in Prophecy and define the file/table location in the placeholder gems to point to the correct data.
+
+To configure these connections:
+
+1. In Prophecy, navigate to **Metadata > Fabrics** to view the list of fabrics in your environment.
+1. Open the fabric that was selected during transpilation.
+1. Open the **Connections** tab.
+1. Create a new connection that corresponds to your original input or output in Alteryx.
+
+After creating the connection, you must configure your Source and Target gems to use the connection.
+
+1. Open the pipeline that resulted from your imported workflow.
+1. Identify the Source/Target gems that correspond to your input and output from Alteryx.
+1. Configure the Source/Target gems to use the connection(s) that you have created in Prophecy.
+1. Update the Source/Target gems with the appropriate location, properties, schema, and more to control data ingress/egress.
+
+## Unsupported connections
+
+If your Alteryx workflow uses connections that Prophecy doesn't support natively, consider these options:
+
+- [RestAPI gem](/data-analysis/gems/custom/rest-api): Use the RestAPI gem to connect to API-based data sources that don't have dedicated connectors.
+- [Script gem](/data-analysis/gems/custom/script): Use the Script gem to implement custom connection logic for specialized data sources.
+- Data migration: Move your data into a data provider that Prophecy supports natively via connections.
+- Custom development: Contact Prophecy support for custom connector development based on your specific requirements.
