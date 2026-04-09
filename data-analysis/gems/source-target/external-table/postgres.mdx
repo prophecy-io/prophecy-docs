@@ -1,0 +1,98 @@
+---
+title: Postgres
+description: Read and write from PostgreSQL database
+---
+
+import Execution from '/snippets/gem-execution-engine.mdx';
+
+<Execution execution_engine="Prophecy Automate" />
+
+## Overview
+
+This page describes how to configure PostgreSQL Source and Target gems, including connection setup, schema options, and available write modes. Use the Postgres Source or Target gem to read from or write to a PostgreSQL database within your pipeline.
+
+## Create a Postgres gem
+
+To create a Postgres Source or Target gem in your pipeline:
+
+<Steps>
+<Step title="Add a Source or Target gem to the pipeline">
+
+1. Open your pipeline in the [Studio](/data-analysis/development/studio/studio).
+1. Click on **Source/Target** in the canvas.
+1. Select **Source** or **Target** from the dropdown.
+1. Click on the gem to open the configuration.
+
+</Step>
+
+<Step title="Select Postgres format">
+  In the **Type** tab, select **Postgres**. Then, click **Next**.
+</Step>
+
+<Step title="Set location details">
+
+In the **Location** tab, set your connection details and table location. To learn more, jump to [Source location](#source-location) and [Target location](#target-location).
+
+</Step>
+
+<Step title="Set table properties">
+  In the **Properties** tab, set the table properties. To learn more, jump to [Source properties](#source-properties) and [Target properties](#target-properties).
+</Step>
+
+<Step title="Preview data (Source only)">
+  In the **Preview** tab, load a sample of the data and verify that it looks correct.
+</Step>
+
+</Steps>
+
+## Source configuration
+
+Use these settings to configure a Postgres Source gem for reading data.
+
+### Source location
+
+| Parameter                   | Description |
+| --------------------------- | ----------- |
+| Format type                 | Table format for the source. For PostgreSQL tables, set to `postgres`. |
+| Select or create connection | Select or create a new [Postgres connection](/data-analysis/environment/connections/postgres) in the Prophecy fabric you will use. |
+| Schema                      | Schema containing the table you want to read from. |
+| Name                        | Exact name of the PostgreSQL table to read data from. |
+| Query                       | SQL query to read data from. If provided, this takes precedence over the schema and table name fields. |
+
+### Source properties
+
+Infer or manually configure the schema of your Source gem. Optionally, add a description for your table. Additional properties are not supported at this time.
+
+## Target configuration
+
+Use these settings to configure a Postgres Target gem for writing data.
+
+### Target location
+
+| Parameter                   | Description |
+| --------------------------- | ----------- |
+| Format type                 | Table format for the target. For PostgreSQL tables, set to `postgres`. |
+| Select or create connection | Select or create a new [Postgres connection](/data-analysis/environment/connections/postgres) in the Prophecy fabric you will use. |
+| Schema                      | Schema where the target table resides or will be created. |
+| Name                        | Name of the PostgreSQL table to write data to. If the table doesn't exist, it will be created automatically. |
+
+### Target properties
+
+| Property    | Description                                                                                          | Default |
+| ----------- | ---------------------------------------------------------------------------------------------------- | ------- |
+| Description | Description of the table.                                                                            | None    |
+| Write Mode  | Whether to overwrite the table, append new data to the table, or throw an error if the table exists. | None    |
+
+## Configure a Postgres connection
+
+Use these settings to create a Postgres connection:
+
+| Parameter | Description |
+| --------- | ----------- |
+| Connection Name | Name for the connection. |
+| Server | PostgreSQL server hostname or IP address. |
+| Port | Port used to connect to the PostgreSQL server. |
+| Database | PostgreSQL database name. |
+| Username | Username used for pipeline development and scheduled execution. |
+| Password | Password used for pipeline development and scheduled execution. |
+| Knowledge Graph Indexer | Choose whether to enable the Knowledge Graph Indexer for this connection. |
