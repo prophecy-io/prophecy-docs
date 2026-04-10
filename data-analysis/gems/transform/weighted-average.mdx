@@ -11,6 +11,8 @@ import Execution from '/snippets/gem-execution-engine.mdx';
 
 Use the WeightedAverage gem to calculate the weighted average of a numeric field by using another numeric field as the weight. You can also calculate weighted averages separately for groups of records.
 
+The output is an aggregated result set. If no grouping fields are selected, the gem returns a single row containing the weighted average. If grouping fields are selected, it returns one row per group with the grouping fields and the calculated weighted average.
+
 ## Prerequisites
 
 Add `prophecy_basics` package version 1.0.11 or higher to your project.
@@ -38,7 +40,7 @@ If you specify grouping fields, the gem performs this calculation independently 
 
 ## Output
 
-If you do not select grouping fields, the gem returns a single row with the weighted average.
+If you do not select grouping fields, the gem returns a single row and column with the weighted average.
 
 If you select grouping fields, the gem returns one row per group with the weighted average.
 
@@ -46,6 +48,72 @@ The output includes the selected grouping fields, if any, and the calculated wei
 
 ## Notes
 
-- Both the Value Field and Weight Field must be numeric.
+- Both the Value column and the Weight column must be numeric.
 - When weights are equal across all records, the result is the same as a standard average.
 - Grouping fields are optional and allow per-group calculations.
+
+## Example
+
+You want to calculate the weighted average price of items sold, where each price is weighted by total sale value.
+
+Input:
+{/* vale off */}
+<div class="table-example">
+| Item   | Price | Total_Sale |
+| ------ | ----- | ---------- |
+| Shirt  | 20    | 2          |
+| Pants  | 50    | 1          |
+| Jacket | 100   | 3          |
+</div>
+{/* vale on */}
+
+Configuration:
+
+- **Value Field**: `Price`
+- **Weight Field**: `Total_Sale`
+- **Output Field Name**: `weighted_avg_price`
+- **Grouping Fields**: *(none)*
+
+Calculation:
+
+- `(20 × 2 + 50 × 1 + 100 × 3) / (2 + 1 + 3)`
+- `(40 + 50 + 300) / 6 = 390 / 6 = 65`
+
+Output:
+
+{/* vale off */}
+<div class="table-example">
+| weighted_avg_price |
+| ------------------ |
+| 65                 |
+</div>
+{/* vale on */}
+
+### Example with grouping
+
+If you group by `Category`:
+
+{/* vale off */}
+<div class="table-example">
+| Category  | Price | Total_Sale |
+| --------- | ----- | ---------- |
+| Tops      | 20    | 2          |
+| Tops      | 50    | 1          |
+| Outerwear | 100   | 3          |
+</div>
+{/* vale on */}
+
+Configuration:
+
+- **Grouping Fields**: `Category`
+
+Output:
+
+{/* vale off */}
+<div class="table-example">
+| Category  | weighted_avg_price |
+| --------- | ------------------ |
+| Tops      | 30                 |
+| Outerwear | 100                |
+</div>
+{/* vale on */}

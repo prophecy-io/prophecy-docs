@@ -4,15 +4,14 @@ description: Replace specified values in numeric fields with calculated or user-
 ---
 
 import Execution from '/snippets/gem-execution-engine.mdx';
-import GemExample from '/snippets/interactive-gem.mdx';
 
 <Execution execution_engine="the SQL warehouse" />
 
 ## Overview
 
-Use the Imputation gem to replace a specified value in one or more numeric fields with a replacement value. You can use it to handle missing or placeholder values before downstream analysis or modeling.
+You can use the Imputation gem to replace a specified value in one or more numeric fields with a replacement value before downstream analysis or modeling.
 
-For example, you can replace null values in sales fields with the average of the remaining values so those missing values do not distort later calculations.
+For example, you can replace null values in `sales `fields with the average of non-null `sales` so those missing values do not distort later calculations.
 
 ## Prerequisites
 
@@ -28,20 +27,18 @@ For example, you can replace null values in sales fields with the average of the
 | Replace with value | Choose the value used for replacement.<ul><li>Average</li><li>Median</li><li>Mode</li><li>User-specified value</li></ul>If you choose User-specified value, the **Replacement value** field appears. |
 | Replacement value | Enter the replacement value when **Replace with value** is set to User-specified value. |
 | Include imputed value indicator field | Add an indicator field for each imputed column that shows whether a value was imputed. |
-| Output imputed values as a separate field | Keep the original field unchanged and write the imputed result to a new field. |
+| Output imputed values as a separate field | Keep the original field unchanged and write the imputed result to a new column. (Non-imputed values are automatically included in column.) |
 
 ## How it works
 
-The gem scans the selected fields and looks for values that match the configured **Incoming value to replace** setting.
+The Imputation gem scans the selected fields and looks for values that match the configured **Incoming value to replace** setting.
 
 Matching values are replaced using the selected method:
 
-- Average: Replaces with the mean of valid values in the field, excluding the value being replaced.
-- Median: Replaces with the middle value in the field, excluding the value being replaced.
-- Mode: Replaces with the most frequently occurring value in the field, excluding the value being replaced.
-- User-specified value: Replaces with the value you provide.
-
-The calculation is performed independently for each selected field.
+- **Average**: Replaces with the mean of valid values in the field, excluding the value being replaced.
+- **Median**: Replaces with the middle value in the field, excluding the value being replaced.
+- **Mode**: Replaces with the most frequently occurring value in the field, excluding the value being replaced.
+- **User-specified value**: Replaces with the value you provide.
 
 ## Output
 
@@ -59,7 +56,41 @@ If both options are selected, both additional fields are included.
 
 ## Notes
 
-- This gem is intended for numeric fields.
+- This gem works for numeric fields.
 - Imputation is calculated separately for each selected field.
 - When using Average, Median, or Mode, the replacement statistic is calculated using valid values only, excluding the value being replaced.
-- If **Output imputed values as a separate field** is not selected, the original field is overwritten with the imputed result.
+- If you do not select **Output imputed values as a separate field**, the original field is overwritten with the imputed result.
+
+## Example
+
+Suppose you have the following dataset with missing values in numeric fields.
+
+{/* vale off */}
+<div class="table-example">
+
+| Product | Price | Total_Sale |
+| ------- | ----- | ---------- |
+| Shirt   | 20.0  | 200.0      |
+| Pants   | null  | 150.0      |
+| Jacket  | 50.0  | null       |
+| Shoes   | 30.0  | 300.0      |
+
+</div>
+{/* vale on */}
+
+If you configure the gem to replace **Null** values using **Average**, the null for "Jacket" is replaced with the average of `Total_Sale`.
+
+### Result
+
+{/* vale off */}
+<div class="table-example">
+
+| Product | Price | Total_Sale |
+| ------- | ----- | ---------- |
+| Shirt   | 20.0  | 200.0      |
+| Pants   | 33.3  | 150.0      |
+| Jacket  | 50.0  | 216.7      |
+| Shoes   | 30.0  | 300.0      |
+
+</div>
+{/* vale on */}

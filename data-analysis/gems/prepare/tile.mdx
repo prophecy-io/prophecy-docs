@@ -11,6 +11,10 @@ Use the Tile gem to assign records to tiles based on your data and the tiling me
 
 The gem appends tile information to your data so you can analyze ranges, sequence within each tile, and grouped distributions. Depending on the method, you can also group records first or control how rows are ordered before tiles are assigned.
 
+## Prerequisites
+
+- Add `prophecy_basics` package version 1.0.11 or higher to your project.
+
 ## Overview
 
 The Tile gem supports these tiling methods:
@@ -26,10 +30,6 @@ The output appends two fields to the data:
 - **Tile number**, which stores the tile assigned to the record
 - **Tile sequence number**, which stores the record's position within the tile
 
-## Prerequisites
-
-- Add `prophecy_basics` package version 1.0.11 or higher to your project.
-
 ## Parameters
 
 | Parameter | Description |
@@ -44,7 +44,6 @@ Use **Equal Sum** to assign tiles so each tile has approximately the same total 
 
 | Parameter | Description |
 | --------- | ----------- |
-| Select tiling options | Configure the **Equal Sum** method. |
 | Number of Tiles | Specify how many tiles to assign. |
 | Select Sum Column | Select the numeric field used to distribute totals across tiles. |
 | Select Column | Select the column used for tiling configuration. |
@@ -102,7 +101,6 @@ Use **Equal Records** to divide input records into the specified number of tiles
 
 | Parameter | Description |
 | --------- | ----------- |
-| Select tiling options | Configure the **Equal Records** method. |
 | Number of Tiles | Specify how many tiles to assign. |
 | Select group by columns (Optional) | Optionally select fields to create tiles independently within each group. |
 | Do not split tile on Columns (Optional) | Optionally prevent a tile from splitting across the selected column. |
@@ -146,7 +144,6 @@ Use **Smart Tile** to create tiles based on the standard deviation of values in 
 
 | Parameter | Description |
 | --------- | ----------- |
-| Select tiling options | Configure the **Smart Tile** method. |
 | Select Tile Numeric Column | Select the numeric field used for the tile calculation. |
 | Select Column | Select the column used for tiling configuration. |
 | Select group by columns (Optional) | Optionally select fields to create tiles independently within each group. |
