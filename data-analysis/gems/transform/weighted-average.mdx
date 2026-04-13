@@ -54,17 +54,20 @@ The output includes the selected grouping fields, if any, and the calculated wei
 
 ## Example
 
-You want to calculate the weighted average price of items sold, where each price is weighted by total sale value.
+You want to calculate the weighted average price of items sold, where each price is weighted by `total_sale` value.
 
 Input:
 {/* vale off */}
 <div class="table-example">
-| Item   | Price | Total_Sale |
+
+| Item   | Price | `total_sale` |
 | ------ | ----- | ---------- |
 | Shirt  | 20    | 2          |
 | Pants  | 50    | 1          |
 | Jacket | 100   | 3          |
+
 </div>
+
 {/* vale on */}
 
 Configuration:
@@ -109,11 +112,9 @@ Configuration:
 
 Output:
 
-{/* vale off */}
 <div class="table-example">
-| Category  | weighted_avg_price |
+| Category  | `weighted_avg_price` |
 | --------- | ------------------ |
 | Tops      | 30                 |
 | Outerwear | 100                |
 </div>
-{/* vale on */}
