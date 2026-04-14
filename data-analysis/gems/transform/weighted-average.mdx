@@ -1,0 +1,120 @@
+---
+title: WeightedAverage
+description: Calculate the weighted average of a numeric field using another numeric field as the weight
+---
+
+import Execution from '/snippets/gem-execution-engine.mdx';
+
+<Execution execution_engine="the SQL warehouse" />
+
+## Overview
+
+Use the WeightedAverage gem to calculate the weighted average of a numeric field by using another numeric field as the weight. You can also calculate weighted averages separately for groups of records.
+
+The output is an aggregated result set. If no grouping fields are selected, the gem returns a single row containing the weighted average. If grouping fields are selected, it returns one row per group with the grouping fields and the calculated weighted average.
+
+## Prerequisites
+
+Add `prophecy_basics` package version 1.0.11 or higher to your project.
+
+## Parameters
+
+| Parameter | Description |
+| --------- | ----------- |
+| Value Field (Numeric) | Select the numeric field that contains the values to average. |
+| Weight Field (Numeric) | Select the numeric field that contains the weights used in the calculation. When all records have the same weight, the result is equivalent to a standard average. |
+| Output Field Name | Enter the name of the output field that stores the calculated weighted average. |
+| Grouping Fields (Optional) | Optionally select one or more fields to calculate the weighted average separately for each group. If you do not select grouping fields, the gem calculates a single weighted average across all input records. |
+
+## How it works
+
+The weighted average is calculated as:
+
+$$
+\frac{\sum (value \times weight)}{\sum weight}
+$$
+
+Each value is multiplied by its corresponding weight. The results are summed, and that sum is divided by the total weight.
+
+If you specify grouping fields, the gem performs this calculation independently for each group.
+
+## Output
+
+If you do not select grouping fields, the gem returns a single row and column with the weighted average.
+
+If you select grouping fields, the gem returns one row per group with the weighted average.
+
+The output includes the selected grouping fields, if any, and the calculated weighted average using the specified output field name.
+
+## Notes
+
+- Both the Value column and the Weight column must be numeric.
+- When weights are equal across all records, the result is the same as a standard average.
+- Grouping fields are optional and allow per-group calculations.
+
+## Example
+
+You want to calculate the weighted average price of items sold, where each price is weighted by `total_sale` value.
+
+Input:
+{/* vale off */}
+<div class="table-example">
+
+| Item   | Price | `total_sale` |
+| ------ | ----- | ---------- |
+| Shirt  | 20    | 2          |
+| Pants  | 50    | 1          |
+| Jacket | 100   | 3          |
+
+</div>
+
+{/* vale on */}
+
+Configuration:
+
+- **Value Field**: `Price`
+- **Weight Field**: `Total_Sale`
+- **Output Field Name**: `weighted_avg_price`
+- **Grouping Fields**: *(none)*
+
+Calculation:
+
+- `(20 × 2 + 50 × 1 + 100 × 3) / (2 + 1 + 3)`
+- `(40 + 50 + 300) / 6 = 390 / 6 = 65`
+
+Output:
+
+{/* vale off */}
+<div class="table-example">
+| weighted_avg_price |
+| ------------------ |
+| 65                 |
+</div>
+{/* vale on */}
+
+### Example with grouping
+
+If you group by `Category`:
+
+{/* vale off */}
+<div class="table-example">
+| Category  | Price | Total_Sale |
+| --------- | ----- | ---------- |
+| Tops      | 20    | 2          |
+| Tops      | 50    | 1          |
+| Outerwear | 100   | 3          |
+</div>
+{/* vale on */}
+
+Configuration:
+
+- **Grouping Fields**: `Category`
+
+Output:
+
+<div class="table-example">
+| Category  | `weighted_avg_price` |
+| --------- | ------------------ |
+| Tops      | 30                 |
+| Outerwear | 100                |
+</div>

@@ -398,8 +398,10 @@
                           "data-analysis/gems/transform/dynamic-select",
                           "data-analysis/gems/transform/fuzzy-match",
                           "data-analysis/gems/transform/pivot",
+                          "data-analysis/gems/transform/running-total",
                           "data-analysis/gems/transform/unpivot",
-                          "data-analysis/gems/transform/window"
+                          "data-analysis/gems/transform/window",
+                          "data-analysis/gems/transform/weighted-average"
                         ]
                       },
                       {
@@ -412,12 +414,14 @@
                           "data-analysis/gems/prepare/find-duplicates",
                           "data-analysis/gems/prepare/flatten-schema",
                           "data-analysis/gems/prepare/generate-rows",
+                          "data-analysis/gems/prepare/imputation",
                           "data-analysis/gems/prepare/limit",
                           "data-analysis/gems/prepare/multi-column-edit",
                           "data-analysis/gems/prepare/multi-column-rename",
                           "data-analysis/gems/prepare/order-by",
                           "data-analysis/gems/prepare/record-id",
-                          "data-analysis/gems/prepare/reformat"
+                          "data-analysis/gems/prepare/reformat",
+                          "data-analysis/gems/prepare/tile"
                         ]
                       },
                       {

@@ -1,0 +1,249 @@
+---
+title: Tile
+description: Assign tile values to records by using one of five tiling methods.
+---
+
+import Execution from '/snippets/gem-execution-engine.mdx';
+
+<Execution execution_engine="the SQL warehouse" />
+
+Use the Tile gem to assign records to tiles based on your data and the tiling method you choose. You can distribute records by equal sum, equal record count, standard deviation bands, unique values, or manually defined cutoffs.
+
+The gem appends tile information to your data so you can analyze ranges, sequence within each tile, and grouped distributions. Depending on the method, you can also group records first or control how rows are ordered before tiles are assigned.
+
+## Prerequisites
+
+Add `prophecy_basics` package version 1.0.11 or higher to your project.
+
+## Overview
+
+The Tile gem supports these tiling methods:
+
+- **Equal Sum**
+- **Equal Records**
+- **Smart Tile**
+- **Unique Value**
+- **Manual**
+
+The output appends two fields to the data:
+
+- **Tile number**, which stores the tile assigned to the record
+- **Tile sequence number**, which stores the record's position within the tile
+
+## Parameters
+
+| Parameter | Description |
+| --------- | ----------- |
+| Select tiling method | Choose the tiling method. Available options are **Equal Sum**, **Equal Records**, **Smart Tile**, **Unique Value**, and **Manual**. |
+
+## Equal Sum
+
+Use **Equal Sum** to assign tiles so each tile has approximately the same total from the selected sum field based on the row order.
+
+### Parameters
+
+| Parameter | Description |
+| --------- | ----------- |
+| Number of Tiles | Specify how many tiles to assign. |
+| Select Sum Column | Select the numeric field used to distribute totals across tiles. |
+| Select Column | Select the column used for tiling configuration. |
+| Select group by columns (Optional) | Optionally select fields to create tiles independently within each group. |
+| Order rows within each group (Optional) | Optionally order rows before assigning tiles. This section includes **Order By Columns** and **Sort strategy**. |
+
+### Order rows within each group
+
+Use **Order By Columns** to select the columns used to order rows.
+
+Use **Sort strategy** to choose one of the following options:
+
+- ascending nulls first
+- ascending nulls last
+- descending nulls first
+- descending nulls last
+
+### Example
+
+Let's say you have the following dataset and set **Number of Tiles** to `2`.
+
+<div class="table-example">
+
+| Record | Sales |
+| ------ | ----- |
+| A      | 10    |
+| B      | 20    |
+| C      | 15    |
+| D      | 15    |
+
+</div>
+
+If you select **Equal Sum** and use **Sales** as the sum column, the gem assigns records so each tile has a similar total based on the row order.
+
+### Result
+
+<div class="table-example">
+
+| Record | Sales | Tile number | Tile sequence number |
+| ------ | ----- | ----------- | -------------------- |
+| A      | 10    | 1           | 1                    |
+| B      | 20    | 1           | 2                    |
+| C      | 15    | 2           | 1                    |
+| D      | 15    | 2           | 2                    |
+
+</div>
+
+In this example, both tiles total `30`.
+
+## Equal Records
+
+Use **Equal Records** to divide input records into the specified number of tiles so each tile contains the same number of records as closely as possible.
+
+### Parameters
+
+| Parameter | Description |
+| --------- | ----------- |
+| Number of Tiles | Specify how many tiles to assign. |
+| Select group by columns (Optional) | Optionally select fields to create tiles independently within each group. |
+| Do not split tile on Columns (Optional) | Optionally prevent a tile from splitting across the selected column. |
+| Order rows within each group (Optional) | Optionally order rows before assigning tiles. |
+
+### Example
+
+Let's say you have the following dataset and set **Number of Tiles** to `2`.
+
+<div class="table-example">
+
+| Record | Score |
+| ------ | ----- |
+| A      | 90    |
+| B      | 85    |
+| C      | 80    |
+| D      | 75    |
+
+</div>
+
+If you select **Equal Records**, the gem divides the four records into two tiles with two records in each tile.
+
+### Result
+
+<div class="table-example">
+
+| Record | Score | Tile number | Tile sequence number |
+| ------ | ----- | ----------- | -------------------- |
+| A      | 90    | 1           | 1                    |
+| B      | 85    | 1           | 2                    |
+| C      | 80    | 2           | 1                    |
+| D      | 75    | 2           | 2                    |
+
+</div>
+
+## Smart Tile
+
+Use **Smart Tile** to create tiles based on the standard deviation of values in a numeric field. The assigned tile indicates whether the value falls within the average range, above the average, or below the average.
+
+### Parameters
+
+| Parameter | Description |
+| --------- | ----------- |
+| Select Tile Numeric Column | Select the numeric field used for the tile calculation. |
+| Select Column | Select the column used for tiling configuration. |
+| Select group by columns (Optional) | Optionally select fields to create tiles independently within each group. |
+| Do not output name column | Do not append a descriptive name column. |
+| Output name column | Append a descriptive output field. Descriptors include Average, Above Average, High, Extremely High, Below Average, Low, and Extremely Low. |
+| Output verbose name column | Append a descriptive output field and include the value range in parentheses. |
+
+### Example
+
+Let's say you use **Price** as the tile numeric column and enable **Output name column**.
+
+<div class="table-example">
+
+| Sale_ID | Price | Tile number | SmartTile_Num | Tile sequence number |
+| ------- | ----- | ----------- | ------------- | -------------------- |
+| 2       | 11.89 | -1          | Below Average | 1                    |
+| 12      | 15.16 | -1          | Below Average | 2                    |
+| 4       | 18.06 | -1          | Below Average | 3                    |
+| 27      | 19.91 | -1          | Below Average | 4                    |
+
+</div>
+
+In this example, the records fall into the `-1` band and the output includes the descriptive label **Below Average**.
+
+## Unique Value
+
+Use **Unique Value** to assign a unique tile to each unique value in one or more selected fields. If you select multiple fields, the tile is based on the combination of values.
+
+### Parameters
+
+| Parameter | Description |
+| --------- | ----------- |
+| Select Unique Column | Select one or more fields used to assign unique tiles. |
+| Select group by columns (Optional) | Optionally select fields to create tiles independently within each group. |
+
+### Example
+
+Let's say you have the following dataset and select **Category** as the unique column.
+
+<div class="table-example">
+
+| Record | Category |
+| ------ | -------- |
+| A      | Books    |
+| B      | Games    |
+| C      | Books    |
+| D      | Music    |
+
+</div>
+
+If you select **Unique Value**, each unique category receives its own tile.
+
+### Result
+
+<div class="table-example">
+
+| Record | Category | Tile number | Tile sequence number |
+| ------ | -------- | ----------- | -------------------- |
+| A      | Books    | 1           | 1                    |
+| C      | Books    | 1           | 2                    |
+| B      | Games    | 2           | 1                    |
+| D      | Music    | 3           | 1                    |
+
+</div>
+
+## Manual
+
+Use **Manual** to define tile cutoffs yourself.
+
+### Parameters
+
+| Parameter | Description |
+| --------- | ----------- |
+| Select Tile Numeric Column | Select the numeric field used for tile assignment. |
+| Enter one or more tile cutoffs | Enter each tile's upper limit separated by commas. |
+
+### Example
+
+Let's say you have the following dataset, select **Score** as the tile numeric column, and enter the cutoffs `50,80`.
+
+<div class="table-example">
+
+| Record | Score |
+| ------ | ----- |
+| A      | 30    |
+| B      | 60    |
+| C      | 90    |
+
+</div>
+
+If you select **Manual**, the gem assigns tiles based on the cutoffs you provide.
+
+### Result
+
+<div class="table-example">
+
+| Record | Score | Tile number | Tile sequence number |
+| ------ | ----- | ----------- | -------------------- |
+| A      | 30    | 1           | 1                    |
+| B      | 60    | 2           | 1                    |
+| C      | 90    | 3           | 1                    |
+
+</div>
