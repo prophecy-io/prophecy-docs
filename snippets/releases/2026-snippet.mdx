@@ -4,26 +4,26 @@
 
 Four new gems are now available with the `prophecy_basics` package:
 
-- **WeightedAverage**: Calculate weighted averages for numeric fields, with optional grouping.
-- **RunningTotal**: Compute running totals with configurable partitioning and ordering.
-- **Tile**: Assign records to tiles using methods such as equal sum, equal count, standard deviation bands, or custom cutoffs.
-- **Imputation**: Replace specified values (such as nulls) in numeric fields with a defined replacement value.
+- [WeightedAverage](/data-analysis/gems/transform/weighted-average): Calculate weighted averages for numeric fields, with optional grouping.
+- [RunningTotal](/data-analysis/gems/transform/running-total): Compute running totals with configurable partitioning and ordering.
+- [Tile](/data-analysis/gems/prepare/tile): Assign records to tiles using methods such as equal sum, equal count, standard deviation bands, or custom cutoffs.
+- [Imputation](/data-analysis/gems/prepare/imputation): Replace specified values (such as nulls) in numeric fields with a defined replacement value.
 
 To use these gems, add `prophecy_basics` version 1.0.11 or higher to your project.
 
 ## Condition gem
 
-The [**Condition** gem] routes rows to one of multiple outputs based on user-defined conditions. Each row is evaluated in order and routed to the first matching output.
+The [**Condition** gem](/data-analysis/gems/custom/conditional) routes rows to one of multiple outputs based on user-defined conditions. Each row is evaluated in order and routed to the first matching output.
 
 You can use this gem to implement branching logic in pipelines, such as splitting datasets, handling exceptions, or applying control flow based on data conditions.
 
 ## PostgreSQL source and target support
 
-You can now use **PostgreSQL Source and Target gems** to read from and write to PostgreSQL databases within your pipelines.
+You can now use [PostgreSQL Source and Target gems](/data-analysis/gems/source-target/external-table/postgres) to read from and write to PostgreSQL databases within your pipelines.
 
 ## Concrete types for project parameters
 
-Project parameters now support **concrete types**. Values are interpreted based on their content rather than treated as literal strings.
+Project parameters now support concrete types. Values are interpreted based on their content rather than treated as literal strings.
 
 For example, expressions such as `concat("first_name", "last_name")` are recognized as SQL expressions and evaluated accordingly.
 
@@ -77,7 +77,7 @@ Scala pipeline projects [now generate version-specific JARs for Spark 3.x and Sp
 
 This change ensures compatibility across environments using different Scala versions (2.12 for Spark 3.x and 2.13 for Spark 4.x), eliminating runtime errors caused by binary incompatibility.
 
-To support this, pipeline builds now use Maven profiles to produce JARs for each supported Scala version from a single codebase. 
+To support this, pipeline builds now use Maven profiles to produce JARs for each supported Scala version from a single codebase.
 
 </Update>
 
