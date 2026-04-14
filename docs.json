@@ -229,6 +229,7 @@
                               "data-analysis/environment/connections/mssql",
                               "data-analysis/environment/connections/onedrive",
                               "data-analysis/environment/connections/oracle",
+                              "data-analysis/environment/connections/postgres",
                               "data-analysis/environment/connections/power-bi",
                               "data-analysis/environment/connections/prophecy-managed",
                               "data-analysis/environment/connections/redshift",
@@ -288,9 +289,9 @@
                       {
                         "group": "Copilot for gems",
                         "pages": [
-                          "data-analysis/ai/copilot/gem-expressions",
-                          "data-analysis/ai/copilot/gem-fixes",
-                          "data-analysis/ai/copilot/auto-documentation"
+                          "data-analysis/gems/copilot/gem-expressions",
+                          "data-analysis/gems/copilot/gem-fixes",
+                          "data-analysis/gems/copilot/auto-documentation"
                         ]
                       },
                       {
@@ -339,6 +340,7 @@
                           "data-analysis/gems/source-target/external-table/mssql",
                           "data-analysis/gems/source-target/external-table/mongodb",
                           "data-analysis/gems/source-target/external-table/oracle",
+                          "data-analysis/gems/source-target/external-table/postgres",
                           "data-analysis/gems/source-target/external-table/redshift",
                           "data-analysis/gems/source-target/external-table/salesforce",
                           "data-analysis/gems/source-target/external-table/snowflake",
@@ -392,30 +394,34 @@
                         "pages": [
                           "data-analysis/gems/transform/aggregate",
                           "data-analysis/gems/transform/count-records",
-                          "data-analysis/gems/transform/dynamic-select",
                           "data-analysis/gems/transform/encoder-decoder",
+                          "data-analysis/gems/transform/dynamic-select",
                           "data-analysis/gems/transform/fuzzy-match",
                           "data-analysis/gems/transform/pivot",
+                          "data-analysis/gems/transform/running-total",
                           "data-analysis/gems/transform/unpivot",
-                          "data-analysis/gems/transform/window"
+                          "data-analysis/gems/transform/window",
+                          "data-analysis/gems/transform/weighted-average"
                         ]
                       },
                       {
                         "group": "Prepare",
                         "pages": [
                           "data-analysis/gems/prepare/data-cleansing",
+                          "data-analysis/gems/prepare/masking",
                           "data-analysis/gems/prepare/deduplicate",
                           "data-analysis/gems/prepare/filter",
                           "data-analysis/gems/prepare/find-duplicates",
                           "data-analysis/gems/prepare/flatten-schema",
                           "data-analysis/gems/prepare/generate-rows",
+                          "data-analysis/gems/prepare/imputation",
                           "data-analysis/gems/prepare/limit",
-                          "data-analysis/gems/prepare/masking",
                           "data-analysis/gems/prepare/multi-column-edit",
                           "data-analysis/gems/prepare/multi-column-rename",
                           "data-analysis/gems/prepare/order-by",
                           "data-analysis/gems/prepare/record-id",
-                          "data-analysis/gems/prepare/reformat"
+                          "data-analysis/gems/prepare/reformat",
+                          "data-analysis/gems/prepare/tile"
                         ]
                       },
                       {
@@ -524,6 +530,7 @@
                               "api-reference/connections/properties/sharepoint",
                               "api-reference/connections/properties/mongodb",
                               "api-reference/connections/properties/oracle",
+                              "api-reference/connections/properties/postgres",
                               "api-reference/connections/properties/salesforce",
                               "api-reference/connections/properties/hana",
                               "api-reference/connections/properties/sftp",
@@ -643,6 +650,7 @@
                           "data-analysis/administration/management/cluster-admin-settings/cluster-admin-settings",
                           "data-analysis/administration/management/cluster-admin-settings/oauth-setup",
                           "data-analysis/administration/management/cluster-admin-settings/copilot-settings",
+                          "data-analysis/administration/management/cluster-admin-settings/configure-endpoint",
                           "data-analysis/administration/management/cluster-admin-settings/feature-management"
                         ]
                       },
