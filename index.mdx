@@ -5,9 +5,35 @@ description: 'Build, run, and manage AI-native data pipelines'
 
 Prophecy lets teams build production-grade data pipelines using SQL, PySpark, and natural language. You describe what you want to do with your data, and the Prophecy Agent helps you generate, modify, and understand pipelines directly in your project.
 
-The Agent works within your active environment—inspecting metadata, retrieving sample data where permitted, and translating your intent into concrete pipeline changes that you can inspect. From initial exploration to production deployment, Prophecy supports the full lifecycle of data work while keeping everything transparent and editable.
+The Agent works within your active environment—inspecting metadata, retrieving sample data where permitted, and translating your intent into concrete pipeline changes that you can inspect and validate. From initial exploration to production deployment, Prophecy supports the full lifecycle of data work while keeping everything transparent and editable.
 
 Projects are built in shared environments where analysts and engineers collaborate across pipelines, analyses, and workflows. Each project is backed by Git and deployed to governed execution environments called fabrics.
+
+## Why use Prophecy
+
+Prophecy makes it easier to go from an idea to production-ready data pipelines.
+
+**Build with natural language**: Describe what you want to do, and the Agent generates or updates pipelines directly in your project. [Learn about the Agent](/data-analysis/ai/agent).
+
+**Faster iteration**: Move from idea to working pipelines without navigating multiple tools or writing everything from scratch. [See our Quickstart page](/data-analysis/getting-started/quick-start).
+
+**Designed for analysts**: Work in SQL while still building production-grade pipelines and workflows. [Learn about developing pipelines](/data-analysis/development/pipelines/data-analysis-pipelines).
+
+**Production-ready by default**: Deploy pipelines with built-in scheduling, observability, and environment separation. [Learn about publishing pipelines](/data-analysis/production/publication).
+
+## What you can build with Prophecy
+
+Prophecy supports a broad range of data workflows, from exploration to production systems.
+
+**AI-generated pipelines**: Use natural language to create and modify pipelines directly in your project with the [Prophecy Agent](/data-analysis/ai/agent).
+
+**Data pipelines**: Transform, join, and prepare data using SQL or PySpark with visual or code-based development [pipelines](/data-analysis/development/pipelines).
+
+**Orchestrated workflows**: Build multi-step pipelines with dependencies, conditional logic, and parameterized execution using [pipeline gems](/data-analysis/production/scheduling/pipeline-trigger-gem).
+
+**Reusable data products**: Create pipelines that can be [scheduled](/data-analysis/production/scheduling/scheduling), [reused](/data-analysis/development/versioning/clone-projects), and [shared](/data-analysis/collaboration/project-sharing) across [teams](data-analysis/administration/management/teams/teams).
+
+**Analytics-ready datasets**: Produce clean, reliable datasets for [BI tools and downstream consumption](/data-analysis/gems/source-target).
 
 ## Getting started
 
@@ -41,23 +67,11 @@ Import workflows from Alteryx and extend them with the Agent
 </Card>
 </CardGroup>
 
-## Why use Prophecy
-
-Prophecy makes it easier to go from an idea to production-ready data pipelines.
-
-**Build with natural language**: Describe what you want to do, and the Agent generates or updates pipelines directly in your project. [Learn about the Agent](/data-analysis/ai/agent).
-
-**Faster iteration**: Move from idea to working pipelines without navigating multiple tools or writing everything from scratch. [See our Quickstart page](/data-analysis/getting-started/quick-start).
-
-**Designed for analysts**: Work in SQL while still building production-grade pipelines and workflows. [Learn about developing pipelines](/data-analysis/development/pipelines/data-analysis-pipelines).
-
-**Production-ready by default**: Deploy pipelines with built-in scheduling, observability, and environment separation. [Learn about publishing pipelines](/data-analysis/production/publication).
-
 ## Who Prophecy is for
 
-Prophecy is used by individuals and teams working across the data lifecycle.
+Prophecy brings AI-assisted data development, deployment, and analysis into a single workflow—running directly on your data platform at scale.
 
-**Data analysts**
+### Data analysts
 
 - Build SQL pipelines and recurring workflows
 - Use natural language to generate and modify transformations
@@ -65,33 +79,26 @@ Prophecy is used by individuals and teams working across the data lifecycle.
 
 Start here:
 - [Quickstart](/data-analysis/getting-started/quick-start)
+- [Build with the Agent](/data-analysis/ai/agent/agent)
 - [Build SQL pipelines](/data-analysis/development/pipelines/data-analysis-pipelines)
+- [Use gems](/data-analysis/gems/gems)
 - [Use parameters](/data-analysis/development/parameters/parameter-sets)
+- [Create analyses](/data-analysis/analysis/overview)
 
-**Data engineers**
+Data engineers
 
-- Build and maintain PySpark pipelines.
-- Extend and publish workflows generated by the Agent.
-- Manage dependencies and environments.
+- Build Spark-native pipelines using visual or code-based development.
+- Compile pipelines into reusable PySpark or Scala code for full control and customization.
+- Develop complex data workflows including ingestion, transformations, and machine learning pipelines.
+- Organize work in projects that package pipelines, dependencies, and configurations for deployment.
+- Run pipelines interactively, on schedules, or as production jobs with logs and metrics for monitoring.
+- Deploy and orchestrate pipelines as Databricks jobs with support for multi-step workflows and conditional logic.
 
 Start here:
-- [Getting started (engineering)](/data-engineering/getting-started)
-- [PySpark pipelines](/data-engineering/development/pipelines)
-- [Dependencies and extensibility](/data-engineering/extensibility)
-
-## What you can build with Prophecy
-
-Prophecy supports a broad range of data workflows, from exploration to production systems.
-
-**AI-generated pipelines**: Use natural language to create and modify pipelines directly in your project with the [Prophecy Agent](/data-analysis/ai/agent).
-
-**Data pipelines**: Transform, join, and prepare data using SQL or PySpark with visual or code-based development [pipelines](/data-analysis/development/pipelines).
-
-**Orchestrated workflows**: Build multi-step pipelines with dependencies, conditional logic, and parameterized execution using [pipeline gems](/data-analysis/production/scheduling/pipeline-trigger-gem).
-
-**Reusable data products**: Create pipelines that can be [scheduled](/data-analysis/production/scheduling/scheduling), [reused](/data-analysis/development/versioning/clone-projects), and [shared](/data-analysis/collaboration/project-sharing) across [teams](data-analysis/administration/management/teams/teams).
-
-**Analytics-ready datasets**: Produce clean, reliable datasets for [BI tools and downstream consumption](/data-analysis/gems/source-target)
+- [Getting started (engineering)](/data-engineering/getting-started).
+- [Build pipelines](/data-engineering/development/pipelines).
+- [Manage projects and dependencies](/data-engineering/projects).
+- [Run and schedule pipelines](/data-engineering/run-types).
 
 ## How Prophecy fits into your workflow
 
