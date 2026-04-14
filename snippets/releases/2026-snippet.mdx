@@ -13,7 +13,7 @@ To use these gems, add `prophecy_basics` version 1.0.11 or higher to your projec
 
 ## Condition gem
 
-The [**Condition** gem](/data-analysis/gems/custom/conditional) routes rows to one of multiple outputs based on user-defined conditions. Each row is evaluated in order and routed to the first matching output.
+The [Condition](/data-analysis/gems/custom/condition) gem routes rows to one of multiple outputs based on user-defined conditions. Each row is evaluated in order and routed to the first matching output.
 
 You can use this gem to implement branching logic in pipelines, such as splitting datasets, handling exceptions, or applying control flow based on data conditions.
 
@@ -23,7 +23,7 @@ You can now use [PostgreSQL Source and Target gems](/data-analysis/gems/source-t
 
 ## Concrete types for project parameters
 
-Project parameters now support concrete types. Values are interpreted based on their content rather than treated as literal strings.
+[Project parameters](/data-analysis/development/parameters/parameters) now support concrete types. Values are interpreted based on their content rather than treated as literal strings.
 
 For example, expressions such as `concat("first_name", "last_name")` are recognized as SQL expressions and evaluated accordingly.
 
