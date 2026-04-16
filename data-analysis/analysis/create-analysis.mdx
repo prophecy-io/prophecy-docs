@@ -1,159 +1,130 @@
 ---
 title: Create an analysis
-description: Follow this tutorial to build your first analysis
+description: Create and build an analysis dashboard using the Agent or manually
 ---
 
-Depending on your use case, analysis can be as simple as a single visualization or as complex as a dashboard with multiple interactive components. This page walks you through using the Agent to create a simple analysis and then building a more complex dashboard from that starting point.
+An analysis lets you build interactive dashboards on top of your pipelines.
 
-## Objectives
+Choose how you want to create your analysis:
+- Use the Agent for a faster, automated workflow
+- Create manually for full control over the dashboard
 
-In this tutorial, you will:
+<Tabs>
 
-- Add source data to the pipeline.
-- Ask the Agent to create a pipeline that produces a specific visualization.
-- Prompt the Agent to add a visualization to a new analysis.
-- Embed a [pipeline parameter](/data-analysis/development/parameters/parameters) in the generated pipeline.
-- Update the analysis dashboard to include [interactive components](/data-analysis/analysis/analysis-components).
-- Run the analysis from the end user perspective.
+<Tab title="Use the Agent">
 
-## Prerequisites
+## Overview
 
-To complete this tutorial, you will need Prophecy 4.2.5 or later.
+Use the Agent to automatically generate a pipeline and analysis from a prompt.
 
-## Create the pipeline
+## Add source data
 
-You'll start with a sample dataset that contains information about home technology sales transactions. Then, you will prompt the Agent to create a pipeline that results in an insight about the data.
+import Analysisdataset from '/snippets/misc/analysis-dataset.mdx'
 
-### Add source data
+<Analysisdataset/>
 
-1. Open the **Source/Target** gem category.
-2. Click **Table**. This adds a new Table gem to the canvas.
-3. Hover over the gem and click **Open**.
-4. Select **+ New Table**.
-5. For **Type and Format**, choose **Seed**.
-6. Name the seed `home_tech_transactions`.
-7. For the **Seed path**, choose **seeds**. Prophecy saves your seed file in this folder of the project repository.
-8. Click **Next**.
-9. In the **Properties** tab, paste the following data.
+## Generate an analysis
 
-   ```csv expandable
-   Date,Transaction_ID,Product_Category,Region,Units_Sold,Unit_Price,Discount_Applied
-   2026-01-01,TXN1001,Smart Speakers,North,5,120.00,0.10
-   2026-01-01,TXN1002,Security Cameras,West,2,250.00,0.00
-   2026-01-02,TXN1003,Smart Lighting,East,12,25.00,0.05
-   2026-01-02,TXN1004,Smart Speakers,South,3,120.00,0.00
-   2026-01-03,TXN1005,Thermostats,North,8,180.00,0.15
-   2026-01-03,TXN1006,Security Cameras,East,4,250.00,0.10
-   2026-01-04,TXN1007,Smart Lighting,West,20,25.00,0.20
-   2026-01-04,TXN1008,Smart Speakers,North,2,120.00,0.00
-   2026-01-05,TXN1009,Thermostats,South,5,180.00,0.00
-   2026-01-05,TXN1010,Security Cameras,West,1,250.00,0.05
-   2026-01-06,TXN1011,Smart Lighting,North,15,25.00,0.00
-   2026-01-06,TXN1012,Smart Speakers,East,6,120.00,0.10
-   2026-01-07,TXN1013,Thermostats,West,3,180.00,0.10
-   2026-01-07,TXN1014,Security Cameras,South,2,250.00,0.00
-   2026-01-08,TXN1015,Smart Lighting,East,25,25.00,0.15
-   2026-01-08,TXN1016,Smart Speakers,North,4,120.00,0.00
-   2026-01-09,TXN1017,Thermostats,North,6,180.00,0.05
-   2026-01-09,TXN1018,Security Cameras,West,3,250.00,0.00
-   2026-01-10,TXN1019,Smart Lighting,South,10,25.00,0.00
-   2026-01-10,TXN1020,Smart Speakers,East,8,120.00,0.20
-   2026-01-11,TXN1021,Thermostats,East,4,180.00,0.00
-   2026-01-11,TXN1022,Security Cameras,North,2,250.00,0.10
-   2026-01-12,TXN1023,Smart Lighting,West,30,25.00,0.10
-   2026-01-12,TXN1024,Smart Speakers,South,5,120.00,0.00
-   2026-01-13,TXN1025,Thermostats,West,7,180.00,0.15
-   2026-01-13,TXN1026,Security Cameras,East,3,250.00,0.00
-   2026-01-14,TXN1027,Smart Lighting,North,12,25.00,0.05
-   2026-01-14,TXN1028,Smart Speakers,West,4,120.00,0.00
-   2026-01-15,TXN1029,Thermostats,South,6,180.00,0.10
-   ```
+In the Chat interface, enter a prompt:
 
-10. Click **Next**.
-11. Click **Load Data** to preview the data in tabular format.
-12. Click **Save**.
-
-### Generate transformation logic
-
-In the Chat interface, ask the Agent to create a pipeline that results in a bar chart showing the total sales by product category.
-
-```text wrap
+```text
 Visualize sales performance per product category in @home_tech_transactions
 ```
 
-The Agent:
+The Agent will:
 
-- Transforms the data to aggregate the total sales by product category.
-- Creates a [bar chart visualization](/data-analysis/development/runs/data-explorer/charts/charts) of the data.
-- Adds a [Visualize gem](/data-analysis/gems/report/visualize) to the canvas.
-- Create a new [analysis](/data-analysis/analysis/overview) that links to the pipeline.
-- Includes the bar chart which uses input data from the Visualize gem.
+- Transform the data
+- Create a visualization
+- Generate a pipeline
+- Create a linked analysis dashboard
 
-![Send Agent prompt](/data-analysis/analysis/img/prompt-analysis.png)
+## Continue building
 
-At this point, you will already have a pipeline and a baseline analysis dashboard. You can keep asking the Agent to transform the data to answer different questions, or you can continue to build on the analysis yourself.
+You can continue prompting the Agent to:
 
-When you switch between the pipeline tab and the analysis tab, the same Agent session remains open.
-
-<Tip>
-
-If you would like to create an analysis without the Agent, you have two options:
-
-- Hover over the pipeline in the project browser and select the **Create analysis** icon.
-- Click the **+** plus icon in the canvas header and select **Create analysis**.
-
-<Frame>![Create analysis icon](/data-analysis/analysis/img/add-analysis.png)</Frame>
-
-</Tip>
+- Add new visualizations
+- Modify transformations
+- Expand the dashboard
 
 ## Add interactive components
 
-To add interactive components to the analysis, you'll need to embed a pipeline parameter in the pipeline. [Pipeline parameters](/data-analysis/development/parameters/parameters) enable dynamic behavior in pipelines by allowing values to be set at runtime. In this case, pipeline parameter values are set by the end user when they run the analysis.
+import Analysisinteractive from '/snippets/misc/analysis-interactive.mdx'
 
-### Create a pipeline parameter
+<Analysisinteractive/>
 
-In this section, you'll define a pipeline parameter called `region`. The parameter will capture the region that the user selects, allowing the pipeline to filter transactions based on the region the user wants to see.
+## For full configuration options, see [Analysis components]().
 
-1. Open the pipeline tied to the analysis.
-1. Click **default** in the project header to open the parameter settings.
-1. Open the **Pipeline Parameters** tab.
-1. In the default parameter set, click **+ Add Parameter**.
-1. Name the parameter `region`.
-1. Set the parameter type to `String`.
-1. Click **Select expression > Value**.
-1. Enter `North` as the default value to be used during [interactive pipeline runs](/data-analysis/development/runs/execution).
-1. Click **Save**.
+</Tab>
+<Tab title="Create manually">
 
-### Add a filter
+## Overview
 
-Next, add a Filter gem to the pipeline. To make the filter condition dynamic, you'll use the pipeline parameter in the gem.
+Create an analysis manually to build a dashboard from an existing pipeline.
 
-1. Add a **Filter** gem directly after the Source gem and before the next gem (generated by the Agent).
-1. Open the **Filter** gem configuration.
-1. For the filter condition:
-   - Click **Select expression > Column** and select the `Region` column.
-   - Click **Select operator** and select **equals**.
-   - Click **Select expression > Configuration Variable** and select the `region` parameter.
+## Add source data
 
-   <Frame>
-     ![Configure visual expression to use
-     parameter](/data-analysis/analysis/img/filter-region.png)
-   </Frame>
+import AnalysisdatasetMan from '/snippets/misc/analysis-dataset.mdx'
 
-   <Tip>This expression is equivalent to `Region = {{ var('region') }}` in the Code view.</Tip>
+<AnalysisdatasetMan/>
 
-1. Click **Save**.
+## Create the analysis
 
-### Add a Text Input component
+1. Open the **Project Explorer**.
+2. Hover over a pipeline.
+3. Click the **Create analysis** icon.
 
-Add a Text Input component to allow the end user to enter the region they want to see.
+Alternatively:
 
-1. Open the analysis dashboard that the Agent created.
-1. Click **Edit**.
-1. Open the **Interactive** dropdown and select **Text Input**.
-1. In the **Inspect** tab, for the **Configuration field**, select the `region` parameter.
-1. For the **Label**, enter `Region`.
-1. Drag the Text Input component above the bar chart visualization.
+- Click the **+** icon in the canvas header
+- Select **Create analysis**
+
+## Configure the analysis
+
+A dialog opens with the following fields:
+
+| Field            | Description                                                                 |
+|------------------|-----------------------------------------------------------------------------|
+| **Analysis name** | Use alphanumeric characters and underscores.                               |
+| **Description**   | Optional description of the analysis.                                      |
+| **Pipeline name** | Select the pipeline to associate with the analysis.                        |
+| **Parameter set** | Choose which parameter set to use.                                         |
+| **Directory path**| Leave the default or select a different location.                          |
+
+Click **Create analysis**.
+
+## Build your analysis
+
+The analysis opens on the canvas.
+
+You can add three types of components:
+
+- **Interactive** — Capture user input
+- **Data Integration** — Display pipeline data
+- **Content** — Add text and images
+
+For full configuration options, see [Analysis components]().
+
+## Add a chart
+
+To add a visualization:
+
+1. Select a **chart** component.
+2. Choose a **data table**.
+3. Enter a **label**.
+4. Select a **chart type**.
+5. Configure:
+   - Category column
+   - Y-axis column
+
+You can further customize chart appearance, including labels and formatting.
+
+## Add interactive components
+
+import AnalysisinteractiveMan from '/snippets/misc/analysis-interactive.mdx'
+
+<AnalysisinteractiveMan/>
+
+</Tab> </Tabs>
 
 ## Run the analysis
 
@@ -165,10 +136,7 @@ Let's return to the analysis preview so we can test the new component.
 1. Review the bar chart to see the total sales by product category for the West region.
 
 <Warning>
-  When the analysis runs, Prophecy always executes the entire underlying pipeline. This means any
-  additional transformations, tables, or other components included in the pipeline will also run,
-  even if they're not exposed in the dashboard. Be mindful of how you design the pipeline to ensure
-  your dashboard triggers only the intended logic.
+When the analysis runs, Prophecy always executes the entire underlying pipeline. This means any additional transformations, tables, or other components included in the pipeline will also run, even if they're not exposed in the dashboard. Be mindful of how you design the pipeline to ensure your dashboard triggers only the intended logic.
 </Warning>
 
 ## Share the dashboard
