@@ -9,10 +9,12 @@ You can do this directly in the visual interface by opening gems and reviewing t
 
 ## How inspection works
 
-Inspecting a pipeline typically involves two things:
+Inspecting a pipeline typically involves the following:
 
-- Reviewing the logic inside a gem
-- Reviewing the data output after that gem runs
+- Reviewing the pipeline as a whole.
+- Reviewing the logic inside a gem.
+- Reviewing the data output after that gem runs.
+- (Optionally) Examining the SQL behind a gem.
 
 Prophecy provides a few tools to support this workflow:
 
@@ -103,9 +105,9 @@ All pipelines compile to SQL that runs in your warehouse. You can inspect this S
 
 To do this:
 
-1. Open the pipeline.
-2. Switch to code view.
-3. Review the generated SQL for the pipeline or specific steps.
+1. Open a gem.
+2. Switch to [code view](/data-analysis/gems/visual-expression-builder/visual-expression-builder#code-view).
+3. Review the generated SQL.
 
 Inspecting SQL is useful when you want to:
 
