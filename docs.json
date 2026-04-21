@@ -89,8 +89,9 @@
                     ]
                   },
                   {
-                    "group": "Build pipelines",
+                    "group": "Build and inspect pipelines",
                     "pages": [
+                      "data-analysis/ai/inspect-results",
                       {
                         "group": "Projects",
                         "pages": [
