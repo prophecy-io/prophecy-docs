@@ -39,6 +39,7 @@ Keytab
 Zendesk
 websockets
 Matchers
+athena
 
 # Prophecy Concepts
 Subgraph
