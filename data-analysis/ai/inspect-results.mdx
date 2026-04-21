@@ -21,6 +21,26 @@ Prophecy provides a few tools to support this workflow:
 - Use the [Data Profile](data-analysis/development/runs/data-explorer/data-profile) to analyze distributions, nulls, and data quality
 - Use the [visual expression builder](data-analysis/gems/visual-expression-builder/visual-expression-builder) to review or refine expression logic
 
+# Inspect the overall pipeline
+
+Begin by reviewing the pipeline as a whole to understand how data flows through each step.
+
+On the pipeline canvas, look at:
+
+- **The sequence of steps** — how data moves from sources to final outputs
+- **Joins and branching paths** — where datasets are combined or split
+- **Inputs and outputs** — what each gem receives and produces
+- **Key transformation points** — where filtering, aggregation, or enrichment occurs
+
+This high-level view helps you answer questions like:
+
+- Does the pipeline follow the intended logic from start to finish?
+- Are joins happening in the right place and in the right order?
+- Are there unnecessary or missing steps?
+- Does the final output reflect the transformations you expect?
+
+Start with the overall structure, then drill into individual gems and their outputs as needed.
+
 ## Inspect a pipeline step
 
 To understand what a step is doing:
@@ -76,6 +96,22 @@ Use the [visual expression builder](/data-analysis/gems/visual-expression-builde
 - Work with parameters and dynamic values
 
 After updating an expression, run the pipeline and verify the output in Data Explorer to ensure the expression produces the expected results.
+
+## Inspect generated SQL
+
+All pipelines compile to SQL that runs in your warehouse. You can inspect this SQL to verify exactly how transformations are executed.
+
+To do this:
+
+1. Open the pipeline.
+2. Switch to code view.
+3. Review the generated SQL for the pipeline or specific steps.
+
+Inspecting SQL is useful when you want to:
+
+- Confirm how joins, filters, or aggregations are implemented
+- Debug unexpected results at a lower level
+- Validate performance or query structure
 
 ## Next steps
 
