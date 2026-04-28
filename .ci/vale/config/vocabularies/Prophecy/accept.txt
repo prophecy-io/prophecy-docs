@@ -49,6 +49,7 @@ Configs
 Config
 configs
 config
+libs
 
 # Technical Terms
 dbt

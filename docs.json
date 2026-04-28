@@ -704,16 +704,16 @@
                   {
                     "group": "Releases",
                     "pages": [
-                      "data-analysis/releases/2026",
-                      "data-analysis/releases/2025"
+                      "releases/2026",
+                      "releases/2025"
                     ]
                   },
                   {
                     "group": "Reference",
                     "pages": [
-                      "data-analysis/releases/version-chart",
-                      "data-analysis/releases/version-support",
-                      "data-analysis/releases/find-version"
+                      "releases/version-chart",
+                      "releases/version-support",
+                      "releases/find-version"
                     ]
                   }
                 ]
@@ -1208,16 +1208,16 @@
                   {
                     "group": "Releases",
                     "pages": [
-                      "data-engineering/releases/2026",
-                      "data-engineering/releases/2025"
+                      "releases/2026",
+                      "releases/2025"
                     ]
                   },
                   {
                     "group": "Reference",
                     "pages": [
-                      "data-engineering/releases/version-chart",
-                      "data-engineering/releases/version-support",
-                      "data-engineering/releases/find-version"
+                      "releases/version-chart",
+                      "releases/version-support",
+                      "releases/find-version"
                     ]
                   }
                 ]
@@ -1484,6 +1484,16 @@
     }
   },
   "redirects": [
+    {
+      "source": "/data-engineering/releases/:path*",
+      "destination": "/releases/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/data-analysis/releases/:path*",
+      "destination": "/releases/:path*",
+      "permanent": true
+    },
     {
       "source": "/data-engineering/administration/:path*",
       "destination": "/administration/:path*",
