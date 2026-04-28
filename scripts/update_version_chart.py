@@ -88,7 +88,7 @@ def parse_existing_row(row_line):
 
 
 def update_version_chart_file(docs_repo_path):
-    version_chart_file = os.path.join(docs_repo_path, "snippets/releases/version-chart-snippet.mdx")
+    version_chart_file = os.path.join(docs_repo_path, "releases/version-chart.mdx")
 
     # Read the entire file
     with open(version_chart_file, 'r') as file:
