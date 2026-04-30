@@ -65,9 +65,9 @@ You can use the Condition gem for these scenarios:
 - Alerts or guardrails, such as reacting to a low row count
 - Branching pipeline logic
 
-## Example of simple data splitting
+## Example: simple data splitting
 
-Assume you have the following orders table.
+Assume you have the following orders table:
 
 <div class="table-example">
 | OrderId | Customer | OrderAmount | Region |
@@ -78,13 +78,13 @@ Assume you have the following orders table.
 | 1004    | Jordan   | 2100        | North  |
 </div>
 
-Suppose you configure the Condition gem with two outputs.
+You configure the Condition gem with two outputs:
 
-Output `out0` uses the condition `OrderAmount > 1000`.
+- Output `out0` uses the condition `OrderAmount > 1000`.
 
-Output `out1` is the default (else) route.
+- Output `out1` is the default (else) route.
 
-Rows where `OrderAmount > 1000` are routed to `out0`.
+Result: rows where `OrderAmount > 1000` are routed to `out0`:
 
 <div class="table-example">
 | OrderId | Customer | OrderAmount | Region |
@@ -93,7 +93,7 @@ Rows where `OrderAmount > 1000` are routed to `out0`.
 | 1004    | Jordan   | 2100        | North  |
 </div>
 
-All remaining rows are routed to `out1`.
+All remaining rows are routed to `out1`:ß
 
 <div class="table-example">
 | OrderId | Customer | OrderAmount | Region |
@@ -104,7 +104,7 @@ All remaining rows are routed to `out1`.
 
 ## Example: Multiple outputs, one match
 
-Assume this input:
+Assume you have the following input:
 
 <div class="table-example">
 | id   | value |
@@ -114,13 +114,11 @@ Assume this input:
 | 3    | 30    |
 </div>
 
-Configure the Condition gem with three outputs:
+You configure the Condition gem with three outputs:
 
 - `out0`: `value > 100`
 - `out1`: `value > 50`
 - `out2`: default (else)
-
-### What happens
 
 Conditions are evaluated top to bottom for each row:
 
@@ -142,18 +140,18 @@ Assume the same input:
 | 3    | 30    |
 </div>
 
-Configure the Condition gem:
+You configure the Condition gem as follows:
 
 - `out0`: `count < 2`
 - `out1`: default (else)
 
-### What happens
+The condition `count < 2` evaluates to `false`.
 
-- The dataset has 3 rows.
-- The condition `count < 2` evaluates to `false`.
-- Because this is a dataset-level condition, it applies to the entire dataset:
+Because this is a dataset-level condition, it applies to the entire dataset:
   - No rows are routed to `out0`.
   - All rows are routed to `out1`.
+
+Result: `out0` = 0 rows, `out1` = 3 rows.
 
 ### Key takeaway
 
