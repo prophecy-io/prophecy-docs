@@ -102,8 +102,8 @@
                       {
                         "group": "Pipelines",
                         "pages": [
-                        "data-analysis/development/pipelines/data-analysis-pipelines",
-                        "data-analysis/development/pipelines/view-pipeline-py"
+                          "data-analysis/development/pipelines/data-analysis-pipelines",
+                          "data-analysis/development/pipelines/view-pipeline-py"
                         ]
                       },
                        "data-analysis/ai/inspect-results",
@@ -188,15 +188,15 @@
                     ]
                   },
                   {
-                        "group": "Explore and visualize",
-                        "pages": [
-                          "data-analysis/analysis/overview",
-                          "data-analysis/analysis/create-analysis",
-                          "data-analysis/analysis/analysis-components",
-                          "data-analysis/analysis/analysis-settings",
-                          "data-analysis/analysis/consume-analysis"
-                        ]
-                      },
+                    "group": "Explore and visualize",
+                    "pages": [
+                      "data-analysis/analysis/overview",
+                      "data-analysis/analysis/create-analysis",
+                      "data-analysis/analysis/analysis-components",
+                      "data-analysis/analysis/analysis-settings",
+                      "data-analysis/analysis/consume-analysis"
+                    ]
+                  },
                   {
                     "group": "Platform setup",
                     "pages": [
@@ -249,7 +249,9 @@
                       },
                       {
                         "group": "Secrets",
-                        "pages": ["data-analysis/environment/secrets/secrets"]
+                        "pages": [
+                          "data-analysis/environment/secrets/secrets"
+                        ]
                       }
                     ]
                   },
@@ -499,7 +501,9 @@
                 "groups": [
                   {
                     "group": "API documentation",
-                    "pages": ["api-reference/introduction"]
+                    "pages": [
+                      "api-reference/introduction"
+                    ]
                   },
                   {
                     "group": "Endpoints",
@@ -571,7 +575,9 @@
                       },
                       {
                         "group": "Projects",
-                        "pages": ["api-reference/projects/deploy-project"]
+                        "pages": [
+                          "api-reference/projects/deploy-project"
+                        ]
                       },
                       {
                         "group": "Pipelines",
@@ -591,17 +597,17 @@
                   {
                     "group": "Platform",
                     "pages": [
-                      "data-analysis/administration/platform/editions",
-                      "data-analysis/administration/platform/architecture",
-                      "data-analysis/administration/platform/prophecy-deployment"
+                      "administration/platform/editions",
+                      "administration/platform/architecture",
+                      "administration/platform/prophecy-deployment"
                     ]
                   },
                   {
                     "group": "Setup",
                     "pages": [
-                      "data-analysis/administration/setup/prophecy-express-guide",
-                      "data-analysis/administration/setup/prophecy-enterprise-guide",
-                      "data-analysis/administration/setup/databricks-partner-connect"
+                      "administration/setup/prophecy-express-guide",
+                      "administration/setup/prophecy-enterprise-guide",
+                      "administration/setup/databricks-partner-connect"
                     ]
                   },
                   {
@@ -610,13 +616,14 @@
                       {
                         "group": "Teams",
                         "pages": [
-                          "data-analysis/administration/management/teams/teams",
+                          "administration/management/teams/teams",
                           {
                             "group": "Settings",
                             "pages": [
-                              "data-analysis/administration/management/teams/settings/ai",
-                              "data-analysis/administration/management/teams/settings/default-dependencies",
-                              "data-analysis/administration/management/teams/settings/project-creation-template"
+                              "administration/management/teams/settings/ai",
+                              "administration/management/teams/settings/default-dependencies",
+                              "administration/management/teams/settings/spark",
+                              "administration/management/teams/settings/project-creation-template"
                             ]
                           }
                         ]
@@ -624,13 +631,13 @@
                       {
                         "group": "Users",
                         "pages": [
-                          "data-analysis/administration/management/users/team-user-provisioning",
-                          "data-analysis/administration/management/users/account-settings",
+                          "administration/management/users/team-user-provisioning",
+                          "administration/management/users/account-settings",
                           {
                             "group": "Access control",
                             "pages": [
-                              "data-analysis/administration/management/users/access/role-based-access",
-                              "data-analysis/administration/management/users/access/team-based-access"
+                              "administration/management/users/access/role-based-access",
+                              "administration/management/users/access/team-based-access"
                             ]
                           }
                         ]
@@ -638,57 +645,56 @@
                       {
                         "group": "Authentication",
                         "pages": [
-                          "data-analysis/administration/management/authentication/authentication",
-                          "data-analysis/administration/management/authentication/saml",
-                          "data-analysis/administration/management/authentication/azure-ad",
-                          "data-analysis/administration/management/authentication/google-sso",
-                          "data-analysis/administration/management/authentication/ldap",
-                          "data-analysis/administration/management/authentication/group-team-mapping"
+                          "administration/management/authentication/authentication",
+                          "administration/management/authentication/saml",
+                          "administration/management/authentication/azure-ad",
+                          "administration/management/authentication/google-sso",
+                          "administration/management/authentication/ldap",
+                          "administration/management/authentication/group-team-mapping"
                         ]
                       },
                       {
                         "group": "Cluster admin settings",
                         "pages": [
-                          "data-analysis/administration/management/cluster-admin-settings/cluster-admin-settings",
-                          "data-analysis/administration/management/cluster-admin-settings/oauth-setup",
-                          "data-analysis/administration/management/cluster-admin-settings/copilot-settings",
-                          "data-analysis/administration/management/cluster-admin-settings/configure-endpoint",
-                          "data-analysis/administration/management/cluster-admin-settings/feature-management"
+                          "administration/management/cluster-admin-settings/cluster-admin-settings",
+                          "administration/management/cluster-admin-settings/oauth-setup",
+                          "administration/management/cluster-admin-settings/copilot-settings",
+                          "administration/management/cluster-admin-settings/configure-endpoint",
+                          "administration/management/cluster-admin-settings/feature-management"
                         ]
                       },
-
                       {
                         "group": "Usage and billing",
                         "pages": [
-                          "data-analysis/administration/management/usage-billing/usage-billing",
-                          "data-analysis/administration/management/usage-billing/credits"
+                          "administration/management/usage-billing/usage-billing",
+                          "administration/management/usage-billing/credits"
                         ]
                       },
-                      "data-analysis/administration/management/audit-logs"
+                      "administration/management/audit-logs"
                     ]
                   },
                   {
                     "group": "Help and resources",
                     "pages": [
-                      "data-analysis/administration/getting-help/get-in-touch",
+                      "administration/getting-help/get-in-touch",
                       {
                         "group": "Support",
                         "pages": [
-                          "data-analysis/administration/getting-help/submit-request",
-                          "data-analysis/administration/getting-help/troubleshooting",
+                          "administration/getting-help/submit-request",
+                          "administration/getting-help/troubleshooting",
                           {
                             "group": "Collect diagnostic data",
                             "pages": [
-                              "data-analysis/administration/getting-help/prophecy-details",
-                              "data-analysis/administration/getting-help/spark-cluster-details",
-                              "data-analysis/administration/getting-help/har-file",
-                              "data-analysis/administration/getting-help/diagnostics",
-                              "data-analysis/administration/getting-help/copy-session-info"
+                              "administration/getting-help/prophecy-details",
+                              "administration/getting-help/spark-cluster-details",
+                              "administration/getting-help/har-file",
+                              "administration/getting-help/diagnostics",
+                              "administration/getting-help/copy-session-info"
                             ]
                           }
                         ]
                       },
-                      "data-analysis/administration/getting-help/security"
+                      "administration/getting-help/security"
                     ]
                   }
                 ]
@@ -698,14 +704,17 @@
                 "groups": [
                   {
                     "group": "Releases",
-                    "pages": ["data-analysis/releases/2026", "data-analysis/releases/2025"]
+                    "pages": [
+                      "releases/2026",
+                      "releases/2025"
+                    ]
                   },
                   {
                     "group": "Reference",
                     "pages": [
-                      "data-analysis/releases/version-chart",
-                      "data-analysis/releases/version-support",
-                      "data-analysis/releases/find-version"
+                      "releases/version-chart",
+                      "releases/version-support",
+                      "releases/find-version"
                     ]
                   }
                 ]
@@ -907,7 +916,9 @@
                           },
                           {
                             "group": "SQL providers",
-                            "pages": ["data-engineering/fabrics/sql-provider/snowflake"]
+                            "pages": [
+                              "data-engineering/fabrics/sql-provider/snowflake"
+                            ]
                           },
                           "data-engineering/fabrics/secret-providers"
                         ]
@@ -1090,16 +1101,17 @@
                   {
                     "group": "Platform",
                     "pages": [
-                      "data-engineering/administration/platform/editions",
-                      "data-engineering/administration/platform/architecture",
-                      "data-engineering/administration/platform/prophecy-deployment"
+                      "administration/platform/editions",
+                      "administration/platform/architecture",
+                      "administration/platform/prophecy-deployment"
                     ]
                   },
                   {
                     "group": "Setup",
                     "pages": [
-                      "data-engineering/administration/setup/prophecy-express-guide",
-                      "data-engineering/administration/setup/prophecy-enterprise-guide"
+                      "administration/setup/prophecy-express-guide",
+                      "administration/setup/prophecy-enterprise-guide",
+                      "administration/setup/databricks-partner-connect"
                     ]
                   },
                   {
@@ -1108,14 +1120,14 @@
                       {
                         "group": "Teams",
                         "pages": [
-                          "data-engineering/administration/management/teams/teams",
+                          "administration/management/teams/teams",
                           {
                             "group": "Settings",
                             "pages": [
-                              "data-engineering/administration/management/teams/settings/ai",
-                              "data-engineering/administration/management/teams/settings/default-dependencies",
-                              "data-engineering/administration/management/teams/settings/spark",
-                              "data-engineering/administration/management/teams/settings/project-creation-template"
+                              "administration/management/teams/settings/ai",
+                              "administration/management/teams/settings/default-dependencies",
+                              "administration/management/teams/settings/spark",
+                              "administration/management/teams/settings/project-creation-template"
                             ]
                           }
                         ]
@@ -1123,13 +1135,13 @@
                       {
                         "group": "Users",
                         "pages": [
-                          "data-engineering/administration/management/users/team-user-provisioning",
-                          "data-engineering/administration/management/users/account-settings",
+                          "administration/management/users/team-user-provisioning",
+                          "administration/management/users/account-settings",
                           {
                             "group": "Access control",
                             "pages": [
-                              "data-engineering/administration/management/users/access/role-based-access",
-                              "data-engineering/administration/management/users/access/team-based-access"
+                              "administration/management/users/access/role-based-access",
+                              "administration/management/users/access/team-based-access"
                             ]
                           }
                         ]
@@ -1137,53 +1149,56 @@
                       {
                         "group": "Authentication",
                         "pages": [
-                          "data-engineering/administration/management/authentication/authentication",
-                          "data-engineering/administration/management/authentication/saml",
-                          "data-engineering/administration/management/authentication/azure-ad",
-                          "data-engineering/administration/management/authentication/google-sso",
-                          "data-engineering/administration/management/authentication/ldap",
-                          "data-engineering/administration/management/authentication/group-team-mapping"
+                          "administration/management/authentication/authentication",
+                          "administration/management/authentication/saml",
+                          "administration/management/authentication/azure-ad",
+                          "administration/management/authentication/google-sso",
+                          "administration/management/authentication/ldap",
+                          "administration/management/authentication/group-team-mapping"
                         ]
                       },
                       {
                         "group": "Cluster admin settings",
                         "pages": [
-                          "data-engineering/administration/management/cluster-admin-settings/cluster-admin-settings",
-                          "data-engineering/administration/management/cluster-admin-settings/oauth-setup",
-                          "data-engineering/administration/management/cluster-admin-settings/copilot-settings",
-                          "data-engineering/administration/management/cluster-admin-settings/feature-management"
+                          "administration/management/cluster-admin-settings/cluster-admin-settings",
+                          "administration/management/cluster-admin-settings/oauth-setup",
+                          "administration/management/cluster-admin-settings/copilot-settings",
+                          "administration/management/cluster-admin-settings/configure-endpoint",
+                          "administration/management/cluster-admin-settings/feature-management"
                         ]
                       },
-
                       {
                         "group": "Usage and billing",
                         "pages": [
-                          "data-engineering/administration/management/usage-billing/usage-billing"
+                          "administration/management/usage-billing/usage-billing",
+                          "administration/management/usage-billing/credits"
                         ]
                       },
-                      "data-engineering/administration/management/audit-logs"
+                      "administration/management/audit-logs"
                     ]
                   },
                   {
                     "group": "Help and resources",
                     "pages": [
-                      "data-engineering/administration/getting-help/get-in-touch",
+                      "administration/getting-help/get-in-touch",
                       {
                         "group": "Support",
                         "pages": [
-                          "data-engineering/administration/getting-help/submit-request",
+                          "administration/getting-help/submit-request",
+                          "administration/getting-help/troubleshooting",
                           {
                             "group": "Collect diagnostic data",
                             "pages": [
-                              "data-engineering/administration/getting-help/prophecy-details",
-                              "data-engineering/administration/getting-help/spark-cluster-details",
-                              "data-engineering/administration/getting-help/har-file",
-                              "data-engineering/administration/getting-help/diagnostics"
+                              "administration/getting-help/prophecy-details",
+                              "administration/getting-help/spark-cluster-details",
+                              "administration/getting-help/har-file",
+                              "administration/getting-help/diagnostics",
+                              "administration/getting-help/copy-session-info"
                             ]
                           }
                         ]
                       },
-                      "data-engineering/administration/getting-help/security"
+                      "administration/getting-help/security"
                     ]
                   }
                 ]
@@ -1193,14 +1208,17 @@
                 "groups": [
                   {
                     "group": "Releases",
-                    "pages": ["data-engineering/releases/2026", "data-engineering/releases/2025"]
+                    "pages": [
+                      "releases/2026",
+                      "releases/2025"
+                    ]
                   },
                   {
                     "group": "Reference",
                     "pages": [
-                      "data-engineering/releases/version-chart",
-                      "data-engineering/releases/version-support",
-                      "data-engineering/releases/find-version"
+                      "releases/version-chart",
+                      "releases/version-support",
+                      "releases/find-version"
                     ]
                   }
                 ]
@@ -1220,13 +1238,16 @@
             "groups": [
               {
                 "group": "Import overview",
-                "pages": ["import-tool/index", "import-tool/migration"]
+                "pages": [
+                  "import-tool/index",
+                  "import-tool/migration"
+                ]
               },
               {
                 "group": "Alteryx to SQL",
                 "pages": [
                   "import-tool/alteryx/alteryx-to-prophecy-sql/getting-started-prophecy-alteryx",
-                 "import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-to-sql",
+                  "import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-to-sql",
                   "import-tool/alteryx/alteryx-to-prophecy-sql/sql-dialect-differences",
                   "import-tool/alteryx/alteryx-to-prophecy-sql/data-type-mapping",
                   "import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-connections",
@@ -1269,7 +1290,7 @@
                           "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-join-tools/alteryx-union"
                         ]
                       },
-                                             {
+                      {
                         "group": "Alteryx Parse tools",
                         "pages": [
                           "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-parse-tools/alteryx-datetime",
@@ -1280,7 +1301,7 @@
                       {
                         "group": "Alteryx Transform tools",
                         "pages": [
-                         "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-arrange",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-arrange",
                           "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-count-records",
                           "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-cross-tab",
                           "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-make-columns",
@@ -1313,7 +1334,9 @@
               },
               {
                 "group": "Migration Analysis",
-                "pages": ["import-tool/alteryx/alteryx-migration-analysis"]
+                "pages": [
+                  "import-tool/alteryx/alteryx-migration-analysis"
+                ]
               }
             ]
           },
@@ -1366,15 +1389,21 @@
               },
               {
                 "group": "Components",
-                "pages": ["import-tool/abinitio/abinitio-components"]
+                "pages": [
+                  "import-tool/abinitio/abinitio-components"
+                ]
               },
               {
                 "group": "Functions",
-                "pages": ["import-tool/abinitio/abinitio-functions"]
+                "pages": [
+                  "import-tool/abinitio/abinitio-functions"
+                ]
               },
               {
                 "group": "Plans",
-                "pages": ["import-tool/abinitio/abinitio-plans"]
+                "pages": [
+                  "import-tool/abinitio/abinitio-plans"
+                ]
               },
               {
                 "group": "Gems",
@@ -1407,7 +1436,9 @@
               },
               {
                 "group": "Components",
-                "pages": ["import-tool/datastage/datastage-components"]
+                "pages": [
+                  "import-tool/datastage/datastage-components"
+                ]
               }
             ]
           }
@@ -1433,7 +1464,16 @@
     }
   },
   "contextual": {
-    "options": ["copy", "view", "chatgpt", "claude", "perplexity", "mcp", "cursor", "vscode"]
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
   },
   "footer": {},
   "api": {
@@ -1445,7 +1485,27 @@
     }
   },
   "redirects": [
-     {
+    {
+      "source": "/data-engineering/releases/:path*",
+      "destination": "/releases/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/data-analysis/releases/:path*",
+      "destination": "/releases/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/data-engineering/administration/:path*",
+      "destination": "/administration/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/data-analysis/administration/:path*",
+      "destination": "/administration/:path*",
+      "permanent": true
+    },
+    {
       "source": "/import-tool/alteryx/alteryx-to-databricks-sql/:path*",
       "destination": "/import-tool/alteryx/alteryx-to-prophecy-sql/:path*",
       "permanent": true
@@ -1498,7 +1558,7 @@
       "source": "/data-analysis/collaboration/prophecy-apps/app-settings",
       "destination": "/data-analysis/analysis/analysis-settings"
     },
-        {
+    {
       "source": "/data-analysis/ai/copilot/gem-expressions",
       "destination": "/data-analysis/gems/copilot/gem-expressions"
     },
@@ -1511,32 +1571,32 @@
       "destination": "/data-analysis/gems/copilot/auto-documentation"
     },
     {
-  "source": "/data-analysis/development/analyses/overview",
-  "destination": "/data-analysis/analyses/overview"
-},
-{
-  "source": "/data-analysis/development/analyses/create-analysis",
-  "destination": "/data-analysis/analyses/create-analysis"
-},
-{
-  "source": "/data-analysis/development/analyses/analysis-components",
-  "destination": "/data-analysis/analyses/analysis-components"
-},
-{
-  "source": "/data-analysis/development/analyses/analysis-settings",
-  "destination": "/data-analysis/analyses/analysis-settings"
-},
-{
-  "source": "/data-analysis/development/analyses/consume-analysis",
-  "destination": "/data-analysis/analyses/consume-analysis"
-},
-{
-  "source": "/import-tool/alteryx/alteryx-to-databricks-sql/databricks-data-types",
-  "destination": "/import-tool/alteryx/alteryx-to-prophecy-sql/data-type-mapping"
-},
-{
-  "source": "/import-tool/alteryx/alteryx-to-databricks-sql/databricks-functions-mappings",
-  "destination": "/import-tool/alteryx/alteryx-to-prophecy-sql/function-mapping"
-}
+      "source": "/data-analysis/development/analyses/overview",
+      "destination": "/data-analysis/analyses/overview"
+    },
+    {
+      "source": "/data-analysis/development/analyses/create-analysis",
+      "destination": "/data-analysis/analyses/create-analysis"
+    },
+    {
+      "source": "/data-analysis/development/analyses/analysis-components",
+      "destination": "/data-analysis/analyses/analysis-components"
+    },
+    {
+      "source": "/data-analysis/development/analyses/analysis-settings",
+      "destination": "/data-analysis/analyses/analysis-settings"
+    },
+    {
+      "source": "/data-analysis/development/analyses/consume-analysis",
+      "destination": "/data-analysis/analyses/consume-analysis"
+    },
+    {
+      "source": "/import-tool/alteryx/alteryx-to-databricks-sql/databricks-data-types",
+      "destination": "/import-tool/alteryx/alteryx-to-prophecy-sql/data-type-mapping"
+    },
+    {
+      "source": "/import-tool/alteryx/alteryx-to-databricks-sql/databricks-functions-mappings",
+      "destination": "/import-tool/alteryx/alteryx-to-prophecy-sql/function-mapping"
+    }
   ]
 }
