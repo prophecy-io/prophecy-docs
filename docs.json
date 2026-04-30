@@ -59,6 +59,7 @@
                           "data-analysis/ai/agent/analyses"
                         ]
                       },
+                      "data-analysis/ai/inspect-results",
                       {
                         "group": "Advanced capabilities",
                         "pages": [
@@ -89,7 +90,7 @@
                     ]
                   },
                   {
-                    "group": "Build pipelines",
+                    "group": "Build and inspect pipelines",
                     "pages": [
                       {
                         "group": "Projects",
