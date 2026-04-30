@@ -181,6 +181,7 @@
                           "data-analysis/development/extensibility/package-hub/package-hub",
                           "data-analysis/development/extensibility/package-hub/template-hub",
                           "data-analysis/development/extensibility/functions",
+                          "data-analysis/development/extensibility/generate-schema-name",
                           "data-analysis/development/extensibility/stored-procedure",
                           "data-analysis/development/extensibility/sql-gem-builder"
                         ]
