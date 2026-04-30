@@ -1,29 +1,35 @@
 ---
-title: "generate_schema_name macro"
-description: "Understand the auto-generated schema-resolution macro in SQL projects and why you should keep it"
+title: Schema name resolution in SQL projects
+description: 'How Prophecy resolves schema names in SQL projects and how to restore the default macro if needed'
 ---
 
-When you create a SQL project in Prophecy, the project is initialized with a small dbt macro named `generate_schema_name` under the `macros/` directory. This macro controls how Prophecy resolves the final schema name for every table in your pipeline. Deleting it changes the resolution rules in a way that is easy to miss in the editor but produces wrong fully qualified names at preflight and run time.
+When you create a SQL project in Prophecy, the project is initialized with a small dbt macro named `generate_schema_name` under the `macros/` directory. This macro controls how Prophecy resolves the final schema name for every table in your pipeline.
 
 This page explains what the macro does, what happens if you delete it, and how to restore it.
 
-## Overview
+<Warning>
+  Do not delete `macros/generate_schema_name.sql` from your project. Deleting it does not reset defaults. Instead, it switches your project to dbt's concatenating default, which concatenates schema names in a way that is rarely correct for Prophecy projects.
+</Warning>
 
-`generate_schema_name` is a dbt macro that runs every time a Prophecy SQL pipeline resolves the schema for a model or Table gem. dbt ships a built-in version of this macro, but its default behavior concatenates two values and is rarely what you want. Prophecy's project template overrides the dbt default with a simpler version that returns the schema you actually configured.
+Prophecy auto-generates this macro for every new SQL project. If you started a project before this auto-generation rolled out, or you removed the file at some point, you will need to add it back manually. See [Restore the macro](#restore-the-macro).
 
-| Property             | Value                                                  |
-| -------------------- | ------------------------------------------------------ |
-| Macro name           | `generate_schema_name`                                 |
-| Location in project  | `macros/generate_schema_name.sql`                      |
-| Created by           | Prophecy, automatically at project initialization      |
-| Visible in           | The **Functions** tab of the project sidebar           |
-| Required             | Yes — for correct schema resolution in SQL projects    |
+## What happens if you delete the macro
 
-<Info>
-  Prophecy auto-generates this macro for every new SQL project. If you started a project before
-  this auto-generation rolled out, or you removed the file at some point, you will need to add it
-  back manually. See [Restore the macro](#restore-the-macro).
-</Info>
+If you delete `macros/generate_schema_name.sql` from the project, dbt falls back to its built-in version of the macro. The built-in version concatenates the fabric's default schema with whatever you set on the Table gem, joined by an underscore.
+
+For example, with a Databricks fabric whose connection schema is `default` and a Table gem whose target schema is `my_schema`:
+
+| Macro present                   | Resolved schema       | Resulting fully qualified name      |
+| ------------------ | --------------------------- | ----------------------------------- |
+| Prophecy `generate_schema_name` | `my_schema`           | `<catalog>.my_schema.<table>`       |
+| dbt built-in (`generate_schema_name` macro deleted)    | `default_my_schema`   | `<catalog>.default_my_schema.<table>` |
+
+You will typically notice this in one of two ways:
+
+- The **preflight check** in the Prophecy editor reports that the target table cannot be found, because the concatenated schema does not exist in the warehouse.
+- A pipeline run creates a new schema named `<fabric_default>_<your_target_schema>` in your warehouse and writes data there, instead of the schema you configured.
+
+If you only see this issue on tables that have an explicit target schema set, and tables without a target schema still resolve correctly, the missing macro is the most likely cause.
 
 ## How schemas are resolved
 
@@ -50,32 +56,6 @@ The contract is straightforward:
 
 - If a Table gem **does not** set a target schema, the table is written to the fabric default schema.
 - If a Table gem **does** set a target schema, the table is written to that schema exactly as written.
-
-This matches what you see in the Table gem configuration and what most users intuitively expect.
-
-## What happens if you delete the macro
-
-If `macros/generate_schema_name.sql` is missing from the project, dbt falls back to its built-in version of the macro. The built-in version concatenates the fabric default schema with whatever you set on the Table gem, joined by an underscore.
-
-For example, with a Databricks fabric whose connection schema is `default` and a Table gem whose target schema is `nihal_sid`:
-
-| Macro present                   | Resolved schema       | Resulting fully qualified name      |
-| ------------------------------- | --------------------- | ----------------------------------- |
-| Prophecy `generate_schema_name` | `nihal_sid`           | `<catalog>.nihal_sid.<table>`       |
-| dbt built-in (macro deleted)    | `default_nihal_sid`   | `<catalog>.default_nihal_sid.<table>` |
-
-You will typically notice this in one of two ways:
-
-- The **preflight check** in the Prophecy editor reports that the target table cannot be found, because the concatenated schema does not exist in the warehouse.
-- A pipeline run **creates a new schema** named `<fabric_default>_<your_target_schema>` in your warehouse and writes data there, instead of the schema you configured.
-
-<Warning>
-  Do not delete `macros/generate_schema_name.sql` from your project. Deleting it does not "reset
-  to defaults" — it switches your project to dbt's concatenating default, which is almost
-  certainly not what you want.
-</Warning>
-
-If you only see this issue on tables that have an explicit target schema set, and tables without a target schema still resolve correctly, the missing macro is the most likely cause.
 
 ## Restore the macro
 
@@ -120,21 +100,19 @@ If you have already deleted `generate_schema_name`, you can recreate it from the
     directly, without the fabric default schema as a prefix.
 
     <Check>
-      A table with target schema `nihal_sid` resolves to `<catalog>.nihal_sid.<table>`, not
-      `<catalog>.default_nihal_sid.<table>`.
+      A table with target schema `my_schema` resolves to `<catalog>.my_schema.<table>`, not
+      `<catalog>.default_my_schema.<table>`.
     </Check>
   </Step>
 </Steps>
 
 ## Customizing the macro
 
-The macro is a regular dbt macro and you can customize it if you have specific routing rules — for example, prefixing schemas by environment or by team. As long as the customized macro is named `generate_schema_name` and lives in the `macros/` directory, dbt will use it instead of the built-in version.
+The macro is a regular dbt macro and you can customize it if you have specific routing rules. For example, you could prefix schemas by environment or by team. As long as the customized macro is named `generate_schema_name` and lives in the `macros/` directory, dbt will use it instead of the built-in version.
 
 <Tip>
-  If you customize this macro, follow the dbt guidance in
-  [Custom schema names](https://docs.getdbt.com/docs/build/custom-schemas#how-does-dbt-generate-a-models-schema-name).
-  Keep the macro deterministic so that the schemas you see in the editor match the schemas that
-  the pipeline writes to at run time.
+  If you customize this macro, follow the dbt guidance in [Custom schema names](https://docs.getdbt.com/docs/build/custom-schemas#how-does-dbt-generate-a-models-schema-name).
+  Keep the macro deterministic so that the schemas you see in the editor match the schemas that the pipeline writes to at run time.
 </Tip>
 
 ## Related topics
@@ -142,4 +120,4 @@ The macro is a regular dbt macro and you can customize it if you have specific r
 - [Functions](/data-analysis/development/extensibility/functions) — Other user-built macros in SQL projects.
 - [Databricks connection](/data-analysis/environment/connections/databricks#connection-parameters) — Where the fabric default schema is configured for Databricks.
 - [Snowflake connection](/data-analysis/environment/connections/snowflake#connection-parameters) — Where the fabric default schema is configured for Snowflake.
-- [dbt: Custom schemas](https://docs.getdbt.com/docs/build/custom-schemas) — Upstream documentation for the macro.
+- [dbt's documentation on custom schemas](https://docs.getdbt.com/docs/build/custom-schemas) — Upstream documentation for the macro.
