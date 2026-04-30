@@ -107,7 +107,7 @@ Prophecy cannot retrieve datasets if the authenticated identity does not have ac
 If a Table gem with an explicit target schema resolves to `<catalog>.<fabric_default_schema>_<your_target_schema>.<table>` instead of `<catalog>.<your_target_schema>.<table>`, the project is missing the auto-generated `generate_schema_name` macro. With the macro removed, dbt's built-in version concatenates the fabric default schema with the table target schema.
 
 - Open the project sidebar and check the **Functions** section for an entry named `generate_schema_name`.
-- If it is missing, restore it. Learn more in [generate_schema_name macro](/data-analysis/development/extensibility/generate-schema-name).
+- If it is missing, restore it. Learn more in [Schema name resolution in SQL projects](/data-analysis/development/extensibility/generate-schema-name).
 
 </Accordion>
 </AccordionGroup>
