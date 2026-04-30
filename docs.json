@@ -91,7 +91,6 @@
                   {
                     "group": "Build and inspect pipelines",
                     "pages": [
-                      "data-analysis/ai/inspect-results",
                       {
                         "group": "Projects",
                         "pages": [
@@ -107,6 +106,7 @@
                         "data-analysis/development/pipelines/view-pipeline-py"
                         ]
                       },
+                       "data-analysis/ai/inspect-results",
                       {
                         "group": "Studio",
                         "pages": [

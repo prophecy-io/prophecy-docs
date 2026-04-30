@@ -16,16 +16,18 @@ Inspecting a pipeline typically involves the following:
 - Reviewing the data output after that gem runs.
 - (Optionally) Examining the SQL behind a gem.
 
-![Insption steps](/data-analysis/ai/agent/img/inspect-agent-results.png)
+![Inspection steps](/data-analysis/ai/agent/img/inspect-agent-results.png)
 
 Prophecy provides a few tools to support this workflow:
 
-- Open a [gem](/data-analysis/gems/gems) to inspect and modify its configuration
-- Use the [Data Explorer](/data-analysis/development/runs/data-explorer/data-explorer) to view the output after a step
-- Use the [Data Profile](data-analysis/development/runs/data-explorer/data-profile) to analyze distributions, nulls, and data quality
-- Use the [visual expression builder](data-analysis/gems/visual-expression-builder/visual-expression-builder) to review or refine expression logic
+- View [pipelines](/data-analysis/development/pipelines/data-analysis-pipelines) on the canvas to see how data is flowing.
+- Open a [gem](/data-analysis/gems/gems) to inspect and modify its configuration.
+- Use the [Data Explorer](/data-analysis/development/runs/data-explorer/data-explorer) to view the output after a step.
+- Use the [Data Profile](data-analysis/development/runs/data-explorer/data-profile) to analyze distributions, nulls, and data quality.
+- Use the [visual expression builder](data-analysis/gems/visual-expression-builder/visual-expression-builder) to review or refine a gem's expression logic.
+- Inspect SQL using [code view](/data-analysis/gems/visual-expression-builder/visual-expression-builder#code-view).
 
-# Inspect the overall pipeline
+## Inspect the overall pipeline
 
 Begin by reviewing the pipeline as a whole to understand how data flows through each step.
 
@@ -43,7 +45,14 @@ This high-level view helps you answer questions like:
 - Are there unnecessary or missing steps?
 - Does the final output reflect the transformations you expect?
 
-Start with the overall structure, then drill into individual gems and their outputs as needed.
+Here are some examples of gems featured in the screenshot below:
+
+1. [Table gems](/data-analysis/gems/source-target/table/snowflake), which visualize your data sources.
+1. [Reformat gems](/data-analysis/gems/prepare/reformat), which transforms one or more column names or values by using expressions and/or functions.
+1. [Join gems](/data-analysis/gems/join-split/join), which combine data from two or more datasets based on a shared column value.
+1. [Filter gems](/data-analysis/gems/prepare/filter), which filter output rows based on defined criteria.
+
+![Generated pipeline](/data-analysis/ai/agent/img/inspect-pipeline.png)
 
 ## Inspect a pipeline step
 
@@ -59,6 +68,10 @@ To understand what a step is doing:
 
 Opening a gem helps you understand how the transformation is defined.
 
+For example, the screenshot below depicts a Filter gem that filters out rows where `MONTHLY_PREMIUM` is null or zero.
+
+![Generated pipeline](/data-analysis/ai/agent/img/inspect-filter-gem.png)
+
 ## Inspect results
 
 After reviewing the logic, validate the output:
@@ -70,11 +83,11 @@ After reviewing the logic, validate the output:
    - column names and types
    - schema changes from previous steps
 
-If you need deeper insight into the data:
-
-- Use the [Data Profile](/data-analysis/development/runs/data-explorer/data-profile) to check distributions, null values, and outliers.
+If you need deeper insight into the data, use the [Data Profile](/data-analysis/development/runs/data-explorer/data-profile) to check distributions, null values, and outliers.
 
 Inspecting results helps you confirm that the transformation behaves as expected.
+
+![Data explorer with data analysis open](/data-analysis/ai/agent/img/inspect-data-analysis.png)
 
 ## What to look for
 
