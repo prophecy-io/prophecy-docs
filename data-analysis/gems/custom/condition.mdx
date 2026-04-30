@@ -11,6 +11,10 @@ You can use this gem when you need branching logic in a pipeline. This includes 
 
 Each output port has a condition that evaluates to `true` or `false`. Conditions are evaluated from top to bottom. Each row is routed to the first output whose condition evaluates to `true`. Any rows that do not match earlier conditions are routed to the final output port.
 
+<Note>
+All output branches execute, even if they receive zero rows. The Condition gem routes rows; it does not gate execution.
+</Note>
+
 After a row is routed to an output, it is not evaluated against later outputs.
 
 The Conditional gem supports both row-level routing and dataset-level routing:
@@ -18,7 +22,7 @@ The Conditional gem supports both row-level routing and dataset-level routing:
 - Row-level routing splits data based on column values.
 - Dataset-level routing supports control-flow decisions using aggregate conditions such as `count` or `sum`.
 
-Dataset-level conditions (such as using `count`) evaluate the same way for all rows: If the condition is `true`, all rows are routed to that output. If the condition is `false`, no rows are routed to that output.
+Dataset-level conditions (such as using `count`) evaluate the same way for all rows: If the condition is `true`, all rows are routed to that output. If the condition is `false`, no rows are routed to that output. However, even when a dataset-level condition evaluates to `false`, downstream branches still execute with empty inputs.
 
 The final output port acts as a default (else) route. Any rows that do not match earlier conditions are routed to the last output.
 
@@ -41,11 +45,27 @@ You can define row-level conditions such as `OrderAmount > 1000` or dataset-leve
 
 ## Output behavior
 
-If no rows satisfy a condition, that output receives an empty dataframe. Downstream transformations still execute even when the input dataframe is empty.
+If no rows satisfy a condition, that output receives an empty dataframe. Downstream transformations still execute even when the input dataframe is empty. That is, every output path runs, but only the matching branch receives rows.
 
-Aggregations applied downstream of an empty branch may still produce rows. For example, a count aggregation can return a single-row result.
+Aggregations applied downstream of an empty branch may still produce rows. For example, a `count` aggregation can return a single-row result.
 
-## Example
+## Limitations
+
+- Output order affects behavior because conditions are evaluated top to bottom.
+- A condition that always evaluates to `true` captures all rows and prevents later outputs from receiving data.
+- Downstream logic must handle empty dataframes.
+- Dataset-level conditions such as using `count` do not split rows. They route all rows or no rows.
+
+## Example use cases
+
+You can use the Condition gem for these scenarios:
+
+- Data splitting, such as routing high and low values to different branches
+- Exception handling
+- Alerts or guardrails, such as reacting to a low row count
+- Branching pipeline logic
+
+## Example of simple data splitting
 
 Assume you have the following orders table.
 
@@ -82,32 +102,62 @@ All remaining rows are routed to `out1`.
 | 1003    | Priya    | 800         | West   |
 </div>
 
-## Example with dataset-level condition
+## Example: Multiple outputs, one match
 
-You can route based on properties of the entire dataset.
+Assume this input:
 
-Output `out0` uses the condition `Count < row_limit`.
+<div class="table-example">
+| id   | value |
+| ---- | ----- |
+| 1    | 10    |
+| 2    | 20    |
+| 3    | 30    |
+</div>
 
-If the dataset has fewer rows than `row_limit`, all rows are routed to `out0`. Otherwise, they continue to the next output.
+Configure the Condition gem with three outputs:
 
-This approach is useful for alerting when data volume is too low, routing to fallback logic, and enforcing data quality thresholds.
+- `out0`: `value > 100`
+- `out1`: `value > 50`
+- `out2`: default (else)
 
-## Limitations
+### What happens
 
-- Output order affects behavior because earlier conditions take priority over later ones.
-- A condition that always evaluates to `true` captures all rows and prevents later outputs from receiving data.
-- Dataset-level conditions such as using `Count` do not split rows. They route all rows or no rows.
-- You must account for empty dataframes in downstream logic.
-- If an earlier condition always evaluates to `true`, all rows will be routed to that output and later outputs will not receive any data.
+Conditions are evaluated top to bottom for each row:
 
-## Example use cases
+- No rows satisfy `value > 100`, so `out0` receives zero rows.
+- No rows satisfy `value > 50`, so `out1` receives zero rows.
+- All rows fall through to the default route, so `out2` receives all rows.
 
-You can use the Condition gem for these scenarios:
+Result: `out0` = 0 rows, `out1` = 0 rows, `out2` = 3 rows.
 
-- Data splitting, such as routing high and low values to different branches
-- Exception handling
-- Alerts or guardrails, such as reacting to a low row count
-- Branching pipeline logic
+## Example: Dataset-level condition (`count`)
+
+Assume the same input:
+
+<div class="table-example">
+| id   | value |
+| ---- | ----- |
+| 1    | 10    |
+| 2    | 20    |
+| 3    | 30    |
+</div>
+
+Configure the Condition gem:
+
+- `out0`: `count < 2`
+- `out1`: default (else)
+
+### What happens
+
+- The dataset has 3 rows.
+- The condition `count < 2` evaluates to `false`.
+- Because this is a dataset-level condition, it applies to the entire dataset:
+  - No rows are routed to `out0`.
+  - All rows are routed to `out1`.
+
+### Key takeaway
+
+Dataset-level conditions do not split rows. They route all rows or no rows. Even when a condition is false, the corresponding branch still executes with an empty dataframe.
 
 ## Filter vs Condition gem
 
@@ -142,10 +192,7 @@ For example, when output out0 uses `OrderAmount > 1000` and output out1 has no c
 
 ### Summary
 
-The Filter gem keeps what matches.
-
-The Condition gem decides where data goes.
-
-Use the Filter gem for simple filtering.
-
-Use the Condition gem when you need branching or control flow in your pipeline.
+- The Filter gem keeps what matches.
+- The Condition gem decides where data goes.
+- Use the Filter gem for simple filtering.
+- Use the Condition gem when you need branching or control flow in your pipeline.
