@@ -59,6 +59,7 @@
                           "data-analysis/ai/agent/analyses"
                         ]
                       },
+                      "data-analysis/ai/inspect-results",
                       {
                         "group": "Advanced capabilities",
                         "pages": [
@@ -106,7 +107,6 @@
                         "data-analysis/development/pipelines/view-pipeline-py"
                         ]
                       },
-                       "data-analysis/ai/inspect-results",
                       {
                         "group": "Studio",
                         "pages": [
