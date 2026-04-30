@@ -24,6 +24,25 @@ The indexer crawls your data storage using either your identity or a separately 
   different fabric, AI features will use that fabric's knowledge graph.
 </Note>
 
+## Agent behavior when data access is disabled
+
+The `AI_DATA_ACCESS_CLUSTER_ENABLED` flag controls whether the V4 agent can access live data. When this flag is set to `false`, the agent is limited to metadata stored in the knowledge graph and cannot execute SQL queries, run pipelines, or generate summarizations that require live data.
+
+The agent is not broken in this state. Instead, it is operating within its restricted scope. Admins can [configure data access](/administration/management/cluster-admin-settings/knowledge-graph-config) to restore full capability.
+
+| Capability | Allowed | Agent behavior |
+|---|---|---|
+| KG search | ✓ | Returns KG-indexed metadata results |
+| Dataset discovery | ✓ | Lists datasets available in the KG |
+| Schema lookup (via KG) | ✓ | Returns schema info stored in KG without querying the source |
+| SQL queries | ✗ | Partially responds and prompts user to enable data access |
+| Pipeline execution | ✗ | Declines and advises enabling data access |
+| Summarization requiring live data | ✗ | Provides a partial answer and prompts user to enable data access |
+
+<Note>
+  When data access is disabled, the agent will partially respond to requests outside its allowed scope and prompt you to enable data access for complete answers.
+</Note>
+
 ## What's next
 
 Configure the [knowledge graph indexer](/data-analysis/ai/knowledge-graph/indexer) to schedule automatic indexing or set up separate authentication credentials.

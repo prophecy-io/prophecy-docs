@@ -20,6 +20,27 @@ The knowledge graph indexer crawls each connection in your fabric separately. Fo
 1. Indexes table names, schemas, column names, data types, and other metadata.
 1. Updates the knowledge graph with this information.
 
+## Knowledge graph dependency checklist
+
+Before configuring or troubleshooting the indexer, verify that the following are in place. Items marked as required must be satisfied for the agent to use the knowledge graph at all.
+
+| # | Item | How the V4 agent uses this | Required? |
+|---|---|---|---|
+| 1 | KG indexer has run successfully | Agent relies on indexed metadata for all KG searches, dataset discovery, and schema lookups | Required |
+| 2 | Neo4j is running and reachable | Agent queries Neo4j directly for graph traversal and relationship resolution | Required |
+| 3 | `KNOWLEDGE_GRAPH_BASE_URL` set in `sql-sandbox-config-map` | Agent uses this URL to call dataset search and schema tools, even when AI data access is disabled | Required |
+| 4 | `CLAUDE_MODEL` set in `sql-sandbox-config-map` | Specifies the model the agent uses for KG-powered inference | Required |
+| 5 | `AI_DATA_ACCESS_CLUSTER_ENABLED` flag state is known | Determines which agent capabilities are active. When `false`, the agent is limited to KG metadata only | Required |
+| 6 | Orchestrator ConfigMap updated (taint/toleration + worker resources) | KG worker pods must schedule on the correct node with sufficient CPU and memory to complete indexing | Required for indexing |
+| 7 | Karpenter node pool provisioned (`kg-worker-node`) | KG indexer worker pods are scheduled on dedicated high-resource nodes | Required for indexing |
+| 8 | KG indexing completed with SUCCESS status | Schema and dataset lookups depend on up-to-date KG data — stale or empty KG produces incomplete agent responses | Required |
+| 9 | Incremental indexing schedule confirmed | Keeps the graph current; incremental runs take approximately 1 hour | Recommended |
+| 10 | `kg-worker-pod` manually deleted after indexing | Prevents idle high-resource nodes from incurring unnecessary cost | Recommended |
+
+<Note>
+  Items 3 and 4 require updating the `sql-sandbox-config-map` via kubectl. See [Knowledge graph configuration](/administration/management/cluster-admin-settings/knowledge-graph-config) for steps.
+</Note>
+
 ## Configure automatic indexing
 
 Configure scheduled crawling to keep your index up-to-date without manual intervention.
