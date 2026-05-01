@@ -1,9 +1,11 @@
 ---
-title: Google BigQuery
-description: Learn how to connect with BigQuery
+title: Connect to Google BigQuery
+description: Learn how to connect to BigQuery
 ---
 
-A BigQuery connection allows Prophecy to access tables and compute resources in your BigQuery project. This page explains how to use and configure a Google BigQuery connection in Prophecy.
+A BigQuery connection allows Prophecy to access tables in your BigQuery project. When configured as a SQL Warehouse connection, BigQuery also provides the compute engine used to run pipeline transformations.
+
+This page explains how to use and configure a Google BigQuery connection in Prophecy.
 
 ## Prerequisites
 
@@ -15,20 +17,47 @@ To learn more, visit [Basic roles and permissions](https://cloud.google.com/bigq
 
 ## Connection type
 
-Prophecy supports BigQuery as both a SQL Warehouse connection and an Ingress/Egress connection. To learn more about these different connection types, visit [Prophecy fabrics](/data-analysis/environment/fabrics/prophecy-fabrics).
+Prophecy supports BigQuery in two different roles.
+
+| Connection type               | Description                                                  |
+| ----------------------------- | ------------------------------------------------------------ |
+| **SQL Warehouse connection**  | BigQuery acts as the compute engine for a fabric. Prophecy generates SQL and BigQuery executes the transformations. To learn more about SQL Warehouse connections, see [Prophecy fabrics](/data-analysis/environment/fabrics/prophecy-fabrics). |
+| **Ingress/Egress connection** | BigQuery is used only as a data source or target. Prophecy reads data from or writes data to BigQuery, but pipeline transformations run in another warehouse. |
+
+## When BigQuery is a fabric
+```
+Pipeline
+   ↓
+Fabric
+   ↓
+BigQuery executes SQL
+   ↓
+Tables updated in BigQuery
+```
+## When BigQuery is ingress/egress
+```
+Pipeline
+   ↓
+Warehouse executes SQL
+(Databricks / Prophecy / Snowflake)
+   ↓
+Prophecy Automate
+   ↓
+BigQuery tables
+```
 
 ## Feature support
 
 The table below outlines whether the connection supports certain Prophecy features.
 
-| Feature                                                                                    | Supported                           |
-| ------------------------------------------------------------------------------------------ | ----------------------------------- |
-| Run SQL queries                                                                            | Yes — SQL Warehouse Connection only |
-| Read and write data with a [Table gem](/data-analysis/gems/source-target/table/bigquery)   | Yes — SQL Warehouse Connection only |
-| Read data with a [Source gem](/data-analysis/gems/source-target/external-table/bigquery)   | Yes                                 |
-| Write data with a [Target gem](/data-analysis/gems/source-target/external-table/bigquery)  | Yes                                 |
-| Browse data in the [Environment browser](/data-analysis/development/studio/studio#sidebar) | Yes                                 |
-| Index tables in the [Knowledge Graph](/data-analysis/ai/knowledge-graph/knowledge-graph)   | No                                  |
+| Feature                                                                                    | SQL Warehouse                         | Ingress/Egress |
+| ------------------------------------------------------------------------------------------ | ----------------------------------- | ----- |
+| Run SQL queries                                                                            | Yes                                 | No |
+| Read and write data with a [Table gem](/data-analysis/gems/source-target/table/bigquery)   | Yes                                 | No |
+| Read data with a [Source gem](/data-analysis/gems/source-target/external-table/bigquery)   | Yes                                 | Yes |
+| Write data with a [Target gem](/data-analysis/gems/source-target/external-table/bigquery)  | Yes                                 | Yes |
+| Browse data in the [Environment browser](/data-analysis/development/studio/studio#sidebar) | Yes                                 | Yes |
+| Index tables in the [Knowledge Graph](/data-analysis/ai/knowledge-graph/knowledge-graph)   | No                                  | Yes |
 
 ## Connection parameters
 
@@ -59,7 +88,7 @@ To leverage user-based OAuth:
 
 If no app registrations appear, an admin must configure an [OAuth app registration](/data-analysis/administration/management/cluster-admin-settings/oauth-setup).
 
-When your fabric is configured to use OAuth, the following occurs when a user attaches the fabric to their project:
+When your connection is configured to use OAuth, the following occurs when a user attaches the fabric to their project:
 
 1. The user is prompted to sign in with their Google account.
 1. Prophecy uses the user's credentials to authenticate the connection.

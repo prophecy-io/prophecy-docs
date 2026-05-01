@@ -1,6 +1,6 @@
 ---
 title: Deploy parameter sets
-description: Choose which parameter values are used when pipelines and apps run
+description: Choose which parameter values are used when pipelines and analyses run
 ---
 
 A parameter set is a named collection of values for multiple parameters. You can create parameter sets at the project level or the pipeline level.
@@ -40,22 +40,37 @@ For interactive development, the default set is active unless you manually activ
 
 ## Create parameter sets
 
-To create a new parameter set, you first need to define the variables in the **default** parameter set.
+Each project and pipeline has a default parameter set. Follow the steps below to create a new parameter set.
 
-1. Open **Parameters** from the project header.
-2. Select either **Project Parameters** or **Pipeline Parameters**.
-3. Add variables to the set by clicking **+ Add Variable**.
-4. Enter values for each variable, or leave them empty to inherit from the default set.
-5. Click **Save**.
+<Steps>
+<Step title="Open parameter settings">
 
-To add and activate a new parameter set, you need to:
+Open parameter settings from the default set or the pipeline menu.
 
-1. Open **Parameters** from the project header.
-2. Click **+ Add Parameter Set**.
-3. Enter a name for the parameter set.
-4. Assign values to the variables or leave them empty to inherit the default.
-5. Toggle **Active** to make this set the active configuration.
-6. Click **Save**.
+<Frame>
+  ![Arrows to the default set and the pipeline
+  menu](/data-analysis/development/parameters/img/open-parameters.png)
+</Frame>
+
+</Step>
+<Step title="Define default values">
+
+- Select either **Project Parameters** or **Pipeline Parameters**.
+- Add variables to the set by clicking **+ Add Variable**.
+- Enter values for each variable or choose to inherit from the default set.
+- Click **Save**.
+
+</Step>
+<Step title="Add and activate a new parameter set">
+
+- Click **+ Add Parameter Set**.
+- Enter a name for the parameter set.
+- Assign values to the variables or leave them empty to inherit the default.
+- Toggle **Active** to make this set the active configuration.
+- Click **Save**.
+
+</Step>
+</Steps>
 
 ## Example
 
@@ -72,14 +87,14 @@ By grouping these into parameter sets, you ensure that when you switch sets, pip
 
 First, set up your standard operating values in the default set:
 
-1. Open **Parameters** in the project header and select **Project Parameters**.
+1. Open the parameter settings.
 1. Click **+ Add Variable** and name it `currency`.
 1. Set the value to `USD`.
 1. Click **+ Add Variable** again and name it `fx_rate_table`.
 1. Set the value to `fx_rates_usd`.
 1. Click **Save**.
 
-After saving the set of variables, you can reference `currency` and `fx_rate_table` in any pipeline in the project. Your pipeline will use the default set values by default for interactive runs.
+After saving the set of variables, you can reference `currency` and `fx_rate_table` in any pipeline in the project. By default, your pipeline will use these values for interactive runs.
 
 ### Create a regional override (Europe)
 
@@ -95,23 +110,23 @@ By switching the active set to `Europe`, you update your entire project to handl
 
 ## Select parameter sets at runtime
 
-How you select a parameter set depends on how the pipeline or app is executed.
+How you select a parameter set depends on how the pipeline or analysis is executed.
 
 ### On-demand pipeline runs
 
 Interactive pipeline runs use the active parameter set for both project and pipeline parameters.
 
-### On-demand Prophecy App runs
+### On-demand analysis runs
 
-You can select a parameter set when [creating a Prophecy App](data-analysis/collaboration/prophecy-apps/app-creation) or modify it afterward in [app settings](data-analysis/collaboration/prophecy-apps/app-settings). This determines which pipeline parameter values the app uses when it runs. On-demand app runs always use values from the active project parameter set.
+You can select a parameter set when [creating an analysis dashboard](/data-analysis/analysis/create-analysis) or modify it afterward in [analysis settings](/data-analysis/analysis/analysis-settings). This determines which pipeline parameter values the analysis uses when it runs. On-demand analysis runs always use values from the active project parameter set.
 
 ### Pipeline schedules
 
 When you [schedule](/data-analysis/production/scheduling/schedule-setup) a pipeline, you can choose which pipeline parameter set to use for that schedule. This lets you run the same pipeline with different configurations on different schedules.
 
-### App schedules
+### Analysis schedules
 
-When you [schedule a Prophecy App](data-analysis/collaboration/prophecy-apps/run-apps), you can choose which pipeline parameter set to use for that schedule. This lets you run the same app with different configurations on different schedules.
+When you [schedule an analysis](/data-analysis/analysis/consume-analysis), you can choose which pipeline parameter set to use for that schedule. This lets you run the same analysis with different configurations on different schedules.
 
 ### Deployed pipelines
 

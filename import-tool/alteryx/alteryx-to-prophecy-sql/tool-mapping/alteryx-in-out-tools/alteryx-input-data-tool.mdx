@@ -1,0 +1,108 @@
+---
+title: Alteryx Input Data Tool > Prophecy Table & Source Gems
+description: Mapping between Alteryx’s Input Data tool and Prophecy’s Table and Source gems
+---
+
+The [Alteryx Input Data tool](https://help.alteryx.com/current/en/designer/tools/in-out-tools/input-data-tool.html) loads data from files, databases, or network shares directly into the Designer canvas for immediate local preview and in-memory processing.
+
+In Prophecy, this functionality is handled by two gems, depending on where the data is stored:
+
+- **Table gem** – for data stored in your [SQL Warehouse](/data-analysis/environment/fabrics/create-fabrics) defined in your fabric.
+- **Source gem** – for tables in external systems or data stored in locations that Prophecy Automate can read as files (CSV, Parquet, JSON, XML, Excel, and so on).
+
+See [Alteryx Connection mapping](/import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-connections) for an overview of how Prophecy connections relate to Alteryx's Input and Output tools.
+
+## Automated migration results
+
+The importer preserves basic configuration when determinable, using the following logic:
+
+- If the Alteryx pipeline reads from a local file path, Prophecy creates an SFTP source with the same file path.
+- If the Alteryx pipeline uses query based source, Prophecy creates a catalog table source.
+
+Migration cannot fully preserve:
+
+- Local paths, mapped drives, or UNC shares
+- DSNs and other desktop-specific connection types
+- Excel features such as named ranges or custom cell selections
+- Alteryx-specific type overrides.
+
+## Manually replicate in Prophecy
+
+To reproduce the behavior of Alteryx’s Input Data tool in Prophecy, focus first on identifying the _type of source_ you used in Alteryx, then select the corresponding Prophecy gem.
+
+| Alteryx Input Type                                    | Prophecy Equivalent          | Notes                                                                                             |
+| ----------------------------------------------------- | ---------------------------- | ------------------------------------------------------------------------------------------------- |
+| **Database table** (warehouse)                        | **Table gem**                | Select the catalog, schema, and table from Unity Catalog. All reads execute in the SQL Warehouse. |
+| **Database table** (external system)                  | **Source gem**               | Reads tables from systems outside of your fabric's SQL Warehouse.                                 |
+| **File-based input** (CSV, Excel, JSON, XML, Parquet) | **Source gem**               | Reads files from Databricks Volumes or cloud storage. Replaces local or network filesystem paths. |
+| **Folder or multi-file input**                        | **Source gem with wildcard** | Use SQL Warehouse–supported glob patterns. All files must share a consistent schema.              |
+
+## Configuration options
+
+In Alteryx, users configure the Input Data tool by selecting a file or database connection, choosing a connection type (file path, DSN, ODBC), and specifying format options. Alteryx immediately loads a preview locally.
+
+In Prophecy:
+
+- Use a **Table gem** to select a catalog, schema, and table visible to the SQL Warehouse.
+- Use a **Source gem** to connect to either an external database or a cloud path accessible to the warehouse.
+- All data access depends on warehouse permissions rather than local machine paths.
+
+Key properties include:
+
+- **Source Type** — Table or File.
+- **File Format** — CSV, Parquet, JSON, XML, Excel (XLSX), fixed-width text (with schema supplied).
+- **Path / Catalog / Schema / Table Name** — the warehouse-visible location.
+- **Header** — for CSV or Excel.
+- **Delimiter / Quote Character** — CSV-specific settings.
+
+## Output behavior
+
+Alteryx loads data locally and often displays full datasets during preview. The Input Data tool outputs an in-memory data stream directly into the workflow engine.
+
+Prophecy outputs a logical reference that turns into a SQL query during preview or execution. Important differences:
+
+- **Data is never loaded locally** — all reads occur through the SQL Warehouse.
+- **Preview results** may be truncated due to warehouse row limits or permissions.
+- **Schema is warehouse-defined** — type inference may differ from Alteryx’s local behavior.
+
+## Known caveats
+
+Be aware of the following during migration:
+
+- **Local or network paths cannot be used**: files must be migrated to cloud storage.
+- **DSNs do not migrate**: replace with workspace-managed secrets or OAuth connections.
+- **Excel behavior differs**: named ranges, multi-sheet operations, and complex formatting must be reimplemented manually.
+- **Case sensitivity**: may affect table or column resolution in SQL Warehouse.
+
+## Example
+
+### Alteryx Input Data example
+
+Goal: Load a CSV file from a network drive.
+
+**Configuration:**
+
+- File path: `\\corp-share\data\sales.csv`
+- Delimiter: `,`
+- First row contains field names
+- Local preview shows 500 rows
+
+Workflow:
+
+    Input Data → downstream tools
+
+### Prophecy Table / Source gem example
+
+Goal: Load the same dataset using SQL.
+
+**Configuration (Source gem):**
+
+- Source Type: File
+- Format: CSV
+- Path: `/Volumes/raw/sales/sales.csv`
+- Header: true
+- Delimiter: `,`
+
+Workflow:
+
+    Source → downstream gems → output

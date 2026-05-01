@@ -1,0 +1,38 @@
+---
+title: Missing support for an Alteryx function
+description: Learn what to do when you import an unsupported function
+---
+
+At the moment, Transpiler supports transpiling [a subset of Alteryx functions](/import-tool/alteryx/alteryx-to-prophecy-sql/function-mapping). If you import an unsupported function, use the [solution](#solution) provided as a workaround to this limitation.
+
+## Example
+
+Assume you have an Alteryx workflow that uses the [CompareDigits() function](https://help.alteryx.com/current/en/designer/functions/test-functions.html#idp389233).
+
+When you click the **Transpile** button in Transpiler, you see that your workflow is fully transpiled, _but_ there is a row with a **todo** component in the **Choose entities to create** dialog.
+
+When you open your bundle, the pipeline and gem diagnostics has the following error message:
+
+```shell
+Cannot resolve routine `COMPAREDIGITS` on search path [`system`, `builtin`, `system`.`session`, `hive_metastore`.`default`].
+
+Verify the spelling of `COMPAREDIGITS`, check that the routine exists, and confirm you have `USE` privilege on the catalog and schema, and EXECUTE the routine. SQLSTATE: 42883;
+```
+
+## Solution
+
+1. Open the gem that contains the **todo** function.
+
+   The gem uses the exact function you had in your Alteryx workflow.
+
+1. Update the function.
+
+   You can do one of the following:
+
+   - Click on the function, and select `Fix it`.
+
+     Copilot automatically finds the correct Spark SQL function to use.
+
+   - Build your own expression with the [Visual Expression Builder](/data-analysis/gems/visual-expression-builder/visual-expression-builder).
+
+   - Manually search for the correct Spark SQL function to use and insert it.

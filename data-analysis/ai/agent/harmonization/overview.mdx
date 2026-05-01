@@ -3,15 +3,13 @@ title: Harmonization
 description: Automate data standardization with harmonization
 ---
 
-<Badge icon="circle-exclamation" color="orange" shape="rounded" size="sm">
-  Private Preview
-</Badge>
-
 Data harmonization transforms disparate source data into a standardized schema.
 
 Source systems often use different naming conventions, data types, and structures to represent the same type of data. For example, you might have the exact same survey hosted on different systems, each which produce different output data **with the same type of information**. To merge this data into a single dataset, you need to harmonize the data.
 
 The Harmonization Agent does this for you by transforming source columns to expected target columns while validating data quality.
+
+The Harmonization Agent runs in a dedicated project mode and requires the [Transform Agent to be disabled](#enabling-harmonization). Projects can operate in either Transform Agent mode or Harmonization mode, but not both simultaneously.
 
 ## How does the Harmonization Agent work?
 
@@ -34,3 +32,15 @@ For example, the agent can reference patterns such as column name equivalencies,
 The review process allows users to validate agent-generated mappings and transformations before finalization. During review, you can see how each source column was mapped to the target schema, the transformations applied, the agent's confidence score for each mapping, and the data quality tests that were applied.
 
 The review step ensures that business logic and domain-specific requirements are correctly implemented. While the agent handles routine mappings efficiently, human oversight catches edge cases and ensures that transformations align with business rules.
+
+## Enabling harmonization
+
+The Harmonization Agent runs in a dedicated project mode and requires the Transform Agent to be disabled. Projects can operate in either Transform Agent mode or Harmonization/Documentation mode, but not both simultaneously.
+
+To use the Harmonization Agent:
+
+1. Disable the v4 Agent for the team that owns the project by opening **Metadata → Teams → Select team → Settings → Advanced**.
+1. Click the **Enable Transform Agent** toggle.
+1. Return to your project.
+
+Only one agent mode can be active per team at a time.

@@ -39,6 +39,7 @@ Keytab
 Zendesk
 websockets
 Matchers
+athena
 
 # Prophecy Concepts
 Subgraph
@@ -48,6 +49,7 @@ Configs
 Config
 configs
 config
+libs
 
 # Technical Terms
 dbt
@@ -219,3 +221,4 @@ rollout
 Taskflow
 rollup
 rollups
+toolset

@@ -1,0 +1,158 @@
+---
+title: Data type mapping
+description: Explains how Alteryx data types map to Prophecy SQL data types
+---
+
+This page maps **Alteryx Designer** data types to **Prophecy Analysts** data types used in Prophecy SQL pipelines.
+
+Prophecy SQL pipelines run on different execution engines such as **Databricks SQL** or **BigQuery**.  
+Because each engine provides its own SQL type system, the resulting data type may differ depending on the configured environment.
+
+Use the tabs below to view the mapping for your execution engine.
+
+<Tabs>
+
+<Tab title="Databricks">
+
+This section maps **Alteryx Designer** data types to **Databricks SQL** types used by Prophecy pipelines.
+
+## String data
+
+Alteryx has four data types for strings: `String`, `WString`, `V_String`, `V_WString`.
+
+In Prophecy, all strings can be handled with the SQL data type `STRING`.
+
+| Alteryx | Prophecy (Databricks SQL) | Notes |
+|--------|---------------------------|------|
+| `String` / `V_String` | `STRING` | Databricks `STRING` is UTF-8 variable-length. While Alteryx distinguishes between fixed and variable storage, `STRING` covers both use cases. |
+| `WString` / `V_WString` | `STRING` | Databricks strings are Unicode by default. While Alteryx uses a separate wide-string type, `STRING` is effectively wide-string. |
+
+## Numeric data
+
+Alteryx has seven numeric types: `Byte`, `Int16`, `Int32`, `Int64`, `Fixed Decimal`, `Float`, `Double`.
+
+| Alteryx | Prophecy (Databricks SQL) | Notes |
+|--------|---------------------------|------|
+| `Byte` | `TINYINT` | Alteryx `Byte` (0–255) becomes signed `TINYINT` (-128–127). Cast to `SMALLINT` if you need a higher positive range. |
+| `Int16` | `SMALLINT` | Two-byte signed integer. |
+| `Int32` | `INT` | Four-byte signed integer. |
+| `Int64` | `BIGINT` | Eight-byte signed integer. |
+| `Fixed Decimal` | `DECIMAL(p,s)` | Defaults to `DECIMAL` with no parameters. Precision and scale can be specified explicitly. |
+| `Float` | `FLOAT` | 32-bit single precision (~7 digits). |
+| `Double` | `DOUBLE` | 64-bit double precision (~15–16 digits). |
+
+## DateTime data
+
+Alteryx has three DateTime data types: `Date`, `Time`, `DateTime`.
+
+| Alteryx | Prophecy (Databricks SQL) | Notes |
+|--------|---------------------------|------|
+| `Date` | `DATE` | Calendar date (`YYYY-MM-DD`) without timezone. |
+| `Time` | `STRING` or derived `TIMESTAMP` | Databricks lacks a standalone `TIME` type. |
+| `DateTime` | `TIMESTAMP` | Represents precise time values with microsecond precision. |
+
+### Precision and range differences
+
+- Databricks supports wider date ranges (year 0001–9999).
+- Alteryx cannot process dates earlier than 1400.
+- Casting from strings must match the expected format.
+
+## Boolean data
+
+Alteryx type: **Bool**
+
+| Alteryx | Prophecy (Databricks SQL) | Notes |
+|--------|---------------------------|------|
+| `Bool` | `BOOLEAN` | True/False literal values. |
+
+## Quick reference
+
+| Alteryx | Prophecy (Databricks SQL) |
+|--------|---------------------------|
+| String / V_String | `STRING` |
+| WString / V_WString | `STRING` |
+| Byte | `TINYINT` |
+| Int16 | `SMALLINT` |
+| Int32 | `INT` |
+| Int64 | `BIGINT` |
+| Fixed Decimal | `DECIMAL(p,s)` |
+| Float | `FLOAT` |
+| Double | `DOUBLE` |
+| Date | `DATE` |
+| Time | `STRING` or `TIMESTAMP` |
+| DateTime | `TIMESTAMP` |
+| Bool | `BOOLEAN` |
+
+</Tab>
+
+<Tab title="BigQuery">
+
+This section maps **Alteryx Designer** data types to **BigQuery SQL** types used by Prophecy pipelines.
+
+## String data
+
+| Alteryx | Prophecy (BigQuery SQL) | Notes |
+|--------|--------------------------|------|
+| `String` / `V_String` | `STRING` | BigQuery strings are UTF-8 and variable-length. |
+| `WString` / `V_WString` | `STRING` | Unicode strings are supported by default. |
+
+## Numeric data
+
+| Alteryx | Prophecy (BigQuery SQL) | Notes |
+|--------|--------------------------|------|
+| `Byte` | `INT64` | BigQuery uses a single integer type for all integer widths. |
+| `Int16` | `INT64` | Smaller integer widths are normalized to `INT64`. |
+| `Int32` | `INT64` | |
+| `Int64` | `INT64` | Direct mapping. |
+| `Fixed Decimal` | `NUMERIC` or `BIGNUMERIC` | `NUMERIC` supports up to 38 digits precision; `BIGNUMERIC` supports larger precision. |
+| `Float` | `FLOAT64` | Double-precision floating point value. |
+| `Double` | `FLOAT64` | BigQuery uses `FLOAT64` for floating-point values. |
+
+## DateTime data
+
+| Alteryx | Prophecy (BigQuery SQL) | Notes |
+|--------|--------------------------|------|
+| `Date` | `DATE` | Calendar date (`YYYY-MM-DD`). |
+| `Time` | `TIME` | Native time-of-day type without timezone. |
+| `DateTime` | `DATETIME` or `TIMESTAMP` | `DATETIME` has no timezone; `TIMESTAMP` represents an absolute point in time. |
+
+### Precision and range differences
+
+- BigQuery timestamps support **microsecond precision**.
+- `TIMESTAMP` values represent absolute time in **UTC**.
+- `DATETIME` values represent date and time **without timezone context**.
+
+## Boolean data
+
+| Alteryx | Prophecy (BigQuery SQL) | Notes |
+|--------|--------------------------|------|
+| `Bool` | `BOOL` | Represents true/false values. |
+
+## Quick reference
+
+| Alteryx | Prophecy (BigQuery SQL) |
+|--------|--------------------------|
+| String / V_String | `STRING` |
+| WString / V_WString | `STRING` |
+| Byte | `INT64` |
+| Int16 | `INT64` |
+| Int32 | `INT64` |
+| Int64 | `INT64` |
+| Fixed Decimal | `NUMERIC` / `BIGNUMERIC` |
+| Float | `FLOAT64` |
+| Double | `FLOAT64` |
+| Date | `DATE` |
+| Time | `TIME` |
+| DateTime | `DATETIME` or `TIMESTAMP` |
+| Bool | `BOOL` |
+
+## Known differences & recommendations
+
+- **Integer widths:** BigQuery consolidates all integer sizes to `INT64`.
+- **Decimal precision:** Use `NUMERIC` for most use cases; use `BIGNUMERIC` when higher precision is required.
+- **Date/time handling:** BigQuery distinguishes between `DATETIME` (no timezone) and `TIMESTAMP` (absolute time).
+- **Unicode strings:** BigQuery `STRING` supports UTF-8 text by default.
+
+</Tab>
+
+</Tabs>

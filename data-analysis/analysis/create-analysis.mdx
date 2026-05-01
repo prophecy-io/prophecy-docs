@@ -1,0 +1,152 @@
+---
+title: Create an analysis
+description: Create and build an analysis dashboard using the Agent or manually
+---
+
+An analysis lets you build interactive dashboards on top of your pipelines.
+
+Choose how you want to create your analysis:
+- Use the Agent for a faster, automated workflow
+- Create manually for full control over the dashboard
+
+<Tabs>
+
+<Tab title="Use the Agent">
+
+## Overview
+
+Use the Agent to automatically generate a pipeline and analysis from a prompt.
+
+## Add source data
+
+import Analysisdataset from '/snippets/misc/analysis-dataset.mdx'
+
+<Analysisdataset/>
+
+## Generate an analysis
+
+In the Chat interface, enter a prompt:
+
+```text
+Visualize sales performance per product category in @home_tech_transactions
+```
+
+The Agent will:
+
+- Transform the data
+- Create a visualization
+- Generate a pipeline
+- Create a linked analysis dashboard
+
+## Continue building
+
+You can continue prompting the Agent to:
+
+- Add new visualizations
+- Modify transformations
+- Expand the dashboard
+
+## Add interactive components
+
+import Analysisinteractive from '/snippets/misc/analysis-interactive.mdx'
+
+<Analysisinteractive/>
+
+For full configuration options, see [Analysis components](/data-analysis/analysis/analysis-components).
+
+</Tab>
+<Tab title="Create manually">
+
+## Overview
+
+Create an analysis manually to build a dashboard from an existing pipeline.
+
+## Add source data
+
+import AnalysisdatasetMan from '/snippets/misc/analysis-dataset.mdx'
+
+<AnalysisdatasetMan/>
+
+## Create the analysis
+
+1. Open the **Project Explorer**.
+2. Hover over a pipeline.
+3. Click the **Create analysis** icon.
+
+Alternatively:
+
+- Click the **+** icon in the canvas header
+- Select **Create analysis**
+
+## Configure the analysis
+
+1. Enter a name for the analysis in **Analysis name**. Use alphanumeric characters and underscores.
+2. (Optional) Enter a description in **Description**.
+3. Select a pipeline in **Pipeline name**.
+4. Choose a parameter set in **Parameter set**.
+5. (Optional) Update the location in **Directory path**, or leave the default.
+6. Click **Create analysis**.
+
+## Build your analysis
+
+The analysis opens on the canvas.
+
+You can add three types of components:
+
+- **Interactive** — Capture user input
+- **Data Integration** — Display pipeline data
+- **Content** — Add text and images
+
+For full configuration options, see [Analysis components](/data-analysis/analysis/analysis-components).
+
+## Add a chart
+
+To add a visualization:
+
+1. Select a **chart** component.
+2. Choose a **data table**.
+3. Enter a **label**.
+4. Select a **chart type**.
+5. Configure:
+   - Category column
+   - Y-axis column
+
+You can further customize chart appearance, including labels and formatting.
+
+## Add interactive components
+
+import AnalysisinteractiveMan from '/snippets/misc/analysis-interactive.mdx'
+
+<AnalysisinteractiveMan/>
+
+</Tab> </Tabs>
+
+## Run the analysis
+
+Let's return to the analysis preview so we can test the new component.
+
+1. From the analysis, click **Back to Preview**.
+1. In the **Region** field, enter `West`.
+1. Click the **Run** button.
+1. Review the bar chart to see the total sales by product category for the West region.
+
+<Warning>
+When the analysis runs, Prophecy always executes the entire underlying pipeline. This means any additional transformations, tables, or other components included in the pipeline will also run, even if they're not exposed in the dashboard. Be mindful of how you design the pipeline to ensure your dashboard triggers only the intended logic.
+</Warning>
+
+## Share the dashboard
+
+Access to analyses is controlled by Prophecy's team-based permission model. If your team owns a project, you have full edit access. This means that you can build, edit, and delete analyses in the project.
+
+If a project is shared with your team, you **cannot** edit any pipeline's or analysis's structure. However, you can **run** analyses from the shared project. This ensures that your data engineering team can share pipelines they developed without exposing them to changes.
+
+<Info>
+  To learn more, reference the documentation on [team-based
+  access](/data-analysis/administration/management/users/access/team-based-access).
+</Info>
+
+## What's next
+
+To address your specific business requirements, leverage more complex [components](/data-analysis/analysis/analysis-components) to construct robust analysis dashboards.
+
+To learn about the end user experience, see [consume analyses](/data-analysis/analysis/consume-analysis).
