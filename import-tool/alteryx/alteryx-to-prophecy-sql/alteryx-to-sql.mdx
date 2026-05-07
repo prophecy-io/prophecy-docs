@@ -1,6 +1,6 @@
 ---
-title: Migrate to SQL (Databricks and BigQuery)
-description: How to migrate Alteryx workflows to SQL using Databricks or BigQuery fabrics
+title: Migrate to SQL (Databricks, BigQuery, Snowflake)
+description: How to migrate Alteryx workflows to SQL using Databricks, BigQuery, or Snowflake fabrics
 ---
 
 When you create an Alteryx bundle for a SQL project in the Prophecy transpiler, you can analyze, change, and validate your migration before the transpilation begins.
@@ -37,12 +37,13 @@ The SQL dialect generated during import depends on the selected fabric:
 
 - **Databricks fabric → Databricks SQL**
 - **BigQuery fabric → BigQuery SQL**
+- **Snowflake fabric → Snowflake SQL**
 
 You cannot change the SQL dialect after transpilation without recreating the bundle.
 
 While the migration workflow is the same, some behaviors differ depending on the selected fabric:
 
-- **SQL syntax**: Generated SQL follows the target engine (Databricks or BigQuery).
+- **SQL syntax**: Generated SQL follows the target engine (Databricks/BigQuery/Snowflake).
 - **Tool support**: Some Alteryx tools may map differently depending on engine capabilities.
 
 See [SQL dialect differences](/import-tool/alteryx/alteryx-to-prophecy-sql/sql-dialect-differences) for more detail.
