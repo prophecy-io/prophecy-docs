@@ -29,7 +29,7 @@ Alteryx provides many specialized conversion functions. SQL engines rely on gene
 - Databricks SQL supports `conv()` for base conversions, but BigQuery and Snowflake do not have the same general-purpose base conversion function.
 
 <Tabs>
-<TabItem value="databricks" label="Databricks SQL">
+<Tab title="Databricks SQL">
 
 | Alteryx Function | Equivalent SQL Function | Notes |
 | ---------------- | ------------ | ----- |
@@ -45,9 +45,8 @@ Alteryx provides many specialized conversion functions. SQL engines rely on gene
 | `ToRadians` | `radians()` | Exact mapping. |
 | `ToString` | `cast(col as string)` | Converts to a string. |
 
-</TabItem>
-
-<TabItem value="bigquery" label="BigQuery">
+</Tab>
+<Tab title="BigQuery">
 
 | Alteryx Function | Equivalent SQL Function | Notes |
 | ---------------- | ------------ | ----- |
@@ -63,9 +62,9 @@ Alteryx provides many specialized conversion functions. SQL engines rely on gene
 | `ToRadians` | `radians()` | Exact mapping. |
 | `ToString` | `cast(col as string)` | Converts to a string. |
 
-</TabItem>
+</Tab>
 
-<TabItem value="snowflake" label="Snowflake">
+<Tab title="Snowflake">
 
 | Alteryx Function | Equivalent SQL Function | Notes |
 | ---------------- | ------------ | ----- |
@@ -81,7 +80,7 @@ Alteryx provides many specialized conversion functions. SQL engines rely on gene
 | `ToRadians` | `radians()` | Exact mapping. |
 | `ToString` | `cast(col as string)` or `to_varchar()` | Both are common Snowflake patterns for converting values to strings. Confirm generated output. |
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ## DateTime
@@ -89,7 +88,7 @@ Alteryx provides many specialized conversion functions. SQL engines rely on gene
 Alteryx provides many specialized datetime functions. The SQL mapping depends on the target engine. Databricks SQL, BigQuery, and Snowflake all support broad datetime functionality, but they differ in function names, argument order, return types, format patterns, and time zone behavior.
 
 <Tabs>
-<TabItem value="databricks" label="Databricks SQL">
+  <Tab title="Databricks SQL">
 
 | Alteryx Function | Equivalent SQL Function | Notes |
 | ---------------- | ------------ | ----- |
@@ -114,9 +113,8 @@ Alteryx provides many specialized datetime functions. The SQL mapping depends on
 | `ToDate` | `to_date()` | Converts to a date. |
 | `ToDateTime` | `to_timestamp()` | Outputs a SQL timestamp. |
 
-</TabItem>
-
-<TabItem value="bigquery" label="BigQuery">
+  </Tab>
+<Tab title="BigQuery">
 
 | Alteryx Function | Equivalent SQL Function | Notes |
 | ---------------- | ------------ | ----- |
@@ -141,9 +139,9 @@ Alteryx provides many specialized datetime functions. The SQL mapping depends on
 | `ToDate` | `EXTRACT(DATE FROM datetime_expression)` or `DATE(datetime_expression)` | Converts or extracts the date portion. |
 | `ToDateTime` | `PARSE_TIMESTAMP(format, timestamp_string)` | Use when parsing a string into a timestamp value. |
 
-</TabItem>
+</Tab>
 
-<TabItem value="snowflake" label="Snowflake">
+<Tab title="Snowflake">
 
 | Alteryx Function | Equivalent SQL Function | Notes |
 | ---------------- | ------------ | ----- |
@@ -168,7 +166,7 @@ Alteryx provides many specialized datetime functions. The SQL mapping depends on
 | `ToDate` | `to_date()` | Converts to a date. Time information is discarded when converting timestamp values to date. |
 | `ToDateTime` | `to_timestamp()` or `try_to_timestamp()` | `to_timestamp` maps to a timestamp variant based on Snowflake session settings. Confirm whether import uses `try_to_timestamp` for safe parsing. |
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ## Math
@@ -229,7 +227,7 @@ Range and bound functions behave similarly across SQL engines, but differences a
 - `MaxIDX` and `MinIDX` in Alteryx identify the _position_ of a value, but SQL engines typically use sorting or window functions (`row_number() over (...)`) to achieve the same result.
 
 <Tabs>
-<TabItem value="databricks" label="Databricks SQL">
+<Tab title="Databricks SQL">
 
 | Alteryx Function | Equivalent SQL Function | Notes |
 | ---------------- | ------------ | ----- |
@@ -240,9 +238,8 @@ Range and bound functions behave similarly across SQL engines, but differences a
 | `Min` | `min()` | Exact mapping. Nulls are ignored by default. |
 | `MinIDX` | `array_min()` | Like `array_max()`, this applies to arrays. To find the row with the minimum value, use `order by ... asc limit 1`. |
 
-</TabItem>
-
-<TabItem value="bigquery" label="BigQuery">
+</Tab>
+<Tab title="BigQuery">
 
 | Alteryx Function | Equivalent SQL Function | Notes |
 | ---------------- | ------------ | ----- |
@@ -253,9 +250,9 @@ Range and bound functions behave similarly across SQL engines, but differences a
 | `Min` | `min()` | Exact mapping. BigQuery ignores nulls by default. |
 | `MinIDX` | `array_min()` | Like `MaxIDX`, this applies to arrays rather than datasets. To find the row with the minimum value, use `order by ... asc limit 1` or a window function. |
 
-</TabItem>
+</Tab>
 
-<TabItem value="snowflake" label="Snowflake">
+<Tab title="Snowflake">
 
 | Alteryx Function | Equivalent SQL Function | Notes |
 | ---------------- | ------------ | ----- |
@@ -266,7 +263,7 @@ Range and bound functions behave similarly across SQL engines, but differences a
 | `Min` | `min()` | Exact mapping. Snowflake ignores nulls by default. |
 | `MinIDX` | `array_min()` | Like `MaxIDX`, this applies to arrays rather than datasets. Use ordering or window functions for row-level comparisons. Confirm exact transpilation behavior with engineering. |
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ## Operators
@@ -295,7 +292,7 @@ Specialized functions have similar conceptual mappings across SQL engines, but d
 - **TOPNIDX:** In Alteryx it finds the _position_ of the top N value; SQL engines typically use sorting and positional access to replicate this behavior.
 
 <Tabs>
-<TabItem value="databricks" label="Databricks SQL">
+<Tab title="Databricks SQL">
 
 | Alteryx Function | Equivalent SQL Function | Notes |
 | ---------------- | ------------ | ----- |
@@ -305,9 +302,8 @@ Specialized functions have similar conceptual mappings across SQL engines, but d
 | `TOPNIDX` | `array_sort()`, `element_at()`, and `array_position()` | No direct equivalent. Use array sorting plus positional lookup to approximate the behavior. For row-level ranking, use `order by` or window functions. |
 | `UrlEncode` | `url_encode()` | Exact mapping. |
 
-</TabItem>
-
-<TabItem value="bigquery" label="BigQuery">
+</Tab>
+<Tab title="BigQuery">
 
 | Alteryx Function | Equivalent SQL Function | Notes |
 | ---------------- | ------------ | ----- |
@@ -317,9 +313,9 @@ Specialized functions have similar conceptual mappings across SQL engines, but d
 | `TOPNIDX` | `array_sort()`, `array_reverse()`, `offset`, and `array_position()` | No direct equivalent. In BigQuery, you typically sort the array, optionally reverse it for descending order, then access the value with `offset(n-1)`. |
 | `UrlEncode` | No direct equivalent | BigQuery does not have a built-in `url_encode` function; requires UDF or external processing. |
 
-</TabItem>
+</Tab>
 
-<TabItem value="snowflake" label="Snowflake">
+<Tab title="Snowflake">
 
 | Alteryx Function | Equivalent SQL Function | Notes |
 | ---------------- | ------------ | ----- |
@@ -329,7 +325,7 @@ Specialized functions have similar conceptual mappings across SQL engines, but d
 | `TOPNIDX` | `array_sort()`, positional access, and array lookup functions | No direct equivalent. Snowflake supports array sorting and positional access, but exact generated SQL may vary depending on array type and implementation. |
 | `UrlEncode` | `url_encode()` or custom logic | Confirm generated Snowflake mapping with engineering. Snowflake supports URL encoding functions in some contexts, but implementation may differ from Databricks SQL. |
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ## String
@@ -346,7 +342,7 @@ Key differences across SQL engines:
 - **Substring & trimming:** Similar core functions exist across engines, but syntax and edge-case behavior may differ slightly.
 
 <Tabs>
-<TabItem value="databricks" label="Databricks SQL">
+<Tab title="Databricks SQL">
 
 | Alteryx | Equivalent SQL Function | Notes |
 | --- | --- | --- |
@@ -381,9 +377,8 @@ Key differences across SQL engines:
 | `Uppercase` | `upper()` | Exact mapping. |
 | `UuidCreate` | `uuid()` | Exact mapping. |
 
-</TabItem>
-
-<TabItem value="bigquery" label="BigQuery">
+</Tab>
+<Tab title="BigQuery">
 
 | Alteryx | Equivalent SQL Function | Notes |
 | --- | --- | --- |
@@ -418,9 +413,9 @@ Key differences across SQL engines:
 | `Uppercase` | `upper()` | Exact mapping. |
 | `UuidCreate` | `generate_uuid()` | Generates a UUID string. |
 
-</TabItem>
+</Tab>
 
-<TabItem value="snowflake" label="Snowflake">
+<Tab title="Snowflake">
 
 | Alteryx | Equivalent SQL Function | Notes |
 | --- | --- | --- |
@@ -455,5 +450,5 @@ Key differences across SQL engines:
 | `Uppercase` | `upper()` | Exact mapping. |
 | `UuidCreate` | `uuid_string()` | Generates a UUID string. Confirm exact generated mapping with engineering. |
 
-</TabItem>
+</Tab>
 </Tabs>
