@@ -99,7 +99,7 @@ Prophecy supports the following execution behaviors for Pipeline gems.
 
 | Execution behavior | Description |
 |---|---|
-| **Sequential execution** | When a Pipeline gem triggers a target pipeline multiple times, pipeline instances run sequentially. The Pipeline gem does not finish until all triggered pipeline instances complete. |
-| **Sequential triggering** | Pipeline gems wait for upstream pipelines to finish when multiple Pipeline gems are configured sequentially or assigned sequential [gem phases](/data-analysis/gems/#gem-phase). |
-| **Parallel triggering** | Pipeline gems can execute in parallel when separate pipeline branches share the same gem phase. |
-| **Recursive triggers** | Recursive execution is supported. If a triggered pipeline contains another Pipeline gem, that Pipeline gem executes as expected. |
+| Sequential execution | If a Pipeline gem triggers the same target pipeline multiple times, the triggered pipeline runs execute sequentially. The Pipeline gem completes only after all triggered runs finish. |
+| Sequential triggering | Pipeline gems execute in sequence when they are connected sequentially or assigned sequential [gem phases](/data-analysis/gems/#gem-phase). Downstream Pipeline gems wait for upstream Pipeline gems to finish before triggering. |
+| Parallel triggering | Pipeline gems can execute in parallel when separate pipeline branches use the same gem phase. |
+| Recursive triggers | Pipeline gems support recursive execution. If a triggered pipeline contains another Pipeline gem, that Pipeline gem executes normally. |
