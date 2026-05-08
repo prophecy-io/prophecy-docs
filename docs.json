@@ -482,15 +482,17 @@
                       {
                         "group": "Custom",
                         "pages": [
-                          "data-analysis/gems/custom/todo-gem",
+                          "data-analysis/gems/custom/condition",
                           "data-analysis/gems/custom/directory",
                           "data-analysis/gems/custom/dynamic-input",
                           "data-analysis/gems/custom/macro",
+                          "data-analysis/production/scheduling/pipeline-trigger-gem",
                           "data-analysis/gems/custom/rest-api",
+                          "data-analysis/gems/custom/script",
                           "data-analysis/gems/custom/sql-statement",
                           "data-analysis/gems/custom/stored-procedure",
-                          "data-analysis/gems/custom/script",
-                          "data-analysis/gems/custom/condition"
+                          "data-analysis/gems/custom/todo-gem"
+
                         ]
                       }
                     ]
