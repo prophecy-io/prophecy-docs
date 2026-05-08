@@ -102,16 +102,13 @@ In some environments, administrators may want more granular control over which m
 
 There are two types of credentials stored in a connection:
 
-- **Pipeline Development and Scheduled Execution** credentials control how pipelines authenticate when they run.
-- **Knowledge Graph Indexer** credentials control how the indexer authenticates when retrieving metadata on a schedule.
+- **Pipeline Development and Scheduled Execution credentials** control how pipelines authenticate when they run.
+- **Knowledge Graph Indexer credentials** control how the indexer authenticates when retrieving metadata on a schedule.
 
 If separate credentials are not configured, the indexer uses the pipeline development credentials.
 
 <Note>
-  The Knowledge Graph indexer always uses the same identity as the pipeline development identity if
-  the pipeline development authentication strategy is [Personal Access
-  Token](/data-analysis/environment/connections/databricks#personal-access-token-pat) (rather than
-  OAuth). This section does not apply when using PAT authentication.
+  The Knowledge Graph indexer always uses the same identity as the pipeline development identity if the pipeline development authentication strategy is [Personal Access Token](/data-analysis/environment/connections/databricks#personal-access-token-pat) (rather than OAuth). This section does not apply when using PAT authentication.
 </Note>
 
 ### Prerequisites
@@ -126,9 +123,7 @@ Before configuring dedicated credentials for the Knowledge Graph indexer, you mu
 The configured identity must have sufficient permissions to retrieve metadata for the warehouse objects you want indexed into the Knowledge Graph.
 
 <Warning>
-  Knowledge Graph indexing permissions should generally match or exceed the permissions used for
-  pipeline execution. This helps ensure that metadata for the datasets used in pipelines is also
-  available to AI features. Prophecy does not enforce this automatically.
+  Knowledge Graph indexing permissions should generally match or exceed the permissions used for pipeline execution. This helps ensure that metadata for the datasets used in pipelines is also available to AI features. Prophecy does not enforce this automatically.
 </Warning>
 
 ### Procedure
@@ -140,15 +135,11 @@ To configure separate authentication for the Knowledge Graph indexer:
 1. Open the **Connections** tab.
 1. Edit the **SQL Warehouse Connection**.
 1. Scroll to the **Knowledge Graph Indexer** section.
-1. Configure authentication based on your pipeline development authentication method.
+1. Configure authentication based on your pipeline development authentication method:
 
-If you use User OAuth for **pipeline development:**
+    - If you use User OAuth for **pipeline development, choose either OAuth (User) or OAuth (Service Principal) for the Knowledge Graph indexer.
 
-- Choose either OAuth (User) or OAuth (Service Principal) for the Knowledge Graph indexer.
-
-If you use Service Principal OAuth for **pipeline development:**
-
-- You can only use Service Principal OAuth for the Knowledge Graph indexer.
+    - If you use Service Principal OAuth for **pipeline development, you can only use Service Principal OAuth for the Knowledge Graph indexer.
 
 #### Service Principal OAuth (recommended)
 
@@ -158,8 +149,7 @@ Recommended for production and scheduled indexing because credentials do not exp
 - **Indexed metadata**: Metadata for all warehouse objects the service principal is authorized to access.
 
 <Note>
-  If pipeline development uses **User OAuth**, Prophecy continues to enforce user-level permissions
-  even when the Knowledge Graph indexer uses service principal credentials.
+  If pipeline development uses **User OAuth**, Prophecy continues to enforce user-level permissions even when the Knowledge Graph indexer uses service principal credentials.
 </Note>
 
 #### User OAuth
