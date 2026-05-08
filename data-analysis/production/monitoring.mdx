@@ -66,6 +66,8 @@ Use the following filters to narrow the results:
 
 Use the **Run History** tab in the Observability interface to view and analyze recent pipeline runs across all fabrics and projects. This page provides detailed metadata for each run, including its type, duration, status, and execution context.
 
+You can also use Run History to open **historical runtime logs** and inspect previous pipeline executions in Historical Mode.
+
 Use the following filters to narrow the results.
 
 | Field          | Description                                                                                                                                                                           |
@@ -83,8 +85,35 @@ For each historical pipeline run, Prophecy provides the following information.
 | **Fabric**     | Name of the fabric used to execute the pipeline run.                                                                                                                                                                     |
 | **Pipeline**   | Name of the pipeline that was executed.                                                                                                                                                                                  |
 | **Project**    | Name of the project containing the pipeline.                                                                                                                                                                             |
-| **Run Type**   | How the run was triggered. <br />This includes by interactive runs, pipeline schedules, APIs, and analysis runs. <br />Any scheduled runs will include additional information about the schedule that triggered the run. |
+| **Run Type**   | How the run was triggered. <br />This includes interactive runs, pipeline schedules, APIs, and analysis runs. <br />Any scheduled runs include additional information about the schedule that triggered the run.        |
 | **Start Time** | Timestamp when the run started.                                                                                                                                                                                          |
 | **End Time**   | Timestamp when the run completed.                                                                                                                                                                                        |
 | **Duration**   | Elapsed time of the run.                                                                                                                                                                                                 |
 | **Result**     | Status of the run: `Success` (green) or `Failed` (red).                                                                                                                                                                  |
+| **See logs**   | Opens historical runtime logs and the associated pipeline snapshot in Historical Mode.                                                                                                                                   |
+
+## Open historical runtime logs
+
+You can inspect completed pipeline executions directly from the Run History table.
+
+To open historical runtime logs:
+
+1. Open the **Run History** tab and locate the run you want to inspect.
+3. Click **See logs** in the far-right column.
+
+![Open historical runtime logs](/data-analysis/development/runs/img/historical-logs.png)
+
+Prophecy opens the selected pipeline in **Historical Mode**, restoring:
+
+- Runtime logs for the selected execution
+- The historical pipeline snapshot
+- Component execution statuses and progress information
+
+In Historical Mode, the pipeline canvas becomes read-only so you can safely review the historical execution context without modifying the current pipeline version.
+
+<Info>
+  Historical runtime logs and pipeline snapshots are retained for a limited period of time and may
+  not be available for every historical run.
+</Info>
+
+For more information about runtime logs, Historical Mode, and pipeline snapshots, see [Runtime logs](/data-analysis/development/runs/runtime-logs).
