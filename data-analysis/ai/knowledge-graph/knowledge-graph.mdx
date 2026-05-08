@@ -3,44 +3,44 @@ title: 'What is a knowledge graph?'
 description: 'Prophecy creates a metadata index to power AI features'
 ---
 
-Prophecy uses **knowledge graphs** to understand your [data environment](/data-analysis/environment/fabrics/prophecy-fabrics) for AI capabilities (Prophecy Agent and Copilot).
+Prophecy uses **Knowledge Graphs** to help AI features such as Prophecy Agent and Copilot understand your [data environment](/data-analysis/environment/fabrics/prophecy-fabrics).
 
-A [knowledge graph](https://en.wikipedia.org/wiki/Knowledge_graph) is an index that maps the relationships between data in your fabric. The knowledge graph contains metadata about tables, schemas, columns, and data types—not your actual data.
+A Knowledge Graph is a metadata index that represents relationships between schemas, tables, columns, data types, and other objects in your fabric. The Knowledge Graph contains metadata about your data environment — not the actual data stored in your warehouse. A Knowledge Graph is a metadata index that represents relationships between schemas, tables, columns, data types, and other objects in your fabric. For general background on knowledge graphs, see the [Wikipedia article on knowledge graphs](https://en.wikipedia.org/wiki/Knowledge_graph).
 
-When you interact with AI, Prophecy uses a knowledge graph to add context to your prompts. This context helps the Large Language Model (LLM) generate accurate SQL code that references the correct tables and columns in your warehouse.
+The Knowledge Graph only indexes metadata that the configured warehouse identity is authorized to access.
 
-## How knowledge graphs work
-
-When you interact with AI in Prophecy, the system enriches your prompt with context from the knowledge graph before sending it to the Large Language Model (LLM). This enrichment step adds metadata about your project's datasets, schemas, and other entities, which helps the LLM understand what you're referring to. The LLM then generates SQL code based on this enhanced context.
+When you interact with AI in Prophecy, the platform uses the Knowledge Graph to enrich your prompts with metadata context about accessible datasets, schemas, tables, and columns. Prophecy indexes this metadata using both structured search and embedding-based retrieval techniques to help the model identify relevant schema context from natural language prompts and generate more accurate responses and SQL.
 
 ## Knowledge graph generation
 
-Prophecy generates one knowledge graph per fabric. Each knowledge graph indexes metadata from all data connections in the fabric.
+Each fabric maintains its own Knowledge Graph index of accessible metadata.
 
-The indexer crawls your data storage using either your identity or a separately configured identity. You can schedule automatic refreshes or trigger manual indexing to keep the knowledge graph current.
+The indexer retrieves metadata from all data connections attached to the fabric, using either your identity or a separately configured identity. During indexing, Prophecy retrieves metadata only for the warehouse objects that the configured identity is authorized to access.
+
+You can schedule automatic refreshes or trigger manual indexing to keep the Knowledge Graph current.
 
 <Note>
-  Prophecy uses the knowledge graph of the fabric attached to your project. If you attach to a
-  different fabric, AI features will use that fabric's knowledge graph.
+  Prophecy uses the Knowledge Graph associated with the fabric attached to your project. If you attach to a
+  different fabric, AI features will use that fabric's Knowledge Graph.
 </Note>
 
 ## Agent behavior when data access is disabled
 
-The `AI_DATA_ACCESS_CLUSTER_ENABLED` flag controls whether the V4 agent can access live data. When this flag is set to `false`, the agent is limited to metadata stored in the knowledge graph and cannot execute SQL queries, run pipelines, or generate summarizations that require live data.
+The `AI_DATA_ACCESS_CLUSTER_ENABLED` flag controls whether the V4 agent can access live data. When this flag is set to `false`, the agent operates in a metadata-only mode and is limited to Knowledge Graph operations.
 
-The agent is not broken in this state. Instead, it is operating within its restricted scope. Admins can [configure data access](/administration/management/cluster-admin-settings/knowledge-graph-config) to restore full capability.
+In this mode, the agent can still use Knowledge Graph metadata to search datasets, retrieve schema information, and provide metadata-aware assistance. However, the AI agent cannot perform live data operations such as executing SQL queries, running pipelines, or generating summaries that require warehouse access.
 
 | Capability | Allowed | Agent behavior |
 |---|---|---|
 | KG search | ✓ | Returns KG-indexed metadata results |
 | Dataset discovery | ✓ | Lists datasets available in the KG |
-| Schema lookup (via KG) | ✓ | Returns schema info stored in KG without querying the source |
-| SQL queries | ✗ | Partially responds and prompts user to enable data access |
-| Pipeline execution | ✗ | Declines and advises enabling data access |
-| Summarization requiring live data | ✗ | Provides a partial answer and prompts user to enable data access |
+| Schema lookup (via KG) | ✓ | Returns schema information stored in the KG without querying the source |
+| SQL queries | ✗ | Explains that live data access must be enabled |
+| Pipeline execution | ✗ | Explains that live data access must be enabled |
+| Summarization requiring live data | ✗ | Provides a partial response using available metadata and explains that live data access must be enabled |
 
 <Note>
-  When data access is disabled, the agent will partially respond to requests outside its allowed scope and prompt you to enable data access for complete answers.
+  When data access is disabled, the agent can still provide metadata-aware assistance using the Knowledge Graph, but live data operations require data access to be enabled.
 </Note>
 
 ## What's next

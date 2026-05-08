@@ -1,9 +1,11 @@
 ---
 title: Knowledge graph indexer
-description: 'Configure automatic indexing and authentication for the knowledge graph'
+description: 'Configure automatic indexing and authentication for the Knowledge Graph'
 ---
 
-The [knowledge graph](/data-analysis/ai/knowledge-graph/knowledge-graph) indexer scans your SQL warehouse and external data storage to build and maintain the metadata index that powers AI features. Prophecy automatically indexes your data environment when you create a fabric using your default credentials. After the initial run, you can configure indexing behavior to control when and how the indexer runs.
+The [Knowledge Graph](/data-analysis/ai/knowledge-graph/knowledge-graph) indexer retrieves metadata from your SQL warehouse and external data storage systems to build and maintain the metadata index that powers AI features in Prophecy.
+
+Prophecy automatically indexes your data environment when you create a fabric using your default credentials. After the initial run, you can configure indexing behavior to control when and how the indexer runs.
 
 This page covers:
 
@@ -13,159 +15,157 @@ This page covers:
 
 ## How indexing works
 
-The knowledge graph indexer crawls each connection in your fabric separately. For each run, the indexer:
+The Knowledge Graph indexer processes each connection in your fabric separately. For each indexing run, the indexer:
 
-1. Uses the credentials stored in the connection to authenticate as an identity in the external system.
-1. Scans databases and file storage systems that the identity has access to, limited by the permissions granted to that identity.
-1. Indexes table names, schemas, column names, data types, and other metadata.
-1. Updates the knowledge graph with this information.
+1. Uses the credentials stored in the connection to authenticate with the external system.
+1. Retrieves metadata only for databases, schemas, tables, and storage locations that the configured identity is authorized to access.
+1. Indexes metadata such as table names, schemas, column names, data types, and available object descriptions.
+1. Updates the Knowledge Graph with the latest metadata.
+
+Prophecy indexes metadata using both structured search and embedding-based retrieval techniques to support AI-powered dataset discovery and contextual assistance.
+
+<Note>
+  The Knowledge Graph stores metadata only. It does not store actual warehouse data values, sampled records, or summaries of table contents.
+</Note>
 
 ## Knowledge graph dependency checklist
 
-Before configuring or troubleshooting the indexer, verify that the following are in place. Items marked as required must be satisfied for the agent to use the knowledge graph at all.
+Before configuring or troubleshooting the indexer, verify that the following requirements are satisfied.
 
-| # | Item | How the V4 agent uses this | Required? |
-|---|---|---|---|
-| 1 | KG indexer has run successfully | Agent relies on indexed metadata for all KG searches, dataset discovery, and schema lookups | Required |
-| 2 | Neo4j is running and reachable | Agent queries Neo4j directly for graph traversal and relationship resolution | Required |
-| 3 | `KNOWLEDGE_GRAPH_BASE_URL` set in `sql-sandbox-config-map` | Agent uses this URL to call dataset search and schema tools, even when AI data access is disabled | Required |
-| 4 | `CLAUDE_MODEL` set in `sql-sandbox-config-map` | Specifies the model the agent uses for KG-powered inference | Required |
-| 5 | `AI_DATA_ACCESS_CLUSTER_ENABLED` flag state is known | Determines which agent capabilities are active. When `false`, the agent is limited to KG metadata only | Required |
-| 6 | Orchestrator ConfigMap updated (taint/toleration + worker resources) | KG worker pods must schedule on the correct node with sufficient CPU and memory to complete indexing | Required for indexing |
-| 7 | Karpenter node pool provisioned (`kg-worker-node`) | KG indexer worker pods are scheduled on dedicated high-resource nodes | Required for indexing |
-| 8 | KG indexing completed with SUCCESS status | Schema and dataset lookups depend on up-to-date KG data — stale or empty KG produces incomplete agent responses | Required |
-| 9 | Incremental indexing schedule confirmed | Keeps the graph current; incremental runs take approximately 1 hour | Recommended |
-| 10 | `kg-worker-pod` manually deleted after indexing | Prevents idle high-resource nodes from incurring unnecessary cost | Recommended |
+| # | Item | Why it matters | Required? |
+|---|--------------------------|-----------------------------|----------------|
+| 1 | KG indexer has run successfully | AI features rely on indexed metadata for dataset discovery and schema-aware assistance | Required |
+| 2 | Knowledge Graph services are running and reachable | AI features require access to Knowledge Graph retrieval services | Required |
+| 3 | `KNOWLEDGE_GRAPH_BASE_URL` configured in `sql-sandbox-config-map` | Enables AI services to access Knowledge Graph retrieval APIs | Required |
+| 4 | `CLAUDE_MODEL` configured in `sql-sandbox-config-map` | Specifies the Anthropic model used for Knowledge Graph-powered AI assistance | Required |
+| 5 | `AI_DATA_ACCESS_CLUSTER_ENABLED` flag state is known | Determines whether the AI agent can perform live data operations or operate in metadata-only mode | Required |
+| 6 | Sufficient worker resources are available | Indexing operations require adequate compute and memory resources | Required for indexing |
+| 7 | KG indexing completed with SUCCESS status | Schema and dataset lookups depend on up-to-date metadata | Required |
+| 8 | Incremental indexing schedule confirmed | Keeps metadata current as warehouse schemas evolve | Recommended |
 
 <Note>
-  Items 3 and 4 require updating the `sql-sandbox-config-map` via kubectl. See [Knowledge graph configuration](/administration/management/cluster-admin-settings/knowledge-graph-config) for steps.
+  Items 3 and 4 require updating the `sql-sandbox-config-map`. See [Knowledge graph configuration](/administration/management/cluster-admin-settings/knowledge-graph-config)
+  for setup instructions.
 </Note>
 
 ## Configure automatic indexing
 
-Configure scheduled crawling to keep your index up-to-date without manual intervention.
+You can configure scheduled indexing to keep your Knowledge Graph up to date without manual intervention.
 
-1. In Prophecy, navigate to **Metadata > Fabrics**.
-1. Select the fabric where you will enable indexing.
+1. In Prophecy, open **Metadata > Fabrics**.
+1. Select the fabric where you wish to enable indexing.
 1. Open the **Connections** tab.
-1. Click to open the connection that you wish to schedule indexing for.
-1. In the connection dialog, scroll to the **Knowledge Graph Indexer** tile and toggle on **Enable Knowledge Graph Periodic Indexing**.
+1. Open the connection to be indexed.
+1. In the connection dialog, scroll to the **Knowledge Graph Indexer** tile and enable **Knowledge Graph Periodic Indexing**.
 1. Configure the schedule to run hourly, daily, or weekly.
 
-The schedule must have a defined frequency and timezone. The default timezone is the timezone from where you access Prophecy.
+The schedule must have a defined frequency and timezone. By default, Prophecy uses the timezone from where you access the application.
 
 ### Scheduling parameters
 
-**Hourly**
-
-| Parameter             | Description                                                                                                                | Default                               |
-| --------------------- | -------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
-| Repeat every ... from | The interval in hours between pipeline runs, starting at a specific time.<br/>Example: Repeat every 2 hours from 12:00 AM. | Every 1 hour<br />starting at 2:00 AM |
-
-**Daily**
-
-| Parameter | Description                                                                 | Default |
-| --------- | --------------------------------------------------------------------------- | ------- |
-| Repeat at | The time of day when the schedule will run.<br />Example: Repeat at 9:00 AM | 2:00 AM |
-
-**Weekly**
-
-| Parameter | Description                                                                                          | Default |
-| --------- | ---------------------------------------------------------------------------------------------------- | ------- |
-| Repeat on | The day(s) of the week that the pipeline will run.<br />Example: Repeat on Monday, Wednesday, Friday | Sunday  |
-| Repeat at | The time of the day that the pipeline will run.<br />Example: Repeat at 9:00 AM                      | 2:00 AM |
+| Schedule type | Parameter | Description | Default |
+|---|---|---|---|
+| Hourly | Repeat every ... from | The interval in hours between indexing runs, starting at a specific time.<br/>Example: Repeat every 2 hours from 12:00 AM. | Every 1 hour<br/>starting at 2:00 AM |
+| Daily | Repeat at | The time of day when indexing runs.<br/>Example: Repeat at 9:00 AM. | 2:00 AM |
+| Weekly | Repeat on | The day(s) of the week when indexing runs.<br/>Example: Repeat on Monday, Wednesday, Friday. | Sunday |
+| Weekly | Repeat at | The time of day when indexing runs.<br/>Example: Repeat at 9:00 AM. | 2:00 AM |
 
 ## Manually trigger indexing
 
-You may need to manually trigger indexing if you know that certain tables are missing from the knowledge graph. To do so:
+You may need to manually trigger indexing if newly created tables or schemas are not yet available to AI features.
 
-1. In Prophecy, navigate to **Metadata > Fabrics**.
-1. Select the fabric where you will enable indexing.
+To manually trigger indexing:
+
+1. In Prophecy, open **Metadata > Fabrics**.
+1. Select the fabric you want to index.
 1. Open the **Connections** tab.
-1. Click to open the connection that you wish to reindex.
+1. Open the connection to be indexed.
 1. Scroll to the **Knowledge Graph Indexing Status** tile in the connection dialog.
-1. Click **Start** to reindex the tables and track its progress. You'll be able to view the progress of processed schemas and directories.
+1. Click **Start** to begin indexing and monitor progress.
 
-If more convenient, you can also start this process from the [Environment tab](/data-analysis/environment/connections/connections#environment-browser) in your project:
+You can also trigger indexing from the [Environment tab](/data-analysis/environment/connections/connections#environment-browser) in your project:
 
 1. Open a project in the project editor.
-1. Attach to the fabric that you wish to reindex.
-1. In the left sidebar, open the Environment tab.
-1. Below your connections, you'll see a **Missing Tables?** callout.
+1. Attach the fabric you want to index.
+1. Open the **Environment** tab in the left sidebar.
+1. Locate the **Missing Tables?** callout below your connections.
 1. Click **Refresh**.
 
 <Tip>
-  You might be prompted to manually trigger indexing if the Agent can't locate a table during a
-  conversation.
+  Prophecy may prompt you to manually trigger indexing if the AI agent cannot locate a table or
+  schema during a conversation.
 </Tip>
 
 ## Add separate authentication for the indexer
 
-In certain scenarios, you may want more granular control over which tables get indexed. For Databricks connections only, Prophecy lets you do so with dedicated authentication credentials for the knowledge graph indexer.
+In some environments, administrators may want more granular control over which metadata is indexed into the Knowledge Graph. For Databricks connections, Prophecy supports configuring separate authentication credentials specifically for the Knowledge Graph indexer.
 
 There are two types of credentials stored in a connection:
 
 - **Pipeline Development and Scheduled Execution** credentials control how pipelines authenticate when they run.
-- **Knowledge Graph Indexer** credentials control how the crawler authenticates when it indexes your warehouse on an automated schedule.
+- **Knowledge Graph Indexer** credentials control how the indexer authenticates when retrieving metadata on a schedule.
 
-If you don't add separate authentication for the indexer, it will use the pipeline development credentials when running.
+If separate credentials are not configured, the indexer uses the pipeline development credentials.
 
 <Note>
-  The knowledge graph indexer always uses the same identity as the pipeline development identity if
+  The Knowledge Graph indexer always uses the same identity as the pipeline development identity if
   the pipeline development authentication strategy is [Personal Access
   Token](/data-analysis/environment/connections/databricks#personal-access-token-pat) (rather than
-  OAuth). This section is not applicable if you use the PAT authentication method.
+  OAuth). This section does not apply when using PAT authentication.
 </Note>
 
 ### Prerequisites
 
-Before configuring dedicated credentials for the knowledge graph indexer, you must:
+Before configuring dedicated credentials for the Knowledge Graph indexer, you must:
 
 - Upgrade to Prophecy 4.2.2 or later.
-- Configure your SQL warehouse connection with a [Databricks connection](/data-analysis/environment/connections/databricks). Other SQL warehouses are not supported.
-- Be a Prophecy administrator. Though there are no role-based restrictions for configuring the knowledge graph indexer, you need to understand how authentication works in Prophecy.
-- Be a Databricks administrator. This lets you assign appropriate permissions to the identity that will be used to run the indexer. The identity must have `MANAGE` access on the assets that you wish to index in the knowledge graph.
+- Configure your SQL warehouse connection with a [Databricks connection](/data-analysis/environment/connections/databricks). Other SQL warehouses are not currently supported for separate indexer authentication.
+- Be a Prophecy administrator.
+- Be a Databricks administrator with permission to assign appropriate access to the indexing identity.
+
+The configured identity must have sufficient permissions to retrieve metadata for the warehouse objects you want indexed into the Knowledge Graph.
 
 <Warning>
-  The knowledge graph indexing permissions should be equal to or a superset of the pipeline
-  execution permissions. This ensures that the same tables you use in your pipelines are indexed by
-  the knowledge graph. However, Prophecy does not enforce this.
+  Knowledge Graph indexing permissions should generally match or exceed the permissions used for
+  pipeline execution. This helps ensure that metadata for the datasets used in pipelines is also
+  available to AI features. Prophecy does not enforce this automatically.
 </Warning>
 
 ### Procedure
 
-To configure the knowledge graph indexer for a fabric:
+To configure separate authentication for the Knowledge Graph indexer:
 
 1. In Prophecy, navigate to **Metadata > Fabrics**.
-1. Select the fabric where you will enable indexing.
+1. Select the target fabric.
 1. Open the **Connections** tab.
-1. Click the pencil icon to edit the **SQL Warehouse Connection**.
-1. In the dialog, scroll to the **Knowledge Graph Indexer** tile.
-1. Configure authentication based on your pipeline development authentication method:
+1. Edit the **SQL Warehouse Connection**.
+1. Scroll to the **Knowledge Graph Indexer** section.
+1. Configure authentication based on your pipeline development authentication method.
 
-   If you use User OAuth for **pipeline development:**
-   - Choose either OAuth (User) or OAuth (Service Principal) for the knowledge graph indexer.
+If you use User OAuth for **pipeline development:**
 
-   If you use Service Principal OAuth for **pipeline development:**
-   - You can only use Service Principal OAuth for the knowledge graph indexer.
+- Choose either OAuth (User) or OAuth (Service Principal) for the Knowledge Graph indexer.
+
+If you use Service Principal OAuth for **pipeline development:**
+
+- You can only use Service Principal OAuth for the Knowledge Graph indexer.
 
 #### Service Principal OAuth (recommended)
 
-Recommended for production and scheduled indexing. Credentials don't expire.
+Recommended for production and scheduled indexing because credentials do not expire.
 
-- **Configuration**: Reuse pipeline development credentials or provide a different **Service Principal Client ID** and **Client Secret**.
-- **What gets indexed**: All tables that the service principal can access.
+- **Configuration**: Reuse pipeline development credentials or provide a separate Service Principal Client ID and Client Secret.
+- **Indexed metadata**: Metadata for all warehouse objects the service principal is authorized to access.
 
 <Note>
-  If you use **User OAuth** for pipeline development, Prophecy enforces user permissions even when
-  the indexer uses service principal credentials. Users only see tables they have permission to
-  access.
+  If pipeline development uses **User OAuth**, Prophecy continues to enforce user-level permissions
+  even when the Knowledge Graph indexer uses service principal credentials.
 </Note>
 
 #### User OAuth
 
-User OAuth should only be used for development.
+Recommended primarily for development environments.
 
 - **Configuration**: Uses the same app registration as pipeline development.
-- **What gets indexed**: All tables that the individual user can access.
-- **Limitations**: Requires frequent user logins. Scheduled crawling can fail when user credentials expire.
+- **Indexed metadata**: Metadata for warehouse objects the authenticated user is authorized to access.
+- **Limitations**: Scheduled indexing can fail when user credentials expire or require reauthentication.
