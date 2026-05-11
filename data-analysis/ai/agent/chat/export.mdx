@@ -8,10 +8,8 @@ Export session information from your Agent chat to share with support or enginee
 ## Steps
 
 1. Open chat history.
-1. Click **Copy Session Info**.
+1. Click **Copy Session Details**.
 1. The session information is copied to your clipboard as JSON.
-
-{/* TODO: Confirm whether Copy Session Info is named Copy Session Info or Copy Session Details in the updated UI. */}
 
 ## Session info structure
 
@@ -21,9 +19,8 @@ The exported session info contains the following fields:
   Unique identifier for the current chat session.
 </ResponseField>
 
-<ResponseField name="chatId" type="string" required>
-  Identifier for the specific chat conversation, formatted as `{type}_{projectId}_{pipelineId}_
-  {environment}_{pipelineName}`.
+<ResponseField name="conversationId" type="string" required>
+  Identifier for the specific chat conversation.
 </ResponseField>
 
 <ResponseField name="hostname" type="string" required>
@@ -42,6 +39,13 @@ The exported session info contains the following fields:
   The Prophecy version number running in your environment.
 </ResponseField>
 
+<ResponseField name="projectID" type="string" required>
+  The identifier for the project for this chat.
+</ResponseField>
+<ResponseField name="userEmail" type="string" required>
+  The email for the chat user.
+</ResponseField>
+
 ## Example output
 
 When you export session info, the clipboard contains JSON in this format:
@@ -49,11 +53,13 @@ When you export session info, the clipboard contains JSON in this format:
 ```json
 {
   "sessionId": "861716af-6414-407d-97d1-d7afa1866558",
-  "chatId": "datatransformation_11083_90964_dev_l2_percentile",
+  "conversationId": "x2G3r2uxsPX8CpzRDo_Us",
   "hostname": "app.prophecy.io",
   "commit": "4.2.1.4",
   "timestamp": 1763401148947,
-  "version": "4.2.1.4"
+  "version": "4.2.1.4",
+  "projectId": "31709",
+  "userEmail": "user.drew@prophecy.io"
 }
 ```
 
