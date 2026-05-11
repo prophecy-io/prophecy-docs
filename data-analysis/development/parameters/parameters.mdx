@@ -70,7 +70,7 @@ Prophecy supports typed parameters at both the project and pipeline level.
 | -------------- | ------------------------------------------------------------------------------------- |
 | Array          | A list of values of the same type, added one by one in a multi-value input field. Stored in `parameters.py`.   |
 | Boolean        | A true or false value, selected from a dropdown.                                      |
-| Connection     | A connection in the current fabric.                                                    |
+| Connection     | A connection in the current [fabric](/data-analysis/environment/fabrics/prophecy-fabrics).                                                    |
 | Date           | A calendar date in `dd-mm-yyyy` format, chosen using a date picker. Stored in `parameters.py`.             |
 | Double         | A 64-bit floating-point number entered in a numeric field.                            |
 | Float          | A 32-bit floating-point number entered in a numeric field.                            |
@@ -108,6 +108,20 @@ When multiple values are defined, parameters are resolved in the following order
 2. Custom project parameter set
 3. Default pipeline parameter set
 4. Custom pipeline parameter set
+
+### Connection parameters
+
+Connection parameters reference fabric connections rather than storing scalar values such as strings or numbers.
+You can use connection parameters to make pipelines portable across environments while preserving connection-type safety.
+
+Connection parameters are:
+
+- Scoped to the current fabric.
+- Restricted to compatible connection types.
+- Validated against available fabric connections.
+- Revalidated when switching fabrics.
+
+See the [connection parameters example in Use Parameters](/data-analysis/development/parameters/usage#connection-type) for an implementation example.
 
 ### Migration behavior
 
