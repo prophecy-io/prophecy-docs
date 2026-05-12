@@ -46,11 +46,9 @@
                           {
                             "group": "Chat",
                             "pages": [
+                              "data-analysis/ai/agent/chat/using-chat",
                               "data-analysis/ai/agent/chat/mentions",
-                              "data-analysis/ai/agent/chat/modes",
                               "data-analysis/ai/agent/chat/upload-files",
-                              "data-analysis/ai/agent/chat/reset",
-                              "data-analysis/ai/agent/chat/revert",
                               "data-analysis/ai/agent/chat/export"
                             ]
                           },

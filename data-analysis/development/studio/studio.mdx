@@ -7,7 +7,9 @@ When you build a [pipeline](/data-analysis/development/pipelines/data-analysis-p
 
 ## Sidebars
 
-When you open the Studio, you'll see the pipeline canvas and multiple sidebars.
+When you open the Studio, Prophecy opens the last saved state of the project when one is available. If there is no saved state, Prophecy opens a project landing page where you can open existing entities or create new ones. New projects without entities open with Agent chat maximized when v4 AI is enabled.
+
+{/* TODO: Confirm how long Prophecy keeps the saved project state and whether it is saved per user, browser, or project. */}
 
 import { WistiaVideo } from '/snippets/react/wistia-video.jsx';
 
@@ -19,9 +21,15 @@ import { WistiaVideo } from '/snippets/react/wistia-video.jsx';
 
 Use the chat interface to interact with Prophecy Agents. Learn more about how to use AI for your project in the [Agent Overview](/data-analysis/ai/agent/agent) documentation.
 
+When Agent chat is maximized, it appears full screen. You can minimize the chat to show the canvas landing page.
+
+You can also rename a chat by clicking the chat name, and manage chats from chat history. See [using chat](/data-analysis/ai/agent/chat/using-chat) for more details.
+
 ### Project browser
 
 In the Visual view, browse through project entities such as pipelines, tables, analyses, functions, and more. When you switch to the Code view, you will see the project repository directory instead.
+
+Opening or closing the Project Browser only changes the Project Browser panel. It does not control whether the landing page or canvas is visible.
 
 ### Environment browser
 
@@ -50,6 +58,7 @@ The pipeline canvas is the workspace where you can add and connect various gems 
 <Frame>
   <WistiaVideo mediaId="z8f32lb8zg" />
 </Frame>
+{/* TODO: Review this video for updated landing page and canvas terminology. */}
 
 ### Gem drawer
 
@@ -69,13 +78,16 @@ In the subheader on the pipeline canvas, you can switch between pipeline and ana
 
 The Studio header includes the following elements.
 
-<Frame>
+{/*<Frame>
   <WistiaVideo mediaId="7fsm71ewab" />
 </Frame>
+ TODO: Review this video for the updated project settings icon and project-name click behavior. */}
 
 ### Dropdown menu
 
-Access various project settings, dependencies, and metadata. If you need to delete your project, you'll find that option in this dropdown menu.
+Access various project settings, dependencies, and metadata from the project settings menu beside the project name. If you need to delete your project, you'll find that option in this dropdown menu.
+
+Clicking the project icon or project name opens the project landing page in the canvas.
 
 ### Parameters
 
