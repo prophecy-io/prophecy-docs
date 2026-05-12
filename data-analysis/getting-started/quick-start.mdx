@@ -37,7 +37,7 @@ First, you need to create the project where you will build your pipeline. You'll
 1. Under **Select Template**, choose **Prophecy for Analysts**.
 1. Click **Complete**.
 
-Prophecy will open the your new project in the [Studio](/data-analysis/development/studio/studio).
+Prophecy will open your new project in [Studio](/data-analysis/development/studio/studio). For a new project with v4 AI enabled, Agent chat opens maximized by default.
 
 </Step>
 <Step title="Connect to the execution environment">
@@ -45,11 +45,12 @@ Prophecy will open the your new project in the [Studio](/data-analysis/developme
 1. Select the default fabric or your own fabric.
 2. Click **Save**.
 
-This attaches the project to the fabric. You can switch fabrics at any time by clicking the fabric selector in the top right corner of the project canvas.
+This attaches the project to the fabric. You can switch fabrics at any time by clicking the fabric selector in the project header.
 
 </Step>
 <Step title="Add a new pipeline">
 
+1. Minimize Agent chat to show the project landing page.
 1. On the project landing page, click **Create Pipeline**.
 1. For the **Pipeline Name**, enter `patient_analytics`.
 1. Leave the default **Directory Path** of `pipelines`. Prophecy saves your compiled pipeline code in this folder of the project repository.
@@ -125,7 +126,7 @@ Now that you have data in your project, you can explore it using the Agent.
 <Steps>
 <Step title="Access the Agent">
 
-Locate and open the **Chat** tab in the left sidebar.
+If Agent chat is minimized, maximize it to continue working in chat.
 
 This is where you'll interact with the Agent.
 
@@ -270,6 +271,7 @@ import { WistiaVideo } from '/snippets/react/wistia-video.jsx';
 <Frame>
   <WistiaVideo mediaId="021zpkv0ys" />
 </Frame>
+{/* TODO: Review this video for updated Agent chat and canvas behavior. */}
 
 </Step>
 
@@ -409,21 +411,14 @@ Use these prompts as templates for your own pipelines.
 <Accordion title="Agent can't find tables">
 **Probable cause**: [Knowledge graph](/data-analysis/ai/knowledge-graph/knowledge-graph) is out of date
 
-**How to fix**: Reindex your Databricks connection so the knowledge graph includes the table
+**How to fix**: [Reindex your fabric connection](/data-analysis/ai/knowledge-graph/indexer) so the knowledge graph includes the table
 
 </Accordion>
 
 <Accordion title="Conversation feels stuck or off track">
 **Probable cause**: Chat context isn't relevant anymore
 
-**How to fix**: Click `… > Reset` in the chat interface to start a fresh session
-
-</Accordion>
-
-<Accordion title="Need to report a bad response">
-**Probable cause**: You want to provide feedback to improve results
-
-**How to fix**: Click the thumbs-up or thumbs-down on the Agent's message. This helps us improve the Agent's behavior.
+**How to fix**: Start a new chat.
 
 </Accordion>
 

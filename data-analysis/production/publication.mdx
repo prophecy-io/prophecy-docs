@@ -3,7 +3,7 @@ title: Publication
 description: Publish your projects to create new deployments
 ---
 
-Project publication is an essential step in the project lifecycle. Each published version marks the project as production-ready and enables its use across different systems.
+**Publishing** a project marks the project as production-ready and enables its use across different systems.
 
 ## Release and deployment
 
@@ -11,11 +11,15 @@ When you publish a project, two key processes occur: **release** and **deploymen
 
 First, the project is released, creating a new version and preparing it for distribution. During this process, Prophecy assigns a version label to the project and makes the new version available in packages.
 
-Next, the project is deployed to different environments. The deployment process builds the project in each target [fabric](/data-analysis/environment/fabrics/prophecy-fabrics) (environment) and enables pipeline [schedules](/data-analysis/production/scheduling/scheduling) for each fabric.
+Next, the project is **deployed**. When you deploy, you select one or more of the project's [fabrics](/data-analysis/environment/fabrics/prophecy-fabrics) and Prophecy builds the project in the fabric's environment (such as your Databricks, BigQuery, or Snowflake warehouse).
+
+For example, you may be working with both a `dev` and a `prod` fabric, each of which are configured for different environments. At the appropriate stages in your project's lifecycle, you deploy to one or both of these fabrics.
+
+Once you deploy, you can [schedule pipelines](/data-analysis/production/scheduling/scheduling) for each fabric.
 
 <Info>
-  If you publish a project without selecting a fabric, it is only **released**. This means a new
-  version is created and made available for use in the Package Hub, but no deployments are created.
+  You can publish a project without selecting a fabric. When you do so, it is **released** but not **deployed**. This means that Prophecy creates a new
+  version and makes available for use in the Package Hub, but no changes are made to your environment.
 </Info>
 
 ## Permissions
@@ -29,7 +33,7 @@ If your production fabric uses Databricks connections, [consider using a service
 
 ## Parameters
 
-Once you save your project as a draft, you have the option to Publish that version of the project. Review the following table to understand the publication parameters.
+Once you save your project as a draft, you can configure and publish a version of the project. The following table describes publication parameters.
 
 | Parameters                      | Description                                                                                                                                                                                            |
 | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -61,15 +65,17 @@ Prophecy lets multiple users work on the same project simultaneously. If you try
 
 ## Monitor deployed projects
 
-All of your teams' published projects will appear in the [Observability](/data-analysis/production/monitoring) interface in Prophecy. This lets you see information like:
+All of your teams' published projects will appear in the [Observability](/data-analysis/production/monitoring) interface in Prophecy.
 
-- List of deployed projects
-- List of pipeline schedules per fabric
-- History of pipeline runs and run status
+The Observability interface lets you see information such as:
+
+- A list of deployed projects.
+- A list of pipeline schedules per fabric.
+- A history of pipeline runs and run status.
 
 ## Project publication logs
 
-When you publish a project, Prophecy provides logs for each publication step to help you troubleshoot if anything goes wrong during the deployment process. You see a success or failure status for each step in the publish logs, making it easy to identify exactly where issues may have occurred.
+When you publish a project, Prophecy provides logs for each publication step to help you troubleshoot if anything goes wrong during the deployment process. You see a success or failure status for each step in the publish logs, allowing you to identify exactly where issues may have occurred.
 
 The publication process follows these steps.
 
