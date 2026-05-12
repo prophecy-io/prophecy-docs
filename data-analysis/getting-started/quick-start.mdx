@@ -39,8 +39,6 @@ First, you need to create the project where you will build your pipeline. You'll
 
 Prophecy will open your new project in [Studio](/data-analysis/development/studio/studio). For a new project with v4 AI enabled, Agent chat opens maximized by default.
 
-{/* TODO: Confirm the first-open behavior for quickstart users if AI is disabled. */}
-
 </Step>
 <Step title="Connect to the execution environment">
 
@@ -59,8 +57,6 @@ This attaches the project to the fabric. You can switch fabrics at any time by c
 1. Click **Create**.
 
 This opens the pipeline canvas for your new pipeline.
-
-{/* TODO: Confirm whether users can create the pipeline from maximized chat or must minimize chat first. */}
 
 </Step>
 </Steps>
@@ -415,21 +411,14 @@ Use these prompts as templates for your own pipelines.
 <Accordion title="Agent can't find tables">
 **Probable cause**: [Knowledge graph](/data-analysis/ai/knowledge-graph/knowledge-graph) is out of date
 
-**How to fix**: Reindex your Databricks connection so the knowledge graph includes the table
+**How to fix**: [Reindex your fabric connection](/data-analysis/ai/knowledge-graph/indexer) so the knowledge graph includes the table
 
 </Accordion>
 
 <Accordion title="Conversation feels stuck or off track">
 **Probable cause**: Chat context isn't relevant anymore
 
-**How to fix**: Click `… > Reset` in the chat interface to start a fresh session
-
-</Accordion>
-
-<Accordion title="Need to report a bad response">
-**Probable cause**: You want to provide feedback to improve results
-
-**How to fix**: Click the thumbs-up or thumbs-down on the Agent's message. This helps us improve the Agent's behavior.
+**How to fix**: Start a new chat.
 
 </Accordion>
 
