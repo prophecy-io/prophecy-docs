@@ -2,6 +2,33 @@
 title: '2026 releases'
 description: 'Features and enhancements from new releases'
 ---
+
+<Update label="Prophecy 4.2.8" description="May 11, 2026" tags={["Data Analysis"]}>
+
+## Improved AI chat experience
+
+[Agent chat](data-analysis/ai/agent/chat/using-chat) has been updated with a cleaner conversation experience. You can now manage chats from chat history, start a new chat, rename chats, delete chats, and copy session details from one place.
+
+The chat input still supports file uploads and `@` mentions for referencing project entities. AI-generated changes now show a review area with the edited entities, and the latest AI response includes an **Undo this** option when changes can be reverted.
+
+## Connection parameters for projects and pipelines
+
+[Project parameters](/data-analysis/development/parameters/parameters) and pipeline parameters now support **Connection** type variables. Connection parameters allow pipelines to reference fabric connections dynamically instead of selecting a fixed connection directly in a Source or Target gem.
+
+Connection parameters are validated against the current fabric and restricted to compatible connection types. For example, an S3 Source gem only allows S3 connection parameters. Diagnostics are displayed if the referenced connection is missing or has a different type in the active fabric.
+
+## Import Alteryx workflows to Snowflake SQL
+
+You can now migrate Alteryx workflows to Snowflake SQL using a Snowflake fabric. During import, the selected fabric determines the SQL dialect, allowing you to generate pipelines that run natively on Snowflake.
+
+## Break large Alteryx workflows into multiple pipelines
+
+When importing Alteryx workflows into SQL projects, you can now enable **Break into Multiple Workflows** to split large workflows into smaller Prophecy pipelines.
+
+Prophecy automatically creates an orchestration pipeline to coordinate execution of the generated pipelines. During splitting, Prophecy can also preserve Alteryx visual containers so that related workflow sections remain grouped together in the generated pipelines.
+
+</Update>
+
 <Update label="Prophecy 4.2.7" description="April 14, 2026" tags={["Data Analysis"]}>
 
 ## New gems in `prophecy_basics` package
@@ -36,7 +63,6 @@ For example, expressions such as `concat("first_name", "last_name")` are recogni
 You can now open [historical runtime logs](/data-analysis/development/runs/runtime-logs#access-historical-runtime-logs) directly from the Observability → Run History page. When you click **See Logs**, Prophecy opens the pipeline in [Historical Mode](/data-analysis/development/runs/runtime-logs#historical-mode), which shows the runtime logs, pipeline snapshot, and component execution states associated with that run.
 
 This feature helps you investigate failures, review previous executions, compare historical runs, and rerun pipelines using the original execution snapshot.
-
 
 </Update>
 
