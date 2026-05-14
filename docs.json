@@ -267,8 +267,8 @@
                           "data-analysis/production/scheduling/pipeline-trigger-gem"
                         ]
                       },
-                      "data-analysis/production/publication-concepts",
-                      "data-analysis/production/publish-project",
+                      "data-analysis/production/publication/publication-concepts",
+                      "data-analysis/production/publication/publish-project",
                       "data-analysis/production/monitoring"
                     ]
                   },
@@ -1603,7 +1603,7 @@
     },
     {
       "source": "/data-analysis/production/publication",
-      "destination": "/data-analysis/production/publication-concepts"
+      "destination": "/data-analysis/production/publication/publication-concepts"
     }
   ]
 }
