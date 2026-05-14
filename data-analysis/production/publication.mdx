@@ -1,88 +1,73 @@
 ---
-title: Publication
-description: Publish your projects to create new deployments
+title: Publication concepts
+description: Understand drafts, published versions, deployments, and fabrics in SQL and Model projects
 ---
 
-**Publishing** a project marks the project as production-ready and enables its use across different systems.
+Publication lets you create reusable project versions and deploy those versions to development or production environments
 
-## Release and deployment
+Publication applies only to SQL projects that use Simple Version Control.
 
-When you publish a project, two key processes occur: **release** and **deployment**.
+## Publication workflow
 
-First, the project is released, creating a new version and preparing it for distribution. During this process, Prophecy assigns a version label to the project and makes the new version available in packages.
+Prophecy separates publication into three stages:
 
-Next, the project is **deployed**. When you deploy, you select one or more of the project's [fabrics](/data-analysis/environment/fabrics/prophecy-fabrics) and Prophecy builds the project in the fabric's environment (such as your Databricks, BigQuery, or Snowflake warehouse).
-
-For example, you may be working with both a `dev` and a `prod` fabric, each of which are configured for different environments. At the appropriate stages in your project's lifecycle, you deploy to one or both of these fabrics.
-
-Once you deploy, you can [schedule pipelines](/data-analysis/production/scheduling/scheduling) for each fabric.
-
-<Info>
-  You can publish a project without selecting a fabric. When you do so, it is **released** but not **deployed**. This means that Prophecy creates a new
-  version and makes available for use in the Package Hub, but no changes are made to your environment.
-</Info>
-
-## Permissions
-
-To publish a project to a fabric, that fabric must be [assigned to one of your teams](/data-analysis/administration/management/users/access/team-based-access). This ensures that only authorized users can deploy projects to specific environments. For example:
-
-- **Development fabric**: Assigned to a broader team for testing and iteration. You typically won't publish to development fabrics, except when testing schedules.
-- **Production fabric**: Assigned to a limited-access team that will be able to publish to production.
-
-If your production fabric uses Databricks connections, [consider using a service principal](/data-analysis/environment/connections/databricks#authentication-methods) for authentication. This helps scheduled pipelines in published projects run reliably.
-
-## Parameters
-
-Once you save your project as a draft, you can configure and publish a version of the project. The following table describes publication parameters.
-
-| Parameters                      | Description                                                                                                                                                                                            |
-| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Version details                 | Copilot automatically populates the version details, but you can edit the version number or description if necessary.                                                                                  |
-| Changes that will be published  | Prophecy lists the saved drafts that include changes to be reflected in the new published version.                                                                                                     |
-| Select the fabric(s) to publish | Prophecy creates a new project deployment for each fabric. If a deployment already exists, it is updated. To see your deployments, review the [Monitoring](/data-analysis/production/monitoring) page. |
-| Choose project parameter set    | Select the project [parameter set](/data-analysis/development/parameters/parameter-sets) to use for the deployment. This allows you to publish different configurations to different environments.     |
-
-Prophecy lets you publish different versions of a project to different fabrics. This might be useful if you want `Version 1` published on a development fabric and `Version 2` published on a production fabric. (You cannot publish two different versions to the same fabric.)
-
-## Publish the project
-
-Follow the steps below to understand how to publish your project from the Prophecy interface.
-
-1. Click **Publish** from the project header.
-1. Review the version details and the changes to be published.
-1. Select one or more fabrics to publish to.
-1. In the **Choose Project Parameter Set** dropdown, select the project [parameter set](/data-analysis/development/parameters/parameter-sets) that will be applied to all pipelines that will be deployed in this project.
-1. Click **Publish**.
+| Stage                     | Purpose                                               |
+| ------------------------- | ----------------------------------------------------- |
+| Save a draft        | Save work in progress                                 |
+| Publish a project version | Create a reusable version of the project              |
+| Deploy                    | Make that version available in a specific environment |
 
 <Note>
-  If you use the version dropdown and select **Publish new version** before saving as a draft, you
-  will be prompted to save your project to the version history first.
+Publishing does not automatically run pipelines. After deployment, you can [schedule pipelines](/data-analysis/production/scheduling/scheduling) independently for each fabric.
 </Note>
 
-## Request to publish
+## Save a draft
 
-Prophecy lets multiple users work on the same project simultaneously. If you try to publish the project while multiple people are working on it, you can **request to publish** the project. This way, all collaborators can be aware of the publication as they work on the project and approve or veto the action.
+As you develop and edit your project, you can **save drafts** to store in-progress project changes before publication.
 
-## Monitor deployed projects
+Use drafts to:
 
-All of your teams' published projects will appear in the [Observability](/data-analysis/production/monitoring) interface in Prophecy.
+- Save work while continuing development.
+- Collaborate with other users.
+- Review changes before publication.
+- Prepare a version for deployment.
 
-The Observability interface lets you see information such as:
+Saving a draft does not create a deployable project version and does not make changes available in deployment environments.
 
-- A list of deployed projects.
-- A list of pipeline schedules per fabric.
-- A history of pipeline runs and run status.
+## Publish a version
 
-## Project publication logs
+Publishing creates a reusable version of the project, but does not automatically deploy it to your Databricks, Snowflake, or BigQuery environment.
 
-When you publish a project, Prophecy provides logs for each publication step to help you troubleshoot if anything goes wrong during the deployment process. You see a success or failure status for each step in the publish logs, allowing you to identify exactly where issues may have occurred.
+Until deployment occurs, the published version remains available in Prophecy but is not yet available in a development or production environment.
 
-The publication process follows these steps.
+When you publish a version, Prophecy:
 
-1. **Fetching fabric info**: Gather information about the currently attached fabric
-1. **Reading project code**: Review code elements
-1. **Packaging project**: Bundle all components together
-1. **Connecting to deployment service**: Establish connection to deployment tool
-1. **Deploying to fabric**: Build project in the target fabric
+- Assigns a version number and description.
+- Packages the project.
+- Makes the version available for deployment.
 
-![Publish logs](/data-analysis/production/img/publish-logs.png)
+Published versions are immutable, meaning that once you publish a version, Prophecy preserves it as a stable reference for deployment and rollback. This helps you:
+
+- Track project changes over time.
+- Deploy consistent versions across environments.
+- Roll back to earlier project versions if necessary.
+
+## Deploy a project
+
+When you **deploy** a project, you make a published version available in a specific deployment environment.
+
+In Prophecy, deployment environments are called [fabrics](/data-analysis/environment/fabrics/prophecy-fabrics). Examples include development, staging, and production environments for platforms such as Databricks, Snowflake, or BigQuery.
+
+Different environments often require different configurations, such as connections, schemas, or runtime parameters. You can use [project parameter sets](/data-analysis/development/parameters/parameter-sets) to apply environment-specific configuration during deploymen
+
+During deployment, Prophecy:
+
+- Builds the project in the selected environment.
+- Applies the selected project parameter set.
+- Creates or updates the deployment for that environment.
+
+You can deploy different versions of the same project to different environments. For example, a development environment might use version `1.1` while production continues using version `1.0`.
+
+However, an environment can contain only one deployed version of a project at a time.
+
+After deployment, you can [schedule pipelines](/data-analysis/production/scheduling/scheduling) independently for each environment.
