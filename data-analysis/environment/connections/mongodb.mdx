@@ -20,10 +20,10 @@ The table below outlines whether the connection supports certain Prophecy featur
 
 | Feature                                                                                    | Supported |
 | ------------------------------------------------------------------------------------------ | --------- |
-| Read data with a [Source gem](/data-analysis/gems/source-target/external-table/mongodb)    | Yes       |
-| Write data with a [Target gem](/data-analysis/gems/source-target/external-table/mongodb)   | Yes       |
+| Read data with a [Source gem](/data-analysis/gems/source-target/external-table/mongodb)   | Yes       |
+| Write data with a [Target gem](/data-analysis/gems/source-target/external-table/mongodb)  | Yes       |
 | Browse data in the [Environment browser](/data-analysis/development/studio/studio#sidebar) | Yes       |
-| Index tables in the [Knowledge Graph](/data-analysis/ai/knowledge-graph/knowledge-graph)   | No        |
+| Index tables in the [Knowledge Graph](/data-analysis/ai/knowledge-graph/knowledge-graph) | No        |
 
 ## Connection parameters
 
@@ -41,32 +41,37 @@ To create a connection with MongoDB, enter the following parameters:
 
 ## Data type mapping
 
-When Prophecy processes data from MongoDB using SQL warehouses, it converts MongoDB-specific data types to formats compatible with your target warehouse. This table shows how [MongoDB data types](https://www.mongodb.com/docs/manual/reference/bson-types/) are transformed for Databricks and BigQuery.
+When Prophecy processes data from MongoDB using SQL warehouses, it converts MongoDB-specific data types to formats compatible with your target warehouse. This table shows how [MongoDB data types](https://www.mongodb.com/docs/manual/reference/bson-types/) are transformed for Databricks, BigQuery, and Snowflake.
 
-| MongoDB                                                                                     | Databricks                        | BigQuery                              |
-| ------------------------------------------------------------------------------------------- | --------------------------------- | ------------------------------------- |
-| 32-bit integer                                                                              | INT<br />Alias: Integer           | INT64<br />Alias: Integer             |
-| 64-bit integer                                                                              | BIGINT<br />Alias: Bigint         | INT64<br />Alias: Integer             |
-| Double                                                                                      | DOUBLE<br />Alias: Double         | FLOAT64<br />Alias: Float             |
-| Boolean                                                                                     | BOOLEAN<br />Alias: Boolean       | BOOL<br />Alias: Boolean              |
-| String                                                                                      | STRING<br />Alias: String         | STRING<br />Alias: String             |
-| Date                                                                                        | TIMESTAMP<br />Alias: Timestamp   | TIMESTAMP<br />Alias: Timestamp       |
-| Timestamp                                                                                   | TIMESTAMP<br />Alias: Timestamp   | TIMESTAMP<br />Alias: Timestamp       |
-| Binary                                                                                      | BINARY<br />Alias: Binary         | BYTES<br />Alias: Bytes               |
-| ObjectId                                                                                    | STRING<br />Alias: String         | STRING<br />Alias: String             |
-| Decimal128                                                                                  | DECIMAL(34,2)<br />Alias: Decimal | BIGNUMERIC(34, 2)<br />Alias: Numeric |
-| Min key                                                                                     | STRING<br />Alias: String         | STRING<br />Alias: String             |
-| Max key                                                                                     | STRING<br />Alias: String         | STRING<br />Alias: String             |
-| Regular Expression                                                                          | STRING<br />Alias: String         | STRING<br />Alias: String             |
-| DBPointer                                                                                   | STRING<br />Alias: String         | STRING<br />Alias: String             |
-| JavaScript                                                                                  | STRING<br />Alias: String         | STRING<br />Alias: String             |
-| JavaScript with scope                                                                       | STRING<br />Alias: String         | STRING<br />Alias: String             |
-| Symbol                                                                                      | STRING<br />Alias: String         | STRING<br />Alias: String             |
-| [Embedded Document](https://www.mongodb.com/docs/manual/tutorial/query-embedded-documents/) | STRUCT<br />Alias: Struct         | STRUCT<br />Alias: Struct             |
-| Array                                                                                       | ARRAY<br />Alias: Array           | ARRAY<br />Alias: Array               |
-| Empty Array                                                                                 | ARRAY<br />Alias: Array           | ARRAY<br />Alias: Array               |
-| Null                                                                                        | STRING<br />Alias: String         | STRING<br />Alias: String             |
-| Unidentified                                                                                | STRING<br />Alias: String         | STRING<br />Alias: String             |
+| MongoDB                                                                                     | Databricks                                | BigQuery                                  | Snowflake                            |
+| ------------------------------------------------------------------------------------------- | ----------------------------------------- | ----------------------------------------- | ------------------------------------ |
+| 32-bit integer                                                                              | `int`<br />Alias: Integer                 | `int64`<br />Alias: Integer               | `number`<br />Alias: Number          |
+| 64-bit integer                                                                              | `bigint`<br />Alias: Bigint               | `int64`<br />Alias: Integer               | `number`<br />Alias: Number          |
+| Double                                                                                      | `double`<br />Alias: Double               | `float64`<br />Alias: Float               | `float`<br />Alias: Float            |
+| Boolean                                                                                     | `boolean`<br />Alias: Boolean             | `bool`<br />Alias: Boolean                | `boolean`<br />Alias: Boolean        |
+| String                                                                                      | `string`<br />Alias: String               | `string`<br />Alias: String               | `string`<br />Alias: String          |
+| Date                                                                                        | `timestamp`<br />Alias: Timestamp         | `timestamp`<br />Alias: Timestamp         | `timestamp`<br />Alias: Timestamp    |
+| Timestamp                                                                                   | `timestamp`<br />Alias: Timestamp         | `timestamp`<br />Alias: Timestamp         | `timestamp`<br />Alias: Timestamp    |
+| Binary                                                                                      | `binary`<br />Alias: Binary               | `bytes`<br />Alias: Bytes                 | `binary`<br />Alias: Binary          |
+| ObjectId                                                                                    | `string`<br />Alias: String               | `string`<br />Alias: String               | `string`<br />Alias: String          |
+| Decimal128                                                                                  | `decimal(34,2)`<br />Alias: Decimal       | `bignumeric(34,2)`<br />Alias: Numeric    | `number(34,2)`<br />Alias: Number    |
+| Min key                                                                                     | `string`<br />Alias: String               | `string`<br />Alias: String               | `string`<br />Alias: String          |
+| Max key                                                                                     | `string`<br />Alias: String               | `string`<br />Alias: String               | `string`<br />Alias: String          |
+| Regular Expression                                                                          | `string`<br />Alias: String               | `string`<br />Alias: String               | `string`<br />Alias: String          |
+| DBPointer                                                                                   | `string`<br />Alias: String               | `string`<br />Alias: String               | `string`<br />Alias: String          |
+| JavaScript                                                                                  | `string`<br />Alias: String               | `string`<br />Alias: String               | `string`<br />Alias: String          |
+| JavaScript with scope                                                                       | `string`<br />Alias: String               | `string`<br />Alias: String               | `string`<br />Alias: String          |
+| Symbol                                                                                      | `string`<br />Alias: String               | `string`<br />Alias: String               | `string`<br />Alias: String          |
+| [Embedded Document](https://www.mongodb.com/docs/manual/tutorial/query-embedded-documents/) | `struct`<br />Alias: Struct               | `struct`<br />Alias: Struct               | `variant`<br />Alias: Variant        |
+| Array                                                                                       | `array`<br />Alias: Array                 | `array`<br />Alias: Array                 | `array`<br />Alias: Array            |
+| Empty Array                                                                                 | `array`<br />Alias: Array                 | `array`<br />Alias: Array                 | `array`<br />Alias: Array            |
+| Null                                                                                        | `string`<br />Alias: String               | `string`<br />Alias: String               | `string`<br />Alias: String          |
+| Unidentified                                                                                | `string`<br />Alias: String               | `string`<br />Alias: String               | `string`<br />Alias: String          |
+<Info>
+
+Embedded MongoDB documents are inferred as Snowflake `VARIANT` values when read through the Spark MongoDB connector. Although Snowflake supports the `OBJECT` type, inferred embedded documents map to `VARIANT` unless explicitly declared otherwise.
+
+</Info>
 
 <Info>Learn more in [Supported data types](/data-analysis/gems/data-types).</Info>
 
@@ -75,6 +80,7 @@ When Prophecy processes data from MongoDB using SQL warehouses, it converts Mong
 Connections in Prophecy are stored within [fabrics](/data-analysis/environment/fabrics/prophecy-fabrics), which are assigned to specific teams. Once a MongoDB connection is added to a fabric, all team members who have access to the fabric can use the connection in their projects. No additional authentication is required—team members automatically inherit the access and permissions of the stored connection credentials.
 
 <Warning>
+
 Be mindful of the access level granted by the stored credentials. Anyone on the team will have the same permissions—including access to sensitive data if allowed.
 
 To manage this securely, consider creating a dedicated fabric and team for high-sensitivity connections. This way, only approved users have access to those credentials.

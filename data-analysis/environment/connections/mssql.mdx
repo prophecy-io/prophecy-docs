@@ -9,7 +9,7 @@ This page describes how to use and configure a connection to Microsoft SQL Serve
 
 Prophecy connects to Microsoft SQL Server (MSSQL) using the database credentials you provide. These credentials are used to authenticate your session and authorize all data operations during pipeline execution. To use an MSSQL connection effectively, your user account must have:
 
-- `SELECT`, `INSERT`, `UPDATE`, and `DELETE` on the tables used in your Prophecy pipelines.
+- `select`, `insert`, `update`, and `delete` on the tables used in your Prophecy pipelines.
 - Access to the database and schema where tables are located.
 
 ## Feature support
@@ -37,50 +37,55 @@ To create a connection with Microsoft SQL Server, enter the following parameters
 
 ## Data type mapping
 
-When Prophecy processes data from Microsoft SQL Server (MSSQL) using SQL warehouses, it converts MSSQL-specific data types to formats compatible with your target warehouse. This table shows how [MSSQL data types](https://learn.microsoft.com/en-us/sql/t-sql/data-types/data-types-transact-sql?view=sql-server-ver17) are transformed for Databricks and BigQuery.
+When Prophecy processes data from Microsoft SQL Server (MSSQL) using SQL warehouses, it converts MSSQL-specific data types to formats compatible with your target warehouse. This table shows how [MSSQL data types](https://learn.microsoft.com/en-us/sql/t-sql/data-types/data-types-transact-sql?view=sql-server-ver17) are transformed for Databricks, BigQuery, and Snowflake.
 
-| MSSQL            | Databricks                      | BigQuery                        |
-| ---------------- | ------------------------------- | ------------------------------- |
-| tinyint          | INT<br />Alias: Integer         | INT64<br />Alias: Integer       |
-| smallint         | INT<br />Alias: Integer         | INT64<br />Alias: Integer       |
-| int              | INT<br />Alias: Integer         | INT64<br />Alias: Integer       |
-| bigint           | BIGINT<br />Alias: Bigint       | INT64<br />Alias: Integer       |
-| float / real     | DOUBLE<br />Alias: Double       | FLOAT64<br />Alias: Float       |
-| decimal          | DOUBLE<br />Alias: Double       | FLOAT64<br />Alias: Float       |
-| numeric          | DOUBLE<br />Alias: Double       | FLOAT64<br />Alias: Float       |
-| money            | DOUBLE<br />Alias: Double       | FLOAT64<br />Alias: Float       |
-| smallmoney       | DOUBLE<br />Alias: Double       | FLOAT64<br />Alias: Float       |
-| bit              | BOOLEAN<br />Alias: Boolean     | BOOL<br />Alias: Boolean        |
-| char             | STRING<br />Alias: String       | STRING<br />Alias: String       |
-| varchar          | STRING<br />Alias: String       | STRING<br />Alias: String       |
-| text             | STRING<br />Alias: String       | STRING<br />Alias: String       |
-| nchar            | STRING<br />Alias: String       | STRING<br />Alias: String       |
-| nvarchar         | STRING<br />Alias: String       | STRING<br />Alias: String       |
-| ntext            | STRING<br />Alias: String       | STRING<br />Alias: String       |
-| xml              | STRING<br />Alias: String       | STRING<br />Alias: String       |
-| date             | TIMESTAMP<br />Alias: Timestamp | TIMESTAMP<br />Alias: Timestamp |
-| time             | TIMESTAMP<br />Alias: Timestamp | TIMESTAMP<br />Alias: Timestamp |
-| datetime         | TIMESTAMP<br />Alias: Timestamp | TIMESTAMP<br />Alias: Timestamp |
-| datetime2        | TIMESTAMP<br />Alias: Timestamp | TIMESTAMP<br />Alias: Timestamp |
-| smalldatetime    | TIMESTAMP<br />Alias: Timestamp | TIMESTAMP<br />Alias: Timestamp |
-| datetimeoffset   | TIMESTAMP<br />Alias: Timestamp | TIMESTAMP<br />Alias: Timestamp |
-| rowversion       | TIMESTAMP<br />Alias: Timestamp | TIMESTAMP<br />Alias: Timestamp |
-| binary           | BINARY<br />Alias: Binary       | BYTES<br />Alias: Bytes         |
-| varbinary        | BINARY<br />Alias: Binary       | BYTES<br />Alias: Bytes         |
-| image            | BINARY<br />Alias: Binary       | BYTES<br />Alias: Bytes         |
-| uniqueidentifier | BINARY<br />Alias: Binary       | BYTES<br />Alias: Bytes         |
-| sql_variant      | BINARY<br />Alias: Binary       | BYTES<br />Alias: Bytes         |
-| geometry         | BINARY<br />Alias: Binary       | BYTES<br />Alias: Bytes         |
-| geography        | BINARY<br />Alias: Binary       | BYTES<br />Alias: Bytes         |
-| hierarchyid      | BINARY<br />Alias: Binary       | BYTES<br />Alias: Bytes         |
+| MSSQL            | Databricks                          | BigQuery                          | Snowflake                       |
+| ---------------- | ----------------------------------- | --------------------------------- | ------------------------------- |
+| tinyint          | `int`<br />Alias: Integer           | `int64`<br />Alias: Integer       | `number`<br />Alias: Number     |
+| smallint         | `int`<br />Alias: Integer           | `int64`<br />Alias: Integer       | `number`<br />Alias: Number     |
+| int              | `int`<br />Alias: Integer           | `int64`<br />Alias: Integer       | `number`<br />Alias: Number     |
+| bigint           | `bigint`<br />Alias: Bigint         | `int64`<br />Alias: Integer       | `number`<br />Alias: Number     |
+| float / real     | `double`<br />Alias: Double         | `float64`<br />Alias: Float       | `float`<br />Alias: Float       |
+| decimal          | `double`<br />Alias: Double         | `float64`<br />Alias: Float       | `number`<br />Alias: Number     |
+| numeric          | `double`<br />Alias: Double         | `float64`<br />Alias: Float       | `number`<br />Alias: Number     |
+| money            | `double`<br />Alias: Double         | `float64`<br />Alias: Float       | `number`<br />Alias: Number     |
+| smallmoney       | `double`<br />Alias: Double         | `float64`<br />Alias: Float       | `number`<br />Alias: Number     |
+| bit              | `boolean`<br />Alias: Boolean       | `bool`<br />Alias: Boolean        | `boolean`<br />Alias: Boolean   |
+| char             | `string`<br />Alias: String         | `string`<br />Alias: String       | `string`<br />Alias: String     |
+| varchar          | `string`<br />Alias: String         | `string`<br />Alias: String       | `string`<br />Alias: String     |
+| text             | `string`<br />Alias: String         | `string`<br />Alias: String       | `string`<br />Alias: String     |
+| nchar            | `string`<br />Alias: String         | `string`<br />Alias: String       | `string`<br />Alias: String     |
+| nvarchar         | `string`<br />Alias: String         | `string`<br />Alias: String       | `string`<br />Alias: String     |
+| ntext            | `string`<br />Alias: String         | `string`<br />Alias: String       | `string`<br />Alias: String     |
+| xml              | `string`<br />Alias: String         | `string`<br />Alias: String       | `string`<br />Alias: String     |
+| date             | `timestamp`<br />Alias: Timestamp   | `timestamp`<br />Alias: Timestamp | `timestamp`<br />Alias: Timestamp |
+| time             | `timestamp`<br />Alias: Timestamp   | `timestamp`<br />Alias: Timestamp | `timestamp`<br />Alias: Timestamp |
+| datetime         | `timestamp`<br />Alias: Timestamp   | `timestamp`<br />Alias: Timestamp | `timestamp`<br />Alias: Timestamp |
+| datetime2        | `timestamp`<br />Alias: Timestamp   | `timestamp`<br />Alias: Timestamp | `timestamp`<br />Alias: Timestamp |
+| smalldatetime    | `timestamp`<br />Alias: Timestamp   | `timestamp`<br />Alias: Timestamp | `timestamp`<br />Alias: Timestamp |
+| datetimeoffset   | `timestamp`<br />Alias: Timestamp   | `timestamp`<br />Alias: Timestamp | `timestamp`<br />Alias: Timestamp |
+| rowversion       | `timestamp`<br />Alias: Timestamp   | `timestamp`<br />Alias: Timestamp | `timestamp`<br />Alias: Timestamp |
+| binary           | `binary`<br />Alias: Binary         | `bytes`<br />Alias: Bytes         | `binary`<br />Alias: Binary     |
+| varbinary        | `binary`<br />Alias: Binary         | `bytes`<br />Alias: Bytes         | `binary`<br />Alias: Binary     |
+| image            | `binary`<br />Alias: Binary         | `bytes`<br />Alias: Bytes         | `binary`<br />Alias: Binary     |
+| uniqueidentifier | `binary`<br />Alias: Binary         | `bytes`<br />Alias: Bytes         | `string`<br />Alias: String     |
+| sql_variant      | `binary`<br />Alias: Binary         | `bytes`<br />Alias: Bytes         | `string`<br />Alias: String     |
+| geometry         | `binary`<br />Alias: Binary         | `bytes`<br />Alias: Bytes         | `binary`<br />Alias: Binary     |
+| geography        | `binary`<br />Alias: Binary         | `bytes`<br />Alias: Bytes         | `binary`<br />Alias: Binary     |
+| hierarchyid      | `binary`<br />Alias: Binary         | `bytes`<br />Alias: Bytes         | `binary`<br />Alias: Binary     |
 
-<Info>Learn more in [Supported data types](/data-analysis/gems/data-types).</Info>
+<Info>
+
+Learn more in [Supported data types](/data-analysis/gems/data-types).
+
+</Info>
 
 ## Sharing connections within teams
 
-Connections in Prophecy are stored within [fabrics](/data-analysis/environment/fabrics/prophecy-fabrics), which are assigned to specific teams. Once a MSSQL connection is added to a fabric, all team members who have access to the fabric can use the connection in their projects. No additional authentication is required—team members automatically inherit the access and permissions of the stored connection credentials.
+Connections in Prophecy are stored within [fabrics](/data-analysis/environment/fabrics/prophecy-fabrics), which are assigned to specific teams. Once an MSSQL connection is added to a fabric, all team members who have access to the fabric can use the connection in their projects. No additional authentication is required—team members automatically inherit the access and permissions of the stored connection credentials.
 
 <Warning>
+
 Be mindful of the access level granted by the stored credentials. Anyone on the team will have the same permissions—including access to sensitive data if allowed.
 
 To manage this securely, consider creating a dedicated fabric and team for high-sensitivity connections. This way, only approved users have access to those credentials.
