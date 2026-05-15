@@ -1,5 +1,5 @@
 ---
-title: Migrate to SQL
+title: Migrate to SQL (Databricks, BigQuery, Snowflake)
 description: How to migrate Alteryx workflows to SQL using Databricks, BigQuery, or Snowflake fabrics
 ---
 
@@ -33,7 +33,7 @@ To export an Alteryx workflow from the Alteryx Designer:
 
 </details>
 
-## Differences between Databricks and BigQuery import
+## Differences between importing Databricks, BigQuery and Snowflake SQL
 
 The SQL dialect generated during import depends on the selected fabric:
 
@@ -41,7 +41,7 @@ The SQL dialect generated during import depends on the selected fabric:
 - **BigQuery fabric → BigQuery SQL**
 - **Snowflake fabric → Snowflake SQL**
 
-You cannot change the SQL dialect after transpilation without recreating the bundle.
+You cannot change the SQL dialect after import without recreating the bundle.
 
 While the migration workflow is the same, some behaviors differ depending on the selected fabric:
 

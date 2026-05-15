@@ -38,52 +38,63 @@ To create a connection with Oracle, enter the following parameters:
 
 ## Data type mapping
 
-When Prophecy processes data from Oracle using SQL warehouses, it converts Oracle-specific data types to formats compatible with your target warehouse. This table shows how [Oracle data types](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Data-Types.html) are transformed for Databricks and BigQuery.
+When Prophecy processes data from Oracle using SQL warehouses, it converts Oracle-specific data types to formats compatible with your target warehouse. This table shows how [Oracle data types](https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Data-Types.html) are transformed for Databricks, BigQuery, and Snowflake.
 
-| Oracle                          | Databricks                        | BigQuery                                 |
-| ------------------------------- | --------------------------------- | ---------------------------------------- |
-| NUMBER                          | DECIMAL(38,5)<br />Alias: Decimal | BIGNUMERIC(38, 5)<br />Alias: BigNumeric |
-| SMALLINT / INTEGER / NUMBER(38) | BIGINT<br />Alias: Bigint         | INT64<br />Alias: Integer                |
-| FLOAT                           | DOUBLE<br />Alias: Double         | FLOAT64<br />Alias: Float                |
-| REAL / FLOAT(63)                | DOUBLE<br />Alias: Double         | FLOAT64<br />Alias: Float                |
-| DOUBLE PRECISION / FLOAT(126)   | DOUBLE<br />Alias: Double         | FLOAT64<br />Alias: Float                |
-| BINARY_FLOAT                    | DOUBLE<br />Alias: Double         | FLOAT64<br />Alias: Float                |
-| BINARY_DOUBLE                   | DOUBLE<br />Alias: Double         | FLOAT64<br />Alias: Float                |
-| DECIMAL                         | DECIMAL(38,5)<br />Alias: Decimal | BIGNUMERIC(38, 5)<br />Alias: BigNumeric |
-| NUMERIC                         | DECIMAL(38,5)<br />Alias: Decimal | BIGNUMERIC(38, 5)<br />Alias: BigNumeric |
-| CHAR                            | STRING<br />Alias: String         | STRING<br />Alias: String                |
-| VARCHAR                         | STRING<br />Alias: String         | STRING<br />Alias: String                |
-| VARCHAR2                        | STRING<br />Alias: String         | STRING<br />Alias: String                |
-| NCHAR                           | STRING<br />Alias: String         | STRING<br />Alias: String                |
-| NVARCHAR2                       | STRING<br />Alias: String         | STRING<br />Alias: String                |
-| LONG                            | STRING<br />Alias: String         | STRING<br />Alias: String                |
-| CLOB                            | STRING<br />Alias: String         | STRING<br />Alias: String                |
-| NCLOB                           | STRING<br />Alias: String         | STRING<br />Alias: String                |
-| BLOB                            | BINARY<br />Alias: Binary         | BYTES<br />Alias: Bytes                  |
-| DATE                            | TIMESTAMP<br />Alias: Timestamp   | TIMESTAMP<br />Alias: Timestamp          |
-| TIMESTAMP                       | TIMESTAMP<br />Alias: Timestamp   | TIMESTAMP<br />Alias: Timestamp          |
-| TIMESTAMP WITH TIME ZONE        | TIMESTAMP<br />Alias: Timestamp   | TIMESTAMP<br />Alias: Timestamp          |
-| TIMESTAMP WITH LOCAL TIME ZONE  | TIMESTAMP<br />Alias: Timestamp   | TIMESTAMP<br />Alias: Timestamp          |
-| INTERVAL YEAR TO MONTH          | STRING<br />Alias: String         | STRING<br />Alias: String                |
-| INTERVAL DAY TO SECOND          | STRING<br />Alias: String         | STRING<br />Alias: String                |
-| RAW                             | BINARY<br />Alias: Binary         | BYTES<br />Alias: Bytes                  |
-| LONG RAW                        | BINARY<br />Alias: Binary         | BYTES<br />Alias: Bytes                  |
-| XMLType                         | STRING<br />Alias: String         | STRING<br />Alias: String                |
-| BOOLEAN                         | BOOLEAN<br />Alias: Boolean       | BOOL<br />Alias: Boolean                 |
-| URIType                         | STRING<br />Alias: String         | STRING<br />Alias: String                |
-| DBURIType                       | STRING<br />Alias: String         | STRING<br />Alias: String                |
-| XDBURIType                      | STRING<br />Alias: String         | STRING<br />Alias: String                |
-| HTTPURIType                     | STRING<br />Alias: String         | STRING<br />Alias: String                |
-| LongVarChar                     | STRING<br />Alias: String         | STRING<br />Alias: String                |
-| LongRaw                         | BINARY<br />Alias: Binary         | BYTES<br />Alias: Bytes                  |
+| Oracle                          | Databricks                          | BigQuery                                   | Snowflake                           |
+| ------------------------------- | ----------------------------------- | ------------------------------------------ | ----------------------------------- |
+| NUMBER                          | `decimal(38,5)`<br />Alias: Decimal | `bignumeric(38,5)`<br />Alias: BigNumeric  | `number(38,10)`<br />Alias: Number  |
+| SMALLINT / INTEGER / NUMBER(38) | `bigint`<br />Alias: Bigint         | `int64`<br />Alias: Integer                | `number`<br />Alias: Number         |
+| FLOAT                           | `double`<br />Alias: Double         | `float64`<br />Alias: Float                | `float`<br />Alias: Float           |
+| REAL / FLOAT(63)                | `double`<br />Alias: Double         | `float64`<br />Alias: Float                | `float`<br />Alias: Float           |
+| DOUBLE PRECISION / FLOAT(126)   | `double`<br />Alias: Double         | `float64`<br />Alias: Float                | `float`<br />Alias: Float           |
+| BINARY_FLOAT                    | `double`<br />Alias: Double         | `float64`<br />Alias: Float                | `float`<br />Alias: Float           |
+| BINARY_DOUBLE                   | `double`<br />Alias: Double         | `float64`<br />Alias: Float                | `float`<br />Alias: Float           |
+| DECIMAL                         | `decimal(38,5)`<br />Alias: Decimal | `bignumeric(38,5)`<br />Alias: BigNumeric  | `number(38,10)`<br />Alias: Number  |
+| NUMERIC                         | `decimal(38,5)`<br />Alias: Decimal | `bignumeric(38,5)`<br />Alias: BigNumeric  | `number(38,10)`<br />Alias: Number  |
+| CHAR                            | `string`<br />Alias: String         | `string`<br />Alias: String                | `string`<br />Alias: String         |
+| VARCHAR                         | `string`<br />Alias: String         | `string`<br />Alias: String                | `string`<br />Alias: String         |
+| VARCHAR2                        | `string`<br />Alias: String         | `string`<br />Alias: String                | `string`<br />Alias: String         |
+| NCHAR                           | `string`<br />Alias: String         | `string`<br />Alias: String                | `string`<br />Alias: String         |
+| NVARCHAR2                       | `string`<br />Alias: String         | `string`<br />Alias: String                | `string`<br />Alias: String         |
+| LONG                            | `string`<br />Alias: String         | `string`<br />Alias: String                | `string`<br />Alias: String         |
+| CLOB                            | `string`<br />Alias: String         | `string`<br />Alias: String                | `string`<br />Alias: String         |
+| NCLOB                           | `string`<br />Alias: String         | `string`<br />Alias: String                | `string`<br />Alias: String         |
+| BLOB                            | `binary`<br />Alias: Binary         | `bytes`<br />Alias: Bytes                  | `binary`<br />Alias: Binary         |
+| DATE                            | `timestamp`<br />Alias: Timestamp   | `timestamp`<br />Alias: Timestamp          | `timestamp`<br />Alias: Timestamp   |
+| TIMESTAMP                       | `timestamp`<br />Alias: Timestamp   | `timestamp`<br />Alias: Timestamp          | `timestamp`<br />Alias: Timestamp   |
+| TIMESTAMP WITH TIME ZONE        | `timestamp`<br />Alias: Timestamp   | `timestamp`<br />Alias: Timestamp          | `timestamp`<br />Alias: Timestamp   |
+| TIMESTAMP WITH LOCAL TIME ZONE  | `timestamp`<br />Alias: Timestamp   | `timestamp`<br />Alias: Timestamp          | `timestamp`<br />Alias: Timestamp   |
+| INTERVAL YEAR TO MONTH          | `string`<br />Alias: String         | `string`<br />Alias: String                | `string`<br />Alias: String         |
+| INTERVAL DAY TO SECOND          | `string`<br />Alias: String         | `string`<br />Alias: String                | `string`<br />Alias: String         |
+| RAW                             | `binary`<br />Alias: Binary         | `bytes`<br />Alias: Bytes                  | `binary`<br />Alias: Binary         |
+| LONG RAW                        | `binary`<br />Alias: Binary         | `bytes`<br />Alias: Bytes                  | `binary`<br />Alias: Binary         |
+| XMLType                         | `string`<br />Alias: String         | `string`<br />Alias: String                | `string`<br />Alias: String         |
+| BOOLEAN                         | `boolean`<br />Alias: Boolean       | `bool`<br />Alias: Boolean                 | `boolean`<br />Alias: Boolean       |
+| URIType                         | `string`<br />Alias: String         | `string`<br />Alias: String                | `string`<br />Alias: String         |
+| DBURIType                       | `string`<br />Alias: String         | `string`<br />Alias: String                | `string`<br />Alias: String         |
+| XDBURIType                      | `string`<br />Alias: String         | `string`<br />Alias: String                | `string`<br />Alias: String         |
+| HTTPURIType                     | `string`<br />Alias: String         | `string`<br />Alias: String                | `string`<br />Alias: String         |
+| LongVarChar                     | `string`<br />Alias: String         | `string`<br />Alias: String                | `string`<br />Alias: String         |
+| LongRaw                         | `binary`<br />Alias: Binary         | `bytes`<br />Alias: Bytes                  | `binary`<br />Alias: Binary         |
 
-<Info>Learn more in [Supported data types](/data-analysis/gems/data-types).</Info>
+<Info>
+
+For Oracle `number` types with explicit precision and scale, Prophecy preserves those values when mapping to Snowflake. For example, Oracle `number(10,2)` maps to Snowflake `number(10,2)`.
+
+</Info>
+
+<Info>
+
+Learn more in [Supported data types](/data-analysis/gems/data-types).
+
+</Info>
 
 ## Sharing connections within teams
 
 Connections in Prophecy are stored within [fabrics](/data-analysis/environment/fabrics/prophecy-fabrics), which are assigned to specific teams. Once an Oracle connection is added to a fabric, all team members who have access to the fabric can use the connection in their projects. No additional authentication is required—team members automatically inherit the access and permissions of the stored connection credentials.
 
 <Warning>
+
 Be mindful of the access level granted by the stored credentials. Anyone on the team will have the same permissions—including access to sensitive data if allowed.
 
 To manage this securely, consider creating a dedicated fabric and team for high-sensitivity connections. This way, only approved users have access to those credentials.
