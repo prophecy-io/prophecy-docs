@@ -21,6 +21,11 @@ You can now migrate Alteryx workflows to Snowflake SQL using a Snowflake fabric.
 
 Connection parameters are validated against the current fabric and restricted to compatible connection types. For example, an S3 Source gem only allows S3 connection parameters. Diagnostics are displayed if the referenced connection is missing or has a different type in the active fabric.
 
+## SQL Shell
+
+SQL Pipelines and Analyses/Apps now support a [SQL Shell](/data-analysis/development/studio/sql-shell), an interactive query interface available from the **...** menu in the SQL IDE. The SQL Shell opens as a separate tab alongside pipeline or analysis tabs and lets you run ad-hoc SQL queries directly against the warehouse configured for the current [project fabric](/data-analysis/environment/fabrics/prophecy-fabrics). The shell includes a Monaco SQL editor with syntax highlighting and auto-completion, live query execution output, paginated query results, query history, and Run and Cancel controls.
+
+
 </Update>
 
 <Update label="Prophecy 4.2.7" description="April 14, 2026" tags={["Data Analysis"]}>
