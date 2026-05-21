@@ -109,6 +109,7 @@
                         "group": "Studio",
                         "pages": [
                           "data-analysis/development/studio/studio",
+                          "data-analysis/development/studio/sql-shell",
                           "data-analysis/development/studio/folders",
                           "data-analysis/development/studio/canvas-annotations",
                           "data-analysis/development/studio/containers",
