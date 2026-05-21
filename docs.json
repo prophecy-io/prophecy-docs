@@ -268,7 +268,13 @@
                           "data-analysis/production/scheduling/pipeline-trigger-gem"
                         ]
                       },
-                      "data-analysis/production/publication",
+                       {
+                        "group": "Publishing",
+                        "pages": [
+                          "data-analysis/production/publication/publication-concepts",
+                          "data-analysis/production/publication/publish-project"
+                        ]
+                      },
                       "data-analysis/production/monitoring"
                     ]
                   },
@@ -1600,6 +1606,10 @@
     {
       "source": "/import-tool/alteryx/alteryx-to-databricks-sql/databricks-functions-mappings",
       "destination": "/import-tool/alteryx/alteryx-to-prophecy-sql/function-mapping"
+    },
+    {
+      "source": "/data-analysis/production/publication",
+      "destination": "/data-analysis/production/publication/publication-concepts"
     }
   ]
 }

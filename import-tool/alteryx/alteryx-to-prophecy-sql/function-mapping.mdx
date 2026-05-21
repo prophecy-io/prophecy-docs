@@ -3,13 +3,13 @@ title: Alteryx function mapping
 description: List of supported Alteryx functions and how they map to Prophecy SQL
 ---
 
-While importing Alteryx workflows to Prophecy pipelines, Prophecy converts Alteryx functions into equivalent SQL functions for Databricks or BigQuery. The SQL dialect used in imported pipelines is determined by the target platform you select during import. If you import into Databricks, Prophecy generates Databricks SQL. If you import into BigQuery, it generates BigQuery SQL.
+While importing Alteryx workflows to Prophecy pipelines, Prophecy converts Alteryx functions into equivalent SQL functions. The SQL dialect used in imported pipelines is determined by the target platform you select during import (Databricks, BigQuery, or Snowflake).
 
-The following tables list all the Alteryx functions that Prophecy supports and their corresponding SQL functions. If a table does not specify Databricks or BigQuery, functionality is equivalent for both dialects.
+The following tables list all the Alteryx functions that Prophecy supports and their corresponding SQL functions. If a table does not specify Databricks, BigQuery, or Snowflake, functionality is equivalent for all three dialects.
 
 ## Conditional
 
-When you import conditional Alteryx functions into Prophecy, the logic of your formulas stays the same, but the syntax changes, because SQL engines such as Databricks SQL and BigQuery use `case` expressions instead of `IF/IIF/Switch`. Prophecy's import makes these conversions for you.
+When you import conditional Alteryx functions into Prophecy, the logic of your formulas stays the same, but the syntax changes, because SQL engines use `case` expressions instead of `IF/IIF/Switch`. Prophecy's import makes these conversions for you.
 
 When reading or debugging generated SQL, you should recognize the `case` functions below as the SQL equivalent of Alteryx's conditional functions.
 
@@ -22,51 +22,154 @@ When reading or debugging generated SQL, you should recognize the `case` functio
 
 ## Conversions
 
-Alteryx provides many specialized conversion functions. SQL engines such as Databricks SQL and BigQuery rely on general-purpose functions like `CAST`, encoding/decoding functions, and numeric conversions.
+Alteryx provides many specialized conversion functions. SQL engines rely on general-purpose casting, encoding and decoding functions, and numeric conversion functions.
 
-- BigQuery provides safer casting via `SAFE_CAST`, which returns NULL instead of failing.
-- Databricks: `conv()` handles many cases, but there is no equivalent in BigQuery.
+- BigQuery provides safer casting via `safe_cast`, which returns `null` instead of failing.
+- Snowflake provides error-handling conversion functions such as `try_cast` and `try_to_number`, which return `null` when conversion fails.
+- Databricks SQL supports `conv()` for base conversions, but BigQuery and Snowflake do not have the same general-purpose base conversion function.
 
-| Alteryx Function      | Databricks SQL                   | BigQuery                  | Notes                                                        |
-| --------------------- | -------------------------------- | ------------------------- | ------------------------------------------------------------ |
-| `BinToInt`            | `conv(expr, from_base, to_base)` | No direct equivalent      | BigQuery does not have a general base conversion function like `conv`. Requires custom logic or UDF. |
-| `CharFromInt`         | `char()`                         | `chr()`                   | Function names differ slightly.                              |
-| `CharToInt`           | `ascii()`                        | `ascii()`                 | Same behavior across engines.                                |
-| `ConvertFromCodePage` | `convertFromCodePage()`          | No direct equivalent      | BigQuery does not expose code page conversion functions.     |
-| `HexToNumber`         | `conv()`                         | No direct equivalent      | Requires manual parsing or UDF in BigQuery.                  |
-| `IntToBin`            | `bin()`                          | No direct equivalent      | BigQuery lacks built-in binary string conversion.            |
-| `IntToHex`            | `conv()`                         | `to_hex()`                | BigQuery supports hex conversion via `to_hex()`.             |
-| `ToDegrees`           | `degrees()`                      | `degrees()`               | Exact mapping.                                               |
-| `ToNumber`            | `regexp_extract()`               | `SAFE_CAST()` or `CAST()` | BigQuery supports direct casting; `SAFE_CAST` avoids runtime errors. |
-| `ToRadians`           | `radians()`                      | `radians()`               | Exact mapping.                                               |
-| `ToString`            | `CAST(col AS STRING)`            | `CAST(col AS STRING)`     | Same syntax across engines.                                  |
+<Tabs>
+<Tab title="Databricks SQL">
+
+| Alteryx Function | Equivalent SQL Function | Notes |
+| ---------------- | ------------ | ----- |
+| `BinToInt` | `conv(expr, from_base, to_base)` | Databricks uses `conv` for base conversions. |
+| `CharFromInt` | `char()` | `char` is equivalent to `CharFromInt` in Alteryx. |
+| `CharToInt` | `ascii()` | `ascii` is equivalent to `CharToInt` in Alteryx. |
+| `ConvertFromCodePage` | `convertFromCodePage()` | Functions are equivalent; note slightly different case in SQL function name. |
+| `HexToNumber` | `conv()` | Databricks uses `conv` for base conversions. |
+| `IntToBin` | `bin()` | Databricks uses `bin` for binary conversions. |
+| `IntToHex` | `conv()` | Databricks uses `conv` for base conversions. |
+| `ToDegrees` | `degrees()` | Exact mapping. |
+| `ToNumber` | `regexp_extract()` | In Databricks, `ToNumber` is approximated with `regexp_extract`. This extracts numeric substrings. |
+| `ToRadians` | `radians()` | Exact mapping. |
+| `ToString` | `cast(col as string)` | Converts to a string. |
+
+</Tab>
+<Tab title="BigQuery">
+
+| Alteryx Function | Equivalent SQL Function | Notes |
+| ---------------- | ------------ | ----- |
+| `BinToInt` | No direct equivalent | BigQuery does not have a general base conversion function like `conv`. Requires custom logic or UDF. |
+| `CharFromInt` | `chr()` | Function name differs from Databricks SQL. |
+| `CharToInt` | `ascii()` | Same mapping as Databricks SQL. |
+| `ConvertFromCodePage` | No direct equivalent | BigQuery does not expose code page conversion functions. |
+| `HexToNumber` | No direct equivalent | Requires manual parsing or UDF in BigQuery. |
+| `IntToBin` | No direct equivalent | BigQuery lacks built-in binary string conversion. |
+| `IntToHex` | `to_hex()` | BigQuery supports hex conversion via `to_hex()`. |
+| `ToDegrees` | `degrees()` | Exact mapping. |
+| `ToNumber` | `safe_cast()` or `cast()` | `safe_cast` avoids runtime errors by returning `null` when conversion fails. |
+| `ToRadians` | `radians()` | Exact mapping. |
+| `ToString` | `cast(col as string)` | Converts to a string. |
+
+</Tab>
+
+<Tab title="Snowflake">
+
+| Alteryx Function | Equivalent SQL Function | Notes |
+| ---------------- | ------------ | ----- |
+| `BinToInt` | No direct equivalent | Snowflake does not appear to provide a general-purpose `conv(expr, from_base, to_base)` equivalent. Requires custom logic or UDF. |
+| `CharFromInt` | `chr()` or `char()` | Snowflake supports `chr`/`char` for returning a character from a Unicode code point. |
+| `CharToInt` | `ascii()` | Returns the numeric value of the first character in a string. |
+| `ConvertFromCodePage` | No direct equivalent | Confirm whether Import supports this conversion for Snowflake or requires external processing. |
+| `HexToNumber` | No direct equivalent | Snowflake has hex encoding/decoding functions, but numeric base conversion may require custom logic or UDF. |
+| `IntToBin` | No direct equivalent | Confirm whether Import generates custom logic for binary string conversion. |
+| `IntToHex` | `hex_encode()` | Exact mapping. |
+| `ToDegrees` | `degrees()` | Exact mapping. |
+| `ToNumber` | `try_cast(... as float)` | Import uses `try_cast` so invalid numeric conversions return `null` instead of failing. |
+| `ToString` | `format_number(...)` or `regexp_replace(...)` | Generated SQL varies depending on the formatting or cleanup behavior required by the original Alteryx expression. |
+| `ToRadians` | `radians()` | Exact mapping. |
+| `ToString` | `format_number(...)` or `regexp_replace(...)` | Generated SQL varies depending on the formatting or cleanup behavior required by the original Alteryx expression. |
+
+</Tab>
+</Tabs>
 
 ## DateTime
 
-Alteryx provides many specialized datetime functions. The SQL mapping depends on the target engine. Databricks SQL and BigQuery both support broad datetime functionality, but they differ in function names, return types, and how they handle truncation, parsing, and time zones.
+Alteryx provides many specialized datetime functions. The SQL mapping depends on the target engine. Databricks SQL, BigQuery, and Snowflake all support broad datetime functionality, but they differ in function names, argument order, return types, format patterns, and time zone behavior.
 
-| Alteryx Function       | Databricks SQL                                        | BigQuery                                                     | Notes                                                        |
-| ---------------------- | ----------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| `DateTimeAdd`          | `date_add()` or `ts + INTERVAL ...` or `add_months()` | `DATETIME_ADD(datetime_expression, INTERVAL int64_expression part)` | BigQuery directly supports `DATETIME_ADD` across units including `MICROSECOND` through `YEAR`. Databricks often requires different functions depending on the unit. |
-| `DateTimeDay`          | `day()`                                               | `EXTRACT(DAY FROM datetime_expression)`                      | BigQuery uses `EXTRACT` for datetime parts.                  |
-| `DateTimeDiff`         | `datediff()`                                          | `DATETIME_DIFF(end_datetime, start_datetime, part)`          | BigQuery supports multiple parts and counts boundaries; week behavior can vary depending on `WEEK`, `WEEK(MONDAY)`, or `ISOWEEK`. |
-| `DateTimeFirstOfMonth` | `date_trunc()`                                        | `DATETIME_TRUNC(datetime_value, MONTH)`                      | In BigQuery, truncation is done with `DATETIME_TRUNC`.       |
-| `DateTimeFormat`       | `date_format(ts, 'pattern')`                          | `FORMAT_DATETIME(format_string, datetime_expr)`              | BigQuery uses its own format element syntax.                 |
-| `DateTimeHour`         | `hour()`                                              | `EXTRACT(HOUR FROM datetime_expression)`                     | BigQuery uses `EXTRACT`.                                     |
-| `DateTimeLastOfMonth`  | `last_day()`                                          | `LAST_DAY(datetime[, MONTH])`                                | In BigQuery, `LAST_DAY` returns a `DATE`, not a `DATETIME`.  |
-| `DateTimeMinutes`      | `minute()`                                            | `EXTRACT(MINUTE FROM datetime_expression)`                   | BigQuery uses `EXTRACT`.                                     |
-| `DateTimeMonth`        | `month()`                                             | `EXTRACT(MONTH FROM datetime_expression)`                    | BigQuery uses `EXTRACT`.                                     |
-| `DateTimeNow`          | `current_timestamp()`                                 | `CURRENT_DATETIME([time_zone])`                              | Use `CURRENT_DATETIME` when the target result should stay a `DATETIME`. BigQuery supports an optional time zone argument. |
-| `DateTimeNowPrecise`   | `current_timestamp()`                                 | `CURRENT_DATETIME([time_zone])`                              | BigQuery `DATETIME` includes fractional seconds in the returned value, but this is still a `DATETIME`, not a timestamp. |
-| `DateTimeParse`        | `to_date()` or `to_timestamp()`                       | `PARSE_DATETIME(format_string, datetime_string)`             | BigQuery has a direct parser for `DATETIME`; format string positions must match the input string. |
-| `DateTimeQuarter`      | `quarter()`                                           | `EXTRACT(QUARTER FROM datetime_expression)`                  | BigQuery uses `EXTRACT`.                                     |
-| `DateTimeSeconds`      | `second()`                                            | `EXTRACT(SECOND FROM datetime_expression)`                   | BigQuery uses `EXTRACT`.                                     |
-| `DateTimeToday`        | `current_date()`                                      | `CURRENT_DATE()`                                             |                                                              |
-| `DateTimeToUTC`        | `to_utc_timestamp(ts, tz)`                            |                                                              |                                                              |
-| `DateTimeTrim`         | `date_trunc()`                                        | `DATETIME_TRUNC(datetime_value, granularity)`                | BigQuery supports truncation to date and time granularities. ([Google Cloud Documentation](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions)) |
-| `DateTimeYear`         | `year()`                                              | `EXTRACT(YEAR FROM datetime_expression)`                     | BigQuery uses `EXTRACT`.                                     |
-| `ToDate`               | `to_date()`                                           | `EXTRACT(DATE FROM datetime_expression)` or `DATE(datetime_expression)` |                                                              |
-| `ToDateTime`           | `to_timestamp()`                                      | `PARSE_TIMESTAMP(format, timestamp_string)`                  |                                                              |
+<Tabs>
+  <Tab title="Databricks SQL">
+
+| Alteryx Function | Equivalent SQL Function | Notes |
+| ---------------- | ------------ | ----- |
+| `DateTimeAdd` | `date_add()` or `ts + interval ...` or `add_months()` | `date_add` only adds days. For other units, use interval expressions or `add_months()` depending on the unit. |
+| `DateTimeDay` | `day()` | Exact mapping. |
+| `DateTimeDiff` | `datediff()` | Returns date differences. For finer units, use timestamp or interval expressions. |
+| `DateTimeFirstOfMonth` | `date_trunc()` | Exact mapping. |
+| `DateTimeFormat` | `date_format(ts, 'pattern')` | Formats date or timestamp values as strings. |
+| `DateTimeHour` | `hour()` | Exact mapping. |
+| `DateTimeLastOfMonth` | `last_day()` | Exact mapping. |
+| `DateTimeMinutes` | `minute()` | Exact mapping. |
+| `DateTimeMonth` | `month()` | Exact mapping. |
+| `DateTimeNow` | `current_timestamp()` | Exact mapping. |
+| `DateTimeNowPrecise` | `current_timestamp()` | Exact mapping. |
+| `DateTimeParse` | `to_date()` or `to_timestamp()` | Use `to_timestamp()` when the parsed value needs to retain time information. |
+| `DateTimeQuarter` | `quarter()` | Exact mapping. |
+| `DateTimeSeconds` | `second()` | Exact mapping. |
+| `DateTimeToday` | `current_date()` | Exact mapping. |
+| `DateTimeToUTC` | `to_utc_timestamp(ts, tz)` | Converts a timestamp from the specified time zone to UTC. |
+| `DateTimeTrim` | `date_trunc()` | Exact mapping. |
+| `DateTimeYear` | `year()` | Exact mapping. |
+| `ToDate` | `to_date()` | Converts to a date. |
+| `ToDateTime` | `to_timestamp()` | Outputs a SQL timestamp. |
+
+  </Tab>
+<Tab title="BigQuery">
+
+| Alteryx Function | Equivalent SQL Function | Notes |
+| ---------------- | ------------ | ----- |
+| `DateTimeAdd` | `datetime_add(datetime_expression, interval int64_expression part)` | BigQuery supports `DATETIME_ADD` across units including `MICROSECOND` through `YEAR`. |
+| `DateTimeDay` | `extract(day from datetime_expression)` | BigQuery uses `EXTRACT` for datetime parts. |
+| `DateTimeDiff` | `datetime_diff(end_datetime, start_datetime, part)` | BigQuery counts part boundaries. week behavior can vary depending on `week`, `week(monday)`, or `isoweek`. |
+| `DateTimeFirstOfMonth` | `datetime_trunc(datetime_value, month)` | Truncates the datetime value to the beginning of the month. |
+| `DateTimeFormat` | `format_datetime(format_string, datetime_expr)` | BigQuery uses its own format element syntax. |
+| `DateTimeHour` | `extract(hour from datetime_expression)` | BigQuery uses `extract`. |
+| `DateTimeLastOfMonth` | `last_day(datetime[, month])` | `last_day` returns a `date`, not a `datetime`. |
+| `DateTimeMinutes` | `extract(minute from datetime_expression)` | BigQuery uses `extract`. |
+| `DateTimeMonth` | `extract(month from datetime_expression)` | BigQuery uses `extract`. |
+| `DateTimeNow` | `current_datetime([time_zone])` | Use `current_datetime` when the result should stay a `datetime`. |
+| `DateTimeNowPrecise` | `current_datetime([time_zone])` | BigQuery `datetime` includes fractional seconds, but is still not a timestamp. |
+| `DateTimeParse` | `parse_datetime(format_string, datetime_string)` | Format string positions must match the input string. |
+| `DateTimeQuarter` | `extract(quarter from datetime_expression)` | BigQuery uses `extract`. |
+| `DateTimeSeconds` | `extract(second from datetime_expression)` | BigQuery uses `extract`. |
+| `DateTimeToday` | `current_date()` | Exact mapping. |
+| `DateTimeToUTC` |  | Confirm separately against BigQuery timestamp/time zone behavior. |
+| `DateTimeTrim` | `datetime_trunc(datetime_value, granularity)` | Supports truncation to date and time granularities. |
+| `DateTimeYear` | `extract(year from datetime_expression)` | BigQuery uses `extract`. |
+| `ToDate` | `extract(date from datetime_expression)` or `date(datetime_expression)` | Converts or extracts the date portion. |
+| `ToDateTime` | `parse_timestamp(format, timestamp_string)` | Use when parsing a string into a timestamp value. |
+
+</Tab>
+
+<Tab title="Snowflake">
+
+| Alteryx Function | Equivalent SQL Function | Notes |
+| ---------------- | ------------ | ----- |
+| `DateTimeAdd` | `dateadd(part, value, date_or_time_expr)` | Snowflake uses `dateadd` with the date/time part first, followed by the amount and expression. |
+| `DateTimeDay` | `day()` or `date_part('day', expr)` | Use `date_part` when you want a consistent extraction pattern across parts. |
+| `DateTimeDiff` | `datediff(part, start_expr, end_expr)` | Snowflake returns the difference for the specified part by subtracting the second argument from the third. |
+| `DateTimeFirstOfMonth` | `date_trunc('month', expr)` | Truncates to the first day of the month. |
+| `DateTimeFormat` | `to_char(expr, format)` | Use `to_char` to format date, time, or timestamp values as strings. |
+| `DateTimeHour` | `hour()` or `date_part('hour', expr)` | Exact extraction mapping. |
+| `DateTimeLastOfMonth` | `last_day(expr, 'month')` | Returns the last day of the month. |
+| `DateTimeMinutes` | `minute()` or `date_part('minute', expr)` | Exact extraction mapping. |
+| `DateTimeMonth` | `month()` or `date_part('month', expr)` | Exact extraction mapping. |
+| `DateTimeNow` | `current_timestamp()` | Returns the current timestamp. |
+| `DateTimeNowPrecise` | `current_timestamp()` | Confirm whether imported Snowflake SQL needs a specific precision or timestamp variant. |
+| `DateTimeParse` | `to_timestamp()` | Converts string input into a Snowflake timestamp value. |
+| `DateTimeQuarter` | `quarter()` or `date_part('quarter', expr)` | Exact extraction mapping. |
+| `DateTimeSeconds` | `second()` or `date_part('second', expr)` | Exact extraction mapping. |
+| `DateTimeToday` | `current_date()` | Exact mapping. |
+| `DateTimeToUTC` | `CONVERT_TIMEZONE('UTC', ts)` | Converts the timestamp value to UTC. |
+| `DateTimeTrim` | `date_trunc(part, expr)` | Snowflake truncates `DATE`, `TIME`, or `TIMESTAMP` values to the specified precision. |
+| `DateTimeYear` | `year()` or `date_part('year', expr)` | Exact extraction mapping. |
+| `ToDate` | `to_date()` | Converts to a date. Time information is discarded when converting timestamp values to date. |
+| `ToDateTime` | `to_timestamp()` | Outputs a Snowflake timestamp value. |
+
+</Tab>
+</Tabs>
+
 ## Math
 
 Alteryx offers a large catalog of dedicated math functions, many of which map directly to Databricks SQL. Most Alteryx functions have 1:1 equivalents, with a few cases (random integers, logs) requiring light SQL expressions to reproduce exact behavior.
@@ -117,21 +220,52 @@ Alteryx uses named bitwise functions (such as `BinaryAnd` and `BinaryOr`), while
 
 ## Range and bound functions
 
-There are a number of similarities between how Alteryx and SQL engines in terms of range and bound functions, but also some important differencees:
+Range and bound functions behave similarly across SQL engines, but differences arise in how arrays, ordering, and positional logic are handled.
 
 - `between` works directly; syntax just shifts to SQL form.
 - `Bound` requires an explicit `case` statement.
 - `Max` and `Min` are direct equivalents.
-- `MaxIDX` and `MinIDX` in Alteryx identify the _position_ of a value, but in Databricks SQL you use sorting or window functions (`row_number() over (...)`) to achieve the same result.
+- `MaxIDX` and `MinIDX` in Alteryx identify the _position_ of a value, but SQL engines typically use sorting or window functions (`row_number() over (...)`) to achieve the same result.
 
-| Alteryx Function | Equivalent Databricks SQL Function                           | Equivalent BigQuery SQL Function                             | Notes                                                        |
-| ---------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| `Between`        | `between()`                                                  | `between`                                                    | In Alteryx, `Between([x], 10, 20)`; in SQL, `x between 10 and 20`. |
-| `Bound`          | `case when x < min then min when x > max then max else x end` | `case when x < min then min when x > max then max else x end` | BigQuery, like Databricks SQL, has no single `bound` function; use a `case` expression to clamp the value inside a range. |
-| `Max`            | `max()`                                                      | `max()`                                                      | Exact mapping. BigQuery ignores nulls by default.    |
-| `MaxIDX`         | `array_max()`                                                | `array_max()`                                                | In both engines, this applies to arrays rather than datasets. To find the row containing the max value, use `order by ... desc limit 1` or a window function. |
-| `Min`            | `min()`                                                      | `min()`                                                      | Exact mapping. In BigQuery, nulls are ignored by default.    |
-| `MinIDX`         | `array_min()`                                                | `array_min()`                                                | Like `MaxIDX`, this applies to arrays rather than datasets. To find the row with the minimum value, use `order by ... asc limit 1` or a window function. |
+<Tabs>
+<Tab title="Databricks SQL">
+
+| Alteryx Function | Equivalent SQL Function | Notes |
+| ---------------- | ------------ | ----- |
+| `Between` | `between()` | In Alteryx, `Between([x], 10, 20)`; in SQL, `x between 10 and 20`. |
+| `Bound` | `case when x < min then min when x > max then max else x end` | Databricks SQL has no single `bound` function; use a `case` expression to clamp the value inside a range. |
+| `Max` | `max()` | Exact mapping. Nulls are ignored by default. |
+| `MaxIDX` | `array_max()` | Applies to arrays rather than datasets. To find the row containing the max value, use `order by ... desc limit 1` or a window function. |
+| `Min` | `min()` | Exact mapping. Nulls are ignored by default. |
+| `MinIDX` | `array_min()` | Like `array_max()`, this applies to arrays. To find the row with the minimum value, use `order by ... asc limit 1`. |
+
+</Tab>
+<Tab title="BigQuery">
+
+| Alteryx Function | Equivalent SQL Function | Notes |
+| ---------------- | ------------ | ----- |
+| `Between` | `between` | In Alteryx, `Between([x], 10, 20)`; in SQL, `x between 10 and 20`. |
+| `Bound` | `case when x < min then min when x > max then max else x end` | BigQuery has no single `bound` function; use a `case` expression to clamp the value inside a range. |
+| `Max` | `max()` | Exact mapping. BigQuery ignores nulls by default. |
+| `MaxIDX` | `array_max()` | Applies to arrays rather than datasets. To find the row containing the max value, use `order by ... desc limit 1` or a window function. |
+| `Min` | `min()` | Exact mapping. BigQuery ignores nulls by default. |
+| `MinIDX` | `array_min()` | Like `MaxIDX`, this applies to arrays rather than datasets. To find the row with the minimum value, use `order by ... asc limit 1` or a window function. |
+
+</Tab>
+
+<Tab title="Snowflake">
+
+| Alteryx Function | Equivalent SQL Function | Notes |
+| ---------------- | ------------ | ----- |
+| `Between` | `between` | In Alteryx, `Between([x], 10, 20)`; in SQL, `x between 10 and 20`. |
+| `Bound` | `case when x < min then min when x > max then max else x end` | Snowflake has no built-in `bound` function; use a `case` expression to clamp values to a range. |
+| `Max` | `max()` | Exact mapping. Snowflake ignores nulls by default. |
+| `MaxIDX` | `array_position(array(a), array_max(array(a))) - 1` | Snowflake preserves Alteryx zero-based positional behavior by subtracting 1 from the returned position. |
+| `Min` | `min()` | Exact mapping. Snowflake ignores nulls by default. |
+| `MinIDX` | `array_position(array(a), array_min(array(a))) - 1` | Snowflake preserves Alteryx zero-based positional behavior by subtracting 1 from the returned position. |
+
+</Tab>
+</Tabs>
 
 ## Operators
 
@@ -139,7 +273,7 @@ There are a number of similarities between how Alteryx and SQL engines in terms 
 | ------------------------------------------------------------------------ | ---------------------------------- | ---------------------------------------------------------- |
 | Block comment                                                            | `/*`<br />`*/`                      | Exact mapping.                                             |
 | Single-line comment                                                      | `--`                               | `//` does not work in SQL.                      |
-| Boolean `AND` or `\&\&`                                                  | `AND`                              | `\&\&` is not supported in SQL. Use `AND`.      |
+| Boolean `AND` or `\&\&`                                                  | `and`                              | `\&\&` is not supported in SQL. Use `AND`.      |
 | Boolean `NOT` or `!`                                                     | `!`                                | `!` is not supported in SQL. Use `NOT`.         |
 | Boolean `OR` or `\|\|`                                                   | `OR`                               | `\|\|` is not supported in SQL. Use `OR`.       |
 | Equality `==`, `=`                                                       | `=`                                | In SQL, equality is expressed as `=`, not `==`. |
@@ -147,67 +281,175 @@ There are a number of similarities between how Alteryx and SQL engines in terms 
 | Greater than, greater than or equal to, less than, less than or equal to | `>`, `>=`, `<`, `<=`               | Exact mapping.                                             |
 | Addition, Subtraction, Multiplication, Division                          | `+`, `-`, `*`, `/`                 | Exact mapping.                                             |
 | Parentheses                                                              | `(` `)`                            | Exact mapping.                                             |
-| `value IN`                                                               | `IN`                               | Exact mapping.                                             |
-| `value NOT IN`                                                           | `NOT IN`                           | Exact mapping.                                             |
+| `value IN`                                                               | `in`                               | Exact mapping.                                             |
+| `value NOT IN`                                                           | `not in`                           | Exact mapping.                                             |
 
 ## Specialized
 
 Specialized functions have similar conceptual mappings across SQL engines, but differences arise in indexing, null handling, and how arrays are processed. These differences are especially important when translating positional logic from Alteryx.
 
-- **Indexing:** Alteryx uses zero-based indices. BigQuery arrays are 0-based (using OFFSET), but Databricks SQL arrays are 1-based.
-
+- **Indexing:** Alteryx uses zero-based indices. BigQuery and Snowflake arrays are 0-based, while Databricks SQL arrays are 1-based.
 - **Null handling:** `NULL()` is a callable function in Alteryx, but a literal in SQL.
-- **TOPNIDX:** In Alteryx it finds the _position_ of the top N value; in SQL you’ll use sorting or `row_number()` to replicate.
+- **TOPNIDX:** In Alteryx it finds the _position_ of the top N value; SQL engines typically use sorting and positional access to replicate this behavior.
 
-| Alteryx Function | Equivalent Databricks SQL Function                    | Equivalent BigQuery SQL Function                             | Notes                                                        |
-| ---------------- | ----------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| `Coalesce`       | `coalesce()`                                          | `coalesce()`                                                 | Exact mapping across engines.                                |
-| `GetVal`         | `element_at()`                                        | `array[...] [offset(index)]`                                 | Alteryx uses 0-based indexing. Databricks SQL arrays are 1-based (`element_at(x, 1)` = first element). BigQuery arrays use 0-based indexing with `offset`, so `getval(x, 0)` → `x[offset(0)]`. |
-| `NULL`           | `coalesce()` or `NULL` literal                                     | `coalesce()` or `NULL` literal                               | For both dialects, `NULL` is a literal (not a function). Use `coalesce()` to replace nulls. |
-| `TOPNIDX`        | `array_sort()`, `element_at()` and `array_position()` | `ARRAY_SORT()`, `ARRAY_REVERSE()`, `OFFSET`, `ARRAY_POSITION()` (or workaround) | No direct equivalent. In BigQuery, you typically sort an array, optionally reverse it for descending order, then use `OFFSET(n-1)` to access the Nth value. Finding position may require `ARRAY_POSITION()` or additional logic. |
-| `UrlEncode`      | `url_encode()`                                        | No direct equivalent.                                       | BigQuery does not have a built-in `url_encode` function; requires UDF or external processing. |
+<Tabs>
+<Tab title="Databricks SQL">
+
+| Alteryx Function | Equivalent SQL Function | Notes |
+| ---------------- | ------------ | ----- |
+| `Coalesce` | `coalesce()` | Alteryx evaluates left-to-right; Databricks SQL follows standard SQL semantics. |
+| `GetVal` | `element_at()` | In Alteryx, `GetVal(list, index)` retrieves the element at a 0-based index. Databricks SQL arrays are 1-based, so `GetVal([x], 0)` corresponds to `element_at(x, 1)`. |
+| `NULL` | `coalesce()` or `NULL` literal | `NULL` is a literal in SQL, not a function. Use `coalesce()` to replace nulls. |
+| `TOPNIDX` | `array_sort()`, `element_at()`, and `array_position()` | No direct equivalent. Use array sorting plus positional lookup to approximate the behavior. For row-level ranking, use `order by` or window functions. |
+| `UrlEncode` | `url_encode()` | Exact mapping. |
+
+</Tab>
+<Tab title="BigQuery">
+
+| Alteryx Function | Equivalent SQL Function | Notes |
+| ---------------- | ------------ | ----- |
+| `Coalesce` | `coalesce()` | Exact mapping. |
+| `GetVal` | `array[offset(index)]` | BigQuery arrays are 0-based using `offset`. `GetVal(x, 0)` becomes `x[offset(0)]`. |
+| `NULL` | `coalesce()` or `null` literal | `null` is a literal in BigQuery SQL. Use `coalesce()` to replace nulls. |
+| `TOPNIDX` | `array_sort()`, `array_reverse()`, `offset`, and `array_position()` | No direct equivalent. In BigQuery, you typically sort the array, optionally reverse it for descending order, then access the value with `offset(n-1)`. |
+| `UrlEncode` | No direct equivalent | BigQuery does not have a built-in `url_encode` function; requires UDF or external processing. |
+
+</Tab>
+
+<Tab title="Snowflake">
+
+| Alteryx Function | Equivalent SQL Function | Notes |
+| ---------------- | ------------ | ----- |
+| `Coalesce` | `coalesce()` | Exact mapping. |
+| `GetVal` | `array(...)[i-1]` | Snowflake array access is adjusted to preserve Alteryx zero-based indexing behavior. |
+| `NULL` | `coalesce()` or `null` literal | `null` is a literal in Snowflake SQL. Use `coalesce()` to replace nulls. |
+| `TOPNIDX` | `array_position(array(a), reverse(array_sort(array(a)))[i+1]) - 1` | Snowflake preserves Alteryx positional semantics by sorting the array, selecting the indexed value, and subtracting 1 from the resulting position. |
+| `UrlEncode` | `url_encode()` | Exact mapping. |
+
+</Tab>
+</Tabs>
 
 ## String
 
 Key differences across SQL engines:
 
-- **Indexing:** Both Databricks SQL and BigQuery use 1-based indexing (Alteryx is 0-based).
-- **Case sensitivity:** Both engines are case-sensitive by default.
+- **Indexing:** Databricks SQL arrays are 1-based, while BigQuery and Snowflake arrays are 0-based. Alteryx uses 0-based indexing.
+- **Case sensitivity:** All three engines are case-sensitive by default unless you normalize with functions such as `lower()` or `upper()`.
 - **Regex behavior:**
   - Databricks: Java regex
-  - BigQuery: RE2 (no backtracking, fewer advanced features)
+  - BigQuery: RE2
+  - Snowflake: POSIX-style regular expressions
 - **Function coverage:** Some Alteryx string functions have no direct equivalent and require workarounds or UDFs.
-- **Substring & trimming:** Similar core functions exist, but syntax and edge-case behavior may differ slightly.
+- **Substring & trimming:** Similar core functions exist across engines, but syntax and edge-case behavior may differ slightly.
 
-| Alteryx                                                   | Databricks SQL                              | BigQuery                                           | Notes                                                        |
-| --------------------------------------------------------- | ------------------------------------------- | --------------------------------------------------- | ------------------------------------------------------------ |
-| `Contains`                                                | `contains()`                                | `STRPOS(col, substring) > 0`                        | Databricks SQL is case-sensitive by default unless you apply `lower()` or `upper()`. BigQuery does not have a `contains()` function; use `STRPOS`. |
-| `CountWords`                                              | `size()` and `split()`                      | `ARRAY_LENGTH(SPLIT(col, ' '))`                     | No direct equivalent in SQL. For Databricks, split the string into tokens and use `size(split(col, ' '))` to count space-delimited words. BigQuery has equivalent functionality but different function names. |
-| `DecomposeUnicodeForMatch`                                | No native equivalent                        | No native equivalent                                | Not implemented in SQL; Unicode normalization would need external processing or Python UDF. |
-| `EndsWith`                                                | `col LIKE '%pattern'`                       | `col LIKE '%pattern'`                               | SQL uses `LIKE`; remember to escape special characters and use `%` wildcards. |
-| `FindNth`                                                 | No native equivalent                        | No native equivalent                                | Requires workaround in both engines.                         |
-| `FindString`                                              | `locate(substring, col)`                    | `STRPOS(col, substring)`                            | `locate(substring, col)` is the Databricks SQL equivalent. It returns the 1-based position of the substring. BigQuery returns 1-based position; 0 if not found. |
-| `GetLeft`/`Left`                                          | `substring(col, 1, n)`                      | `substr(col, 1, n)`                                 | Alteryx’s `Left`/`GetLeft` is 0-based, but SQL substring positions start at 1. Databricks and BigQuery have equivalent functions with slightly different names. |
-| `GetPart`                                                 | `element_at(split(col, ' '), n)`            | `split(col, ' ')[offset(n-1)]`                | Split the string into an array, then use `element_at()` to retrieve the part. SQL arrays are 1-based: `GetPart(col, n)` → `element_at(split(col, ' '), n+1)` if Alteryx’s index is 0-based. |
-| `GetRight`/`Right`                                        | `substring(col, length(col)-n+1, n)`        | `substring(col, length(col)-n+1, n)`                | SQL lacks `RIGHT()` by default; emulate with `substring()`.  |
-| `GetWord`                                                 | `element_at(split(col, ' '), n)`            | `SPLIT(col, ' ')[OFFSET(n-1)]`                      | Split into an array first, then use `element_at()` (1-based indexing). BigQuery arrays are 0-based with `OFFSET`; this is a key difference from Databricks. |
-| `Length`                                                  | `length()`                                  | `length()`                                          | Exact mapping.                                               |
-| `LowerCase`                                               | `lower()`                                   | `lower()`                                           | Exact mapping.                                               |
-| `MD5_ASCII`,`MD5_UNICODE`, `MD5_UTF8`                     | `md5()`                                     | `md5()`                                               | SQL does not distinguish between ASCII, Unicode, or UTF-8 variants in its hash functions. `md5()` is the single equivalent for `md5_ascii`, `md5_unicode`, and `md5_utf8`. |
-| `PadLeft`                                                 | `lpad(col, n, 'char')`                      | `LPAD()`                                            | Exact mapping.                                               |
-| `PadRight`                                                | `rpad(col, n, 'char'`                       | `RPAD()`                                            | Exact mapping.                                               |
-| `REGEX_CountMatches`                                      | `size(split(col, regex)) - 1`               | `ARRAY_LENGTH(REGEXP_EXTRACT_ALL<br/>(col, regex))` | No built-in counter; emulate with `split()` and `size()`. BigQuery has `REGEXP_EXTRACT_ALL`, making this cleaner. |
-| `REGEX_Match`                                             | `regexp_extract(col, regex, 0)`             | `REGEXP_EXTRACT(col, regex)`                        | Databricks extracts substring matching regex; returns empty string if no match. BigQuery uses RE2 syntax; some patterns supported in Databricks may fail. |
-| `REGEX_Replace`, `Replace`, `ReplaceChar`, `ReplaceFirst` | `regexp_replace(col, pattern, replacement)` | `REGEXP_REPLACE(col, pattern, replacement)`         | Use `regexp_replace(col, pattern, replacement)`. Databricks SQL uses one function for all regex and substring replacements; it replaces _all_ matches by default. There is no built-in “replace only the first occurrence” variant without extra logic. BigQuery uses RE2 syntax. |
-| `ReverseString`                                           | `reverse()`                                 | `reverse()`                                         | Exact mapping.                                               |
-| `StartsWith`                                              | `col LIKE 'pattern%'`                       | `col LIKE 'pattern%'`                               | Works with wildcards; case-sensitive by default.             |
-| `STRCSPN`                                                 | No native equivalent.                       | No native equivalent.                               | Not implemented in Databricks SQL; would require custom UDF. |
-| `StripQuotes`                                             | `regexp_replace(col, '["'']', '')`          | `regexp_replace(col, '["'']', '')`                  | Replace quotes with empty string via regex.                  |
-| `STRSPN`                                                  | No native equivalent.                       | No native equivalent.                               | Also unavailable; emulate via regex or Python.               |
-| `Substring`                                               | `substring(col, start, length)`             | `substr(col, start, length)`                        | Positions are 1-based; function name differs (`substr` vs. `substring`). |
-| `TitleCase`                                               | `initcap()`                                 | `initcap()`                                         | Exact mapping.                                               |
-| `Trim`                                                    | `trim(col)`                                 | `TRIM()`                                            | Use `trim()` for both sides.                                 |
-| `TrimLeft`                                                | `ltrim()`                                   | `ltrim()`                                           | Exact mapping.                                               |
-| `TrimRight`                                               | `rtrim()`                                   | `rtrim()`                                           | Exact mapping.                                               |
-| `Uppercase`                                               | `upper()`                                   | `upper()`                                           | Exact mapping.                                               |
-| `UuidCreate`                                              | `uuid()`                                   | `generate_uuid()`                                           | Exact mapping.                                               |
+<Tabs>
+<Tab title="Databricks SQL">
+
+| Alteryx | Equivalent SQL Function | Notes |
+| --- | --- | --- |
+| `Contains` | `contains()` | Databricks SQL is case-sensitive by default unless you apply `lower()` or `upper()`. |
+| `CountWords` | `size(split(col, ' '))` | Split the string into tokens and count the resulting array elements. |
+| `DecomposeUnicodeForMatch` | No native equivalent | Requires external processing or Python UDF. |
+| `EndsWith` | `col like '%pattern'` | SQL uses `LIKE`; remember to escape special characters and use `%` wildcards. |
+| `FindNth` | No native equivalent | Requires workaround logic. |
+| `FindString` | `locate(substring, col)` | Returns the 1-based position of the substring. |
+| `GetLeft` / `Left` | `substring(col, 1, n)` | SQL substring positions start at 1. |
+| `GetPart` | `element_at(split(col, ' '), n)` | Databricks SQL arrays are 1-based. `GetPart(col, n)` → `element_at(split(col, ' '), n+1)` if the Alteryx index is 0-based. |
+| `GetRight` / `Right` | `substring(col, length(col)-n+1, n)` | SQL lacks a built-in `right()` equivalent in some contexts; emulate with `substring()`. |
+| `GetWord` | `element_at(split(col, ' '), n)` | Uses array indexing after `split()`. |
+| `Length` | `length()` | Exact mapping. |
+| `LowerCase` | `lower()` | Exact mapping. |
+| `MD5_ASCII`, `MD5_UNICODE`, `MD5_UTF8` | `md5()` | SQL does not distinguish between encoding-specific MD5 variants. |
+| `PadLeft` | `lpad(col, n, 'char')` | Exact mapping. |
+| `PadRight` | `rpad(col, n, 'char')` | Exact mapping. |
+| `REGEX_CountMatches` | `size(split(col, regex)) - 1` | No built-in counter; emulate with `split()` and `size()`. |
+| `REGEX_Match` | `regexp_extract(col, regex, 0)` | Returns the substring matching the regex pattern. |
+| `REGEX_Replace`, `Replace`, `ReplaceChar`, `ReplaceFirst` | `regexp_replace(col, pattern, replacement)` | Replaces all matches by default. |
+| `ReverseString` | `reverse()` | Exact mapping. |
+| `StartsWith` | `col LIKE 'pattern%'` | Case-sensitive by default. |
+| `STRCSPN` | No native equivalent | Requires custom UDF or workaround logic. |
+| `StripQuotes` | `regexp_replace(col, '["'']', '')` | Removes quotes using regex replacement. |
+| `STRSPN` | No native equivalent | Requires custom logic. |
+| `Substring` | `substring(col, start, length)` | Positions are 1-based. |
+| `TitleCase` | `initcap()` | Exact mapping. |
+| `Trim` | `trim(col)` | Exact mapping. |
+| `TrimLeft` | `ltrim()` | Exact mapping. |
+| `TrimRight` | `rtrim()` | Exact mapping. |
+| `Uppercase` | `upper()` | Exact mapping. |
+| `UuidCreate` | `uuid()` | Exact mapping. |
+
+</Tab>
+<Tab title="BigQuery">
+
+| Alteryx | Equivalent SQL Function | Notes |
+| --- | --- | --- |
+| `Contains` | `strpos(col, substring) > 0` | BigQuery does not provide a `contains()` function. |
+| `CountWords` | `array_length(split(col, ' '))` | Split the string into an array, then count elements. |
+| `DecomposeUnicodeForMatch` | No native equivalent | Requires external processing or UDF. |
+| `EndsWith` | `col like '%pattern'` | Uses standard SQL wildcard syntax. |
+| `FindNth` | No native equivalent | Requires workaround logic. |
+| `FindString` | `strpos(col, substring)` | Returns a 1-based position; returns 0 if not found. |
+| `GetLeft` / `Left` | `substr(col, 1, n)` | Function name differs from Databricks SQL. |
+| `GetPart` | `split(col, ' ')[offset(n-1)]` | BigQuery arrays are 0-based using `offset`. |
+| `GetRight` / `Right` | `substring(col, length(col)-n+1, n)` | Uses substring arithmetic to emulate right-side extraction. |
+| `GetWord` | `split(col, ' ')[offset(n-1)]` | Uses array indexing after `split()`. |
+| `Length` | `length()` | Exact mapping. |
+| `LowerCase` | `lower()` | Exact mapping. |
+| `MD5_ASCII`, `MD5_UNICODE`, `MD5_UTF8` | `md5()` | Uses a single MD5 function for all variants. |
+| `PadLeft` | `lpad()` | Exact mapping. |
+| `PadRight` | `rpad()` | Exact mapping. |
+| `REGEX_CountMatches` | `array_length(regexp_extract_all(col, regex))` | BigQuery supports `regexp_extract_all`. |
+| `REGEX_Match` | `regexp_extract(col, regex)` | Uses RE2 regex syntax. |
+| `REGEX_Replace`, `Replace`, `ReplaceChar`, `ReplaceFirst` | `REGEXP_REPLACE(col, pattern, replacement)` | Uses RE2 regex syntax. |
+| `ReverseString` | `reverse()` | Exact mapping. |
+| `StartsWith` | `col LIKE 'pattern%'` | Case-sensitive by default. |
+| `STRCSPN` | No native equivalent | Requires custom logic or UDF. |
+| `StripQuotes` | `regexp_replace(col, '["'']', '')` | Removes quotes using regex replacement. |
+| `STRSPN` | No native equivalent | Requires custom logic. |
+| `Substring` | `substr(col, start, length)` | Uses `substr` rather than `substring`. |
+| `TitleCase` | `initcap()` | Exact mapping. |
+| `Trim` | `trim()` | Exact mapping. |
+| `TrimLeft` | `ltrim()` | Exact mapping. |
+| `TrimRight` | `rtrim()` | Exact mapping. |
+| `Uppercase` | `upper()` | Exact mapping. |
+| `UuidCreate` | `generate_uuid()` | Generates a UUID string. |
+
+</Tab>
+
+<Tab title="Snowflake">
+
+| Alteryx | Equivalent SQL Function | Notes |
+| --- | --- | --- |
+| `Contains` | `contains(col, substring)` | Exact mapping. |
+| `CountWords` | `array_size(split(col, ' '))` | Split the string into an array, then count elements. |
+| `DecomposeUnicodeForMatch` | No native equivalent | Requires external processing or UDF. |
+| `EndsWith` | `col LIKE '%pattern'` | Uses standard SQL wildcard syntax. |
+| `FindNth` | No native equivalent | Requires workaround logic. |
+| `FindString` | `charindex(needle, haystack) - 1` | Snowflake indexing is adjusted to preserve Alteryx zero-based behavior. |
+| `GetLeft` / `Left` | `substr(col, 1, n)` | Snowflake uses `substr`/`substring`. |
+| `GetPart` | `split_part(s, delim, n)` | Snowflake provides a dedicated split-and-access function. |
+| `GetRight` / `Right` | `substr(col, length(col)-n+1, n)` | Uses substring arithmetic to emulate right-side extraction. |
+| `GetWord` | `split(col, ' ')[n]` | Snowflake arrays are 0-based. Confirm generated syntax for array access. |
+| `Length` | `length()` | Exact mapping. |
+| `LowerCase` | `lower()` | Exact mapping. |
+| `MD5_ASCII`, `MD5_UNICODE`, `MD5_UTF8` | `md5()` | Snowflake uses a single MD5 function for all variants. |
+| `PadLeft` | `lpad()` | Exact mapping. |
+| `PadRight` | `rpad()` | Exact mapping. |
+| `REGEX_CountMatches` | `regexp_count(col, regex)` | Snowflake provides a native regex count function. |
+| `REGEX_Match` | `regexp_like()` or `regexp_substr()` | `regexp_like` is used for boolean matching; `regexp_substr` is used when extracting matched text. |
+| `REGEX_Replace`, `Replace`, `ReplaceChar`, `ReplaceFirst` | `regexp_replace(col, pattern, replacement)` | Snowflake regex behavior differs from both Java regex and RE2. |
+| `ReverseString` | `reverse()` | Exact mapping. |
+| `StartsWith` | `col LIKE 'pattern%'` | Case-sensitive by default. |
+| `STRCSPN` | No native equivalent | Requires custom logic or UDF. |
+| `StripQuotes` | `regexp_replace(col, '["'']', '')` | Removes quotes using regex replacement. |
+| `STRSPN` | No native equivalent | Requires custom logic. |
+| `Substring` | `substr(col, start, length)` | Snowflake supports both `substr` and `substring`. |
+| `TitleCase` | `initcap()` | Exact mapping. |
+| `Trim` | `trim()` | Exact mapping. |
+| `TrimLeft` | `ltrim()` | Exact mapping. |
+| `TrimRight` | `rtrim()` | Exact mapping. |
+| `Uppercase` | `upper()` | Exact mapping. |
+| `UuidCreate` | `UUID_STRING()` | Generates a UUID string. |
+
+</Tab>
+</Tabs>
