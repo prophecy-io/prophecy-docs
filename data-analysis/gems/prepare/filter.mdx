@@ -1,6 +1,6 @@
 ---
 title: Filter gem for Data Analysis
-description: Filter the data
+description: Keep only rows that match a condition
 ---
 
 import Execution from '/snippets/gem-execution-engine.mdx';
@@ -10,22 +10,41 @@ import GemExample from '/snippets/interactive-gem.mdx';
 
 ## Overview
 
-Filters models based on the provided filter condition.
+Use the Filter gem to keep rows that match a condition and remove all other rows from the pipeline.
+
+Common use cases include:
+- filtering active customers
+- removing null values
+- keeping recent records
+- filtering by date ranges
+- selecting high-value transactions
+
+The Filter gem evaluates each row individually and keeps only rows that match the filter condition.
 
 <GemExample gemName="Filter" />
 
 ## Parameters
 
-| Parameter        | Description                                                 | Required |
-| :--------------- | :---------------------------------------------------------- | :------- |
-| Model            | Input Source on which the filter condition will be applied. | True     |
-| Filter Condition | BooleanType column or boolean expression.                   | True     |
+| Parameter | Description | Required |
+| :-- | :-- | :-- |
+| Model | Input dataset to filter. | True |
+| Filter Condition | Boolean expression used to determine which rows are kept. | True |
+
+## Common filter examples
+
+| Goal | Filter condition |
+| :-- | :-- |
+| Keep active customers | `Status = 'ACTIVE'` |
+| Keep high-value orders | `OrderAmount > 1000` |
+| Filter recent orders | `OrderDate >= '2025-01-01'` |
+| Remove null values | `CustomerId IS NOT NULL` |
+| Keep specific countries | `Country IN ('US', 'CA')` |
 
 ## Example
 
 Assume you have the following weather prediction table.
 
-<div class="table-example">
+<div className="table-example">
 
 | DatePrediction | TemperatureCelsius | HumidityPercent | WindSpeed | Condition |
 | -------------- | ------------------ | --------------- | --------- | --------- |
@@ -36,11 +55,15 @@ Assume you have the following weather prediction table.
 
 </div>
 
-### Result
+Using the following filter condition:
 
-The follow table results when you use the following filter condition: `DatePrediction > '2025-03-02'`
+```text
+DatePrediction > '2025-03-02'
+```
 
-<div class="table-example">
+returns:
+
+<div className="table-example">
 
 | DatePrediction | TemperatureCelsius | HumidityPercent | WindSpeed | Condition |
 | -------------- | ------------------ | --------------- | --------- | --------- |
@@ -49,42 +72,101 @@ The follow table results when you use the following filter condition: `DatePredi
 
 </div>
 
-## Filter vs Conditional gem
+## Common issues
+
+### No rows returned
+
+Verify that:
+
+- the filter condition matches the column data type
+- the values exist in the dataset
+- string comparisons use the expected capitalization
+
+### Null values not matching
+
+Comparisons with `NULL` may return unexpected results.
+
+Use:
+- `IS NULL`
+- `IS NOT NULL`
+
+instead of:
+- `= NULL`
+- `!= NULL`
+
+### Date comparisons not working
+
+Ensure date values use the correct format and data type.
+
+## Similar tools and concepts
+
+The Filter gem works similarly to a SQL `WHERE` clause.
+
+For example, this filter condition:
+
+```text
+OrderAmount > 1000
+```
+
+is equivalent to:
+
+```sql
+SELECT *
+FROM Orders
+WHERE OrderAmount > 1000
+```
+
+If you've used SQL before, you can apply similar comparison operators and expressions in the Filter gem.
+
+You may also recognize similar behavior from:
+
+- the Alteryx Filter tool
+- `df.filter()` in PySpark
+- boolean indexing in Pandas
+
+## Filter gem vs Conditional gem
 
 The Filter gem and [the Conditional gem](/data-analysis/gems/custom/condition) both evaluate conditions on a dataset, but they serve different purposes.
 
 ### Key differences
 
-|               | Filter gem                                               | Condition gem                                     |
-| ------------- | -------------------------------------------------------- | --------------------------------------------------- |
-| Purpose       | Reduce data                                              | Route data                                          |
-| Outputs       | One output                                               | Two or more outputs                                 |
-| Behavior      | Keeps rows that match the condition and removes the rest | Sends rows to different outputs based on conditions |
-| Routing       | No routing                                               | Yes (multiple paths)                                |
-| Order matters | No                                                       | Yes (first matching output wins)                    |
-
-### When to use the Filter gem
-
-Use Filter gem when you want to **keep only the rows that match a condition** and remove the rest.
-
-For example, using the condition `OrderAmount > 1000`, the Filter gem returns only the rows where `OrderAmount` is greater than 1000, and removes all other rows from the pipeline.
-
-### When to use the Condition gem
-
-Use the Condition gem when you want to **route rows to different paths** based on conditions.
-
-For example, if `out0` is configured with the condition `OrderAmount > 1000` and `out1` has no condition, then rows where `OrderAmount` is greater than 1000 are routed to `out0`, while all remaining rows are routed to `out1`.
+| | Filter gem | Conditional gem |
+| :-- | :-- | :-- |
+| Purpose | Reduce data | Route data |
+| Outputs | One output | Two or more outputs |
+| Behavior | Keeps rows that match the condition and removes the rest | Sends rows to different outputs based on conditions |
+| Routing | No routing | Yes |
+| Order matters | No | Yes (first matching output wins) |
 
 ### Row-level vs dataset-level behavior
 
-- **Filter gem** always operates at the **row level**
-- **Condition gem** can operate at:
-  - **row level** (e.g., `OrderAmount > 1000`)
-  - **dataset level** (e.g., `Count < threshold`)
+- The Filter gem always operates at the row level.
+- The Conditional gem can operate at:
+  - row level (for example, `OrderAmount > 1000`)
+  - dataset level (for example, `Count < threshold`)
+
+### When to use the Filter gem
+
+Use the Filter gem when you want to:
+- keep only matching rows
+- remove unwanted records
+- reduce the size of a dataset
+- apply filtering logic similar to a SQL `WHERE` clause
+
+### When to use the Conditional gem
+
+Use the Conditional gem when you want to:
+- route rows to different outputs
+- create branching logic
+- split data into multiple paths
+
+For example:
+- rows matching `OrderAmount > 1000` can be routed to `out0`
+- all remaining rows can be routed to `out1`
 
 ### Summary
 
-- **Filter gem** → keeps what matches
-- **Condition gem** → decides where data goes
+- Filter gem → keeps matching rows
+- Conditional gem → routes rows to different outputs
 
-Use the Filter gem for simple filtering. Use the Conditional em when you need branching or control flow in your pipeline.
+Use the Filter gem for simple row filtering. Use the Conditional gem when you need branching or control flow in your pipeline.
