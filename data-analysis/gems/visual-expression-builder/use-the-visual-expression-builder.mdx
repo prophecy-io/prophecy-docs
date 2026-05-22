@@ -13,7 +13,7 @@ Common use cases include:
 - using parameters in expressions
 - creating reusable business logic across pipelines
 
-This page explains common expression patterns you can build with the visual expression builder.
+This page explains common expression patterns you can create with the visual expression builder.
 
 ## Common expression examples
 
@@ -31,14 +31,15 @@ This page explains common expression patterns you can build with the visual expr
 Some expressions return calculated values, while others return `true` or `false`.
 
 For example:
+
 - Filter conditions must evaluate to `true` or `false`.
 - Reformat expressions can return calculated values such as text, numbers, or dates.
 
 Understanding the expected output type can help prevent validation and runtime errors.
 
-## Key advanced features
+## Expression-building features
 
-The following table describes a few advanced options for the visual expression builder.
+The following table describes options for the visual expression builder.
 
 | Feature    | Description                                                                                                                                                                                                                                                                 |
 | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -103,7 +104,7 @@ Assume you have a dataset where you want to filter for the following:
 
 To set up the grouping expressions to match the image above:
 
-1. After creating the Filer gem, click **Add condition**. An option to Select expression appears.
+1. After creating the Filter gem, click **Add condition**. An option to Select expression appears.
 1. Click **Select expression > Column**.
 1. Select `TOTAL_EXPECTED_REVENUE` from the list.
 1. Click **Select operator** and select `is not null`.
@@ -166,16 +167,6 @@ The output of this gem will only include rows where the order region matches at 
 
 Run the pipeline up to and including the gem with your expression, and observe the resulting data sample. To do so, click the **play** button on either the canvas or the gem. Once the code has finished running, you can verify the results to make sure they match your expectations. You can explore the result of your gem in the [Data Explorer](/data-analysis/development/runs/data-explorer/data-explorer).
 
-## Tips
-
-Here are some additional tips to keep in mind when using the visual expression builder:
-
-- The expression dropdowns support search.
-- Each argument of your function is another expression since you have the same expression options to choose from.
-- You can drag and drop your comparison expressions to rearrange them.
-- Just as with conditions, you can also drag and drop your grouping expressions to rearrange them.
-- You can delete individual expressions, conditions, and groupings by clicking the trash icon at the end of the rows.
-
 ## Common issues
 
 ### Filter expressions failing validation
@@ -227,3 +218,12 @@ When combining `AND` and `OR` conditions:
 - verify that conditions are nested correctly.
 - test expressions incrementally to confirm the output.
 
+## Tips
+
+Here are some additional tips to keep in mind when using the visual expression builder:
+
+- The expression dropdowns support search.
+- Each argument of your function is another expression since you have the same expression options to choose from.
+- You can drag and drop your comparison expressions to rearrange them.
+- Just as with conditions, you can also drag and drop your grouping expressions to rearrange them.
+- You can delete individual expressions, conditions, and groupings by clicking the trash icon at the end of the rows.
