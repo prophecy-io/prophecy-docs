@@ -1,0 +1,72 @@
+---
+title: Configure Anthropic endpoint for Prophecy
+description: Set up LLM provider for Anthropic Claude in Prophecy.
+---
+Prophecy allows you to use Anthropic Claude models through different providers by configuring the Transform Agent in settings.
+
+Only one provider can be active at a time.
+
+<Callout icon="/images/icon.png" color="#FFC107">
+  Applicable to the [Express and Enterprise Editions](/administration/platform/editions) only.
+</Callout>
+
+## Navigate to settings
+
+1. Log in to Prophecy as an administrator.
+2. Go to **Settings > Admin > Copilot Settings**.
+3. Locate **AI Model Provider Credentials**.
+4. Edit the **Transform Agent JSON**.
+
+## Configure Anthropic (public API)
+
+Use this option to connect directly to Anthropic using an API key from the Anthropic Console.
+
+Apply the following configuration:
+
+```json
+{
+  "transform_agent": {
+    "anthropic_key": "<anthropic API key>"
+  }
+}
+```
+
+This configuration sends requests directly to Anthropic's public API using your provided API key.
+
+## Configure Azure AI Foundry
+
+Use this option to route Claude requests through your Azure AI Foundry deployment.
+
+Apply the following configuration:
+
+```
+{
+  "transform_agent": {
+    "foundry_config": {
+      "use_foundry": "true",
+      "foundry_api_key": "YOUR_API_KEY",
+      "foundry_base_url": "YOUR_BASE_URL",
+      "foundry_model": "claude-opus-4-5"
+    }
+  }
+}
+```
+
+### Configuration parameters
+
+| Parameter            | Description                        |
+| -------------------- | ---------------------------------- |
+| **foundry_api_key**  | Your Azure AI Foundry API key      |
+| **foundry_base_url** | Your Azure AI Foundry endpoint URL |
+| **foundry_model**    | The deployed Claude model name     |
+
+## Important
+
+- Remove `/v1/messages` from the base URL provided by Azure AI Foundry.
+- The model name must match the deployment name in Azure AI Foundry.
+
+## How it works
+
+Prophecy uses the Transform Agent configuration to determine which provider handles Claude requests. Defining either an `anthropic_key` or a `foundry_config` block selects the provider.
+
+Only one provider can be configured at a time.

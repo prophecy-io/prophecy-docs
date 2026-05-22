@@ -3,21 +3,21 @@ title: 'Pipeline gem'
 description: 'Start pipeline runs from a gem in the canvas'
 ---
 
-The Pipeline gem allows you to run another pipeline from within your current pipeline. It supports conditional triggering, parameter passing, and metadata return for each run. Each Pipeline gem execution can trigger the target pipeline multiple times, with each instance running sequentially. The gem completes only after all triggered runs finish.
+The Pipeline gem allows you to run another pipeline from within your current pipeline. It supports conditional triggering, parameter passing, and returning metadata for each pipeline run.
 
-This is useful for building orchestrated workflows directly in the visual canvas. You'll find the gem under the **Custom** category in the gem drawer.
+This gem is useful for building orchestrated workflows directly in the visual canvas. You can find it under the **Custom** category in the gem drawer.
+
+A single Pipeline gem execution can trigger the target pipeline multiple times. Triggered pipeline runs execute sequentially, and the Pipeline gem completes only after all triggered runs finish.
 
 <Tip>
-  You can create pipelines solely dedicated to pipeline orchestration using multiple instances of
-  this gem. Clearly label your orchestration pipelines to differentiate them from standard data
-  pipelines.
+  You can create pipelines solely dedicated to pipeline orchestration using multiple instances of this gem. We recommend labeling your orchestration pipelines to differentiate them from standard data pipelines.
 </Tip>
 
 ## Limitations
 
 The Pipeline gem has the following limitations:
 
-- It can trigger only pipelines within the same project.
+- It can only trigger pipelines for the current project.
 - The [Monitoring](/data-analysis/production/monitoring) page doesn't show the parent pipeline that triggered a run using the Pipeline gem.
 
 ## Input and Output
@@ -26,8 +26,8 @@ The following table describes what the Pipeline gem expects as input and what it
 
 | Port    | Description                                                                                                                                                                                                                               |
 | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **in0** | Optional input dataset that may include a `status` column and additional columns.<br />Valid statuses include `success`, `failure`, or `skipped`.<br />Each row of the input triggers a separate pipeline run per Pipeline gem execution. |
-| **out** | One output dataset that contains the metadata for each triggered pipeline run. <br />The Pipeline gem returns one row per triggered run.                                                                                                  |
+| **in0** | Optional input dataset that may include a `status` column and additional columns.<br /><br />Valid statuses include `success`, `failure`, or `skipped`.<br /><br />Each row of the input triggers a separate pipeline run per Pipeline gem execution. |
+| **out** | One output dataset that contains the metadata for each triggered pipeline run. <br /><br />The Pipeline gem returns one row per triggered run.                                                                                                  |
 
 When no input is connected:
 
@@ -36,10 +36,7 @@ When no input is connected:
 
 When an input dataset is connected:
 
-- If a `status` column is present, it is used to evaluate [trigger conditions](#trigger-conditions).
-
-  If the trigger condition is met, the Pipeline gem triggers the child pipeline once for each input row.
-
+- If a `status` column is present, it is used to evaluate [trigger conditions](#trigger-conditions). If the trigger condition is met, the Pipeline gem triggers the child pipeline once for each input row.
 - If a `status` column is **not** present, the Pipeline gem always triggers the child pipeline once for each input row.
 - Additional columns can be used to pass parameter values into each run.
 - The output contains one row of metadata per input row.
@@ -83,28 +80,26 @@ The Pipeline gem accepts the following parameters.
 
 ### Trigger conditions
 
-You can define the pipeline trigger condition by choosing from the following list.
+<Note>
+A Pipeline gem requires at least one non-empty input row to execute. If input is empty, the pipeline will not run, even when trigger condition is set to **Always run**.
+</Note>
 
-- **Always run** (default): Executes the pipeline unconditionally, regardless of input status (or absence of status).
-
-- **All pipelines succeeded**: Executes only when every input row has a `success` status.
-
-- **All pipelines failed**: Executes only when every input row has a `failure` status.
-
-- **All pipelines finished**: Executes after all input pipeline runs have completed, regardless of their success or failure.
-
-- **Any pipeline succeeded**: Executes if at least one input row has a `success` status.
-
-- **Any pipeline failed**: Executes if at least one input row has a `failure` status.
+| Trigger condition | Description |
+|---|---|
+| **Always run** (default) | Executes the pipeline whenever at least one input row is present, regardless of input status. |
+| **All pipelines succeeded** | Executes only when every input row has a `success` status. |
+| **All pipelines failed** | Executes only when every input row has a `failure` status. |
+| **All pipelines finished** | Executes after all input pipeline runs have completed, regardless of their success or failure. |
+| **Any pipeline succeeded** | Executes if at least one input row has a `success` status. |
+| **Any pipeline failed** | Executes if at least one input row has a `failure` status. |
 
 ## Execution behavior
 
-Prophecy supports the following execution behaviors when running a Pipeline gem.
+Prophecy supports the following execution behaviors for Pipeline gems.
 
-- **Sequential execution**: When one Pipeline gem triggers a target pipeline multiple times, pipeline instances run sequentially. The Pipeline gem does not finish running until all instances of the target pipeline finish running.
-
-- **Sequential triggering**: Pipeline gems wait for upstream pipelines to finish running when multiple Pipeline gems are configured sequentially or are configured with sequential [gem phases](/data-analysis/gems/#gem-phase).
-
-- **Parallel triggering**: The gem supports parallel execution when separate pipeline branches have the same gem phase.
-
-- **Recursive triggers**: Recursive execution is supported. If a triggered pipeline contains another Pipeline gem, it will execute as expected.
+| Execution behavior | Description |
+|---|---|
+| Sequential execution | If a Pipeline gem triggers the same target pipeline multiple times, the triggered pipeline runs execute sequentially. The Pipeline gem completes only after all triggered runs finish. |
+| Sequential triggering | Pipeline gems execute in sequence when they are connected sequentially or assigned sequential [gem phases](/data-analysis/gems/#gem-phase). Downstream Pipeline gems wait for upstream Pipeline gems to finish before triggering. |
+| Parallel triggering | Pipeline gems can execute in parallel when separate pipeline branches use the same gem phase. |
+| Recursive triggers | Pipeline gems support recursive execution. If a triggered pipeline contains another Pipeline gem, that Pipeline gem executes normally. |

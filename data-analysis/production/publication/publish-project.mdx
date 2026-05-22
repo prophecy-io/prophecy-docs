@@ -1,0 +1,172 @@
+---
+title: Publish and deploy projects
+description: Publish SQL projects and deploy them to fabrics
+---
+
+Use publication controls in Prophecy Studio to save drafts, publish project versions, and deploy those versions to fabrics.
+
+For an overview of drafts, published versions, deployments, and fabrics, see [Publication concepts](/data-analysis/production/publication/publication-concepts).
+
+## Publication controls
+
+The publication controls in the SQL IDE change based on the current project state.
+
+### Button labels
+
+| Button label | Meaning |
+| --- | --- |
+| Save to Draft | The project contains unsaved changes that must be saved before publication. |
+| Publish | The project is ready to publish. |
+| Share | Professional Edition sharing flow. |
+
+<Accordion title="When publication controls do not appear">
+
+Prophecy hides publication controls when:
+
+- The project is a template or example project
+- The project is in shared project mode
+- The project is in replay mode
+- The project is in historical mode
+- Simple Version Control is not enabled for the project
+
+</Accordion>
+
+<Accordion title="Disabled publication states">
+
+Under certain conditions, publication controls are disabled.
+
+| Condition | Tooltip |
+| --- | --- |
+| Viewing version history | "Publish is disabled in version history view" |
+| Code generation in progress | "Please wait for code generation to finish" |
+| Project is read-only or locked | "Publish is disabled in read-only view" |
+| Agent is in read-only mode | No tooltip |
+
+</Accordion>
+
+## Save draft changes
+
+If your project contains unsaved changes, the publication control displays **Save to Draft**.
+
+To save draft changes:
+
+1. Click **Save to Draft**.
+2. Review the draft changes.
+3. Save the draft.
+
+Saving a draft stores the latest project changes without publishing or deploying the project.
+
+## Publish a project version
+
+After you save your latest draft changes, the publication control displays **Publish**.
+
+To publish a project version:
+
+1. Click **Publish**.
+2. Review the version details.
+3. Review the changes included in the version.
+4. Enter or edit the version number.
+5. Add a version description.
+6. Optional: Select one or more fabrics for deployment.
+7. Optional: Select a project parameter set.
+8. Click **Publish**.
+
+If you publish without selecting a fabric, Prophecy creates the published version but does not deploy it to an environment.
+
+## Deploy a project version
+
+When you select one or more fabrics during publication, Prophecy deploys the published version to those environments.
+
+<Accordion title="Fabric access and permissions">
+
+To deploy a project to a fabric, your team must have access to that fabric.
+
+For example:
+
+- Development fabrics may allow broader access for testing and iteration
+- Production fabrics may restrict deployment access to approved users
+
+If your production fabric uses Databricks connections, consider using a service principal for authentication. This helps scheduled pipelines run reliably in production environments.
+
+</Accordion>
+
+During deployment, Prophecy:
+
+- Builds the project in the selected fabric
+- Applies the selected project parameter set
+- Creates or updates the deployment for that environment
+
+After deployment, you can [schedule pipelines](/data-analysis/production/scheduling/scheduling) independently for each fabric.
+
+<Accordion title="Publication validation errors">
+
+Prophecy validates the project before publication.
+
+| Validation issue | Message |
+| --- | --- |
+| Compilation errors | "Cannot publish: Please fix all compilation errors first" |
+| Invalid version number | "Please enter a valid version number" |
+| Missing description | "Please add a description to publish the version" |
+| No fabric selected | "Please select at least one fabric to publish" |
+| No deployment changes | "Please update fabric(s) or parameter set to publish" |
+
+</Accordion>
+
+<Accordion title="Publication logs">
+
+
+Prophecy generates logs for each publication step.
+
+The logs help you troubleshoot failed publications and identify where publication stopped.
+
+The publication process includes these steps:
+
+1. **Fetching fabric info**: Retrieve information about the selected fabric
+2. **Reading project code**: Review project code elements
+3. **Packaging project**: Bundle project components together
+4. **Connecting to deployment service**: Connect to the deployment service
+5. **Deploying to fabric**: Deploy the project to the selected fabric
+
+![Publish logs](/data-analysis/production/img/publish-logs.png)
+
+</Accordion>
+
+## Request to publish
+
+Prophecy allows multiple users to work on the same project simultaneously.
+
+If another user currently holds a peer lock on the project, Prophecy opens a **Request to Publish** dialog instead of publishing immediately.
+
+Collaborators can review or veto the publication request before the new version is released.
+
+## Share a project
+
+<Callout icon="/images/icon.png" color="#FFC107">
+  Available for [Free and Professional Editions](/data-analysis/administration/platform/editions)
+  only.
+</Callout>
+
+Professional Edition users can share SQL projects with:
+
+- Existing Prophecy users.
+- External users who are not yet registered with Prophecy.
+
+Shared projects open in a read-only view.
+
+External users can:
+
+- review the project,
+- interact with Agent in limited mode,
+- and sign up for Prophecy.
+
+Users cannot modify shared projects directly. To make changes, users must clone the project after signing in to Prophecy.
+
+To share a project:
+
+1. Click the arrow next to **Save to Draft** or **Publish**.
+2. Select **Share project**.
+3. Share the project by:
+   - entering an email address,
+   - or copying the share link.
+
+<Note> Guest users can ask a limited number of Agent questions in shared projects. Guest Agent chats are not persisted and disappear after the browser refreshes. </Note>
