@@ -1,27 +1,28 @@
 ---
 title: 'Introduction'
-description: 'Build out your AI-native data lifecycle'
+description: 'Build, run, and manage AI-native data pipelines'
 ---
 
-Prophecy provides a complete workflow for data analysts: generate pipelines with AI, refine them visually, and deploy production-ready code. The platform integrates with multiple cloud data platforms, so you can read in data, write out data, and execute transformations without switching between tools.
+Prophecy helps analysts generate, refine, and operationalize data workflows with AI.
 
-This approach removes the gap between AI-generated logic and deployable code. You iterate visually while Prophecy maintains the underlying codebase, which serves as a single source of truth. Within this system, you can seamlessly integrate your software best practices, version control, and governance policies.
+Describe the workflow you want, generate pipelines with AI, refine them visually or in SQL, and run recurring workflows directly on your data platform.
 
-Getting started is easy. Just sign up, create a project, and start building your first pipeline.
+Generated workflows remain editable, reusable, and production-ready from the start.
+
+Getting started is easy. Just sign up, create a project, and build your first workflow.
 
 ## Getting started
 
-<CardGroup cols={2}>
-  <Card title="Sign up for the Free Edition" icon="arrow-pointer" iconType="duotone" href="https://app.prophecy.ai/metadata/auth/signup">
-    Create a free account and start building your first pipeline
-  </Card>
+<CardGroup cols={3}>
+<Card title="Sign up for the Free Edition" icon="arrow-pointer" iconType="duotone" href="https://app.prophecy.ai/metadata/auth/signup">
+Create a free account and start building your first workflow
+</Card>
 
-<Card
-  title="Quickstart"
-  icon="clock"
-  iconType="duotone"
-  href="/data-analysis/getting-started/quick-start">
-  Follow the quickstart to develop a project with the Prophecy Agent
+<Card title="Quickstart"
+icon="rocket-launch"
+iconType="duotone"
+href="/data-analysis/getting-started/quick-start">
+Build your first AI-generated pipeline in minutes
 </Card>
 
 <Card
@@ -29,30 +30,94 @@ Getting started is easy. Just sign up, create a project, and start building your
   icon="sparkles"
   iconType="duotone"
   href="/data-analysis/ai/agent/agent">
-  Get answers to your data questions with the Prophecy Agent
+  Describe workflows in natural language and generate pipelines with AI
 </Card>
+</CardGroup>
 
+## Review and refine
+
+<CardGroup cols={3}>
 <Card
-  title="Inspect and validate pipelines"
+  title="Review generated workflows"
   icon="magnifying-glass"
   iconType="duotone"
   href="/data-analysis/ai/inspect-results">
-  View the pipelines behind the Agent's answers
+  Review, validate, and refine AI-generated pipelines visually or in SQL
 </Card>
 
 <Card
-  title="Concepts"
-  icon="lightbulb"
-  iconType="duotone"
-  href="/data-analysis/getting-started/concepts">
-  Learn core concepts for data analysts working with Prophecy
-  </Card>
+title="Concepts"
+icon="lightbulb"
+iconType="duotone"
+href="/data-analysis/getting-started/concepts">
+Learn core concepts like pipelines, workflows, and parameters
+</Card>
 
 <Card
-  title="Import workflows"
-  icon="file-import"
-  iconType="duotone"
-  href="/import-tool">
-  Import existing workflows from Alteryx or other platforms.
-  </Card>
+title="Use parameters and reusable workflows"
+icon="sliders"
+iconType="duotone"
+href="/data-analysis/development/parameters/parameters">
+Build flexible workflows that adapt across teams, schedules, and runtime environments
+</Card>
 </CardGroup>
+
+## Extend existing workflows
+
+<CardGroup cols={3}>
+<Card
+title="Share and reuse workflows"
+icon="share-nodes"
+iconType="duotone"
+href="/data-analysis/collaboration/project-sharing">
+Share projects and reusable workflows across teams
+</Card>
+
+<Card
+title="Schedule and run workflows"
+icon="clock"
+iconType="duotone"
+href="/data-analysis/production/scheduling/scheduling">
+Run recurring workflows on schedules or trigger them automatically
+</Card>
+
+<Card
+title="Import workflows"
+icon="file-import"
+iconType="duotone"
+href="/import-tool">
+Import existing Alteryx workflows and extend them with AI
+</Card>
+</CardGroup>
+
+## Why teams use Prophecy
+
+Prophecy helps data teams move from ad-hoc analysis to reliable operational workflows faster with AI.
+
+- **Build with natural language**: [Describe the workflow you want](/data-analysis/ai/agent/chat/using-chat), and Prophecy generates [pipelines](/data-analysis/development/pipelines/data-analysis-pipelines) you can refine visually or in SQL.
+- **Review and refine workflows**: [Validate](/data-analysis/ai/inspect-results) generated logic and customize workflows visually or in SQL.
+- **Run reliable operational workflows**: Schedule workflows, [monitor execution](/data-analysis/production/monitoring), and manage recurring data processes.
+- **Share workflows across teams**: [Collaborate](/data-analysis/collaboration/project-sharing) on recurring reporting and data preparation workflows across [projects](/data-analysis/development/projects/create-project) and [teams](/administration/management/users/team-user-provisioning).
+- **Review and visualize data**: [Explore outputs](/data-analysis/development/runs/data-explorer/data-explorer) and [generate dashboards](/data-analysis/analysis/overview) directly from your workflows.
+
+## Built for analysts and data teams
+
+### Analysts
+
+- Build SQL pipelines and recurring workflows
+- Generate and modify transformations using natural language
+- Turn ad-hoc analysis into reusable operational workflows
+
+Start here:
+- [Quickstart](/data-analysis/getting-started/quick-start)
+- [Build with Agent](/data-analysis/ai/agent/agent)
+- [Build SQL pipelines](/data-analysis/development/pipelines/data-analysis-pipelines)
+
+### Engineers
+
+- Build Spark-native pipelines using visual or code-first workflows
+- Develop production workflows for ingestion, transformation, and orchestration
+- Deploy and monitor workflows running on your cloud data platform
+
+Learn more:
+[Data Engineering docs](/data-engineering/getting-started)
