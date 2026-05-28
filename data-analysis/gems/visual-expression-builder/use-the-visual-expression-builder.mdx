@@ -1,13 +1,45 @@
 ---
-title: Advanced visual expressions
-description: Create complex visual expressions that include logical operators, comparisons, and parameters
+title: Common expression patterns
+description: Build conditional logic, filters, and reusable expressions with the visual expression builder
 ---
 
-In addition to using the [expression options](/data-analysis/gems/visual-expression-builder/visual-expression-builder-reference) that appear when you open the visual expression builder, you can also create additional configurations that add complexity to your expressions. This page explains the advanced expressions that you can achieve with the visual expression builder.
+Use the visual expression builder to create conditional logic, combine multiple filter conditions, build reusable expressions with parameters, and define complex business rules without writing SQL manually.
 
-## Key advanced features
+Common use cases include:
+- categorizing records based on conditions
+- building multi-condition filters with `AND` and `OR`
+- creating derived columns
+- handling null values
+- using parameters in expressions
+- creating reusable business logic across pipelines
 
-The following table describes a few advanced options for the visual expression builder.
+This page explains common expression patterns you can create with the visual expression builder.
+
+## Common expression examples
+
+| Goal | Example pattern |
+| :-- | :-- |
+| Categorize records using conditions | `WHEN revenue < 1000000 THEN 'Low Revenue'` |
+| Combine multiple conditions | `Amount > 100000 AND Region = 'APAC'` |
+| Replace null values | `COALESCE(region, 'Unknown')` |
+| Build nested logic | Multiple `WHEN` clauses with `ELSE` |
+| Filter rows using grouped logic | Nested `AND` / `OR` conditions |
+| Use runtime values in expressions | Configuration variables and parameters |
+
+## Expressions that return values vs conditions
+
+Some expressions return calculated values, while others return `true` or `false`.
+
+For example:
+
+- Filter conditions must evaluate to `true` or `false`.
+- Reformat expressions can return calculated values such as text, numbers, or dates.
+
+Understanding the expected output type can help prevent validation and runtime errors.
+
+## Expression-building features
+
+The following table describes options for the visual expression builder.
 
 | Feature    | Description                                                                                                                                                                                                                                                                 |
 | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -17,7 +49,7 @@ The following table describes a few advanced options for the visual expression b
 
 ## Examples
 
-### Use comparisons to stratify accounts
+### Create conditional logic for derived columns
 
 Let's say you want to stratify accounts based on their annual revenues. Each condition we set up is limited to one comparison. This example combines conditional logic with comparison operators.
 
@@ -51,7 +83,7 @@ To set up the comparison expressions to match the image above:
 
 This conditional expression will categorize your accounts based on revenue thresholds, making it easier to perform segment-specific analysis and reporting. When the pipeline runs, each account will be assigned to the appropriate revenue category based on the conditions you've defined.
 
-### Use groupings to create complex filters
+### Build multi-condition filters with AND/OR logic
 
 When filtering data, you often want the output data to meet multiple criteria. You can use Grouping for this by creating multiple `AND` and `OR` statements.
 
@@ -72,7 +104,7 @@ Assume you have a dataset where you want to filter for the following:
 
 To set up the grouping expressions to match the image above:
 
-1. After creating the Filer gem, click **Add condition**. An option to Select expression appears.
+1. After creating the Filter gem, click **Add condition**. An option to Select expression appears.
 1. Click **Select expression > Column**.
 1. Select `TOTAL_EXPECTED_REVENUE` from the list.
 1. Click **Select operator** and select `is not null`.
@@ -95,9 +127,9 @@ To set up the grouping expressions to match the image above:
 
 This complex filter will return only high-value opportunities from specific quarters that have valid expected revenue values. By combining AND and OR conditions in this way, you can create precise data subsets that match your exact business requirements.
 
-### Create dynamic expressions with parameters
+### Create reusable expressions with parameters
 
-When you use a pipeline parameter in a visual expression, you can manipulate the value of that parameter using different configs at runtime. Let's review an example that leverages an array parameter in a Filter gem.
+When you use a [pipeline parameter](/data-analysis/development/parameters/parameters) in a visual expression, you can manipulate the value of that parameter using different configs at runtime. Let's review an example that leverages an array parameter in a Filter gem.
 
 Imagine that you want to filter an `Orders` dataset based on the region where the order was placed. Specifically, you only want to keep rows where the region is included in the array parameter.
 
@@ -134,6 +166,57 @@ The output of this gem will only include rows where the order region matches at 
 ## Validate your expressions
 
 Run the pipeline up to and including the gem with your expression, and observe the resulting data sample. To do so, click the **play** button on either the canvas or the gem. Once the code has finished running, you can verify the results to make sure they match your expectations. You can explore the result of your gem in the [Data Explorer](/data-analysis/development/runs/data-explorer/data-explorer).
+
+## Common issues
+
+### Filter expressions failing validation
+
+Filter conditions must evaluate to `true` or `false`.
+
+For example:
+- `Amount > 1000` is valid.
+- `CASE WHEN Amount > 1000 THEN 'High' END` is not valid as a filter condition because it returns text instead of a boolean value.
+
+Use conditional expressions to create derived columns in gems like [Reformat](/data-analysis/gems/prepare/reformat), and use boolean comparisons in [Filter](/data-analysis/gems/prepare/filter) gems.
+
+### Conditional logic not returning expected results
+
+Verify that:
+
+- conditions are evaluated in the expected order.
+- grouped `AND` and `OR` conditions are structured correctly.
+- all possible cases are handled with an `ELSE` condition when appropriate.
+
+### Null values causing unexpected behavior
+
+Some expressions return `NULL` when input values are `NULL`.
+
+Use functions such as `COALESCE()` to provide default values when needed.
+
+### Expression validation errors
+
+Validation errors can occur when:
+
+- data types do not match.
+- required function arguments are missing.
+- column references are incorrect.
+- expressions return an unexpected value type.
+
+### Nested field references not resolving correctly
+
+When working with nested or structured data, verify that:
+
+- the correct field path is selected.
+- the referenced field exists in the input schema.
+- the expression uses the expected nested structure.
+
+### Multi-condition filters returning unexpected rows
+
+When combining `AND` and `OR` conditions:
+
+- use grouping to control evaluation order.
+- verify that conditions are nested correctly.
+- test expressions incrementally to confirm the output.
 
 ## Tips
 
