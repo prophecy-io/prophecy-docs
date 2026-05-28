@@ -3,11 +3,45 @@ title: Create an analysis
 description: Create and build an analysis dashboard using the Agent or manually
 ---
 
-An analysis lets you build interactive dashboards on top of your pipelines.
+An analysis is an interactive business application built on top of a data pipeline.
 
-Choose how you want to create your analysis:
-- Use the Agent for a faster, automated workflow
-- Create manually for full control over the dashboard
+Analyses let teams expose pipeline logic through forms, charts, and other interactive components so users can run and consume data without writing code.
+
+An analysis combines:
+
+- A data pipeline that defines the underlying logic
+- Interactive components that capture user input
+- Visualization components that display results
+- Configurations that store reusable runtime values
+
+When a user runs an analysis, Prophecy executes the underlying pipeline using the values entered in the analysis UI.
+
+## How analyses work
+
+An analysis acts as a UI layer on top of a data pipeline.
+
+The general workflow is:
+
+1. You create an analysis connected to a pipeline.
+2. Interactive components are bound to pipeline parameters.
+3. Users enter values in the analysis UI.
+4. Prophecy executes the pipeline using those values.
+5. Results render in charts, tables, and other components.
+
+Analyses support multiple saved configurations. Each configuration stores a reusable set of runtime values and can be run or scheduled independently.
+
+You can enter runtime values in the analysis, which override the pipeline's default parameter values during execution.
+
+## Edit mode and preview mode
+
+Analyses have two primary modes:
+
+- **Edit mode** — Build and configure the analysis layout and components
+- **Preview mode** — Run the analysis as an end user would experience it
+
+In edit mode, you add components, configure charts, and bind inputs to parameters.
+
+In preview mode, you enter runtime values, execute the pipeline, and review results.
 
 <Tabs>
 
@@ -33,10 +67,10 @@ Visualize sales performance per product category in @home_tech_transactions
 
 The Agent will:
 
-- Transform the data
-- Create a visualization
-- Generate a pipeline
-- Create a linked analysis dashboard
+- Transform the data.
+- Create a visualization.
+- Generate a pipeline.
+- Generate an interactive analysis dashboard.
 
 ## Continue building
 
@@ -89,7 +123,7 @@ Alternatively:
 
 ## Build your analysis
 
-The analysis opens on the canvas.
+The analysis opens in **Edit** mode on the analysis canvas, where you can design the runtime experience for users.
 
 You can add three types of components:
 
@@ -121,6 +155,22 @@ import AnalysisinteractiveMan from '/snippets/misc/analysis-interactive.mdx'
 
 </Tab> </Tabs>
 
+## Configurations
+
+Analyses support multiple saved configurations. Configurations appear under the analysis in the App Browser.
+Each analysis can contain multiple configurations, which can be selected, renamed, scheduled, or run independently.
+
+A configuration is a named set of runtime values for the analysis. Configurations allow teams to create reusable presets for different environments, users, or operational scenarios.
+
+For example, an analysis might include:
+
+- A `production` configuration.
+- A `staging` configuration.
+- Configurations for different regions or business units.
+
+Each configuration can be run and scheduled independently.
+
+
 ## Run the analysis
 
 Let's return to the analysis preview so we can test the new component.
@@ -134,7 +184,9 @@ Let's return to the analysis preview so we can test the new component.
 When the analysis runs, Prophecy always executes the entire underlying pipeline. This means any additional transformations, tables, or other components included in the pipeline will also run, even if they're not exposed in the dashboard. Be mindful of how you design the pipeline to ensure your dashboard triggers only the intended logic.
 </Warning>
 
-## Share the dashboard
+## Share the analysis
+
+You can share published analyses with other teams for interactive consumption and execution.
 
 Access to analyses is controlled by Prophecy's team-based permission model. If your team owns a project, you have full edit access. This means that you can build, edit, and delete analyses in the project.
 
