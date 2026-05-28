@@ -10,16 +10,95 @@ import GemExample from '/snippets/interactive-gem.mdx';
 
 ## Overview
 
-Transforms one or more column names or values by using expressions and/or functions. It's useful when we need to extract only the required columns or make changes column-wise.
+Use the Reformat gem to:
+- rename columns
+- create calculated columns
+- modify existing column values
+- change data types
+- select which columns appear in the output dataset
+
+Use expressions and functions to transform values, combine columns, clean data, or create new derived fields.
 
 <GemExample gemName="Reformat" />
+
+## Common transformation examples
+
+| Goal | Example expression |
+| :-- | :-- |
+| Rename a column | Set `Target column` to the new column name |
+| Create a full name column | `first_name || ' ' || last_name` |
+| Convert text to uppercase | `UPPER(customer_name)` |
+| Replace null values | `COALESCE(region, 'Unknown')` |
+| Create a calculated field | `price * quantity` |
+| Convert a value to a string | `CAST(order_id AS STRING)` |
+| Extract part of a date | `YEAR(order_date)` |
 
 ## Parameters
 
 | Parameter     | Description                                | Required                                 |
 | :------------ | :----------------------------------------- | :--------------------------------------- |
-| Model         | Input Source on which changes are required | True                                     |
+| Model         | Input dataset to transform | True                                     |
 | Target column | Output column name                         | False                                    |
 | Expression    | Expression to compute target column        | Required if a `Target column` is present |
 
 <Info>If no columns are selected, then all columns are passed through to the output.</Info>
+
+## How Reformat works
+
+The Reformat gem processes each row individually and applies expressions to generate output columns.
+
+You can:
+
+- keep existing columns
+- rename columns
+- modify column values
+- create new columns
+- remove unwanted columns
+
+If no columns are selected, all input columns are passed through unchanged.
+
+## Common issues
+
+### Column not found
+
+Verify that:
+
+- the column name exists in the input dataset.
+- the column name uses the correct capitalization.
+- the column reference is spelled correctly.
+
+### Type mismatch errors
+
+Some functions and operators require specific data types.
+
+For example:
+
+- numeric calculations require numeric columns.
+- string functions require text values.
+
+Use `CAST()` to convert values when needed.
+
+### Null values causing unexpected results
+
+Some expressions return `NULL` when one or more input values are `NULL`.
+
+Use `COALESCE()` to replace null values with defaults.
+
+### Duplicate column names
+
+Output column names must be unique.
+
+## Similar tools and concepts
+
+The Reformat gem can be used to:
+- rename columns
+- create calculated fields
+- modify existing column values
+- select output columns
+
+You may recognize similar behavior from:
+
+- SQL `SELECT` expressions and aliases
+- the Alteryx Formula and Select tools
+- PySpark `select()` and `withColumn()`
+- Pandas column transformations
