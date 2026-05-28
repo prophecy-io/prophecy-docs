@@ -10,9 +10,36 @@ import GemExample from '/snippets/interactive-gem.mdx';
 
 ## Overview
 
-Use the Join gem to combine data from two or more tables based on a shared column value. This helps you link related information, such as customer details and purchase history, or user activity logs and account records.
+Use the Join gem to combine related data from two or more datasets.
+
+Common use cases include:
+- adding customer details to order records
+- combining user activity with account information
+- enriching datasets with lookup tables
+- matching records between systems
+
+The Join gem matches rows using one or more join conditions, such as matching customer IDs or order numbers.
 
 <GemExample gemName="Join" />
+
+## How to choose a join type
+
+Choose:
+
+- **Inner Join** to keep only matching rows.
+- **Left Join** to keep all rows from the first dataset.
+- **Right Join** to keep all rows from the second dataset.
+- **Full Outer Join** to keep all rows from both datasets.
+- **Cross Join** to combine every row from both datasets.
+
+## Common join examples
+
+| Goal | Recommended join type |
+| :-- | :-- |
+| Keep only matching records from both tables | Inner Join |
+| Keep all records from the left table | Left Join |
+| Keep all records from both tables | Full Outer Join |
+| Combine every row from both tables | Cross Join |
 
 ## Input and Output
 
@@ -31,7 +58,7 @@ To configure the Join gem, you need to define join conditions and select the col
 
 ### Join conditions
 
-You can add one or more join conditions to the gem depending on the number of input tables added.
+You can add one or more join conditions to the gem depending on the number of input tables added. Rows are matched using shared values, such as customer IDs, order IDs, or email addresses.
 
 | Parameters     | Description                                                                                                           |
 | -------------- | --------------------------------------------------------------------------------------------------------------------- |
@@ -47,7 +74,7 @@ You can add one or more join conditions to the gem depending on the number of in
 
 | Parameters  | Description                                                                                                                                          |
 | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Expressions | Defines the output columns that will be returned by the gem. If left empty, Prophecy passes through all the input columns without any modifications. |
+| Expressions | Selects which columns appear in the output dataset. If left empty, Prophecy passes through all the input columns without any modifications. |
 
 ### Example
 
@@ -59,6 +86,34 @@ Assume you have two tables: _orders_ and _customers_. You want the orders table 
 1. If using the code expression, use the following SQL join condition: **in0.CustomerID = in1.customer_id**
 1. Leave the **Expressions** tile empty.
 1. Save and run the gem.
+
+## Common issues
+
+### Duplicate rows after joining
+
+Duplicate rows can occur when multiple rows in one table match the same row in another table.
+
+Verify that:
+- the join keys are unique when expected
+- the correct join type is selected
+- duplicate records do not exist in the input datasets
+
+### Missing records in the output
+
+Rows may be excluded depending on the selected join type.
+
+For example:
+- Inner Join keeps only matching rows
+- Left Join keeps all rows from the left table
+- Full Outer Join keeps all rows from both tables
+
+### Null values in joined columns
+
+Rows with `NULL` join keys may not match other rows.
+
+### Ambiguous column names
+
+If both datasets contain columns with the same name, rename or qualify columns to avoid ambiguity.
 
 ## Join types
 
@@ -140,17 +195,31 @@ ON e.department_id = d.department_id;
 
 </div>
 
+
 ### RIGHT JOIN / RIGHT OUTER JOIN
 
-Right Join (or Right Outer join) will return columns from both the tables and match records with records from the right table. The result-set will contain null for the rows for which there is no matching row on the left side.
+Right Join (or Right Outer Join) returns matching rows from both tables and preserves all rows from the right table. Rows from the right table that do not have a match in the left table will contain `NULL` values for the left table columns.
 
-For example, if the Join condition provided was `employees.department_id = departments.department_id`, the sample query would be:
+For example, if the join condition is `employees.department_id = departments.department_id`, the sample query would be:
 
-```
+```sql
 SELECT e.employee_id, e.employee_name, d.department_name
 FROM employees e
-OUTER JOIN departments d
+RIGHT OUTER JOIN departments d
 ON e.department_id = d.department_id;
+````
+
+<div className="table-example">
+
+| EMPLOYEE_ID | EMPLOYEE_NAME | DEPARTMENT_NAME |
+| :---------- | :------------ | :-------------- |
+| 1           | Alice         | HR              |
+| 2           | Bob           | Engineering     |
+| 5           | Eve           | Engineering     |
+| 3           | Charlie       | Sales           |
+| NULL        | NULL          | Marketing       |
+
+</div>
 ```
 
 <div class="table-example">
@@ -325,3 +394,13 @@ NATURAL FULL OUTER JOIN departments d;
 | NULL        | NULL          | Marketing       |
 
 </div>
+
+## Similar tools and concepts
+
+The Join gem combines related data from multiple datasets using shared column values.
+
+You may recognize similar behavior from:
+- SQL `JOIN` operations
+- the Alteryx Join tool
+- PySpark `join()`
+- Pandas `merge()`
