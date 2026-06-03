@@ -72,6 +72,28 @@ returns:
 
 </div>
 
+### Using pipeline parameters in filter conditions
+
+You can reference [pipeline parameters](/data-analysis/development/parameters/parameters) in filter conditions to make filtering dynamic at runtime.
+
+In **Visual mode**, select **Configuration Variables** from the expression builder to insert a parameter directly.
+
+In **Code mode**, use Jinja syntax:
+
+```
+{{ var('parameter_name') }}
+```
+
+| Parameter type                     | Example filter condition                                     |
+| :--------------------------------- | :----------------------------------------------------------- |
+| String                             | `sensor_id = {{ var('sensor') }}`                            |
+| Date                               | `from_utc_timestamp(timestamp_col, 'UTC') > {{ var('start_date') }}` |
+| Numeric (Int, Long, Float, Double) | `total_usage_mb > {{ var('usage_cap_mb') }}`                 |
+| Array                              | Use `array_contains` in the visual expression builder. See [Use parameters](/data-analysis/development/parameters/usage). |
+| Boolean                            | `archived = {{ var('include_archived') }}`                   |
+
+<Tip> For a full walkthrough of each parameter type including dashboard integration, see [Use parameters](/data-analysis/development/parameters/usage). </Tip>
+
 ## Common issues
 
 ### No rows returned
