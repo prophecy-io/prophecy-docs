@@ -1,0 +1,87 @@
+---
+title: Prophecy status page
+description: Monitor the health of your Prophecy environment and subscribe to incident notifications
+---
+
+The Prophecy Status Page (https://status.prophecy.io/) provides real-time visibility into the health and availability of your Prophecy environment.
+
+Use the status page to:
+
+- Check if your Prophecy environment is operational.
+- Track ongoing incidents and maintenance windows.
+- View historical uptime and past incident details.
+- Subscribe to notifications so you are alerted immediately when something changes
+
+![Prophecy Status Page](/administration/getting-help/img/prophecy-status-page.png)
+
+## Understanding Status Indicators
+
+The status page displays the current health of Prophecy services and infrastructure components.
+
+Each component is assigned a status indicator:
+
+| Status | Description |
+|----------|-------------|
+| Operational | All systems are running normally. No action needed. |
+| Major Outage | A significant portion of the platform is unavailable. Incident is open and being worked on with high priority. |
+| Under Maintenance | Scheduled maintenance is in progress. This is a planned activity communicated in advance. Temporary disruption may occur. |
+| Unknown | Status cannot be determined. This may indicate a monitoring gap. Contact support if this persists. |
+
+## View incidents
+
+When an issue affects the platform, Prophecy posts updates on the status page.
+
+![Prophecy Status Page](/administration/getting-help/img/status-page-incident.png)
+
+Incidents typically progress through the following states:
+
+- **Investigating** - The team has been alerted and is actively looking into the issue. Not all root causes are known at this point. The status page will be updated as information becomes available.
+- **Identified** - The root cause has been found. The team is now working on a resolution. An estimated time to fix may be shared at this stage.
+- **Monitoring** - A fix has been applied and the team is watching to confirm the issue is fully resolved. Services may still show as degraded during this period.
+- **Resolved** - The incident is closed. All affected services are back to normal operation. A post-incident summary may be shared with affected customers.
+
+Incident updates are displayed in chronological order and include information about impact, mitigation efforts, and resolution status.
+
+## Subscribe to notifications
+
+You can subscribe to receive email notifications when incidents are created, updated, or resolved.
+
+To subscribe:
+
+1. Open the status page.
+1. Scroll to **Subscribe to status updates**.
+4. Enter your email address.
+5. Click **Subscribe**.
+6. Confirm the subscription using the link sent to your inbox.
+
+After confirmation, you will receive notifications for future status changes and incidents.
+
+## Manage subscriptions
+
+To stop receiving notifications, click **Unsubscribe** in any status page email.
+
+To use a different email address, unsubscribe from the existing subscription and create a new subscription using the new address.
+
+## Scheduled maintenance
+
+The Prophecy team may schedule planned maintenance windows for upgrades, infrastructure changes, or other operational activities. These are communicated on the status page in advance.
+
+- Scheduled maintenance events appear on the status page before the window begins.
+- Subscribers receive email notifications ahead of the maintenance start time.
+- During maintenance, affected services may show as purple (Under Maintenance) on the status page.
+- Once maintenance is complete, all services return to green (Operational) and you will receive a confirmation notification.
+
+<Note>
+If you have time-sensitive workflows that could be affected by a maintenance window, please reach out to your Prophecy support contact as soon as you see a maintenance announcement so we can plan accordingly.
+</Note>
+
+## Contact support
+
+The status page reports platform-wide service health and incident information.
+
+If you experience an issue that is not reflected on the status page, contact Prophecy Support:
+
+- Support Portal: Submit a support request through Zendesk
+- Email: support@prophecy.io
+
+For production-blocking issues, contact your designated Prophecy support representative.
