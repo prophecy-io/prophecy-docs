@@ -1,0 +1,72 @@
+---
+title: Alteryx Dynamic Select Tool > Prophecy DynamicSelect gem
+description: Mapping between Alteryx’s Dynamic Select tool and Prophecy’s DynamicSelect gem
+---
+
+The **[Alteryx Dynamic Select tool](https://help.alteryx.com/current/en/designer/tools/developer/dynamic-select-tool.html)** dynamically selects, deselects, or reorders columns based on rules, formulas, or metadata from the incoming dataset. It is commonly used to keep schemas flexible in the face of changing inputs, apply bulk inclusion or exclusion rules, or reorder fields without hard-coding column names.
+
+In Prophecy, the same behavior is implemented using the [DynamicSelect gem](/data-analysis/gems/custom/dynamic-select). This gem applies rule-based column selection and ordering at runtime, allowing pipelines to adapt to evolving schemas while preserving downstream logic.
+
+## Automated migration results
+
+When Import encounters an Alteryx Dynamic Select tool, it generates a **DynamicSelect** gem configured to reflect the detected selection logic.
+
+In typical migrations:
+
+- Rules used to include or exclude columns are translated into DynamicSelect conditions.
+- Column ordering logic is preserved when it can be inferred from the Alteryx configuration.
+- The resulting schema reflects the same dynamic behavior rather than a fixed column list.
+
+Configurations that rely on complex formulas or metadata references may require manual review after import.
+
+## Manually replicate in Prophecy
+
+To manually reproduce Dynamic Select behavior:
+
+1. Add a **DynamicSelect** gem to the canvas.
+2. Choose the selection mode (include, exclude, or reorder columns).
+3. Define rules based on column name patterns, positions, or other available metadata.
+4. Preview the resulting schema to confirm the expected columns are retained and ordered.
+5. Connect the output to downstream gems.
+
+## Configuration options
+
+### Column selection rules
+
+- **Alteryx:** Columns can be selected or deselected dynamically using expressions, name patterns, or metadata.
+- **Prophecy:** Columns are included, excluded, or reordered based on declarative rules evaluated at runtime.
+
+### Ordering behavior
+
+- **Alteryx:** Supports dynamic reordering of fields as part of the selection logic.
+- **Prophecy:** Preserves or reorders columns according to the configured DynamicSelect rules.
+
+### Schema flexibility
+
+- **Alteryx:** Designed to accommodate changing input schemas without manual updates.
+- **Prophecy:** Applies the same dynamic evaluation so pipelines remain resilient to upstream schema changes.
+
+## Output behavior
+
+- **Alteryx:** Outputs the incoming dataset with columns selected and ordered according to dynamic rules.
+- **Prophecy:** Outputs a dataset whose schema is computed at runtime based on the configured selection logic.
+
+## Known caveats
+
+- **Formula complexity:** Highly complex or metadata-dependent expressions may not fully translate and should be validated after import.
+- **Downstream dependencies:** Even with dynamic selection, downstream tools that reference specific columns should be reviewed to ensure compatibility.
+- **Preview differences:** Because selection is evaluated at runtime, schema previews may differ depending on sample data.
+
+## Example
+
+### Alteryx
+
+Use the Dynamic Select tool to keep all columns whose names start with `sales_` and move them to the front of the dataset.
+
+### Prophecy
+
+1. Add a **DynamicSelect** gem.
+2. Configure an include rule matching `sales_*`.
+3. Apply ordering logic to place matching columns first.
+
+The resulting dataset dynamically selects and orders columns in a way that matches the behavior of the Alteryx Dynamic Select tool.

@@ -1,0 +1,80 @@
+---
+title: Alteryx Base64 Encoder Tool > Prophecy DataEncoderDecoder gem
+description: Mapping between Alteryx’s Base64 Encoder tool and Prophecy’s DataEncoderDecoder gem
+---
+The [Alteryx Base64 Encoder tool](https://help.alteryx.com/current/en/designer/tools/developer/base64-encoder-tool.html#base64-encoder-tool) creates a Base64-encoded version of a selected string field and outputs it as a new column. It is commonly used to encode textual data (for example, credentials or identifiers) into a Base64 representation for downstream systems.
+
+In Prophecy, the same outcome is implemented using the [DataEncoderDecoder gem](/data-analysis/gems/transform/encoder-decoder), which supports Base64 encoding and decoding across one or more columns. Unlike Alteryx’s single-purpose tool, this gem supports multiple encoding methods and allows you to either overwrite existing columns or write results to new columns using a prefix or suffix.
+
+## Automated migration results
+
+When Import encounters Base64-encoding behavior from an Alteryx workflow, it generates a **DataEncoderDecoder** gem configured to apply Base64 encoding to the corresponding string column.
+
+In typical migrations:
+
+- The **encode/decode option** is set to `base64`.
+- The source text column selected in Alteryx is mapped to the gem’s column selection.
+- The gem is configured to **add a new output column** (using a prefix or suffix) so that the original field is preserved, matching Alteryx’s behavior of producing a separate encoded field.
+
+## Manually replicate in Prophecy
+
+To reproduce Alteryx Base64 Encoder behavior manually:
+
+1. Add a **DataEncoderDecoder** gem to the canvas.
+2. Under **Select columns to encode/decode**, choose the string column you want to encode.
+3. Set **Select encode/decode option** to `base64`.
+4. Under **Transformed column options**, choose either:
+   - **Substitute the new columns in place** (overwrite the original field), or
+   - **Add new columns with a prefix/suffix attached** (recommended for parity with Alteryx).
+
+## Configuration options
+
+### Column selection
+
+- **Alteryx:** Select a Text (`V_WString`) field to encode.
+- **Prophecy:** Select one or more string (or binary) columns to apply Base64 encoding.
+
+### Encoding method
+
+- **Alteryx:** Always performs Base64 encoding.
+- **Prophecy:** Choose `base64` from the available encode/decode methods.
+
+### Output column behavior
+
+- **Alteryx:** Always outputs the encoded value as a new column.
+- **Prophecy:** You can either overwrite the original column or create a new column using a configurable prefix or suffix.
+
+## Options
+
+| Platform | Option                          | Description                                |
+| -------- | ------------------------------- | ------------------------------------------ |
+| Alteryx  | Choose Field                    | Selects the string field to Base64-encode  |
+| Prophecy | Select columns to encode/decode | Determines which column(s) are transformed |
+| Prophecy | Select encode/decode option     | Controls the encoding method (`base64`)    |
+| Prophecy | Transformed column options      | Overwrite existing columns or add new ones |
+
+## Output behavior
+
+- **Alteryx:** Produces a new column containing the Base64-encoded version of the selected text field.
+- **Prophecy:** Produces an output dataset where selected columns are Base64-encoded, either replacing the original values or written to new columns depending on configuration.
+
+## Known caveats
+
+- **Input types:** Alteryx’s Base64 Encoder is documented around text fields, while Prophecy’s DataEncoderDecoder can operate on string or binary columns. If your data is not already in string form, an explicit type conversion may be required.
+- **Gem availability:** The DataEncoderDecoder gem requires the `prophecy_basics` package to be available in the project.
+- **Decode workflows:** Alteryx workflows often handle Base64 decoding through separate tools or Blob-based patterns; in Prophecy, encoding and decoding are handled by the same gem via configuration.
+
+## Example
+
+### Alteryx
+
+Encode a field such as `EncodeThis` using the Base64 Encoder tool. The workflow outputs a new column containing the Base64-encoded value.
+
+### Prophecy
+
+1. Add a **DataEncoderDecoder** gem.
+2. Select `EncodeThis` under **Select columns to encode/decode**.
+3. Choose the `base64` encode option.
+4. Configure the gem to add a new column with a suffix such as `_encoded`.
+
+The resulting dataset includes a column like `EncodeThis_encoded` containing the Base64-encoded output, functionally equivalent to the Alteryx result.
