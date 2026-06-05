@@ -686,6 +686,7 @@
                     "group": "Help and resources",
                     "pages": [
                       "administration/getting-help/get-in-touch",
+                      "administration/getting-help/status-page",
                       {
                         "group": "Support",
                         "pages": [
