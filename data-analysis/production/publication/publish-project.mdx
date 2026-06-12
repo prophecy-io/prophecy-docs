@@ -7,6 +7,23 @@ Use publication controls in Prophecy Studio to save drafts, publish project vers
 
 For an overview of drafts, published versions, deployments, and fabrics, see [Publication concepts](/data-analysis/production/publication/publication-concepts).
 
+Publishing consists of two independent actions:
+
+- **Release**: Create a versioned project release.
+- **Deployment**: Deploy that release to one or more fabrics.
+
+You can release a project without deploying it, or release and deploy in the same action.
+
+```mermaid
+flowchart TD
+    A[Save Draft] --> B[Create Release]
+    B --> C{Deploy to fabrics?}
+    C -->|No| D[Release only]
+    C -->|Yes| E[Deploy to Fabric A]
+    C -->|Yes| F[Deploy to Fabric B]
+    C -->|Yes| G[Deploy to Fabric C]
+```
+
 ## Publication controls
 
 The publication controls in the SQL IDE change based on the current project state.
@@ -56,7 +73,7 @@ To save draft changes:
 
 Saving a draft stores the latest project changes without publishing or deploying the project.
 
-## Publish a project version
+## Publish and deploy a project
 
 After you save your latest draft changes, the publication control displays **Publish**.
 
@@ -71,11 +88,11 @@ To publish a project version:
 7. Optional: Select a project parameter set.
 8. Click **Publish**.
 
-If you publish without selecting a fabric, Prophecy creates the published version but does not deploy it to an environment.
+When you select one or more fabrics during publication, Prophecy deploys the published version to those environments. If you publish without selecting a fabric, Prophecy creates the published version but does not deploy it to an environment.
 
-## Deploy a project version
-
-When you select one or more fabrics during publication, Prophecy deploys the published version to those environments.
+<Note>
+You can only deploy to fabrics your team can access.
+</Note>
 
 <Accordion title="Fabric access and permissions">
 
@@ -92,11 +109,15 @@ If your production fabric uses Databricks connections, consider using a service 
 
 During deployment, Prophecy:
 
-- Builds the project in the selected fabric
-- Applies the selected project parameter set
-- Creates or updates the deployment for that environment
+- Builds the project in the selected fabric.
+- Applies the selected project parameter set.
+- Creates or updates the deployment for that environment. Each deployment represents a specific project version running in a specific fabric. The same project version can be deployed to multiple fabrics, and each deployment is tracked independently.
 
 After deployment, you can [schedule pipelines](/data-analysis/production/scheduling/scheduling) independently for each fabric.
+
+<Note>
+Pipeline schedules are environment-specific. When you deploy a project to multiple fabrics, each fabric can have its own schedule configuration.
+</Note>
 
 <Accordion title="Publication validation errors">
 
@@ -114,8 +135,7 @@ Prophecy validates the project before publication.
 
 <Accordion title="Publication logs">
 
-
-Prophecy generates logs for each publication step.
+Prophecy generates logs for each publication step. If deployment fails, publication logs show the exact step where the process stopped.
 
 The logs help you troubleshoot failed publications and identify where publication stopped.
 
@@ -133,7 +153,7 @@ The publication process includes these steps:
 
 ## Request to publish
 
-Prophecy allows multiple users to work on the same project simultaneously.
+Prophecy allows multiple users to work on the same project simultaneously. In collaborative projects, publishing often requires coordination with other users.
 
 If another user currently holds a peer lock on the project, Prophecy opens a **Request to Publish** dialog instead of publishing immediately.
 
