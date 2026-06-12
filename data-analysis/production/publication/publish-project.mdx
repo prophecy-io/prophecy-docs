@@ -3,7 +3,7 @@ title: Publish and deploy projects
 description: Publish SQL projects and deploy them to fabrics
 ---
 
-Use publication controls in Prophecy Studio to save drafts, publish project versions, and deploy those versions to fabrics.
+Use publication controls in Prophecy Studio to save drafts, create versioned releases, and deploy those releases to fabrics.
 
 For an overview of drafts, published versions, deployments, and fabrics, see [Publication concepts](/data-analysis/production/publication/publication-concepts).
 
@@ -12,17 +12,17 @@ Publishing consists of two independent actions:
 - **Release**: Create a versioned project release.
 - **Deployment**: Deploy that release to one or more fabrics.
 
-You can release a project without deploying it, or release and deploy in the same action.
+You can release a project without deploying it, or release and deploy in the same action. You can also choose the [fabrics](/data-analysis/environment/fabrics/prophecy-fabrics) where you will deploy the project:
 
 ```mermaid
-flowchart TD
-    A[Save Draft] --> B[Create Release]
-    B --> C{Deploy to fabrics?}
-    C -->|No| D[Release only]
+flowchart LR
+    A[Save Draft] --> B[Publish Release]
+    B --> C{Select fabrics?}
+    C -->|No| D[Release Only]
     C -->|Yes| E[Deploy to Fabric A]
     C -->|Yes| F[Deploy to Fabric B]
-    C -->|Yes| G[Deploy to Fabric C]
 ```
+A release represents a versioned snapshot of your project. Deployments determine where that release runs.
 
 ## Publication controls
 
@@ -88,7 +88,9 @@ To publish a project version:
 7. Optional: Select a project parameter set.
 8. Click **Publish**.
 
-When you select one or more fabrics during publication, Prophecy deploys the published version to those environments. If you publish without selecting a fabric, Prophecy creates the published version but does not deploy it to an environment.
+Fabric selection determines whether or not the project is deployed. If you publish without selecting a fabric, Prophecy creates the published version but does not deploy it to an environment.
+
+When you select one or more fabrics during publication, Prophecy creates or updates deployments for those fabrics using the published version.
 
 <Note>
 You can only deploy to fabrics your team can access.
@@ -111,13 +113,11 @@ During deployment, Prophecy:
 
 - Builds the project in the selected fabric.
 - Applies the selected project parameter set.
-- Creates or updates the deployment for that environment. Each deployment represents a specific project version running in a specific fabric. The same project version can be deployed to multiple fabrics, and each deployment is tracked independently.
+- Creates or updates the deployment for that environment.
 
-After deployment, you can [schedule pipelines](/data-analysis/production/scheduling/scheduling) independently for each fabric.
+Each deployment represents a specific project version running in a specific fabric. The same project version can be deployed to multiple fabrics, and each deployment is tracked independently.
 
-<Note>
-Pipeline schedules are environment-specific. When you deploy a project to multiple fabrics, each fabric can have its own schedule configuration.
-</Note>
+After deployment, you can [schedule pipelines](/data-analysis/production/scheduling/scheduling) independently for each fabric. Pipeline schedules are environment-specific. When you deploy a project to multiple fabrics, each fabric can have its own schedule configuration.
 
 <Accordion title="Publication validation errors">
 
@@ -157,7 +157,7 @@ Prophecy allows multiple users to work on the same project simultaneously. In co
 
 If another user currently holds a peer lock on the project, Prophecy opens a **Request to Publish** dialog instead of publishing immediately.
 
-Collaborators can review or veto the publication request before the new version is released.
+Collaborators can review, approve, or reject the publication request before the new version is released.
 
 ## Share a project
 
