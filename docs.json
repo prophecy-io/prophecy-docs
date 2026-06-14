@@ -102,7 +102,8 @@
                         "group": "Pipelines",
                         "pages": [
                           "data-analysis/development/pipelines/data-analysis-pipelines",
-                          "data-analysis/development/pipelines/view-pipeline-py"
+                          "data-analysis/development/pipelines/view-pipeline-py",
+                          "data-analysis/development/pipelines/view-sql-lineage"
                         ]
                       },
                       {
