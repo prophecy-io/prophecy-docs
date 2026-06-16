@@ -103,6 +103,8 @@ namespace
 operationalize
 Operationalize
 ad-hoc
+subqueries
+subquery
 
 # Prophecy Tools
 PBT
