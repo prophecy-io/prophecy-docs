@@ -9,7 +9,10 @@ Use SQL lineage when you need to inspect how a selected column was created, whet
 
 ## View column lineage in a pipeline
 
-When you select **Lineage** from the pipeline menu, a lineage panel opens at the bottom of the pipeline editor. Select a dataset and column to see how the column was produced within the pipeline.
+To view column lineage:
+
+1. Select **Lineage** from the pipeline menu. A lineage panel opens at the bottom of the pipeline editor.
+1. Select a dataset and column to see how the column was produced within the pipeline.
 
 Prophecy highlights the gem where the selected column is created and displays the transformation logic used to generate it. For example, selecting `AVG_SPECIALIST_VISITS` highlights the Aggregate gem and shows the expression `ROUND(AVG(specialist_visits_expected), 2)` used to create the column.
 
@@ -17,4 +20,4 @@ Prophecy highlights the gem where the selected column is created and displays th
 
 ## Current limitations
 
-Recursive CTEs, lateral joins, correlated subqueries, and PIVOT or UNPIVOT are not currently covered.
+Lineage is not currently supported for the following: recursive common table expressions, lateral joins, correlated subqueries, and PIVOT/UNPIVOT.
