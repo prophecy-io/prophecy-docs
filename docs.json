@@ -32,7 +32,8 @@
                         "group": "Overview",
                         "pages": [
                           "data-analysis/ai/agent/agent",
-                          "data-analysis/ai/agent/prompting-best-practices"
+                          "data-analysis/ai/agent/prompting-best-practices",
+                          "data-analysis/ai/agent/using-skills"
                         ]
                       },
                       {
