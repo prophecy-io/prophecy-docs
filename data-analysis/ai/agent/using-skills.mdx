@@ -1,9 +1,11 @@
 ---
-title: "Writing a skill"
-description: "A starting point for contributing skills to Prophecy's AI agent."
+title: Using skills
+description: A starting point for contributing skills to Prophecy's AI agent
 ---
 
 Skills tell Prophecy's AI agent how to handle a specific task: when to activate, what to read first, how to proceed, and what to hand off when done. This page covers how to structure a skill file and what to expect as you iterate on it.
+
+Each skill is a short Markdown file with: a name, a description that tells Prophecy when to use it, and instructions that Prophecy follows when the skill applies.
 
 <Note>
 Skills are an iterative artifact. The structure described here reflects patterns that work well in practice, but there is no single correct form. Expect to revise a skill as you learn how the agent interprets it and how users actually phrase their requests.
@@ -17,15 +19,22 @@ In Prophecy, skills live at `skills/<skill-name>/SKILL.md` in your project.
 
 ## How the agent loads skills
 
-The agent reads the **name and description** of every installed skill on every chat. It only loads the full skill body when it determines the skill is relevant to the current task. This means:
+The agent reads the **name and description** of every installed skill on every chat, but only loads the full skill body when it determines the skill is relevant to the current task.
+
+This means:
 
 - You can maintain many skills without degrading agent output.
-- The description is doing active routing work, not just documentation.
+- The skill's description is doing active routing work, not just documentation.
 - A vague description means the skill may never load, or may load at the wrong time.
 
 ## Frontmatter
 
 The frontmatter contains two required fields:
+
+| Field | Notes |
+|---|---|
+| `name` | Slug that becomes the folder name. Lowercase letters, numbers, and hyphens only. |
+| `description` | Routing signal the agent uses to decide when to load this skill. Start with "Use when..." and include: the user intent it targets, specific trigger phrases (quoted), file types or contextual signals that should activate it, and where relevant, what the skill does *not* cover. |
 
 ```yaml
 ---
@@ -37,22 +46,20 @@ description: >
 ---
 ```
 
-| Field | Notes |
-|---|---|
-| `name` | Slug that becomes the folder name. Lowercase letters, numbers, and hyphens only. |
-| `description` | Routing signal the agent uses to decide when to load this skill. Start with "Use when..." and include: the user intent it targets, specific trigger phrases (quoted), file types or contextual signals that should activate it, and where relevant, what the skill does *not* cover. |
-
 A vague description like "Helps with data mapping" gives the agent little to work with. A scoped one like "Use when the user wants to map a raw data tape to the CDM. Triggers include: 'crack this tape', 'map to CDM', 'harmonize tape'" tells it exactly when to act.
 
 ## Skill body
 
-The body has no required schema. Structure follows from the task. Use whatever sections the agent needs to do the job correctly, named and ordered to match the work.
+The body has no required schema, and the skill's tructure follows from the task. Use whatever sections the agent needs to do the job correctly, named and ordered to match the work.
 
 Two elements appear in most skills:
 
+- [Opening context line](#opening-context-line)
+- [Important rule](#important-rule)
+
 ### Opening context line
 
-A one-line summary of what this skill does and when it applies:
+Skils should begin with a one-line summary of what this skill does and when it applies:
 
 ```
 Design-time skill for creating and iterating CDM definitions.
