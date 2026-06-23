@@ -3,13 +3,21 @@ title: Using skills
 description: A starting point for contributing skills to Prophecy's AI agent
 ---
 
-Skills tell Prophecy's AI agent how to handle a specific task: when to activate, what to read first, how to proceed, and what to hand off when done. This page covers how to structure a skill file and what to expect as you iterate on it.
+To extend or streamline the Agent's capabilities, you can create and use _skills_.
 
-Each skill is a short Markdown file with: a name, a description that tells Prophecy when to use it, and instructions that Prophecy follows when the skill applies.
+Skills tell Prophecy’s AI agent how to handle a specific task: when to activate, what context to load, how to approach the work, and what to produce or hand off when finished. This page explains how to structure a skill and how to refine it over time.
 
-<Note>
-Skills are an iterative artifact. The structure described here reflects patterns that work well in practice, but there is no single correct form. Expect to revise a skill as you learn how the agent interprets it and how users actually phrase their requests.
-</Note>
+A skill is a short Markdown file that includes:
+
+- A **name**.
+- A **description** that tells Prophecy when to use the skill.
+- A set of **instructions** that Prophecy follows when the skill is active.
+
+We recommend keeping skills concise. Active skills consume chat context, which increases cost and can reduce the space available for other information. In most cases, you should focus on describing **what** you want Prophecy to do rather than **how** or **why** it should do it.
+
+Skills are most useful when you find yourself repeatedly providing the same instructions, checklist, workflow, or multi-step procedure in chat.
+
+<Note> Skills are inherently iterative. The structure described here reflects patterns that work well in practice, but there is no single correct format. Expect to revise a skill as you learn how users phrase requests, how the agent interprets the instructions, and which guidance produces the best results. </Note>
 
 ## What a skill file is
 
@@ -17,14 +25,16 @@ A skill is a folder containing a `SKILL.md` file and any supporting reference fi
 
 In Prophecy, skills live at `skills/<skill-name>/SKILL.md` in your project.
 
+For additional guidance on skill functions and common patterns, see [Types of Skill Content](https://code.claude.com/docs/en/skills#types-of-skill-content) in Anthropic's Claude Skills documentation.
+
 ## How the agent loads skills
 
 The agent reads the **name and description** of every installed skill on every chat, but only loads the full skill body when it determines the skill is relevant to the current task.
 
 This means:
 
-- You can maintain many skills without degrading agent output.
-- The skill's description is doing active routing work, not just documentation.
+- You can maintain many skills in Prophecy without degrading agent output.
+- The skill's description does active routing work, not just documentation.
 - A vague description means the skill may never load, or may load at the wrong time.
 
 ## Frontmatter
@@ -50,7 +60,7 @@ A vague description like "Helps with data mapping" gives the agent little to wor
 
 ## Skill body
 
-The body has no required schema, and the skill's tructure follows from the task. Use whatever sections the agent needs to do the job correctly, named and ordered to match the work.
+The body has no required schema, and the skill's structure follows from the task. Use whatever sections the agent needs to do the job correctly, named and ordered to match the work.
 
 Two elements appear in most skills:
 
@@ -69,9 +79,9 @@ This orients anyone reading the file and helps the agent understand its own scop
 
 ### Important rule
 
-Tag this as `<important_rule>`.
+It is often useful to begin a skill with an `<important_rule>` block.
 
-An XML-tagged block that fires as the agent's first instruction — before any other content in the body. Use it for sequencing requirements, hard constraints, or anything the agent must not skip:
+Use this XML-tagged block for instructions the agent must follow before anything else in the skill body. This is the right place for sequencing requirements, hard constraints, or steps the agent must not skip:
 
 ```xml
 <important_rule>Before executing, create a task plan: (1) Confirm scope with user — ASK if not explicitly stated, (2) Read existing CDM and domain packs before designing, (3) For CDM changes: additions are safe, renames and deletions need user approval — ASK before making destructive changes.</important_rule>
@@ -79,9 +89,11 @@ An XML-tagged block that fires as the agent's first instruction — before any o
 
 A skill can have more than one `<important_rule>` block. Each fires when the skill loads.
 
-### Everything else
+Everything else
 
-Beyond those two, section structure is up to you. Skills can use numbered steps, tables, prerequisite checklists, status notes, or domain-specific framing. The only requirement is that the instructions are unambiguous enough for the agent to follow without guessing.
+Beyond the description and any optional `<important_rule>` block, the rest of the skill structure is up to you. Skills can use numbered procedures, checklists, tables, status notes, decision trees, or domain-specific guidance—whatever best communicates the workflow.
+
+The key requirement is clarity. Instructions should be specific enough that the agent can follow them consistently without needing to infer missing steps or intent.
 
 <Note>
 Skill body content stays in context for the entire session once loaded. Keep it concise, because every line is a recurring token cost. Move large reference material to supporting files in the same skill directory and link to them from `SKILL.md`.
@@ -89,7 +101,7 @@ Skill body content stays in context for the entire session once loaded. Keep it 
 
 ## Uploading a skill
 
-Once your file is ready, upload the skill to Agent and give it the following prompt:
+Once your file is ready, upload the skill to the Agent and give it the following prompt:
 
 ```
 Upload this skill to skills/<name>/SKILL.md and sync the project.
