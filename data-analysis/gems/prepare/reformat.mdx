@@ -43,19 +43,29 @@ Use expressions and functions to transform values, combine columns, clean data, 
 
 <Info>If no columns are selected, then all columns are passed through to the output.</Info>
 
-## How Reformat works
+### Preview transformed data
 
-The Reformat gem processes each row individually and applies expressions to generate output columns.
+Run the Reformat gem to generate preview results.
 
-You can:
+After the initial run, the **Data** tab displays how your transformations affect the output dataset. As you edit expressions, the preview updates automatically so you can immediately verify the results of your changes.
 
-- keep existing columns
-- rename columns
-- modify column values
-- create new columns
-- remove unwanted columns
+### Visualize data flow
 
-If no columns are selected, all input columns are passed through unchanged.
+You can preview the changes that the Reformat gem will make by either:
+
+1. Clicking the the **Visualize Data Flow** icon to the right of an expression, or
+2. Clicking the **Data** button at the bottom of the Reformat gem visual editor.
+
+When enabled:
+
+- Input columns referenced by the expression are highlighted in the input data preview.
+- The output column produced by the expression is highlighted in the output preview highlights update automatically as you edit the expression.
+
+This view helps you understand column dependencies and verify how output values are derived from source data.
+
+<Info>You must run the Reformat gem at least once before preview data and data flow visualizations are available.</Info>
+
+![visualize data flow](/data-analysis/gems/prepare/img/reformat_gem_data.png)
 
 ## Common issues
 
@@ -63,9 +73,9 @@ If no columns are selected, all input columns are passed through unchanged.
 
 Verify that:
 
-- the column name exists in the input dataset.
-- the column name uses the correct capitalization.
-- the column reference is spelled correctly.
+- The column name exists in the input dataset.
+- The column name uses the correct capitalization.
+- The column reference is spelled correctly.
 
 ### Type mismatch errors
 
@@ -73,8 +83,8 @@ Some functions and operators require specific data types.
 
 For example:
 
-- numeric calculations require numeric columns.
-- string functions require text values.
+- Numeric calculations require numeric columns.
+- String functions require text values.
 
 Use `CAST()` to convert values when needed.
 

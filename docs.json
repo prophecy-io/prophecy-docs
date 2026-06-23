@@ -9,11 +9,6 @@
   },
   "favicon": "/favicon.png",
   "navigation": {
-    "products": [
-      {
-        "product": "Prophecy Documentation",
-        "icon": "/images/pipeline.svg",
-        "description": "Build and deploy data pipelines",
         "dropdowns": [
           {
             "dropdown": "Data Analysis",
@@ -102,7 +97,8 @@
                         "group": "Pipelines",
                         "pages": [
                           "data-analysis/development/pipelines/data-analysis-pipelines",
-                          "data-analysis/development/pipelines/view-pipeline-py"
+                          "data-analysis/development/pipelines/view-pipeline-py",
+                          "data-analysis/development/pipelines/view-sql-lineage"
                         ]
                       },
                       {
@@ -268,7 +264,7 @@
                           "data-analysis/production/scheduling/pipeline-trigger-gem"
                         ]
                       },
-                       {
+                      {
                         "group": "Publishing",
                         "pages": [
                           "data-analysis/production/publication/publication-concepts",
@@ -497,7 +493,212 @@
                           "data-analysis/gems/custom/sql-statement",
                           "data-analysis/gems/custom/stored-procedure",
                           "data-analysis/gems/custom/todo-gem"
-
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "tab": "Import & Migrate",
+                "groups": [
+                  {
+                    "group": "Overview",
+                    "pages": [
+                      "import-tool/index",
+                      "import-tool/migration",
+                      "import-tool/alteryx/alteryx-migration-analysis"
+                    ]
+                  },
+                  {
+                    "group": "Alteryx",
+                    "pages": [
+                      {
+                        "group": "Alteryx to SQL",
+                        "pages": [
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/getting-started-prophecy-alteryx",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-to-sql",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/sql-dialect-differences",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/data-type-mapping",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-connections",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/function-mapping",
+                          {
+                            "group": "Tool mapping",
+                            "pages": [
+                              "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-tool-mapping",
+                              {
+                                "group": "Alteryx In/Out tools",
+                                "pages": [
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-browse-tool",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-datetime-now",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-directory-tool",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-input-data-tool",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-output-data-tool",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-text-input-tool"
+                                ]
+                              },
+                              {
+                                "group": "Alteryx Prep tools",
+                                "pages": [
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-data-cleansing-tool",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-filter-tool",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-formula-tool",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-imputation-tool",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-field-binning-tool",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-field-formula-tool",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-row-formula-tool",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-oversample-field-tool"
+                                ]
+                              },
+                              {
+                                "group": "Alteryx Join tools",
+                                "pages": [
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-join-tools/alteryx-append-fields",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-join-tools/alteryx-find-replace",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-join-tools/alteryx-join",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-join-tools/alteryx-join-multiple",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-join-tools/alteryx-union"
+                                ]
+                              },
+                              {
+                                "group": "Alteryx Parse tools",
+                                "pages": [
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-parse-tools/alteryx-datetime",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-parse-tools/alteryx-regex",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-parse-tools/alteryx-xml-parse"
+                                ]
+                              },
+                              {
+                                "group": "Alteryx Transform tools",
+                                "pages": [
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-arrange",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-count-records",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-cross-tab",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-make-columns",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-running-total",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-summarize",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-transpose",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-weighted-average"
+                                ]
+                              },
+                              "import-tool/alteryx/alteryx-to-prophecy-sql/databricks-performance-tuning"
+                            ]
+                          },
+                          {
+                            "group": "Troubleshooting",
+                            "pages": [
+                              "import-tool/alteryx/alteryx-to-prophecy-sql/troubleshooting/troubleshooting",
+                              "import-tool/alteryx/alteryx-to-prophecy-sql/troubleshooting/malformed-file",
+                              "import-tool/alteryx/alteryx-to-prophecy-sql/troubleshooting/unsupported-function",
+                              "import-tool/alteryx/alteryx-to-prophecy-sql/troubleshooting/unsupported-tool"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "group": "Alteryx to Spark",
+                        "pages": [
+                          "import-tool/alteryx/alteryx-to-spark/alteryx-to-spark",
+                          "import-tool/alteryx/alteryx-to-spark/alteryx-components"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Informatica",
+                    "pages": [
+                      {
+                        "group": "Getting started",
+                        "pages": [
+                          "import-tool/informatica/informatica",
+                          "import-tool/informatica/getting-started-with-Informatica"
+                        ]
+                      },
+                      {
+                        "group": "Informatica to SQL",
+                        "pages": [
+                          "import-tool/informatica/informatica-to-sql/informatica-to-sql",
+                          "import-tool/informatica/informatica-to-sql/big-query-components-mappings",
+                          "import-tool/informatica/informatica-to-sql/big-query-data-types",
+                          "import-tool/informatica/informatica-to-sql/big-query-functions-mappings"
+                        ]
+                      },
+                      {
+                        "group": "Informatica to Spark",
+                        "pages": [
+                          "import-tool/informatica/informatica-to-spark/informatica-to-spark",
+                          "import-tool/informatica/informatica-to-spark/informatica-components"
+                        ]
+                      },
+                      {
+                        "group": "Informatica ICS to SQL",
+                        "pages": [
+                          "import-tool/informatica/informatica-ics-to-spark/getting-started-with-informatica-ics",
+                          "import-tool/informatica/informatica-ics-to-spark/informatica-ics-components"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Ab Initio",
+                    "pages": [
+                      {
+                        "group": "Getting started",
+                        "pages": [
+                          "import-tool/abinitio/abinitio",
+                          "import-tool/abinitio/getting-started-with-Abinitio"
+                        ]
+                      },
+                      {
+                        "group": "Components",
+                        "pages": [
+                          "import-tool/abinitio/abinitio-components"
+                        ]
+                      },
+                      {
+                        "group": "Functions",
+                        "pages": [
+                          "import-tool/abinitio/abinitio-functions"
+                        ]
+                      },
+                      {
+                        "group": "Plans",
+                        "pages": [
+                          "import-tool/abinitio/abinitio-plans"
+                        ]
+                      },
+                      {
+                        "group": "Gems",
+                        "pages": [
+                          "import-tool/abinitio/abinitio-gems/log",
+                          "import-tool/abinitio/abinitio-gems/normalize",
+                          "import-tool/abinitio/abinitio-gems/sequence",
+                          "import-tool/abinitio/abinitio-gems/surrogate-key-generator"
+                        ]
+                      },
+                      {
+                        "group": "Troubleshooting",
+                        "pages": [
+                          "import-tool/abinitio/trouble-shooting/missing-files",
+                          "import-tool/abinitio/trouble-shooting/trouble-shooting"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "DataStage",
+                    "pages": [
+                      {
+                        "group": "Getting started",
+                        "pages": [
+                          "import-tool/datastage/datastage",
+                          "import-tool/datastage/getting-started-with-DataStage"
+                        ]
+                      },
+                      {
+                        "group": "Components",
+                        "pages": [
+                          "import-tool/datastage/datastage-components"
                         ]
                       }
                     ]
@@ -1106,6 +1307,307 @@
                 ]
               },
               {
+                "tab": "Import & Migrate",
+                "groups": [
+                  {
+                    "group": "Overview",
+                    "pages": [
+                      "import-tool/index",
+                      "import-tool/migration",
+                      "import-tool/alteryx/alteryx-migration-analysis"
+                    ]
+                  },
+                  {
+                    "group": "Alteryx",
+                    "pages": [
+                      {
+                        "group": "Alteryx to SQL",
+                        "pages": [
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/getting-started-prophecy-alteryx",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-to-sql",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/sql-dialect-differences",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/data-type-mapping",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-connections",
+                          "import-tool/alteryx/alteryx-to-prophecy-sql/function-mapping",
+                          {
+                            "group": "Tool mapping",
+                            "pages": [
+                              "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-tool-mapping",
+                              {
+                                "group": "Alteryx In/Out tools",
+                                "pages": [
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-browse-tool",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-datetime-now",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-directory-tool",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-input-data-tool",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-output-data-tool",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-text-input-tool"
+                                ]
+                              },
+                              {
+                                "group": "Alteryx Prep tools",
+                                "pages": [
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-data-cleansing-tool",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-filter-tool",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-formula-tool",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-imputation-tool",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-field-binning-tool",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-field-formula-tool",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-row-formula-tool",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-oversample-field-tool"
+                                ]
+                              },
+                              {
+                                "group": "Alteryx Join tools",
+                                "pages": [
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-join-tools/alteryx-append-fields",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-join-tools/alteryx-find-replace",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-join-tools/alteryx-join",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-join-tools/alteryx-join-multiple",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-join-tools/alteryx-union"
+                                ]
+                              },
+                              {
+                                "group": "Alteryx Parse tools",
+                                "pages": [
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-parse-tools/alteryx-datetime",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-parse-tools/alteryx-regex",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-parse-tools/alteryx-xml-parse"
+                                ]
+                              },
+                              {
+                                "group": "Alteryx Transform tools",
+                                "pages": [
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-arrange",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-count-records",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-cross-tab",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-make-columns",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-running-total",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-summarize",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-transpose",
+                                  "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-weighted-average"
+                                ]
+                              },
+                              "import-tool/alteryx/alteryx-to-prophecy-sql/databricks-performance-tuning"
+                            ]
+                          },
+                          {
+                            "group": "Troubleshooting",
+                            "pages": [
+                              "import-tool/alteryx/alteryx-to-prophecy-sql/troubleshooting/troubleshooting",
+                              "import-tool/alteryx/alteryx-to-prophecy-sql/troubleshooting/malformed-file",
+                              "import-tool/alteryx/alteryx-to-prophecy-sql/troubleshooting/unsupported-function",
+                              "import-tool/alteryx/alteryx-to-prophecy-sql/troubleshooting/unsupported-tool"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "group": "Alteryx to Spark",
+                        "pages": [
+                          "import-tool/alteryx/alteryx-to-spark/alteryx-to-spark",
+                          "import-tool/alteryx/alteryx-to-spark/alteryx-components"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Informatica",
+                    "pages": [
+                      {
+                        "group": "Getting started",
+                        "pages": [
+                          "import-tool/informatica/informatica",
+                          "import-tool/informatica/getting-started-with-Informatica"
+                        ]
+                      },
+                      {
+                        "group": "Informatica to SQL",
+                        "pages": [
+                          "import-tool/informatica/informatica-to-sql/informatica-to-sql",
+                          "import-tool/informatica/informatica-to-sql/big-query-components-mappings",
+                          "import-tool/informatica/informatica-to-sql/big-query-data-types",
+                          "import-tool/informatica/informatica-to-sql/big-query-functions-mappings"
+                        ]
+                      },
+                      {
+                        "group": "Informatica to Spark",
+                        "pages": [
+                          "import-tool/informatica/informatica-to-spark/informatica-to-spark",
+                          "import-tool/informatica/informatica-to-spark/informatica-components"
+                        ]
+                      },
+                      {
+                        "group": "Informatica ICS to SQL",
+                        "pages": [
+                          "import-tool/informatica/informatica-ics-to-spark/getting-started-with-informatica-ics",
+                          "import-tool/informatica/informatica-ics-to-spark/informatica-ics-components"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Ab Initio",
+                    "pages": [
+                      {
+                        "group": "Getting started",
+                        "pages": [
+                          "import-tool/abinitio/abinitio",
+                          "import-tool/abinitio/getting-started-with-Abinitio"
+                        ]
+                      },
+                      {
+                        "group": "Components",
+                        "pages": [
+                          "import-tool/abinitio/abinitio-components"
+                        ]
+                      },
+                      {
+                        "group": "Functions",
+                        "pages": [
+                          "import-tool/abinitio/abinitio-functions"
+                        ]
+                      },
+                      {
+                        "group": "Plans",
+                        "pages": [
+                          "import-tool/abinitio/abinitio-plans"
+                        ]
+                      },
+                      {
+                        "group": "Gems",
+                        "pages": [
+                          "import-tool/abinitio/abinitio-gems/log",
+                          "import-tool/abinitio/abinitio-gems/normalize",
+                          "import-tool/abinitio/abinitio-gems/sequence",
+                          "import-tool/abinitio/abinitio-gems/surrogate-key-generator"
+                        ]
+                      },
+                      {
+                        "group": "Troubleshooting",
+                        "pages": [
+                          "import-tool/abinitio/trouble-shooting/missing-files",
+                          "import-tool/abinitio/trouble-shooting/trouble-shooting"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "DataStage",
+                    "pages": [
+                      {
+                        "group": "Getting started",
+                        "pages": [
+                          "import-tool/datastage/datastage",
+                          "import-tool/datastage/getting-started-with-DataStage"
+                        ]
+                      },
+                      {
+                        "group": "Components",
+                        "pages": [
+                          "import-tool/datastage/datastage-components"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "tab": "API reference",
+                "groups": [
+                  {
+                    "group": "API documentation",
+                    "pages": [
+                      "api-reference/introduction"
+                    ]
+                  },
+                  {
+                    "group": "Endpoints",
+                    "pages": [
+                      {
+                        "group": "Fabrics",
+                        "pages": [
+                          "api-reference/fabrics/create-a-new-fabric",
+                          "api-reference/fabrics/get-fabric-details",
+                          "api-reference/fabrics/update-an-existing-fabric",
+                          "api-reference/fabrics/delete-a-fabric"
+                        ]
+                      },
+                      {
+                        "group": "Connections",
+                        "pages": [
+                          {
+                            "group": "Properties",
+                            "pages": [
+                              "api-reference/connections/properties/redshift",
+                              "api-reference/connections/properties/s3",
+                              "api-reference/connections/properties/adls",
+                              "api-reference/connections/properties/synapse",
+                              "api-reference/connections/properties/bigquery",
+                              "api-reference/connections/properties/gcs",
+                              "api-reference/connections/properties/databricks",
+                              "api-reference/connections/properties/mssql",
+                              "api-reference/connections/properties/onedrive",
+                              "api-reference/connections/properties/power-bi",
+                              "api-reference/connections/properties/sharepoint",
+                              "api-reference/connections/properties/mongodb",
+                              "api-reference/connections/properties/oracle",
+                              "api-reference/connections/properties/postgres",
+                              "api-reference/connections/properties/salesforce",
+                              "api-reference/connections/properties/hana",
+                              "api-reference/connections/properties/sftp",
+                              "api-reference/connections/properties/smartsheet",
+                              "api-reference/connections/properties/smpt",
+                              "api-reference/connections/properties/snowflake",
+                              "api-reference/connections/properties/tableau"
+                            ]
+                          },
+                          "api-reference/connections/properties/kgconfig",
+                          "api-reference/connections/add-connection-to-fabric",
+                          "api-reference/connections/list-connections-per-fabric",
+                          "api-reference/connections/retrieve-connection-details",
+                          "api-reference/connections/update-connection",
+                          "api-reference/connections/delete-connection"
+                        ]
+                      },
+                      {
+                        "group": "Secrets",
+                        "pages": [
+                          {
+                            "group": "Properties",
+                            "pages": [
+                              "api-reference/secrets/properties/text",
+                              "api-reference/secrets/properties/binary",
+                              "api-reference/secrets/properties/username-password",
+                              "api-reference/secrets/properties/oauth"
+                            ]
+                          },
+                          "api-reference/secrets/add-secret-to-fabric",
+                          "api-reference/secrets/list-secrets-per-fabric",
+                          "api-reference/secrets/retrieve-secret-details",
+                          "api-reference/secrets/update-secret",
+                          "api-reference/secrets/delete-secret"
+                        ]
+                      },
+                      {
+                        "group": "Projects",
+                        "pages": [
+                          "api-reference/projects/deploy-project"
+                        ]
+                      },
+                      {
+                        "group": "Pipelines",
+                        "pages": [
+                          "api-reference/pipelines/trigger-pipeline-run",
+                          "api-reference/pipelines/get-pipeline-run-status",
+                          "api-reference/pipelines/run-data-tests"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
                 "tab": "Administration",
                 "groups": [
                   {
@@ -1236,225 +1738,6 @@
             ]
           }
         ]
-      },
-      {
-        "product": "Import Workflows",
-        "icon": "/images/download-d.svg",
-        "description": "Import workflows from external tools into Prophecy",
-        "dropdowns": [
-          {
-            "dropdown": "Alteryx",
-            "icon": "/images/import/logo-alteryx.svg",
-            "groups": [
-              {
-                "group": "Import overview",
-                "pages": [
-                  "import-tool/index",
-                  "import-tool/migration"
-                ]
-              },
-              {
-                "group": "Alteryx to SQL",
-                "pages": [
-                  "import-tool/alteryx/alteryx-to-prophecy-sql/getting-started-prophecy-alteryx",
-                  "import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-to-sql",
-                  "import-tool/alteryx/alteryx-to-prophecy-sql/sql-dialect-differences",
-                  "import-tool/alteryx/alteryx-to-prophecy-sql/data-type-mapping",
-                  "import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-connections",
-                  "import-tool/alteryx/alteryx-to-prophecy-sql/function-mapping",
-                  {
-                    "group": "Tool mapping",
-                    "pages": [
-                      "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-tool-mapping",
-                      {
-                        "group": "Alteryx In/Out tools",
-                        "pages": [
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-browse-tool",
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-datetime-now",
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-directory-tool",
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-input-data-tool",
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-output-data-tool",
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-in-out-tools/alteryx-text-input-tool"
-                        ]
-                      },
-                      {
-                        "group": "Alteryx Prep tools",
-                        "pages": [
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-data-cleansing-tool",
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-filter-tool",
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-formula-tool",
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-imputation-tool",
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-field-binning-tool",
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-field-formula-tool",
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-multi-row-formula-tool",
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-prep-tools/alteryx-oversample-field-tool"
-                        ]
-                      },
-                      {
-                        "group": "Alteryx Join tools",
-                        "pages": [
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-join-tools/alteryx-append-fields",
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-join-tools/alteryx-find-replace",
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-join-tools/alteryx-join",
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-join-tools/alteryx-join-multiple",
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-join-tools/alteryx-union"
-                        ]
-                      },
-                      {
-                        "group": "Alteryx Parse tools",
-                        "pages": [
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-parse-tools/alteryx-datetime",
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-parse-tools/alteryx-regex",
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-parse-tools/alteryx-xml-parse"
-                        ]
-                      },
-                      {
-                        "group": "Alteryx Transform tools",
-                        "pages": [
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-arrange",
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-count-records",
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-cross-tab",
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-make-columns",
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-running-total",
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-summarize",
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-transpose",
-                          "import-tool/alteryx/alteryx-to-prophecy-sql/tool-mapping/alteryx-transform-tools/alteryx-weighted-average"
-                        ]
-                      },
-                      "import-tool/alteryx/alteryx-to-prophecy-sql/databricks-performance-tuning"
-                    ]
-                  },
-                  {
-                    "group": "Troubleshooting",
-                    "pages": [
-                      "import-tool/alteryx/alteryx-to-prophecy-sql/troubleshooting/troubleshooting",
-                      "import-tool/alteryx/alteryx-to-prophecy-sql/troubleshooting/malformed-file",
-                      "import-tool/alteryx/alteryx-to-prophecy-sql/troubleshooting/unsupported-function",
-                      "import-tool/alteryx/alteryx-to-prophecy-sql/troubleshooting/unsupported-tool"
-                    ]
-                  }
-                ]
-              },
-              {
-                "group": "Alteryx to Spark",
-                "pages": [
-                  "import-tool/alteryx/alteryx-to-spark/alteryx-to-spark",
-                  "import-tool/alteryx/alteryx-to-spark/alteryx-components"
-                ]
-              },
-              {
-                "group": "Migration Analysis",
-                "pages": [
-                  "import-tool/alteryx/alteryx-migration-analysis"
-                ]
-              }
-            ]
-          },
-          {
-            "dropdown": "Informatica",
-            "icon": "/images/import/logo-informatica.svg",
-            "groups": [
-              {
-                "group": "Getting started",
-                "pages": [
-                  "import-tool/informatica/informatica",
-                  "import-tool/informatica/getting-started-with-Informatica"
-                ]
-              },
-              {
-                "group": "Informatica to SQL",
-                "pages": [
-                  "import-tool/informatica/informatica-to-sql/informatica-to-sql",
-                  "import-tool/informatica/informatica-to-sql/big-query-components-mappings",
-                  "import-tool/informatica/informatica-to-sql/big-query-data-types",
-                  "import-tool/informatica/informatica-to-sql/big-query-functions-mappings"
-                ]
-              },
-              {
-                "group": "Informatica to Spark",
-                "pages": [
-                  "import-tool/informatica/informatica-to-spark/informatica-to-spark",
-                  "import-tool/informatica/informatica-to-spark/informatica-components"
-                ]
-              },
-              {
-                "group": "Informatica ICS to SQL",
-                "pages": [
-                  "import-tool/informatica/informatica-ics-to-spark/getting-started-with-informatica-ics",
-                  "import-tool/informatica/informatica-ics-to-spark/informatica-ics-components"
-                ]
-              }
-            ]
-          },
-          {
-            "dropdown": "Ab Initio",
-            "icon": "/images/import/logo-abinitio.svg",
-            "groups": [
-              {
-                "group": "Getting started",
-                "pages": [
-                  "import-tool/abinitio/abinitio",
-                  "import-tool/abinitio/getting-started-with-Abinitio"
-                ]
-              },
-              {
-                "group": "Components",
-                "pages": [
-                  "import-tool/abinitio/abinitio-components"
-                ]
-              },
-              {
-                "group": "Functions",
-                "pages": [
-                  "import-tool/abinitio/abinitio-functions"
-                ]
-              },
-              {
-                "group": "Plans",
-                "pages": [
-                  "import-tool/abinitio/abinitio-plans"
-                ]
-              },
-              {
-                "group": "Gems",
-                "pages": [
-                  "import-tool/abinitio/abinitio-gems/log",
-                  "import-tool/abinitio/abinitio-gems/normalize",
-                  "import-tool/abinitio/abinitio-gems/sequence",
-                  "import-tool/abinitio/abinitio-gems/surrogate-key-generator"
-                ]
-              },
-              {
-                "group": "Troubleshooting",
-                "pages": [
-                  "import-tool/abinitio/trouble-shooting/missing-files",
-                  "import-tool/abinitio/trouble-shooting/trouble-shooting"
-                ]
-              }
-            ]
-          },
-          {
-            "dropdown": "DataStage",
-            "icon": "/images/import/logo-ibm.svg",
-            "groups": [
-              {
-                "group": "Getting started",
-                "pages": [
-                  "import-tool/datastage/datastage",
-                  "import-tool/datastage/getting-started-with-DataStage"
-                ]
-              },
-              {
-                "group": "Components",
-                "pages": [
-                  "import-tool/datastage/datastage-components"
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    ]
   },
   "logo": {
     "light": "/images/logo/logo-light.png",
