@@ -3,18 +3,15 @@ title: Data type mapping
 description: Explains how Alteryx data types map to Prophecy SQL data types
 ---
 
-This page maps **Alteryx Designer** data types to **Prophecy Analysts** data types used in Prophecy SQL pipelines.
+This page maps **Alteryx Designer** data types to SQL data types used by Prophecy pipelines.
 
-Prophecy SQL pipelines run on different execution engines such as **Databricks SQL** or **BigQuery**.  
-Because each engine provides its own SQL type system, the resulting data type may differ depending on the configured environment.
+Prophecy pipelines run on different execution engines such as **Databricks SQL**, **BigQuery**, and **Snowflake**. Because each engine provides its own SQL type system, the resulting data type may differ depending on the configured environment.
 
-Use the tabs below to view the mapping for your execution engine.
+Use the tabs below to view mappings for your execution engine.
 
 <Tabs>
 
-<Tab title="Databricks">
-
-This section maps **Alteryx Designer** data types to **Databricks SQL** types used by Prophecy pipelines.
+<Tab title="Databricks SQL">
 
 ## String data
 
@@ -87,18 +84,22 @@ Alteryx type: **Bool**
 
 <Tab title="BigQuery">
 
-This section maps **Alteryx Designer** data types to **BigQuery SQL** types used by Prophecy pipelines.
-
 ## String data
 
-| Alteryx | Prophecy (BigQuery SQL) | Notes |
+Alteryx has four data types for strings: `String`, `WString`, `V_String`, `V_WString`.
+
+In Prophecy, all strings can be handled with the SQL data type `STRING`.
+
+| Alteryx | Prophecy (BigQuery) | Notes |
 |--------|--------------------------|------|
 | `String` / `V_String` | `STRING` | BigQuery strings are UTF-8 and variable-length. |
 | `WString` / `V_WString` | `STRING` | Unicode strings are supported by default. |
 
 ## Numeric data
 
-| Alteryx | Prophecy (BigQuery SQL) | Notes |
+Alteryx has seven numeric types: `Byte`, `Int16`, `Int32`, `Int64`, `Fixed Decimal`, `Float`, `Double`.
+
+| Alteryx | Prophecy (BigQuery) | Notes |
 |--------|--------------------------|------|
 | `Byte` | `INT64` | BigQuery uses a single integer type for all integer widths. |
 | `Int16` | `INT64` | Smaller integer widths are normalized to `INT64`. |
@@ -110,7 +111,9 @@ This section maps **Alteryx Designer** data types to **BigQuery SQL** types used
 
 ## DateTime data
 
-| Alteryx | Prophecy (BigQuery SQL) | Notes |
+Alteryx has three DateTime data types: `Date`, `Time`, `DateTime`.
+
+| Alteryx | Prophecy (BigQuery) | Notes |
 |--------|--------------------------|------|
 | `Date` | `DATE` | Calendar date (`YYYY-MM-DD`). |
 | `Time` | `TIME` | Native time-of-day type without timezone. |
@@ -124,13 +127,13 @@ This section maps **Alteryx Designer** data types to **BigQuery SQL** types used
 
 ## Boolean data
 
-| Alteryx | Prophecy (BigQuery SQL) | Notes |
+| Alteryx | Prophecy (BigQuery) | Notes |
 |--------|--------------------------|------|
 | `Bool` | `BOOL` | Represents true/false values. |
 
 ## Quick reference
 
-| Alteryx | Prophecy (BigQuery SQL) |
+| Alteryx | Prophecy (BigQuery) |
 |--------|--------------------------|
 | String / V_String | `STRING` |
 | WString / V_WString | `STRING` |
@@ -152,6 +155,84 @@ This section maps **Alteryx Designer** data types to **BigQuery SQL** types used
 - **Decimal precision:** Use `NUMERIC` for most use cases; use `BIGNUMERIC` when higher precision is required.
 - **Date/time handling:** BigQuery distinguishes between `DATETIME` (no timezone) and `TIMESTAMP` (absolute time).
 - **Unicode strings:** BigQuery `STRING` supports UTF-8 text by default.
+
+</Tab>
+
+<Tab title="Snowflake">
+
+## String data
+
+Alteryx has four data types for strings: `String`, `WString`, `V_String`, `V_WString`.
+
+In a Snowflake fabric, all strings can be handled with the SQL data type `VARCHAR`.
+
+| Alteryx | Prophecy (Snowflake) | Notes |
+|--------|----------------------|------|
+| `String` / `V_String` | `VARCHAR` | Snowflake `VARCHAR` supports UTF-8 variable-length strings. |
+| `WString` / `V_WString` | `VARCHAR` | Unicode strings are supported by default. |
+
+## Numeric data
+
+Alteryx has seven numeric types: `Byte`, `Int16`, `Int32`, `Int64`, `Fixed Decimal`, `Float`, `Double`.
+
+| Alteryx | Prophecy (Snowflake) | Notes |
+|--------|----------------------|------|
+| `Byte` | `NUMBER` | Confirm whether Import generates width-specific numeric types or generic `NUMBER`. |
+| `Int16` | `NUMBER` | Snowflake commonly uses `NUMBER` for integer storage. |
+| `Int32` | `NUMBER` | |
+| `Int64` | `NUMBER` | |
+| `Fixed Decimal` | `NUMBER(p,s)` | Snowflake supports configurable precision and scale. |
+| `Float` | `FLOAT` | Floating-point numeric type. |
+| `Double` | `FLOAT` | Snowflake uses `FLOAT` for double-precision values. |
+
+## DateTime data
+
+Alteryx has three DateTime data types: `Date`, `Time`, `DateTime`.
+
+| Alteryx | Prophecy (Snowflake) | Notes |
+|--------|----------------------|------|
+| `Date` | `DATE` | Calendar date without timezone. |
+| `Time` | `TIME` | Snowflake supports a standalone `TIME` type. |
+| `DateTime` | `TIMESTAMP` | Confirm whether Import generates `TIMESTAMP`, `TIMESTAMP_NTZ`, or another timestamp variant. |
+
+### Precision and range differences
+
+- Snowflake supports nanosecond timestamp precision.
+- Snowflake provides multiple timestamp variants (`TIMESTAMP_NTZ`, `TIMESTAMP_LTZ`, `TIMESTAMP_TZ`).
+- Timezone behavior depends on the timestamp type and session configuration.
+
+## Boolean data
+
+Alteryx type: **Bool**
+
+| Alteryx | Prophecy (Snowflake) | Notes |
+|--------|----------------------|------|
+| `Bool` | `BOOLEAN` | Represents true/false values. |
+
+## Quick reference
+
+| Alteryx | Prophecy (Snowflake) |
+|--------|----------------------|
+| String / V_String | `VARCHAR` |
+| WString / V_WString | `VARCHAR` |
+| Byte | `NUMBER` |
+| Int16 | `NUMBER` |
+| Int32 | `NUMBER` |
+| Int64 | `NUMBER` |
+| Fixed Decimal | `NUMBER(p,s)` |
+| Float | `FLOAT` |
+| Double | `FLOAT` |
+| Date | `DATE` |
+| Time | `TIME` |
+| DateTime | `TIMESTAMP` |
+| Bool | `BOOLEAN` |
+
+## Known differences & recommendations
+
+- **Numeric handling:** Snowflake commonly uses `NUMBER` for integer storage.
+- **Timestamp variants:** Snowflake supports multiple timestamp types with different timezone semantics.
+- **Unicode strings:** `VARCHAR` supports UTF-8 text by default.
+- **Time support:** Unlike Databricks SQL, Snowflake supports a standalone `TIME` type.
 
 </Tab>
 

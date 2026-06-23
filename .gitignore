@@ -2,3 +2,5 @@
 myenv/
 .venv
 AGENTS.md
+tmp/project-view-ui-changes.md
+docs.before-import-refactor.json
