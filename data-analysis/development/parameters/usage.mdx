@@ -314,6 +314,45 @@ Next, you'll use the `temperature_threshold` parameter to filter your data.
 
 When the analysis runs, users can adjust `temperature_threshold` to make filtering more or less sensitive.
 
+### Connection type
+
+This example uses a pipeline that reads data from Amazon S3. You can use a **Connection** parameter to make the pipeline reusable across fabrics and environments.
+
+#### Create the Connection parameter
+
+1. Open the pipeline parameter settings for the relevant pipeline.
+2. Click **+ Add Variable**.
+3. Name the parameter `sales_s3_connection`.
+4. Select the **Type** and choose **Connection**.
+5. Select a connection from the current fabric, such as `s3_sales_dev`.
+6. Click **Save**.
+
+The selected connection becomes the default value for the parameter.
+
+#### Use the parameter in a Source gem
+
+Next, you'll configure a Source gem to use the connection parameter instead of a fixed connection.
+
+1. Add an **S3 Source** gem to your pipeline.
+2. Open the Source gem settings.
+3. In the **Connection** field, select **Configuration Variable**.
+4. Select `sales_s3_connection`.
+5. Configure the remaining source settings, such as bucket and file path.
+6. Click **Save**.
+
+Only connection parameters matching the Source gem type are selectable. For example, an S3 Source gem only allows S3 connection parameters.
+
+#### Switch fabrics
+
+If you switch to another fabric, Prophecy validates that the configured connection still exists and matches the expected type.
+
+Diagnostics appear in the Source gem if:
+
+- The selected connection does not exist in the current fabric.
+- A connection with the same name exists, but the connection type does not match the Source gem type.
+
+For example, if `sales_s3_connection` references an S3 connection in one fabric, but the same connection name refers to a Snowflake connection in another fabric, the Source gem displays a diagnostic error.
+
 ## Best practices
 
 To make the most out of parameters, we suggest you:

@@ -1,0 +1,49 @@
+---
+title: Knowledge graph configuration
+description: Configure the V4 agent to use the knowledge graph when AI data access is disabled
+---
+
+<Callout icon="/images/icon.png" color="#FFC107">
+  Available on the [Enterprise Edition](/administration/platform/editions) only.
+</Callout>
+
+When `AI_DATA_ACCESS_CLUSTER_ENABLED` is set to `false`, the V4 agent can still serve metadata-based capabilities (dataset discovery, schema lookups, and KG search) as long as you have configured the knowledge graph service URL and model. Without this configuration, the agent will fail to call KG tools even when the knowledge graph has been indexed.
+
+## Prerequisites
+
+- Kubernetes access to the namespace where Prophecy is deployed
+- An existing and successfully indexed [knowledge graph](/data-analysis/ai/knowledge-graph/knowledge-graph)
+
+## Configure the knowledge graph service
+
+Update the `sql-sandbox-config-map` to specify the Claude model and knowledge graph service URL. If the ConfigMap already exists, append the keys under `data`.
+
+Replace `<namespace>` with your actual namespace.
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sql-sandbox-config-map
+  namespace: <namespace>
+data:
+  CLAUDE_MODEL: claude-opus-4-5
+  KNOWLEDGE_GRAPH_BASE_URL: http://knowledge-graph-service.<namespace>.svc.cluster.local:50055
+```
+
+Apply the configuration:
+
+```bash
+kubectl apply -f <filename>.yaml
+```
+
+Then restart the orchestrator to pick up the changes:
+
+```bash
+kubectl -n <namespace> rollout restart deploy orchestrator-<namespace>
+```
+
+<Note>
+  After restarting, verify that the agent can resolve dataset and schema queries before closing your
+  session. See [Agent behavior when data access is disabled](/data-analysis/ai/knowledge-graph/knowledge-graph#agent-behavior-when-data-access-is-disabled) for expected behavior.
+</Note>

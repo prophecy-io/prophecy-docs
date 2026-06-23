@@ -31,11 +31,12 @@ Understanding data lineage delivers multiple benefits for your engineering team:
 There are two ways to access the lineage view:
 
 - Option 1: Hover over your pipeline in the **Pipeline** tab of the **Metadata** page.
-- Option 2: Open the **Lineage** page from the left navigation bar.
+- Option 2: For SQL projects where the default transformation is Model, open **Project Lineage** from the project settings dropdown.
 
 ![How to Open Lineage](/data-engineering/lineage/img/lineage-open-from-metadata.png)
+{/* TODO: Update this screenshot for the Project Lineage entry in project settings. */}
 
-When you open Lineage from the left navigation bar, you are brought to the lineage search page. Once you enter a search query, you can see a list of matching **entities** and a list of **columns**. You can filter these lists by:
+When you open Lineage, you are brought to the lineage search page. Once you enter a search query, you can see a list of matching **entities** and a list of **columns**. You can filter these lists by:
 
 - Entity type
 - Project
@@ -45,17 +46,18 @@ When you open Lineage from the left navigation bar, you are brought to the linea
 Once you click an entity or column, you'll see the lineage visualization.
 
 ![Lineage Search](/data-engineering/lineage/img/lineage-search-high-level-view.png)
+{/* TODO: Review this screenshot for updated project view navigation. */}
 
 ## Lineage Summary
 
 The **Summary** tab visually illustrates the flow of data through pipelines, models, and datasets depending on the entities in your project. Use the **Browse Datasets** panel to search for and select the column or entity that you want to inspect.
 
 ![Browse Datasets](/data-engineering/lineage/img/lineage-browse-dataset.png)
+{/* TODO: Review this screenshot for updated project view navigation. */}
 
 <Info>
-  When you open a project in the project editor, you will see the project's dataset and pipeline
-  lineage. However, you cannot drill-down into lineage details unless you navigate to the lineage
-  view described here.
+  Clicking the project icon or project name opens the project landing page in the canvas. To open
+  lineage, use the lineage navigation described here.
 </Info>
 
 ### Column-level lineage
@@ -63,6 +65,7 @@ The **Summary** tab visually illustrates the flow of data through pipelines, mod
 Column-level lineage tracks the flow and transformation of individual data columns through the pipeline, demonstrating how they are processed at each stage. When you select a column in the lineage view, Prophecy provides the column's upstream and downstream transformations.
 
 ![Lineage View](/data-engineering/lineage/img/lineage-column-level-view.png)
+{/* TODO: Review this screenshot for updated project view navigation. */}
 
 ## Lineage Zoom In
 
@@ -77,9 +80,11 @@ For pipelines, you can see code-level information about each component present i
 - Output columns
 
 ![pipeline zoom-in](/data-engineering/lineage/img/lineage-pipeline-zoom-in.png)
+{/* TODO: Review this screenshot for updated project view navigation. */}
 
 ### Dataset lineage
 
 For datasets, you can find information around all the upstream and downstream transformations (if any) for all the columns of the selected dataset.
 
 ![Dataset zoom-in](/data-engineering/lineage/img/lineage-dataset-zoom-in.png)
+{/* TODO: Review this screenshot for updated project view navigation. */}

@@ -83,6 +83,21 @@ SELECT Id, Name, Industry, CreatedDate FROM Account WHERE CreatedDate >= LAST_N_
   call](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql_select_fields.htm#limiting_result_rows).
 </Info>
 
+<Warning>
+Prophecy does not support SOQL parent-to-child relationship queries that use nested
+subqueries. Query parent and child objects separately, then join the datasets in
+Prophecy.
+
+For example, the following query is not supported:
+
+```sql
+SELECT Id,
+       Name,
+       (SELECT FirstName, LastName FROM Contacts)
+FROM Account
+```
+</Warning>
+
 #### Salesforce Objects
 
 Retrieve all records from a specific Salesforce object by name, without writing a query. Use this option when the object exceeds the default 200 row limit of `FIELDS(ALL)`.

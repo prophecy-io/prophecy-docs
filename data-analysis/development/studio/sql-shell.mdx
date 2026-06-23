@@ -1,0 +1,68 @@
+---
+title: SQL Shell
+description: Run ad-hoc SQL queries directly against the warehouse configured for your project.
+---
+
+The SQL Shell provides an interactive query interface inside the SQL IDE.
+
+You can use it to run ad-hoc SQL queries against the warehouse configured for the current project without leaving the pipeline or analysis context.
+
+The SQL Shell opens as a separate tab alongside your existing tabs and includes a SQL editor, query results panel, query history, and query execution controls.
+
+## Run query
+
+1. Click the **...** menu in the upper-right corner of the pipeline canvas or SQL IDE header.
+2. Select **SQL Shell**.
+3. Wait for the shell to initialize and open in a new tab.
+4. Enter a SQL query in the editor.
+5. Click **Run**.
+6. Review query results in the lower panel.
+
+You can cancel a running query using the **Cancel** button.
+
+The SQL Shell sends the query text directly to the backend with only whitespace trimming applied by the frontend. Query execution behavior, including support for multi-statement queries or DDL statements, depends on the connected fabric and backend configuration.
+
+## View query results
+
+Query results appear in the lower results table with paginated loading.
+
+Results are returned in pages of 100 rows at a time. To retrieve additional rows, load more results from the table interface.
+
+The shell streams execution output live while queries run. Timing information, logs, and row counts appear as execution progresses.
+
+## View query history
+
+Click the **History** tab to view previously executed queries.
+
+Query history is initialized when the shell session starts and persists for the duration of the connection. If the page refreshes or the connection reconnects, the history reloads from the backend.
+
+# Connection behavior
+
+The SQL Shell uses the warehouse and credentials configured for the project's fabric. You do not select or enter credentials directly in the shell.
+
+The shell maintains a persistent WebSocket connection during the session. This enables live query output and automatic reconnection behavior if the connection temporarily drops.
+
+Enterprise network proxies or firewalls that block secure WebSocket (`wss://`) connections may prevent the SQL Shell from functioning correctly.
+
+# Availability and limitations
+
+The SQL Shell is available only in the SQL IDE for SQL Pipelines and Analyses/Apps.
+
+The first time you open the SQL Shell for a fabric, there may be a startup delay while the backend creates a command executor, opens a JDBC connection to the warehouse, and validates the connection.
+
+If initialization fails, the shell displays an error before opening. Common causes include invalid credentials, unavailable warehouses, paused warehouses, or incorrect connection configuration.
+
+The SQL Shell is disabled in the following situations:
+
+- When viewing a pipeline in historical mode.
+- When the environment is in read-only mode.
+
+# Troubleshooting
+
+Common failure scenarios include:
+
+- Fabric mis-configuration, such as invalid credentials, missing warehouses, or insufficient permissions.
+- Network or connectivity issues that block the WebSocket connection.
+- Paused or unavailable warehouses.
+
+Resolve fabric configuration issues at the fabric level. For connectivity issues, contact your administrator.

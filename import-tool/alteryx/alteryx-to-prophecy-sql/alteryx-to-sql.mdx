@@ -1,9 +1,11 @@
 ---
-title: Migrate to SQL (Databricks and BigQuery)
-description: How to migrate Alteryx workflows to SQL using Databricks or BigQuery fabrics
+title: Migrate to SQL (Databricks, BigQuery, Snowflake)
+description: How to migrate Alteryx workflows to SQL using Databricks, BigQuery, or Snowflake fabrics
 ---
 
-When you create an Alteryx bundle for a SQL project in the Prophecy transpiler, you can analyze, change, and validate your migration before the transpilation begins.
+You can migrate Alteryx workflows to SQL pipelines that run on Databricks, BigQuery, or Snowflake. During migration, you upload exported Alteryx workflows, validate migration coverage, and review any unsupported functionality. Import then generates production-ready SQL pipelines that you can view, modify, and extend in Prophecy.
+
+During migration, an Import Bundle acts as a workspace, storing your uploaded files, validation results, transpilation settings, and generated entities so you can review and refine the migration before committing it to a project.
 
 ## Limitations
 
@@ -17,7 +19,9 @@ Review the supported versions and migration scope:
 To migrate workflows from Alteryx to Prophecy, you need to:
 
 - Ensure that the Alteryx Transpiler is enabled in your Prophecy environment.
-- Export the Alteryx workflows that you want to migrate as files. Prophecy accepts `.xml`, `.yxmd`, `.yxwz`, and `.yxmc` files. For more information on these file types, visit [Alteryx File Types](https://help.alteryx.com/current/en/designer/file-types-support/alteryx-file-types.html#alteryx-file-types) in the Alteryx documentation.
+- Export the Alteryx workflows that you want to migrate as files. Prophecy accepts `.xml`, `.yxmd`, `.yxwz`, `.yxmc`, and `.yxzp` files. For more information on these file types, visit [Alteryx File Types](https://help.alteryx.com/current/en/designer/file-types-support/alteryx-file-types.html#alteryx-file-types) in the Alteryx documentation.
+
+After transpilation, review migration coverage and any placeholder gems before importing entities into production projects.
 
 <details>
 <summary>How to export an Alteryx workflow</summary>
@@ -31,28 +35,38 @@ To export an Alteryx workflow from the Alteryx Designer:
 
 </details>
 
-## Differences between Databricks and BigQuery import
+## Differences between importing Databricks, BigQuery and Snowflake SQL
 
 The SQL dialect generated during import depends on the selected fabric:
 
 - **Databricks fabric → Databricks SQL**
 - **BigQuery fabric → BigQuery SQL**
+- **Snowflake fabric → Snowflake SQL**
 
-You cannot change the SQL dialect after transpilation without recreating the bundle.
+You cannot change the SQL dialect after import without recreating the bundle.
 
 While the migration workflow is the same, some behaviors differ depending on the selected fabric:
 
-- **SQL syntax**: Generated SQL follows the target engine (Databricks or BigQuery).
+- **SQL syntax**: Generated SQL follows the target engine (Databricks, BigQuery, Snowflake).
 - **Tool support**: Some Alteryx tools may map differently depending on engine capabilities.
 
 See [SQL dialect differences](/import-tool/alteryx/alteryx-to-prophecy-sql/sql-dialect-differences) for more detail.
+
+## What Prophecy creates during migration
+
+Depending on your workflow and import settings, Prophecy creates:
+
+- One or more SQL pipelines.
+- Supporting datasets and tables.
+- Pipeline configurations from Alteryx interface tools.
+- An orchestration pipeline for split workflows.
 
 ## Procedure
 
 <Steps>
 <Step title="Create a bundle">
 
-Start with creating a new Import bundle.
+Start with creating a new Import bundle. A bundle stores uploaded files, validation results, and generated entities.
 
 1. On the left navigation bar, click the **Import icon** (arrow pointing down in a circle).
 1. At the top of the page, click **Import Bundle**.
@@ -72,7 +86,7 @@ Start with creating a new Import bundle.
 1. Click **Next**.
 1. In the **Upload Files** tab, upload the Alteryx files you want to migrate.
 
-   Prophecy accepts `.xml`, `.yxmd`, `.yxwz`, and `.yxmc` files.
+   Prophecy accepts `.xml`, `.yxmd`, `.yxwz`, `.yxmc`, and `.yxzp` files.
 
 1. Click **Next**. The Transpilation step opens.
 
@@ -93,8 +107,10 @@ Configure how Prophecy imports your workflows.
    - Verify or change the **Target Pipeline Name**, which will be the name of your new Prophecy pipeline.
    - Check the **Entities associated with this pipeline** section to see the datasets that will be created.
    - Enable the **Transpile interface tools into configurations** checkbox if you want to convert interface tools from Alteryx into pipeline configurations in Prophecy.
+   - Check the **Break into Multiple Workflows** checkbox to split large Alteryx workflows into smaller Prophecy pipelines. See [Split large workflows into multiple pipelines](#split-large-workflows-into-multiple-pipelines) below for more details.
+      - Optionally, enable **Preserve Visual Containers** to keep Alteryx container groupings together during workflow splitting.
 
-1. Click **Validate** to have Prophecy check that the migration is possible for all staged files.
+1. Click **Validate** to have Prophecy check that the migration is possible for all staged files. Validation checks whether the uploaded workflows can be successfully transpiled and identifies unsupported tools, missing metadata, or configuration issues before conversion begins.
 1. Once validation passes, click **Transpile** to begin the actual conversion process. The Transpile button is only enabled after successful validation.
 
 ![Import workflows](./img/alteryx-import-pipeline.png)
@@ -133,22 +149,64 @@ To see the bundle metadata, which includes information about all of the imported
 
 You can review the pipelines, jobs, tables, function, coverage, status, source, language, project, and fabric of the bundle in the right tile. You can open any entity in a new tab in the project editor by clicking on the entity.
 
+<Note>
+If Prophecy cannot fully transpile a transformation, it inserts a placeholder gem so you can manually implement the required SQL logic. In some cases, you may be able to use [Prophecy's Agent](/data-analysis/ai/agent/agent) to generate this SQL.
+</Note>
+
 </Step>
 
-<Step title="Testing">
+<Step title="Validate migrated pipelines">
 
 Open your bundle and run your pipeline to verify that it writes the same output as your Alteryx workflow. If not, modify or add additional gems to make the output the same.
 
-Before you deploy your project into production, we recommend you to run both your Alteryx workflow and Prophecy pipeline in parallel for at least two weeks. This helps you see if Prophecy consistently produces the same output as Alteryx.
+Before you deploy your project into production, we recommend that you run both your Alteryx workflow and Prophecy pipeline in parallel for at least two weeks. This helps you see if Prophecy consistently produces the same output as Alteryx.
 
 </Step>
 
 </Steps>
 
+
 ### Reimport pipelines
 
-If you want to update or restart your transpilation, click on the **Reimport Pipeline** button on the Transpiler page.
+If you want to update or restart your import, click on the **Reimport Pipeline** button on the Transpiler page.
 
 ![Reimport](./img/alteryx-reimport.png)
 
 For support, please see [Getting help with Prophecy](/data-analysis/administration/getting-help/get-in-touch).
+
+### Split large workflows into multiple pipelines
+
+For large SQL workflows, you can enable **Break into multiple workflows** during import. When enabled, Prophecy can split a large Alteryx workflow into multiple smaller Prophecy pipelines.
+
+When a workflow is split, Prophecy creates:
+
+* An orchestration pipeline that runs the generated pipelines in sequence.
+* Multiple generated sub-pipelines, named with suffixes such as `_part1`, `_part2`, and so on.
+
+Workflow splitting is intended for large workflows. Smaller workflows may remain as a single pipeline even when this option is enabled.
+
+To preserve the structure of the original Alteryx workflow, Prophecy can also preserve Alteryx visual containers when breaking up workflows. To enable this behavior, select **Preserve Visual Containers** during import. The generated pipelines retain the original workflow layout and container groupings where possible.
+
+When a workflow is split:
+
+- Prophecy does not split the contents of a visual container across multiple pipelines.
+- Connections that cross pipeline boundaries are replaced with intermediate datasets that transfer data between generated pipelines.
+- Intermediate source and target datasets appear in labeled visual containers in the generated pipelines.
+
+In some cases, Prophecy may import the workflow as a single pipeline even when **Break into multiple workflows** is enabled.
+
+This can happen when:
+
+- The resulting pipeline contains fewer than 200 gems.
+- The workflow structure cannot be safely divided into multiple pipelines, such as when required schema information is unavailable.
+- When workflows contain dependencies that prevent safe splitting.
+
+## Troubleshooting
+
+### A workflow was not split into multiple pipelines
+
+Large workflows may remain as a single pipeline if Prophecy cannot safely determine split points or required metadata.
+
+### A transformation became a placeholder gem
+
+Some Alteryx tools do not have a direct SQL equivalent and require manual implementation.

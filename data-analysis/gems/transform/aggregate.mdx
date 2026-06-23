@@ -1,6 +1,6 @@
 ---
 title: Aggregate gem for Data Analysis
-description: Group and pivot your data
+description: Group and summarize your data using GROUP BY and aggregation functions
 ---
 
 import Execution from '/snippets/gem-execution-engine.mdx';
@@ -10,23 +10,104 @@ import GemExample from '/snippets/interactive-gem.mdx';
 
 ## Overview
 
-Use the Aggregate gem to group data and perform aggregations on each group.
+Use the Aggregate gem to group rows and calculate summary values for each group. This is useful for reporting, customer analysis, financial summaries, and KPI calculations.
+
+Common use cases include:
+
+- Counting orders per customer.
+- Calculating total sales by region.
+- Finding average transaction values.
+- Summarizing records by category or date.
+- Creating grouped metrics for dashboards and downstream analysis.
+
+The Aggregate gem works similarly to a SQL `GROUP BY` statement.
 
 <GemExample gemName="Aggregate" />
 
 ## Parameters
 
-| Parameter         | Description                                                                                            |
-| ----------------- | ------------------------------------------------------------------------------------------------------ |
-| Group By          | Defines the column(s) that include the categories that you will group by.                              |
-| Expressions       | Includes the aggregations that you wish to perform. Each aggregation will produce a new output column. |
-| Having Conditions | Filter after the GROUP BY operation.                                                                   |
+| Parameter         | Description |
+| ----------------- | ----------- |
+| Group By          | Select the column or columns used to group rows into categories. Each unique combination becomes one output row. |
+| Expressions       | Define the aggregation calculations to perform for each group. Each aggregation creates a new output column. |
+| Having Conditions | Filter grouped results after the aggregation step completes. Similar to a SQL `HAVING` clause. |
+
+## Common examples
+
+| Goal | Group By | Expression |
+| --- | --- | --- |
+| Count orders per customer | `customer_id` | `count(order_id)` |
+| Calculate total revenue by region | `region` | `sum(order_amount)` |
+| Find average order value by sales rep | `sales_rep` | `avg(order_amount)` |
+| Get the latest transaction date per account | `account_id` | `max(transaction_date)` |
+| Count distinct products sold by store | `store_id` | `count_distinct(product_id)` |
+
+## How Aggregate works
+
+The Aggregate gem processes data in three main steps:
+
+1. Group rows based on the selected **Group By** columns.
+2. Calculate aggregation expressions for each group.
+3. Optionally filter grouped results using **Having Conditions**.
+
+Unlike a Filter gem, the **Having Conditions** are evaluated after aggregation is complete.
+
+For example:
+
+- A Filter gem can remove individual rows before grouping.
+- A Having condition can remove grouped results after calculations are complete.
 
 ## Example
 
-Suppose you have a dataset of orders that includes the `customer_id` of each customer. You can use the Aggregate gem to:
+Suppose you have a dataset of orders that includes the `customer_id` for each customer. You can use the Aggregate gem to analyze customer purchasing behavior.
 
-- Group by the **customer_id** column. This will apply aggregations per each unique customer.
-- Count the number of orders per customer using `count(order_id)`.
-- Retrieve the total amount spent by the customer using `sum(order_amount)`.
-- View customers who made less than three orders. To do so, add the **Having** condition `count(order_id) < 3`.
+### Example configuration
+
+| Setting | Value |
+| --- | --- |
+| Group By | `customer_id` |
+| Expressions | `count(order_id)` as `order_count` |
+| Expressions | `sum(order_amount)` as `total_spent` |
+| Having Conditions | `count(order_id) < 3` |
+
+### Result
+
+This configuration will:
+
+- Group all rows by `customer_id`
+- Count the number of orders for each customer
+- Calculate the total amount spent by each customer
+- Return only customers who placed fewer than three orders
+
+## Common issues
+
+### Unexpected duplicate groups
+
+Check for:
+
+- Leading or trailing spaces in grouped columns
+- Differences in letter casing such as `US` versus `us`
+- Null values creating separate groups
+
+You may need to clean or standardize values before aggregation.
+
+### Incorrect counts
+
+If counts appear too high:
+
+- Verify whether duplicate rows exist before aggregation
+- Confirm whether you should use `count()` or `count_distinct()`
+
+### Having condition does not work as expected
+
+Remember that Having conditions filter grouped results after aggregation. If you need to filter raw rows before grouping, use a Filter gem earlier in the pipeline.
+
+## Similar tools and concepts
+
+| Tool or Platform | Similar Concept |
+| --- | --- |
+| SQL | `GROUP BY` with aggregation functions |
+| Alteryx | Summarize tool |
+| Pandas | `groupby()` with aggregate functions |
+| PySpark | `groupBy().agg()` |
+| Excel | PivotTables and grouped summaries |

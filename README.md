@@ -2,7 +2,7 @@
 
 Welcome to the public source repository for the official **Prophecy Documentation**.
 
-This repository contains the source files that generate the content for our documentation webstie. Prophecy is the **AI Data Prep & Analysis Platform** that empowers data teams to build, refine, and deploy production-ready data pipelines and transformations on cloud data platforms like Databricks and BigQuery.
+This repository contains the source files that generate the content for our documentation webstie. Prophecy is the **AI Data Prep & Analysis Platform** that empowers data teams to build, refine, and deploy production-ready data pipelines and transformations on cloud data platforms like Databricks, BigQuery, and Snowflake.
 
 We keep this repository public to maintain transparency and allow our users and the broader community to explore the structure and content of our documentation.
 
