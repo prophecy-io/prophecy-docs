@@ -17,3 +17,7 @@ To view column lineage:
 Prophecy highlights the gem where the selected column is created and displays the transformation logic used to generate it. For example, selecting `AVG_SPECIALIST_VISITS` highlights the Aggregate gem and shows the expression `ROUND(AVG(specialist_visits_expected), 2)` used to create the column.
 
 ![view sql lineage](/data-analysis/development/pipelines/img/sql-lineage.png)
+
+## Limitations
+
+Prophecy cannot compute lineage for some Custom gems, such as the [Rest API gem](/data-analysis/gems/custom/rest-api) or the [Script gem](/data-analysis/gems/custom/script). Because these gems can contain arbitrary code, lineage information may not be available for columns processed within them.
