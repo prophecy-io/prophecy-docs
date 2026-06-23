@@ -1,9 +1,11 @@
 ---
-title: Migrate to SQL
+title: Migrate to SQL (Databricks, BigQuery, Snowflake)
 description: How to migrate Alteryx workflows to SQL using Databricks, BigQuery, or Snowflake fabrics
 ---
 
-When you create an Alteryx bundle for a SQL project in the Prophecy transpiler, you can analyze, change, and validate your migration before the transpilation begins.
+You can migrate Alteryx workflows to SQL pipelines that run on Databricks, BigQuery, or Snowflake. During migration, you upload exported Alteryx workflows, validate migration coverage, and review any unsupported functionality. Import then generates production-ready SQL pipelines that you can view, modify, and extend in Prophecy.
+
+During migration, an Import Bundle acts as a workspace, storing your uploaded files, validation results, transpilation settings, and generated entities so you can review and refine the migration before committing it to a project.
 
 ## Limitations
 
@@ -17,7 +19,7 @@ Review the supported versions and migration scope:
 To migrate workflows from Alteryx to Prophecy, you need to:
 
 - Ensure that the Alteryx Transpiler is enabled in your Prophecy environment.
-- Export the Alteryx workflows that you want to migrate as files. Prophecy accepts `.xml`, `.yxmd`, `.yxwz`, and `.yxmc` files. For more information on these file types, visit [Alteryx File Types](https://help.alteryx.com/current/en/designer/file-types-support/alteryx-file-types.html#alteryx-file-types) in the Alteryx documentation.
+- Export the Alteryx workflows that you want to migrate as files. Prophecy accepts `.xml`, `.yxmd`, `.yxwz`, `.yxmc`, and `.yxzp` files. For more information on these file types, visit [Alteryx File Types](https://help.alteryx.com/current/en/designer/file-types-support/alteryx-file-types.html#alteryx-file-types) in the Alteryx documentation.
 
 After transpilation, review migration coverage and any placeholder gems before importing entities into production projects.
 
@@ -33,7 +35,7 @@ To export an Alteryx workflow from the Alteryx Designer:
 
 </details>
 
-## Differences between Databricks and BigQuery import
+## Differences between importing Databricks, BigQuery and Snowflake SQL
 
 The SQL dialect generated during import depends on the selected fabric:
 
@@ -41,7 +43,7 @@ The SQL dialect generated during import depends on the selected fabric:
 - **BigQuery fabric → BigQuery SQL**
 - **Snowflake fabric → Snowflake SQL**
 
-You cannot change the SQL dialect after transpilation without recreating the bundle.
+You cannot change the SQL dialect after import without recreating the bundle.
 
 While the migration workflow is the same, some behaviors differ depending on the selected fabric:
 
@@ -52,7 +54,7 @@ See [SQL dialect differences](/import-tool/alteryx/alteryx-to-prophecy-sql/sql-d
 
 ## What Prophecy creates during migration
 
-Depending on your workflow and import settings, Prophecy can create:
+Depending on your workflow and import settings, Prophecy creates:
 
 - One or more SQL pipelines.
 - Supporting datasets and tables.
@@ -84,7 +86,7 @@ Start with creating a new Import bundle. A bundle stores uploaded files, validat
 1. Click **Next**.
 1. In the **Upload Files** tab, upload the Alteryx files you want to migrate.
 
-   Prophecy accepts `.xml`, `.yxmd`, `.yxwz`, and `.yxmc` files.
+   Prophecy accepts `.xml`, `.yxmd`, `.yxwz`, `.yxmc`, and `.yxzp` files.
 
 1. Click **Next**. The Transpilation step opens.
 
