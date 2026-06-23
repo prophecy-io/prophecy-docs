@@ -72,6 +72,46 @@ Tables are persistent, indexed storage objects optimized for frequent access.
   be able to edit these properties.
 </Info>
 
+#### JSON columns
+
+Prophecy supports BigQuery `JSON` columns, including schema inference, nested field exploration, and reading and writing JSON data.
+
+##### Infer schema
+
+For tables that contain `JSON` columns, you can use **Infer Schema** to sample data and discover the nested structure stored within the column. The inferred schema is displayed as an expandable tree in the Properties tab, similar to Snowflake `VARIANT` columns.
+
+For example, a JSON column containing:
+
+```json
+{
+  "amount": 100,
+  "user": {
+    "id": 123,
+    "plan": "premium"
+  }
+}
+```
+
+is displayed as nested fields that can be expanded and referenced throughout your pipeline.
+
+#### Access nested fields
+
+After schema inference, you can reference nested JSON fields in gems such as Reformat, Filter, and Join using dot notation.
+
+For example:
+
+```text
+payload.user.plan
+```
+Prophecy automatically generates the appropriate BigQuery JSON functions:
+
+| Field type | Generated SQL |
+| ---------- | ------------- |
+| String values | `JSON_VALUE(payload, '$.user.plan')` |
+| Numeric values | `CAST(JSON_VALUE(payload, '$.amount') AS FLOAT64)` |
+| Boolean values | `CAST(JSON_VALUE(payload, '$.active') AS BOOL)` |
+| Objects or arrays | `JSON_QUERY(payload, '$.user')` |
+
 #### Target parameters
 
 | Parameter     | Description                                                                                                                                                                            |
@@ -79,6 +119,16 @@ Tables are persistent, indexed storage objects optimized for frequent access.
 | Location      | Choose the location where the table will be stored. You can create a new table by writing a new table name.                                                                            |
 | Properties    | Define certain properties of the table. The schema cannot be changed for targets.                                                                                                      |
 | Write Options | Select how you want the data to be written each time you run the pipeline (Table only). Learn more in [Write strategies](/data-analysis/gems/source-target/table/write/write-options). |
+
+#### Write JSON data
+
+When writing to BigQuery `JSON` columns, Prophecy automatically converts string representations of JSON into native BigQuery JSON values. No manual SQL transformations are required.
+
+<Info>
+  BigQuery JSON columns support schema inference and nested field access similar to Snowflake
+  `VARIANT` columns.
+</Info>
+
 
 ### Views
 
