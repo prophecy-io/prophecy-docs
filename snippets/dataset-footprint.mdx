@@ -1,0 +1,25 @@
+## Dataset footprint
+
+The **Dataset Footprint** panel provides an estimate of a table's storage size and projected storage cost. Use this information to understand the data footprint of a BigQuery table before running pipelines.
+
+To view dataset footprint information:
+
+1. Open a **Table** gem on the SQL canvas.
+2. Select the **Properties** tab.
+3. View the **Dataset Footprint** section under **Generic Options**.
+
+### Available metrics
+
+| Field                      | Description                                                           |
+| -------------------------- | --------------------------------------------------------------------- |
+| **Data Stored**            | Current storage size of the table, displayed in B, KB, MB, GB, or TB. |
+| **Projected Monthly Cost** | Estimated monthly storage cost, displayed in Compute Units (CU).      |
+| **Last Updated**           | Indicates when the footprint information was last refreshed.          |
+
+### Additional access points
+
+Dataset footprint information is also available when you hover over a table connection in the **Project Explorer**.
+
+### Limitations
+
+Dataset footprint information is available only for **Table** datasets. It is not available for views or other dataset types.
