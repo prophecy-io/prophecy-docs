@@ -177,6 +177,17 @@ The undo option is only available for the most recent response containing change
 
 Older responses display standard copy actions instead.
 
+## Interactive clarification questions in SQL Copilot
+
+The Agent may pause during generation to ask for additional input before continuing.
+
+When the Agent needs clarification, it displays a question directly in the chat along with available answer options. After you select a response, the agent continues generation using your choice.
+
+This improvement allows the Agent to gather missing information and resolve ambiguities instead of making assumptions or failing when additional context is required.
+
+You can also dismiss a question if you do not want to provide an answer. The agent handles skipped questions gracefully and continues with the best available context.
+
+
 ### Confirmation prompts for Agent pipeline execution
 
 The Agent requests confirmation before executing pipelines that can write data to your warehouse.
