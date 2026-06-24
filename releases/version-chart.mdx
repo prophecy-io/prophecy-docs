@@ -28,6 +28,16 @@ Prophecy versions that are labeled with `EM` are Extended Maintenance releases. 
 
 </Note>
 
+### Map the Scala library version to your Databricks Runtime
+
+The `prophecy-libs` Scala artifact encodes three pieces of information that must line up with your Databricks Runtime (DBR). Reading the full coordinate `prophecy-libs_2.12:3.5.0-9.2.2`:
+
+- **Spark version** (first triplet, `3.5.0`)—Match the major.minor (`3.5`) to the Spark version bundled with your DBR (for example, DBR with Spark 3.5.2 → use `3.5.x`). Prophecy always publishes this triplet with a patch of `0`, so you match on major.minor only and ignore Spark's patch number.
+- **Prophecy library version** (second triplet, `9.2.2`)—This is the `prophecy-libs` release itself, independent of Spark. Use the latest available for your Spark line.
+- **Scala version** (artifact suffix, `_2.12`)—Match this to the Scala version your DBR ships with (for example, DBR on Scala 2.12 → use `_2.12`).
+
+For example, a cluster on DBR with Spark 3.5.2 and Scala 2.12 maps to `prophecy-libs_2.12:3.5.0-9.2.2`, where `3.5.0` tracks Spark 3.5, `9.2.2` is the current `prophecy-libs` release, and `_2.12` matches the runtime's Scala version.
+
 <Tip>
 
 You can query this table using the following API and your Prophecy personal access token:
