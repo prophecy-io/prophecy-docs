@@ -18,6 +18,6 @@ Prophecy highlights the gem where the selected column is created and displays th
 
 ![view sql lineage](/data-analysis/development/pipelines/img/sql-lineage.png)
 
-## Current limitations
+## Limitations
 
-Lineage is not currently supported for the following: recursive common table expressions, lateral joins, correlated subqueries, and PIVOT/UNPIVOT.
+Prophecy cannot compute lineage for some Custom gems, such as the [Rest API gem](/data-analysis/gems/custom/rest-api) or the [Script gem](/data-analysis/gems/custom/script). Because these gems can contain arbitrary code, lineage information may not be available for columns processed within them.
