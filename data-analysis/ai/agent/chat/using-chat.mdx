@@ -177,6 +177,18 @@ The undo option is only available for the most recent response containing change
 
 Older responses display standard copy actions instead.
 
+### Confirmation prompts for Agent pipeline execution
+
+The Agent requests confirmation before executing pipelines that can write data to your warehouse.
+
+When the Agent attempts to run a pipeline, you'll see a prompt identifying the pipeline and warning that the operation may write or overwrite data. You can choose to:
+
+* **Allow Once** to approve the current execution
+* **Always Allow** to automatically approve future executions
+* **Deny** to prevent the execution
+
+This additional confirmation step helps prevent unintended data modifications while giving you control over Agent-initiated pipeline runs.
+
 ## Continue work across chats
 
 Chats are project-aware and can reference existing entities in your project.
