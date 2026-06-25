@@ -24,6 +24,22 @@ Prophecy now supports BigQuery's native `JSON` data type.
 - Reference nested fields in transformations.
 - Read from and write to BigQuery JSON columns.
 
+## Improved Agent interactions in chat
+
+The Agent now supports more interactive workflows directly within chat, giving you greater control over how tasks are executed.
+
+When additional information is needed, the Agent can pause and ask clarification questions in the chat. After you select a response, the Agent continues using your answer. This helps the Agent resolve ambiguities and gather missing information instead of making assumptions or failing when more context is required.
+
+The Agent also now requests confirmation before executing pipelines that write data to your warehouse. You can approve a single execution, always allow future executions, or deny the request. This additional safeguard helps prevent unintended data modifications while maintaining a streamlined workflow.
+
+Together, these improvements make Agent interactions more transparent, collaborative, and user-controlled.
+
+## Full dataset profiling in Data Explorer
+
+You can now calculate data profile statistics across an entire dataset, not just the initial sample of 10,000 rows.
+
+After reviewing the sample profile, you can load a full profile to generate column statistics for all rows, providing a more complete view of data quality and value distributions before building or refining pipelines.
+
 </Update>
 
 <Update label="Prophecy 4.2.8" description="May 11, 2026" tags={["Data Analysis"]}>
