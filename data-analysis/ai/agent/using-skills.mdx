@@ -1,124 +1,63 @@
 ---
-title: Using skills with the Agent
-description: A starting point for contributing skills to Prophecy's AI agent
+title: "Writing a skill"
+description: "A starting point for contributing skills to Prophecy's AI agent."
 ---
 
-To extend or streamline the Agent's capabilities, you can create and use _skills_.
+Skills tell Prophecy's AI agent how to handle a specific task: when to activate, what to read first, how to proceed, and what to hand off when done. This page covers how to structure a skill and what to expect as you iterate on it.
 
-Skills tell Prophecy’s AI agent how to handle a specific task: when to activate, what context to load, how to approach the work, and what to produce or hand off when finished. This page explains how to structure a skill and how to refine it over time.
+<Note>
+Skills are an iterative artifact. The structure described here reflects patterns that work well in practice, but there is no single correct form. Expect to revise a skill as you learn how the agent interprets it and how users actually phrase their requests.
+</Note>
 
-A skill is a short Markdown file that includes:
+## What a skill is
 
-- A **name**.
-- A **description** that tells Prophecy when to use the skill.
-- A set of **instructions** that Prophecy follows when the skill is active.
-
-We recommend keeping skills concise. Active skills consume chat context, which increases cost and can reduce the space available for other information. In most cases, you should focus on describing **what** you want Prophecy to do rather than **how** or **why** it should do it.
-
-Skills are most useful when you find yourself repeatedly providing the same instructions, checklist, workflow, or multi-step procedure in chat.
-
-<Note> Skills are inherently iterative. The structure described here reflects patterns that work well in practice, but there is no single correct format. Expect to revise a skill as you learn how users phrase requests, how the agent interprets the instructions, and which guidance produces the best results. </Note>
-
-## What a skill file is
-
-A skill is a folder containing a `SKILL.md` file and any supporting reference files. Skills conform to the [Agent Skills open specification](https://agentskills.io/specification), which defines a portable, interoperable format for agent instructions.
+A skill is a named set of instructions the agent loads when a user request matches its description. Skills conform to the [Agent Skills open specification](https://agentskills.io/specification), which defines a portable, interoperable format for agent instructions.
 
 In Prophecy, skills live at `skills/<skill-name>/SKILL.md` in your project.
 
-For additional guidance on skill functions and common patterns, see [Types of Skill Content](https://code.claude.com/docs/en/skills#types-of-skill-content) in Anthropic's Claude Skills documentation.
-
 ## How the agent loads skills
 
-The agent reads the **name and description** of every installed skill on every chat, but only loads the full skill body when it determines the skill is relevant to the current task.
+The agent reads the name and description of every installed skill on every chat. It only loads the full skill body when it determines the skill is relevant to the current task. This means:
 
-This means:
+- You can maintain many skills without degrading agent output
+- The description is doing active routing work, not just documentation
+- A vague description means the skill may never load — or may load at the wrong time
 
-- You can maintain many skills in Prophecy without degrading agent output.
-- The skill's description does active routing work, not just documentation.
-- A vague description means the skill may never load, or may load at the wrong time.
+## Name and description
 
-## Frontmatter
+When you create a skill in Prophecy, you enter a name, description, and body.
 
-The frontmatter contains two required fields:
+- **Name** is a slug used as the folder name. Use lowercase letters, numbers, and hyphens only.
+- **Description** is the routing signal the agent uses to decide when to load this skill. Start with "Use when..." and be as concrete as possible. Include the user intent it targets, specific trigger phrases in quotes, any file types or contextual signals that should activate it, and where relevant, what the skill does *not* cover. A vague description like "Helps with data mapping" gives the agent little to work with. A scoped one like "Use when the user wants to map a raw data tape to the CDM. Triggers include: 'crack this tape', 'map to CDM', 'harmonize tape'" tells it exactly when to act.
+- **Body** is the instructions the agent follows once the skill loads. There is no required structure — sections are whatever the task needs, named and ordered to match the work. A skill that runs a multi-step pipeline might use numbered steps and prerequisite checks; one that provides background context might be a few paragraphs of prose.
 
-| Field | Notes |
-|---|---|
-| `name` | Slug that becomes the folder name. Lowercase letters, numbers, and hyphens only. |
-| `description` | Routing signal the agent uses to decide when to load this skill. Start with "Use when..." and include: the user intent it targets, specific trigger phrases (quoted), file types or contextual signals that should activate it, and where relevant, what the skill does *not* cover. |
+## Adding a skill in Prophecy
 
-```yaml
----
-name: your-skill-name
-description: >
-  Use when the user wants to [do X]. Triggers include:
-  "[phrase 1]", "[phrase 2]", or when the user uploads a [file type]
-  that appears to be [description].
----
-```
+Skills are added through the Prophecy UI in Professional edition.
 
-A vague description like "Helps with data mapping" gives the agent little to work with. A scoped one like "Use when the user wants to map a raw data tape to the CDM. Triggers include: 'crack this tape', 'map to CDM', 'harmonize tape'" tells it exactly when to act.
+1. From the home page, click **Add New > Skill**.
+2. In the **New Skill** dialog, enter a skill name and description, and confirm the folder (defaults to `/skills`).
+3. Enter your skill body content.
+4. The skill is added to your project automatically.
+
+![skills professional home page](/data-analysis/ai/agent/img/skills-professional.png)
+
+To verify it was created, click the vertical ellipsis menu and select **View Code** — the skill file will appear in your project.
+
+You can also prompt the AI to draft a skill for you from the same dialog.
 
 ## Skill body
 
-The body has no required schema, and the skill's structure follows from the task. Use whatever sections the agent needs to do the job correctly, named and ordered to match the work.
+A skill body typically opens with a one-line statement of purpose and scope — what the skill does and, where useful, what it explicitly does not do.
 
-Two elements appear in most skills:
+From there, the body is organized around the operations the agent needs to perform. Each operation defines a trigger condition (what the user said or did), a sequence of steps, and any output format or response pattern the agent should follow. Operations can also specify constraints — things the agent should not do at this stage, particularly when a skill is one step in a larger workflow and scope boundaries matter.
 
-- [Opening context line](#opening-context-line)
-- [Important rule](#important-rule)
-
-### Opening context line
-
-Skils should begin with a one-line summary of what this skill does and when it applies:
-
-```
-Design-time skill for creating and iterating CDM definitions.
-```
-
-This orients anyone reading the file and helps the agent understand its own scope before reading further.
-
-### Important rule
-
-It is often useful to begin a skill with an `<important_rule>` block.
-
-Use this XML-tagged block for instructions the agent must follow before anything else in the skill body. This is the right place for sequencing requirements, hard constraints, or steps the agent must not skip:
-
-```xml
-<important_rule>Before executing, create a task plan: (1) Confirm scope with user — ASK if not explicitly stated, (2) Read existing CDM and domain packs before designing, (3) For CDM changes: additions are safe, renames and deletions need user approval — ASK before making destructive changes.</important_rule>
-```
-
-A skill can have more than one `<important_rule>` block. Each fires when the skill loads.
-
-Everything else
-
-Beyond the description and any optional `<important_rule>` block, the rest of the skill structure is up to you. Skills can use numbered procedures, checklists, tables, status notes, decision trees, or domain-specific guidance—whatever best communicates the workflow.
-
-The key requirement is clarity. Instructions should be specific enough that the agent can follow them consistently without needing to infer missing steps or intent.
+Skills often include a prerequisites section pointing to shared config or capability files the agent should read before acting. They may also include response templates — example phrasing the agent can adapt — and edge case handling for situations like multiple inputs or ambiguous requests.
 
 <Note>
-Skill body content stays in context for the entire session once loaded. Keep it concise, because every line is a recurring token cost. Move large reference material to supporting files in the same skill directory and link to them from `SKILL.md`.
+Skill body content stays in context for the entire session once loaded. Keep it concise — every line is a recurring token cost. Move large reference material to supporting files in the same skill directory and link to them from `SKILL.md`.
 </Note>
-
-## Uploading a skill
-
-Once your file is ready, upload the skill to the Agent and give it the following prompt:
-
-```
-Upload this skill to skills/<name>/SKILL.md and sync the project.
-```
-
-The agent will:
-1. Read the file from the attachment
-2. Parse the `name:` field to determine the folder
-3. Write the file to `skills/<name>/SKILL.md`
-4. Call `update_files` to sync it to your project browser
-
-## Portability
-
-Skills follow the [Agent Skills open specification](https://agentskills.io/specification).
 
 ## Further reading
 
-[The open-standard Agent Skills specification](https://agentskills.io/specification).
-
-[Claude's Skills documentation](https://code.claude.com/docs/en/skills).
+[Agent Skills specification](https://agentskills.io/specification) — the open standard this format conforms to
