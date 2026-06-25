@@ -3,6 +3,45 @@ title: '2026 releases'
 description: 'Features and enhancements from new releases'
 ---
 
+<Update label="Prophecy 4.2.9" description="June 17, 2026" tags={["Data Analysis"]}>
+
+## Reformat gem: Live previews and data flow visualization
+
+The [Reformat gem](/data-analysis/gems/prepare/reformat) now provides faster interactive feedback when building transformations.
+
+You can preview data updates automatically as you edit expressions, allowing you to validate changes without repeatedly rerunning the transformation.
+
+You can also use **Visualize Data Flow** to better understand how expressions transform data. Selecting an expression highlights the input columns it references and the output column it produces, making it easier to trace calculations and verify dependencies.
+
+These enhancements help you build, validate, and troubleshoot transformations more efficiently directly within the Reformat gem.
+
+## BigQuery JSON column support
+
+Prophecy now [supports BigQuery's native `JSON` data type](/data-analysis/gems/source-target/table/bigquery#json-columns).
+
+- Infer nested schemas from JSON columns.
+- Browse JSON fields as expandable nested structures.
+- Reference nested fields in transformations.
+- Read from and write to BigQuery JSON columns.
+
+## Improved Agent interactions in chat
+
+The Agent now supports more [interactive workflows directly within chat](/data-analysis/ai/agent/chat/using-chat#interactive-clarification-questions-in-sql-copilot), giving you greater control over how tasks are executed.
+
+When additional information is needed, the Agent can pause and ask clarification questions in the chat. After you select a response, the Agent continues using your answer. This helps the Agent resolve ambiguities and gather missing information instead of making assumptions or failing when more context is required.
+
+The Agent also now requests confirmation before executing pipelines that write data to your warehouse. You can approve a single execution, always allow future executions, or deny the request. This additional safeguard helps prevent unintended data modifications while maintaining a streamlined workflow.
+
+Together, these improvements make Agent interactions more transparent, collaborative, and user-controlled.
+
+## Full dataset profiling in Data Explorer
+
+You can now [calculate data profile statistics across an entire dataset](/data-analysis/development/runs/data-explorer/data-profile), not just the initial sample of 10,000 rows.
+
+After reviewing the sample profile, you can load a full profile to generate column statistics for all rows, providing a more complete view of data quality and value distributions before building or refining pipelines.
+
+</Update>
+
 <Update label="Prophecy 4.2.8" description="May 11, 2026" tags={["Data Analysis"]}>
 
 ## Updated AI chat experience
