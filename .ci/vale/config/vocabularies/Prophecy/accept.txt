@@ -51,6 +51,7 @@ Config
 configs
 config
 libs
+inspectable
 
 # Technical Terms
 dbt

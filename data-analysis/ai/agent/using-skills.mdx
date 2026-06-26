@@ -1,9 +1,9 @@
 ---
-title: "Writing a skill"
+title: "Use skills"
 description: "A starting point for contributing skills to Prophecy's AI agent."
 ---
 
-Skills tell Prophecy's AI agent how to handle a specific task: when to activate, what to read first, how to proceed, and what to hand off when done. This page covers how to structure a skill and what to expect as you iterate on it.
+Skills tell Prophecy's AI agent how to handle a specific task: when to activate, what to read first, how to proceed, and what to hand off when done. This page covers how to add a skill and how to structure one.
 
 <Note>
 Skills are an iterative artifact. The structure described here reflects patterns that work well in practice, but there is no single correct form. Expect to revise a skill as you learn how the agent interprets it and how users actually phrase their requests.
@@ -19,32 +19,60 @@ In Prophecy, skills live at `skills/<skill-name>/SKILL.md` in your project.
 
 The agent reads the name and description of every installed skill on every chat. It only loads the full skill body when it determines the skill is relevant to the current task. This means:
 
-- You can maintain many skills without degrading agent output
-- The description is doing active routing work, not just documentation
-- A vague description means the skill may never load — or may load at the wrong time
+- You can maintain many skills without degrading agent output.
+- The description is doing active routing work, not just documentation.
+- A vague description means the skill may never load, or may load at the wrong time.
+
+## Add a skill
+
+<Tabs>
+<Tab title="Prophecy for Business">
+
+### Add a single skill
+
+1. From the bottom of the Project Explorer, select **Add entity > Skill**.
+2. In the **Add Skill** dialog, enter a skill name. By default the skill is created in the `/skills` folder.
+3. Click **Create**. The skill editor opens.
+4. Enter a description and content, then save.
+
+![add skill prophecy for business](/data-analysis/ai/agent/img/add-skill-p4b.png)
+
+### Install skills from a zip file
+
+You can bulk-install a set of skills by uploading a zip file directly to the agent.
+
+1. In the agent chat, attach your zip file using **Attach** or by dragging it into the chat.
+2. Enter the prompt: `Install the skills in this zip`.
+3. The agent installs all skills it finds and confirms which were added. Installed skills appear in the `/skills` directory in your project.
+
+You can invoke any installed skill by name, for example `/strats` or `/validation`.
+
+</Tab>
+<Tab title="Professional Edition">
+
+### Add a single skill
+
+1. From the project panel, select **Add New > Skill**. Alternatively, select **+** at the top of the tab bar, then choose **New > Skill**.
+2. In the **Add Skill** dialog, enter a skill name. By default the skill is created in the `/skills` folder.
+3. Click **Create**. The skill editor opens.
+4. Enter a description and content, then save.
+
+![add skill prophecy professional edition](/data-analysis/ai/agent/img/add-skill-professional.png)
+
+<Note>
+Bulk install from a zip file is not supported in Professional Edition.
+</Note>
+
+</Tab>
+</Tabs>
 
 ## Name and description
 
-When you create a skill in Prophecy, you enter a name, description, and body.
+When the skill editor opens, you enter a name, description, and body.
 
 - **Name** is a slug used as the folder name. Use lowercase letters, numbers, and hyphens only.
 - **Description** is the routing signal the agent uses to decide when to load this skill. Start with "Use when..." and be as concrete as possible. Include the user intent it targets, specific trigger phrases in quotes, any file types or contextual signals that should activate it, and where relevant, what the skill does *not* cover. A vague description like "Helps with data mapping" gives the agent little to work with. A scoped one like "Use when the user wants to map a raw data tape to the CDM. Triggers include: 'crack this tape', 'map to CDM', 'harmonize tape'" tells it exactly when to act.
-- **Body** is the instructions the agent follows once the skill loads. There is no required structure — sections are whatever the task needs, named and ordered to match the work. A skill that runs a multi-step pipeline might use numbered steps and prerequisite checks; one that provides background context might be a few paragraphs of prose.
-
-## Adding a skill in Prophecy
-
-Skills are added through the Prophecy UI in Professional edition.
-
-1. From the home page, click **Add New > Skill**.
-2. In the **New Skill** dialog, enter a skill name and description, and confirm the folder (defaults to `/skills`).
-3. Enter your skill body content.
-4. The skill is added to your project automatically.
-
-![skills professional home page](/data-analysis/ai/agent/img/skills-professional.png)
-
-To verify it was created, click the vertical ellipsis menu and select **View Code** — the skill file will appear in your project.
-
-You can also prompt the AI to draft a skill for you from the same dialog.
+- **Body** is the instructions the agent follows once the skill loads.
 
 ## Skill body
 
@@ -53,6 +81,8 @@ A skill body typically opens with a one-line statement of purpose and scope — 
 From there, the body is organized around the operations the agent needs to perform. Each operation defines a trigger condition (what the user said or did), a sequence of steps, and any output format or response pattern the agent should follow. Operations can also specify constraints — things the agent should not do at this stage, particularly when a skill is one step in a larger workflow and scope boundaries matter.
 
 Skills often include a prerequisites section pointing to shared config or capability files the agent should read before acting. They may also include response templates — example phrasing the agent can adapt — and edge case handling for situations like multiple inputs or ambiguous requests.
+
+There is no required structure — sections are whatever the task needs, named and ordered to match the work. A skill that runs a multi-step pipeline might use numbered steps and prerequisite checks; one that provides background context might be a few paragraphs of prose.
 
 <Note>
 Skill body content stays in context for the entire session once loaded. Keep it concise — every line is a recurring token cost. Move large reference material to supporting files in the same skill directory and link to them from `SKILL.md`.
