@@ -1,0 +1,68 @@
+---
+title: Use Professional Edition
+description: A managed, AI-first analytics environment for data analyst teams
+---
+
+Prophecy's Free and Professional Editions are designed for data analyst teams that want to work with AI-driven analysis without managing data infrastructure. Prophecy provides and manages the underlying resources, metered by credits.
+
+The Free Edition is functionally identical to the Professional Edition, but is limited to 5 credits per month and a single user per plan. Sign up for the Free Edition to get started. You can upgrade to Professional Edition after you sign in for the first time.
+
+<Tip>
+Coming from Alteryx or prefer to build pipelines directly? Prophecy for Business gives you a full visual pipeline editor and SQL editor alongside the Agent. See [Prophecy for Business](/data-analysis/getting-started/concepts) to compare.
+</Tip>
+
+## What you can do
+
+Professional Edition centers on a conversational workflow: attach data, describe what you want to understand, and the Agent generates pipelines and analyses in response.
+
+From the home page you can:
+
+- Attach a data file and start an analysis with a prompt or a common task.
+- Resume recent analyses and chat threads from your project.
+- Add datasets, pipelines, analyses, and skills to your project from the project panel.
+
+The Agent handles pipeline generation in the background. You interact primarily through chat and the analysis surface rather than the pipeline canvas directly, though pipelines remain visible and inspectable within your project.
+
+![Professional Edition Home Page](/data-analysis/getting-started/img/prof-ed-home.png)
+
+## Get started
+
+1. Sign up for the [Free Edition](https://app.prophecy.ai/professional/).
+2. Sign in and upgrade to Professional Edition when ready.
+3. From the home screen, select **Attach Data** to upload a file.
+4. Enter a prompt or choose a common task — **Summarize my dataset**, **Find patterns or trends**, or **Clean up my data**.
+5. Select **Get Started**.
+6. Choose **Process as Table** to run transformations against your data, or **Attach as Reference** to make the file available for context.
+
+After you select **Get Started**, the view splits into two panels.
+
+The left panel shows the Agent's response. The Agent suggests analysis questions based on what it finds. You can ask a follow-up question directly, or select one of the Agent's suggestions to go deeper. The conversation continues here as you refine your analysis.
+
+The right panel shows your project. Your attached file appears under **Browse Project**. Recent chat threads are listed under **Recent Activity**. From here you can also select **+ Add New** to add a dataset, pipeline, analysis, or skill to the project as your work grows.
+
+![Professional project page](/data-analysis/getting-started/img/prof-project-page.png)
+
+For some requests the Agent responds inline without generating a pipeline. For others it builds and runs a pipeline in the background. When a pipeline is generated you can inspect it at any time from the project panel.
+
+## What's different from Prophecy for Business
+
+Professional Edition runs on Prophecy-managed DuckDB. You do not configure fabrics, connections, or secrets — there is no infrastructure to set up.
+
+The tradeoff is scope. Professional Edition does not currently support connecting to external data platforms such as Databricks, Snowflake, or BigQuery.
+
+Other differences from Prophecy for Business:
+
+- No versioning.
+- No fabric, connection, or secrets management.
+- No scheduling or publishing.
+
+## When to move to Prophecy for Business
+
+Consider moving to Prophecy for Business when you need to:
+
+- Connect to Databricks, Snowflake, or BigQuery.
+- Schedule and deploy pipelines to production.
+- Version and branch project work.
+- Manage connections and secrets at the team or organization level.
+
+Your projects and analyses carry over. Professional Edition is designed as a starting point, not a ceiling.
