@@ -48,7 +48,7 @@
                               "data-analysis/ai/agent/chat/export"
                             ]
                           },
-                          "data-analysis/ai/using-skills"
+                          "data-analysis/ai/using-skills",
                           "data-analysis/ai/agent/explore",
                           "data-analysis/ai/agent/transform",
                           "data-analysis/ai/agent/analyses"
