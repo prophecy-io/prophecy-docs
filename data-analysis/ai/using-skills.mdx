@@ -35,7 +35,7 @@ The [Agent](/data-analysis/ai/agent/agent) reads the name and description of eve
 1. From the bottom of the Project Explorer, select **Add entity > Skill**.
 2. In the **Add Skill** dialog, enter a skill name. By default the skill is created in the `/skills` folder.
 3. Click **Create**. The skill editor opens.
-4. Enter a description and content, then save.
+4. Enter a [description](#description) and [body](#body), then save.
 
 ![add skill prophecy for business](/data-analysis/ai/agent/img/add-skill-p4b.png)
 
@@ -57,7 +57,7 @@ You can invoke any installed skill by name, for example `/strats` or `/validatio
 1. From the project panel, select **Add New > Skill**. Alternatively, select **+** at the top of the tab bar, then choose **New > Skill**.
 2. In the **Add Skill** dialog, enter a skill name. By default the skill is created in the `/skills` folder.
 3. Click **Create**. The skill editor opens.
-4. Enter a description and content, then save.
+4. Enter a [description](#description) and [body](#body), then save.
 
 ![add skill prophecy professional edition](/data-analysis/ai/agent/img/add-skill-professional.png)
 
@@ -68,17 +68,17 @@ Bulk install from a zip file is not supported in Professional Edition.
 </Tab>
 </Tabs>
 
-## Name and description
+The following applies when adding a skill manually. If you installed skills from a zip file, the skill files are already written. You can edit these directly in the skill editor.
 
-When the skill editor opens, you enter a name, description, and body.
+## Skill description and body
 
-- **Name** is a slug used as the folder name. Use lowercase letters, numbers, and hyphens only.
-- **Description** is the routing signal the Agent uses to decide when to load this skill. Start with "Use when..." and be as concrete as possible. Include the user intent it targets, specific trigger phrases in quotes, any file types or contextual signals that should activate it, and where relevant, what the skill does *not* cover. A vague description like "Helps with data mapping" gives the Agent little to work with. A scoped one like "Use when the user wants to map a raw data tape to the CDM. Triggers include: 'crack this tape', 'map to CDM', 'harmonize tape'" tells it exactly when to act.
-- **Body** is the instructions the Agent follows once the skill loads.
+When the skill editor opens, you enter a description and content.
 
-## Skill body
+### Description
+The description provides the routing signal that the Agent uses to decide when to load this skill. Start with "Use when..." and be as concrete as possible. Include the user intent it targets, specific trigger phrases in quotes, any file types or contextual signals that should activate it, and where relevant, what the skill does *not* cover. A vague description like "Helps with data mapping" gives the Agent little to work with. A scoped one like "Use when the user wants to map a raw data tape to the CDM. Triggers include: 'crack this tape', 'map to CDM', 'harmonize tape'" tells it exactly when to act.
 
-A skill body typically opens with a one-line statement of purpose and scope — what the skill does and, where useful, what it explicitly does not do.
+### Body
+Here, you enter the instructions the Agent follows once the skill loads. A skill body typically opens with a one-line statement of purpose and scope — what the skill does and, where useful, what it explicitly does not do.
 
 From there, the body is organized around the operations the Agent needs to perform. Each operation defines a trigger condition (what the user said or did), a sequence of steps, and any output format or response pattern the Agent should follow. Operations can also specify constraints — things the Agent should not do at this stage, particularly when a skill is one step in a larger workflow and scope boundaries matter.
 
