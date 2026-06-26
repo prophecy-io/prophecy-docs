@@ -72,7 +72,7 @@ The following applies when adding a skill manually. If you installed skills from
 
 ## Skill description and body
 
-When the skill editor opens, you enter a description and content.
+When the skill editor opens, you enter a description and body.
 
 ### Description
 The description provides the routing signal that the Agent uses to decide when to load this skill. Start with "Use when..." and be as concrete as possible. Include the user intent it targets, specific trigger phrases in quotes, any file types or contextual signals that should activate it, and where relevant, what the skill does *not* cover. A vague description like "Helps with data mapping" gives the Agent little to work with. A scoped one like "Use when the user wants to map a raw data tape to the CDM. Triggers include: 'crack this tape', 'map to CDM', 'harmonize tape'" tells it exactly when to act.
@@ -80,14 +80,14 @@ The description provides the routing signal that the Agent uses to decide when t
 ### Body
 Here, you enter the instructions the Agent follows once the skill loads. A skill body typically opens with a one-line statement of purpose and scope — what the skill does and, where useful, what it explicitly does not do.
 
-From there, the body is organized around the operations the Agent needs to perform. Each operation defines a trigger condition (what the user said or did), a sequence of steps, and any output format or response pattern the Agent should follow. Operations can also specify constraints — things the Agent should not do at this stage, particularly when a skill is one step in a larger workflow and scope boundaries matter.
+From there, the body is organized around the operations the Agent needs to perform. Each operation defines a trigger condition (what the user said or did), a sequence of steps, and any output format or response pattern the Agent should follow. Operations can also specify constraints: things the Agent should not do at this stage, particularly when a skill is one step in a larger workflow and scope boundaries matter.
 
-Skills often include a prerequisites section pointing to shared config or capability files the Agent should read before acting. They may also include response templates — example phrasing the Agent can adapt — and edge case handling for situations like multiple inputs or ambiguous requests.
+Skills often include a prerequisites section pointing to shared config or capability files the Agent should read before acting. They may also include response templates (example phrasing the Agent can adapt) and edge case handling for situations like multiple inputs or ambiguous requests.
 
-There is no required structure — sections are whatever the task needs, named and ordered to match the work. A skill that runs a multi-step pipeline might use numbered steps and prerequisite checks; one that provides background context might be a few paragraphs of prose.
+There is no required structure. Use whatever sections suit the task, named and ordered to match the work. A skill that runs a multi-step pipeline might use numbered steps and prerequisite checks, whereas one that provides background context might be a few paragraphs of prose.
 
 <Note>
-Skill body content stays in context for the entire session once loaded. Keep it concise — every line is a recurring token cost. Move large reference material to supporting files in the same skill directory and link to them from `SKILL.md`.
+Skill body body stays in context for the entire session once loaded. Keep it concise — every line is a recurring token cost. Move large reference material to supporting files in the same skill directory and link to them from `SKILL.md`.
 </Note>
 
 ## Further reading
