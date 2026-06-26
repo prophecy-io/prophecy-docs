@@ -40,6 +40,7 @@ Zendesk
 websockets
 Matchers
 athena
+Anthropic
 
 # Prophecy Concepts
 Subgraph
@@ -50,6 +51,7 @@ Config
 configs
 config
 libs
+inspectable
 
 # Technical Terms
 dbt
@@ -103,6 +105,8 @@ namespace
 operationalize
 Operationalize
 ad-hoc
+subqueries
+subquery
 
 # Prophecy Tools
 PBT
