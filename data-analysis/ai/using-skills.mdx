@@ -114,29 +114,24 @@ Skill body content stays in context for the entire session once loaded. Keep it 
 
 The Agent can make changes to skills once they are in the Prophecy environment.
 
-Here are some effective prompts for improving Prophecy skills:
+After adding skills using the steps above, you can use the following prompts to improve Prophecy skills:
 
 ### 1. Start with discovery
 > "Look at [skill name] skill. How can I improve this so that it works better for Prophecy?"
 
-This triggers an analysis of the current state and generates specific recommendations before making changes.
+This triggers an analysis of the skill's current state and generates specific recommendations before the Agent makes changes.
 
 ### 2. Request data integration
 > "Make this skill use actual data from the workspace instead of just asking questions"
 
-Transforms Q&A-only skills into data-driven tools that query tables before conversing.
+Here, you ask the agent to tune the skill so that it queries tables before conversing.
 
 ### 3. Add pipeline generation
 > "Update the skill to offer creating pipelines when appropriate"
 
-Skills become more useful when they can build artifacts, not just give advice.
+In Prophecy, skills become more useful when they can build artifacts such as [pipelines](/data-analysis/development/pipelines/data-analysis-pipelines) and [analyses](/data-analysis/analysis/overview).
 
-### 4. Add Analysis/Dashboard output
-> "Make the skill create Analysis dashboards to visualize recommendations"
-
-Turns text recommendations into interactive visual artifacts.
-
-### 5. Connect to Existing Work
+### 4. Connect to Existing Work
 > "Make this skill integrate with the [pipeline name] pipeline I already have"
 
 Links new skills to existing pipelines for richer, context-aware behavior.
@@ -148,7 +143,6 @@ Links new skills to existing pipelines for richer, context-aware behavior.
 | 1    | "Look at X skill, how to improve for Prophecy?" | Get analysis + recommendations |
 | 2    | "yes" or "do it"                                | Skill gets rewritten           |
 | 3    | "now test it" or invoke the skill               | Validate the improvements      |
-
 
 ### Key Transformation Questions
 
