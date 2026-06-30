@@ -58,3 +58,15 @@ The **Connections** tab allows you to store your credentials to various external
 import EditFabric from '/snippets/misc/edit-fabric.mdx';
 
 <EditFabric />
+
+## Column naming limitations for Big Query fabrics
+
+BigQuery only allows letters, numbers, and underscores in column names. When a Prophecy pipeline creates an interim table on a BigQuery fabric, special characters (such as brackets) in column names are silently converted to underscores (`_`).
+
+This conversion happens automatically, with no warning or indication in the pipeline. Converted column names propagate downstream, and will appear in the schema for any gem connected after the interim table, including the final target gem, even if the target system (such as HANA) supports the original characters.
+
+<Warning>
+If your source data contains column names with brackets or other special characters, and your pipeline uses a BigQuery fabric for interim processing, those characters will be replaced with underscores in the interim table and in all downstream schemas, regardless of whether your final target supports the original naming.
+
+If your final target supports special characters in column names but your pipeline runs through a BigQuery fabric, avoid relying on those characters being preserved end-to-end. We recommend either 1) renaming source columns to use only letters, numbers, and underscores before processing, or 2) accounting for renamed columns in downstream logic.
+</Warning>
