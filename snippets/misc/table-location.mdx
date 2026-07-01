@@ -1,0 +1,37 @@
+### Location
+
+The Location tab defines where a table lives and how it's identified within your project.
+
+| Field | Description |
+| ----- | ----------- |
+| Table alias | A stable, logical identifier for the table that stays constant even if the underlying database, schema, or table name changes. Required when you create the table, and cannot be changed afterward. |
+| Database | The database containing the table. |
+| Schema | The schema containing the table. |
+| Table | The table name. |
+
+A **parameter set** selector appears in the upper-right corner of the Location tab:
+
+- If the table gem is used inside a pipeline, this shows that pipeline's active parameter set automatically.
+- If you're working on the table outside of a pipeline (for example, from the Project browser), it shows **Select Pipeline and Parameter set** until you choose one. You only need to do this if one or more Location fields are set to Advanced mode (see below) and you need their values resolved outside pipeline context.
+
+At the bottom of the Location tab, Prophecy shows a live preview of the resolved `database.schema.table` location — the hardcoded values if all fields are in Simple mode, or the resolved parameter values if any field is in Advanced mode. If a value can't be resolved yet — for example, because no parameter set is selected — Prophecy displays the raw value instead.
+
+#### Make a location field dynamic
+
+By default, each Location field (database, schema, table) takes a fixed value that you type directly — this is **Simple** mode.
+
+Switch a field to **Advanced** mode to bind it to a project or pipeline parameter instead of a fixed value.
+
+<Note>
+  Only parameters of type `sql_expression` can be used in Advanced mode. Using a parameter of a different type will cause the table location to fail to resolve.
+</Note>
+
+<Warning>
+  Switching a field from Advanced back to Simple mode clears its current value.
+</Warning>
+
+Once a field is in Advanced mode, its value depends on which parameter set is active (see the parameter set selector above). This makes it possible to define a table once and reuse it across multiple pipelines, each supplying different values for the parameterized fields via their own parameter sets. To reuse a table you've already created, select it from **Table > [alias]** in the Project browser.
+
+<Warning>
+  Prophecy does not validate that tables resolved from different parameter sets share the same schema. If your parameter sets point to tables with different schemas, downstream steps in your pipeline may fail or behave unexpectedly.
+</Warning>
