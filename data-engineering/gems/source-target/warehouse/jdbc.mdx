@@ -89,7 +89,7 @@ Use `Execute Pre Query` or `Execute Post Query` to call a stored procedure in th
 Because the Source gem always returns an output — even when the stored procedure itself produces none — you must still populate [Data Source](#parameters) with a placeholder value (for example, a dummy table name or trivial query) to satisfy the gem's Location configuration.
 
 <Info>
-The JDBC Source gem has no input ports. If a stored procedure needs to run at a specific point in the pipeline rather than at the start, use gem phase to control execution order:
+The JDBC Source gem has no input ports. If a stored procedure needs to run at a specific point in the pipeline rather than at the start, use [gem phase](/data-engineering/gems/gems#gem-phase) to control execution order:
 
 - Gems upstream of the stored procedure call: **Phase 0**
 - The JDBC Source gem running the stored procedure: **Phase 1**
