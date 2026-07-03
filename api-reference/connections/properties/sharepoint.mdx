@@ -1,65 +1,214 @@
 ---
-title: Microsoft SharePoint connection properties API
-description: Properties required to create and update SharePoint connections
+title: Microsoft SharePoint file gem
+description: Use SharePoint as a file source or target in a gem
 ---
 
-Properties for SharePoint connections are specified in the `properties` object when creating or updating a connection. All properties are nested within the connection request body.
+import Execution from '/snippets/gem-execution-engine.mdx';
 
-## Properties
+<Execution execution_engine="Prophecy Automate" />
 
-<ParamField body="siteUrl" type="string" required>
+## Overview
 
-SharePoint site URL.
+Use a Source or Target gem to read from or write to SharePoint in Prophecy pipelines. This page covers supported file formats, how to create the gem, and how to configure connection details and paths for both Source and Target gems.
 
-Format: `https://{tenant}.sharepoint.com/sites/{sitename}`
+## Supported file formats
 
-</ParamField>
+| Format                                                                       | Read | Write |
+| ---------------------------------------------------------------------------- | ---- | ----- |
+| [CSV](/data-analysis/gems/source-target/file/file-types/csv)                 | ✔   | ✔    |
+| [Fixed width](/data-analysis/gems/source-target/file/file-types/fixed-width) | ✔   |       |
+| [JSON](/data-analysis/gems/source-target/file/file-types/json)               | ✔   | ✔    |
+| [XLSX](/data-analysis/gems/source-target/file/file-types/excel)              | ✔   | ✔    |
+| [XML](/data-analysis/gems/source-target/file/file-types/xml)                 | ✔   | ✔    |
 
-<ParamField body="tenantId" type="string" required>
-  Azure Active Directory tenant ID.
-</ParamField>
+## Create a SharePoint gem
 
-<ParamField body="clientId" type="string" required>
-  Azure Active Directory application (client) ID.
-</ParamField>
+To create a SharePoint Source or Target gem in your pipeline:
 
-<ParamField body="clientSecret" type="object" required>
-Reference to a Prophecy secret containing the Azure client secret.
+<Steps>
+<Step title="Add a Source or Target gem to the pipeline">
 
-- When using the [create connection API](/api-reference/connections/add-connection-to-fabric), the secret must be stored in Prophecy before creating the connection.
-- When using the [create fabric API](/api-reference/fabrics/create-a-new-fabric), replace this whole object with the string `{{SECRET}}`, which references the secret being created in parallel to the connection.
+1. Open your pipeline in the [Studio](/data-analysis/development/studio/studio).
+1. Click on **Source/Target** in the canvas.
+1. Select **Source** or **Target** from the dropdown.
+1. Click on the gem to open the configuration.
 
-<Expandable title="clientSecret properties">
-<ParamField body="clientSecret.kind" type="string" required>
-Secret kind. Must be `prophecy`.
-</ParamField>
+</Step>
 
-<ParamField body="clientSecret.subKind" type="string" required>
-  Secret sub-type. Must be `text` for client secrets.
-</ParamField>
+<Step title="Select SharePoint format">
+  In the **Type** tab, select **SharePoint**. Then, click **Next**.
+</Step>
 
-<ParamField body="clientSecret.type" type="string" required>
-  Type of reference. Must be `secret`.
-</ParamField>
+<Step title="Set location details">
 
-<ParamField body="clientSecret.properties" type="object" required>
-  Properties identifying the secret by ID and name.
-</ParamField>
+In the **Location** tab, set your file format and connection details. To learn more, jump to [Location](#location).
 
-<ParamField body="clientSecret.properties.id" type="string" required>
-  The ID of the secret stored in Prophecy. Find the ID using the [List secrets per fabric
-  API](/api-reference/secrets/list-secrets-per-fabric).
-</ParamField>
+</Step>
 
-<ParamField body="clientSecret.properties.name" type="string" required>
-  The name of the secret stored in Prophecy.
-</ParamField>
+<Step title="Set file properties">
+In the **Properties** tab, set the file properties. These vary based on the file type that you are working with.
 
-</Expandable>
+<Info>See the list of properties per file type, such as [CSV](/data-analysis/gems/source-target/file/file-types/csv).</Info>
+</Step>
 
-</ParamField>
+<Step title="Preview data (Source only)">
+  In the **Preview** tab, load a sample of the data and verify that it looks correct.
+</Step>
 
-<ParamField body="kgConfig" type="object">
-  Knowledge graph configuration settings for the connection. See the [Knowledge graph
-  indexer](/api-reference/connections/properties/kgconfig) properties for more information.
-</ParamField>
+</Steps>
+
+## Grant service principal access to SharePoint sites
+
+The connection you select or create in the **Location** tab authenticates to SharePoint as a service principal (an Azure AD app registration). Before that connection can read from or write to a site, the service principal needs explicit access to it.
+
+Microsoft recommends the `Sites.Selected` permission over tenant-wide access, since it scopes the service principal to specific site collections only. This is the required setup for most connection issues customers hit — `Sites.Selected` grants nothing by default, so access must be explicitly assigned per site.
+
+<Info>
+  `Sites.Selected` alone does not grant access to any site. You must also complete
+  [Step 2](#step-2-get-the-sharepoint-site-id) and [Step 3](#step-3-grant-access-to-the-site) below for each site the connection needs.
+</Info>
+
+### Prerequisites
+
+- An Azure AD app registration to use as the service principal.
+- SharePoint Administrator or Global Administrator role on the tenant.
+- Access to [Microsoft Graph Explorer](https://developer.microsoft.com/en-us/graph/graph-explorer).
+
+<Steps>
+<Step title="Add the Sites.Selected permission">
+
+1. In the [Azure Portal](https://portal.azure.com), go to **App Registrations** and select your app.
+2. Click **API permissions** in the left menu.
+3. Click **Add a permission** > **Microsoft Graph** > **Application permissions**.
+4. Search for and add `Sites.Selected`.
+5. Click **Grant admin consent for your tenant**.
+
+| Permission       | Type        | Description                        |
+| ---------------- | ----------- | ----------------------------------- |
+| `Sites.Selected` | Application | Access selected site collections    |
+
+</Step>
+
+<Step title="Get the SharePoint site ID">
+
+Use Graph Explorer to look up the ID of the site you want to grant access to.
+
+1. Go to [Graph Explorer](https://developer.microsoft.com/en-us/graph/graph-explorer) and sign in with a SharePoint Administrator or Global Administrator account.
+2. Take the site's normal URL (for example, `https://prophecy.sharepoint.com/sites/testsite`) and convert it to the Graph format: replace the first `/` after the hostname with a colon.
+3. Set the method to `GET` and run:
+
+```
+GET https://graph.microsoft.com/v1.0/sites/{hostname}:/sites/{siteName}
+```
+
+For example:
+
+```
+GET https://graph.microsoft.com/v1.0/sites/prophecy.sharepoint.com:/sites/testsite
+```
+
+4. Copy the `id` value from the response. This is the site ID used in the next step.
+
+<Warning>
+  The hostname and site path are joined with a colon, not a slash.
+
+  - Wrong: `prophecy.sharepoint.com/sites/testsite`
+  - Correct: `prophecy.sharepoint.com:/sites/testsite`
+</Warning>
+
+</Step>
+
+<Step title="Grant access to the site">
+
+Use a `POST` request to assign the service principal a role on the specific site.
+
+1. In Graph Explorer, set the method to `POST` and use the site ID from Step 2:
+
+```
+POST https://graph.microsoft.com/v1.0/sites/{site-id}/permissions
+```
+
+2. In the **Request body** tab, paste the following, replacing the app client ID and display name with your service principal's values:
+
+```json
+{
+  "roles": ["<role>"],
+  "grantedToIdentities": [
+    {
+      "application": {
+        "id": "<app-client-id>",
+        "displayName": "<app-name>"
+      }
+    }
+  ]
+}
+```
+
+3. Click **Run query**. A `201 Created` response confirms the permission was granted.
+
+Repeat this step for every additional site the connection needs access to.
+
+| Role value     | Access level          |
+| -------------- | ---------------------- |
+| `read`         | Read-only               |
+| `write`        | Read and write           |
+| `fullcontrol`  | Full site control        |
+
+<Note>
+  Grant `read` if the connection is used for Source gems only. Grant `write` if the connection is used for Target gems, or if you're unsure which gems will use it.
+</Note>
+
+<Warning>
+  `Sites.Selected` grants access at the site level only. It does not support scoping access to individual folders or libraries within a site.
+</Warning>
+
+</Step>
+</Steps>
+
+### Troubleshooting
+
+**403 Forbidden when running the POST request**
+
+- Confirm you're signed in to Graph Explorer as a SharePoint Administrator or Global Administrator.
+- In Graph Explorer, open **Modify permissions** and consent to `Sites.FullControl.All`, then re-run the request.
+
+**Permissions don't seem to take effect**
+
+- `Sites.Selected` grants nothing by default — access must be explicitly granted per site via Step 3.
+- Confirm Step 3 was repeated for each site the connection needs, not just the first one.
+- Permission grants can take a few minutes to propagate. If a connection test fails immediately after granting access, wait a few minutes and retry before troubleshooting further.
+
+**Check what's already been granted**
+
+Run a `GET` on the site's permissions to see existing grants, including any stale or duplicate entries from a previous app registration:
+
+```
+GET https://graph.microsoft.com/v1.0/sites/{site-id}/permissions
+```
+
+## Source location
+
+| Parameter                   | Description                                                                                                                           |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Select or create connection | Select an existing SharePoint connection or [create a new one](/data-analysis/environment/connections/sharepoint). See [Grant service principal access to SharePoint sites](#grant-service-principal-access-to-sharepoint-sites) if the connection needs new site permissions. |
+| File Path                   | Path to the file in SharePoint. <br/><br/>Example: `/sites/sitename/SharedDocuments/file.csv`                                         |
+| Examine                     | Automatically determine the file format, compression type (if any), properties, and schema of the file to read.                       |
+| Format type                 | Type of file to read, such as `csv` or `json`.                                                                                        |
+| Compression                 | The compression type of the file to read. <br /><br />Supported types: `uncompressed`,`gzip`, `zstd`, `lz4`, `zlib`, `snappy`, `lzop` |
+
+## Target location
+
+| Parameter                   | Description                                                                                                                                   |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| Select or create connection | Select an existing SharePoint connection or [create a new one](/data-analysis/environment/connections/sharepoint). See [Grant service principal access to SharePoint sites](#grant-service-principal-access-to-sharepoint-sites) if the connection needs new site permissions. |
+| File Path                   | Path to the file in SharePoint. <br/><br/>Example: `/sites/sitename/SharedDocuments/file.csv`                                                 |
+| Examine                     | If an existing file exists at the target path, click **Examine** to automatically determine the file format and compression type (if any).    |
+| Encryption Algorithm        | The encryption algorithm to use when writing the file.<br /><br />Supported algorithms: `AES-192`, `AES-296`, `BlowFish`                      |
+| Format type                 | Type of file to write, such as `csv` or `json`.                                                                                               |
+| Compression                 | The compression type to use when writing the file.<br /><br />Supported types: `uncompressed`,`gzip`, `zstd`, `lz4`, `zlib`, `snappy`, `lzop` |
+
+<Note>
+  Configure encryption in a Target gem to encrypt an entire file. Use the
+  [DataEncoderDecoder](/data-analysis/gems/transform/encoder-decoder) gem to encrypt individual
+  columns.
+</Note>
