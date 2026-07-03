@@ -28,10 +28,10 @@ To create a SharePoint Source or Target gem in your pipeline:
 <Steps>
 <Step title="Add a Source or Target gem to the pipeline">
 
-1. Open your pipeline in the [Studio](/data-analysis/development/studio/studio).
-1. Click on **Source/Target** in the canvas.
+1. Open your pipeline in [Studio](/data-analysis/development/studio/studio).
+1. Click **Source/Target** in the canvas.
 1. Select **Source** or **Target** from the dropdown.
-1. Click on the gem to open the configuration.
+1. Click the gem to configure it.
 
 </Step>
 
@@ -41,12 +41,12 @@ To create a SharePoint Source or Target gem in your pipeline:
 
 <Step title="Set location details">
 
-In the **Location** tab, set your file format and connection details. To learn more, jump to [Location](#location).
+In the **Location** tab, set your file format and connection details. To learn more, see [Location](#location) below.
 
 </Step>
 
 <Step title="Set file properties">
-In the **Properties** tab, set the file properties. These vary based on the file type that you are working with.
+In the **Properties** tab, set file properties. These vary based on the file type that you are using.
 
 <Info>See the list of properties per file type, such as [CSV](/data-analysis/gems/source-target/file/file-types/csv).</Info>
 </Step>
@@ -94,7 +94,7 @@ Microsoft recommends the `Sites.Selected` permission over tenant-wide access, si
 Use Graph Explorer to look up the ID of the site you want to grant access to.
 
 1. Go to [Graph Explorer](https://developer.microsoft.com/en-us/graph/graph-explorer) and sign in with a SharePoint Administrator or Global Administrator account.
-2. Take the site's normal URL (for example, `https://prophecy.sharepoint.com/sites/testsite`) and convert it to the Graph format: replace the first `/` after the hostname with a colon.
+2. Take the site's normal URL (such as `https://prophecy.sharepoint.com/sites/testsite`) and convert it to the Graph format: replace the first `/` after the hostname with a colon (`:`).
 3. Set the method to `GET` and run:
 
 ```
@@ -110,7 +110,7 @@ GET https://graph.microsoft.com/v1.0/sites/prophecy.sharepoint.com:/sites/testsi
 4. Copy the `id` value from the response. This is the site ID used in the next step.
 
 <Warning>
-  The hostname and site path are joined with a colon, not a slash.
+  The hostname and site path need to be joined with a colon, not a slash.
 
   - Wrong: `prophecy.sharepoint.com/sites/testsite`
   - Correct: `prophecy.sharepoint.com:/sites/testsite`
@@ -132,12 +132,12 @@ POST https://graph.microsoft.com/v1.0/sites/{site-id}/permissions
 
 ```json
 {
-  "roles": ["<role>"],
+  "roles": ["read", "write"],
   "grantedToIdentities": [
     {
       "application": {
         "id": "<app-client-id>",
-        "displayName": "<app-name>"
+        "displayName": "<app Name>"
       }
     }
   ]
@@ -154,9 +154,11 @@ Repeat this step for every additional site the connection needs access to.
 | `write`        | Read and write           |
 | `fullcontrol`  | Full site control        |
 
+
 <Note>
-  Grant `read` if the connection is used for Source gems only. Grant `write` if the connection is used for Target gems, or if you're unsure which gems will use it.
+  Grant both `read` and `write` together, as shown above. This is the only combination Prophecy has tested; granting `read` alone for Source-only connections is untested and not currently recommended.
 </Note>
+
 
 <Warning>
   `Sites.Selected` grants access at the site level only. It does not support scoping access to individual folders or libraries within a site.
@@ -167,12 +169,19 @@ Repeat this step for every additional site the connection needs access to.
 
 ### Troubleshooting
 
-**403 Forbidden when running the POST request**
+#### 403 Forbidden when running the POST request
 
 - Confirm you're signed in to Graph Explorer as a SharePoint Administrator or Global Administrator.
 - In Graph Explorer, open **Modify permissions** and consent to `Sites.FullControl.All`, then re-run the request.
 
-**Permissions don't seem to take effect**
+#### Invalid hostname error
+Make sure that you have a colon `:` before `/sites` in the hostname.
+
+Correct: `prophecy.sharepoint.com:/sites/testsite` (uses colon before /sites/)
+
+Wrong: `prophecy.sharepoint.com/sites/testsite` (uses slash)
+
+#### Permissions don't seem to take effect**
 
 - `Sites.Selected` grants nothing by default — access must be explicitly granted per site via Step 3.
 - Confirm Step 3 was repeated for each site the connection needs, not just the first one.

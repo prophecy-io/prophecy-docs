@@ -7,13 +7,17 @@ Prophecy supports integration with Microsoft SharePoint, allowing you to read fr
 
 ## Prerequisites
 
-To connect Prophecy to OneDrive, your Microsoft administrator must first [register Prophecy as an application](https://learn.microsoft.com/en-us/graph/auth/auth-concepts#register-the-application) in Microsoft Entra ID. This registration provides the Client ID and Client Secret needed to authenticate Prophecy with Microsoft APIs.
+To connect Prophecy to SharePoint, your Microsoft administrator must first [register Prophecy as an application](https://learn.microsoft.com/en-us/graph/auth/auth-concepts#register-the-application) in Microsoft Entra ID. This registration provides the Client ID and Client Secret needed to authenticate Prophecy with Microsoft APIs.
 
-As part of the setup, the following application-level permission must be granted to the registered app:
+As part of the setup, the registered app must be granted the `Sites.Selected` application permission, then explicitly given access to each SharePoint site the connection will use.
 
-- `Sites.Manage.All`
+`Sites.Selected` scopes access to specific site collections only, rather than granting tenant-wide access to every site.
 
-This allows Prophecy to read and write content across SharePoint sites. Learn more in [Permissions for OneDrive and SharePoint API](https://learn.microsoft.com/en-us/onedrive/developer/rest-api/concepts/permissions_reference?view=odsp-graph-online).
+<Note>
+  `Sites.Selected` requires additional setup beyond adding the permission in Entra ID — you must also grant access to each site individually via Microsoft Graph API. See [Grant service principal access to SharePoint sites](/data-analysis/gems/source-target/file/sharepoint#grant-service-principal-access-to-sharepoint-sites) for more details.
+</Note>
+
+Learn more in [Permissions for OneDrive and SharePoint API](https://learn.microsoft.com/en-us/onedrive/developer/rest-api/concepts/permissions_reference?view=odsp-graph-online).
 
 ## Feature support
 
@@ -30,6 +34,8 @@ The table below outlines whether the connection supports certain Prophecy featur
 
 Prophecy can only access files stored in the [document library](https://support.microsoft.com/en-us/office/what-is-a-document-library-3b5976dd-65cf-4c9e-bf5a-713c10ca2872) of your SharePoint site. Make sure any files you want to import are placed there.
 
+Prophecy can only access sites that have been explicitly granted to it via `Sites.Selected`. If a connection can't reach a site, confirm the site has been granted access — see [Grant service principal access to SharePoint sites](/data-analysis/gems/source-target/file/sharepoint#grant-service-principal-access-to-sharepoint-sites).
+
 ## Connection parameters
 
 To create a connection with SharePoint, enter the following parameters. You can find the Tenant ID, Client ID, and Client Secret in your Microsoft Entra app.
@@ -42,13 +48,16 @@ To create a connection with SharePoint, enter the following parameters. You can 
 | Client Secret ([Secret required](/data-analysis/environment/secrets/secrets)) | Your Microsoft Entra app Client Secret                                                                    |
 | Site URL                                                                      | URL of the SharePoint site to connect<br />Example: `https://yourcompany.sharepoint.com/sites/mysite`     |
 
+<Note>
+  The site entered here must match a site that has been granted access via `Sites.Selected`. See [Grant service principal access to SharePoint sites](/data-analysis/gems/source-target/file/sharepoint#grant-service-principal-access-to-sharepoint-sites).
+</Note>
+
 ## Sharing connections within teams
 
-Connections in Prophecy are stored within [fabrics](/data-analysis/environment/fabrics/prophecy-fabrics), which are assigned to specific teams. Once a SharePoint connection is added to a fabric, all team members who have access to the fabric can use the connection in their projects. No additional authentication is required—team members automatically inherit the access and permissions of the stored connection credentials.
+Connections in Prophecy are stored in [fabrics](/data-analysis/environment/fabrics/prophecy-fabrics), which are assigned to specific teams. Once you add a SharePoint connection to a fabric, all team members who have access to the fabric can use the connection in their projects. No additional authentication is required: team members inherit access from the stored connection credentials.
 
 <Warning>
-Be mindful of the access level granted by the stored credentials. Anyone on the team will have the same permissions—including access to sensitive data if allowed.
+  Be mindful of the access level granted by the stored credentials. Anyone on the team will have the same permissions, including access to sensitive data if applicable.
 
-To manage this securely, consider creating a dedicated fabric and team for high-sensitivity connections. This way, only approved users have access to those credentials.
-
+  To manage this securely, consider creating a dedicated fabric and team for high-sensitivity connections. This way, only approved users have access to those credentials.
 </Warning>
