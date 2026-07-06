@@ -1,57 +1,143 @@
 ---
 title: Consume analyses
-description: Learn how to use analyses that have been shared with you
+description: Run, configure, and schedule analyses
 ---
 
-Not only can analysis dashboards help you yourself gain insights about the data, but you can also share them with others. If a user has access to your project, they will also be able to view all the analysis dashboards in the project. When an end user access an analysis from the analysis UI, they can run the analysis without stepping into the project itself.
+Analyses let you interact with data pipelines through a configurable runtime experience.
 
-## Configs
+You can use analyses to:
 
-If an analysis dashboard includes interactive components, _configs_ let you keep your own set of values separate and saved for those interactive components. This ensures that each user can run the analysis with their own values, while still sharing the underlying pipeline with the rest of the team.
+- Enter runtime values through forms and interactive inputs.
+- Run pipelines without editing pipeline logic.
+- Review results in charts and tables.
+- Save reusable configurations.
+- Schedule recurring executions.
+- Share operational workflows with other teams.
 
-In other words, a config acts like your personal instance of the analysis dashboard. For each config, you can:
+## Open an analysis
 
-- Name your config (such as `Q1 Sales Report` or `NY Region Data Pull`).
-- Customize input values based on your use case.
-- Save and reuse the config later.
-- Schedule the config to run at defined intervals.
+1. Open the **Analysis Browser** (the graph icon) in the left sidebar.
+2. Select an analysis.
 
-<Note>
-  Configs are stored per team. Other team members can access and run your configs if they belong to
-  the same team.
-</Note>
+![analysis browser page](/data-analysis/analysis/img/analysis-browser.png)
 
-### Create config
+The analysis opens in **Preview** mode.
 
-Follow the steps below to create a new config:
+Preview mode lets you interact with the analysis as an end user would, including entering runtime values, executing the pipeline, and reviewing results.
 
-1. Navigate to the **Analysis** page from the left navigation menu.
-1. Open the analysis you want to run.
-1. If no configs exist yet, you'll be prompted to create one. Otherwise:
-   - Hover over the analysis name in the sidebar.
-   - Click the `+` icon to add a new config.
+## Understanding configurations
 
-1. Fill in the required inputs (form fields that map to pipeline parameters).
-1. Click the **play** button to execute the pipeline that powers the analysis.
+Analyses support multiple **configurations**.
 
-## Schedules
+A configuration is a named set of runtime values for an analysis. Configurations allow teams to create reusable presets for different workflows, environments, or operational scenarios.
 
-Each config can be scheduled to run automatically on a recurring basis. These analysis schedules are independent from any pipeline schedules set within the broader project. This allows you to:
+For example, an analysis might include:
 
-- Automate recurring reports, like weekly reports.
-- Run your own configs while not affecting other pipeline schedules.
+- A `production` configuration
+- A `staging` configuration
+- Configurations for different regions or business units
 
-### Schedule a config
+Configurations appear under the analysis in the Analysis Browser. Each analysis can contain multiple configurations, which you can select, rename, schedule, or run independently.
 
-To create and enable an analysis schedule:
+Runtime values entered in a configuration override the pipeline's default parameter values during execution.
 
-1. Open the analysis to schedule.
-1. Select the specific config to schedule.
-1. From the analysis header, click the `...` options menu.
-1. Click **Schedule**.
-1. Under **Choose Pipeline Parameter Set**, select the pipeline [parameter set](/data-analysis/development/parameters/parameter-sets) you want to use for this schedule.
-1. Define the frequency.
-1. Turn on the **Enable** toggle.
-1. Click **Schedule**.
+## Create a configuration
 
-After you create the schedule, publish it to the appropriate fabric (the execution environment that the pipeline will run on). This is the same process as [scheduling pipelines](/data-analysis/production/scheduling/scheduling) themselves.
+1. In the **Analysis Browser**, hover over an analysis.
+2. Click the **+** icon.
+3. Enter a configuration name.
+4. Click **Create**.
+
+Configuration names must be unique within the analysis.
+
+## Manage configurations
+
+To manage a configuration:
+
+1. Open the configuration menu.
+2. Select an action:
+   - Rename
+   - Delete
+
+You can switch between configurations by selecting them in the Analysis Browser.
+
+## Run an analysis
+
+When you run an analysis, Prophecy executes the underlying pipeline using the current configuration values.
+
+Analysis results render in charts, tables, and other visualization components.
+
+1. Open a configuration.
+2. Enter or update runtime values.
+3. Click **Run**.
+4. Review the results.
+
+For example, you might:
+- Enter `West` in a **Region** field
+- Run the analysis
+- Review a chart showing sales by product category for the western region
+
+Interactive components capture runtime input, while charts and tables display the resulting pipeline output.
+
+<Warning>
+Running an analysis always executes the full underlying pipeline. Any additional transformations or tables included in the pipeline will also run, even if they are not displayed in the analysis.
+</Warning>
+
+## Refresh analysis results
+
+Analyses can become out of date if the underlying pipeline changes.
+
+If the pipeline definition changes after the analysis was last executed, Prophecy displays a warning indicating that the analysis should be rerun.
+
+To refresh the analysis:
+1. Open the configuration.
+2. Click **Run**.
+
+## Schedule an analysis
+
+You can schedule configurations to run automatically.
+
+Schedules are attached to individual configurations, allowing the same analysis to run with different runtime values on different schedules.
+
+For example:
+- A `production` configuration might run hourly
+- A `staging` configuration might run once per day
+
+To create a schedule:
+
+1. Open a configuration.
+2. Click **Schedule**.
+3. Configure:
+   - Cron expression
+   - Time zone
+   - Notification settings
+4. Save the schedule.
+
+## Share analyses
+
+You can share published analyses with other teams for interactive consumption and execution.
+
+Access to analyses is controlled by Prophecy's team-based permission model.
+
+If your team owns a project, you can:
+- Create analyses
+- Edit analyses
+- Delete analyses
+- Manage configurations
+
+If a project is shared with your team, you can:
+- Run analyses
+- Use existing configurations
+- Review results
+
+You cannot modify the analysis structure or underlying pipeline.
+
+<Info>
+To learn more, see [team-based access](/data-analysis/administration/management/users/access/team-based-access).
+</Info>
+
+## What's next
+
+To learn how to build analyses, see [Create an analysis](/data-analysis/analysis/create-analysis).
+
+To customize runtime behavior and visualizations, see [Analysis components](/data-analysis/analysis/analysis-components).
