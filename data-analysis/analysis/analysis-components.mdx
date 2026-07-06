@@ -7,9 +7,9 @@ Components are the building blocks of an analysis. They define how users interac
 
 Analysis components fall into three categories:
 
--**Interactive** — Let you capture runtime values from users and assign them to pipeline parameters. These values override parameter defaults when the analysis runs.
--**Data Integration** — Display or provide data used by the pipeline, including tables, charts, file uploads, and pipeline output previews.
--**Content** — Let you add supporting context such as headings, instructions, text, and images. By combining components, you can create interactive workflows that let users enter values, execute pipelines, and review results without editing pipeline logic.
+- **Interactive** — Let you capture runtime values from users and assign them to pipeline parameters. These values override parameter defaults when the analysis runs.
+- **Data Integration** — Display or provide data used by the pipeline, including tables, charts, file uploads, and pipeline output previews.
+- **Content** — Let you add supporting context such as headings, instructions, text, and images. By combining components, you can create interactive workflows that let users enter values, execute pipelines, and review results without editing pipeline logic.
 
 ## Interactive
 
@@ -42,7 +42,7 @@ The user can enter any text into the field. Only string-type parameters are supp
 
 ### Number Input
 
-The user can enter any number into the field. The number type (e.g., `int`, `double`, `long`) is determined by the pipeline parameter.
+The user can enter any number into the field. The number type (such as `int`, `double`, or `long`) is determined by the pipeline parameter.
 
 | Setting             | Description                                                                                 | Required |
 | ------------------- | ------------------------------------------------------------------------------------------- | -------- |
@@ -218,6 +218,7 @@ Display a visualization of data from a [Table gem](/data-analysis/gems/source-ta
 Content components let you add supporting context to an analysis.
 
 You can use these components to:
+
 - Add instructions and descriptions.
 - Organize workflows with headings and sections.
 - Display images and reference material.
