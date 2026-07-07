@@ -3,17 +3,13 @@ title: Lookup
 description: Lookup
 ---
 
-<Panel>
-<Info>
-
-Cluster requirements:
+<Accordion title="Cluster requirements">
+**Cluster requirements:**
 
 - UC dedicated clusters 14.3+ supported
 - UC standard clusters 15.4+ supported
 - Livy clusters 3.0.1+ supported
-
-</Info>
-</Panel>
+</Accordion>
 
 Lookup gems allow you to mark a particular DataFrame as a _Broadcast_ DataFrame. Spark ensures that this data is available on every computation node so you can perform lookups without shuffling data. This is useful for looking up values in tables.
 
