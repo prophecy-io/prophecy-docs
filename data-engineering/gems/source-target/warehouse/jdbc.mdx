@@ -70,7 +70,7 @@ The Source gem reads data from JDBC and allows you to optionally specify the fol
 | Execute Post Query     | SQL statement or stored procedure call to run after Prophecy reads data from the JDBC source. Use this for cleanup logic that must happen after the read — for example, updating a log table when a job ends, or running a stored procedure to drop a staging table. For example: `update logs set action='loading_end' where job_id=101`                                                                                         | None    |
 
 <Warning>
-  If you get `class not found` error while you run your pipeline, add a missing dependency to your
+  If you get a `class not found` error while you run your pipeline, add a missing dependency to your
   cluster. To learn how to add dependencies for specific JDBC jar, see [Spark
   dependencies](/data-engineering/extensibility/dependencies/spark-dependencies).
 </Warning>
@@ -84,9 +84,9 @@ Because the Source gem always returns an output — even when the stored procedu
 <Info>
 The JDBC Source gem has no input ports. If a stored procedure needs to run at a specific point in the pipeline rather than at the start, use [gem phase](/data-engineering/gems/gems#gem-phase) to control execution order:
 
-- Gems upstream of the stored procedure call: **Phase 0**
-- The JDBC Source gem running the stored procedure: **Phase 1**
-- Gems downstream of the stored procedure call: **Phase 2**
+- Gems upstream of the stored procedure call: **Phase 0**.
+- The JDBC Source gem running the stored procedure: **Phase 1**.
+- Gems downstream of the stored procedure call: **Phase 2**.
 </Info>
 
 ### Compiled code
