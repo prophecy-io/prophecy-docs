@@ -6,7 +6,7 @@ description: How credit consumption in Prophecy corresponds to platform usage
 
 In Prophecy, **credits** are a single, shared unit of usage across the platform. Instead of paying separately for compute, storage, data movement, seats, and AI features, your team draws all of it from one credit balance.
 
-A credit is a fixed amount of value that gets consumed at different rates depending on what's using it. Adding a teammate draws down your balance very differently than running a pipeline or making an AI request does. Two teams with the same credit balance can burn through credits at different speeds, depending on how they use the platform.
+A credit is a fixed amount of value that gets consumed at different rates. Adding a teammate draws down your balance differently than running a pipeline or making an AI request does. Two teams with the same credit balance can burn through credits at different speeds, depending on how they use the platform.
 
 The table in [How credits are charged](#how-credits-are-charged) shows exactly how each type of usage draws from your balance.
 
@@ -16,7 +16,7 @@ Plans, teams, and fabrics define how billing and credit consumption are organize
 - A **team** represents a group of users who share access to resources through one fabric.
 - A **fabric** points to a dedicated Prophecy warehouse database and compute resources.
 
-<Info>  To learn about monitoring credit usage and buying additional credits, see [Usage and billing](/administration/management/usage-billing/usage-billing). </Info>
+<Info>  To view your remaining credits, monitor usage trends, or purchase additional credits, open [Usage and billing](/administration/management/usage-billing/usage-billing) in Prophecy. </Info>
 
 ## Plans and credit allocation
 
@@ -24,9 +24,9 @@ Plans, teams, and fabrics define how billing and credit consumption are organize
 | ----------------------------------------------------- | --------------- | -------------------- | --------------------------------- |
 | **Free trial**                                        | Free            | 50 credits, one-time | Valid for 14 days; does not reset |
 | **Starter** (Professional Edition)                    | Free            | 5 credits/month      | Monthly                           |
-| **Pro** (Professional Edition and Structured Finance) | $150/user/month | 50 credits/month     | Monthly                           |
+| **Pro** (Professional Edition and Structured Finance) | $150 / user / month | 50 credits/month     | Monthly                           |
 
-<Note>  Structured Finance runs on Professional Edition — it isn't a separate edition or pricing tier. The Pro plan terms above apply to both. </Note>
+<Note>  Structured Finance runs on Professional Edition. The Pro plan terms above apply to Structured Finance as well. </Note>
 
 There is currently no limit on the number of users per team on the Pro plan.
 
@@ -34,17 +34,15 @@ There is currently no limit on the number of users per team on the Pro plan.
 
 The following actions consume the corresponding number of credits.
 
-| Action            | Description                                              | Credits Consumed                                             |
+Compute charges depend on how long your workload runs. Larger datasets, more complex transformations, and longer-running pipelines consume more compute credits than smaller or shorter jobs.
+
+| Action            | Description                                              | Unit price in credits                                        |
 | ----------------- | -------------------------------------------------------- | ------------------------------------------------------------ |
-| **Team Members**  | Number of users allowed on your plan                     | 20 / user / month                                            |
 | **AI Requests**   | Each time you click on Copilot or interact with an Agent | 0.04 / request |
 | **Compute**       | Processing required when running a gem or pipeline       | 0.12 credits/hour |
 | **Data Egressed** | Data sent outside the Prophecy warehouse                 | 0.045 / GB                                                   |
-| **Data Storage**  | Data stored in the Prophecy warehouse                    | 0.02 / GiB / month                                           |
-
-<Note>  The Prophecy warehouse is powered by DuckDB. Advanced users can update the DuckDB SQL queries in the **Code** view of their project to optimize computation and reduce credit consumption. </Note>
-
-<Callout icon="/images/icon.png" color="#FFC107">  `TBD — Compute billing for external warehouses (Databricks, BigQuery).` When a fabric points to an external warehouse instead of Prophecy's own, most transformation processing happens on that external warehouse rather than in the Prophecy sandbox. Final billing treatment for this scenario (egress-only vs. egress + sandbox compute) is pending confirmation — this section will be updated once finalized for this release. </Callout>
+| **Data Storage**  | Data stored in a warehouse                   | 0.02 / GiB / month                                           |
+| **Workspace members**  | Number of users allowed on your plan                     | 75 / user / month |
 
 ## Relationship diagram
 
@@ -56,7 +54,7 @@ A[Plan] --> B[Team]
 B --> C[Fabric / Prophecy Warehouse]
 subgraph "Credit Consumption"
 direction LR
-E[Team Members]
+E[Workspace Members]
 F[AI Requests]
 G[Compute]
 H[Data Storage]
@@ -75,6 +73,16 @@ class A,B,C entity
 class E,F,G,H,I metric
 ```
 
+## Examples of credit use
+
+| Action                             | Credit impact               |
+| ---------------------------------- | --------------------------- |
+| Ask Copilot a question             | AI request                  |
+| Run a small pipeline               | Compute                     |
+| Publish an analysis                | No additional credit charge |
+| Store 10 GiB of data for one month | Storage                     |
+
+
 ## What happens when you run out of credits?
 
 When you run out of credits, the following features will be disabled:
@@ -84,6 +92,4 @@ When you run out of credits, the following features will be disabled:
 - Scheduled pipeline runs
 - Project publication (deployment)
 
-```
-TBD — internal planning references a soft alert threshold and a hard limit threshold before this point (e.g. spending guardrails at set dollar amounts). If these ship in this release, add a short "Alerts" section here describing what a user sees and when, before the hard cutoff above. Do not publish specific dollar thresholds until confirmed as final and customer-facing.
-```
+After credits are added to your account, disabled features become available again. You can purchase additional credits from the Usage and Billing page.
