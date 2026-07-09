@@ -79,21 +79,20 @@ Downstream transformations should therefore handle empty dataframes.
 
 Some operations, such as aggregations, may still produce output when their input dataframe is empty. For example, a count aggregation can return a single row.
 
-
 ## Example: Route based on row count
 
 Assume your pipeline receives 25 rows.
 
 Configure the Condition gem as follows:
 
-- `out0`: `count < 10`
-- `out1`: `count < 100`
+- `out0`: `count(*) < 10`
+- `out1`: `count(*) < 100`
 - `out2`: default
 
 The Condition gem evaluates the outputs in order.
 
-- `count < 10` evaluates to `false`.
-- `count < 100` evaluates to `true`.
+- `count(*) < 10` evaluates to `false`.
+- `count(*) < 100` evaluates to `true`.
 
 The entire dataset is routed to `out1`.
 
@@ -155,5 +154,3 @@ Use the Condition gem when you want to choose between multiple execution paths.
 | Output contains matching rows | Output contains the entire input dataset |
 | Evaluates each row | Evaluates one boolean condition |
 | Can reduce a dataset | Selects one output path |
-
-
