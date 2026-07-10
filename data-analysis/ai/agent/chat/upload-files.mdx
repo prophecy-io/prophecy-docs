@@ -1,14 +1,28 @@
 ---
 title: 'Upload files'
-description: 'Add local files to the SQL warehouse for Agent use'
+description: 'Upload files for data pipelines, analysis, or chat context'
 ---
 
-Upload local files directly into the Agent chat to incorporate them into your pipeline. Uploaded files are converted to tables in the SQL warehouse configured in your fabric, making them available for the Agent to read and use in transformations.
+When you upload a file to the Agent chat, you can choose one of two options:
 
-<Note>The recommended maximum file size is 100 MB.</Note>
+| Option | Use when |
+|--------|----------|
+| **Process as Table** | Convert the file into a table in your SQL warehouse so the Agent can use it in data pipelines and transformations. |
+| **Attach as Reference** | Keep the file in its original format so the Agent can use it as chat context, documentation, or reference material. |
+
+The remainder of this page describes **Process as Table** uploads.
+
+When you choose **Process as Table**, Prophecy uploads the file to the SQL warehouse configured in your fabric and converts it into a structured table that the Agent can read and use in transformations.
+
+<Note>Each file can be up to 30 MB, and the total size of all files in a single upload can be up to 100 MB.</Note>
+
+<Note>
+Uploaded files are scanned for safety before they are processed. Prophecy rejects uploads if they contain disallowed file types, executable content, or archives that exceed size, nesting, or entry-count limits. Rejected uploads show an error message describing the reason.
+</Note>
 
 <AccordionGroup>
 <Accordion title="Supported file formats">
+
 You can upload the following file formats:
 
 - CSV
@@ -24,18 +38,16 @@ You can upload the following file formats:
 
 <Steps>
 <Step title="Start the upload">
-Click the **paperclip** icon in the chat footer to open the file upload dialog. Alternatively, you can drag and drop a file directly onto the pipeline canvas.
+Click the **paperclip** icon in the chat footer or drag a file onto the pipeline canvas. When prompted, choose **Process as Table** to continue with the workflow described on this page.
 
-{/* TODO: Confirm whether the paperclip remains in the chat footer after the chat header update. */}
 </Step>
 
 <Step title="Select your file">
-  Choose the file you want to upload from your local filesystem. The upload dialog opens
-  automatically.
+  Choose the file you want to upload from your local filesystem and drag it into chat. The upload dialog opens automatically.
 </Step>
 
 <Step title="Configure storage location">
-Set where the file should be stored in the SQL warehouse:
+Determine where the file should be stored in the SQL warehouse:
 
 - Choose the database.
 - Choose the schema.
