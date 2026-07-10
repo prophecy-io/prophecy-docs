@@ -1,86 +1,141 @@
 ---
 title: RestAPI
-description: Call APIs from your pipeline
+description: Call REST APIs from your pipeline
 ---
 
 import Execution from '/snippets/gem-execution-engine.mdx';
-import MySnippet from '/snippets/interactive-gem.mdx';
 
 <Execution execution_engine="Prophecy Automate" />
 
 ## Overview
 
-Use the RestAPI gem to make API calls from your pipeline.
-
-<MySnippet gemName="RestAPI" />
+Use the RestAPI gem to make HTTP requests to external REST APIs from your pipeline. You can retrieve data, send data to downstream systems, or trigger external services as part of your workflow.
 
 ## Use cases
 
-## Input and Output
+Common uses for the RestAPI gem include:
+
+- Enriching pipeline data with information from an external service.
+- Sending pipeline results to another application.
+- Triggering external workflows or notifications.
+- Retrieving reference or lookup data during pipeline execution.
+
+## Input and output
 
 The RestAPI gem uses the following input and output ports.
 
-| Port    | Description                                                                    |
-| ------- | ------------------------------------------------------------------------------ |
-| **in0** | (Optional) Input table. Prophecy will make one API call per row.               |
-| **out** | Output table that includes input columns (if applicable) and the API response. |
+| Port | Description |
+|-------|-------------|
+| **in0** | (Optional) Input table. If connected, Prophecy makes one API request for each input row. |
+| **out** | Output table containing the API response, along with the input columns when applicable. |
 
-By default, the RestAPI gem does not include an input port. To add a port, click the `+` button next to **Ports**. Alternatively, connect a previous gem to the RestAPI gem directly to add a new input port.
+By default, the RestAPI gem does not include an input port. You can add one by clicking the **+** button next to **Ports**, or by connecting another gem directly to the RestAPI gem.
 
 <Info>
-  The number of inputs and outputs can be changed as needed by clicking the `+` button on the
-  respective tab in the left panel. To learn more about adding and removing ports, see [Gem
-  ports](/data-analysis/gems/gems#gem-ports).
+The number of input and output ports can be changed as needed. To learn more, see [Gem ports](/data-analysis/gems/gems#gem-ports).
 </Info>
 
-## Parameters
+## Configure the RestAPI gem
 
-Configure the RestAPI gem using the following parameters.
+The RestAPI gem guides you through configuration using a multi-step configuration flow.
 
-| Parameter                  | Description                                                                                                                                                                                                                               |
-| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Target Column Name         | Name of the output column that will contain the API response.<br/>Default: `api_data`.                                                                                                                                                    |
-| URL                        | API endpoint URL where the request will be sent.                                                                                                                                                                                          |
-| Method                     | HTTP method that determines the action to perform. <br/>Common values include `GET` (retrieve data), `POST` (create data), `PUT` (update data), `DELETE` (remove data).                                                                   |
-| Parse API response as JSON | Automatically parse JSON responses into separate columns instead of a single string column. <br/>See [Parse JSON Responses](#parse-json-responses) for details.                                                                           |
-| Authentication             | Method to send credentials to the RestAPI. <br/>See [Authentication methods](#authentication-methods) for details.                                                                                                                        |
-| Params                     | Query parameters to append to the request URL as key-value pairs. <br/>Commonly used for filtering, sorting, or pagination. <br/>Example: `page:2` and `limit:10`.                                                                        |
-| Body                       | Request payload sent with `POST`, `PUT`, or `PATCH` methods. <br/>Contains the data to be processed by the API, typically in JSON format.                                                                                                 |
-| Headers                    | Additional metadata sent with the request as key-value pairs. <br/>Used for authentication, content type specification, and other request attributes. <br/>Supports hard-coded values, configurations (pipeline parameters), and secrets. |
+<Steps>
 
-<Tip>
-You can populate these parameters with hard-coded values, or you can reference columns. To reference a column, use curly brackets. You can reference columns in any field.
+<Step title="Request">
 
-For example, if your dataset has a column named `AccountID`, you can call an API like this:
+The **Request** page defines the HTTP request that will be sent.
 
-<br/>`https://api.company.com/users/{{AccountID}}`
-</Tip>
+Configure the following settings.
 
-### Parse JSON responses
+| Setting | Description |
+|---------|-------------|
+| HTTP Method | Select the HTTP method to use. Supported methods include `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, and `HEAD`. |
+| Target URL | Enter the endpoint to call. |
+| Request Body | For methods that send a request body, choose the body format and provide the request payload. Supported formats include JSON, XML, and plain text. |
 
-Enable JSON parsing to automatically extract the response into separate columns.
+You can reference input columns anywhere the gem accepts text by enclosing the column name in double curly braces.
 
-1. Check the **Parse API response as JSON** checkbox in the gem configuration.
-1. Open the output port panel and enable the **Custom Schema** toggle.
-1. Click **Infer from Cluster** to retrieve the schema from the JSON response.
+For example:
 
-When JSON parsing is enabled:
+```text
+https://api.company.com/customers/{{CustomerID}}
+```
 
-- The API response is automatically parsed into individual columns based on the JSON structure.
-- The **Target Column Name** parameter is hidden since column names come from the JSON field names.
-- If your input has multiple rows, each row triggers a separate API call, and the results are unioned into a single output table.
+You can also reference columns inside a request body.
 
-This feature is enabled by default for new gems using the `GET` method. Changing the method will disable it, but you can always re-enable the checkbox.
+```json
+{
+  "customerId": "{{CustomerID}}",
+  "region": "{{Region}}"
+}
+```
 
-<Note>
-  JSON parsing requires the API to return valid JSON responses. If the response format is
-  inconsistent or not JSON, disable this option and parse the response manually in subsequent gems.
-</Note>
+Click **Continue** to proceed.
 
-### Authentication methods
+</Step>
 
-The RestAPI gem supports three authentication methods.
+<Step title="Authentication and headers">
 
-- **None**: No automatic authentication. Enter authentication information manually in the **Headers** parameter.
-- **Basic Auth**: Automatically sends Base64-encoded username and password from a [Username & Password secret](/data-analysis/environment/secrets/secrets).
-- **Bearer Token**: Automatically sends a bearer token retrieved through OAuth. Prophecy uses a preconfigured [M2M OAuth secret](/data-analysis/environment/secrets/secrets) to obtain this token on your behalf.
+The **Auth & Headers** page configures authentication and additional request metadata.
+
+Choose one of the supported authentication methods:
+
+- None
+- Basic Auth
+- Bearer Token
+- API Key
+- OAuth 2.0
+
+You can also configure:
+
+- **Request parameters** to append query parameters to the URL.
+- **Request headers** to send additional HTTP headers.
+
+Click **Continue** to proceed.
+
+</Step>
+
+<Step title="Response">
+
+The **Response** page controls how Prophecy processes the API response.
+
+Choose one of the following response formats:
+
+- None
+- JSON
+- XML
+
+If you select **JSON** or **XML**, you can configure response parsing.
+
+Available options include:
+
+- Waiting for asynchronous responses.
+- Specifying a JSONPath or XPath expression used to evaluate the response.
+- Choosing how often Prophecy checks for completion.
+- Setting the maximum number of polling attempts.
+- Testing the parsing configuration before saving.
+
+Click **Continue** to proceed.
+</Step>
+
+<Step title="Resilience">
+
+The **Resilience** page lets you configure retry behavior for failed requests.
+
+Enable **Retry if the API fails** to automatically retry unsuccessful requests.
+
+When retries are enabled, configure:
+
+- **Retry attempts** — Maximum number of retry attempts.
+- **Retry delay** — Number of seconds to wait between attempts.
+
+Click **Save Configuration** to finish configuring the gem.
+
+</Step>
+</Steps>
+
+## Additional considerations
+
+- If the RestAPI gem has an input table, Prophecy sends one request for each input row.
+- You can use dynamic values by referencing input columns with `{{column_name}}`.
+- Authentication credentials should be stored using Prophecy secrets whenever possible.
