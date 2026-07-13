@@ -63,7 +63,7 @@ Simple mode organizes the Aggregate gem into three collapsible sections.
 
 ## Complex expressions
 
-Simple mode supports standard grouping columns and aggregation expressions such as `SUM(order_amount)` or `AVG(age)`.
+Simple mode supports standard grouping columns and aggregation expressions such as `sum(order_amount)` or `avg(age)`.
 
 If an existing Aggregate gem contains more advanced expressions, Simple mode displays a message indicating that the configuration is too complex to edit.
 
@@ -79,16 +79,6 @@ In these cases, you have two options:
 **Reset and use Default Mode** permanently removes the existing grouping and aggregation configuration. Aggregate Filters (HAVING conditions) are preserved.
 
 </Warning>
-
-## Common examples
-
-| Goal | Group By | Expression |
-| --- | --- | --- |
-| Count orders per customer | `customer_id` | `count(order_id)` |
-| Calculate total revenue by region | `region` | `sum(order_amount)` |
-| Find average order value by sales rep | `sales_rep` | `avg(order_amount)` |
-| Get the latest transaction date per account | `account_id` | `max(transaction_date)` |
-| Count distinct products sold by store | `store_id` | `count_distinct(product_id)` |
 
 ## How Aggregate works
 
@@ -125,6 +115,16 @@ For example:
 
 - A Filter gem can remove individual rows before grouping.
 - A Having condition can remove grouped results after calculations are complete.
+
+## Common use cases
+
+| Goal | Group By | Expression |
+| --- | --- | --- |
+| Count orders per customer | `customer_id` | `count(order_id)` |
+| Calculate total revenue by region | `region` | `sum(order_amount)` |
+| Find average order value by sales rep | `sales_rep` | `avg(order_amount)` |
+| Get the latest transaction date per account | `account_id` | `max(transaction_date)` |
+| Count distinct products sold by store | `store_id` | `count_distinct(product_id)` |
 
 ## Example
 
@@ -175,9 +175,9 @@ Hovering over a row highlights the corresponding source column in the input prev
 
 Check for:
 
-- Leading or trailing spaces in grouped columns
-- Differences in letter casing such as `US` versus `us`
-- Null values creating separate groups
+- Leading or trailing spaces in grouped columns.
+- Differences in letter casing such as `US` versus `us`.
+- Null values creating separate groups.
 
 You may need to clean or standardize values before aggregation.
 
@@ -185,12 +185,12 @@ You may need to clean or standardize values before aggregation.
 
 If counts appear too high:
 
-- Verify whether duplicate rows exist before aggregation
-- Confirm whether you should use `count()` or `count_distinct()`
+- Verify whether duplicate rows exist before aggregation.
+- Confirm whether you should use `count()` or `count_distinct()`.
 
-### Having condition does not work as expected
+### Aggregate Filters/Having Conditions does not work as expected
 
-Remember that Having conditions filter grouped results after aggregation. If you need to filter raw rows before grouping, use a Filter gem earlier in the pipeline.
+Aggregate Filters (Simple mode) and Having Conditions (Advanced mode) filter grouped results after aggregation. If you need to filter raw rows before grouping, use a Filter gem earlier in the pipeline.
 
 ## Similar tools and concepts
 
