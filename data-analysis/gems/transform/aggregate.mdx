@@ -128,7 +128,7 @@ For example:
 
 ## Example
 
-Suppose you have a dataset of orders that includes heathcare users with the following columns.
+Suppose you have a dataset of orders that includes heathcare users with the following columns:
 
 | Column name               | Description                                                                |
 | ------------------------- | -------------------------------------------------------------------------- |
@@ -154,7 +154,7 @@ This configuration:
 
 - Groups all rows by `persona`.
 - Calculates the average household income, age, and number of dependents for each persona.
-- Returns the `persona` value for each group using `ANY_VALUE`.
+- Returns the `persona` value for each group using `any_value`.
 
 Because `persona` is also the grouping column, every row within a group has the same `persona` value. In cases like this, `any_value` returns that shared value and includes it in the output.
 
