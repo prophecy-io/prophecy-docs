@@ -16,21 +16,13 @@ If a row with the same key exists, it is updated. Otherwise, a new row is insert
 | Exclude Columns                                    | Defines columns that should be excluded from the merge operation.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | (Advanced) On Schema Change                        | Specifies how schema changes should be handled during the merge process.<ul><li><strong>ignore</strong>: Newly added columns will not be written to the model. This is the default option.</li><li><strong>fail</strong>: Triggers an error message when the source and target schemas diverge.</li><li><strong>append_new_columns</strong>: Append new columns to the existing table.</li><li><strong>sync_all_columns</strong>: Adds any new columns to the existing table, and removes any columns that are now missing. Includes data type changes. This option uses the output of the previous gem.</li></ul> |
 
-## Example: Update vehicle type only
+## Example: Upsert vehicle types
 
-When an incoming `VEHICLE_ID` matches an existing one, vehicle type information is updated while registration dates remain unchanged. The merge column is explicitly set to `TYPE`.
+A vehicle registry uses `vehicle_id` as the merge key. The merge column is set to `type`, so matching vehicles have their type updated. Vehicles that do not exist in the target table are inserted as new rows.
 
 <div class="table-example">
 
-**Incoming table**
-
-| VEHICLE_ID | TYPE |
-| ---------- | ---- |
-| 101        | Tram |
-| 102        | Bus  |
-| 104        | Bus  |
-
-**Existing table**
+**Existing target table**
 
 | VEHICLE_ID | TYPE  | REGISTERED_AT |
 | ---------- | ----- | ------------- |
@@ -38,7 +30,15 @@ When an incoming `VEHICLE_ID` matches an existing one, vehicle type information 
 | 102        | Train | 2023-12-02    |
 | 103        | Bus   | 2023-12-03    |
 
-**Updated table**
+**Incoming dataset**
+
+| VEHICLE_ID | TYPE |
+| ---------- | ---- |
+| 101        | Tram |
+| 102        | Bus  |
+| 104        | Bus  |
+
+**Resulting target table**
 
 | VEHICLE_ID | TYPE | REGISTERED_AT |
 | ---------- | ---- | ------------- |
@@ -47,6 +47,6 @@ When an incoming `VEHICLE_ID` matches an existing one, vehicle type information 
 | 103        | Bus  | 2023-12-03    |
 | 104        | Bus  | null          |
 
-Notice that only the `TYPE` column was updated for vehicles `101` and `102` while the `REGISTERED_AT` values remained unchanged. Additionally, note that vehicle `103` remained unchanged since it didn't match a vehicle in the incoming data. Finally, vehicle `104` was inserted, and no data was added to the `REGISTERED_AT` column.
+Because the merge column is set to `TYPE`, Prophecy updates only that column for matching rows. Columns that are not included in the merge remain unchanged. Rows that do not match the merge key are inserted as new rows. In this example, vehicles `101` and `102` have updated `TYPE` values, vehicle `103` remains unchanged, and vehicle `104` is inserted with a `null` value for `REGISTERED_AT` because that column was not included in the incoming dataset.
 
 </div>

@@ -22,30 +22,30 @@ The **Merge - SCD2** write mode tracks historical changes by adding new rows ins
 
 ## Example: Route assignment history
 
-Each time a vehicle changes routes, a new row is added to preserve history. In this case, **Determine new records by checking timestamp column** is enabled, and `ASSIGNED_AT` is the timestamp column.
+A vehicle assignment table tracks which route each vehicle is assigned to over time. When a vehicle is assigned to a new route, Prophecy preserves the previous assignment and creates a new current record. In this example, Determine new records by checking timestamp column is enabled, and `assigned_at` is the timestamp column.
 
 <div class="table-example">
 
-**Incoming table**
-
-| VEHICLE_ID | ROUTE   | ASSIGNED_AT |
-| ---------- | ------- | ----------- |
-| 101        | Route B | 2024-01-15  |
-
-**Existing table**
+**Existing target table**
 
 | VEHICLE_ID | ROUTE   | ASSIGNED_AT | valid_from | valid_to |
 | ---------- | ------- | ----------- | ---------- | -------- |
 | 101        | Route A | 2024-01-01  | 2024-01-01 | NULL     |
 
-**Updated table**
+**Incoming data set**
+
+| VEHICLE_ID | ROUTE   | ASSIGNED_AT |
+| ---------- | ------- | ----------- |
+| 101        | Route B | 2024-01-15  |
+
+**Updated target table**
 
 | VEHICLE_ID | ROUTE   | ASSIGNED_AT | valid_from | valid_to   |
 | ---------- | ------- | ----------- | ---------- | ---------- |
 | 101        | Route A | 2024-01-01  | 2024-01-01 | 2024-01-15 |
 | 101        | Route B | 2024-01-15  | 2024-01-15 | NULL       |
 
-Notice that the original Route A record now has an end date (`2024-01-15` taken from the `ASSIGNED_AT` column) and a new Route B record was added with a null end date, preserving the complete history of route assignments.
+Because the incoming row matches an existing `vehicle_id` but has a newer `assigned_at` value, Prophecy preserves the existing row by assigning it a `valid_to` date and inserts a new current row with a `null` `valid_to` value. This creates a complete history of the vehicle's route assignments rather than overwriting the previous assignment.
 
 </div>
 
