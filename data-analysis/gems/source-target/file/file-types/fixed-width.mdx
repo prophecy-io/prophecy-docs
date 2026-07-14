@@ -58,6 +58,18 @@ The tables below list metadata fields specific to certain data types per SQL war
 | Timestamp  | **Format**: Expected format of the timestamp that can override the global default at the column level. | No       |
 
   </Tab>
+
+<Tab title="Snowflake">
+
+| Data type | Specific metadata fields                                                                               | Required |
+| --------- | ------------------------------------------------------------------------------------------------------ | -------- |
+| Array     | **Number of occurrences**: Number of elements in the array.                                            | Yes      |
+| Date      | **Format**: Expected format of the date that can override the global default at the column level.      | No       |
+| Decimal   | **Scale**: Number of digits after the decimal point. | No       |
+| Time      | **Format**: Expected format of the time that can override the global default at the column level.      | No       |
+| Timestamp | **Format**: Expected format of the timestamp that can override the global default at the column level. | No       |
+
+</Tab>
 </Tabs>
 
 <Note>
@@ -67,7 +79,7 @@ The tables below list metadata fields specific to certain data types per SQL war
 
 ## Source properties
 
-The following properties are available to customize how how fixed-width files are read.
+The following properties are available to customize how fixed-width files are read.
 
 | Property                             | Description                                                                     | Default               |
 | ------------------------------------ | ------------------------------------------------------------------------------- | --------------------- |

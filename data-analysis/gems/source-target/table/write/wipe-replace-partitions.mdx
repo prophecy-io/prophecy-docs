@@ -12,36 +12,36 @@ Replaces entire partitions in the target table. Only partitions containing updat
 | Partition by                | Defines the partitions of the target table.<ul><li><strong>Databricks</strong>: Each unique value of the partition column corresponds to a partition. You cannot change the granularity of the partitions.</li><li><strong>BigQuery</strong>: You must [manually define the granularity](#define-partition-granularity-bigquery-only) of your partitions. BigQuery does not automatically infer how to write the partitions.</li></ul>                                                                                                                                                                             |
 | (Advanced) On Schema Change | Specifies how schema changes should be handled during the merge process.<ul><li><strong>ignore</strong>: Newly added columns will not be written to the model. This is the default option.</li><li><strong>fail</strong>: Triggers an error message when the source and target schemas diverge.</li><li><strong>append_new_columns</strong>: Append new columns to the existing table.</li><li><strong>sync_all_columns</strong>: Adds any new columns to the existing table, and removes any columns that are now missing. Includes data type changes. This option uses the output of the previous gem.</li></ul> |
 
-## Example: Update trips for a specific day
+## Example: Replace one day's sales
 
-In this case, the partition column is the `DATE` column, where each partition corresponds to a single day. Since the incoming data includes records from `2024-01-15`, all of the records from that date are dropped from the existing table and replaced with the new data.
+A sales table is partitioned by the `SALE_DATE` column. A corrected dataset arrives for `2024-01-15`, so only that partition is replaced. All other partitions remain unchanged.
 
 <div class="table-example">
 
-**Incoming table**
+**Existing target table**
 
-| TRIP_ID | VEHICLE_ID | DATE       |
-| ------- | ---------- | ---------- |
-| 401     | 201        | 2024-01-15 |
-| 402     | 202        | 2024-01-15 |
+| ORDER_ID | PRODUCT | SALE_DATE |
+| -------- | ------- | --------- |
+| 101      | Laptop  | 2024-01-14 |
+| 201      | Mouse   | 2024-01-15 |
+| 202      | Monitor | 2024-01-15 |
 
-**Existing table**
+**Incoming dataset**
 
-| TRIP_ID | VEHICLE_ID | DATE       |
-| ------- | ---------- | ---------- |
-| 101     | 101        | 2024-01-14 |
-| 301     | 201        | 2024-01-15 |
-| 302     | 202        | 2024-01-15 |
+| ORDER_ID | PRODUCT  | SALE_DATE |
+| -------- | -------- | --------- |
+| 301      | Mouse    | 2024-01-15 |
+| 302      | Keyboard | 2024-01-15 |
 
-**Updated table**
+**Resulting target table**
 
-| TRIP_ID | VEHICLE_ID | DATE       |
-| ------- | ---------- | ---------- |
-| 101     | 101        | 2024-01-14 |
-| 401     | 201        | 2024-01-15 |
-| 402     | 202        | 2024-01-15 |
+| ORDER_ID | PRODUCT  | SALE_DATE |
+| -------- | -------- | --------- |
+| 101      | Laptop   | 2024-01-14 |
+| 301      | Mouse    | 2024-01-15 |
+| 302      | Keyboard | 2024-01-15 |
 
-Notice that only the `2024-01-15` partition was replaced with new data, while the `2024-01-14` partition remained untouched.
+Because this write mode replaces entire partitions, Prophecy removes all existing rows from any partition represented in the incoming dataset before writing the new rows. Partitions that are not represented in the incoming dataset are left unchanged. In this example, only the `2024-01-15` partition is replaced, while the `2024-01-14` partition remains unchanged.
 
 </div>
 

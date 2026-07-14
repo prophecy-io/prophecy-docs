@@ -322,6 +322,7 @@
                         "pages": [
                           "data-analysis/gems/source-target/table/bigquery",
                           "data-analysis/gems/source-target/table/databricks",
+                          "data-analysis/gems/source-target/table/snowflake",
                           "data-analysis/gems/source-target/table/prophecy-warehouse",
                           "data-analysis/gems/source-target/table/upload-files",
                           {

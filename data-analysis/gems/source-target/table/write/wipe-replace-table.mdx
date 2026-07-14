@@ -3,36 +3,37 @@ title: Wipe and Replace Table
 description: Replace all the rows in the target table
 ---
 
-Replaces all existing data with new data on each run. This is the simplest approach and ensures your target table always reflects the latest state of your source data.
+On each run, Prophecy removes all existing rows from the target table and writes the incoming dataset. The target table always reflects the latest state of the source data.
 
-## Example: Replace vehicle registry
+## Example: Replace product list
 
-A full vehicle registry is refreshed each day, replacing all prior records with the latest list.
+A product catalog is refreshed each day by replacing the existing table with the latest product list.
 
 <div class="table-example">
 
-**Incoming table**
+**Existing target table**
 
-| VEHICLE_ID | TYPE  | REGISTERED_AT |
-| ---------- | ----- | ------------- |
-| 201        | Bus   | 2024-01-15    |
-| 202        | Train | 2024-01-16    |
+| PRODUCT_ID | NAME     | QUANTITY |
+| ---------- | -------- | -------- |
+| 101        | Laptop   | 25       |
+| 102        | Mouse    | 84       |
+| 103        | Keyboard | 40       |
 
-**Existing table**
+**Incoming data set**
 
-| VEHICLE_ID | TYPE | REGISTERED_AT |
-| ---------- | ---- | ------------- |
-| 101        | Bus  | 2023-12-01    |
-| 102        | Tram | 2023-12-02    |
+| PRODUCT_ID | NAME    | QUANTITY |
+| ---------- | ------- | -------- |
+| 101        | Laptop  | 21       |
+| 104        | Monitor | 17       |
 
-**Updated table**
+**Resulting target table**
 
-| VEHICLE_ID | TYPE  | REGISTERED_AT |
-| ---------- | ----- | ------------- |
-| 201        | Bus   | 2024-01-15    |
-| 202        | Train | 2024-01-16    |
+| PRODUCT_ID | NAME    | QUANTITY |
+| ---------- | ------- | -------- |
+| 101        | Laptop  | 21       |
+| 104        | Monitor | 17       |
 
-Notice that all previous records (vehicles `101` and `102`) have been completely removed and replaced with the new incoming data.
+Because this write mode replaces the entire table, any rows that are not present in the incoming dataset are removed. Prophecy does not compare existing and incoming rows or merge individual records. In this example, products `102` and `103` are removed because they are not included in the latest product list.
 
 </div>
 
