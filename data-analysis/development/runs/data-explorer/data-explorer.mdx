@@ -3,7 +3,7 @@ title: Data exploration for Data Analysis
 description: Generate data samples through the pipeline during development
 ---
 
-The **Data Explorer** allows you to inspect data samples at each stage of your pipeline. Use it to identify issues early and verify that your transformations are producing the expected output. You can review column structures, data types, and sample values at each step of your workflow.
+During development, you can inspect data as it flows through your pipeline. Enable **Data Preview** from a gem's action menu to display preview icons on the pipeline canvas. You can also enable **Record Count** to display the number of rows produced by each gem.
 
 ## Generate data samples
 
@@ -42,3 +42,15 @@ To work with the full dataset, do one of the following:
 
 - Click **Load More** at the bottom of the table until all rows are visible.
 - Click **Run** in the top-right corner of the preview. This refreshes the view and applies sorting and filtering to the entire dataset.
+
+## View row count
+
+To display the number of rows produced by a gem, right-click the gem and enable **Record Count**.
+
+When enabled, Prophecy displays the current row count next to the gem's output on the pipeline canvas. This lets you quickly verify how many rows are flowing through each stage of your pipeline without opening the Data Explorer.
+
+{/* consider adding screenshot*/}
+<Note>
+The displayed row count reflects the results of the most recent pipeline run.
+</Note>
+{/*  TODO: Confirm whether the count updates immediately when the option is disabled and whether counts are shown automatically for some gem types. */}
