@@ -1,6 +1,6 @@
 ---
 title: Data profiling for Data Analysts
-description: See high level statistics for data samples in your pipeline
+description: See statistics for data samples in your pipeline
 ---
 
 Data profiling allows you to view statistics on interim datasets in your pipeline. When you open a dataset's profile in the [Data Explorer](/data-analysis/development/runs/data-explorer/data-explorer), you can visualize value distributions and data completeness to ensure your data matches expectations.
@@ -14,7 +14,9 @@ The Data Explorer includes data profiles that are generated on your sample data.
 - **Percent of blank values:** The percentage of values in the column that are blank.
 - **Most common values:** Displays the top four most frequent values in the column, along with the percentage of occurrences for each.
 
-To view these statistics for your sample data, click **Profile** in the Data Explorer.
+To view these statistics for your sample data, click **Profile** in the Data Explorer (1) to open the Data Profile view. Initially, Prophecy calculates Data Profile statistics using only the first 10,000 rows of data, but you can ask Prophecy to expand this calculation to the full data set.
+
+Before you do so, we recommend checking total row count by clicking the **Total Row Count** button at the bottom of the Data Explorer (2). Next, click **Load Full Profile** to calculate statistics for the entire dataset (3).
 
 ![Quick profile](/data-analysis/development/runs/data-explorer/img/quick-data-profile.png)
 

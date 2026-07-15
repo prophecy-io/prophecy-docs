@@ -3,26 +3,19 @@ title: Directory gem for Data Engineering
 description: Return a listing of all the files in a specified directory
 ---
 
-<Panel>
-<Info>
-Dependencies:
+<Accordion title="Dependencies & cluster requirements">
+**Dependencies:**
 
 - ProphecySparkBasicsPython 0.2.27+
 - ProphecyLibsPython 1.9.42+
 - ProphecyLibsScala 8.2.1+
 
-</Info>
-
-<Info>
-
-Cluster requirements:
+**Cluster requirements:**
 
 - UC dedicated clusters 14.3+ supported
 - UC standard clusters 14.3+ supported
 - Livy clusters not supported
-
-</Info>
-</Panel>
+</Accordion>
 
 The Directory gem returns a listing of all the files in a specified directory including file metadata such as file creation time, type, size, path, and more.
 
@@ -65,25 +58,16 @@ def directory_listing(spark: SparkSession) -> DataFrame:
 
 </CodeGroup>
 
-<Panel>
-
-<Info>
-Dependencies:
+<Accordion title="Dependencies & cluster requirements">
+**Dependencies:**
 
 - ProphecySparkBasicsPython 0.2.27+
 - ProphecyLibsPython 1.9.42+
 - ProphecyLibsScala 8.2.1+
 
-</Info>
-
-<Info>
-
-Cluster requirements:
+**Cluster requirements:**
 
 - UC dedicated clusters 14.3+ supported
 - UC standard clusters 14.3+ supported
 - Livy clusters not supported
-
-</Info>
-
-</Panel>
+</Accordion>

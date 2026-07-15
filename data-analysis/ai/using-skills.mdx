@@ -1,0 +1,158 @@
+---
+title: Add and use skills
+description: Contribute skills to Prophecy's AI Agent for specific tasks
+---
+
+Skills tell [Prophecy's AI Agent](/data-analysis/ai/agent/agent) how to handle a specific task: when to activate, what to read first, how to proceed, and what to hand off when done. This page covers how to add one or more skills.
+
+<Note>
+Skills are an iterative artifact. The structure described here reflects patterns that work well in practice, but there is no single correct form. Expect to revise a skill as you learn how the Agent interprets it and how users actually phrase their requests. You can also [use the Agent](#use-agent-to-improve-skill) to generate or refine skills.
+</Note>
+
+## What a skill is
+
+A skill is a named set of instructions the Agent loads when a user request matches its description. Skills conform to the [Agent Skills open specification](https://agentskills.io/specification), which defines a portable, interoperable format for agent instructions.
+
+In Prophecy, skills live at `skills/<skill-name>/SKILL.md` in your project.
+
+Once created, skills appear in your project alongside other project entities. In Prophecy for Business, you can find them in the [Project Browser](/data-analysis/development/studio/studio#project-browser); in [Professional Edition](data-analysis/getting-started/professional-edition), they appear in the Browse Project panel on the right side of the workspace.
+
+## How the agent loads skills
+
+The [Agent](/data-analysis/ai/agent/agent) reads the name and description of every installed skill on every chat. It only loads the full skill content when it determines the skill is relevant to the current task. This means:
+
+- You can maintain many skills without degrading agent output.
+- The description is doing active routing work, not just documentation.
+- A vague description means the skill may never load, or may load at the wrong time.
+
+## Add a skill
+
+<Tabs>
+<Tab title="Prophecy for Business">
+
+### Add a single skill
+
+1. From the bottom of the Project Explorer, select **Add entity > Skill**.
+
+![add entity button](/data-analysis/ai/agent/img/add-entity.png)
+
+2. In the **Add Skill** dialog, enter a skill name. By default the skill is created in the `/skills` folder.
+3. Click **Create**. The skill editor opens.
+4. Enter a [description](#description) (1) and [content](#content) (2). Changes save automatically.
+
+![add skill prophecy for business](/data-analysis/ai/agent/img/add-skill-p4b.png)
+
+### Install skills from a zip file
+
+You can bulk-install a set of skills by uploading a zip file directly to the Agent.
+
+1. In the Agent chat, attach your zip file using **Attach** or by dragging it into the chat.
+2. Enter the prompt: `Install the skills in this zip`.
+3. The Agent installs all skills it finds and confirms which were added. Installed skills appear in the `/skills` directory in your project.
+
+You can invoke any installed skill by name, for example `/strats` or `/validation`.
+
+</Tab>
+<Tab title="Professional Edition">
+
+### Add a single skill
+
+1. At the bottom of the [Project Browser](/data-analysis/development/studio/studio#project-browser) (the rightward panel in Studio), select **Add New > Skill**. Alternatively, select **+** at the top of the tab bar, then choose **New > Skill**.
+2. In the **Add Skill** dialog, enter a skill name. By default the skill is created in the `/skills` folder.
+3. Click **Create**. The skill editor opens.
+4. Enter a [description](#description) (1) and [content](#content)(2). Changes save automatically.
+
+![add skill prophecy professional edition](/data-analysis/ai/agent/img/add-skill-professional.png)
+
+<Note>
+Bulk install from a zip file is not supported in Professional Edition.
+</Note>
+
+</Tab>
+</Tabs>
+
+The following applies when adding a skill manually. If you installed skills from a zip file, the skill files are already written, and you can edit these directly in the skill editor.
+
+## Skill description and content
+
+When the skill editor opens, you enter a description and content.
+
+### Description
+
+The description is the routing signal the Agent uses to decide when to load this skill. Start with "Use when..." and be as concrete as possible. Include the user intent it targets, specific trigger phrases in quotes, any file types or contextual signals that should activate it, and where relevant, what the skill does *not* cover.
+
+A vague description gives the Agent little to work with:
+
+> Helps with data mapping.
+
+A scoped description tells it exactly when to act:
+
+> Use when the user wants to map a raw data tape to the CDM. Triggers include: 'crack this tape', 'map to CDM', 'harmonize tape'. Does not handle pipeline execution or output formatting.
+
+### Content
+
+Here, you enter the instructions the Agent follows once the skill loads. Often, a content block starts with a one-line statement of purpose and scope: what the skill does and, where useful, what it explicitly does not do.
+
+From there, organize content around the operations the Agent needs to perform. Each operation defines a trigger condition (what the user said or did), a sequence of steps, and any output format or response pattern the Agent should follow.
+
+Operations can also specify constraints: things the Agent should not do at this stage, particularly when a skill is one step in a larger workflow and scope boundaries matter.
+
+Some patterns that appear frequently in practice:
+
+- **Prerequisites** — a "Before anything else" section directing the Agent to read a shared config or capabilities file before acting.
+- **Tunable parameters** — numeric thresholds documented explicitly so users know what to adjust, and so the Agent can offer to expose them as pipeline variables rather than hardcoding values.
+- **Scope boundaries** — a "What this skill does NOT do" section at the end, especially when the skill sits alongside related skills that handle adjacent tasks.
+- **Handoff patterns** — explicit routing instructions telling the Agent which other skill to invoke when the user's request moves out of this skill's scope.
+
+There is no required structure for content. Use whatever sections suit the task, named and ordered to match the work. A skill that runs a multi-step pipeline might use numbered steps and prerequisite checks, whereas one that provides background context might be a few paragraphs of prose.
+
+<Note>
+Skill body content stays in context for the entire session once loaded. Keep it concise — every line is a recurring token cost. Move large reference material to supporting files in the same skill directory and link to them from `SKILL.md`.
+</Note>
+
+## Use Agent to improve skill
+
+The Agent can make changes to skills once they are in the Prophecy environment.
+
+After adding skills using the steps above, you can use the following prompts to improve Prophecy skills:
+
+### 1. Start with discovery
+> "Look at [skill name] skill. How can I improve this so that it works better for Prophecy?"
+
+This triggers an analysis of the skill's current state and generates specific recommendations before the Agent makes changes.
+
+### 2. Request data integration
+> "Make this skill use actual data from the workspace instead of just asking questions"
+
+Here, you ask the agent to tune the skill so that it queries tables before conversing.
+
+### 3. Add pipeline generation
+> "Update the skill to offer creating pipelines when appropriate"
+
+In Prophecy, skills become more useful when they can build artifacts such as [pipelines](/data-analysis/development/pipelines/data-analysis-pipelines) and [analyses](/data-analysis/analysis/overview).
+
+### 4. Connect to existing work
+> "Make this skill integrate with the [pipeline name] pipeline I already have"
+
+Links new skills to existing pipelines for richer, context-aware behavior.
+
+### Pattern that works well
+
+| Step | User Says                                       | Result                         |
+| ---- | ----------------------------------------------- | ------------------------------ |
+| 1    | "Look at X skill, how to improve for Prophecy?" | Get analysis + recommendations |
+| 2    | "yes" or "do it"                                | Skill gets rewritten           |
+| 3    | "now test it" or invoke the skill               | Validate the improvements      |
+
+### Key transformation questions
+
+- **From advice → data-driven**: "Make it search for relevant data before asking questions"
+- **From text → artifacts**: "Have it offer to create pipelines and dashboards"
+- **From generic → integrated**: "Connect it to existing pipelines like [name]"
+- **From one-shot → workflow**: "Add steps for discovery, analysis, then artifact creation"
+
+## Further reading
+
+[Agent Skills specification](https://agentskills.io/specification): the open standard used by Claude skills.
+
+[Anthropic's The Complete Guide to Building Skills for Claude](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf): offers detailed information on building skills for Claude that may be helpful in building skills for Prophecy.

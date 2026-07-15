@@ -1,17 +1,26 @@
 ---
 title: 'Analysis components'
-description: 'Learn about the different components to configure in an analysis dashboard'
+description: 'Learn about the components you can use to build interactive analyses'
 ---
 
-Components are the building blocks of your data analysis dashboards. There are three types of components you can use to build your dashboard:
+Components are the building blocks of an analysis. They define how users interact with the underlying data pipeline during runtime.
 
-- [Interactive](#interactive): Lets users assign custom values to pipeline parameters.
-- [Data Integration](#data-integration): Allows users to upload data or view data outputs.
-- [Content](#content): Embed static text and images into your analysis.
+Analysis components fall into three categories:
+
+- **Interactive** — Let you capture runtime values from users and assign them to pipeline parameters. These values override parameter defaults when the analysis runs.
+- **Data Integration** — Display or provide data used by the pipeline, including tables, charts, file uploads, and pipeline output previews.
+- **Content** — Let you add supporting context such as headings, instructions, text, and images. By combining components, you can create interactive workflows that let users enter values, execute pipelines, and review results without editing pipeline logic.
 
 ## Interactive
 
 Interactive components enable users to assign values to [pipeline parameters](/data-analysis/development/parameters/parameters). These values can influence the behavior of each pipeline run and change the output that appears in the analysis.
+
+You can use interactive components to:
+
+- Filter pipeline output.
+- Select execution options.
+- Configure runtime behavior.
+- Pass values into transformations and queries.
 
 If the end user leaves an interactive field blank:
 
@@ -33,7 +42,7 @@ The user can enter any text into the field. Only string-type parameters are supp
 
 ### Number Input
 
-The user can enter any number into the field. The number type (e.g., `int`, `double`, `long`) is determined by the pipeline parameter.
+The user can enter any number into the field. The number type (such as `int`, `double`, or `long`) is determined by the pipeline parameter.
 
 | Setting             | Description                                                                                 | Required |
 | ------------------- | ------------------------------------------------------------------------------------------- | -------- |
@@ -161,7 +170,15 @@ The user can enter a date from a date picker. Only date-type configurations are 
 
 ## Data Integration
 
-Data integration components help users interact with the data throughout the pipeline.
+Data integration components let users view, upload, and interact with data connected to the pipeline.
+
+These components typically display pipeline output after execution or provide additional data used during runtime.
+
+You can use data integration components to:
+- Preview pipeline output.
+- Display results in charts and tables.
+- Upload files for pipeline processing.
+- Explore runtime data interactively.
 
 ### File Upload
 
@@ -198,7 +215,14 @@ Display a visualization of data from a [Table gem](/data-analysis/gems/source-ta
 
 ## Content
 
-Content components let you embed static text and images into your analyses.
+Content components let you add supporting context to an analysis.
+
+You can use these components to:
+
+- Add instructions and descriptions.
+- Organize workflows with headings and sections.
+- Display images and reference material.
+- Help users understand how to interact with the analysis.
 
 ### Text
 

@@ -1,196 +1,156 @@
 ---
 title: Condition
-description: Route rows from one input model to multiple outputs based on ordered conditional logic.
+description: Route an input dataset to one of multiple outputs based on ordered conditions.
 ---
 
-The Condition gem routes rows from an input model to one of two or more outputs based on conditions that you define for each output port. It evaluates those conditions in order and sends each row to the first output whose condition is satisfied.
-
-You can use this gem when you need branching logic in a pipeline. This includes splitting datasets, handling exceptions, adding alerts or guardrails, and implementing control flow based on dataset-level checks such as row counts or sums.
+The Condition gem evaluates a series of conditions and routes the entire input dataset to the first output whose condition evaluates to `true`. This makes it useful for pipeline control flow, data quality checks, and conditional execution.
 
 ## How it works
 
-Each output port has a condition that evaluates to `true` or `false`. Conditions are evaluated from top to bottom. Each row is routed to the first output whose condition evaluates to `true`. Any rows that do not match earlier conditions are routed to the final output port.
+Each output port contains a condition that must evaluate to a single boolean value (`true` or `false`).
+
+The Condition gem evaluates output ports from top to bottom:
+
+1. Evaluate the first output condition.
+2. If the condition evaluates to `true`, route the entire input dataset to that output.
+3. Otherwise, evaluate the next output.
+4. Continue until a condition evaluates to `true`.
+5. If no conditions evaluate to `true`, route the dataset to the final (default) output.
 
 <Note>
-All output branches execute, even if they receive zero rows. The Condition gem routes rows; it does not gate execution.
+Only one output receives the input dataset. The Condition gem chooses a single route for the entire dataset; it does not split rows across multiple outputs.
 </Note>
 
-After a row is routed to an output, it is not evaluated against later outputs.
+After a condition evaluates to `true`, later conditions are not evaluated.
 
-The Conditional gem supports both row-level routing and dataset-level routing:
+## Condition requirements
 
-- Row-level routing splits data based on column values.
-- Dataset-level routing supports control-flow decisions using aggregate conditions such as `count` or `sum`.
+Each condition must return exactly one row containing a boolean value.
 
-Dataset-level conditions (such as using `count`) evaluate the same way for all rows: If the condition is `true`, all rows are routed to that output. If the condition is `false`, no rows are routed to that output. However, even when a dataset-level condition evaluates to `false`, downstream branches still execute with empty inputs.
+Conditions that return multiple rows are invalid and cause the pipeline to fail with a scalar subquery error.
 
-The final output port acts as a default (else) route. Any rows that do not match earlier conditions are routed to the last output.
+For example:
+
+| Condition | Result | Valid |
+|-----------|--------|-------|
+| `count > 1000` | One boolean value | ✓ |
+| `sum(amount) > threshold` | One boolean value | ✓ |
+| `A = 1` | One result per input row | ✗ |
+
+Conditions typically use aggregate functions or expressions that evaluate the input dataset as a whole.
 
 ## Use the Condition gem
 
 1. Add a **Condition** gem to your pipeline from the **Custom** category.
 2. Connect an input to the gem.
-3. Define a condition for each output port by using the condition builder. The condition builder supports columns, functions, parameters, and expressions.
-4. Click **Add Routing Rule** or the **+** to add more output ports when you need additional branches.
-5. Reorder the output ports as needed to change evaluation priority.
-6. Connect downstream gems to each output port.
+3. Define a condition for each output.
+4. Click **Add Routing Rule** or **+** to add additional outputs.
+5. Arrange outputs in the order you want them evaluated.
+6. Connect downstream gems to each output.
 
 The gem starts with two output ports by default.
 
-## Condition types
-
-Condition gem conditions can reference [pipeline parameters and project parameters](/data-analysis/development/parameters/parameters).
-
-You can define row-level conditions such as `OrderAmount > 1000` or dataset-level conditions such as `count < threshold`.
-
 ## Output behavior
 
-If no rows satisfy a condition, that output receives an empty dataframe. Downstream transformations still execute even when the input dataframe is empty. That is, every output path runs, but only the matching branch receives rows.
+Only one output receives the input dataset.
 
-Aggregations applied downstream of an empty branch may still produce rows. For example, a `count` aggregation can return a single-row result.
+All downstream branches still execute, even when they receive zero rows. Outputs that are not selected receive empty dataframes.
 
-## Limitations
+```mermaid
+flowchart LR
+    A[Input dataset] --> B{out0 condition<br/>returns TRUE?}
 
-- Output order affects behavior because conditions are evaluated top to bottom.
-- A condition that always evaluates to `true` captures all rows and prevents later outputs from receiving data.
-- Downstream logic must handle empty dataframes.
-- Dataset-level conditions such as using `count` do not split rows. They route all rows or no rows.
+    B -->|Yes| C[Route entire dataset<br/>to out0]
+    B -->|No| D{out1 condition<br/>returns TRUE?}
+
+    D -->|Yes| E[Route entire dataset<br/>to out1]
+    D -->|No| F[Route entire dataset<br/>to default output]
+```
+
+For example, if `out0` evaluates to `true`, the pipeline behaves like this:
+
+| Output | Rows |
+|--------|------|
+| out0 | All input rows |
+| out1 | 0 |
+| out2 | 0 |
+
+Downstream transformations should therefore handle empty dataframes.
+
+Some operations, such as aggregations, may still produce output when their input dataframe is empty. For example, a count aggregation can return a single row.
+
+## Example: Route based on row count
+
+Assume your pipeline receives 25 rows.
+
+Configure the Condition gem as follows:
+
+- `out0`: `count(*) < 10`
+- `out1`: `count(*) < 100`
+- `out2`: default
+
+The Condition gem evaluates the outputs in order.
+
+- `count(*) < 10` evaluates to `false`.
+- `count(*) < 100` evaluates to `true`.
+
+The entire dataset is routed to `out1`.
+
+`out0` and `out2` still execute but receive empty dataframes.
+
+## Example: Invalid condition
+
+Assume the input contains:
+
+| A |
+|---|
+| 1 |
+| 2 |
+
+The following condition is invalid:
+
+```
+A = 1
+```
+
+The expression produces two results:
+
+| Result |
+|--------|
+| true |
+| false |
+
+Because the condition returns multiple rows instead of a single boolean value, the Condition gem fails with a scalar subquery error.
+
+To use the Condition gem successfully, each condition must evaluate to exactly one boolean value.
 
 ## Example use cases
 
-You can use the Condition gem for these scenarios:
+Use the Condition gem when you need to:
 
-- Data splitting, such as routing high and low values to different branches
-- Exception handling
-- Alerts or guardrails, such as reacting to a low row count
-- Branching pipeline logic
+- Route a pipeline based on dataset size.
+- Apply data quality guardrails.
+- Trigger different processing paths based on aggregate metrics.
+- Implement pipeline control flow.
 
-## Example: simple data splitting
+## Limitations
 
-Assume you have the following orders table:
-
-<div class="table-example">
-| OrderId | Customer | OrderAmount | Region |
-|--------|----------|------------|--------|
-| 1001    | Asha     | 450         | West   |
-| 1002    | Mateo    | 1250        | East   |
-| 1003    | Priya    | 800         | West   |
-| 1004    | Jordan   | 2100        | North  |
-</div>
-
-You configure the Condition gem with two outputs:
-
-- Output `out0` uses the condition `OrderAmount > 1000`.
-
-- Output `out1` is the default (else) route.
-
-Result: rows where `OrderAmount > 1000` are routed to `out0`:
-
-<div class="table-example">
-| OrderId | Customer | OrderAmount | Region |
-|--------|----------|------------|--------|
-| 1002    | Mateo    | 1250        | East   |
-| 1004    | Jordan   | 2100        | North  |
-</div>
-
-All remaining rows are routed to `out1`:ß
-
-<div class="table-example">
-| OrderId | Customer | OrderAmount | Region |
-|--------|----------|------------|--------|
-| 1001    | Asha     | 450         | West   |
-| 1003    | Priya    | 800         | West   |
-</div>
-
-## Example: Multiple outputs, one match
-
-Assume you have the following input:
-
-<div class="table-example">
-| id   | value |
-| ---- | ----- |
-| 1    | 10    |
-| 2    | 20    |
-| 3    | 30    |
-</div>
-
-You configure the Condition gem with three outputs:
-
-- `out0`: `value > 100`
-- `out1`: `value > 50`
-- `out2`: default (else)
-
-Conditions are evaluated top to bottom for each row:
-
-- No rows satisfy `value > 100`, so `out0` receives zero rows.
-- No rows satisfy `value > 50`, so `out1` receives zero rows.
-- All rows fall through to the default route, so `out2` receives all rows.
-
-Result: `out0` = 0 rows, `out1` = 0 rows, `out2` = 3 rows.
-
-## Example: Dataset-level condition (`count`)
-
-Assume the same input:
-
-<div class="table-example">
-| id   | value |
-| ---- | ----- |
-| 1    | 10    |
-| 2    | 20    |
-| 3    | 30    |
-</div>
-
-You configure the Condition gem as follows:
-
-- `out0`: `count < 2`
-- `out1`: default (else)
-
-The condition `count < 2` evaluates to `false`.
-
-Because this is a dataset-level condition, it applies to the entire dataset:
-  - No rows are routed to `out0`.
-  - All rows are routed to `out1`.
-
-Result: `out0` = 0 rows, `out1` = 3 rows.
-
-### Key takeaway
-
-Dataset-level conditions do not split rows. They route all rows or no rows. Even when a condition is false, the corresponding branch still executes with an empty dataframe.
+- Conditions are evaluated from top to bottom.
+- The first condition that evaluates to `true` determines the output.
+- Only one output receives the input dataset.
+- Each condition must evaluate to exactly one boolean value.
+- Conditions that return multiple rows cause the pipeline to fail.
+- Downstream logic must handle empty dataframes.
 
 ## Filter vs Condition gem
 
-Both the [Filter gem](/data-analysis/gems/prepare/filter) and the Condition gem evaluate conditions on a dataset, but they serve different purposes.
+Use the [Filter gem](/data-analysis/gems/prepare/filter) when you want to keep or remove rows.
 
-### Key differences
+Use the Condition gem when you want to choose between multiple execution paths.
 
 | Filter gem | Condition gem |
-|------------|----------------|
-| Reduce data | Route data |
-| One output | Two or more outputs |
-| Keeps rows that match the condition and removes the rest | Sends rows to different outputs based on conditions |
-| No routing | Yes (multiple paths) |
-| Order does not matter | Order matters (first matching output wins) |
-
-### When to use the Filter gem
-
-Use the Filter gem when you want to keep only the rows that match a condition and discard the rest.
-
-For example, with `OrderAmount > 1000`, only rows with `OrderAmount > 1000` remain, and all other rows are removed from the pipeline.
-
-### When to use Condition gem
-
-Use the Condition gem when you want to route rows to different paths based on conditions.
-
-For example, when output out0 uses `OrderAmount > 1000` and output out1 has no condition, rows with `OrderAmount > 1000` go to out0, and all remaining rows go to out1.
-
-### Dataset-level vs row-level behavior
-
-- The Filter gem always operates at the row level.
-- The Condition gem can operate at the row level and the dataset level.
-
-### Summary
-
-- The Filter gem keeps what matches.
-- The Condition gem decides where data goes.
-- Use the Filter gem for simple filtering.
-- Use the Condition gem when you need branching or control flow in your pipeline.
+|------------|---------------|
+| Filters rows | Chooses one pipeline branch |
+| Output contains matching rows | Output contains the entire input dataset |
+| Evaluates each row | Evaluates one boolean condition |
+| Can reduce a dataset | Selects one output path |

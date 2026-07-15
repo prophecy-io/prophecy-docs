@@ -12,6 +12,15 @@ In Prophecy's **Data Prep and Analysis** model:
 - **Pipelines** prepare and transform data.
 - **Analyses** explore, visualize, and interpret that prepared data.
 
+An analysis combines:
+
+- A data pipeline that defines the underlying logic.
+- Interactive components that capture user input.
+- Visualization components that display results.
+- [Parameters](/data-analysis/development/parameters/parameters) that store reusable runtime values.
+
+When a user runs an analysis, Prophecy executes the underlying pipeline using the values entered in the analysis UI.
+
 <Note>
   Before Prophecy 4.2.5, analysis dashboards were known as Prophecy Apps. We have renamed this
   feature to more strongly couple analysis with pipelines. Functionality remains largely the same;
