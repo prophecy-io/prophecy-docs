@@ -32,12 +32,12 @@ The RestAPI gem uses the following input and output ports.
 By default, the RestAPI gem does not include an input port. You can add one by clicking the **+** button next to **Ports**, or by connecting another gem directly to the RestAPI gem.
 
 <Info>
-The number of input and output ports can be changed as needed. To learn more, see [Gem ports](/data-analysis/gems/gems#gem-ports).
+You can change the number of input and output ports for most gems. To learn more, see [Gem ports](/data-analysis/gems/gems#gem-ports).
 </Info>
 
 ## Configure the RestAPI gem
 
-The RestAPI gem guides you through configuration using a multi-step configuration flow.
+When you first open the RestAPI gem, Prophecy guides you through a multi-step configuration flow.
 
 <Steps>
 
@@ -45,17 +45,15 @@ The RestAPI gem guides you through configuration using a multi-step configuratio
 
 The **Request** page defines the HTTP request that will be sent.
 
-Configure the following settings.
+Configure the following settings:
 
 | Setting | Description |
 |---------|-------------|
-| HTTP Method | Select the HTTP method to use. Supported methods include `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, and `HEAD`. |
-| Target URL | Enter the endpoint to call. |
+| HTTP Method | Select the HTTP method to use. Supported methods include `GET`, `POST`, `PUT`, `DELETE`, and `PATCH`. |
+| Target URL | Enter the URL of the REST API endpoint to call. |
 | Request Body | For methods that send a request body, choose the body format and provide the request payload. Supported formats include JSON, XML, and plain text. |
 
-You can reference input columns anywhere the gem accepts text by enclosing the column name in double curly braces.
-
-For example:
+You can reference input columns anywhere the gem accepts text by enclosing the column name in double curly braces as follows:
 
 ```text
 https://api.company.com/customers/{{CustomerID}}
@@ -70,7 +68,7 @@ You can also reference columns inside a request body.
 }
 ```
 
-Click **Continue** to proceed.
+Once you have configured the HTTP request, click **Continue** to proceed.
 
 </Step>
 
@@ -80,11 +78,10 @@ The **Auth & Headers** page configures authentication and additional request met
 
 Choose one of the supported authentication methods:
 
-- None
-- Basic Auth
-- Bearer Token
-- API Key
-- OAuth 2.0
+- **None** — Send the request without automatic authentication.
+- **Basic Auth** — Authenticate using a username and password.
+- **Bearer Token** — Send a bearer token directly or select an M2M OAuth secret so Prophecy can retrieve the token.
+- **API Key** — Send an API key in either a request header or query parameter.
 
 You can also configure:
 
@@ -97,23 +94,45 @@ Click **Continue** to proceed.
 
 <Step title="Response">
 
-The **Response** page controls how Prophecy processes the API response.
+The **Response** page controls how Prophecy parses the API response.
 
-Choose one of the following response formats:
+Choose one of the following parsing options.
 
-- None
-- JSON
-- XML
+### None
 
-If you select **JSON** or **XML**, you can configure response parsing.
+Return the API response as a single text column. You can specify the name of the output column.
 
-Available options include:
+### JSON
 
-- Waiting for asynchronous responses.
-- Specifying a JSONPath or XPath expression used to evaluate the response.
-- Choosing how often Prophecy checks for completion.
-- Setting the maximum number of polling attempts.
-- Testing the parsing configuration before saving.
+Parse the response as JSON.
+
+You can optionally:
+
+1. **Flatten the parsed response into columns.** If you leave this option disabled, Prophecy returns the parsed response as a single struct column.
+2. **Wait for async results.** Enable this option for APIs that initially return an "in progress" response. Enter a JSONPath condition that identifies an in-progress response. Prophecy continues polling while the condition evaluates to true and stops when it evaluates to false or no longer matches.
+
+### XML
+
+Parse the response as XML.
+
+You can optionally:
+
+1. **Flatten the parsed response into columns.** If you leave this option disabled, Prophecy returns the parsed response as a single struct column.
+2. **Wait for async results.** Enable this option for APIs that initially return an "in progress" response. Enter an XPath condition that identifies an in-progress response. Prophecy continues polling while the condition evaluates to true and stops when it evaluates to false or no longer matches.
+
+### Parsed response output
+
+When you choose JSON or XML, the output depends on whether you flatten the parsed response.
+
+<Note>
+Parsing the response does not automatically define the output schema. After configuring the gem, open the output port and click **Infer from Cluster** to retrieve the response schema.
+</Note>
+
+| Flatten parsed response into columns | Output                                                                     |
+| ------------------------------------ | -------------------------------------------------------------------------- |
+| Disabled                             | The parsed response is returned as a single struct column.                 |
+| Enabled                              | Fields from the parsed response are returned as individual output columns. |
+
 
 Click **Continue** to proceed.
 </Step>
@@ -129,6 +148,15 @@ When retries are enabled, configure:
 - **Retry attempts** — Maximum number of retry attempts.
 - **Retry delay** — Number of seconds to wait between attempts.
 
+Prophecy retries requests that fail because of:
+
+- Network errors or timeouts.
+- HTTP `408 Request Timeout` responses.
+- HTTP `429 Too Many Requests` responses.
+- HTTP `5xx` server errors.
+
+Other HTTP `4xx` responses are not retried.
+
 Click **Save Configuration** to finish configuring the gem.
 
 </Step>
@@ -138,4 +166,4 @@ Click **Save Configuration** to finish configuring the gem.
 
 - If the RestAPI gem has an input table, Prophecy sends one request for each input row.
 - You can use dynamic values by referencing input columns with `{{column_name}}`.
-- Authentication credentials should be stored using Prophecy secrets whenever possible.
+- Authentication credentials should be stored using Prophecy secrets.
