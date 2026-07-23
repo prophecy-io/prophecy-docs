@@ -25,86 +25,92 @@ The review process allows users to validate agent-generated mappings and transfo
 
 The review step ensures that business logic and domain-specific requirements are correctly implemented. While the agent handles routine mappings efficiently, human oversight catches edge cases and ensures that transformations align with business rules.
 
+## Access the harmonization feature
+
+The harmonization feature is available only through the Finance app.
+
+Open the Finance app at `https://app.prophecy.ai/finance/`.
+
 ## Create a new data mapping
 
-To create a new data mapping:
-
-1. Select **Add New Data Mapping**.
-2. Select a source dataset by either:
-   - Uploading an Excel, CSV, or Parquet file.
-   - Selecting an existing table.
-3. If you select an existing table, search for the dataset you want to use.
-4. Continue to the **Review Data** page.
+1. Select **Add New** > **Data Mapping**.
+2. Select a source dataset by uploading an Excel, CSV, or Parquet file, or by choosing an existing table.
+3. Search existing datasets when selecting an existing table.
+4. Click **Continue**.
 
 ## Review the source data
 
-The **Review Data** page opens to the schema view.
+The source data review opens to a schema that displays the column name, data type, and available metadata.
 
-The schema displays:
-
-- Column name
-- Data type
-- Metadata
-
-To inspect the source data, click **Data** in the upper-right corner to view sample data by column.
-
-When you finish reviewing the schema or sample data, continue to the next step.
+Click **Data** in the upper-right corner to view sample data by column. After reviewing the schema or sample data, continue to the target data model selection.
 
 ## Select a target data model
 
-Select the target data model that you want to map your source data to.
+Available data models appear in the left-hand column.
 
-Available data models appear in the left navigation pane. When you select a data model, its schema is displayed so you can review the target columns before creating the mapping.
+1. Select a target data model.
+2. Review the target model schema.
+3. Click **Map Data**.
 
-When you finish reviewing the schema, click **Map Data**.
+## Generate mappings
 
-## Review the generated mapping
+Initially, Prophecy runs a deterministic, rule-based mapping pass.
 
-After you start mapping, the Agent analyzes the source data and creates an initial mapping.
+The deterministic pass considers:
 
-The mapping summary includes information such as:
+- Exact-name matches with compatible data types.
+- Historical, approved mappings stored in a per-CDM memory store.
 
-- The number of mapped columns compared to the total number of target columns.
-- Columns mapped to source fields.
-- Columns marked as having no available source data.
-- Any unresolved data quality issues.
+Mappings that were previously approved for other pipelines can be suggested again. These mappings have a distinct historical-match attribution.
 
-To inspect the mapping:
+The Agent then generates additional mapping suggestions. After processing finishes, the mapping summary shows how many target columns were mapped, how many were not mapped because corresponding source data was unavailable, and whether unresolved data quality issues remain.
+
+## Review mapping details
 
 1. Open the new data mapping.
 2. Select **View Details**.
-3. Select a column from either mapping category.
-4. Review the mapping line that connects the source and target columns.
-5. Select a target column to view additional details about that column.
+3. Select a column from a mapping category.
+4. Review the line that displays the source-to-target mapping.
+5. Select the target column to view its details.
 6. Click **Next** to continue.
 
-## Review data quality
+![harmonization result](/data-analysis/ai/agent/harmonization/img/harmonization-result.png)
 
-Open the **Data Quality** tab to review validation results.
+## Review data quality results
 
-The page summarizes table-level and column-level checks, including how many checks passed and failed.
+Open the **Data Quality** tab to review the mapping checks.
 
-If validation issues are found:
+The summary displays table-level and column-level checks, including how many checks passed and failed.
 
-1. Click **Go to Mapping**.
-2. Ask the Agent for suggestions to resolve the mapping issue.
-3. Review the suggested mapping options.
-4. Select the option you want to apply.
-5. Allow the Agent to update the mapping.
+When a check fails, click **Go to Mapping** to review the related mapping.
 
-The source material includes examples of Agent suggestions such as using a default value of `0`, falling back to another field, or using an expected value.
+## Apply a suggested fix
+
+The Agent does not directly modify the live mapping when resolving a data quality failure.
+
+Instead, it creates a separate suggested fix that includes:
+
+- A proposed transformation.
+- A plain-language description of the proposed change.
+
+The suggested fix remains separate from the live mapping until you explicitly apply it.
+
+1. Ask the Agent for suggestions to resolve the mapping issue.
+2. Review the suggested fix and its description.
+3. Select the proposed option you want to use.
+4. Explicitly apply the suggested fix to update the mapping.
+
+Suggested options can include a default value such as `0`, a fallback to another field, or a fallback to an expected value.
 
 ## Preview and export the output
 
-When you are satisfied with the mapping:
-
-1. Click **Output Preview** to review the transformed results.
-2. Return to the mapping if additional changes are required.
+1. Click **Output Preview** to review the harmonized results.
+2. Return to the mapping when additional changes are required.
 3. After the mapping completes successfully, review the success message indicating that the dataset is ready.
 4. Export the harmonized data.
 
 ## View the generated pipeline
 
-After the harmonization process completes, Prophecy automatically creates the pipeline used to perform the harmonization.
+Prophecy creates a pipeline behind the scenes to perform the harmonization.
 
-You can open the generated pipeline to view the implementation details for each gem.
+Open the generated pipeline to review the implementation and inspect the details of each gem.
