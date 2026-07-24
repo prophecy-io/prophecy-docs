@@ -188,6 +188,11 @@ SQLStatement
 XMLParse
 JSONParse
 
+## Structured Finance
+comparables
+stratifications
+watchlists
+
 ## Transpiler
 
 Informatica

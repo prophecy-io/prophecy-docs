@@ -1,0 +1,71 @@
+---
+title: Structured Finance
+description: Standardize loan tapes and analyze structured finance portfolios
+---
+
+Structured Finance provides workflows for onboarding, standardizing, and analyzing loan-level data.
+
+To access Structured Finance, go to `https://app.prophecy.ai/finance/`.
+
+<Note>
+If you are already signed up for [Professional Edition](data-analysis/getting-started/professional-edition), you will need to create a separate sign-in for Structured Finance.
+</Note>
+
+The workflow begins with Tape Cracking, which uses [data harmonization](/data-analysis/ai/agent/harmonization/overview) to map a source loan tape to a standardized asset-class data model.
+
+After the data is harmonized, you can use it to generate stratification analyses, select sub-pools, compare deals, and monitor closed transactions.
+
+## Structured Finance workflow
+
+The Structured Finance app includes the following workflows:
+
+| Workflow                             | Description                                                                                          |
+| ------------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| **Tape Cracking**                    | Map a new loan tape to an asset-class data model and validate the standardized output.               |
+| **Stratifications & Pool Selection** | Generate standard stratifications for an existing loan tape and use the results to build a sub-pool. |
+| **Peer Comparison**                  | Benchmark a deal against the prior shelf and recent issuer comparables.                              |
+| **Post-Close Surveillance**          | Monitor closed deals through watchlists, vintage performance, and investor reporting.                |
+
+## Tape Cracking
+
+Tape Cracking is the data onboarding and harmonization workflow.
+
+You select a source loan tape and map it to a Common Data Model that defines the standardized schema for the asset class. The Harmonization Agent generates mappings, validates data quality, proposes fixes for mapping issues, and produces a standardized dataset.
+
+Behind the scenes, Prophecy creates a pipeline that performs the harmonization.
+
+For the complete workflow, see [Harmonization](/data-analysis/ai/agent/harmonization/overview).
+
+## Stratifications and Pool Selection
+
+Stratifications & Pool Selection generates a standard analysis for a harmonized loan tape.
+
+When you click **Use Template**, Prophecy creates a copy of the selected template project in your team or workspace. Prophecy assigns the copy a unique project name and opens the new project with the template welcome prompt already populated.
+
+The original template remains unchanged.
+
+The US Auto ABS template includes the following analysis sections:
+
+| Section                        | Description                                                                                                                                            |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Current Principal Balance**  | Shows the distribution of loans by outstanding principal balance. Use it to assess pool concentration, loan-size granularity, and single-obligor risk. |
+| **Range of Contract Rate (%)** | Shows the distribution of loans by contract-rate bucket. Use it to evaluate the pool's yield profile and sensitivity to prepayment behavior.           |
+| **Obligor State of Residence** | Shows geographic concentration by U.S. state, including a balance distribution heat map and geographic detail.                                         |
+| **Range of Credit Scores**     | Shows the distribution of loans by credit-score bucket. Use it to evaluate the credit quality of the pool.                                             |
+| **Range of LTV (%)**           | Shows the distribution of loans by loan-to-value bucket. Use it to assess collateral coverage and identify loans with negative equity risk.            |
+
+<Note>
+Stratifications & Pool Selection is currently available for US Auto ABS. US RMBS, European RMBS, and European Auto ABS are shown as coming soon.
+</Note>
+
+## Peer Comparison
+
+Peer Comparison benchmarks a deal against the prior shelf and recent issuer comparables.
+
+Use it to evaluate how the current deal compares with related transactions.
+
+## Post-Close Surveillance
+
+Post-Close Surveillance helps you monitor closed deals.
+
+It supports workflows for watchlists, vintage performance, and investor reporting.
