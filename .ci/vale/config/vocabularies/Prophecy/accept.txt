@@ -192,6 +192,8 @@ JSONParse
 comparables
 stratifications
 watchlists
+CDM
+CDMs
 
 ## Transpiler
 

@@ -15,34 +15,42 @@ After the initial mapping is complete, you can review mapped and unmapped column
 
 The Harmonization Agent uses AI to infer mappings between source schemas and a target [Common Data Model](#common-data-model) (CDM) that you define.
 
-## Common Data Model
-
-A Common Data Model (CDM) defines the target schema that all source data must conform to. It specifies standardized column names, data types, and data tests used across downstream pipelines. The CDM is typically created once and reused across multiple harmonization workflows.
+A **Common Data Model (CDM)** defines a target schema for source data. It specifies standardized column names, data types, and data tests used across downstream pipelines. The CDM is typically created once and reused across multiple harmonization workflows.
 
 ## Human-in-the-loop validation
 
-The review process allows users to validate agent-generated mappings and transformations before finalization. During review, you can see how each source column was mapped to the target schema, the transformations applied, the agent's confidence score for each mapping, and the data quality tests that were applied.
+While the agent handles routine mappings efficiently, human oversight catches edge cases and ensures that transformations align with business rules.
 
-The review step ensures that business logic and domain-specific requirements are correctly implemented. While the agent handles routine mappings efficiently, human oversight catches edge cases and ensures that transformations align with business rules.
+Before harmonization processes, you can validate agent-generated mappings and transformations. During review, Prophecy shows you how each source column is mapped to the target schema, any transformations applied, a confidence score for each mapping, and any data quality tests applied.
 
-## Access the harmonization feature
+## Access harmonization
 
-The harmonization feature is available only through the Finance app.
+The harmonization feature is currently available only through [the Structured Finance Edition](/data-analysis/getting-started/structured-finance-edition).
 
-Open the Finance app at `https://app.prophecy.ai/finance/`.
+To access Structured Finance, go to `https://app.prophecy.ai/finance/`.
+
+<Note>
+If you are already signed up for [Professional Edition](data-analysis/getting-started/professional-edition), you will need to create a separate sign-in for Structured Finance.
+</Note>
 
 ## Create a new data mapping
 
-1. Select **Add New** > **Data Mapping**.
-2. Select a source dataset by uploading an Excel, CSV, or Parquet file, or by choosing an existing table.
-3. Search existing datasets when selecting an existing table.
-4. Click **Continue**.
+To create a data mapping:
+
+1. Open Structured Finance.
+1. Click **Tape Cracking**.
+1. Select a source dataset. Either:
+   - Click **Table** to upload an Excel, CSV, Parquet, or similar file or
+   - Click **Select Existing** to choose an existing table.
+1. Click **Continue**.
 
 ## Review the source data
 
-The source data review opens to a schema that displays the column name, data type, and available metadata.
+The source data review opens with the schema for your chosen source (that is, a page that displays column names, data types, and any available metadata).
 
-Click **Data** in the upper-right corner to view sample data by column. After reviewing the schema or sample data, continue to the target data model selection.
+To view sample data by column, click **Data** in the upper-right corner of the page.
+
+After reviewing the schema or sample data, continue to the target data model selection.
 
 ## Select a target data model
 
@@ -51,6 +59,16 @@ Available data models appear in the left-hand column.
 1. Select a target data model.
 2. Review the target model schema.
 3. Click **Map Data**.
+
+<AccordionGroup>
+<Accordion title="Create new Common Data Model">
+
+import AddCDM from '/snippets/misc/add-cdm.mdx'
+
+<AddCDM/>
+
+</Accordion>
+</AccordionGroup>
 
 ## Generate mappings
 
