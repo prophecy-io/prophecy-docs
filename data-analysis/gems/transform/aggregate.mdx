@@ -41,7 +41,7 @@ Simple mode organizes the Aggregate gem into three collapsible sections.
 
 | Section               | Description                                                                                               |
 | --------------------- | --------------------------------------------------------------------------------------------------------- |
-| **Grouping**          | Choose one or more columns to group by. Optionally rename the output column for each grouping expression. |
+| **Grouping**          | Choose one or more columns to group by. Optionally, rename the output column for each grouping expression. |
 | **Aggregations**      | Select an aggregation function, choose the input column, and provide an output column name.               |
 | **Aggregate Filters** | Filter grouped results after aggregation using a HAVING expression.                                       |
 
@@ -55,7 +55,7 @@ Simple mode organizes the Aggregate gem into three collapsible sections.
 | avg            | Returns the average.                       |
 | min            | Returns the minimum value.                 |
 | max            | Returns the maximum value.                 |
-| any_value      | Returns an arbitrary value from the group. Use `ANY_VALUE` when every row in a group has the same value, or when any representative value is acceptable. |
+| any_value      | Returns an arbitrary value from the group. Use `any_value` when every row in a group has the same value, or when any representative value is acceptable. |
 | stddev         | Returns the standard deviation.            |
 | variance       | Returns the variance.                      |
 | collect_list   | Returns an array containing all values.    |
@@ -65,7 +65,7 @@ Simple mode organizes the Aggregate gem into three collapsible sections.
 
 Simple mode supports standard grouping columns and aggregation expressions such as `sum(order_amount)` or `avg(age)`.
 
-If an existing Aggregate gem contains more advanced expressions, Simple mode displays a message indicating that the configuration is too complex to edit.
+If an existing Aggregate gem contains more advanced expressions, Simple mode displays a message indicating that the configuration is too complex to edit in Simple mode.
 
 For example, Simple mode does note support calculated grouping expressions such as `sum(a) + sum(b)`.
 
@@ -80,7 +80,7 @@ In these cases, you have two options:
 
 </Warning>
 
-## How Aggregate works
+## How the Aggregate gem works
 
 The Aggregate gem processes data in three main steps:
 
@@ -109,7 +109,7 @@ flowchart LR
     E -- No --> G[Remove group]
 ```
 
-Unlike a Filter gem, the **Having Conditions** are evaluated after aggregation is complete.
+Unlike a Filter gem, **Having Conditions** are evaluated after aggregation is complete.
 
 For example:
 
