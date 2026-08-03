@@ -1,6 +1,6 @@
 ### Location
 
-The Location tab defines where a table lives and how it's identified within your project.
+The Location tab defines where a table lives and how it is identified within your project.
 
 | Field | Description |
 | ----- | ----------- |
@@ -11,14 +11,14 @@ The Location tab defines where a table lives and how it's identified within your
 
 A **parameter set** selector appears in the upper-right corner of the Location tab:
 
-- If the table gem is used inside a pipeline, this shows that pipeline's active parameter set automatically.
-- If you're working on the table outside of a pipeline (for example, from the Project browser), it shows **Select Pipeline and Parameter set** until you choose one. You only need to do this if one or more Location fields are set to Advanced mode (see below) and you need their values resolved outside pipeline context.
+- If the table gem is used inside a pipeline, the selector shows that pipeline's active parameter set automatically.
+- If you're working on the table outside of a pipeline (for example, from the Project browser), the selector shows **Select Pipeline and Parameter set** until you choose one. You only need to do this if one or more Location fields are set to Advanced mode (see below) and you need their values resolved outside pipeline context.
 
-At the bottom of the Location tab, Prophecy shows a live preview of the resolved `database.schema.table` location — the hardcoded values if all fields are in Simple mode, or the resolved parameter values if any field is in Advanced mode. If a value can't be resolved yet — for example, because no parameter set is selected — Prophecy displays the raw value instead.
+At the bottom of the Location tab, Prophecy shows a live preview of the resolved `database.schema.table` location: the hardcoded values if all fields are in Simple mode, or the resolved parameter values if any field is in Advanced mode. If a value can't be resolved yet — for example, because no parameter set is selected — Prophecy displays the raw value instead.
 
 #### Make a location field dynamic
 
-By default, each Location field (database, schema, table) takes a fixed value that you type directly — this is **Simple** mode.
+In the default **Simple** mode, each Location field (database, schema, table) takes a fixed value that you type directly.
 
 Switch a field to **Advanced** mode to bind it to a project or pipeline parameter instead of a fixed value.
 
