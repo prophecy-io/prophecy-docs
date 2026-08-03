@@ -56,10 +56,42 @@ These data types you see in Prophecy correspond to the [data types in BigQuery](
 | String     | Represents variable-length character strings. <br />SQL type name: **STRING**                                                                         |
 
 <Info>
-Prophecy does not support BigQuery `Interval`, `Geography`, or `JSON` data types directly.
 
-- **Geography / JSON:** Serialized and stored as strings.
+- **JSON:** Supported. Prophecy infers the JSON schema and displays nested fields in the UI.
+- **Geography:** Serialized and stored as strings.
 - **Interval:** Converted to a month-day-nano interval type for display and processing.
+
+</Info>
+
+</Tab>
+
+<Tab title="Snowflake">
+The data types you see in Prophecy correspond to the [data types in Snowflake](https://docs.snowflake.com/en/sql-reference-data-types).
+
+| Data type | Description |
+| --------- | ----------- |
+| Array | Represents semi-structured arrays of values. |
+| Binary | Represents variable-length binary data. |
+| Boolean | Represents true and false values. |
+| Date | Represents calendar dates without a time component. |
+| Decimal | Represents fixed-point numbers with a specified precision and scale. |
+| Float | Represents approximate numeric values. |
+| Integer | Represents whole numbers. |
+| Object | Represents semi-structured key-value data. |
+| String | Represents variable-length character strings. |
+| Time | Represents a time of day without a date. |
+| Timestamp | Represents a date and time value. |
+| Variant | Represents semi-structured data such as JSON, Avro, ORC, Parquet, or XML. |
+
+<Info>
+Prophecy maps Snowflake SQL types to the simplified data types shown above.
+
+For example:
+
+- **Integer** includes Snowflake integer types such as `NUMBER`, `DECIMAL`, `NUMERIC`, `INT`, `INTEGER`, `BIGINT`, `SMALLINT`, `TINYINT`, and `BYTEINT` when they represent whole numbers.
+- **Float** includes approximate numeric types such as `FLOAT`, `FLOAT4`, `FLOAT8`, `DOUBLE`, `DOUBLE PRECISION`, and `REAL`.
+- **String** includes character and text types such as `VARCHAR`, `CHAR`, `CHARACTER`, `STRING`, and `TEXT`.
+- **Timestamp** includes `TIMESTAMP_NTZ`, `TIMESTAMP_LTZ`, and `TIMESTAMP_TZ`.
 
 </Info>
 
