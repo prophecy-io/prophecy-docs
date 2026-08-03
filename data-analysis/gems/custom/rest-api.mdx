@@ -22,7 +22,7 @@ Common uses for the RestAPI gem include:
 
 ## Input and output
 
-The RestAPI gem uses the following input and output ports.
+The RestAPI gem uses the following input and output ports:
 
 | Port | Description |
 |-------|-------------|
@@ -53,13 +53,13 @@ Configure the following settings:
 | Target URL | Enter the URL of the REST API endpoint to call. |
 | Request Body | For methods that send a request body, choose the body format and provide the request payload. Supported formats include JSON, XML, and plain text. |
 
-You can reference input columns anywhere the gem accepts text by enclosing the column name in double curly braces as follows:
+You can reference input columns anywhere the gem accepts text by enclosing the column name in double curly braces:
 
 ```text
 https://api.company.com/customers/{{CustomerID}}
 ```
 
-You can also reference columns inside a request body.
+You can also reference columns inside a request body:
 
 ```json
 {
@@ -74,19 +74,23 @@ Once you have configured the HTTP request, click **Continue** to proceed.
 
 <Step title="Authentication and headers">
 
-The **Auth & Headers** page configures authentication and additional request metadata.
+The **Auth & Headers** page lets you configure authentication and additional request metadata.
 
 Choose one of the supported authentication methods:
 
-- **None** — Send the request without automatic authentication.
-- **Basic Auth** — Authenticate using a username and password.
-- **Bearer Token** — Send a bearer token directly or select an M2M OAuth secret so Prophecy can retrieve the token.
+- **None** — Send the request without automatic authentication. You can add an `Authorization` header manually in the **Request headers** section.
+- **Basic Auth** — Authenticate using a username and password stored in a [Username & Password secret](/data-analysis/environment/secrets/secrets).
+- **Bearer Token** — Authenticate using a bearer token. Select an existing secret to supply the token value, or enter a new token as a secret.
 - **API Key** — Send an API key in either a request header or query parameter.
 
 You can also configure:
 
-- **Request parameters** to append query parameters to the URL.
-- **Request headers** to send additional HTTP headers.
+- **Request parameters** to append query parameters to the URL. For example, `limit:250` appends `?limit=250` to the request URL.
+- **Request headers** to send additional HTTP headers. Header values support hard-coded strings, pipeline parameters, and secrets.
+
+<Tip>
+Store credentials as [Prophecy secrets](/data-analysis/environment/secrets/secrets) rather than hard-coding them in headers or parameters. Secrets are never visible after they are saved.
+</Tip>
 
 Click **Continue** to proceed.
 
@@ -100,7 +104,7 @@ Choose one of the following parsing options.
 
 ### None
 
-Return the API response as a single text column. You can specify the name of the output column.
+Return the API response as a single text column. You can specify a name for the output column.
 
 ### JSON
 
@@ -128,20 +132,20 @@ When you choose JSON or XML, the output depends on whether you flatten the parse
 Parsing the response does not automatically define the output schema. After configuring the gem, open the output port and click **Infer from Cluster** to retrieve the response schema.
 </Note>
 
-| Flatten parsed response into columns | Output                                                                     |
-| ------------------------------------ | -------------------------------------------------------------------------- |
-| Disabled                             | The parsed response is returned as a single struct column.                 |
-| Enabled                              | Fields from the parsed response are returned as individual output columns. |
-
+| Flatten parsed response into columns | Output |
+|--------------------------------------|--------|
+| Disabled | The parsed response is returned as a single struct column. |
+| Enabled | Fields from the parsed response are returned as individual output columns. |
 
 Click **Continue** to proceed.
+
 </Step>
 
 <Step title="Resilience">
 
 The **Resilience** page lets you configure retry behavior for failed requests.
 
-Enable **Retry if the API fails** to automatically retry unsuccessful requests.
+Enable **Retry if the API fails** to retry unsuccessful requests automatically.
 
 When retries are enabled, configure:
 
@@ -162,8 +166,65 @@ Click **Save Configuration** to finish configuring the gem.
 </Step>
 </Steps>
 
-## Additional considerations
+## Example
 
-- If the RestAPI gem has an input table, Prophecy sends one request for each input row.
-- You can use dynamic values by referencing input columns with `{{column_name}}`.
-- Authentication credentials should be stored using Prophecy secrets.
+Suppose you have a dataset of customer records with the following columns:
+
+| Column name | Description |
+|---|---|
+| `customer_id` | Unique identifier for each customer. |
+| `region` | Geographic region associated with the customer. |
+
+You can use the RestAPI gem to enrich each row by calling an external CRM API that returns account details for a given customer.
+
+### Example configuration
+
+| Setting | Value |
+|---|---|
+| HTTP Method | `GET` |
+| Target URL | `https://api.crm.com/accounts/{{customer_id}}` |
+| Authentication | Bearer Token |
+| Response parsing | JSON, flattened into columns |
+
+### Result
+
+This configuration:
+
+- Sends one `GET` request per input row, using the `customer_id` column to construct the URL dynamically.
+- Authenticates each request using a bearer token stored as a Prophecy secret.
+- Parses the JSON response and flattens the returned fields into individual output columns alongside the original input columns.
+
+## Common issues
+
+### Authentication errors
+
+If requests return `401 Unauthorized` or `403 Forbidden`:
+
+- Verify that the token or credentials are correct and have not expired.
+- Check that the secret is attached to the correct fabric.
+- If using **None** authentication, confirm that the `Authorization` header is formatted correctly. Bearer tokens should use the format `Bearer <token>`.
+
+### Unexpected response shape
+
+If the output schema looks wrong after inferring:
+
+- Check the raw response by temporarily disabling JSON or XML parsing and inspecting the `api_data` column.
+- Some APIs wrap results in a top-level key such as `data` or `results`. You may need a subsequent gem to extract the nested field.
+
+### Pagination
+
+Most APIs return a limited number of results per request, controlled by parameters such as `limit` and `offset` or `page`. The RestAPI gem sends one request per input row and does not handle pagination automatically. To retrieve all pages, build a loop using pipeline parameters or pre-compute the required page offsets in an upstream gem.
+
+### API not reachable from Prophecy
+
+If the API call fails with a network or connection error, the API may not be accessible from Prophecy's execution environment. In this case, consider calling the API externally and writing the results to a table your fabric can read (such as a Databricks notebook writing to a Delta table, a Snowflake task, or a BigQuery scheduled query) then reading from that table as a source in your Prophecy pipeline.
+
+## Similar tools and concepts
+
+| Tool or platform | Similar concept |
+|---|---|
+| SQL | `JOIN` against an external data source |
+| Alteryx | Download tool |
+| Pandas | `requests` library with `DataFrame.apply()` |
+| PySpark | UDF wrapping `requests` library |
+| Postman | Manual API testing and request configuration |
