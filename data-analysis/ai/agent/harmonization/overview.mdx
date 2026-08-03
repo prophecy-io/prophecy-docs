@@ -7,40 +7,130 @@ Data harmonization transforms disparate source data into a standardized schema.
 
 Source systems often use different naming conventions, data types, and structures to represent the same type of data. For example, you might have the exact same survey hosted on different systems, each which produce different output data **with the same type of information**. To merge this data into a single dataset, you need to harmonize the data.
 
-The Harmonization Agent does this for you by transforming source columns to expected target columns while validating data quality.
+The Harmonization Agent does this for you by transforming source columns to expected target columns while validating data quality. You start by selecting a source dataset, reviewing its schema, choosing a target data model, and letting the Agent generate an initial mapping.
 
-The Harmonization Agent runs in a dedicated project mode and requires the [Transform Agent to be disabled](#enabling-harmonization). Projects can operate in either Transform Agent mode or Harmonization mode, but not both simultaneously.
+After the initial mapping is complete, you can review mapped and unmapped columns, resolve data quality issues, preview the output, and export the harmonized data. Behind the scenes, Prophecy creates a pipeline that performs the harmonization process.
 
 ## How does the Harmonization Agent work?
 
-The Harmonization Agent uses AI to infer mappings between source schemas and a target [Common Data Model](#common-data-model) (CDM) that you define. While the agent can assume a mapping to get your data in the right format, we highly recommend providing a [reference pipeline](#reference-pipelines) to "teach" the agent how to transform your data. When you provide a reference pipeline, the agent compares the source schema to patterns in reference pipelines to make informed transformation decisions.
+The Harmonization Agent uses AI to infer mappings between source schemas and a target [Common Data Model](#common-data-model) (CDM) that you define.
 
-Once the agent has generated the harmonized pipeline, Prophecy encourages a [human-in-the-loop](#human-in-the-loop-validation) approach. For each source-target mapping, you can review confidence scores and double check each transformation. Additionally, you can review the data quality test outcomes for each mapping. After review and validation, the harmonized pipeline becomes a production-ready asset that can be scheduled and deployed.
-
-## Common Data Model
-
-A Common Data Model (CDM) defines the target schema that all source data must conform to. It specifies standardized column names, data types, and data tests used across downstream pipelines. The CDM is typically created once and reused across multiple harmonization workflows.
-
-## Reference pipelines
-
-Optionally, you can build a reference pipeline that transforms source data and maps it to your CDM. The Harmonization Agent can use this pipeline to learn how similar source data should be transformed.
-
-For example, the agent can reference patterns such as column name equivalencies, common transformation types, and data type conversions. When harmonizing a new source with similar characteristics, the agent applies these patterns to generate mappings and transformations automatically.
+A **Common Data Model (CDM)** defines a target schema for source data. It specifies standardized column names, data types, and data tests used across downstream pipelines. The CDM is typically created once and reused across multiple harmonization workflows.
 
 ## Human-in-the-loop validation
 
-The review process allows users to validate agent-generated mappings and transformations before finalization. During review, you can see how each source column was mapped to the target schema, the transformations applied, the agent's confidence score for each mapping, and the data quality tests that were applied.
+While the agent handles routine mappings efficiently, human oversight catches edge cases and ensures that transformations align with business rules.
 
-The review step ensures that business logic and domain-specific requirements are correctly implemented. While the agent handles routine mappings efficiently, human oversight catches edge cases and ensures that transformations align with business rules.
+Before harmonization processes, you can validate agent-generated mappings and transformations. During review, Prophecy shows you how each source column is mapped to the target schema, any transformations applied, a confidence score for each mapping, and any data quality tests applied.
 
-## Enabling harmonization
+## Access harmonization
 
-The Harmonization Agent runs in a dedicated project mode and requires the Transform Agent to be disabled. Projects can operate in either Transform Agent mode or Harmonization/Documentation mode, but not both simultaneously.
+The harmonization feature is currently available only through [the Structured Finance Edition](/data-analysis/getting-started/structured-finance-edition).
 
-To use the Harmonization Agent:
+To access Structured Finance, go to `https://app.prophecy.ai/finance/`.
 
-1. Disable the v4 Agent for the team that owns the project by opening **Metadata → Teams → Select team → Settings → Advanced**.
-1. Click the **Enable Transform Agent** toggle.
-1. Return to your project.
+<Note>
+If you are already signed up for [Professional Edition](data-analysis/getting-started/professional-edition), you will need to create a separate sign-in for Structured Finance.
+</Note>
 
-Only one agent mode can be active per team at a time.
+## Create a new data mapping
+
+To create a data mapping:
+
+1. Open Structured Finance.
+1. Click **Tape Cracking**.
+1. Select a source dataset. Either:
+   - Click **Table** to upload an Excel, CSV, Parquet, or similar file or
+   - Click **Select Existing** to choose an existing table.
+1. Click **Continue**.
+
+## Review the source data
+
+The source data review opens with the schema for your chosen source (that is, a page that displays column names, data types, and any available metadata).
+
+To view sample data by column, click **Data** in the upper-right corner of the page.
+
+After reviewing the schema or sample data, continue to the target data model selection.
+
+## Select a target data model
+
+Available data models appear in the left-hand column.
+
+1. Select a target data model.
+2. Review the target model schema.
+3. Click **Map Data**.
+
+<AccordionGroup>
+<Accordion title="Create new Common Data Model">
+
+import AddCDM from '/snippets/misc/add-cdm.mdx'
+
+<AddCDM/>
+
+</Accordion>
+</AccordionGroup>
+
+## Generate mappings
+
+Initially, Prophecy runs a deterministic, rule-based mapping pass.
+
+The deterministic pass considers:
+
+- Exact-name matches with compatible data types.
+- Historical, approved mappings stored in a per-CDM memory store.
+
+Mappings that were previously approved for other pipelines can be suggested again. These mappings have a distinct historical-match attribution.
+
+The Agent then generates additional mapping suggestions. After processing finishes, the mapping summary shows how many target columns were mapped, how many were not mapped because corresponding source data was unavailable, and whether unresolved data quality issues remain.
+
+## Review mapping details
+
+1. Open the new data mapping.
+2. Select **View Details**.
+3. Select a column from a mapping category.
+4. Review the line that displays the source-to-target mapping.
+5. Select the target column to view its details.
+6. Click **Next** to continue.
+
+![harmonization result](/data-analysis/ai/agent/harmonization/img/harmonization-result.png)
+
+## Review data quality results
+
+Open the **Data Quality** tab to review the mapping checks.
+
+The summary displays table-level and column-level checks, including how many checks passed and failed.
+
+When a check fails, click **Go to Mapping** to review the related mapping.
+
+## Apply a suggested fix
+
+The Agent does not directly modify the live mapping when resolving a data quality failure.
+
+Instead, it creates a separate suggested fix that includes:
+
+- A proposed transformation.
+- A plain-language description of the proposed change.
+
+The suggested fix remains separate from the live mapping until you explicitly apply it.
+
+1. Ask the Agent for suggestions to resolve the mapping issue.
+2. Review the suggested fix and its description.
+3. Select the proposed option you want to use.
+4. Explicitly apply the suggested fix to update the mapping.
+
+Suggested options can include a default value such as `0`, a fallback to another field, or a fallback to an expected value.
+
+## Preview and export the output
+
+1. Click **Output Preview** to review the harmonized results.
+2. Return to the mapping when additional changes are required.
+3. After the mapping completes successfully, review the success message indicating that the dataset is ready.
+4. Export the harmonized data.
+
+![final page harmonization](/data-analysis/ai/agent/harmonization/img/harmonization-final-page.png)
+
+## View the generated pipeline
+
+Prophecy creates a pipeline behind the scenes to perform the harmonization.
+
+Open the generated pipeline to review the implementation and inspect the details of each gem.
