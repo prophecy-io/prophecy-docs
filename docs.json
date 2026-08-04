@@ -23,7 +23,8 @@
                       "index",
                       "data-analysis/getting-started/concepts",
                       "data-analysis/getting-started/quick-start",
-                      "data-analysis/getting-started/professional-edition"
+                      "data-analysis/getting-started/professional-edition",
+                      "data-analysis/getting-started/structured-finance-edition"
                     ]
                   },
                   {
@@ -213,13 +214,14 @@
                         ]
                       },
                       {
-                        "group": "Connections",
+                        "group": "Data ingress/egress",
                         "pages": [
                           "data-analysis/environment/connections/connections",
                           {
-                            "group": "Data ingress/egress",
+                            "group": "Connect to",
                             "pages": [
                               "data-analysis/environment/connections/adls",
+                              "data-analysis/environment/connections/synapse",
                               "data-analysis/environment/connections/bigquery",
                               "data-analysis/environment/connections/databricks",
                               "data-analysis/environment/connections/gcs",
@@ -234,13 +236,13 @@
                               "data-analysis/environment/connections/redshift",
                               "data-analysis/environment/connections/s3",
                               "data-analysis/environment/connections/salesforce",
-                              "data-analysis/environment/connections/sftp",
                               "data-analysis/environment/connections/sharepoint",
+                              "data-analysis/environment/connections/sftp",
                               "data-analysis/environment/connections/smartsheet",
                               "data-analysis/environment/connections/smtp",
                               "data-analysis/environment/connections/snowflake",
-                              "data-analysis/environment/connections/synapse",
-                              "data-analysis/environment/connections/tableau"
+                              "data-analysis/environment/connections/tableau",
+                              "data-analysis/environment/connections/windows-network-drive"
                             ]
                           }
                         ]
