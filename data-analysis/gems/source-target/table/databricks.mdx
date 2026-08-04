@@ -29,7 +29,7 @@ The following table types are supported for Databricks connections.
   [Views](https://docs.databricks.com/aws/en/views/).
 </Info>
 
-## Create a new table
+## Configure table
 
 Once you create a Table gem, you can reuse the table throughout your project. All created tables appear in the [Project](/data-analysis/development/studio/studio) tab in the left sidebar.
 
@@ -57,13 +57,15 @@ Click **+ New Table**. The gem configuration will depend on the table type:
 
 </Steps>
 
-## Gem configuration
-
-### Tables
+## Configure table
 
 Tables are persistent, indexed storage objects optimized for frequent access.
 
-#### Source parameters
+import TableLoc from '/snippets/misc/table-location.mdx';
+
+<TableLoc/>
+
+### Source parameters
 
 | Parameter  | Description                                                    |
 | ---------- | -------------------------------------------------------------- |
@@ -71,19 +73,18 @@ Tables are persistent, indexed storage objects optimized for frequent access.
 | Properties | Define or infer schema. Add a description if needed.           |
 | Preview    | Load a sample of the data before saving.                       |
 
-#### Target parameters
+### Target parameters
 
 | Parameter     | Description                                                                                                                                                                            |
 | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Location      | Choose the location where the table will be stored. You can create a new table by writing a new table name.                                                                            |
-| Properties    | Define certain properties of the table. The schema cannot be changed for targets.                                                                                                      |
+| Properties    | Define properties for the table. The schema cannot be changed for targets.                                                                                                      |
 | Write Options | Select how you want the data to be written each time you run the pipeline (Table only). Learn more in [Write strategies](/data-analysis/gems/source-target/table/write/write-options). |
-
-### Views
+## Configure views
 
 Views are virtual tables recomputed at runtime from a query.
 
-#### Source parameters
+### Source parameters
 
 | Parameter  | Description                                          |
 | ---------- | ---------------------------------------------------- |
@@ -91,7 +92,7 @@ Views are virtual tables recomputed at runtime from a query.
 | Properties | Define or infer schema. Add a description if needed. |
 | Preview    | Load data based on the view's underlying query.      |
 
-#### Target parameters
+### Target parameters
 
 | Parameter  | Description                                                                       |
 | ---------- | --------------------------------------------------------------------------------- |
@@ -105,7 +106,7 @@ Views are virtual tables recomputed at runtime from a query.
   No additional write modes are supported.
 </Note>
 
-### Seeds
+## Configure seeds
 
 Seeds are lightweight CSV datasets defined in your project. Seeds are source-only.
 
