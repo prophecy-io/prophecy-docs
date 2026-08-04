@@ -51,11 +51,9 @@ Click **+ New Table**. The gem configuration will depend on the table type:
 
 </Steps>
 
-## Gem configuration
+## Configure tables
 
-### Tables
-
-#### Source parameters
+### Source parameters
 
 | Parameter  | Description                                                                                                   |
 | ---------- | ------------------------------------------------------------------------------------------------------------- |
@@ -63,7 +61,7 @@ Click **+ New Table**. The gem configuration will depend on the table type:
 | Properties | Define or infer schema. Add a description if needed.                                                          |
 | Preview    | Load a sample of the data before saving.                                                                      |
 
-#### Target parameters
+### Target parameters
 
 | Parameter     | Description                                                                                                                                                 |
 | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -71,11 +69,15 @@ Click **+ New Table**. The gem configuration will depend on the table type:
 | Properties    | Define certain properties of the table. The schema cannot be changed for target tables.                                                                     |
 | Write Options | Select how you want the data to be written each time you run the pipeline. Wipe and Replace Table only.                                                     |
 
-### Views
+import TableLoc from '/snippets/misc/table-location.mdx';
+
+<TableLoc/>
+
+## Configure views
 
 Views are virtual tables recomputed at runtime from a query.
 
-#### Source parameters
+### Source parameters
 
 | Parameter  | Description                                          |
 | ---------- | ---------------------------------------------------- |
@@ -83,7 +85,7 @@ Views are virtual tables recomputed at runtime from a query.
 | Properties | Define or infer schema. Add a description if needed. |
 | Preview    | Load data based on the view's underlying query.      |
 
-#### Target parameters
+### Target parameters
 
 | Parameter  | Description                                                                             |
 | ---------- | --------------------------------------------------------------------------------------- |
@@ -97,7 +99,7 @@ Views are virtual tables recomputed at runtime from a query.
   No additional write modes are supported.
 </Note>
 
-### Seeds
+## Configure seeds
 
 Seeds are lightweight CSV datasets defined in your project. Seeds are source-only.
 

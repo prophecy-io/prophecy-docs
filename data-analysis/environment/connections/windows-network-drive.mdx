@@ -1,0 +1,44 @@
+---
+title: Windows network share
+description: Synchronize files from a Windows network share to SharePoint so they can be used in Prophecy
+---
+
+Organizations often store source data on Windows network shares or mapped drives.
+
+Because these file shares are not directly accessible from cloud-native applications, Prophecy recommends synchronizing them to Microsoft SharePoint Online and then [connecting Prophecy to SharePoint](/data-analysis/environment/connections/sharepoint).
+
+## How it works
+
+Instead of connecting Prophecy directly to a Windows network share, use SharePoint Online as an intermediary.
+
+This approach allows you to continue managing files on your network while making them available through a supported cloud connection.
+
+## Synchronize your network share
+
+Prophecy does not synchronize files between a network share and SharePoint. Instead, you should use a Microsoft-supported migration or synchronization tool to keep your SharePoint document library up to date.
+
+Microsoft recommends using one-way incremental synchronization, where changes made on the network share are periodically copied to SharePoint. This approach minimizes synchronization time while avoiding conflicts that can occur with two-way synchronization.
+
+Common Microsoft options include:
+
+- **[SharePoint Migration Tool (SPMT)](https://learn.microsoft.com/en-us/sharepointmigration/introducing-the-sharepoint-migration-tool)** for standalone or scripted migrations.
+- **[SharePoint's Migration Manager](https://learn.microsoft.com/en-us/sharepointmigration/mm-get-started** for centralized enterprise deployments.
+For implementation details, refer to the [Microsoft SharePoint migration documentation](https://learn.microsoft.com/en-us/sharepointmigration/introducing-the-sharepoint-migration-tool).
+
+## Connect Prophecy to SharePoint
+
+After your files are synchronized to SharePoint Online, [create a SharePoint connection in Prophecy](/data-analysis/environment/connections/sharepoint) that includes:
+
+- Your SharePoint site URL.
+- Your Azure Active Directory tenant ID.
+- Your Azure application (client) ID.
+- Your Azure client secret stored as a Prophecy secret.
+
+For the required connection properties, see the [Microsoft SharePoint connection properties API](https://learn.microsoft.com/en-us/sharepoint/dev/spfx/connect-to-sharepoint).
+
+## Best practices
+
+- Use one-way incremental synchronization instead of two-way synchronization.
+- Schedule synchronization based on how frequently your source data changes.
+- Treat SharePoint as the data source that Prophecy reads.
+- After migration is complete, consider transitioning users to work directly from SharePoint rather than the original network share.
