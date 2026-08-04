@@ -3,6 +3,48 @@ title: '2026 releases'
 description: 'Features and enhancements from new releases'
 ---
 
+<Update label="Prophecy 4.2.10" description="July 31, 2026" tags={["Data Analysis"]}>
+
+## Parameterize table and view locations
+Table gem Location tabs now support setting database, schema, and table/view name from project or pipeline parameters, not just fixed values. Each Location field can be set to **Value** (a fixed name, as before) or **Configuration Parameter** (bound to an `sql_expression` parameter), so the same table or view definition can resolve to different locations depending on which parameter set is active.
+
+New additions to the Location tab:
+
+- **Table alias** — a stable, logical identifier for the table or view that persists even if the underlying database, schema, or name changes. Set once at creation; cannot be changed afterward.
+- **Parameter set selector** — shows the active pipeline's parameter set automatically, or lets you choose one when working outside a pipeline context.
+- **Live location preview** — shows the resolved `database.schema.table` value as you configure the gem.
+
+This makes it possible to define a table or view once and reuse it across multiple pipelines or environments, with each supplying its own values via parameter sets.
+
+## Improved data harmonization workflow
+Harmonize source data with standardized data models using a guided mapping experience. Upload Excel, CSV, or Parquet files, or select existing tables, then let the Agent automatically map source fields to a target data model. Review mappings, resolve data quality issues with AI-generated suggestions, preview the transformed output, and export the harmonized dataset. Prophecy also automatically generates the underlying pipeline, allowing you to inspect and customize the resulting workflow.
+
+## Structured Finance edition
+Prophecy now offers Structured Finance, a specialized application for onboarding, standardizing, and analyzing loan-level data. Access it at `https://app.prophecy.ai/finance/` (requires a separate sign-in from Professional Edition).
+
+Four workflows are included:
+
+- **Tape Cracking** – Maps a source loan tape to a standardized asset-class data model using the Harmonization Agent, which generates mappings, validates data quality, and proposes fixes.
+- **Stratifications & Pool Selection** – Generates standard stratification analyses (principal balance, contract rate, obligor state, credit score, LTV) from a harmonized loan tape and supports sub-pool selection. Currently available for US Auto ABS; US RMBS, European RMBS, and European Auto ABS are coming soon.
+- **Peer Comparison** – Benchmarks a deal against the prior shelf and recent issuer comparables.
+- **Post-Close Surveillance** – Monitors closed deals via watchlists, vintage performance, and investor reporting.
+
+Users can also create Common Data Models to define standardized schemas for new asset classes.
+
+## Improved RestAPI gem
+The [RestAPI gem](/data-analysis/gems/transform/aggregate) now uses a guided multi-step configuration flow that separates request definition, authentication, response handling, and resilience settings. New capabilities include configurable response parsing for JSON and XML, optional response flattening, asynchronous polling for long-running API requests, flexible authentication options (including API keys and M2M OAuth bearer tokens), and configurable retry behavior for transient failures.
+
+## Improved Aggregation gem
+The [Aggregate gem](/data-analysis/gems/transform/aggregate) now features an easier-to-use Simple mode for the Aggregate gem with guided Grouping, Aggregations, and Aggregate Filters sections, while preserving the existing Advanced mode for complex expressions.
+
+## Data Preview and Row Count
+Added [Data Preview and Record Count](/data-analysis/development/runs/data-explorer/data-explorer) options to gem menus. Enable Data Preview to preload sample data and activate preview icons on intermediate gems, or enable Record Count to display row counts directly on the pipeline canvas for supported outputs.
+
+## Bookmark gems
+Added the ability to [bookmark favorite gems](/data-analysis/gems/gems#bookmark-favorite-gems) for faster access. Star gems from the gem picker to pin them to a new Favorites bar, where you can add them to the canvas with a single click or drag-and-drop.
+
+</Update>
+
 <Update label="Prophecy 4.2.9" description="June 17, 2026" tags={["Data Analysis"]}>
 
 ## Reformat gem: Live previews and data flow visualization
