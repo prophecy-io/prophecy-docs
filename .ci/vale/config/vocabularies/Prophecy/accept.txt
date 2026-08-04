@@ -179,6 +179,8 @@ hostname
 Ungroup
 unselect
 Filepath
+preload
+preloaded
 
 ## Gems
 
