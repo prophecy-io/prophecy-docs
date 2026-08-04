@@ -51,13 +51,11 @@ Click **+ New Table**. The gem configuration will depend on the table type:
 
 </Steps>
 
-## Gem configuration
-
-### Tables
+## Configure tables
 
 Tables are persistent, indexed storage objects optimized for frequent access.
 
-#### Source parameters
+### Source parameters
 
 | Parameter  | Description                                                    |
 | ---------- | -------------------------------------------------------------- |
@@ -72,7 +70,7 @@ Tables are persistent, indexed storage objects optimized for frequent access.
   be able to edit these properties.
 </Info>
 
-#### JSON columns
+### BiqQuery JSON columns
 
 Prophecy supports BigQuery `JSON` columns, including schema inference, nested field exploration, and reading and writing JSON data.
 
@@ -94,7 +92,7 @@ For example, a JSON column containing:
 
 is displayed as nested fields that can be expanded and referenced throughout your pipeline.
 
-#### Access nested fields
+##### Access nested fields
 
 After schema inference, you can reference nested JSON fields in gems such as Reformat, Filter, and Join using dot notation.
 
@@ -112,7 +110,7 @@ Prophecy automatically generates the appropriate BigQuery JSON functions:
 | Boolean values | `CAST(JSON_VALUE(payload, '$.active') AS BOOL)` |
 | Objects or arrays | `JSON_QUERY(payload, '$.user')` |
 
-#### Target parameters
+### Target parameters
 
 | Parameter     | Description                                                                                                                                                                            |
 | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -120,7 +118,7 @@ Prophecy automatically generates the appropriate BigQuery JSON functions:
 | Properties    | Define certain properties of the table. The schema cannot be changed for targets.                                                                                                      |
 | Write Options | Select how you want the data to be written each time you run the pipeline (Table only). Learn more in [Write strategies](/data-analysis/gems/source-target/table/write/write-options). |
 
-#### Write JSON data
+### Write BigQuery JSON data
 
 When writing to BigQuery `JSON` columns, Prophecy automatically converts string representations of JSON into native BigQuery JSON values. No manual SQL transformations are required.
 
@@ -129,12 +127,15 @@ When writing to BigQuery `JSON` columns, Prophecy automatically converts string 
   `VARIANT` columns.
 </Info>
 
+import TableLoc from '/snippets/misc/table-location.mdx';
 
-### Views
+<TableLoc/>
+
+## Configure views
 
 Views are virtual tables recomputed at runtime from a query.
 
-#### Source parameters
+### Source parameters
 
 | Parameter  | Description                                          |
 | ---------- | ---------------------------------------------------- |
@@ -142,7 +143,7 @@ Views are virtual tables recomputed at runtime from a query.
 | Properties | Define or infer schema. Add a description if needed. |
 | Preview    | Load data based on the view's underlying query.      |
 
-#### Target parameters
+### Target parameters
 
 | Parameter  | Description                                                                       |
 | ---------- | --------------------------------------------------------------------------------- |
@@ -156,7 +157,7 @@ Views are virtual tables recomputed at runtime from a query.
   No additional write modes are supported.
 </Note>
 
-### Seeds
+## Configure seeds
 
 Seeds are lightweight CSV datasets defined in your project. Seeds are source-only.
 
