@@ -1,0 +1,40 @@
+---
+title: Remove duplicate and null rows during upload
+description: Remove duplicate rows and rows containing null values while uploading a file or table.
+---
+
+This feature performs basic table cleansing during the file or table upload process. You can remove duplicate rows and rows containing null values without using more complex gem functionality.
+
+Use the preview to compare the original and cleaned tables before choosing which version to use for the remainder of your analysis. Edition availability is not specified in the source material. :contentReference[oaicite:0]{index=0}
+
+## Remove duplicate or null rows
+
+1. Navigate to the properties section in the file upload area.
+2. Select the unchecked **delete duplicate row** or **delete Null rows** option.
+3. Select the columns that you want to check for duplicate or null values.
+4. Click **Next** to open the **Preview** tab.
+5. Compare the original table with the cleaned table and review the row counts to confirm the deletions.
+6. Choose either the raw sheet or the updated sheet for the remainder of the analysis.
+
+## Row removal behavior
+
+When an entire row contains only null values, selecting the full row removes it.
+
+When two row entries are identical, the system automatically removes the duplicate row.
+
+To remove rows that contain null values in a specific column, you must select that column.
+
+To remove duplicates based on a specific column, you must select that column. The duplicate is removed according to the First row rule.
+
+After execution completes successfully, a gem is generated on the canvas. When you choose the raw data file, only the table is added, and no gem is generated.
+
+## Limitations
+
+- Row actions support duplicate removal only. Unique, distinct, and last row operations require more extensive use of the gem.
+- You cannot modify individual cells within the table.
+
+## Supported entity types
+
+- Tables, including SQL warehouse tables
+- Gems, including pipeline gem instances
+- Documentation templates
