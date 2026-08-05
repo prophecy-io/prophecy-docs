@@ -14,9 +14,9 @@
 #
 #     -- Asana/create-app-attachment-github-action, src/index.ts
 #
-# Observed on this repo: a PR whose task sat outside `allowed-projects` and a PR
-# with no Asana link at all BOTH returned status 200, indistinguishable from the
-# 201 of a genuine success. A `uses:` step's stdout can't be captured in Actions,
+# Observed on this repo: a PR whose task Asana refused to attach to and a PR with
+# no Asana link at all BOTH returned status 200, indistinguishable from the 201 of
+# a genuine success. A `uses:` step's stdout can't be captured in Actions,
 # and a job's own log isn't retrievable via the API until the job finishes, so
 # there is no way to recover that detail from outside the action.
 #
@@ -67,14 +67,26 @@ jobs:
       # header, endpoint and retry policy below all mirror what the action does
       # internally, so behaviour should be identical -- the only difference is
       # that we keep the response body instead of logging it.
+      #
+      # allowedProjects/blockedProjects are both empty, i.e. no project
+      # restriction: the check this workflow enforces is "the PR links a real
+      # Asana task the integration can attach to", not "the task lives in
+      # project X". Empty lists are how the action behaves with neither input set.
+      #
+      # BEFORE ADDING AN ALLOWLIST, know that it is checked against the linked
+      # task's OWN projects, and Asana subtasks do not inherit their parent's
+      # project membership -- a subtask reports `projects: []` and can therefore
+      # never match any allowlist. Asana's rejection reads "Please add any of the
+      # project IDs [] to allowed projects list"; those empty brackets are the
+      # tell. This bit us on task 1217162502560427, whose URL even contained the
+      # right project ID because it was copied from that project's view.
+      # `blockedProjects` does walk up to parents ("tasks or subtasks of tasks in
+      # any of these projects"), so a blocklist is the safer tool if you ever
+      # need to scope this and people link subtasks.
       - name: Create pull request attachments
         id: postAttachment
         env:
           ASANA_SECRET: ${{ secrets.ASANA_SECRET }}
-          # The action takes a newline-separated string and splits it into an
-          # array of strings; we pass that array directly. Note strings, not
-          # numbers -- the service is sensitive to this.
-          ALLOWED_PROJECTS: '["1203457878958265"]'
           PR_BODY: ${{ github.event.pull_request.body }}
           PR_TITLE: ${{ github.event.pull_request.title }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
@@ -84,13 +96,12 @@ jobs:
           # jq builds the JSON so that quotes, apostrophes, newlines and $(...) in
           # the PR body/title are serialized as literal text.
           payload=$(jq -n \
-            --argjson allowedProjects "$ALLOWED_PROJECTS" \
             --arg description "$PR_BODY" \
             --arg name "$PR_TITLE" \
             --argjson number "$PR_NUMBER" \
             --arg url "$PR_URL" \
             '{
-               allowedProjects: $allowedProjects,
+               allowedProjects: [],
                blockedProjects: [],
                pullRequestDescription: $description,
                pullRequestName: $name,
@@ -124,6 +135,9 @@ jobs:
       #   rejected  [ { task: '...', result: 'GitHub Widget attachment/comment
       #               failed because the task is not in a project where the
       #               GitHub Action is allowed to run in. ...' } ]
+      # The third only occurs when a project allowlist/blocklist is configured,
+      # which it no longer is; kept because it is the shape that proves a 200 is
+      # not the same thing as a success.
       - name: Verify an Asana widget was actually created
         env:
           HTTP_CODE: ${{ steps.postAttachment.outputs.http_code }}
@@ -181,17 +195,15 @@ jobs:
 #
 # Before doing so, confirm the action now surfaces the per-task result -- check
 # `outputs:` in its action.yml for something beyond `status`. If `status` is still
-# the only output, this version will pass PRs whose task is in a disallowed
-# project and PRs with no Asana link at all, which is the bug we set out to fix.
-# Also note the action was still on the deprecated node12 runtime as of 2026-08.
+# the only output, this version will pass PRs with no Asana link at all and PRs
+# Asana refused to attach to, which is the bug we set out to fix. Also note the
+# action was still on the deprecated node12 runtime as of 2026-08.
 #
 #     - name: Create pull request attachments
 #       uses: Asana/create-app-attachment-github-action@latest
 #       id: postAttachment
 #       with:
 #         asana-secret: ${{ secrets.ASANA_SECRET }}
-#         allowed-projects: |
-#           1203457878958265
 #     - name: Log output status
 #       run: echo "Status is ${{ steps.postAttachment.outputs.status }}"
 #
