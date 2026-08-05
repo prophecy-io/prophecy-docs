@@ -130,14 +130,19 @@ jobs:
       # shape we don't recognise is diagnosable from the log alone.
       #
       # Known response shapes, all seen on this repo with a 2xx status:
-      #   success   [ { task: '1217162502560427', result: 'added a widget' } ]
+      #   created   [ { task: '1217162502560427', result: 'added a widget' } ]
+      #   re-run    [ { task: '...', result: 'Github Widget attachment failed
+      #               because this pull request has already been attached to the
+      #               task.' } ]                                    <- SUCCESS
       #   no link   []
       #   rejected  [ { task: '...', result: 'GitHub Widget attachment/comment
       #               failed because the task is not in a project where the
       #               GitHub Action is allowed to run in. ...' } ]
-      # The third only occurs when a project allowlist/blocklist is configured,
-      # which it no longer is; kept because it is the shape that proves a 200 is
-      # not the same thing as a success.
+      # Note Asana calls the harmless re-run a failure, and spells it 'Github'
+      # here but 'GitHub' in the rejection -- hence case-insensitive matching on
+      # specific clauses rather than on any shared prefix. The last shape only
+      # occurs when a project allowlist/blocklist is configured, which it no
+      # longer is; kept because it proves a 200 is not the same as a success.
       - name: Verify an Asana widget was actually created
         env:
           HTTP_CODE: ${{ steps.postAttachment.outputs.http_code }}
@@ -172,9 +177,20 @@ jobs:
           # Allowlist, deliberately not a blocklist: a task passes only on a
           # recognised success message. An unrecognised `result` fails loudly and
           # prints the string, so a new Asana message can't silently pass as a
-          # success -- widen the regex once you've seen it in a log.
+          # success -- widen `is_success` once you've seen it in a log.
+          #
+          # "already been attached" counts as success: the PR is attached to the
+          # task, which is all this check cares about. Asana words it as a failure,
+          # but it is just a no-op re-run -- and it is the NORMAL response for
+          # every event after the first, since `synchronize` and `edited` re-post
+          # for the life of the PR. Matched on that clause rather than on the
+          # "Widget attachment failed" prefix, which genuine failures also share.
           failures=$(jq -r '
-            [ .[] | select(((.result // "") | test("^(added|updated) a (widget|comment)"; "i")) | not) ]
+            def is_success:
+              (. // "")
+              | test("^(added|updated) a (widget|comment)"; "i")
+                or test("already (been )?attached"; "i");
+            [ .[] | select((.result | is_success) | not) ]
             | map("  task \(.task // "unknown"): \(.result // "no result returned")")
             | join("\n")' "$RESPONSE")
 
@@ -184,7 +200,7 @@ jobs:
             exit 1
           fi
 
-          jq -r '.[] | "Created Asana widget on task \(.task): \(.result)"' "$RESPONSE"
+          jq -r '.[] | "Asana attachment confirmed on task \(.task): \(.result)"' "$RESPONSE"
 
 # ORIGINAL, USING THE OFFICIAL ACTION -- kept for the day it can report failure.
 #
