@@ -43,6 +43,9 @@ Added [Data Preview and Record Count](/data-analysis/development/runs/data-explo
 ## Bookmark gems
 Added the ability to [bookmark favorite gems](/data-analysis/gems/gems#bookmark-favorite-gems) for faster access. Star gems from the gem picker to pin them to a new Favorites bar, where you can add them to the canvas with a single click or drag-and-drop.
 
+## BigQuery column handling
+Prophecy now automatically handles BigQuery's column naming restrictions. Column names containing unsupported special characters are encoded for storage in BigQuery fabrics and decoded back to their original form in the pipeline UI and when writing to external targets.
+
 </Update>
 
 <Update label="Prophecy 4.2.9" description="June 17, 2026" tags={["Data Analysis"]}>
