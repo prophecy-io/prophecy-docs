@@ -57,14 +57,14 @@ The **Connections** tab allows you to store your credentials to various external
 
 ## Column name handling
 
-BigQuery does not allow certain special charactßers in column names. When a pipeline uses a BigQuery fabric, Prophecy automatically encodes column names that contain unsupported characters for storage in BigQuery, then decodes them back to their original form for display throughout the pipeline UI.
+BigQuery does not allow certain special characters in column names. When a pipeline uses a BigQuery fabric, Prophecy automatically encodes column names that contain unsupported characters for storage in BigQuery, then decodes them back to their original form for display throughout the pipeline UI and when writing to external targets.
 
 For example, a column named `revenue(USD)` is stored in BigQuery as `_PCYBQ__revenue_lp_USD_rp_`. In schema panels, the expression builder, and data previews, Prophecy displays the original name. You can hover over an encoded column name to see the physical name stored in BigQuery.
 
-The following characters trigger encoding: `!`, `"`, `$`, `(`, `)`, `*`, `,`, `.`, `/`, `;`, `?`, `@`, `[`, `\`, `]`, `^`, `` ` ``, `{`, `}`, `~`
+The following characters trigger encoding: `!`, `"`, `$`, `(`, `)`, `*`, `,`, `.`, `/`, `;`, `?`, `@`, `[`, `\`, `]`, `^`, `` ` ``, `{`, `}`, `~`. See [BigQuery's docs](https://docs.cloud.google.com/bigquery/docs/schemas#flexible-column-names) for more information on this topic.
 
 <Note>
-  This encoding is handled automatically. You do not need to rename columns before using a BigQuery fabric.
+  Automatic encoding applies to column names ingested from external sources. Manually entering unsupported characters in column name fields (for example, in a Reformat gem) is not currently supported.
 </Note>
 
 import EditFabric from '/snippets/misc/edit-fabric.mdx';
