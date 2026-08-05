@@ -1,19 +1,199 @@
+# Requires every PR to link an Asana task, and fails the check unless Asana
+# confirms it actually attached the PR to that task.
+#
+# WHY THIS DOESN'T USE Asana/create-app-attachment-github-action
+# --------------------------------------------------------------
+# The official action cannot report whether it succeeded. Its only output is
+# `status`, the raw HTTP code of its POST to Asana's integration service, and
+# that comes back 2xx even when nothing was attached. The per-task verdict is
+# `console.log`ed and thrown away:
+#
+#     const result = await axios.post(REQUESTS.ACTION_URL, {...});
+#     console.log(result.data);            // <- the real pass/fail detail
+#     setOutput("status", result.status);   // <- only the HTTP code
+#
+#     -- Asana/create-app-attachment-github-action, src/index.ts
+#
+# Observed on this repo: a PR whose task sat outside `allowed-projects` and a PR
+# with no Asana link at all BOTH returned status 200, indistinguishable from the
+# 201 of a genuine success. A `uses:` step's stdout can't be captured in Actions,
+# and a job's own log isn't retrievable via the API until the job finishes, so
+# there is no way to recover that detail from outside the action.
+#
+# So we make the same POST ourselves and assert on the response body. The
+# endpoint below is what the action calls internally (src/constants/requests.ts:
+# BASE_URL + ACTION_URL) and is NOT publicly documented -- Asana could change it
+# without notice. Symptom would be this check failing on every PR with
+# "unexpected response" or a 4xx.
+#
+# IF ASANA EVER EXPOSES THE RESULT AS A STEP OUTPUT, revert to the action: drop
+# the two steps below and restore the commented block at the end of this file.
+# Track it at https://github.com/Asana/create-app-attachment-github-action.
+
+name: check-asana-link
+
 on:
-  workflow_dispatch:
   pull_request:
     types: [opened, reopened, edited, synchronize]
+
+permissions:
+  contents: read
 
 jobs:
   create-asana-attachment-job:
     runs-on: ubuntu-latest
     name: Create pull request attachments on Asana tasks
     steps:
+      # Fast, obvious failure for the common case (author forgot the link), so the
+      # PR author sees "you forgot the link" rather than an API-shaped error.
+      # Not authoritative -- a well-formed URL can still point at a task Asana
+      # won't attach to. The step below is the real gate.
+      #
+      # PR_BODY goes through `env:` rather than `${{ }}` inside the script: a PR
+      # body interpolated directly into shell source is arbitrary code execution
+      # on the runner, and an ordinary apostrophe breaks the step. Same reason
+      # every field in the next step is passed via env.
+      - name: Ensure Asana URL in PR description
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          # Matches both the /0/<project>/<task> and newer /1/<workspace>/... forms.
+          if ! grep -qE 'https://app\.asana\.com/[0-9]+/[0-9]+' <<<"$PR_BODY"; then
+            echo "::error::Missing Asana task link in the pull request description. Add a link like https://app.asana.com/0/<project>/<task>."
+            exit 1
+          fi
+
+      # Hand-rolled equivalent of the official action. The request shape, auth
+      # header, endpoint and retry policy below all mirror what the action does
+      # internally, so behaviour should be identical -- the only difference is
+      # that we keep the response body instead of logging it.
       - name: Create pull request attachments
-        uses: Asana/create-app-attachment-github-action@latest
         id: postAttachment
-        with:
-          asana-secret: ${{ secrets.ASANA_SECRET }}
-          allowed-projects: |
-            1203457878958265
-      - name: Log output status
-        run: echo "Status is ${{ steps.postAttachment.outputs.status }}"
+        env:
+          ASANA_SECRET: ${{ secrets.ASANA_SECRET }}
+          # The action takes a newline-separated string and splits it into an
+          # array of strings; we pass that array directly. Note strings, not
+          # numbers -- the service is sensitive to this.
+          ALLOWED_PROJECTS: '["1203457878958265"]'
+          PR_BODY: ${{ github.event.pull_request.body }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: |
+          set -euo pipefail
+          # jq builds the JSON so that quotes, apostrophes, newlines and $(...) in
+          # the PR body/title are serialized as literal text.
+          payload=$(jq -n \
+            --argjson allowedProjects "$ALLOWED_PROJECTS" \
+            --arg description "$PR_BODY" \
+            --arg name "$PR_TITLE" \
+            --argjson number "$PR_NUMBER" \
+            --arg url "$PR_URL" \
+            '{
+               allowedProjects: $allowedProjects,
+               blockedProjects: [],
+               pullRequestDescription: $description,
+               pullRequestName: $name,
+               pullRequestNumber: $number,
+               pullRequestURL: $url
+             }')
+
+          # --retry 3 --retry-delay 2 approximates the action's axios-retry config
+          # (3 retries, backoff, retry on 5xx). curl's --retry already treats
+          # 5xx/408/429 as transient, so no extra flag is needed.
+          #
+          # Response goes to a file and only the HTTP code to stdout, so the next
+          # step can inspect both. Don't add -f: it would discard the body on a
+          # 4xx, which is exactly when we want to see it.
+          http_code=$(curl -sS --retry 3 --retry-delay 2 \
+            -o "$RUNNER_TEMP/asana-response.json" -w '%{http_code}' \
+            -X POST 'https://github.integrations.asana.plus/custom/v1/actions/widget' \
+            -H "Authorization: Bearer $ASANA_SECRET" \
+            -H 'Content-Type: application/json' \
+            -d "$payload")
+
+          echo "http_code=$http_code" >>"$GITHUB_OUTPUT"
+
+      # The actual gate. A 2xx alone proves nothing, so every failure mode below
+      # is checked explicitly. Response body is echoed unconditionally so that a
+      # shape we don't recognise is diagnosable from the log alone.
+      #
+      # Known response shapes, all seen on this repo with a 2xx status:
+      #   success   [ { task: '1217162502560427', result: 'added a widget' } ]
+      #   no link   []
+      #   rejected  [ { task: '...', result: 'GitHub Widget attachment/comment
+      #               failed because the task is not in a project where the
+      #               GitHub Action is allowed to run in. ...' } ]
+      - name: Verify an Asana widget was actually created
+        env:
+          HTTP_CODE: ${{ steps.postAttachment.outputs.http_code }}
+        run: |
+          set -uo pipefail
+          RESPONSE="$RUNNER_TEMP/asana-response.json"
+
+          echo "HTTP status: $HTTP_CODE"
+          echo "Response body:"
+          cat "$RESPONSE" 2>/dev/null || echo "(no response body)"
+          echo
+
+          if [[ "$HTTP_CODE" != 2* ]]; then
+            echo "::error::The Asana integration returned HTTP $HTTP_CODE — no attachment was created."
+            exit 1
+          fi
+
+          # Empty file / invalid JSON / non-array all yield a non-numeric count.
+          # Done as one numeric check rather than `jq -e 'type == "array"'`,
+          # because jq 1.6 exits 0 on empty input -- an empty body would pass.
+          count=$(jq -r 'if type == "array" then length else "not-an-array" end' "$RESPONSE" 2>/dev/null)
+          if ! [[ "$count" =~ ^[0-9]+$ ]]; then
+            echo "::error::Unexpected response from the Asana integration — expected a list of per-task results. See the response body above."
+            exit 1
+          fi
+
+          if [ "$count" -eq 0 ]; then
+            echo "::error::Asana matched no task in this pull request description, so no widget was created. Check that the Asana link points to a real task and that the integration can see it."
+            exit 1
+          fi
+
+          # Allowlist, deliberately not a blocklist: a task passes only on a
+          # recognised success message. An unrecognised `result` fails loudly and
+          # prints the string, so a new Asana message can't silently pass as a
+          # success -- widen the regex once you've seen it in a log.
+          failures=$(jq -r '
+            [ .[] | select(((.result // "") | test("^(added|updated) a (widget|comment)"; "i")) | not) ]
+            | map("  task \(.task // "unknown"): \(.result // "no result returned")")
+            | join("\n")' "$RESPONSE")
+
+          if [ -n "$failures" ]; then
+            echo "::error::Asana did not create a widget for one or more linked tasks:"
+            printf '%s\n' "$failures"
+            exit 1
+          fi
+
+          jq -r '.[] | "Created Asana widget on task \(.task): \(.result)"' "$RESPONSE"
+
+# ORIGINAL, USING THE OFFICIAL ACTION -- kept for the day it can report failure.
+#
+# This is what the two steps above replaced. It is correct and much shorter; it
+# simply cannot fail a PR that Asana rejected, for the reasons at the top of this
+# file. To go back, delete the `Create pull request attachments` and `Verify an
+# Asana widget was actually created` steps and uncomment this.
+#
+# Before doing so, confirm the action now surfaces the per-task result -- check
+# `outputs:` in its action.yml for something beyond `status`. If `status` is still
+# the only output, this version will pass PRs whose task is in a disallowed
+# project and PRs with no Asana link at all, which is the bug we set out to fix.
+# Also note the action was still on the deprecated node12 runtime as of 2026-08.
+#
+#     - name: Create pull request attachments
+#       uses: Asana/create-app-attachment-github-action@latest
+#       id: postAttachment
+#       with:
+#         asana-secret: ${{ secrets.ASANA_SECRET }}
+#         allowed-projects: |
+#           1203457878958265
+#     - name: Log output status
+#       run: echo "Status is ${{ steps.postAttachment.outputs.status }}"
+#
+# Pin a release tag rather than @latest if you do restore it (v1.3 was current as
+# of 2026-08); @latest tracks whatever Asana pushes to that branch.
