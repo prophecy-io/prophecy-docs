@@ -1,0 +1,11 @@
+### Map schema for existing target tables
+
+When you select an existing table as a target, the incoming schema might not match the schema of the target table. Prophecy lets you reconcile these differences in the **Map Schema** section of the Properties tab.
+
+For each target column, select the corresponding source column. Prophecy can suggest mappings for unmapped columns, which you can review and select. Any required casts or other transformations are applied so that the incoming data conforms to the target schema.
+
+If you want the target table to use the incoming schema instead, click **Overwrite Target Schema**. This replaces the existing target schema with the source schema rather than mapping the incoming columns to it.
+
+<Info>
+  Schema mapping is available when writing to existing target tables in Snowflake,  Databricks, and BigQuery.
+</Info>
