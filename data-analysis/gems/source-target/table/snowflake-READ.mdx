@@ -1,6 +1,6 @@
 ---
 title: Snowflake table gem
-description: Process Snowflake tables in the SQL warehouse
+description: Read from Snowflake tables
 ---
 
 import Execution from '/snippets/gem-execution-engine.mdx';
@@ -63,22 +63,6 @@ Tables are persistent storage objects used to store structured data in Snowflake
 | Properties | Define or infer schema. Add a description if needed.           |
 | Preview    | Load a sample of the data before saving.                       |
 
-### Target parameters
-
-| Parameter     | Description                                                                                                                                                                            |
-| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Location      | Choose the location where the table will be stored. You can create a new table by writing a new table name.                                                                            |
-| Properties    | Define certain properties of the table. The schema cannot be changed for targets.                                                                                                      |
-| Write Options | Select how you want the data to be written each time you run the pipeline (Table only). Learn more in [Write strategies](/data-analysis/gems/source-target/table/write/write-options). |
-
-import ConfigWrite from '/snippets/misc/schema-options-write-table.mdx';
-
-<ConfigWrite />
-
-import TableLoc from '/snippets/misc/table-location.mdx';
-
-<TableLoc/>
-
 ## Configure views
 
 Views are virtual tables recomputed at runtime from a query.
@@ -90,19 +74,6 @@ Views are virtual tables recomputed at runtime from a query.
 | Location   | Enter the database, schema, and table (view) name.   |
 | Properties | Define or infer schema. Add a description if needed. |
 | Preview    | Load data based on the view's underlying query.      |
-
-### Target parameters
-
-| Parameter  | Description                                                                       |
-| ---------- | --------------------------------------------------------------------------------- |
-| Location   | Define the name of the view to be created or replaced.                            |
-| Properties | Define certain properties of the view. The schema cannot be changed for targets. |
-| Preview    | Load a preview of the resulting view.                                             |
-
-<Note>
-  Every time the pipeline runs, the target view is replaced. This is because the view is recomputed
-  from the underlying query logic each time the pipeline executes. No additional write modes are supported.
-</Note>
 
 ## Configure seeds
 

@@ -1,5 +1,3 @@
-### Location
-
 The Location tab defines where a table lives and how it is identified within your project.
 
 | Field | Description |
@@ -15,6 +13,8 @@ A **parameter set** selector appears in the upper-right corner of the Location t
 - If you're working on the table outside of a pipeline (for example, from the Project browser), the selector shows **Select Pipeline and Parameter set** until you choose one. You only need to do this if one or more Location fields are set to Advanced mode (see below) and you need their values resolved outside pipeline context.
 
 At the bottom of the Location tab, Prophecy shows a live preview of the resolved `database.schema.table` location: the hardcoded values if all fields are in Simple mode, or the resolved parameter values if any field is in Advanced mode. If a value can't be resolved yet — for example, because no parameter set is selected — Prophecy displays the raw value instead.
+
+<Accordion title="Make a location field dynamic">
 
 #### Make a location field dynamic
 
@@ -35,3 +35,5 @@ Once a field is in Advanced mode, its value depends on which parameter set is ac
 <Warning>
   Prophecy does not validate that tables resolved from different parameter sets share the same schema. If your parameter sets point to tables with different schemas, downstream steps in your pipeline may fail or behave unexpectedly.
 </Warning>
+
+</Accordion>

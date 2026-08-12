@@ -1,0 +1,147 @@
+---
+title: Write to BigQuery tables
+description: Configure a BigQuery table or view as a write target
+---
+
+import Execution from '/snippets/gem-execution-engine.mdx';
+import TableLoc from '/snippets/misc/table-location.mdx';
+import ConfigWrite from '/snippets/misc/schema-options-write-table.mdx';
+
+<Execution execution_engine="the SQL warehouse" />
+
+## Overview
+
+In Prophecy, datasets stored in the [SQL Warehouse Connection](/data-analysis/environment/fabrics/prophecy-fabrics) defined in your fabric are accessed using Table gems. Unlike Source and Target gems, Table gems run directly within the data warehouse, eliminating extra orchestration steps and improving performance.
+
+This page explains how to write to a BigQuery table or view using the Table gem. To read from an existing BigQuery table or view instead, see [Read from BigQuery tables](/data-analysis/gems/source-target/table/bigquery-read).
+
+## Configure table
+
+Once you create a Table gem, you can reuse it throughout your project. All created tables appear in the [Project](/data-analysis/development/studio/studio) tab in the left sidebar.
+
+To write to a table in your pipeline:
+
+<Steps>
+<Step title="Add a table gem to the pipeline">
+
+1. Open your pipeline in the [Studio](/data-analysis/development/studio/studio).
+1. Click on **Source/Target** in the canvas.
+1. Select **Table** from the dropdown.
+1. Click on the gem to open the configuration.
+
+</Step>
+
+<Step title="Choose or create a table">
+
+To write to an existing table, select it from the list.
+
+To write to a new table, click **+ New Table**.
+
+</Step>
+
+<Step title="Select type & format">
+
+Choose **Table** or **View**.
+
+</Step>
+
+<Step title="Configure location">
+
+<TableLoc />
+
+</Step>
+
+<Step title="Configure properties">
+
+Map each incoming column to a column on the target table. Prophecy suggests mappings automatically — review and adjust them as needed. Any target column left unmapped defaults to null.
+
+<Note>
+  This is schema **mapping**, not schema definition or inference. Prophecy already knows the
+  target's schema (from an existing table, or as you define one for a new table in the Location
+  step); this step is about reconciling your pipeline's output columns against it.
+</Note>
+
+You can also set a description for the table and configure generic options, such as skipping execution when the input has zero rows.
+
+#### Working with JSON columns
+
+Prophecy supports BigQuery `JSON` columns, including schema inference, nested field exploration, and reading and writing JSON data.
+
+When writing to a BigQuery `JSON` column, Prophecy automatically converts string representations of JSON into native BigQuery JSON values — no manual SQL transformation is required.
+
+<Info>
+  BigQuery JSON columns support schema inference and nested field access similar to Snowflake
+  `VARIANT` columns.
+</Info>
+
+// TODO: the two subsections below (Infer schema, Access nested fields) describe general
+JSON-handling behavior — sampling a column's structure and referencing nested fields in downstream
+gems like Reformat, Filter, and Join — rather than anything specific to writing. They may belong on
+the Read page instead of (or in addition to) here. Keeping them for now so the content isn't lost;
+confirm placement before this ships.
+
+##### Infer schema
+
+For tables that contain `JSON` columns, use **Infer Schema** to sample data and discover the nested structure stored within the column. The inferred schema is displayed as an expandable tree in the Properties tab, similar to Snowflake `VARIANT` columns.
+
+For example, a JSON column containing:
+
+```json
+{
+  "amount": 100,
+  "user": {
+    "id": 123,
+    "plan": "premium"
+  }
+}
+```
+
+is displayed as nested fields that can be expanded and referenced throughout your pipeline.
+
+##### Access nested fields
+
+After schema inference, you can reference nested JSON fields in gems such as Reformat, Filter, and Join using dot notation.
+
+For example:
+
+```text
+payload.user.plan
+```
+
+Prophecy automatically generates the appropriate BigQuery JSON functions:
+
+| Field type | Generated SQL |
+| ---------- | ------------- |
+| String values | `JSON_VALUE(payload, '$.user.plan')` |
+| Numeric values | `CAST(JSON_VALUE(payload, '$.amount') AS FLOAT64)` |
+| Boolean values | `CAST(JSON_VALUE(payload, '$.active') AS BOOL)` |
+| Objects or arrays | `JSON_QUERY(payload, '$.user')` |
+
+</Step>
+
+<Step title="Configure write options">
+
+<ConfigWrite />
+
+Select how you want the data to be written each time you run the pipeline. Learn more in [Write strategies](/data-analysis/gems/source-target/table/write/write-options).
+
+<Note>
+  This step applies to **Table** targets only. If you selected **View** in the type & format step,
+  there's no Write Options tab — the gem shows **Preview** instead, even when it's positioned at
+  the end of a pipeline. Views are always fully recomputed and overwritten on each run, so there's
+  no write mode to choose.
+</Note>
+
+</Step>
+
+<Step title="Data tests">
+
+Add data tests to validate the table after it's written. See [Table tests vs. project tests](/data-analysis/development/tests/test-comparison) to decide which approach fits your validation needs.
+
+</Step>
+
+</Steps>
+
+## Reusing and sharing tables
+
+After you create a table in Prophecy, you can reuse its configuration across your entire project. All created tables appear in the [Project](/data-analysis/development/studio/studio) tab in the left sidebar. To make tables available to other teams, you can share your project as a package in the [Package Hub](/data-analysis/development/extensibility/package-hub/package-hub). Other users will be able to use the shared table configuration, provided they have the necessary permissions in BigQuery to access the underlying data.
