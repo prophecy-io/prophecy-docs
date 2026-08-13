@@ -322,11 +322,12 @@
                       {
                         "group": "Tables (Warehouse)",
                         "pages": [
-                          "data-analysis/gems/source-target/table/bigquery",
-                          "data-analysis/gems/source-target/table/databricks",
+                          "data-analysis/gems/source-target/table/bigquery-read",
+                          "data-analysis/gems/source-target/table/bigquery-write",
                           "data-analysis/gems/source-target/table/databricks-read",
                           "data-analysis/gems/source-target/table/databricks-write",
-                          "data-analysis/gems/source-target/table/snowflake",
+                          "data-analysis/gems/source-target/table/snowflake-read",
+                          "data-analysis/gems/source-target/table/snowflake-write",
                           "data-analysis/gems/source-target/table/prophecy-warehouse",
                           "data-analysis/gems/source-target/table/upload-files",
                           {

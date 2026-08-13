@@ -13,7 +13,7 @@ import ConfigWrite from '/snippets/misc/schema-options-write-table.mdx';
 
 In Prophecy, datasets stored in the [SQL Warehouse Connection](/data-analysis/environment/fabrics/prophecy-fabrics) defined in your fabric are accessed using Table gems. Unlike Source and Target gems, Table gems run directly within the data warehouse, eliminating extra orchestration steps and improving performance.
 
-This page explains how to write to a Snowflake table or view using the Table gem. To read from an existing Snowflake table or view instead, see [Read from Snowflake tables](/data-analysis/gems/source-target/table/snowflake-read)
+This page explains how to write to a Snowflake table or view using the Table gem. To read from an existing Snowflake table or view instead, see [Read from Snowflake tables](/data-analysis/gems/source-target/table/snowflake-write)
 
 ## Configure table
 
@@ -61,6 +61,13 @@ Map each incoming column to a column on the target table. Prophecy suggests mapp
   step); this step is about reconciling your pipeline's output columns against it.
 </Note>
 
+<Info>
+  If your BigQuery tables are partitioned or clustered, Prophecy automatically displays the
+  partitioning and clustering information in the Properties tab. You'll be able to view information
+  such as the partition granularity, partitioning data type, clustering columns, and more. You won't
+  be able to edit these properties.
+</Info>
+
 You can also set a description for the table and configure generic options, such as skipping execution when the input has zero rows.
 
 </Step>
@@ -94,7 +101,7 @@ After you create a table in Prophecy, you can reuse its configuration across you
 
 ## Limitations
 
-Currently, writing to Snowflake tables does not support:
+Currently, Snowflake tables do not support:
 
 - Case-sensitive identifiers.
 - Creating new partitioned tables.

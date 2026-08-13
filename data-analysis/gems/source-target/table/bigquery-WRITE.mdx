@@ -74,49 +74,6 @@ When writing to a BigQuery `JSON` column, Prophecy automatically converts string
   `VARIANT` columns.
 </Info>
 
-// TODO: the two subsections below (Infer schema, Access nested fields) describe general
-JSON-handling behavior — sampling a column's structure and referencing nested fields in downstream
-gems like Reformat, Filter, and Join — rather than anything specific to writing. They may belong on
-the Read page instead of (or in addition to) here. Keeping them for now so the content isn't lost;
-confirm placement before this ships.
-
-##### Infer schema
-
-For tables that contain `JSON` columns, use **Infer Schema** to sample data and discover the nested structure stored within the column. The inferred schema is displayed as an expandable tree in the Properties tab, similar to Snowflake `VARIANT` columns.
-
-For example, a JSON column containing:
-
-```json
-{
-  "amount": 100,
-  "user": {
-    "id": 123,
-    "plan": "premium"
-  }
-}
-```
-
-is displayed as nested fields that can be expanded and referenced throughout your pipeline.
-
-##### Access nested fields
-
-After schema inference, you can reference nested JSON fields in gems such as Reformat, Filter, and Join using dot notation.
-
-For example:
-
-```text
-payload.user.plan
-```
-
-Prophecy automatically generates the appropriate BigQuery JSON functions:
-
-| Field type | Generated SQL |
-| ---------- | ------------- |
-| String values | `JSON_VALUE(payload, '$.user.plan')` |
-| Numeric values | `CAST(JSON_VALUE(payload, '$.amount') AS FLOAT64)` |
-| Boolean values | `CAST(JSON_VALUE(payload, '$.active') AS BOOL)` |
-| Objects or arrays | `JSON_QUERY(payload, '$.user')` |
-
 </Step>
 
 <Step title="Configure write options">
