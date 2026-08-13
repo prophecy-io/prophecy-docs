@@ -36,18 +36,9 @@ To understand exactly what happens when Prophecy runs these write operations, sw
 
 ## Partitioning
 
-Depending on the SQL warehouse you use to write tables, partitioning can have different behavior. Let's examine the difference between partitioning in Google BigQuery and Databricks.
+Depending on the SQL warehouse you use to write tables, partitioning can have different behavior. Let's examine the difference between partitioning in Databricks, Google BigQuery, and Snowflake.
 
 <Tabs>
-<Tab title="BigQuery">
-
-In Google BigQuery, partitioning is a table property.
-
-Partitioning is defined at the table schema level (time, integer range, or column value). Because it is a part of the table architecture, the physical storage in BigQuery is optimized by partitioning automatically.
-
-Once a table is partitioned, every write to that table, full or incremental, respects the partitioning. That means even when you drop and create an entirely new table, Google BigQuery creates the table with partitions in an optimized way.
-
-</Tab>
 
 <Tab title="Databricks">
 
@@ -58,6 +49,27 @@ Databricks organizes data in folders by column values. Partitioning only makes s
 For the **Wipe and Replace Table** option, the table is dropped and completely recreated. Partitioning doesn't add any runtime benefit here, so this is not an option for Databricks.
 
 </Tab>
+
+<Tab title="BigQuery">
+
+In Google BigQuery, partitioning is a table property.
+
+Partitioning is defined at the table schema level (time, integer range, or column value). Because it is a part of the table architecture, the physical storage in BigQuery is optimized by partitioning automatically.
+
+Once a table is partitioned, every write to that table, full or incremental, respects the partitioning. That means even when you drop and create an entirely new table, Google BigQuery creates the table with partitions in an optimized way.
+
+</Tab>
+
+<Tab title="Snowflake">
+
+In Snowflake, tables are automatically divided into **micro-partitions** as data is loaded. Unlike BigQuery and Databricks, you don't define partition columns or manage individual partitions when writing a table.
+
+Snowflake automatically manages the physical organization of micro-partitions. For large tables, you can optionally define clustering keys to influence how data is organized and improve query pruning, but clustering is separate from the write strategy used to populate the table.
+
+As a result, Snowflake write modes don't require you to configure partitioning when writing data.
+
+</Tab>
+
 </Tabs>
 
 ## Troubleshooting
