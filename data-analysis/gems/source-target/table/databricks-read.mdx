@@ -1,9 +1,10 @@
 ---
-title: Databricks table gem
-description: Process Databricks tables in the SQL warehouse
+title: Read from Databricks tables
+description: Configure a Databricks table, view, or seed as a read source
 ---
 
 import Execution from '/snippets/gem-execution-engine.mdx';
+import TableLoc from '/snippets/misc/table-location.mdx';
 
 <Execution execution_engine="the SQL warehouse" />
 
@@ -11,7 +12,7 @@ import Execution from '/snippets/gem-execution-engine.mdx';
 
 In Prophecy, datasets stored in the [SQL Warehouse Connection](/data-analysis/environment/fabrics/prophecy-fabrics) defined in your fabric are accessed using Table gems. Unlike Source and Target gems, Table gems run directly within the data warehouse, eliminating extra orchestration steps and improving performance.
 
-Available configurations for Table gems vary based on your SQL warehouse provider. This page explains how to use the Table gem for a Databricks SQL warehouse, including supported table types, configuration options, and guidance for managing Databricks tables in your Prophecy pipelines.
+This page explains how to read from a Databricks table, view, or seed using the Table gem. To write to a Databricks table or view instead, see [Write to Databricks tables](/data-analysis/gems/source-target/table/databricks-write).
 
 ## Table types
 
@@ -33,7 +34,7 @@ The following table types are supported for Databricks connections.
 
 Once you create a Table gem, you can reuse the table throughout your project. All created tables appear in the [Project](/data-analysis/development/studio/studio) tab in the left sidebar.
 
-To create a table in your pipeline:
+To read from a table in your pipeline:
 
 <Steps>
 <Step title="Add a table gem to the pipeline">
@@ -45,66 +46,56 @@ To create a table in your pipeline:
 
 </Step>
 
-<Step title="Create a new table">
+<Step title="Select a table">
 
-Click **+ New Table**. The gem configuration will depend on the table type:
+Choose the table, view, or seed you want to read from the list.
 
-- [Tables](#tables)
-- [Views](#views)
-- [Seeds](#seeds)
+<Note>
+  Seeds configure differently from Tables and Views — see [Configure seeds](#configure-seeds) below.
+</Note>
 
 </Step>
 
-</Steps>
+<Step title="Configure location">
 
-## Configure table
-
-Tables are persistent, indexed storage objects optimized for frequent access.
-
-import TableLoc from '/snippets/misc/table-location.mdx';
-
-<TableLoc/>
-
-### Source parameters
-
-| Parameter  | Description                                                    |
-| ---------- | -------------------------------------------------------------- |
-| Location   | Specify the table's location using database, schema, and name. |
-| Properties | Define or infer schema. Add a description if needed.           |
-| Preview    | Load a sample of the data before saving.                       |
-
-### Target parameters
-
-| Parameter     | Description                                                                                                                                                                            |
-| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Location      | Choose the location where the table will be stored. You can create a new table by writing a new table name.                                                                            |
-| Properties    | Define properties for the table. The schema cannot be changed for targets.                                                                                                      |
-| Write Options | Select how you want the data to be written each time you run the pipeline (Table only). Learn more in [Write strategies](/data-analysis/gems/source-target/table/write/write-options). |
-## Configure views
-
-Views are virtual tables recomputed at runtime from a query.
-
-### Source parameters
-
-| Parameter  | Description                                          |
-| ---------- | ---------------------------------------------------- |
-| Location   | Enter the database, schema, and table (view) name.   |
-| Properties | Define or infer schema. Add a description if needed. |
-| Preview    | Load data based on the view's underlying query.      |
-
-### Target parameters
-
-| Parameter  | Description                                                                       |
-| ---------- | --------------------------------------------------------------------------------- |
-| Location   | Define the name of the view to be created or replaced.                            |
-| Properties | Define certain properties of the table. The schema cannot be changed for targets. |
-| Preview    | Load a preview of the resulting view.                                             |
+<TableLoc />
 
 <Note>
-  Every time the pipeline runs, the target is overwritten. This is because the view is recomputed
-  from scratch based on the underlying logic, and any previously materialized results are discarded.
-  No additional write modes are supported.
+  For a **View**, enter the database, schema, and view name here instead of a table name.
 </Note>
+
+</Step>
+
+<Step title="Configure properties">
+
+Click **Infer Schema** to infer the table's schema. We recommend keeping values as generated, because these match column names and types in your SQL warehouse.
+
+When you click **Infer Schema**, Prophecy also generates a description for the table. You can edit the description by clicking the field.
+
+<Note>
+  For a **View**, this defines or infers the schema from the view's underlying query.
+</Note>
+
+</Step>
+
+<Step title="Preview data">
+
+Click **Preview** to view a sample of the table's data.
+
+<Note>
+  For a **View**, this loads data based on the view's underlying query rather than stored data.
+</Note>
+
+</Step>
+
+<Step title="(Optional) Create and run data tests for the table">
+
+Here, you can create and run [table tests](/data-analysis/development/tests/table-tests) for the table. Table tests are reusable, parameterized SQL queries that validate your data quality. See [Table tests vs. project tests](/data-analysis/development/tests/test-comparison) if you're deciding which approach fits your validation needs.
+
+When you are satisfied with the table's configuration, click **Save**.
+
+</Step>
+</Steps>
 
 ## Configure seeds
 
@@ -121,11 +112,11 @@ Seeds are lightweight CSV datasets defined in your project. Seeds are source-onl
   data warehouse. This table is created in the [default target
   schema](/data-analysis/environment/connections/databricks#connection-parameters) specified in your
   Databricks connection.
+
+  Tables in pipelines do not support dbt properties, which are only applicable to [model sources and
+  targets](/data-engineering/development/models/sources-target/sources-target). The **properties**
+  referenced above are the seed's own properties (the dbt seed config), not pipeline table properties.
 </Note>
-
-### Properties
-
-Tables in pipelines do not support dbt properties, which are only applicable to [model sources and targets](/data-engineering/development/models/sources-target/sources-target).
 
 ## Cross-workspace access
 

@@ -1,9 +1,10 @@
 ---
-title: Google BigQuery table gem
-description: Process BigQuery tables in the SQL warehouse
+title: Read from BigQuery tables
+description: Configure a BigQuery table, view, or seed as a read source
 ---
 
 import Execution from '/snippets/gem-execution-engine.mdx';
+import TableLoc from '/snippets/misc/table-location.mdx';
 
 <Execution execution_engine="the SQL warehouse" />
 
@@ -11,7 +12,7 @@ import Execution from '/snippets/gem-execution-engine.mdx';
 
 In Prophecy, datasets stored in the [SQL Warehouse Connection](/data-analysis/environment/fabrics/prophecy-fabrics) defined in your fabric are accessed using Table gems. Unlike Source and Target gems, Table gems run directly within the data warehouse, eliminating extra orchestration steps and improving performance.
 
-Available configurations for Table gems vary based on your SQL warehouse provider. This page explains how to use the Table gem for a BigQuery SQL warehouse, including supported table types, configuration options, and guidance for managing BigQuery tables in your Prophecy pipelines.
+This page explains how to read from a BigQuery table, view, or seed using the Table gem. To write to a BigQuery table or view instead, see [Write to BigQuery tables](/data-analysis/gems/source-target/table/bigquery-write).
 
 ## Table types
 
@@ -23,11 +24,11 @@ The following table types are supported for BigQuery connections.
 | View  | A virtual table that derives data dynamically from a query. Slower for complex queries (computed at runtime). | Source or Target |
 | Seed  | Small CSV-format files that you can write directly in Prophecy.                                               | **Source only**  |
 
-## Create a new table
+## Configure table
 
-Once you create a Table gem, you can reuse the table throughout your project. All created tables appear in the [Project](/data-analysis/development/studio/studio) tab in the left sidebar.
+Once you create a Table gem, you can reuse it throughout your project. All created tables appear in the [Project](/data-analysis/development/studio/studio) tab in the left sidebar.
 
-To create a table in your pipeline:
+To read from a table in your pipeline:
 
 <Steps>
 <Step title="Add a table gem to the pipeline">
@@ -39,29 +40,32 @@ To create a table in your pipeline:
 
 </Step>
 
-<Step title="Create a new table">
+<Step title="Select a table">
 
-Click **+ New Table**. The gem configuration will depend on the table type:
-
-- [Tables](#tables)
-- [Views](#views)
-- [Seeds](#seeds)
+Choose the table, view, or seed you want to read from the list.
 
 </Step>
 
-</Steps>
+<Step title="Select type & format">
 
-## Configure tables
+Confirm the type: **Table**, **View**, or **Seed**.
 
-Tables are persistent, indexed storage objects optimized for frequent access.
+<Note>
+  Seeds configure differently from Tables and Views — they skip the Location step entirely. See
+  [Configure seeds](#configure-seeds) below.
+</Note>
 
-### Source parameters
+</Step>
 
-| Parameter  | Description                                                    |
-| ---------- | -------------------------------------------------------------- |
-| Location   | Specify the table's location using database, schema, and name. |
-| Properties | Define or infer schema. Add a description if needed.           |
-| Preview    | Load a sample of the data before saving.                       |
+<Step title="Configure location">
+
+<TableLoc />
+
+</Step>
+
+<Step title="Configure properties">
+
+Define or infer the schema. Add a description if needed.
 
 <Info>
   If your BigQuery tables are partitioned or clustered, Prophecy automatically displays the
@@ -70,13 +74,18 @@ Tables are persistent, indexed storage objects optimized for frequent access.
   be able to edit these properties.
 </Info>
 
-### BiqQuery JSON columns
+#### Working with JSON columns
 
 Prophecy supports BigQuery `JSON` columns, including schema inference, nested field exploration, and reading and writing JSON data.
 
+<Info>
+  BigQuery JSON columns support schema inference and nested field access similar to Snowflake
+  `VARIANT` columns.
+</Info>
+
 ##### Infer schema
 
-For tables that contain `JSON` columns, you can use **Infer Schema** to sample data and discover the nested structure stored within the column. The inferred schema is displayed as an expandable tree in the Properties tab, similar to Snowflake `VARIANT` columns.
+For tables that contain `JSON` columns, use **Infer Schema** to sample data and discover the nested structure stored within the column. The inferred schema is displayed as an expandable tree in the Properties tab, similar to Snowflake `VARIANT` columns.
 
 For example, a JSON column containing:
 
@@ -101,6 +110,7 @@ For example:
 ```text
 payload.user.plan
 ```
+
 Prophecy automatically generates the appropriate BigQuery JSON functions:
 
 | Field type | Generated SQL |
@@ -110,56 +120,31 @@ Prophecy automatically generates the appropriate BigQuery JSON functions:
 | Boolean values | `CAST(JSON_VALUE(payload, '$.active') AS BOOL)` |
 | Objects or arrays | `JSON_QUERY(payload, '$.user')` |
 
-### Target parameters
-
-| Parameter     | Description                                                                                                                                                                            |
-| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Location      | Choose the location where the table will be stored. You can create a new table by writing a new table name.                                                                            |
-| Properties    | Define certain properties of the table. The schema cannot be changed for targets.                                                                                                      |
-| Write Options | Select how you want the data to be written each time you run the pipeline (Table only). Learn more in [Write strategies](/data-analysis/gems/source-target/table/write/write-options). |
-
-### Write BigQuery JSON data
-
-When writing to BigQuery `JSON` columns, Prophecy automatically converts string representations of JSON into native BigQuery JSON values. No manual SQL transformations are required.
-
-<Info>
-  BigQuery JSON columns support schema inference and nested field access similar to Snowflake
-  `VARIANT` columns.
-</Info>
-
-import TableLoc from '/snippets/misc/table-location.mdx';
-
-<TableLoc/>
-
-## Configure views
-
-Views are virtual tables recomputed at runtime from a query.
-
-### Source parameters
-
-| Parameter  | Description                                          |
-| ---------- | ---------------------------------------------------- |
-| Location   | Enter the database, schema, and table (view) name.   |
-| Properties | Define or infer schema. Add a description if needed. |
-| Preview    | Load data based on the view's underlying query.      |
-
-### Target parameters
-
-| Parameter  | Description                                                                       |
-| ---------- | --------------------------------------------------------------------------------- |
-| Location   | Define the name of the view to be created or replaced.                            |
-| Properties | Define certain properties of the table. The schema cannot be changed for targets. |
-| Preview    | Load a preview of the resulting view.                                             |
-
 <Note>
-  Every time the pipeline runs, the target is overwritten. This is because the view is recomputed
-  from scratch based on the underlying logic, and any previously materialized results are discarded.
-  No additional write modes are supported.
+  Writing to a JSON column has different behavior — Prophecy auto-converts string JSON to native
+  BigQuery JSON values on write. See [Write to BigQuery tables](/data-analysis/gems/source-target/table/bigquery-write)
+  for details.
 </Note>
+
+</Step>
+
+<Step title="Preview">
+
+Load a sample of the data before saving. For views, this loads data based on the view's underlying query.
+
+</Step>
+
+<Step title="Data tests">
+
+Add data tests to validate the data you're reading. See [Table tests vs. project tests](/data-analysis/development/tests/test-comparison) to decide which approach fits your validation needs.
+
+</Step>
+
+</Steps>
 
 ## Configure seeds
 
-Seeds are lightweight CSV datasets defined in your project. Seeds are source-only.
+Seeds are lightweight CSV datasets defined in your project. Seeds are source-only and don't support writing.
 
 | Parameter  | Description                                                                                                            |
 | ---------- | ---------------------------------------------------------------------------------------------------------------------- |

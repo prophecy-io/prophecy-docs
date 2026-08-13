@@ -322,9 +322,12 @@
                       {
                         "group": "Tables (Warehouse)",
                         "pages": [
-                          "data-analysis/gems/source-target/table/bigquery",
-                          "data-analysis/gems/source-target/table/databricks",
-                          "data-analysis/gems/source-target/table/snowflake",
+                          "data-analysis/gems/source-target/table/bigquery-read",
+                          "data-analysis/gems/source-target/table/bigquery-write",
+                          "data-analysis/gems/source-target/table/databricks-read",
+                          "data-analysis/gems/source-target/table/databricks-write",
+                          "data-analysis/gems/source-target/table/snowflake-read",
+                          "data-analysis/gems/source-target/table/snowflake-write",
                           "data-analysis/gems/source-target/table/prophecy-warehouse",
                           "data-analysis/gems/source-target/table/upload-files",
                           {
@@ -1899,6 +1902,18 @@
     {
       "source": "/data-analysis/production/publication",
       "destination": "/data-analysis/production/publication/publication-concepts"
-    }
+    },
+    {
+      "source": "/data-analysis/gems/source-target/table/databricks",
+      "destination": "/data-analysis/gems/source-target/table/databricks-read"
+    },
+    {
+      "source": "/data-analysis/gems/source-target/table/bigquery",
+      "destination": "/data-analysis/gems/source-target/table/bigquery-read"
+    },
+    {
+      "source": "/data-analysis/gems/source-target/table/snowflake",
+      "destination": "/data-analysis/gems/source-target/table/snowflake-read"
+}
   ]
 }

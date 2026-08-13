@@ -5,6 +5,16 @@ description: 'Features and enhancements from new releases'
 
 <Update label="Prophecy 4.2.10" description="July 31, 2026" tags={["Data Analysis"]}>
 
+## Table gem: Schema mapping for existing target tables
+
+The Table gem now lets you reconcile schema differences when writing to an existing target table.
+
+You can use Map Schema to assign each target column its corresponding source column. Prophecy suggests mappings automatically for unmapped columns, which you can review and adjust, and applies any required casts or transformations so incoming data conforms to the target schema.
+
+You can also use Overwrite Target Schema if you'd rather the target adopt the incoming schema instead; this replaces the existing target schema with the source schema.
+
+These enhancements are available for Table targets across [Databricks](/data-analysis/gems/source-target/table/databricks-write), [BigQuery](/data-analysis/gems/source-target/table/bigquery-write), and [Snowflake](/data-analysis/gems/source-target/table/snowflake-write), making it easier to write into existing tables without manually reconciling schema drift.
+
 ## Parameterize table and view locations
 Table gem Location tabs now support setting database, schema, and table/view name from project or pipeline parameters, not just fixed values. Each Location field can be set to **Value** (a fixed name, as before) or **Configuration Parameter** (bound to an `sql_expression` parameter), so the same table or view definition can resolve to different locations depending on which parameter set is active.
 
@@ -62,7 +72,7 @@ These enhancements help you build, validate, and troubleshoot transformations mo
 
 ## BigQuery JSON column support
 
-Prophecy now [supports BigQuery's native `JSON` data type](/data-analysis/gems/source-target/table/bigquery#json-columns).
+Prophecy now supports BigQuery's native `JSON` data type for both [reading from](/data-analysis/gems/source-target/table/bigquery-read#working-with-json-columns) and [writing to](/data-analysis/gems/source-target/table/bigquery-write#working-with-json-columns) BigQuery.
 
 - Infer nested schemas from JSON columns.
 - Browse JSON fields as expandable nested structures.
