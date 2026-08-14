@@ -1,0 +1,165 @@
+---
+title: "Tape Cracking: Onboarding & Mapping"
+description: "Attach a tape, select a CDM, and let the agent map source fields to the target schema"
+---
+
+Tape cracking is the process of harmonizing a raw loan or lease tape against a Common Data Model (CDM).
+
+## Start harmonization
+
+Attach the loan tape (CSV or XML) and tell the agent to begin — for example, "let's crack this tape." Click **Get Started**.
+
+Prophecy creates a new project, which you can return to later, and identifies the schema of the source file.
+
+## Review the source data
+
+Before mapping, review row profiles and distributions to understand what you're working with. Click **Data Profile** to see detailed column-level information, including value distributions — for example, the percentage breakdown across vehicle types.
+
+<Tip>
+  See [Data Profiling](/data-analysis/development/runs/data-explorer/data-profile) for a full reference on distributions and profile metrics.
+</Tip>
+
+Click **Continue** once you've reviewed the profile.
+
+## Select a CDM
+
+Choose a Common Data Model (CDM) — for example, `auto_ABS_CDM`. Clicking a CDM shows its full definition.
+
+The CDM is the source of truth for the target schema. Domain packs supply domain-specific knowledge — in this case, US auto loan structures — which is why the CDM can interpret loan-specific fields correctly.
+
+Click **Map Data** to continue.
+
+<Note>
+  At this point the file is uploaded to a fabric — Prophecy's managed storage and compute layer that the mapping and analysis steps run against. You don't need to configure it; it's created automatically as part of this step.
+</Note>
+
+## Agent-driven mapping
+
+Harmonization begins, starting with deterministic mapping. The agent narrates its reasoning as it works through the tape:
+
+```
+Mapping employment & obligor fields...
+- Mapping obligorEmploymentVerificationCode → code 1 = "Not stated/not verified", code 2 = "Stated/not verified"... continuing to next code
+- Mapping employment_status → code 3 = "Stated/verified", defaulting NULL values to this mapping
+- Checking seller_subvented_flag → contains '1', '2', or '98'? Evaluating condition
+- Calculating numberOfObligors → setting to 2 when coObligorIndicator is true, else 1
+- Casting seller_loan_id and issuer_loan_number → target type VARCHAR
+- Computing vehicle_age_months → diffing vehicleModelYear against originationDate
+- ⚠️ Flagging for review: vehicleModelYear looks like a raw year value (e.g. 2020) — verifying calculation formula before finalizing
+```
+
+Each line is a discrete action stated in plain terms. When the agent hits something ambiguous — like an unexpected date format — it flags the item for review rather than guessing silently.
+
+## Harmonization Complete
+
+When the agent finishes, it returns a summary of how columns were mapped:
+
+| Category | Columns |
+|---|---|
+| Deterministic — historical | 66 |
+| Deterministic — direct passthrough | 10 |
+| AI-mapped (non-NULL) | 12 |
+| NULL mappings | 77 |
+
+**Deterministic — historical** mappings match a pattern the system has mapped before. **Deterministic — direct passthrough** mappings are unambiguous one-to-one field matches. **AI-mapped** mappings required inference. **NULL mappings** are target fields with no corresponding source data.
+
+### DQ Check Results
+
+- 37 checks passed (including 1 fixed)
+- 0 checks failing
+- 0 SQL errors
+
+Where a check fails and the agent can resolve it automatically, it does — for example, normalizing `obligor_credit_score_type` from `'FICO Score 8 Auto'` to `'FICO Auto'`.
+
+### Key Mappings Applied
+
+Shows how source fields were mapped to the standardized target schema, grouped by category (Identifiers, Dates, etc.).
+
+- **Source** — the original field name from the input data
+- **Target** — the corresponding field name in the harmonized schema
+
+Where a mapping includes a format change — for example, reformatting a date — the transformation is shown alongside the field names, so you can verify both the mapping and the conversion in one place.
+
+Once harmonization completes, review each mapping before accepting the tape. This step is foundational — a poorly reviewed tape undermines every downstream analysis built on it. The goal is to get every mapping to an approved status.
+
+## Review panel
+
+The right panel shows mapping review status. Click into any mapping to see:
+
+- The transformation applied
+- An AI explanation of the confidence level
+- Any DQ tests passed
+- **AI Memory** — previously approved mappings inform future mapping accuracy. The more mappings you approve, the more deterministic future mappings on similar tapes become.
+
+![Mapping detail panel with Source Column picker and Sample Values](/data-analysis/getting-started/structured-finance/img/mapping-detail.png)
+
+Clicking a mapping's source field opens the column picker, which offers:
+
+- **No value (null)** — leave the target column unmapped
+- **Use AI to generate expression** — have AI generate a transformation instead of a direct field mapping
+- **Function Expression** — write a custom expression manually
+- **Columns** — map directly from an available source field
+
+A **Sample Values** panel shows real data from the selected source column, so you can confirm the mapping is correct before accepting it.
+
+## Mapping results
+
+Review the overall breakdown, for example:
+
+- 62 deterministic (historical)
+- 15 deterministic (direct pass-through)
+- 17 AI-mapped
+- 78 null
+- 72 high-confidence
+
+Click **View More** for the full count table.
+
+For each mapping, **Accept**, **override**, or **reject** it, then use **Accept & Next** to move through the list.
+
+## Filtering and sorting mappings
+
+Use the Filter icon (top right) to isolate mappings that need review.
+
+**Filter by:**
+
+- **AI confidence** — High, Medium, Low, None, Overridden
+- **Data quality** — Passed, Failed, No DQ checks
+- **Error status** — Has error, No error
+
+**Sort by:**
+
+- Default order
+- Name (A → Z)
+- Name (Z → A)
+- Confidence (low → high) — surface what needs the most review
+- Data quality (worst first)
+- Status (unmapped → accepted)
+
+![Filter mappings](/data-analysis/getting-started/structured-finance/img/filter-mappings.png)
+
+Sorting by confidence (low → high) or data quality (worst first) prioritizes manual verification on the mappings most likely to need it.
+
+## Correcting a mapping via chat
+
+To fix an incorrect mapping, describe the issue and the correct value directly in chat — for example, correcting a `deal_id` mapping. The agent overwrites the mapping; you then accept it.
+
+```
+Updated `deal_id` to `'TAOT_2026_1'`. DQ passed.
+```
+
+## Meta-questions during review
+
+You can ask the agent questions about the review state at any point — for example, "how many source columns were there in total and how many were mapped?"
+
+## Adding DQ tests
+
+The agent can suggest data quality tests to add. Adding these improves the agent's mapping performance on future tapes, not just the current one.
+
+## Completing the tape
+
+1. Continue reviewing remaining confidence tiers (medium, low, etc.). If you're certain of a mapping, you can specify it directly and check sample values in the window.
+2. Once every mapping is accepted, click **Output Preview** to preview the harmonized result.
+3. Once satisfied, click **Done**.
+4. The tape is marked ready. Download it as Excel or CSV, or add it as a table to your SQL Warehouse.
+
+Continue to [Stratifications & Pool Selection](/data-analysis/getting-started/structured-finance/stratifications-pool-selection) to run analyses on the harmonized tape.

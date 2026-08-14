@@ -1,0 +1,105 @@
+---
+title: "Skills"
+description: "Built-in AI skills for stratification, cross-deal comparison, CDM authoring, and spec generation"
+---
+
+Structured Finance includes built-in AI skills that trigger on natural-language prompts. Ask the agent what's available — for example, "what Structured Finance skills are available?" — or ask for a specific one, like "adhoc Strats cheat sheet."
+
+## Built-in skills
+
+| Skill | Trigger | Purpose |
+|---|---|---|
+| `harmonization` | "harmonize", "crack a tape", "map to CDM" | Map raw source data to a target CDM schema, edit mappings, fix DQ failures |
+| `adhoc-strats` | "show me", "what's the distribution", "top 10", "weighted average" | Ad-hoc stratification queries on collateral pools — FICO, APR, LTV, state, vehicle, delinquency breakdowns |
+| `asset-comp` | "asset comp", "compare deals", "extract comp", "research note" | Build and query cross-deal comparison tables, extract metrics from prospectuses, generate research notes |
+| `cdm` | "create CDM table", "add column to CDM", "DQ checks" | Author and manage Common Data Model schemas with data quality rules |
+| `livespec` | "generate spec", "create documentation" | Auto-generate pipeline and project specification documents |
+
+These skills work across all supported Auto ABS deal types (GMCAR, SDART, BMWOT, TAOT, CALT, EART, etc.) and integrate with the harmonization and strats pipelines you're already using. Skills are customizable to your organization's needs.
+
+When you confirm use of a skill, the agent identifies the necessary steps and gems, executes them, and returns traceable results — for example, surfacing state or vintage-quarter concentrations to support a pool-cutting decision.
+
+## Ad-hoc stratification (`adhoc-strats`)
+
+The `adhoc-strats` skill accepts natural-language prompts for exploring a loan pool. Prompts are organized around common analysis patterns:
+
+- **Pool Health** — summary stats (contracts, balance, WA FICO/LTV/APR), credit tier splits, new/used breakdowns
+- **Concentration Risk** — top states, vehicle models, and vintages by balance; concentration threshold flags
+- **Tail Risk** — filtering to subprime FICO, high LTV, or combined tail segments
+- **Stacked Risk** — multi-factor filters (e.g., FICO under a threshold AND LTV over a threshold)
+- **Pricing Adequacy** — APR by credit tier, mispriced-risk detection, new vs. used APR spread
+- **Delinquency & Performance** — DPD bucket breakdowns, delinquency by state or credit tier
+
+Prompts support threshold tuning (e.g., "under 660" vs. "under 620"), percentage-of-pool framing, and dimension pivots (e.g., "by state" or "by vintage"). Thresholds for what counts as subprime, high LTV, or high APR vary by deal type — prime loan vs. subprime loan, loan vs. lease.
+
+### Getting the full cheat sheet
+
+Ask the agent for all cheat sheet prompts, then run specific ones by reference:
+
+```
+2.1  "Show me top 5 states by balance with avg FICO and avg LTV"
+2.2  "Show me top 10 vehicle models by balance with avg LTV"
+2.3  "Break down the pool by origination quarter with avg FICO and APR"
+2.4  "Show me any state over 15% of balance, any model over 10%, any vintage over 40%"
+```
+
+You can then run a prompt directly by number — for example, "run 2.2":
+
+**Top 10 Vehicle Models by Balance**
+
+| Rank | Vehicle Model | Balance | % Pool | WA LTV |
+|---|---|---|---|---|
+| 1 | TUNDRAC4X4 | $241,508,204.85 | 11.87% | 104.92% |
+| 2 | CAMRY H | $228,270,257.33 | 11.22% | 111.62% |
+| 3 | RAV4 | $222,139,290.45 | 10.92% | 106.38% |
+| 4 | TACOMA 4X4 | $176,039,411.21 | 8.65% | 102.56% |
+| 5 | RAV4 H | $138,714,339.34 | 6.82% | 101.76% |
+
+The result includes generated insights alongside the table — for example, flagging that the top 3 models account for 34% of pool balance, or that hybrid models cluster at the high end of LTV.
+
+## Cross-deal comparison (`asset-comp`)
+
+The `asset-comp` skill runs on any of these trigger phrases:
+
+- `asset comp` / `add to comp` / `compare to other deals`
+- `compare this tape` / `extract comp` / `insights on this deal`
+- `write research note` / `collateral analysis` / `cross-deal comparison`
+- `GMCAR comp` / `download prospectus` / `refresh comp`
+
+### Operations
+
+| Operation | What it does | Example prompt |
+|---|---|---|
+| **extract** | Pull metrics from the current tape into comp format | "extract comp from this tape" |
+| **add** | Add a deal to the comp table | "add SDART 2025-1 to comp" |
+| **compare** | Cross-deal comparison against the comp table | "compare this tape to other deals" |
+| **insight** | Generate insights on the current deal vs. peers | "insights on this deal" |
+| **research** | Write a research note or collateral analysis | "write research note" |
+
+### Input modes
+
+1. **Harmonized CDM tape** — uses your current pipeline's `output_preview` data
+2. **SEC prospectus** — downloads and parses prospectus PDFs (e.g., "download prospectus for GMCAR 2025-2")
+
+### Example: extracting a comp
+
+"extract comp from this tape" returns a preview — no changes are made to the comp table until you confirm:
+
+**SDART 2025-4 — Comp Extraction (Preview)**
+
+| Metric | Value |
+|---|---|
+| Pool Balance | $2,034,742,702 |
+| Loan Count | 65,867 |
+| WA APR | 5.67% |
+| WA FICO | 771 |
+| WA LTV | 104.96% |
+| New % | 87.98% |
+
+Next steps from a preview:
+
+- "add to comp" → insert into `cross_deal_comp.csv`
+- "compare to others" → side-by-side with peer deals
+- "insights on this deal" → full cross-deal analysis
+
+Cross-deal comparison works because every tape is harmonized to the same CDM — metrics line up without additional mapping. The agent also self-retries on errors encountered during execution.

@@ -1,0 +1,34 @@
+---
+title: "Stratifications & Pool Selection"
+description: "Run strats analysis on a cracked tape and inspect how results are derived"
+---
+
+Once a tape is harmonized, run stratification analysis against it using a built-in or custom template.
+
+## Run a Strats template
+
+Click **Strats and Pool Selection**, review the template, and click **Use Template**. Custom templates are supported if your deal requires buckets or breakdowns that don't match the built-in set.
+
+After applying the template, you get:
+
+- The Strats output itself
+- A pipeline showing the full transformation logic behind it — aggregations, transforms, joins, unions — fully inspectable
+
+## View as a dashboard
+
+Prophecy refers to these analyses as **dashboards**. Once generated, the dashboard is the primary way to view results.
+
+## Inspect an analysis
+
+Click **Inspect** on any analysis to send a prompt to the agent asking it to show how the values were derived. This makes every result fully explainable rather than a black box.
+
+Inspect returns:
+
+- **Thought summary** — a plain-language explanation of what the analysis does and why. For example, a "Current Principal Balance Distribution" workflow groups loan balances by size range to show concentration of value across segments.
+- **Operations table** — the sequence of gems (workflow steps) that make up the analysis:
+  - **Operations** — the gem name and type, for example `ref_notional_bucket...` (a Function gem) or `ref_notional_agg` (an Aggregate gem)
+  - **Description** — a short summary of what that gem does, such as assigning each loan to a bucket, totaling balances, or formatting output rows
+
+Click any gem in the operations table to open that step directly in the workflow, so you can trace exactly how a result was produced.
+
+Continue to [Export & Sharing](/data-analysis/getting-started/structured-finance/export-sharing) to export or share the results.
