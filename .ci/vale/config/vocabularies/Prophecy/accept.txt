@@ -196,6 +196,9 @@ stratifications
 watchlists
 CDM
 CDMs
+Strats
+strat
+hoc
 
 ## Transpiler
 
