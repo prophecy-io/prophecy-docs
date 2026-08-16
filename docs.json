@@ -24,7 +24,17 @@
                       "data-analysis/getting-started/concepts",
                       "data-analysis/getting-started/quick-start",
                       "data-analysis/getting-started/professional-edition",
-                      "data-analysis/getting-started/structured-finance-edition"
+                      {
+                        "group": "Use Structured Finance",
+                        "pages": [
+                          "data-analysis/getting-started/structured-finance/overview",
+                          "data-analysis/getting-started/structured-finance/tape-cracking",
+                          "data-analysis/getting-started/structured-finance/stratifications-pool-selection",
+                          "data-analysis/getting-started/structured-finance/skills",
+                          "data-analysis/getting-started/structured-finance/adhoc-document-workflows",
+                          "data-analysis/getting-started/structured-finance/export-sharing"
+                        ]
+                      }
                     ]
                   },
                   {
