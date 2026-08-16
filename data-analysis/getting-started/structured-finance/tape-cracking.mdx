@@ -1,19 +1,23 @@
 ---
-title: "Tape Cracking: Onboarding & Mapping"
-description: "Attach a tape, select a CDM, and let the agent map source fields to the target schema"
+title: "Tape cracking: onboard & map"
+description: "Attach a tape, select a CDM, and let the Agent map source fields to the target schema"
 ---
 
 Tape cracking is the process of harmonizing a raw loan or lease tape against a Common Data Model (CDM).
 
 ## Start harmonization
 
-Attach the loan tape (CSV or XML) and tell the agent to begin — for example, "let's crack this tape." Click **Get Started**.
+Attach the loan tape (CSV or XML) and tell the Agent to begin. For a new tape, you can enter `let's crack this tape`. Click **Get Started**.
 
-Prophecy creates a new project, which you can return to later, and identifies the schema of the source file.
+Prophecy creates a new project and identifies the schema of the source file.
+
+<Tip>
+Prophecy organizes work into [projects](data-analysis/development/projects/create-project). You can return to this project later by clicking the **Projects** icon in the side bar.
+</Tip>
 
 ## Review the source data
 
-Before mapping, review row profiles and distributions to understand what you're working with. Click **Data Profile** to see detailed column-level information, including value distributions — for example, the percentage breakdown across vehicle types.
+Before mapping, you should review row profiles and distributions to understand the tape's data. Click **Data Profile** to see detailed column-level information, including value distributions (such as the percentage breakdown across vehicle types).
 
 <Tip>
   See [Data Profiling](/data-analysis/development/runs/data-explorer/data-profile) for a full reference on distributions and profile metrics.
@@ -23,19 +27,19 @@ Click **Continue** once you've reviewed the profile.
 
 ## Select a CDM
 
-Choose a Common Data Model (CDM) — for example, `auto_ABS_CDM`. Clicking a CDM shows its full definition.
+Choose a Common Data Model (CDM), such as `auto_ABS_CDM`. You can click a CDM to view its full definition.
 
-The CDM is the source of truth for the target schema. Domain packs supply domain-specific knowledge — in this case, US auto loan structures — which is why the CDM can interpret loan-specific fields correctly.
+The CDM you select is part of a domain pack. A _domain pack_ bundles the CDM together with the domain-specific knowledge needed to interpret it correctly. auto_ABS_CDM is bundled with US auto loan structures, which is why fields like `obligorEmploymentVerificationCode` or `vehicleModelYear` map correctly out of the box.
 
 Click **Map Data** to continue.
 
 <Note>
-  At this point the file is uploaded to a fabric — Prophecy's managed storage and compute layer that the mapping and analysis steps run against. You don't need to configure it; it's created automatically as part of this step.
+  At this point the file is uploaded to a [fabric](/data-analysis/environment/fabrics/prophecy-fabrics). A fabric is a Prophecy entity that contains the connection information needed to connect to external compute and data storage. You don't need to configure one here; it's used automatically as part of this step.
 </Note>
 
 ## Agent-driven mapping
 
-Harmonization begins, starting with deterministic mapping. The agent narrates its reasoning as it works through the tape:
+Prophecy begins harmonization, starting with deterministic mapping. The agent narrates its reasoning as it works through the tape:
 
 ```
 Mapping employment & obligor fields...
@@ -48,11 +52,13 @@ Mapping employment & obligor fields...
 - ⚠️ Flagging for review: vehicleModelYear looks like a raw year value (e.g. 2020) — verifying calculation formula before finalizing
 ```
 
-Each line is a discrete action stated in plain terms. When the agent hits something ambiguous — like an unexpected date format — it flags the item for review rather than guessing silently.
+Each line is a discrete action stated in plain terms. When the Agent hits something ambiguous — like an unexpected date format — it flags the item for review rather than guessing silently.
 
-## Harmonization Complete
+![agent reasoning during harmonization](/data-analysis/getting-started/structured-finance/img/agent-harmonizing.png)
 
-When the agent finishes, it returns a summary of how columns were mapped:
+## View summary of harmonization
+
+When the Agent finishes, it returns a summary of how columns were mapped:
 
 | Category | Columns |
 |---|---|
@@ -61,48 +67,50 @@ When the agent finishes, it returns a summary of how columns were mapped:
 | AI-mapped (non-NULL) | 12 |
 | NULL mappings | 77 |
 
-**Deterministic — historical** mappings match a pattern the system has mapped before. **Deterministic — direct passthrough** mappings are unambiguous one-to-one field matches. **AI-mapped** mappings required inference. **NULL mappings** are target fields with no corresponding source data.
+**Deterministic — historical** mappings match a pattern the system has mapped before.
 
-### DQ Check Results
+**Deterministic — direct passthrough** mappings are unambiguous one-to-one field matches.
+
+**AI-mapped** mappings required inference. **NULL mappings** are target fields with no corresponding source data.
+
+The agent also returns **DQ check results**, such as:
 
 - 37 checks passed (including 1 fixed)
 - 0 checks failing
 - 0 SQL errors
 
-Where a check fails and the agent can resolve it automatically, it does — for example, normalizing `obligor_credit_score_type` from `'FICO Score 8 Auto'` to `'FICO Auto'`.
+Where a check fails and the Agent can resolve it automatically, it does so — for example, normalizing `obligor_credit_score_type` from `'FICO Score 8 Auto'` to `'FICO Auto'`.
 
-### Key Mappings Applied
-
-Shows how source fields were mapped to the standardized target schema, grouped by category (Identifiers, Dates, etc.).
+Finally, the Agent summarizes **key mappings applied**: how source fields were mapped to the standardized target schema, grouped by category (Identifiers, Dates, etc.).
 
 - **Source** — the original field name from the input data
 - **Target** — the corresponding field name in the harmonized schema
 
-Where a mapping includes a format change — for example, reformatting a date — the transformation is shown alongside the field names, so you can verify both the mapping and the conversion in one place.
+Where a mapping includes a format change (such as reformatting a date) the Agent displays the transformation alongside the field names, so you can verify both the mapping and the conversion in one place.
 
 Once harmonization completes, review each mapping before accepting the tape. This step is foundational — a poorly reviewed tape undermines every downstream analysis built on it. The goal is to get every mapping to an approved status.
 
-## Review panel
+## View review panel
 
-The right panel shows mapping review status. Click into any mapping to see:
+The right panel shows mapping review status. Click any mapping to see:
 
-- The transformation applied
-- An AI explanation of the confidence level
-- Any DQ tests passed
-- **AI Memory** — previously approved mappings inform future mapping accuracy. The more mappings you approve, the more deterministic future mappings on similar tapes become.
+- The transformation applied.
+- An AI explanation of the confidence level.
+- Any DQ tests passed.
+- AI Memory — previously approved mappings inform future mapping accuracy. The more mappings you approve, the more deterministic future mappings on similar tapes become
 
 ![Mapping detail panel with Source Column picker and Sample Values](/data-analysis/getting-started/structured-finance/img/mapping-detail.png)
 
-Clicking a mapping's source field opens the column picker, which offers:
+You can change a mapping by clicking the **Source Column/Expression** drop-down menu, which offers the following options:
 
-- **No value (null)** — leave the target column unmapped
-- **Use AI to generate expression** — have AI generate a transformation instead of a direct field mapping
+- **No value (null)** — leave the target column unmapped.
 - **Function Expression** — write a custom expression manually
+- **Use AI to generate expression** — have AI generate a transformation instead of a direct field mapping
 - **Columns** — map directly from an available source field
 
 A **Sample Values** panel shows real data from the selected source column, so you can confirm the mapping is correct before accepting it.
 
-## Mapping results
+### Review mapping results
 
 Review the overall breakdown, for example:
 
@@ -116,17 +124,17 @@ Click **View More** for the full count table.
 
 For each mapping, **Accept**, **override**, or **reject** it, then use **Accept & Next** to move through the list.
 
-## Filtering and sorting mappings
+### Filter and sort mappings
 
 Use the Filter icon (top right) to isolate mappings that need review.
 
-**Filter by:**
+You can filter by:
 
 - **AI confidence** — High, Medium, Low, None, Overridden
 - **Data quality** — Passed, Failed, No DQ checks
 - **Error status** — Has error, No error
 
-**Sort by:**
+You can sort by:
 
 - Default order
 - Name (A → Z)
@@ -139,23 +147,33 @@ Use the Filter icon (top right) to isolate mappings that need review.
 
 Sorting by confidence (low → high) or data quality (worst first) prioritizes manual verification on the mappings most likely to need it.
 
-## Correcting a mapping via chat
+## Correct a mapping via chat
 
-To fix an incorrect mapping, describe the issue and the correct value directly in chat — for example, correcting a `deal_id` mapping. The agent overwrites the mapping; you then accept it.
+To fix an incorrect mapping, describe the issue and the correct value directly in chat — for example, correcting a `deal_id` mapping.
 
 ```
 Updated `deal_id` to `'TAOT_2026_1'`. DQ passed.
 ```
+The agent overwrites the mapping; you then accept it.
 
 ## Meta-questions during review
 
-You can ask the agent questions about the review state at any point — for example, "how many source columns were there in total and how many were mapped?"
+You can ask the Agent questions about the review state at any point — for example, "how many source columns were there in total and how many were mapped?"
 
-## Adding DQ tests
+## Add DQ tests
 
-The agent can suggest data quality tests to add. Adding these improves the agent's mapping performance on future tapes, not just the current one.
+The agent can suggest data quality tests to add. Adding these improves the Agent's mapping performance on future tapes, not just the current one.
 
-## Completing the tape
+## Add a new CDM
+
+To add a new CDM:
+
+1. Click the **+** at the top of the review panel, then select **CDMs**.
+2. In the dialog, enter a name for the common data model and click **Create**.
+3. In the new CDM, choose **Add Table** or **Upload Schema**.
+4. If you choose **Add Table**, enter names, types, descriptions, and DQ checks for each column.
+
+## Complete the tape
 
 1. Continue reviewing remaining confidence tiers (medium, low, etc.). If you're certain of a mapping, you can specify it directly and check sample values in the window.
 2. Once every mapping is accepted, click **Output Preview** to preview the harmonized result.
