@@ -3,24 +3,24 @@ title: "Stratifications & Pool Selection"
 description: "Run strats analysis on a cracked tape and inspect how results are derived"
 ---
 
-Once a tape is harmonized, run stratification analysis against it using a built-in or custom template.
+Once a tape is harmonized, you can run stratification analysis against it using a built-in or custom template.
 
 ## Run a Strats template
 
 Click **Strats and Pool Selection**, review the template, and click **Use Template**. Custom templates are supported if your deal requires buckets or breakdowns that don't match the built-in set.
 
+The Agent runs, applying the **Strats and Pool Selection** to your cracked tape.
+
 After applying the template, you get:
 
-- The Strats output itself
-- A pipeline showing the full transformation logic behind it — aggregations, transforms, joins, unions — fully inspectable
+1. An analysis (Prophecy's term for dashboard), which opens automatically.
+1. A pipeline showing the full transformation logic behind it, all of which are fully inspectable: aggregations, transforms, joins, unions, and so on. To view the pipeline=, click the pipeline icon in the Agent's response.
 
-## View as a dashboard
-
-Prophecy refers to these analyses as **dashboards**. Once generated, the dashboard is the primary way to view results.
+![strats template applied](/data-analysis/getting-started/structured-finance/img/strat-template-applied.png)
 
 ## Inspect an analysis
 
-Click **Inspect** on any analysis to send a prompt to the agent asking it to show how the values were derived. This makes every result fully explainable rather than a black box.
+Click **Inspect** on any part of the analysis to send a prompt to the Agent asking it to show how the values were derived. This makes every result fully explainable rather than a black box.
 
 Inspect returns:
 

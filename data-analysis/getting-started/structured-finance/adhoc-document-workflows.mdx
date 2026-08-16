@@ -3,9 +3,9 @@ title: "Ad Hoc & Document-Based Workflows"
 description: "Extract tables from a prospectus and reconcile them against your harmonized tape"
 ---
 
-Beyond the built-in skills, you can build fully custom workflows against source documents like a prospectus.
+You can build fully custom workflows against source documents — a prospectus, a servicer report, or any other reference document — by uploading them and asking the agent to use their contents. A prospectus comparison is one common example.
 
-## Extracting from a prospectus
+## Example: extract from a prospectus
 
 Upload a prospectus (for example, a 424B5 filing) and ask the agent to extract a specific table — referencing it by page number — and compare it against your existing Strats output. Ask the agent to share its plan before it executes.
 
@@ -17,7 +17,7 @@ with the one we have in our strats?"
 
 The agent extracts the table and can often self-correct even if the page number given is slightly off.
 
-## Aligning bucket structures
+### Align bucket structures
 
 Prospectus tables and your Strats output may bucket values differently. To compare them directly, align your Strat buckets to match the prospectus structure — the best practice is to modify the template directly rather than reconciling mismatched buckets after the fact.
 
@@ -25,7 +25,7 @@ Prospectus tables and your Strats output may bucket values differently. To compa
   First-time runs of a custom ad hoc workflow typically need some tuning. Treat the first pass as a baseline to refine, not a final result.
 </Note>
 
-## Generating a shareable report
+### Generate a shareable report
 
 Once the comparison is built, ask the agent for a shareable Markdown report combining the work — for example, "create a proper MD with a companion report I can share."
 
