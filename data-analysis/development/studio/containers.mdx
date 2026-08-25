@@ -1,9 +1,9 @@
 ---
-title: Visual containers
+title: Use visual containers
 description: Organize your pipeline into containers to group related transformations
 ---
 
-Containers allow you to divide your pipeline into logical sections. They help you visually organize related gems, making pipelines easier to read and understand.
+Containers allow you to divide your pipeline into logical sections. They help you visually organize related gems, making pipelines easier to read and understand. You can also collapse and expand containers to make room on the canvas and differentiate containers by color.
 
 For example, you can use containers to group transformations by:
 
@@ -18,22 +18,26 @@ For example, you can use containers to group transformations by:
 To create a container:
 
 1. Drag to select multiple gems on the canvas.
-1. At the bottom of the canvas, click **Group**.
+1. At the bottom of the canvas, click **Actions**.
+1. Select **Group**.
 
-The selected gems are added to a new container.
+The selected gems are added to a new container, named `VisualGroup_1` by default.
 
 ## Manage containers
 
-To manage your created containers:
+Containers have their own **...** menu, separate from the action menu on individual gems. To manage a container, click its **⋯** menu:
 
-- **Rename containers** — Click on the container name and enter a new one to clarify its purpose.
-
-- **Move gems in or out of a container** — Drag the gem in and out across the container boundary.
-
-- **Edit container size** — Drag the container edges or corners to resize.
-
-- **Collapse containers** — Click **⋯ > Collapse** to hide the container's gems and simplify the canvas.
-
-- **Remove a container** — Click **⋯ > Ungroup** to remove the group and keep its gems on the canvas.
+- **Ungroup** — Remove the group and keep its gems on the canvas.
+- **Add to AI** — Add a mention for the container to Chat.
+- **Explain** — Copilot provides an explanation of what the container groups.
+- **Attach Annotation** — Add an expanded label for the container.
+- **Edit Background Color** — Change the container's background color to visually distinguish it from others.
+- **Collapse** — Hide the container's gems and simplify the canvas. (You can reverse this using an **Expand** command.)
 
 ![Pipeline with collapsed container](/data-analysis/development/studio/img/collapsed-groups.png)
+
+You can also:
+
+- **Rename a container** — Click the container name and enter a new one to clarify its purpose.
+- **Move gems in or out of a container** — Drag the gem in and out across the container boundary.
+- **Edit container size** — Drag the container edges or corners to resize.
