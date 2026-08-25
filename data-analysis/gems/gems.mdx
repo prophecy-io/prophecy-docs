@@ -74,21 +74,6 @@ When you click on a gem from the gem drawer, an instance of that gem gets added 
   from SQL to Scala).
 </Tip>
 
-## Add a gem from a connection
-
-Hovering over the connector between two gems reveals a `+` button. Click it to open the gem palette and insert a new gem directly at that point in the flow, without dragging a gem onto the canvas and rewiring connections by hand.
-
-{/* ![Insert gem into flow](/data-analysis/gems/img/TODO-insert-gem-into-flow.png)*/}
-
-- Hover over a gem's input port to add a gem before it. If a connection already feeds that port, the new gem is spliced into it automatically
-- Hover over a gem's output port to add a gem after it. If the port has no downstream connections, the new gem attaches directly. If the port already feeds one or more gems, you choose how to insert it:
-  - Insert into the flow — the new gem is placed between the existing gems, so data now passes through it (A → New Gem → B)
-  - Add as a separate path — the new gem reads the same output as a new branch, and existing connections stay unchanged
-
-The gem palette only shows gems compatible with the selected insertion point, grouped by category. Use the search field at the top of the palette to filter by name instead of scrolling through categories.
-
-Prophecy adjusts the canvas layout automatically to fit the new gem, and the entire change — the new gem, any rewired connections, and any repositioned gems — undoes as a single step.
-
 ## Gem configuration
 
 When you open a gem, you can configure how the gem will work. Explore our individual gem documentation to understand each gem's parameters.
@@ -117,27 +102,53 @@ To hide ports from the gem configuration, you can collapse the ports panel using
 
 Some gems can be configured in the **visual** view or the **code** view. Use the visual expression builder to populate fields in the visual view. Prophecy will automatically convert visual expressions into SQL expressions. You can edit these SQL statements or write your own in the code view.
 
+## Add a gem from a connection
+
+Hovering over the connector between two gems reveals a `+` button. Click it to open the gem palette and insert a new gem directly at that point in the flow, without dragging a gem onto the canvas and rewiring connections by hand.
+
+{/*![Insert gem into flow](/data-analysis/gems/img/TODO-insert-gem-into-flow.png)*/}
+
+- Hover over a gem's input port to add a gem before it. If a connection already feeds that port, the new gem is spliced into it automatically
+- Hover over a gem's output port to add a gem after it. If the port has no downstream connections, the new gem attaches directly. If the port already feeds one or more gems, you choose how to insert it:
+  - Insert into the flow — the new gem is placed between the existing gems, so data now passes through it (A → New Gem → B)
+  - Add as a separate path — the new gem reads the same output as a new branch, and existing connections stay unchanged
+
+The gem palette only shows gems compatible with the selected insertion point, grouped by category. Use the search field at the top of the palette to filter by name instead of scrolling through categories.
+
+Prophecy adjusts the canvas layout automatically to fit the new gem, and the entire change — the new gem, any rewired connections, and any repositioned gems — undoes as a single step.
+
 ## Action menu
 
-The action menu gives you more granular control over individual gems. When you expand the action menu, you see the following options:
+Selecting one or more gems reveals a toolbar at the bottom of the canvas with the following buttons:
+
+| **Button**    | **Description**                                                       |
+| ------------- | ----------------------------------------------------------------------|
+| **Add to AI** | Adds [mention](data-analysis/ai/agent/chat/mentions) for the gem to Chat. |
+| **Explain**   | Copilot provides an explanation of what the gem does in the pipeline. |
+| **Label**     | Copilot renames the gem.                                              |
+| **Actions**   | Opens a dropdown with additional options, listed below.               |
+| **Delete**    | Remove the gem from the pipeline.                                     |
+
+The **Actions** dropdown includes:
 
 | **Action**       | **Description**                                                       |
 | ---------------- | --------------------------------------------------------------------- |
-| **Add to AI** | Adds [mention](data-analysis/ai/agent/chat/mentions) for gem to Chat. |
-| **Explain**      | Copilot provides an explanation of what the gem does in the pipeline. |
 | **Fix**          | Copilot resolves an error in the gem configuration.                   |
-| **Label**        | Copilot renames the gem.                                              |
 | **Add Description**  | Manually write a comment that appears as a tooltip above the gem.     |
 | **Attach Annotation**| Lets you add an expanded label for the gem on the canvas. |
 | **Data Preview** | Enables the [Data Preview](data-analysis/development/runs/data-explorer/data-explorer) icon on the gem's output so you can inspect sample data. When disabled, the icon remains unavailable. |
 | **Record Count** | Displays the number of rows produced by the gem next to its output. |
 | **Change Phase** | Change the [phase](#gem-phase) of the gem.                            |
+| **Group**        | Combine the selected gems into a [container](/data-analysis/development/studio/containers). |
 | **Make Outgoing Connections Wireless** | Convert wired connections to wireless ones. See [Wireless connections](data-analysis/development/studio/wireless-connections) for more detail.
-| **Delete**       | Remove the gem from the pipeline.                                     |
 
 ### Applying actions to multiple gems
 
-You can apply the following actions to multiple gems at once: **Change Phase**, **Attach Annotation**, **Data Preview**, **Record Count**, and **Group**.
+You can select multiple gems and apply **Change Phase**, **Attach Annotation**, **Data Preview**, **Record Count**, and **Group** to all of them at once from the **Actions** dropdown.
+
+<Note>
+  Bulk **Data Preview** and **Record Count** toggles skip gems that don't support them, such as canvas comments, target-process gems, and containers. If your selection has a mix of current values (for example, some selected gems have Data Preview on and others off), the checkbox shows an indeterminate state until you click it.
+</Note>
 
 To apply actions to multiple gems:
 

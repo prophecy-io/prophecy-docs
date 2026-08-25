@@ -1,13 +1,15 @@
 ---
 title: Studio interface
-description: Use Prophecy's built-in IDE
+description: Learn how to use Prophecy's built-in IDE
 ---
 
 When you build a [pipeline](/data-analysis/development/pipelines/data-analysis-pipelines), it helps to be familiar with the Studio interface. The following sections describe each area of the Studio.
 
 ## Sidebars
 
-When you open Studio, Prophecy opens the last saved state of the project when one is available. If there is no saved state, Prophecy opens a project landing page where you can open existing entities or create new ones.
+When you open the Studio, Prophecy opens the last saved state of the project when one is available. If there is no saved state, Prophecy opens a project landing page where you can open existing entities or create new ones. New projects without entities open with Agent chat maximized when v4 AI is enabled.
+
+{/* TODO: Confirm how long Prophecy keeps the saved project state and whether it is saved per user, browser, or project. */}
 
 import { WistiaVideo } from '/snippets/react/wistia-video.jsx';
 
@@ -73,6 +75,20 @@ At the bottom left of the canvas, the annotate button lets you add free-form tex
 ### Group gems into containers
 
 Drag to select multiple gems, then use the **Actions** menu at the bottom of the canvas to group them into a container. Containers help you visually organize related gems on the canvas. To learn more, visit [Visual containers](/data-analysis/development/studio/containers).
+
+### Alt-key row count and connection reveal
+
+Holding **Alt** (**Option** on Mac) on the canvas switches interim row-count labels from a compact, rounded format to the exact count. For example, `100K rows` becomes `100,000 rows`, and `10.2K rows` becomes `10,166 rows`. Releasing **Alt** reverts to the compact display. This applies to:
+
+- SQL IDE canvas interim icons
+- Spark/Workflow canvas edge labels
+- The interim **view rows** action button
+
+Holding **Alt** also reveals all [wireless connections](/data-analysis/development/studio/wireless-connections) on the canvas at once. Normally, a wireless connection is only visible while its edge is selected. Releasing **Alt** hides them again; any already-selected edges stay visible regardless.
+
+<Note>
+  Counts under 1,000 (for example, `5 rows`) look the same in both compact and exact format. To see the row-count behavior, run the pipeline first so interims have row counts to format.
+</Note>
 
 ### Run button
 
