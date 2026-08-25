@@ -77,10 +77,20 @@ The **Providers** tab allows you to configure the SQL warehouse provider you wan
    - Enter the **Username**.
    - Enter the **Password**.
 
+   **Key-pair** (authenticate with an RSA key pair instead of a password)
+
+   - Enter the **Username**.
+   - Upload your **Private Key** file.
+
+   <Note>
+   This method does not currently support passphrase-protected private keys — there's no field to enter a passphrase. Use an unencrypted private key, or choose a different authentication method.
+   </Note>
+
    **OAuth** (used when authentication is managed by an identity provider or service principal.)
 
-   - Enter the **Client ID**.
-   - Enter the **Client Secret**.
+   - Select an **App Registration** from the dropdown.
+
+     This lists the OAuth app registrations your cluster admin has configured for Snowflake, including native Snowflake OAuth registrations and any [ID Anywhere (Snowflake)](/administration/management/cluster-admin-settings/oauth-setup) registrations, which authenticate through an ADFS/ID Anywhere identity provider instead of Snowflake's native OAuth. If the registration you need isn't listed, ask your cluster admin to add it under **Settings** > **Admin** > **Security**.
 
 1. Provide the **Stage** that Prophecy will use for temporary orchestration files.
 
