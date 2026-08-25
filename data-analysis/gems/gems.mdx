@@ -74,6 +74,21 @@ When you click on a gem from the gem drawer, an instance of that gem gets added 
   from SQL to Scala).
 </Tip>
 
+## Add a gem from a connection
+
+Hovering over the connector between two gems reveals a `+` button. Click it to open the gem palette and insert a new gem directly at that point in the flow, without dragging a gem onto the canvas and rewiring connections by hand.
+
+{/* ![Insert gem into flow](/data-analysis/gems/img/TODO-insert-gem-into-flow.png)*/}
+
+- Hover over a gem's input port to add a gem before it. If a connection already feeds that port, the new gem is spliced into it automatically
+- Hover over a gem's output port to add a gem after it. If the port has no downstream connections, the new gem attaches directly. If the port already feeds one or more gems, you choose how to insert it:
+  - Insert into the flow — the new gem is placed between the existing gems, so data now passes through it (A → New Gem → B)
+  - Add as a separate path — the new gem reads the same output as a new branch, and existing connections stay unchanged
+
+The gem palette only shows gems compatible with the selected insertion point, grouped by category. Use the search field at the top of the palette to filter by name instead of scrolling through categories.
+
+Prophecy adjusts the canvas layout automatically to fit the new gem, and the entire change — the new gem, any rewired connections, and any repositioned gems — undoes as a single step.
+
 ## Gem configuration
 
 When you open a gem, you can configure how the gem will work. Explore our individual gem documentation to understand each gem's parameters.
