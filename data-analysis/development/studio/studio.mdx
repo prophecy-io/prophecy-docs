@@ -3,11 +3,11 @@ title: Studio interface
 description: Learn how to use Prophecy's built-in IDE
 ---
 
-When you build a [pipeline](/data-analysis/development/pipelines/data-analysis-pipelines), it helps to be familiar with the Studio interface. The following sections describe each area of the Studio.
+The Studio is Prophecy's built-in IDE for building [pipelines](/data-analysis/development/pipelines/data-analysis-pipelines). This page walks through each area of the interface, from the sidebars and canvas to the header and footer.
 
 ## Sidebars
 
-When you open the Studio, Prophecy opens the last saved state of the project when one is available. If there is no saved state, Prophecy opens a project landing page where you can open existing entities or create new ones. New projects without entities open with Agent chat maximized when v4 AI is enabled.
+When you open Studio, Prophecy opens the last saved state of the project when one is available. If there is no saved state, Prophecy opens a project landing page where you can open existing entities or create new ones. New projects without entities open with Agent chat maximized when v4 AI is enabled.
 
 {/* TODO: Confirm how long Prophecy keeps the saved project state and whether it is saved per user, browser, or project. */}
 
@@ -31,7 +31,7 @@ In the Visual view, browse through project entities such as pipelines, tables, a
 
 Opening or closing the Project Browser only changes the Project Browser panel. It does not control whether the landing page or canvas is visible.
 
-### Environment browser
+#### Environment browser
 
 The **Environment** tab lets you access data directly in Prophecy from [connections](/data-analysis/environment/connections/connections) defined in your attached fabric. You can:
 
@@ -58,13 +58,33 @@ The pipeline canvas is the workspace where you can add and connect various gems 
 <Frame>
   <WistiaVideo mediaId="z8f32lb8zg" />
 </Frame>
-{/* TODO: Review this video for updated landing page and canvas terminology. */}
 
 ### Gem drawer
 
 At the top of the pipeline canvas, the **gem drawer** displays gem categories such as Transform and Join, which contain all the gems available for use in your pipeline.
 
 You can bookmark gems by clicking the star to their right in the gem dropdown menus. Bookmarked gems then appear in a Favorites bar in the Gem drawer.
+
+### Undo and redo
+
+Use `Cmd+Z` (macOS) or `Ctrl+Z` (Windows/Linux) to undo your most recent change on the canvas, and `Cmd+Y` / `Ctrl+Y` to redo a change. This covers actions such as:
+
+- Gem property changes.
+- Form field edits.
+- Opening and closing dialogs.
+- Switching tabs.
+- URL search parameter changes.
+- Navigating between subgraphs or components.
+
+You can undo up to approximately 50 recent actions. Undo and redo primarily support changes to your pipeline graph. Some actions fall outside this scope and can't be undone, including:
+
+- Creating, opening, or deleting a pipeline.
+- Creating or deleting a dataset.
+- Project-level actions like scheduling, committing, or publishing.
+
+When you perform one of these irreversible actions, Prophecy warns you that the action cannot be done.
+
+Undo and redo are disabled during onboarding tours.
 
 ### Run button
 
