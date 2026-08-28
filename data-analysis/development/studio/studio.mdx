@@ -66,6 +66,30 @@ At the top of the pipeline canvas, the **gem drawer** displays gem categories su
 
 You can bookmark gems by clicking the star to their right in the gem dropdown menus. Bookmarked gems then appear in a Favorites bar in the Gem drawer.
 
+To learn more, visit [Gems for Data Analysis](/data-analysis/gems/gems).
+
+### Annotate button
+
+At the bottom left of the canvas, the annotate button lets you add free-form text annotations directly on the pipeline canvas. To learn more, visit [Canvas annotations](/data-analysis/development/studio/canvas-annotations).
+
+### Group gems into containers
+
+Drag to select multiple gems, then use the **Actions** menu at the bottom of the canvas to group them into a container. Containers help you visually organize related gems on the canvas. To learn more, visit [Visual containers](/data-analysis/development/studio/containers).
+
+### Alt-key row count and connection reveal
+
+Holding **Alt** (**Option** on Mac) on the canvas switches interim row-count labels from a compact, rounded format to the exact count. For example, `100K rows` becomes `100,000 rows`, and `10.2K rows` becomes `10,166 rows`. Releasing **Alt** reverts to the compact display. This applies to:
+
+- SQL IDE canvas interim icons
+- Spark/Workflow canvas edge labels
+- The interim **view rows** action button
+
+Holding **Alt** also reveals all [wireless connections](/data-analysis/development/studio/wireless-connections) on the canvas at once. Normally, a wireless connection is only visible while its edge is selected. Releasing **Alt** hides them again; any already-selected edges stay visible regardless.
+
+<Note>
+  Counts under 1,000 (for example, `5 rows`) look the same in both compact and exact format. To see the row-count behavior, run the pipeline first so interims have row counts to format.
+</Note>
+
 ### Run button
 
 The **run** button triggers pipeline execution. This allows you to test and run the pipeline in real-time, which makes it easier to troubleshoot and verify the pipeline's performance before deployment.
