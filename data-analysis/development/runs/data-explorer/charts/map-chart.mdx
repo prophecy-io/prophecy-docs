@@ -6,12 +6,12 @@ description: Learn what parameters you need to configure a marker, displacement,
 A map chart plots geographic point data on a map. Prophecy supports three map chart types: a [marker map](#marker-map-chart), a [displacement map](#displacement-map-chart), and a [heat map](#heat-map-chart).
 
 <Info>
-  A map chart option only appears when the dataset contains a column of geo points in WKT format, for example `POINT(-74.006 40.7128)`. Note that WKT orders coordinates as longitude, then latitude — the reverse of how coordinates are typically read aloud.
+  A map chart option only appears when the dataset contains a column of geo points in WKT format, for example `POINT(-74.006 40.7128)`. Note that WKT orders coordinates as longitude, then latitude (this is the reverse of how coordinates are often read aloud).
 </Info>
 
 ## Marker map chart
 
-A marker map chart uses pins to represent individual data points on a map.
+A marker map chart uses pins to represent individual data points on a map. For example, you might use a marker map to plot store locations, delivery addresses, or sensor sites.
 
 ![MarkerMapChart](/data-analysis/development/runs/data-explorer/charts/img/marker-map-chart.png)
 
@@ -20,9 +20,9 @@ You can configure the following parameters for the chart:
 | Parameter | Description | Data type | Required |
 | --- | --- | --- | --- |
 | Column | Column containing geo points in WKT format. | WKT geo point | Yes |
-| Label Column | Column containing a name for each geo point, for example a `city_name` column. | Text | Yes |
+| Label Column | Column containing a name for each geo point, such as a `city_name` column. | Text | Yes |
 | Tooltip Columns | One or more columns whose values appear in the tooltip when a marker is clicked. | Any | No |
-| Fit Bounds | When enabled, zooms and pans the map to fit the extent of the plotted points instead of showing the default world view. For example, if every point falls within the United States, enabling this shows only the United States. Off by default. | Boolean | No |
+| Fit Bounds | When enabled, zooms and pans the map to fit the extent of the plotted points, instead of showing the default world view. For example, if every point falls within the United States, enabling this shows only the United States. Off by default. | Boolean | No |
 
 <Note>
   Rows with a malformed WKT string, or with latitude/longitude values outside the valid range (latitude: -90 to 90, longitude: -180 to 180), are silently excluded from the map rather than raising an error.
@@ -30,7 +30,7 @@ You can configure the following parameters for the chart:
 
 ## Displacement map chart
 
-A displacement map chart draws lines between origin and destination points to show movement or flow between locations.
+A displacement map chart draws lines between origin and destination points to show movement or flows between locations. For example, you might use a displacement map to plot shipping routes, flight paths, or migration between cities.
 
 ![DisplacementMapChart](/data-analysis/development/runs/data-explorer/charts/img/displacement-map-chart.png)
 
@@ -44,8 +44,8 @@ You can configure the following parameters for the chart:
 | --- | --- | --- | --- |
 | Source Column | Column containing the starting geo point, in WKT format, for each path. | WKT geo point | Yes |
 | Destination Column | Column containing the ending geo point, in WKT format, for each path. | WKT geo point | Yes |
-| Source Label Column | Column containing an identifier for each starting point. | Text | Yes |
-| Destination Label Column | Column containing an identifier for each destination point. | Text | Yes |
+| Source Label Column | Column containing an identifier for each starting point, such as a `city_name` column. | Text | Yes |
+| Destination Label Column | Column containing an identifier for each destination point, such as a `city_name` column. | Text | Yes |
 | Tooltip Columns | One or more columns whose values appear in the tooltip when a point or path is clicked. | Any | No |
 | Show Direction | When enabled, adds an arrowhead to each path indicating direction from source to destination. Off by default. | Boolean | No |
 | Fit Bounds | When enabled, zooms and pans the map to fit the extent of the plotted points instead of showing the default world view. Off by default. | Boolean | No |
@@ -56,7 +56,7 @@ You can configure the following parameters for the chart:
 
 ## Heat map chart
 
-A heat map chart shows density or intensity across a geographic area, weighted by a numeric value at each point.
+A heat map chart shows density or intensity across a geographic area, weighted by a numeric value at each point. For example, you might use a heat map to plot where customer activity or order volume concentrates geographically.
 
 ![HeatMapChart](/data-analysis/development/runs/data-explorer/charts/img/heat-map-chart.png)
 
@@ -70,7 +70,7 @@ You can configure the following parameters for the chart:
 | Radius | Controls the size, in pixels, of the blurred area drawn around each point. A larger radius produces bigger, more overlapping blobs and a smoother heat surface; a smaller radius produces tighter, more distinct hot spots. Defaults to 20. | Numeric | No |
 
 <Note>
-  Radius is a fixed pixel size; it does not scale with zoom level. Zooming in or out changes the apparent size of each point's blob relative to the map, so a radius that looks right at a city-level zoom may cover a much larger area at a closer zoom, or blur many points together at a world view. Radius also determines the clickable/hoverable area used to trigger a point's tooltip, so increasing it makes points easier to interact with, not just larger to look at.
+  Radius is a fixed pixel size; it does not scale with zoom level. Zooming in or out changes the apparent size of each point's blob relative to the map, so a radius that looks right at a city-level zoom may cover a much larger area at a closer zoom, or blur many points together at a world view. Radius also determines the clickable/hoverable area used to trigger a point's tooltip.
 </Note>
 
 <Note>
