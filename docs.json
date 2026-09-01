@@ -7,6 +7,11 @@
     "light": "#a7b5f6",
     "dark": "#30317c"
   },
+  "integrations": {
+    "clarity": {
+      "projectId": "ybniugwxfu"
+    }
+  },
   "favicon": "/favicon.png",
   "navigation": {
         "dropdowns": [
