@@ -347,6 +347,7 @@
                               "data-analysis/gems/source-target/table/write/wipe-replace-table",
                               "data-analysis/gems/source-target/table/write/append",
                               "data-analysis/gems/source-target/table/write/upsert",
+                              "data-analysis/gems/source-target/table/write/append-unique",
                               "data-analysis/gems/source-target/table/write/wipe-replace-partitions",
                               "data-analysis/gems/source-target/table/write/wipe-replace-predicate",
                               "data-analysis/gems/source-target/table/write/scd2",
