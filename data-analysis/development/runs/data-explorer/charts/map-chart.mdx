@@ -1,45 +1,78 @@
 ---
 title: Map chart
-description: Learn what parameters you need to configure a maker and displacement map chart
+description: Learn what parameters you need to configure a marker, displacement, and heat map chart
 ---
 
-A map chart uses a map to show how data is distributed across a geographic region.
-
-Prophecy provides two types of map charts: a [marker map](#marker-map-chart) and a [displacement map](#displacement-map-chart).
+A map chart plots geographic point data on a map. Prophecy supports three map chart types: a [marker map](#marker-map-chart), a [displacement map](#displacement-map-chart), and a [heat map](#heat-map-chart).
 
 <Info>
-  The option to select a map chart only appears when the dataset contains geo points in WKT format.
+  A map chart option only appears when the dataset contains a column of geo points in WKT format, for example `POINT(-74.006 40.7128)`. Note that WKT orders coordinates as longitude, then latitude — the reverse of how coordinates are typically read aloud.
 </Info>
 
 ## Marker map chart
 
-A marker map chart uses pins to visually represent each data point on a map.
+A marker map chart uses pins to represent individual data points on a map.
 
-![MakerMapChart](/data-analysis/development/runs/data-explorer/charts/img/marker-map-chart.png)
+![MarkerMapChart](/data-analysis/development/runs/data-explorer/charts/img/marker-map-chart.png)
 
 You can configure the following parameters for the chart:
 
-| Parameter           | Description                                                                          |
-| ------------------- | ------------------------------------------------------------------------------------ |
-| Column              | Column that contains geo points in WKT format.                                       |
-| Marker Label Column | Column that contains the name of each geo point (for example, a `city_name` column). |
-| Tooltip Columns     | Column that contains information that will show up in the geo point tooltip.         |
-| Fit Bounds          | Whether to fit the map to the bounds in the points.                                  |
+| Parameter | Description | Data type | Required |
+| --- | --- | --- | --- |
+| Column | Column containing geo points in WKT format. | WKT geo point | Yes |
+| Label Column | Column containing a name for each geo point, for example a `city_name` column. | Text | Yes |
+| Tooltip Columns | One or more columns whose values appear in the tooltip when a marker is clicked. | Any | No |
+| Fit Bounds | When enabled, zooms and pans the map to fit the extent of the plotted points instead of showing the default world view. For example, if every point falls within the United States, enabling this shows only the United States. Off by default. | Boolean | No |
+
+<Note>
+  Rows with a malformed WKT string, or with latitude/longitude values outside the valid range (latitude: -90 to 90, longitude: -180 to 180), are silently excluded from the map rather than raising an error.
+</Note>
 
 ## Displacement map chart
 
-A displacement map chart shows the paths between points on a map.
+A displacement map chart draws lines between origin and destination points to show movement or flow between locations.
 
 ![DisplacementMapChart](/data-analysis/development/runs/data-explorer/charts/img/displacement-map-chart.png)
 
+<Info>
+  Displacement map is only available as a map type when the dataset has more than one column of WKT geo points.
+</Info>
+
 You can configure the following parameters for the chart:
 
-| Parameter                | Description                                                                                  |
-| ------------------------ | -------------------------------------------------------------------------------------------- |
-| Source Column            | Column that contains the starting geo points in WKT format for the map.                      |
-| Destination Column       | Column that contains the destination geo points in WKT format for the map.                   |
-| Source Label Column      | Column that contains an identifier for each starting point.                                  |
-| Destination Label Column | Column that contains an identifier for each destination point.                               |
-| Tooltip Columns          | Column that contains information that will show up in the geo point tooltip.                 |
-| Show Direction           | Whether to include an arrow on that map that indicates direction from source to destination. |
-| Fit Bounds               | Whether to fit the map to the bounds in the points.                                          |
+| Parameter | Description | Data type | Required |
+| --- | --- | --- | --- |
+| Source Column | Column containing the starting geo point, in WKT format, for each path. | WKT geo point | Yes |
+| Destination Column | Column containing the ending geo point, in WKT format, for each path. | WKT geo point | Yes |
+| Source Label Column | Column containing an identifier for each starting point. | Text | Yes |
+| Destination Label Column | Column containing an identifier for each destination point. | Text | Yes |
+| Tooltip Columns | One or more columns whose values appear in the tooltip when a point or path is clicked. | Any | No |
+| Show Direction | When enabled, adds an arrowhead to each path indicating direction from source to destination. Off by default. | Boolean | No |
+| Fit Bounds | When enabled, zooms and pans the map to fit the extent of the plotted points instead of showing the default world view. Off by default. | Boolean | No |
+
+<Note>
+  Rows with a malformed WKT string, or with latitude/longitude values outside the valid range, are silently excluded from the map rather than raising an error.
+</Note>
+
+## Heat map chart
+
+A heat map chart shows density or intensity across a geographic area, weighted by a numeric value at each point.
+
+![HeatMapChart](/data-analysis/development/runs/data-explorer/charts/img/heat-map-chart.png)
+
+You can configure the following parameters for the chart:
+
+| Parameter | Description | Data type | Required |
+| --- | --- | --- | --- |
+| Column | Column containing geo points in WKT format. | WKT geo point | Yes |
+| Value Column | Numeric column used to weight the intensity of the heat layer at each point. | Numeric | Yes |
+| Tooltip Columns | One or more columns whose values appear in the tooltip. | Any | No |
+| Radius | Controls the size, in pixels, of the blurred area drawn around each point. A larger radius produces bigger, more overlapping blobs and a smoother heat surface; a smaller radius produces tighter, more distinct hot spots. Defaults to 20. | Numeric | No |
+
+<Note>
+  Radius is a fixed pixel size; it does not scale with zoom level. Zooming in or out changes the apparent size of each point's blob relative to the map, so a radius that looks right at a city-level zoom may cover a much larger area at a closer zoom, or blur many points together at a world view. Radius also determines the clickable/hoverable area used to trigger a point's tooltip, so increasing it makes points easier to interact with, not just larger to look at.
+</Note>
+
+<Note>
+  Rows with a malformed WKT string, or with latitude/longitude values outside the valid range, are silently excluded from the heat layer rather than raising an error.
+</Note>
