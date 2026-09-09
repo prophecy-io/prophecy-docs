@@ -2,6 +2,17 @@
 title: Audit logs
 description: How Prophecy generates, stores, and shares audit logs
 ---
+{/*
+  DRAFT: tracks the audit pipeline migration to Prophecy's unified telemetry system (feature flag
+  telemetry.audits.enabled). As of 2026-09-09 this flag is off by default and the migration is not GA yet —
+  hold this page until it is. Open items to confirm with engineering before publishing:
+  1. Whether the "Sync data to S3" flow below (customer-controlled SIEM export bucket) still applies as a
+     manual step under the new pipeline, or is superseded/automated.
+  2. Whether the audit event reference tables below (GraphQL-query-shaped) still match what the new
+     pipeline actually captures — newer event types (e.g. access-token create/delete) may not be reflected.
+  3. What, if anything, logs audit events today for a default-config customer while the flag is off, given
+     the old Postgres-backed audit path was removed from the codebase.
+*/}
 This page describes how Prophecy generates, stores, and shares audit logs for Prophecy deployments. Use this information to decide if you need to enable and export audit logs.
 
 Setting up audit logs requires collaboration with Prophecy. [Contact Prophecy](https://www.prophecy.io/request-a-demo) to:
@@ -18,6 +29,16 @@ Prophecy stores audit logs in the same cloud platform as your deployment:
 - For AWS deployments, audit logs are stored in Amazon S3.
 - For Azure deployments, audit logs are stored in Azure Blob Storage.
 - For Google Cloud Platform deployments, audit logs are stored in Google Cloud Storage.
+
+Audit logs are written as Parquet files through the same unified telemetry pipeline that captures product
+usage metrics, and are queryable using AWS Athena.
+
+<Note>
+  AWS Athena is the AWS query service used to query these Parquet files — it's unrelated to any internal
+  Prophecy service that happens to share the name.
+</Note>
+
+{/* DRAFT: re-verify this section's event catalog against the new audit library before publishing — see note 2 above */}
 
 ## Audit event reference
 
@@ -150,6 +171,8 @@ The following tables list the audit events that Prophecy logs, organized by enti
 | -------------- | -------------------------- | -------------------------------------------------------------- |
 | `removeEntity` | When any entity is removed | `["uid", "entityKind"]`                                        |
 | `updateEntity` | When any entity is updated | `["uid", "entityKind", "entityFieldName", "entityFieldValue"]` |
+
+{/* DRAFT: confirm this manual sync flow still applies unchanged under the new pipeline before publishing — see note 1 above */}
 
 ## Sync data to S3
 
