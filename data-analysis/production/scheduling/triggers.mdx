@@ -81,10 +81,7 @@ Each trigger configuration defines where and how Prophecy detects file changes. 
 
 #### Add multiple trigger configurations
 
-You can define multiple trigger configurations to monitor more than one location for file updates. Use AND or OR logic to control when the pipeline runs.
-
-- **AND**: All conditions must be met before the pipeline runs.
-- **OR**: Any one condition must be met to trigger the pipeline.
+You can define multiple trigger configurations to monitor more than one location for file updates. When you add more than one configuration, the pipeline uses `AND` logic, whereby all conditions must be met before the pipeline runs.
 
 For example, you may want to add the following trigger configurations:
 
@@ -93,8 +90,7 @@ For example, you may want to add the following trigger configurations:
 | Transactions       | S3         | `/finance/transactions/*.csv` |
 | Exchange Rates     | SFTP       | `/finance/fx_rates/`          |
 
-- With AND logic, the pipeline runs when a change is detected for **both** Transactions and Exchange Rates.
-- With OR logic, the pipeline runs when a change is detected in **either** Transactions or Exchange Rates.
+With this setup, the pipeline runs only when a change is detected for both Transactions and Exchange Rates.
 
 ### Advanced settings
 
