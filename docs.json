@@ -7,6 +7,11 @@
     "light": "#a7b5f6",
     "dark": "#30317c"
   },
+  "integrations": {
+    "clarity": {
+      "projectId": "ybniugwxfu"
+    }
+  },
   "favicon": "/favicon.png",
   "navigation": {
         "dropdowns": [
@@ -347,6 +352,7 @@
                               "data-analysis/gems/source-target/table/write/wipe-replace-table",
                               "data-analysis/gems/source-target/table/write/append",
                               "data-analysis/gems/source-target/table/write/upsert",
+                              "data-analysis/gems/source-target/table/write/append-unique",
                               "data-analysis/gems/source-target/table/write/wipe-replace-partitions",
                               "data-analysis/gems/source-target/table/write/wipe-replace-predicate",
                               "data-analysis/gems/source-target/table/write/scd2",
@@ -1796,6 +1802,56 @@
     }
   },
   "redirects": [
+    {
+      "source": "/data-analysis/ai/agent/harmonization/data-analysis/getting-started/professional-edition",
+      "destination": "/data-analysis/getting-started/professional-edition",
+      "permanent": true
+    },
+    {
+      "source": "/data-analysis/ai/data-analysis/development/runs/data-explorer/data-profile",
+      "destination": "/data-analysis/development/runs/data-explorer/data-profile",
+      "permanent": true
+    },
+    {
+      "source": "/data-analysis/ai/data-analysis/gems/visual-expression-builder/visual-expression-builder",
+      "destination": "/data-analysis/gems/visual-expression-builder/visual-expression-builder",
+      "permanent": true
+    },
+    {
+      "source": "/data-analysis/ai/data-analysis/getting-started/professional-edition",
+      "destination": "/data-analysis/getting-started/professional-edition",
+      "permanent": true
+    },
+    {
+      "source": "/data-analysis/development/studio/data-analysis/development/pipelines/data-analysis-pipelines",
+      "destination": "/data-analysis/development/pipelines/data-analysis-pipelines",
+      "permanent": true
+    },
+    {
+      "source": "/data-analysis/gems/data-analysis/ai/agent/chat/mentions",
+      "destination": "/data-analysis/ai/agent/chat/mentions",
+      "permanent": true
+    },
+    {
+      "source": "/data-analysis/gems/data-analysis/development/runs/data-explorer/data-explorer",
+      "destination": "/data-analysis/development/runs/data-explorer/data-explorer",
+      "permanent": true
+    },
+    {
+      "source": "/data-analysis/gems/data-analysis/development/studio/wireless-connections",
+      "destination": "/data-analysis/development/studio/wireless-connections",
+      "permanent": true
+    },
+    {
+      "source": "/data-analysis/getting-started/data-analysis/getting-started/professional-edition",
+      "destination": "/data-analysis/getting-started/professional-edition",
+      "permanent": true
+    },
+    {
+      "source": "/data-analysis/getting-started/structured-finance/data-analysis/development/projects/create-project",
+      "destination": "/data-analysis/development/projects/create-project",
+      "permanent": true
+    },
     {
       "source": "/data-engineering/releases/:path*",
       "destination": "/releases/:path*",
