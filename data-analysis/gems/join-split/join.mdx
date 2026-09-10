@@ -67,13 +67,15 @@ Semi and anti joins only offer columns from the first input. A semi join keeps r
 
 Choose:
 
-- **Inner Join** to keep only matching rows.
-- **Left Join** to keep all rows from the first dataset.
-- **Right Join** to keep all rows from the second dataset.
-- **Full Outer Join** to keep all rows from both datasets.
-- **Cross Join** to combine every row from both datasets.
-- **Semi Join** to keep rows from the first dataset that have a match in the second, without adding any of its columns.
-- **Anti Join** to keep rows from the first dataset that have *no* match in the second.
+| Join type | When to use it |
+| --- | --- |
+| **Inner Join** | Keep only matching rows. |
+| **Left Join** | Keep all rows from the first dataset. |
+| **Right Join** | Keep all rows from the second dataset. |
+| **Full Outer Join** | Keep all rows from both datasets. |
+| **Cross Join** | Combine every row from both datasets. |
+| **Semi Join** | Keep rows from the first dataset that have a match in the second, without adding any of its columns. |
+| **Anti Join** | Keep rows from the first dataset that have *no* match in the second. |
 
 <Info>
   Simple mode's join-type dropdown offers Inner, Left Outer, and Right Outer Join. Full Outer, Cross, Natural, and
@@ -311,22 +313,9 @@ SELECT e.employee_id, e.employee_name, d.department_name
 FROM employees e
 RIGHT OUTER JOIN departments d
 ON e.department_id = d.department_id;
-````
-
-<div className="table-example">
-
-| EMPLOYEE_ID | EMPLOYEE_NAME | DEPARTMENT_NAME |
-| :---------- | :------------ | :-------------- |
-| 1           | Alice         | HR              |
-| 2           | Bob           | Engineering     |
-| 5           | Eve           | Engineering     |
-| 3           | Charlie       | Sales           |
-| NULL        | NULL          | Marketing       |
-
-</div>
 ```
 
-<div class="table-example">
+<div className="table-example">
 
 | EMPLOYEE_ID | EMPLOYEE_NAME | DEPARTMENT_NAME |
 | :---------- | :------------ | :-------------- |
