@@ -36,7 +36,7 @@ See [Gems for Data Analysis](/data-analysis/gems/gems#add-a-gem-from-a-connectio
 
 ## Visual containers: new actions and background color
 
-[Visual containers](/data-analysis/development/studio/containers) get a refreshed action menu. Grouping gems now happens via **Actions > Group** at the bottom of the canvas, and each container's **⋯** menu adds **Add to AI**, **Explain**, and **Edit Background Color**, alongside the existing Ungroup, Attach Annotation, and Collapse/Expand options.
+[Visual containers](/data-analysis/development/studio/containers) have a refreshed action menu. Grouping gems now happens via **Actions > Group** at the bottom of the canvas, and each container's **...** menu adds **Add to AI**, **Explain**, and **Edit Background Color**, alongside the existing Ungroup, Attach Annotation, and Collapse/Expand options.
 
 ## Canvas annotations
 
@@ -54,9 +54,6 @@ Toggle draft status from the **...** menu in the pipeline canvas header (**Keep 
 
 See [Mark pipeline as draft](/data-analysis/development/pipelines/data-analysis-pipelines#mark-pipeline-as-draft) and [Draft pipelines](/data-analysis/production/publication/publication-concepts#draft-pipelines).
 
-<Note>
-Draft pipelines are available only for projects that use Simple Version Control.
-</Note>
 
 ## Lock Pipeline gem triggers and schedules to a specific version
 
@@ -66,21 +63,23 @@ Similarly, [schedules](/data-analysis/production/scheduling/schedule-setup#lock-
 
 ## Improved Excel file uploads
 
-Uploading Excel files (XLS, XLSX) via [Upload files in Agent chat](/data-analysis/ai/agent/chat/upload-files#excel-specific-properties) or the [Upload Files gem](/data-analysis/gems/source-target/table/upload-files#excel-specific-properties) now exposes Excel-specific read options:
-
-| Field | Purpose |
-| ----- | ------- |
-| **Read mode** | Read a single sheet, or a union of multiple sheets combined into one table. |
-| **Sheet Name** | Which sheet(s) to read from. |
-| **Enter Cell Range** | Restrict extraction to a specific range, for example `A1:`. |
-| **Header** | Treat the first row of the range as column headers. |
-| **Allow Undefined Rows / Allow Incomplete Rows** | Control whether rows outside the detected schema, or missing values in some columns, are included. |
-| **Enable Schema Merging** | Merge schemas across sheets or tables where they differ. |
-| **Ignore Cell Formatting** | Read cell values without applying Excel's display formatting. |
+Uploading Excel files (XLS, XLSX) via [Upload files in Agent chat](/data-analysis/ai/agent/chat/upload-files#excel-specific-properties) or the [Upload Files gem](/data-analysis/gems/source-target/table/upload-files#excel-specific-properties) now exposes Excel-specific read options.
 
 You can also mark multiple regions of a workbook as separate tables. In the Upload Files gem, each marked table becomes its own output port, with independent schema editing, drift-handling, and the ability to unmark or delete it.
 
 The preview grid for Excel uploads now loads additional rows and columns as you scroll instead of fetching the entire sheet at once, and handles merged cells and blank rows in the source sheet automatically.
+
+## Join gem: Simple and Advanced modes
+
+The [Join gem](/data-analysis/gems/join-split/join) now offers a guided **Simple mode** alongside the existing **Advanced mode**. Simple mode walks you through choosing a join type, defining match conditions, and selecting output columns for two-input joins; a **Where rows go** panel shows which output port each row lands on for the selected join type.
+
+Simple mode also adds **Semi Join** and **Anti Join** types (Full Outer, Cross, Natural, and Semi/Anti joins remain Advanced-mode-only from the dropdown), and the gem now always exposes reject ports alongside the matched output:
+
+If a join's configuration is too complex for Simple mode, the gem prompts you to either switch to Advanced mode or reset to a default inner join.
+
+## Pivot gem: warehouse-specific configuration and unique value fetching
+
+The [Pivot gem](/data-analysis/gems/transform/pivot) configuration is now organized into Snowflake, Databricks, and BigQuery tabs, each with **Grouping**, **Pivot**, and aggregation sections. Instead of manually typing pivot column values, click **Fetch unique values** to retrieve and select the distinct values from your pivot column directly. Column aliasing for aggregations is available on Databricks and BigQuery, but not on Snowflake.
 
 </Update>
 
