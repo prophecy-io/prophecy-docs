@@ -3,10 +3,15 @@ title: Delete and Insert
 description: Delete matching rows and insert new rows
 ---
 
-For rows in the target table that have keys that match rows in the incoming dataset, deletes matching rows from the existing table and replaces them. For incoming rows with new keys, inserts these normally. This ensures that updated records are fully replaced instead of partially updated.
+When you choose the **Delete and Insert** option, Prophecy proceeds as follows:
+
+- For rows in the target table that have keys that match rows in the incoming dataset, deletes matching rows from the existing table and replaces them.
+- For incoming rows with new keys, inserts these normally.
+
+This ensures that updated records are fully replaced instead of partially updated.
 
 <Note>
-  This strategy helps when your unique key is not truly unique (multiple rows per key need to be
+  This strategy helps when your unique key is not truly unique (as when multiple rows per key need to be
   fully refreshed).
 </Note>
 
