@@ -1,0 +1,61 @@
+---
+title: Append Unique Rows
+description: Insert only new records, leaving matching records unchanged
+---
+
+When you choose the **Append Unique Rows** option, if a row's unique key already exists in the target table, the incoming row is ignored and the existing row is left unchanged. Only rows with a unique key that doesn't yet exist in the target are inserted.
+
+<Note>
+  Unlike [Upsert Row](/data-analysis/gems/source-target/table/write/upsert), this mode never
+  modifies existing records; it only inserts new ones.
+</Note>
+
+## Parameters
+
+| Parameter                                          | Description                                                                                                                        |
+| --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Unique Key                                          | Column(s) used to find records that already exist in the target table. Matching records are left unchanged; only the remaining records are inserted.                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| Use Predicate                                       | Limits which target rows are checked for duplicates. Keys outside the predicate range may be re-inserted.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| Use a condition to filter data or incremental runs  | Enables applying conditions for filtering the incoming data into the table.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+
+<Note>
+  Merge Columns, Exclude Columns, and On Schema Change don't apply to this write mode. If you
+  switch to Append Unique Rows from another merge approach, any values set for those options are
+  cleared.
+</Note>
+
+## Example: Append new orders only
+
+An order table uses `ORDER_ID` as the unique key. The incoming dataset includes a status update for an existing order and one new order.
+
+<div class="table-example">
+
+**Existing target table**
+
+| ORDER_ID | STATUS    | AMOUNT |
+| -------- | --------- | ------ |
+| 101      | Shipped   | 250    |
+| 102      | Pending   | 100    |
+
+### Incoming dataset
+
+| ORDER_ID | STATUS    | AMOUNT |
+| -------- | --------- | ------ |
+| 101      | Cancelled | 250    |
+| 103      | Pending   | 75     |
+
+### Resulting target table
+
+| ORDER_ID | STATUS    | AMOUNT |
+| -------- | --------- | ------ |
+| 101      | Shipped   | 250    |
+| 102      | Pending   | 100    |
+| 103      | Pending   | 75     |
+
+Because `ORDER_ID` `101` already exists in the target table, its incoming row is ignored, so the existing `Shipped` status is left unchanged.
+
+`ORDER_ID` `103` doesn't exist in the target, so it's inserted as a new row.
+
+`ORDER_ID` `102` has no matching row in the incoming dataset, so it's left as-is.
+
+</div>
