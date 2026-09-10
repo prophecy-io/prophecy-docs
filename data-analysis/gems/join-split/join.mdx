@@ -4,7 +4,6 @@ description: Join two or more datasets
 ---
 
 import Execution from '/snippets/gem-execution-engine.mdx';
-import GemExample from '/snippets/interactive-gem.mdx';
 
 <Execution execution_engine="the SQL warehouse" />
 
@@ -20,17 +19,92 @@ Common use cases include:
 
 The Join gem matches rows using one or more join conditions, such as matching customer IDs or order numbers.
 
-<GemExample gemName="Join" />
+By default, the Join gem provides a guided interface for choosing a join type, defining match conditions, and selecting output columns. If you need more than two input datasets or a condition that Simple mode can't represent, you can switch to Advanced mode to edit the underlying SQL configuration directly.
+
+## Modes
+
+The Join gem supports two editing modes:
+
+| Mode                      | Description                                                                                                    |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| **Simple mode** (default) | Build a join using guided controls for the join type, match conditions, and output columns. Supports two input datasets. |
+| **Advanced mode**         | Edit the full join configuration directly. Required for three or more input datasets, or conditions that Simple mode can't represent. |
+
+## Simple mode
+
+Simple mode organizes the Join gem into three parts.
+
+| Section             | Description                                                                                                                 |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| **Join type**        | A dropdown at the top of the dialog. See [How to choose a join type](#how-to-choose-a-join-type).                       |
+| **Match rows on**    | One row per condition, each comparing a column from the first input to a column from the second input.                  |
+| **Output columns**   | Choose which columns from either input appear in the result, and optionally rename them.                                |
+
+The dialog also shows a **Where rows go** panel that explains which output port each row of your data lands on for the selected join type. See [Output ports in Simple mode](#output-ports-in-simple-mode).
+
+### Match rows on
+
+Each row compares one column from the first input to one column from the second input using an operator:
+
+| Operator | Meaning                  |
+| -------- | ------------------------ |
+| `=`      | equals                   |
+| `!=`     | not equals               |
+| `<`      | less than                |
+| `<=`     | less than or equal       |
+| `>`      | greater than             |
+| `>=`     | greater than or equal    |
+
+Multiple rows are combined with `AND`. If your join needs `OR` logic, a function call, or any comparison Simple mode can't show as a row, the gem falls back to Advanced mode — see [Complex joins](#complex-joins).
+
+### Output columns
+
+Pick any column from either input to include in the result. If you don't rename a column, Prophecy uses the column name as the output name automatically.
+
+Semi and anti joins only offer columns from the first input. A semi join keeps rows from the first input that have a match in the second, and an anti join keeps rows from the first input that don't. Neither one adds columns from the second input to the result.
 
 ## How to choose a join type
 
-Choose:
+| Join type | When to use it |
+| --- | --- |
+| **Inner Join** | Keep only matching rows. |
+| **Left Join** | Keep all rows from the first dataset. |
+| **Right Join** | Keep all rows from the second dataset. |
+| **Full Outer Join** | Keep all rows from both datasets. |
+| **Cross Join** | Combine every row from both datasets. |
+| **Semi Join** | Keep rows from the first dataset that have a match in the second, without adding any of its columns. |
+| **Anti Join** | Keep rows from the first dataset that have *no* match in the second. |
 
-- **Inner Join** to keep only matching rows.
-- **Left Join** to keep all rows from the first dataset.
-- **Right Join** to keep all rows from the second dataset.
-- **Full Outer Join** to keep all rows from both datasets.
-- **Cross Join** to combine every row from both datasets.
+<Info>
+  Simple mode's join-type dropdown offers Inner, Left Outer, and Right Outer Join. Full Outer, Cross, Natural, and
+  Semi/Anti joins are only available in Advanced mode.
+</Info>
+
+## Complex joins
+
+Simple mode can represent a join when all of the following are true:
+
+- Exactly two input datasets are connected.
+- There's exactly one join condition connecting them.
+- The join type is Inner, Left Outer, or Right Outer (or another type already configured in Advanced mode that Simple mode recognizes).
+- The condition is one or more column comparisons combined with `AND` (no `OR`, no functions).
+- Every output column is a plain column pick, not a calculated expression like `concat(a, b)`.
+
+If any of these aren't true, Simple mode shows a message that the configuration is too complex to edit there. From this message you have two options:
+
+- **Switch to Advanced Mode** lets you edit the existing configuration directly.
+- **Reset and use Default Mode** clears the match conditions and output columns so you can start over with a simple inner join.
+
+<Warning>
+
+**Reset and use Default Mode** permanently removes the existing match conditions and output columns.
+
+</Warning>
+
+<Info>
+  If the gem has more than two input datasets, only **Switch to Advanced Mode** is available — reducing the join to
+  two inputs isn't something Reset can do for you.
+</Info>
 
 ## Common join examples
 
@@ -48,20 +122,48 @@ Choose:
 | **in0** | The first input table in the join.                      |
 | **in1** | The second input table in the join.                     |
 | **inN** | Optional: Additional input table for the join.          |
+
+<Info>
+  Adding a third input, or opening a gem that already has one, moves the Join gem to Advanced mode — Simple mode only
+  represents two-input joins.
+</Info>
+
+### Output ports in Simple mode
+
+In Simple mode the Join gem always has three output ports, in this order:
+
+| Port     | Contents                                                          |
+| -------- | ------------------------------------------------------------------ |
+| **out0** | Rows from the first input that didn't make it into the joined result. |
+| **out1** | The joined (matched) rows.                                        |
+| **out2** | Rows from the second input that didn't make it into the joined result. |
+
+Which reject ports actually carry rows depends on the join type:
+
+| Join type  | out0 (left reject) | out1 (matched) | out2 (right reject) |
+| ---------- | :-----------------: | :------------: | :-------------------: |
+| Inner      | rows                | rows           | rows                 |
+| Left Outer | empty               | rows           | rows                 |
+| Right Outer| rows                | rows           | empty                 |
+
+A Left Outer join, for example, keeps every row from the first input in the matched output, so `out0` never has anything to emit — but a right-side row with no match is dropped from the joined result, and shows up on `out2` instead of disappearing silently. Connect a reject port downstream if you want to inspect or route unmatched rows rather than losing them.
+
+### Output port in Advanced mode
+
+| Port    | Description                                             |
+| ------- | -------------------------------------------------------- |
 | **out** | A single table that results from the join operation(s). |
 
-To add additional input ports, click `+` next to **Ports**.
+## Advanced mode configuration
 
-## Parameters
-
-To configure the Join gem, you need to define join conditions and select the columns that will appear in the output table.
+Advanced mode exposes the underlying join configuration directly, instead of the guided Simple mode cards.
 
 ### Join conditions
 
 You can add one or more join conditions to the gem depending on the number of input tables added. Rows are matched using shared values, such as customer IDs, order IDs, or email addresses.
 
 | Parameters     | Description                                                                                                           |
-| -------------- | --------------------------------------------------------------------------------------------------------------------- |
+| -------------- | -----------------------------------------------------------------------------------------------------------------------|
 | Join type      | The different join types you can choose from. These may vary by SQL provider. Learn about different join types below. |
 | Join condition | The condition that matches rows between tables.                                                                       |
 
@@ -106,6 +208,8 @@ For example:
 - Inner Join keeps only matching rows
 - Left Join keeps all rows from the left table
 - Full Outer Join keeps all rows from both tables
+
+In Simple mode, check the reject ports (`out0` / `out2`) — rows that don't appear in the matched output often show up there instead of being silently dropped. See [Output ports in Simple mode](#output-ports-in-simple-mode).
 
 ### Null values in joined columns
 
@@ -207,22 +311,9 @@ SELECT e.employee_id, e.employee_name, d.department_name
 FROM employees e
 RIGHT OUTER JOIN departments d
 ON e.department_id = d.department_id;
-````
-
-<div className="table-example">
-
-| EMPLOYEE_ID | EMPLOYEE_NAME | DEPARTMENT_NAME |
-| :---------- | :------------ | :-------------- |
-| 1           | Alice         | HR              |
-| 2           | Bob           | Engineering     |
-| 5           | Eve           | Engineering     |
-| 3           | Charlie       | Sales           |
-| NULL        | NULL          | Marketing       |
-
-</div>
 ```
 
-<div class="table-example">
+<div className="table-example">
 
 | EMPLOYEE_ID | EMPLOYEE_NAME | DEPARTMENT_NAME |
 | :---------- | :------------ | :-------------- |
@@ -296,6 +387,50 @@ CROSS JOIN departments d;
 | 5           | Eve           | Engineering     |
 | 5           | Eve           | Sales           |
 | 5           | Eve           | Marketing       |
+
+</div>
+
+### LEFT SEMI JOIN
+
+A semi join returns rows from the left table that have at least one matching row in the right table — but only the left table's columns come through. Unlike an Inner Join, a semi join never duplicates a left row when it has more than one match on the right.
+
+For example, if the join condition provided was `employees.department_id = departments.department_id`, the sample query would be:
+```
+
+SELECT e.employee_id, e.employee_name, e.department_id
+ FROM employees e
+ LEFT SEMI JOIN departments d
+ ON e.department_id = d.department_id;
+
+```
+<div class="table-example">
+
+| EMPLOYEE_ID | EMPLOYEE_NAME | DEPARTMENT_ID |
+| :---------- | :------------ | :------------- |
+| 1           | Alice         | 10             |
+| 2           | Bob           | 20             |
+| 3           | Charlie       | 30             |
+| 5           | Eve           | 20             |
+
+</div>
+
+### LEFT ANTI JOIN
+
+An anti join returns rows from the left table that have *no* matching row in the right table — the inverse of a semi join. Only the left table's columns come through.
+
+For example, if the join condition provided was `employees.department_id = departments.department_id`, the sample query would be:
+
+```
+SELECT e.employee_id, e.employee_name, e.department_id
+ FROM employees e
+ LEFT ANTI JOIN departments d
+ ON e.department_id = d.department_id;
+```
+<div class="table-example">
+
+| EMPLOYEE_ID | EMPLOYEE_NAME | DEPARTMENT_ID |
+| :---------- | :------------ | :------------- |
+| 4           | David         | NULL           |
 
 </div>
 
