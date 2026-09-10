@@ -23,14 +23,14 @@ Prophecy stores audit logs in the same cloud platform as your deployment:
 
 When audit logs are enabled for your Prophecy deployment, they capture the following information:
 
-- User interactions with the Prophecy UI
-- GraphQL API calls
+- User interactions with the Prophecy UI.
+- GraphQL API calls made to the control plane.
+- Actions performed directly on the execution plane, such as fabric, connection, deployment, pipeline run, and schedule operations.
 
 The following tables list the audit events that Prophecy logs, organized by entity type.
 
 <Note>
-  Prophecy uses GraphQL for API operations. Request and response parameters may vary depending on
-  where you call the query.
+  Prophecy uses GraphQL for control plane API operations. Request and response parameters may vary depending on where you call the query.
 </Note>
 
 ### Fabric
@@ -151,6 +151,61 @@ The following tables list the audit events that Prophecy logs, organized by enti
 | `removeEntity` | When any entity is removed | `["uid", "entityKind"]`                                        |
 | `updateEntity` | When any entity is updated | `["uid", "entityKind", "entityFieldName", "entityFieldValue"]` |
 
+## Execution plane events
+
+Prophecy audit logs also capture actions performed directly on the execution plane (the orchestrator service running in your environment), not just control plane GraphQL calls. These events are recorded locally on the execution plane first, then forwarded to the control plane in batches (every 30 minutes by default). As a result, there's a short delay between an execution action occurring and its event appearing in the central audit log.
+
+<Note>
+  Execution plane events are identified by a fixed event type and category rather than a GraphQL query name.
+</Note>
+
+### Authentication and identity
+
+| Event type         | Category   | Description                                                                               |
+| ------------------- | ---------- | -------------------------------------------------------------------------------------------- |
+| `login_federated`  | `auth`     | A user signed in through a federated identity provider (OAuth, OIDC, or SAML)                |
+| `login_ldap`       | `auth`     | A user signed in through LDAP                                                                |
+| `login_builtin`    | `auth`     | A user signed in with a Prophecy-native username and password                                |
+| `login_token`      | `auth`     | A user signed in with a bearer token (reserved for future use)                               |
+| `logout`           | `auth`     | A user ended their own session                                                               |
+| `user_impersonate` | `identity` | A privileged user (for example, a Support role) requested a token to act as another user     |
+
+### Fabric
+
+| Event type             | Category    | Description                          |
+| ----------------------- | ----------- | -------------------------------------- |
+| `fabric_create`        | `data_flow` | A fabric was created                   |
+| `fabric_config_update` | `data_flow` | A fabric's configuration was updated   |
+| `fabric_delete`        | `data_flow` | A fabric was deleted                   |
+
+### Connections and secrets
+
+| Event type            | Category    | Description                    |
+| ---------------------- | ----------- | --------------------------------- |
+| `connection_create`   | `data_flow` | A connection was created          |
+| `connection_update`   | `data_flow` | A connection was updated          |
+| `connection_delete`   | `data_flow` | A connection was deleted          |
+| `fabric_secret_create`| `secrets`   | A secret was added to a fabric    |
+| `fabric_secret_update`| `secrets`   | A fabric secret was updated       |
+| `fabric_secret_delete`| `secrets`   | A fabric secret was deleted       |
+
+### Deployment and pipeline runs
+
+| Event type                | Category  | Description                                                        |
+| --------------------------- | --------- | ---------------------------------------------------------------------- |
+| `project_deploy`          | `compute` | A project was deployed to a fabric                                     |
+| `pipeline_run_interactive`| `compute` | A pipeline was run interactively, for example from the Prophecy IDE    |
+| `pipeline_run_scheduled`  | `compute` | A pipeline run was triggered by a schedule                             |
+| `pipeline_run_sync_api`   | `compute` | A pipeline was run synchronously through the REST API                  |
+
+### Schedules
+
+| Event type        | Category  | Description              |
+| ------------------- | --------- | --------------------------- |
+| `schedule_create`  | `compute` | A schedule was created      |
+| `schedule_update`  | `compute` | A schedule was updated      |
+| `schedule_delete`  | `compute` | A schedule was deleted      |
+
 ## Sync data to S3
 
 If your Prophecy deployment is hosted on AWS, you can sync your Prophecy audit logs to your own Amazon S3 bucket. Follow these steps to configure your S3 bucket and grant Prophecy the required access.
@@ -217,7 +272,7 @@ To use this example JSON:
 - Replace all instances of `prophecy-customer-backend-events-xyz` with your bucket ARN.
 - The Prophecy IAM user `s3access` requires the `DataSyncCreateS3Location` role to create S3 locations in Prophecy's account.
 - After applying the policy, contact Prophecy and provide:
-  - Your bucket ARN
-  - The AWS region
+  - Your bucket ARN.
+  - The AWS region.
 
 Prophecy will complete the configuration and enable syncing for your environment.

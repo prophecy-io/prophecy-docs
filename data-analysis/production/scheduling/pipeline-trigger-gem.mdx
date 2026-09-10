@@ -69,6 +69,7 @@ The Pipeline gem accepts the following parameters.
 | Parameter                           | Description                                                                                                                                                                                                                                                                                 |
 | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Pipeline to run                     | Select a pipeline to trigger in the list of pipelines from the same project.                                                                                                                                                                                                                |
+| Version                             | Choose which published version of the target pipeline to trigger. See [Version](#version) below.                                                                                                                                                                                          |
 | Trigger only if                     | Choose a [condition](#trigger-conditions) to control when the trigger fires based on the `status` column of the input dataset (if present). If the condition is not met, the Pipeline gem runs, but no pipelines are triggered. The output will show that all pipeline runs were `skipped`. |
 | Maximum number of pipeline triggers | Set a maximum number of times the child pipeline runs per Pipeline gem execution. Maximum is `10,000`.                                                                                                                                                                                      |
 | Set pipeline parameters             | Set values for the [pipeline parameters](/data-analysis/development/parameters/parameters) defined in the child pipeline. You can specify constants, expressions, or column values for each parameter. If you don't specify a value, the child pipeline uses its default parameter value.         |
@@ -77,6 +78,24 @@ The Pipeline gem accepts the following parameters.
   Use multiple input rows to launch runs of the same pipeline with different sets of parameter
   values.
 </Tip>
+
+### Version
+
+By default, the Pipeline gem triggers whatever version of the target pipeline is currently in the working tree. You can choose to lock it to a specific published version using the **Last Released** option.
+
+| Option | Description |
+|---|---|
+| **Current** (default) | Triggers the target pipeline's current working-tree state. Always up to date, including unpublished changes. |
+| **Last Released** | Resolves to the target pipeline's newest published version at the moment each run executes. |
+| A specific version (e.g. `3`) | Locks the trigger to that exact published release. The Pipeline gem keeps triggering that version even after the target pipeline is edited, drafted, or republished again — until you change this setting. |
+
+<Note>
+Changing **Pipeline to run** resets **Version** back to **Current**.
+</Note>
+
+<Note>
+Only published versions that include the target pipeline are selectable. Versions that don't include it appear disabled in the list.
+</Note>
 
 ### Trigger conditions
 
