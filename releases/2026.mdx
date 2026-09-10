@@ -3,6 +3,97 @@ title: '2026 releases'
 description: 'Features and enhancements from new releases'
 ---
 
+<Update label="Prophecy 4.2.11" description="September 4, 2026" tags={["Data Analysis"]}>
+
+## Large SQL projects load and compile faster
+
+Large SQL projects now open and compile faster. Prophecy reuses cached results for unchanged pipelines instead of recompiling them each time. In testing with a 13,000-node project, load time decreased from 46 seconds to 25 seconds.
+
+Additional performance improvements reduce the amount of gem specification data sent to the browser, speed up SQL parsing during validation and compilation, and use the faster dbt Fusion engine to initialize dbt-backed projects. Undo and redo behavior is also now consistent across the product.
+
+## Informatica-to-BigQuery conversion fidelity
+
+Informatica-to-BigQuery conversions now more closely preserve Informatica behavior across joins, lookups, aggregations, routers, sequence generators, date and string functions, file and target handling, connections, and parameters.
+
+The improvements focus on runtime fidelity, including NULL handling, safer date parsing and casts, deterministic sequence generation, and preservation of file formats and physical table names.
+
+Re-import existing Informatica estates to pick up these improvements.
+
+## Large projects load and compile faster
+
+Large SQL projects now open and compile faster. Prophecy caches unchanged pipelines instead of recompiling them each time. In testing with a 13,000-node project, load time decreased from 46 seconds to 25 seconds.
+
+Additional improvements speed up SQL parsing and dbt project initialization while reducing unnecessary data sent to the browser. Undo and redo behavior is also now consistent across the product.
+
+## Add a gem from a connection
+
+You can now insert a gem directly into an existing connection instead of dragging one onto the canvas separately. Hover over a connector, or over a gem's input or output port, to reveal a `+` button that opens the gem palette at that point in the flow.
+
+- Hovering over an input port inserts the new gem before it, splicing into any existing connection automatically.
+- Hovering over an output port with no downstream connections attaches the new gem directly. If the port already feeds one or more gems, you can choose to insert the new gem into the flow (`A → New Gem → B`) or add it as a separate path that reads the same output.
+
+See [Gems for Data Analysis](/data-analysis/gems/gems#add-a-gem-from-a-connection) for details.
+
+## Visual containers: new actions and background color
+
+[Visual containers](/data-analysis/development/studio/containers) get a refreshed action menu. Grouping gems now happens via **Actions > Group** at the bottom of the canvas, and each container's **⋯** menu adds **Add to AI**, **Explain**, and **Edit Background Color**, alongside the existing Ungroup, Attach Annotation, and Collapse/Expand options.
+
+## Canvas annotations
+
+Added an annotate button at the bottom left of the canvas for adding free-form text annotations directly on the pipeline. See [Canvas annotations](/data-analysis/development/studio/canvas-annotations).
+
+## Alt-key row counts and wireless connection reveal
+
+Holding **Alt** (**Option** on Mac) on the canvas now switches interim row-count labels to their exact value instead of a rounded, compact format (for example, `100K rows` becomes `100,000 rows`). Holding **Alt** also reveals all [wireless connections](/data-analysis/development/studio/wireless-connections) on the canvas at once, rather than only the one currently selected. Releasing **Alt** restores the compact display and hides unselected wireless connections again.
+
+## Mark pipelines as draft
+
+You can now mark an individual pipeline as `draft` to keep working on it while excluding its in-progress changes from the project's next published version. If the pipeline has been published before, it ships unchanged in the new version; if it hasn't, it's left out entirely. Existing schedules on a draft pipeline keep running, and the pipeline can't be renamed or deleted while marked as draft.
+
+Toggle draft status from the **...** menu in the pipeline canvas header (**Keep as draft** / **Remove draft**). Removing draft status doesn't publish the pipeline immediately — it's picked up the next time the project is published. The changes list during publication shows held-back pipelines and apps with a **Draft - Held** label and a summary count.
+
+See [Mark pipeline as draft](/data-analysis/development/pipelines/data-analysis-pipelines#mark-pipeline-as-draft) and [Draft pipelines](/data-analysis/production/publication/publication-concepts#draft-pipelines).
+
+<Note>
+Draft pipelines are available only for projects that use Simple Version Control.
+</Note>
+
+## Lock Pipeline gem triggers and schedules to a specific version
+
+The [Pipeline gem](/data-analysis/production/scheduling/pipeline-trigger-gem#version) now has a **Version** parameter for choosing which published version of the target pipeline to trigger: **Current** (default, always up to date), **Last Released** (resolves to the newest published version at run time), or a specific version number, which keeps triggering that exact release even as the target pipeline is edited, drafted, or republished.
+
+Similarly, [schedules](/data-analysis/production/scheduling/schedule-setup#lock-a-schedule-to-a-version) can now be locked to a specific published version instead of always following the latest publish. Locks apply per fabric, so the same schedule can be locked on one fabric's deployment while following the latest published version on another.
+
+## Improved Excel file uploads
+
+Uploading Excel files (XLS, XLSX) via [Upload files in Agent chat](/data-analysis/ai/agent/chat/upload-files#excel-specific-properties) or the [Upload Files gem](/data-analysis/gems/source-target/table/upload-files#excel-specific-properties) now exposes Excel-specific read options:
+
+| Field | Purpose |
+| ----- | ------- |
+| **Read mode** | Read a single sheet, or a union of multiple sheets combined into one table. |
+| **Sheet Name** | Which sheet(s) to read from. |
+| **Enter Cell Range** | Restrict extraction to a specific range, for example `A1:`. |
+| **Header** | Treat the first row of the range as column headers. |
+| **Allow Undefined Rows / Allow Incomplete Rows** | Control whether rows outside the detected schema, or missing values in some columns, are included. |
+| **Enable Schema Merging** | Merge schemas across sheets or tables where they differ. |
+| **Ignore Cell Formatting** | Read cell values without applying Excel's display formatting. |
+
+You can also mark multiple regions of a workbook as separate tables. In the Upload Files gem, each marked table becomes its own output port, with independent schema editing, drift-handling, and the ability to unmark or delete it.
+
+The preview grid for Excel uploads now loads additional rows and columns as you scroll instead of fetching the entire sheet at once, and handles merged cells and blank rows in the source sheet automatically.
+
+</Update>
+
+<Update label="Prophecy 4.2.11" description="TBD" tags={["Administration"]}>
+
+## Execution plane events in audit logs
+
+[Audit logs](/administration/management/audit-logs#execution-plane-events) now capture actions performed directly on the execution plane (the orchestrator service running in your environment) — such as fabric, connection, secret, deployment, pipeline run, and schedule operations — in addition to control plane GraphQL calls and UI interactions. These events are recorded locally on the execution plane first, then forwarded to the control plane in batches (every 30 minutes by default), so there's a short delay before they appear in the central audit log.
+
+Execution plane events are identified by a fixed event type and category (for example, `pipeline_run_scheduled` / `compute`, `connection_create` / `data_flow`, `login_federated` / `auth`) rather than a GraphQL query name.
+
+</Update>
+
 <Update label="Prophecy 4.2.10" description="July 31, 2026" tags={["Data Analysis"]}>
 
 ## Table gem: Schema mapping for existing target tables
