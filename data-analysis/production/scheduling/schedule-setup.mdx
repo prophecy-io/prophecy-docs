@@ -17,6 +17,7 @@ To configure a schedule for a pipeline:
 1. Expand the **...** menu in the pipeline canvas header.
 1. Click **Schedule**.
 1. To create a new schedule, click **New Schedule**. To edit an existing schedule, select it from the schedules list.
+1. Under **Which version runs**, choose whether the schedule always uses the latest published version or locks to one specific version. See [Lock a schedule to a version](#lock-a-schedule-to-a-version) below.
 1. Expand the **Choose Pipeline Parameter Set** dropdown and select the pipeline [parameter set](/data-analysis/development/parameters/parameter-sets) you want to use for this schedule.
 1. Configure the [trigger](/data-analysis/production/scheduling/triggers) for the schedule.
 1. Optionally, set up an [email alert](/data-analysis/production/scheduling/alerts) in your schedule.
@@ -24,6 +25,23 @@ To configure a schedule for a pipeline:
 1. Click **Schedule** to save the schedule.
 
 You can create multiple schedules for the same pipeline, each with different parameter sets, triggers, and timing configurations. This allows you to run the same pipeline with different settings at different times or frequencies.
+
+## Lock a schedule to a version
+
+By default, a schedule always runs whichever version of the project is currently published. That is, when the team publishes a new version, the schedule automatically moves to this version for the next run. You can instead _lock_ a schedule to one specific published version, so the scheduler keeps running that version no matter how many times the project is republished.
+
+To change or remove a lock, open the schedule and update **Which version runs**:
+
+- Select **Always the latest published** to unlock the schedule and have it follow future publishes again.
+- Select **Lock to a specific version** and choose a different version to move the lock forward.
+
+<Note>
+A locked schedule that's already running a locked version is unaffected by publishing. Publishing makes no change to it until you update the lock yourself.
+</Note>
+
+<Note>
+Locks apply per fabric. The same schedule can be locked to a version on one fabric's deployment while following the latest published version on another.
+</Note>
 
 ## Activate schedules
 

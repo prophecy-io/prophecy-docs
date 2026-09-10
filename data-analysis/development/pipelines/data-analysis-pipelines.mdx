@@ -94,6 +94,36 @@ The duplicated pipeline opens in the pipeline canvas. By default, the pipeline i
 ![Duplicate pipeline menu](/data-analysis/development/pipelines/img/duplicate-pipeline.png)
 {/* TODO: Review this screenshot for the updated pipeline canvas header. */}
 
+## Mark pipeline as draft
+
+You can mark a pipeline as `draft`. This lets you keep working on it, while excluding changes from the project's next published version. For more on how this affects publication, see [Draft pipelines](/data-analysis/production/publication/publication-concepts#draft-pipelines).
+
+To mark a pipeline as draft:
+
+1. Open the pipeline in Studio.
+2. Click the **...** menu in the upper-right corner of the pipeline canvas.
+3. Click **Keep as draft**.
+4. Confirm the change.
+
+While a pipeline is a draft:
+
+- Its in-progress changes aren't included in the next published version. If it's already been published before, it ships unchanged in the new version; if it hasn't, it's left out of the version entirely.
+- Existing schedules on the pipeline keep running — publishing doesn't take it down or interrupt it.
+- You can't rename or delete the pipeline.
+
+To remove draft status:
+
+1. Open the pipeline in Studio.
+2. Click the **...** menu in the upper-right corner of the pipeline canvas.
+3. Click **Remove draft**.
+4. Confirm the change.
+
+Removing draft status doesn't publish the pipeline immediately — it's included the next time the project is published.
+
+<Note>
+Draft pipelines are available only for projects that use Simple Version Control.
+</Note>
+
 ## Execution and validation
 
 Pipelines move through development, production, and reporting stages. You can [run them interactively in the canvas](/data-analysis/development/runs/execution), schedule automated runs, or trigger execution through analyses.

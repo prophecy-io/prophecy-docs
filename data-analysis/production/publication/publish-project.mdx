@@ -88,6 +88,10 @@ To publish a project version:
 7. Optional: Select a project parameter set.
 8. Click **Publish**.
 
+<Note>
+If any pipelines are marked as draft, their in-progress changes aren't included in this version — they ship unchanged (or are left out entirely, if never published before). The changes list shows them with a **Draft - Held** label, along with any business apps built on them, and a summary line reports how many pipelines were held back. To include a pipeline's latest changes in this publish, remove its draft status first. See [Draft pipelines](/data-analysis/production/publication/publication-concepts#draft-pipelines).
+</Note>
+
 Fabric selection determines whether or not the project is deployed. If you publish without selecting a fabric, Prophecy creates the published version but does not deploy it to an environment.
 
 When you select one or more fabrics during publication, Prophecy creates or updates deployments for those fabrics using the published version.

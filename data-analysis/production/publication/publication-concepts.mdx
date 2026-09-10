@@ -41,6 +41,34 @@ Use drafts to:
 
 Saving a draft does not create a deployable project version and does not make changes available in deployment environments.
 
+## Draft pipelines
+
+When you mark a pipeline as draft, Prophecy excludes its in-progress changes from the project's next published version — it doesn't remove the pipeline itself. For example, if a project includes pipelines `a`, `b`, and `c`, and you mark `b` as draft, the next published version includes your latest changes to `a` and `c`, while `b` remains unchanged in that version unchanged, frozen at whatever was last published for it. If `b` had never been published before you marked it as draft, it's simply left out of every published version until you remove the `draft` designation.
+
+<Note>
+"Save a draft" and "draft pipelines" both use the word _draft_ but mean different things by the term. Saving a draft records in-progress changes to the whole project. Marking a pipeline as draft excludes that pipeline from publication.
+</Note>
+
+Use a draft pipeline to:
+
+- Continue developing a pipeline while excluding in-progress changes from the next release.
+- Publish other pipelines in the project without waiting on unfinished work.
+
+While a pipeline is marked as draft:
+
+- Any in-progress changes are not included in the next published version. If it's already been published before, it ships unchanged in the new version; if it hasn't, it's left out of the version entirely.
+- Any app built on that pipeline is held back the same way.
+- The pipeline can't be renamed or deleted while it's a draft.
+
+<Note>
+Publishing the project doesn't remove the pipeline or interrupt it. Its last published version carries into the new release unchanged, and any existing schedule on it keeps running. That is, Prophecy redeploys that schedule's job with the same, unchanged definition as part of the release.
+</Note>
+
+When you remove draft status, the pipeline is included in the next version you publish; you don't need to take any special steps for the pipeline to
+"catch up."
+
+To mark or unmark a pipeline as draft, see [Mark Pipeline as Draft in the topic Pipelines for Data Analysis](/data-analysis/development/pipelines/data-analysis-pipelines#mark-pipeline-as-draft).
+
 ## Publish a version
 
 Publishing creates a versioned release of your project. A published release can be deployed to one or more environments, but publishing alone does not deploy it.
