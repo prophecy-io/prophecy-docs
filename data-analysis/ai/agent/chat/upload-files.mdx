@@ -3,6 +3,15 @@ title: 'Upload files'
 description: 'Upload files for data pipelines, analysis, or chat context'
 ---
 
+{/* TODO TODO TODO — UNRESOLVED BEFORE PUBLISHING
+Need to confirm with engineering: how does "union of multiple sheets" interact with multi-table
+extraction? Does union always produce one combined table, with multi-table marking only available
+in single-sheet mode? Or can both be used together (union some sheets into one table while also
+marking separate regions elsewhere in the workbook)? This affects how the Excel-specific properties
+section and the multi-table extraction section below relate to each other, and also how step 4
+("Review and update schema") and the knowledge-graph indexing section at the bottom should describe
+multi-table output. Do not ship without resolving this. TODO TODO TODO */}
+
 When you upload a file to the Agent chat, you can choose one of two options:
 
 | Option | Use when |
@@ -67,10 +76,35 @@ Review the inferred schema (column names and data types):
 - Select any table properties you want to configure.
 - Click **Next** to proceed.
 
+<Accordion title="Excel-specific properties">
+
+Excel files (XLS, XLSX) expose additional options at this step:
+
+| Field | Purpose |
+| ----- | ------- |
+| **Read mode** | How the workbook is read: a single sheet, or a union of multiple sheets combined into one table. |
+| **Sheet Name** | Which sheet to read from. When reading a union of multiple sheets, select each sheet to include. |
+| **Enter Cell Range** | Restrict extraction to a specific range, for example `A1:`. |
+| **Header** | Treat the first row of the range as column headers. |
+| **Allow Undefined Rows** | Include rows that fall outside the detected schema. |
+| **Allow Incomplete Rows** | Include rows missing values in some columns. |
+| **Enable Schema Merging** | Merge schemas across sheets or tables where they differ. |
+| **Ignore Cell Formatting** | Read cell values without applying Excel's display formatting. |
+
+After you configure these options, click **Infer Schema** to populate the column list. Column names, types (for example, String or Bigint), and other metadata are editable.
+
+You can also mark multiple regions of an Excel workbook as separate tables. Each marked table becomes its own output, and you can edit its schema, set drift-handling behavior, or unmark it independently of the others.
+
+</Accordion>
+
 </Step>
 
 <Step title="Preview and complete">
 Review the table preview to verify the data structure and content. If the preview looks correct, click **Done** to complete the upload.
+
+<Note>
+For Excel files, the preview grid loads additional rows and columns as you scroll, rather than fetching the entire sheet at once. Merged cells and blank rows in the source sheet are handled automatically.
+</Note>
 
 The file is converted to a table in your SQL warehouse.
 
