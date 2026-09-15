@@ -2,46 +2,52 @@
 title: Deployment models
 description: Understand the SaaS and Dedicated SaaS deployment models
 ---
-Prophecy offers multiple deployment options to meet different organizational requirements for security, isolation, and management preferences. The following table outlines the key differences between the two main deployment models.
+
+Every Prophecy edition runs on one of two deployment models: SaaS or Dedicated SaaS. Which model you're on depends on your edition. This page explains what each model means for tenancy, isolation, and who's responsible for what.
 
 | Feature                      | SaaS | Dedicated SaaS |
-| ---------------------------- | ---- | -------------- |
-| Prophecy-managed upgrades    | ✔    | ✔              |
-| Prophecy-managed maintenance | ✔    | ✔              |
-| Multi-tenancy                | ✔    |                |
-| Single-tenancy               |      | ✔              |
-| Customizable environment     |      | ✔              |
+| ----------------------------- | ---- | --------------- |
+| Prophecy-managed upgrades     | ✔    | ✔               |
+| Prophecy-managed maintenance  | ✔    | ✔               |
+| Multi-tenancy                 | ✔    |                 |
+| Single-tenancy                |      | ✔               |
+| Customizable environment      |      | ✔               |
+
+For a breakdown of which components and compute engines are available on each edition, see [Architecture](/administration/platform/architecture).
 
 ### SaaS
 
-The SaaS deployment option is entirely Prophecy-managed and operates on a multi-tenant architecture. This deployment model provides the fastest access to the latest features and updates. Organizations can quickly evaluate Prophecy using our SaaS environment by signing up for a [free trial](https://app.prophecy.io/metadata/auth/signup).
+SaaS is entirely Prophecy-managed and runs on a multi-tenant architecture in Prophecy's AWS VPC, with multiple layers of logical isolation between tenants. This deployment model gives you the fastest access to new features and updates. Sign up for a [free trial](https://app.prophecy.io/metadata/auth/signup) to evaluate Prophecy on SaaS.
 
 ### Dedicated SaaS
 
 <Callout icon="/images/icon.png" color="#FFC107">
-
-  This deployment model requires the [Enterprise Edition](/administration/platform/editions) of Prophecy.
-
+  This deployment model requires the [Express or Enterprise Edition](/administration/platform/editions) of Prophecy. Express Edition runs on Dedicated SaaS only; Enterprise Edition can run on either SaaS or Dedicated SaaS.
 </Callout>
 
-The Dedicated SaaS deployment combines the convenience of Prophecy-managed infrastructure with the privacy and isolation of a single-tenant architecture. This deployment model operates on Prophecy's Virtual Private Cloud, providing dedicated resources and enhanced security.
+Dedicated SaaS combines Prophecy-managed infrastructure with the privacy and isolation of a single-tenant architecture, deployed to a dedicated Prophecy VPC on AWS, Google Cloud, or Azure. This runs in the region of your choice in order to support data residency requirements. Prophecy manages installation, maintenance, and resource allocation for you.
 
-You can choose your preferred cloud platform (AWS, Azure, or GCP), and Prophecy will manage installation, maintenance, resource allocation, and more.
+Prophecy connects outbound over TLS to your identity provider, Git repository, data platform, and (if configured) your AI LLM endpoint or gateway. For details on what runs in each plane, see [Architecture](/administration/platform/architecture).
 
-![Dedicated SaaS VPC Architecture](/administration/platform/img/arch_dedicated_vpc.png)
+#### Data storage and security
+
+Prophecy is built to run without storing your data. Sample data passes through Prophecy's execution service only momentarily, in memory, to render it in your browser — it isn't persisted. Metadata (schema, object names, relationships) may be stored, at a level you can configure.
+
+All stored data is encrypted at rest (AES-256, via your cloud provider's key management service) and in transit (TLS 1.3). Dedicated SaaS supports Bring Your Own Key (BYOK) for encryption.
 
 #### Responsibility matrix
 
 This table outlines the division of responsibilities between customers and Prophecy for Dedicated SaaS deployments.
 
-| Area                                    | Customer Responsibility | Prophecy Responsibility | Description                                                                                                                                                                                                                                                                                                                                                                      |
-| --------------------------------------- | ----------------------- | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Platform upgrades                       |                         | ✔                       | Prophecy applies upgrades and hotfixes.                                                                                                                                                                                                                                                                                                                                          |
-| Security and compliance                 |                         | ✔                       | Prophecy applies CVE patches, manages SaaS compliance posture, and ensures tenant isolation.                                                                                                                                                                                                                                                                                     |
-| High availability and disaster recovery |                         | ✔                       | Prophecy implements failover strategies and backup/restore procedures. Prophecy also tests disaster recovery scenarios to maintain system resilience.                                                                                                                                                                                                                            |
-| Kubernetes cluster and infrastructure   |                         | ✔                       | Prophecy manages scaling, monitoring, logging, namespaces, and storage.                                                                                                                                                                                                                                                                                                          |
-| Scaling and resource tuning             |                         | ✔                       | Prophecy optimizes performance, adjusts resource allocation, and configures auto-scaling.                                                                                                                                                                                                                                                                                        |
-| Identity and access management          | ✔                       |                         | Customer configures users and groups in their chosen IdP. Then, they set up SSO inside Prophecy.                                                                                                                                                                                                                                                                                 |
-| Networking                              | ✔                       | ✔                       | Prophecy provides PrivateLink service endpoint, manages a list of up to 300 IP addresses allowed to access the Dedicated SaaS deployment, and generally maintains networking infrastructure. <br />Customer accepts PrivateLink connection requests and allowlists Prophecy's IP address with Databricks, GitHub, and other external platforms that Prophecy needs to connect to. |
-| Data encryption (Bring Your Own Key)    | ✔                       | ✔                       | Customer optionally provides and manages Key Management Service (KMS) and grants Prophecy access to customer-managed encryption keys. <br />Prophecy integrates with customer KMS to encrypt persistent storage using customer-managed keys.                                                                                                                                      |
-| Monitoring and logs                     | ✔                       | ✔                       | Customer reviews audit logs that are optionally synced to a customer-owned storage bucket. <br />Prophecy monitors SaaS infrastructure, performs root-cause analysis, updates status page, and generates audit logs.                                                                                                                                                              |
+| Area                                     | Customer Responsibility | Prophecy Responsibility | Description                                                                                                                                                                                                                                                                                                                                                                       |
+| ----------------------------------------- | :----------------------: | :-----------------------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Platform upgrades                         |                          | ✔                        | Prophecy applies upgrades and hotfixes.                                                                                                                                                                                                                                                                                                                                            |
+| Security and compliance                   |                          | ✔                        | Prophecy applies CVE patches, manages SaaS compliance posture, and ensures tenant isolation.                                                                                                                                                                                                                                                                                      |
+| High availability and disaster recovery   |                          | ✔                        | Prophecy implements failover strategies and backup/restore procedures, and tests disaster recovery scenarios to maintain system resilience.                                                                                                                                                                                                                                      |
+| Kubernetes cluster and infrastructure     |                          | ✔                        | Prophecy manages scaling, monitoring, logging, namespaces, and storage for both the Control Plane and Execution Plane.                                                                                                                                                                                                                                                            |
+| Scaling and resource tuning               |                          | ✔                        | Prophecy optimizes performance, adjusts resource allocation, and configures auto-scaling.                                                                                                                                                                                                                                                                                         |
+| Identity and access management            | ✔                        |                          | Customer configures users and groups in their chosen IdP, then sets up SSO inside Prophecy.                                                                                                                                                                                                                                                                                       |
+| Networking                                | ✔                        | ✔                        | Prophecy manages a list of up to 300 IP addresses allowed to access the Dedicated SaaS deployment, connects outbound from a single IP address, and maintains networking infrastructure. Customer accepts connection requests and allowlists Prophecy's IP address with Databricks, GitHub, and other external platforms Prophecy needs to reach. {/*VERIFY PrivateLink cloud scope separately */} |
+| Data encryption (Bring Your Own Key)      | ✔                        | ✔                        | Customer optionally provides and manages a Key Management Service (KMS) and grants Prophecy access to customer-managed encryption keys. Prophecy integrates with customer KMS to encrypt persistent storage using those keys.                                                                                                                                                   |
+| Monitoring and logs                       | ✔                        | ✔                        | Customer reviews audit logs, optionally synced to a customer-owned storage bucket. Prophecy monitors SaaS infrastructure, performs root-cause analysis, updates the status page, and generates audit logs. Prophecy does not log metadata, data, credentials, secrets, or IP addresses (aside from browser IP addresses via the ingress controller).                                    |
+| AI / LLM connectivity                     | ✔ (optional)             | ✔                        | By default, Prophecy connects to its managed foundation model provider. Customers can instead configure their own AI LLM endpoint or gateway. Prompts are encrypted in transit; Prophecy does not use customer data to train or fine-tune any model.                                                                                                                            |
