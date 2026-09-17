@@ -2,7 +2,7 @@
 title: Audit logs
 description: How Prophecy generates, stores, and shares audit logs
 ---
-This page describes how Prophecy generates, stores, and shares audit logs for Prophecy deployments. Use this information to decide if you need to enable and export audit logs.
+This page describes how Prophecy generates, stores, and shares audit logs for Prophecy deployments.
 
 Setting up audit logs requires collaboration with Prophecy. [Contact Prophecy](https://www.prophecy.io/request-a-demo) to:
 
@@ -126,8 +126,7 @@ The following tables list the audit events that Prophecy logs, organized by enti
 | `pullOrigin`                  | pull origin branch                                | `["branch", "projectId"]`                                                               |
 | `checkGitConnection`          | Test Git connection                               | `["externalUriArg", "pushAccessCheck", "userGitCredsUID"]`                              |
 | `linkSavedCredsToExternalGit` | Linked Saved Creds to a project                   | `["projectUID", "userGitCredsUID"]`                                                     |
-| `unlinkExternalGit`           | Unlink the saved creds                            | `["projectUID"]`                                                                        |
-| `checkout`                    | When USer checks out a new branch                 | `["branchName","projectUID"]`                                                           |
+| `unlinkExternalGit`           | Unlink the saved creds                            | `["projectUID"]`                                                                        |                                                       |
 | `branchDivergence`            | When user compares two branches for commit screen | `["projectId", "branchName", "baseBranchName"]`                                         |
 | `branchInfo`                  | Gives details of a particular working branch      | `["projectId", "branchName", "remoteType"]`                                             |
 | `setPrCreationTemplate`       | When user Sets PR creation template               | `["projectId", "customPrTemplate", "prCreationEnabled"]`                                |
@@ -212,13 +211,11 @@ If your Prophecy deployment is hosted on AWS, you can sync your Prophecy audit l
 ### 1. Create the S3 bucket
 
 1. Open the Amazon S3 console and choose **Create bucket**.
-1. Enter a **Bucket name**, following the format `prophecy-customer-backend-events-foo`. Replace `foo` with an identifier for your organization.
-1. Choose a **Region**.
-   - Prophecy recommends u**s-east-1 (N. Virginia)** for best performance.
-   - If you select a different region, contact Prophecy so we can accommodate this preference.
-
+1. Enter a **Bucket name**, following the format `prophecy-customer-audit-events-foo`. Replace `foo` with an identifier for your organization.
+1. Choose a **Region**. Prophecy syncs to whichever region your bucket is created in — there's no region you need to avoid or request special handling for.
 1. Complete the remaining setup options as needed, then create the bucket.
 1. Set **Object Ownership** to **ACLs disabled (recommended)**. You can apply this setting during bucket creation or by editing bucket permissions after creation.
+1. If your bucket uses a customer-managed KMS key, grant the Prophecy role `kms:Encrypt`, `kms:GenerateDataKey*`, and `kms:DescribeKey` in your key policy. Without this, the sync will create successfully but fail when Prophecy tries to write objects.
 
 ### 2. Configure bucket permissions for Prophecy
 
@@ -234,7 +231,7 @@ If your Prophecy deployment is hosted on AWS, you can sync your Prophecy audit l
       "Sid": "DataSyncCreateS3LocationAndTaskAccess",
       "Effect": "Allow",
       "Principal": {
-        "AWS": "arn:aws:iam::##############:role/AWSDataSyncS3BucketAccessCustomerBackendEventsRole"
+        "AWS": "arn:aws:iam::##############:role/AWSDataSyncS3BucketAccessCustomerAuditEventsRole"
       },
       "Action": [
         "s3:GetBucketLocation",
@@ -249,8 +246,8 @@ If your Prophecy deployment is hosted on AWS, you can sync your Prophecy audit l
         "s3:DeleteObject"
       ],
       "Resource": [
-        "arn:aws:s3:::prophecy-customer-backend-events-xyz",
-        "arn:aws:s3:::prophecy-customer-backend-events-xyz/*"
+        "arn:aws:s3:::prophecy-customer-audit-events-foo",
+        "arn:aws:s3:::prophecy-customer-audit-events-foo/*"
       ]
     },
     {
@@ -260,7 +257,7 @@ If your Prophecy deployment is hosted on AWS, you can sync your Prophecy audit l
         "AWS": "arn:aws:iam::##############:user/s3access"
       },
       "Action": "s3:ListBucket",
-      "Resource": "arn:aws:s3:::prophecy-customer-backend-events-xyz"
+      "Resource": "arn:aws:s3:::prophecy-customer-audit-events-foo"
     }
   ]
 }
@@ -268,10 +265,10 @@ If your Prophecy deployment is hosted on AWS, you can sync your Prophecy audit l
 
 To use this example JSON:
 
-- Replace all instances of `prophecy-customer-backend-events-xyz` with your bucket ARN.
-- The Prophecy IAM user `s3access` requires the `DataSyncCreateS3Location` role to create S3 locations in Prophecy's account.
+- Replace all instances of `prophecy-customer-audit-events-foo` with your bucket ARN.
+- The two statements grant access for different purposes: the first lets Prophecy's sync role read your bucket's location and read/write objects at transfer time. The second — the `DataSyncCreateS3Location` statement — grants Prophecy's `s3access` IAM user the `s3:ListBucket` permission it needs to register your bucket as a sync destination in the first place. Both are required.
 - After applying the policy, contact Prophecy and provide:
   - Your bucket ARN.
-  - The AWS region.ß
+  - The AWS region.
 
 Prophecy will complete the configuration and enable syncing for your environment.
