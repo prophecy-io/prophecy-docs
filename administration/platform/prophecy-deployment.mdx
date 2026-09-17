@@ -17,23 +17,25 @@ For a breakdown of which components and compute engines are available on each ed
 
 ### SaaS
 
-SaaS is entirely Prophecy-managed and runs on a multi-tenant architecture in Prophecy's AWS VPC, with multiple layers of logical isolation between tenants. This deployment model gives you the fastest access to new features and updates. Sign up for a [free trial](https://app.prophecy.io/metadata/auth/signup) to evaluate Prophecy on SaaS.
+SaaS is entirely Prophecy-managed and runs on a multi-tenant architecture in Prophecy's AWS VPC (virtual private cloud), with multiple layers of logical isolation between tenants. This deployment model gives you the fastest access to new features and updates. Sign up for a [free trial](https://app.prophecy.io/metadata/auth/signup) to evaluate Prophecy on SaaS.
 
 ### Dedicated SaaS
 
 <Callout icon="/images/icon.png" color="#FFC107">
-  This deployment model requires the [Express or Enterprise Edition](/administration/platform/editions) of Prophecy. Express Edition runs on Dedicated SaaS only; Enterprise Edition can run on either SaaS or Dedicated SaaS.
+  Dedicated SaaS requires the [Express or Enterprise Edition](/administration/platform/editions) of Prophecy. Express Edition runs on Dedicated SaaS only; Enterprise Edition can run on either SaaS or Dedicated SaaS.
 </Callout>
 
-Dedicated SaaS combines Prophecy-managed infrastructure with the privacy and isolation of a single-tenant architecture, deployed to a dedicated Prophecy VPC on AWS, Google Cloud, or Azure. This runs in the region of your choice in order to support data residency requirements. Prophecy manages installation, maintenance, and resource allocation for you.
+Dedicated SaaS combines Prophecy-managed infrastructure with the privacy and isolation of a single-tenant architecture, deployed to a dedicated Prophecy VPC on AWS, Google Cloud, or Azure. This runs in the region of your choice in order to support data residency requirements.
 
-Prophecy connects outbound over TLS to your identity provider, Git repository, data platform, and (if configured) your AI LLM endpoint or gateway. For details on what runs in each plane, see [Architecture](/administration/platform/architecture).
+Prophecy manages installation, maintenance, and resource allocation for you.
+
+Prophecy connects outbound over TLS to your identity provider, Git repository, data platform, and (if configured) your AI LLM endpoint/gateway. For details on what runs in each plane, see [Architecture](/administration/platform/architecture).
 
 #### Data storage and security
 
-Prophecy is built to run without storing your data. Sample data passes through Prophecy's execution service only momentarily, in memory, to render it in your browser — it isn't persisted. Metadata (schema, object names, relationships) may be stored, at a level you can configure.
+Your data stays in your own SQL warehouse and Prophecy never stores or copies it. When you preview a dataset, sample data passes through Prophecy's execution service only momentarily to render it in your browser; data is no persisted anywhere in Prophecy itself.
 
-All stored data is encrypted at rest (AES-256, via your cloud provider's key management service) and in transit (TLS 1.3). Dedicated SaaS supports Bring Your Own Key (BYOK) for encryption.
+Prophecy does store metadata: schema, object names, relationships, and other configuration information, at a level you can control. Prophecy encrypts this information both at rest (using AES-256, via your cloud provider's key management service) and in transit (TLS 1.3). Dedicated SaaS supports Bring Your Own Key (BYOK) for encryption.
 
 #### Responsibility matrix
 
@@ -47,7 +49,7 @@ This table outlines the division of responsibilities between customers and Proph
 | Kubernetes cluster and infrastructure     |                          | ✔                        | Prophecy manages scaling, monitoring, logging, namespaces, and storage for both the Control Plane and Execution Plane.                                                                                                                                                                                                                                                            |
 | Scaling and resource tuning               |                          | ✔                        | Prophecy optimizes performance, adjusts resource allocation, and configures auto-scaling.                                                                                                                                                                                                                                                                                         |
 | Identity and access management            | ✔                        |                          | Customer configures users and groups in their chosen IdP, then sets up SSO inside Prophecy.                                                                                                                                                                                                                                                                                       |
-| Networking                                | ✔                        | ✔                        | Prophecy manages a list of up to 300 IP addresses allowed to access the Dedicated SaaS deployment, connects outbound from a single IP address, and maintains networking infrastructure. Customer accepts connection requests and allowlists Prophecy's IP address with Databricks, GitHub, and other external platforms Prophecy needs to reach. {/*VERIFY PrivateLink cloud scope separately */} |
+| Networking                                | ✔                        | ✔                        | Prophecy manages a list of up to 300 IP addresses allowed to access the Dedicated SaaS deployment, connects outbound from a single IP address, and maintains networking infrastructure. Customer accepts connection requests and allowlists Prophecy's IP address with Databricks, GitHub, and other external platforms Prophecy needs to reach. |
 | Data encryption (Bring Your Own Key)      | ✔                        | ✔                        | Customer optionally provides and manages a Key Management Service (KMS) and grants Prophecy access to customer-managed encryption keys. Prophecy integrates with customer KMS to encrypt persistent storage using those keys.                                                                                                                                                   |
 | Monitoring and logs                       | ✔                        | ✔                        | Customer reviews audit logs, optionally synced to a customer-owned storage bucket. Prophecy monitors SaaS infrastructure, performs root-cause analysis, updates the status page, and generates audit logs. Prophecy does not log metadata, data, credentials, secrets, or IP addresses (aside from browser IP addresses via the ingress controller).                                    |
 | AI / LLM connectivity                     | ✔ (optional)             | ✔                        | By default, Prophecy connects to its managed foundation model provider. Customers can instead configure their own AI LLM endpoint or gateway. Prompts are encrypted in transit; Prophecy does not use customer data to train or fine-tune any model.                                                                                                                            |
