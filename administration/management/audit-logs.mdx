@@ -6,10 +6,9 @@ This page describes how Prophecy generates, stores, and shares audit logs for Pr
 
 Setting up audit logs requires collaboration with Prophecy. [Contact Prophecy](https://www.prophecy.io/request-a-demo) to:
 
-- Enable audit logging in Prophecy-managed storage.
 - Export audit logs on demand.
 - Configure automatic syncing to your own storage.
-- Set a custom retention period for stored logs (by default, logs are stored indefinitely).
+- Set a custom retention period for stored logs.
 
 ## Storage location
 
@@ -235,7 +234,7 @@ If your Prophecy deployment is hosted on AWS, you can sync your Prophecy audit l
       "Sid": "DataSyncCreateS3LocationAndTaskAccess",
       "Effect": "Allow",
       "Principal": {
-        "AWS": "arn:aws:iam::133450206866:role/AWSDataSyncS3BucketAccessCustomerBackendEventsRole"
+        "AWS": "arn:aws:iam::##############:role/AWSDataSyncS3BucketAccessCustomerBackendEventsRole"
       },
       "Action": [
         "s3:GetBucketLocation",
@@ -258,7 +257,7 @@ If your Prophecy deployment is hosted on AWS, you can sync your Prophecy audit l
       "Sid": "DataSyncCreateS3Location",
       "Effect": "Allow",
       "Principal": {
-        "AWS": "arn:aws:iam::133450206866:user/s3access"
+        "AWS": "arn:aws:iam::##############:user/s3access"
       },
       "Action": "s3:ListBucket",
       "Resource": "arn:aws:s3:::prophecy-customer-backend-events-xyz"
@@ -273,6 +272,6 @@ To use this example JSON:
 - The Prophecy IAM user `s3access` requires the `DataSyncCreateS3Location` role to create S3 locations in Prophecy's account.
 - After applying the policy, contact Prophecy and provide:
   - Your bucket ARN.
-  - The AWS region.
+  - The AWS region.ß
 
 Prophecy will complete the configuration and enable syncing for your environment.
