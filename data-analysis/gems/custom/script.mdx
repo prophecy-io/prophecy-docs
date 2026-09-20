@@ -7,7 +7,28 @@ import MySnippet from '/snippets/interactive-gem.mdx';
 
 <MySnippet gemName="Script" />
 
-## Where the script runs
+The Script gem is the escape hatch in an otherwise all-SQL pipeline. Every other gem compiles down to SQL and runs on your warehouse; the Script gem runs custom Python instead, for logic SQL can't express cleanly — calling external APIs, using Python-only libraries, complex string parsing, or porting existing Python business logic into the pipeline.
+
+## When to use the Script gem
+
+| Situation | Why SQL falls short |
+| --- | --- |
+| Calling an external API or service (geocoding, ML inference, enrichment) mid-pipeline | SQL has no native HTTP client |
+| Using a Python-only library (fuzzy matching, phone number parsing, a saved ML model) | No SQL equivalent without reimplementing as UDFs |
+| Multi-step string/text parsing on semi-structured data | Chained `REGEXP_REPLACE`/`SPLIT` calls become unreadable fast |
+| Custom statistical or scoring logic with conditional branches | Awkward or impossible to express with window functions alone |
+| Porting existing Python business logic into a pipeline | Faster and safer than re-deriving the same logic in SQL |
+
+
+{/* PLACEHOLDER: Avais's example(s) go here — ideally one concrete walkthrough with actual gem inputs/outputs, e.g. a specific scenario showing in0 → Script → out */}
+
+## Setting up your fabric
+
+The Script gem's setup step depends on your SQL warehouse provider.
+
+**Databricks**: requires a separate cluster added at the fabric level (**Metadata > Fabric > Provider > Compute Cluster**) to run the script.
+
+**Snowflake / BigQuery**: add the fabric normally — no extra cluster configuration needed. The script runs in the Prophecy Automate environment.
 
 The execution environment for the Script gem depends on the [SQL warehouse](/data-analysis/environment/fabrics/prophecy-fabrics) configured in your Prophecy fabric.
 
@@ -18,18 +39,31 @@ The execution environment for the Script gem depends on the [SQL warehouse](/dat
 | BigQuery               | Prophecy Automate     |
 | Snowflake              | Prophecy Automate     |
 
+{/*FLAG FOR AVAIS: confirm this table with engineering/research — pairs with the fabric setup table above; want to make sure "Databricks Serverless" is still accurate and nothing else has shifted providers.f*/}
+
 This ensures your Python logic runs in an environment optimized for your data platform.
+
+## Input and output
+
+The Script gem accepts one or more inputs and generates one or more outputs.
+
+| Port | Description |
+| --- | --- |
+| `in0` | Input dataset |
+| `out` | Output dataset your script produces |
+
+<Info>
+
+You can change the number of inputs and outputs by clicking the `+` button on the respective
+  tab.
+</Info>
 
 ## Parameters
 
-| Parameter | Description                             |
+| Parameter | Description |
 | --------- | --------------------------------------- |
 | Script    | Where you will write your Python script |
-
-<Info>
-  Number of inputs and outputs can be changed as needed by clicking the `+` button on the respective
-  tab.
-</Info>
+| FX (expression) | Browse and insert any available function directly into the script |
 
 ## Troubleshooting
 
