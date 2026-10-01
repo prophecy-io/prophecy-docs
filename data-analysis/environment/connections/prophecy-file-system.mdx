@@ -1,0 +1,33 @@
+---
+title: Prophecy File System
+description: Learn about the built-in Prophecy File System connection
+---
+
+The **Prophecy File System (PFS)** is a file connection that Prophecy provides automatically — there are no credentials or settings to configure, and you can't create one yourself. It stores files in storage that Prophecy manages, scoped to your fabric, and backs the Databox: upload files from the Databox page or the canvas, then browse, read, or write them from your pipelines like any other file connection.
+
+<Note>
+  This connection appears only once a cluster admin has enabled the Databox for your deployment.
+  If you don't see a connection named **ProphecyFileSystem** in your fabric, ask your cluster admin
+  to check the [Databox configuration](/administration/management/cluster-admin-settings/databox-config).
+</Note>
+
+## Feature support
+
+The table below outlines whether the connection supports certain Prophecy features.
+
+| Feature                                                                                                                                | Supported |
+| --------------------------------------------------------------------------------------------------------------------------------------- | --------- |
+| Read data with a [Source gem](/data-analysis/gems/source-target/source-target)                                                           | Yes       |
+| Write data with a [Target gem](/data-analysis/gems/source-target/source-target)                                                          | Yes       |
+| Browse data in the [Environment browser](/data-analysis/development/studio/studio#sidebar)                                              | Yes       |
+| Trigger scheduled pipeline upon [file arrival or change](/data-analysis/production/scheduling/triggers#file-arrival-or-change-trigger) | Yes       |
+| Index files in the [Knowledge Graph](/data-analysis/ai/knowledge-graph/knowledge-graph)                                                 | Yes       |
+
+## Connection parameters
+
+Unlike other file connections, there's nothing to configure. Prophecy provisions exactly one `ProphecyFileSystem` connection per fabric, and every team member with access to the fabric uses it automatically.
+
+<Info>
+  A fabric can't have more than one Prophecy File System connection, and the connection name
+  `ProphecyFileSystem` is reserved — you can't name a connection of your own the same thing.
+</Info>

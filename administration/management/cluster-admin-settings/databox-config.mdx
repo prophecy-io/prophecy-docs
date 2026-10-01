@@ -1,0 +1,76 @@
+---
+title: Databox configuration
+description: Enable and configure Databox file storage for your Prophecy deployment
+---
+
+<Callout icon="/images/icon.png" color="#FFC107">
+  Applicable to the [Express and Enterprise Editions](/administration/platform/editions) only.
+</Callout>
+
+Databox gives every fabric a place to upload, browse, and share files. Files in Databox are available to agents and can be used as a source or target in pipelines. This page covers how to enable Databox on a self-hosted deployment and the infrastructure it requires.
+
+Databox is off by default. No fabric gets a Databox until you enable it with the settings below.
+
+## Prerequisites
+
+- Kubernetes access to the namespace where Prophecy is deployed.
+- An S3 bucket for Databox files.
+- An IAM role that Prophecy can assume to read, write, list, and delete objects under `<bucket>/databox/*`.
+
+<Warning>
+  The IAM role must grant `ListBucket` with an `s3:prefix` condition of `databox/*`. If you scope
+  the role to a narrower prefix, every Databox request is denied.
+</Warning>
+
+## Configure Databox storage
+
+Add the following keys under `data` in the `orchestrator-cm` ConfigMap. If the ConfigMap already exists, append them to it.
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: orchestrator-cm
+  namespace: <namespace>
+data:
+  DATABOX_ENABLED: "true"
+  DATABOX_S3_BUCKET: <bucket-name>
+  DATABOX_ROLE_ARN: <role-arn>
+  DATABOX_S3_REGION: <bucket-region>
+  KNOWLEDGEGRAPH_ENABLED: "true"
+  DATABOX_CLUSTER_NAME: <cluster-name>
+```
+
+| Setting                  | Required                             | Description                                                                                          |
+| ------------------------ | ------------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| `DATABOX_ENABLED`        | Yes                                  | Turns on Databox for the deployment.                                                                 |
+| `DATABOX_S3_BUCKET`      | Yes                                  | The S3 bucket that stores Databox files.                                                             |
+| `DATABOX_ROLE_ARN`       | Yes                                  | The IAM role Prophecy assumes to access the bucket.                                                  |
+| `DATABOX_S3_REGION`      | Only if the bucket isn't `us-west-1` | The bucket's AWS region.                                                                             |
+| `KNOWLEDGEGRAPH_ENABLED` | Yes                                  | Lets deleted files go to a trash where they stay recoverable for 30 days. Without it, deletes are permanent. |
+| `DATABOX_CLUSTER_NAME`   | Recommended                          | A name for this deployment in the bucket's folder structure. Defaults to the cluster ID.             |
+
+Apply the configuration:
+
+```bash
+kubectl apply -f <filename>.yaml
+```
+
+Restart the orchestrator to pick up the changes:
+
+```bash
+kubectl -n <namespace> rollout restart deploy orchestrator-<namespace>
+```
+
+## Infrastructure requirements
+
+Uploads also depend on two cluster settings outside the ConfigMap:
+
+| Setting | Requirement |
+| --- | --- |
+| Ingress body size | Set `proxy-body-size` on the orchestrator ingress to `2048m`. At the default of `100m`, uploads over 100 MB are rejected. |
+| Pod disk space | Give the orchestrator pod enough disk space for in-progress uploads, up to 2 GB per file. |
+
+## Limits
+
+Each upload can contain up to 20 files and up to 2 GB.
