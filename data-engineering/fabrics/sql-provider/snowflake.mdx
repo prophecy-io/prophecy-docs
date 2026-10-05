@@ -9,6 +9,10 @@ description: Run models on a Snowflake warehouse
 
 To run models on Snowflake, you need to create a fabric with a Snowflake connection.
 
+<Warning>
+Snowflake is deprecating password-based sign-in for service connections (enforced starting October 2026). This fabric type only supports username/password and cannot be switched to key-pair or OAuth — Prophecy flags it with a **Password auth** badge, but you'll need a [unified Snowflake fabric](/data-analysis/environment/fabrics/create-fabrics/snowflake) to use key-pair or OAuth instead. Contact your Prophecy admin about migrating before Snowflake enforces the cutover.
+</Warning>
+
 ## Create a fabric
 
 Fabrics define your Prophecy project execution environment. To create a new fabric:

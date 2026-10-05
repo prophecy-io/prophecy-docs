@@ -1,39 +1,24 @@
 ---
-title: Snowflake
-description: Learn how to connect with Snowflake
+title: Create a Snowflake connection
+description: Connect Prophecy to Snowflake to read, write, and browse tables.
 ---
 
-Learn how to set up and use a Snowflake connection in Prophecy. With a Snowflake connection, you can read from and write to tables in your Snowflake account using Source and Target gems, browse data in the Environment browser, and process Snowflake data within Prophecy pipelines.
+A Snowflake connection lets Prophecy read from and write to tables in your Snowflake account. Use it with Source and Target gems, browse tables in the Environment browser, and process Snowflake data in Prophecy pipelines.
 
-Snowflake can also be configured as a fßabric SQL warehouse, where it executes pipeline transformations. This page describes how to configure a Snowflake connection for accessing data. To learn about using Snowflake as a compute engine, see [Create a Snowflake fabric](/data-analysis/environment/fabrics/create-fabrics/snowflake).
+This page covers Snowflake connections used to access data. To use Snowflake as the compute engine for a fabric, see [Create a Snowflake fabric](/data-analysis/environment/fabrics/create-fabrics/snowflake).
 
-## Prerequisites
+## Connection types
 
-When you create a Snowflake connection in Prophecy, all data operations—such as reading or writing—are executed using the Snowflake credentials you provide. Ensure that your Snowflake user has the following permissions:
-
-- `SELECT`, `INSERT`, `UPDATE`, and `DELETE` on the tables used in your Prophecy pipelines.
-- `OWNERSHIP` on the table, if Prophecy needs to alter or replace it.
-
-When writing data through a Snowflake connection, Prophecy uploads Parquet files to a stage before loading them into Snowflake tables. This requires:
-
-- `CREATE FILE FORMAT` in the target schema.
-- `USAGE` on any file formats used for reading/writing Parquet files.
-- Write access to your user stage
-
-## Connection type
-
-### Connection type
-
-Snowflake can be used in two ways within Prophecy.
+You can use Snowflake in two ways in Prophecy.
 
 | Connection type               | Description                                                  |
 | ----------------------------- | ------------------------------------------------------------ |
-| **SQL Warehouse connection**  | Snowflake acts as the compute engine for a fabric and executes pipeline SQL transformations. To learn more about SQL Warehouse connections, visit [Prophecy fabrics](/data-analysis/environment/fabrics/prophecy-fabrics). |
+| **SQL Warehouse connection**  | Snowflake acts as the compute engine for a fabric and executes pipeline SQL transformations. To learn more about SQL Warehouse connections, see [Prophecy fabrics](/data-analysis/environment/fabrics/prophecy-fabrics). |
 | **Ingress/Egress connection** | Snowflake is used only as a data source or target. Pipelines read from or write to Snowflake tables while transformations run in another warehouse. |
 
 ## Feature support
 
-The table below outlines whether the connection supports certain Prophecy features.
+The following table shows which Prophecy features each connection type supports.
 
 | Feature                            | SQL Warehouse | Ingress/Egress |
 | ---------------------------------- | ------------- | -------------- |
@@ -43,23 +28,40 @@ The table below outlines whether the connection supports certain Prophecy featur
 | Browse data in Environment browser | Yes           | Yes            |
 | Index tables in Knowledge Graph    | No            | No             |
 
+## Prerequisites
+
+Prophecy runs all data operations, such as reads and writes, with the Snowflake credentials you provide in the connection. Grant your Snowflake user or role the privileges for the operations your pipelines perform.
+
+| Operation                 | Required privileges |
+| ------------------------- | ------------------- |
+| Connect and run queries   | `USAGE` on the warehouse, database, and schema |
+| Read data                 | `SELECT` on the tables used in your pipelines |
+| Write data                | `INSERT`, `UPDATE`, and `DELETE` on the tables used in your pipelines<br />`CREATE FILE FORMAT` in the target schema<br />`USAGE` on any file formats used for reading or writing Parquet files<br />Write access to your user stage |
+| Alter or replace tables   | `OWNERSHIP` on the table |
+
+When you write data through a Snowflake connection, Prophecy uploads Parquet files to your user stage and then loads them into Snowflake tables. This is why write operations require file format and stage access.
+
 ## Connection parameters
+
+<Warning>
+Starting October 2026, Snowflake enforces the deprecation of password-based sign-in for service users. Connections that authenticate with a username and password stop working once Snowflake enforces the cutover. Prophecy flags affected connections with a **Password auth** badge on the **Connections** tab. Move these connections to [key-pair or OAuth authentication](/data-analysis/environment/fabrics/create-fabrics/snowflake).
+</Warning>
 
 To create a connection with Snowflake, enter the following parameters:
 
-| Parameter             | Description                                                                                                                                     |
-| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| Connection Name       | Name to identify your connection                                                                                                                |
-| Account               | URL of your Snowflake account<br />Example: `https://<orgname>-<account_name>.snowflakecomputing.com`                                           |
-| Database              | Default database for reading and writing data                                                                                                   |
-| Schema                | Default schema for reading and writing data                                                                                                     |
-| Warehouse             | Name of the Snowflake virtual warehouse used to execute queries for this connection.                                                                                             |
-| Role                  | Snowflake [role](https://docs.snowflake.com/en/user-guide/security-access-control-overview) of the user to connect<br />Example: `ACCOUNTADMIN` |
-| Authentication method | Enter your Snowflake username and use a [secret](/data-analysis/environment/secrets/secrets) to enter your password.                            |
+| Parameter             | Description |
+| --------------------- | ----------- |
+| Connection Name       | Name to identify your connection |
+| Account               | URL for your Snowflake account<br />Example: `https://<orgname>-<account_name>.snowflakecomputing.com` |
+| Database              | Default database for reading and writing data |
+| Schema                | Default schema for reading and writing data |
+| Warehouse             | Name of the Snowflake virtual warehouse used to execute queries for this connection |
+| Role                  | Snowflake [role](https://docs.snowflake.com/en/user-guide/security-access-control-overview) used for the connection. Use a role with only the privileges listed in [Prerequisites](#prerequisites).<br />Example: `PROPHECY_ROLE` |
+| Authentication method | Use key-pair or OAuth authentication. To learn how to configure these methods, see [Create a Snowflake fabric](/data-analysis/environment/fabrics/create-fabrics/snowflake).<br />Password authentication is deprecated. If you still use it, enter your Snowflake username and use a [secret](/data-analysis/environment/secrets/secrets) to enter your password. |
 
 ## Data type mapping
 
-When Snowflake data is processed in pipelines running on other SQL warehouses (such as Databricks or BigQuery), Prophecy converts Snowflake-specific data types to compatible types. This table shows how [Snowflake data types](https://docs.snowflake.com/en/sql-reference/intro-summary-data-types) are transformed for Databricks and BigQuery.
+When an Ingress/Egress connection reads Snowflake data into pipelines that run on another SQL warehouse, such as Databricks or BigQuery, Prophecy converts Snowflake-specific data types to compatible types. The following table shows how [Snowflake data types](https://docs.snowflake.com/en/sql-reference/intro-summary-data-types) map to Databricks and BigQuery types.
 
 | Snowflake     | Databricks                      | BigQuery                        |
 | ------------- | ------------------------------- | ------------------------------- |
@@ -95,18 +97,22 @@ When Snowflake data is processed in pipelines running on other SQL warehouses (s
 
 ## Limitations
 
-There are a few limitations on the data types you can read from Snowflake:
+Snowflake connections have the following data type limitations:
 
-- Prophecy reads `Object`, `Array`, and `Variant` types as `String` type.
-- Prophecy does not support writing `Binary` type columns.
+- Prophecy reads `OBJECT`, `ARRAY`, and `VARIANT` columns as `STRING`.
+- Prophecy does not support writing `BINARY` columns.
+- On Databricks and BigQuery, Prophecy maps `DECIMAL` and `NUMERIC` to floating-point types, which can reduce precision. Avoid this conversion for values that require exact precision, such as currency.
+- On Databricks and BigQuery, Prophecy maps `NUMBER` to an integer type, so values with a decimal scale lose their fractional digits.
+- On Databricks, Prophecy maps `TIME` to `STRING`.
 
 ## Sharing connections within teams
 
-Connections in Prophecy are stored within [fabrics](/data-analysis/environment/fabrics/prophecy-fabrics), which are assigned to specific teams. Once a Snowflake connection is added to a fabric, all team members who have access to the fabric can use the connection in their projects. No additional authentication is required—team members automatically inherit the access and permissions of the stored connection credentials.
+Prophecy stores connections in [fabrics](/data-analysis/environment/fabrics/prophecy-fabrics), which are assigned to specific teams. When you add a Snowflake connection to a fabric, every team member with access to that fabric can use the connection in their projects. Team members don't authenticate separately. They inherit the access and permissions of the stored connection credentials.
+
+How sharing works for connections that use OAuth authentication: Not specified in source material.
 
 <Warning>
-Be mindful of the access level granted by the stored credentials. Anyone on the team will have the same permissions—including access to sensitive data if allowed.
+Anyone on the team has the same permissions as the stored credentials, including access to sensitive data if those credentials allow it.
 
-To manage this securely, consider creating a dedicated fabric and team for high-sensitivity connections. This way, only approved users have access to those credentials.
-
+To limit access to high-sensitivity connections, create a dedicated fabric and team for them so only approved users can use those credentials.
 </Warning>
