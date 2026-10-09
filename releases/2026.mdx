@@ -3,6 +3,43 @@ title: '2026 releases'
 description: 'Features and enhancements from new releases'
 ---
 
+<Update label="Prophecy 4.2.12" description="October 7, 2026" tags={["Data Analysis"]}>
+
+## DataBox
+
+Available for the Professional Edition, [DataBox](/data-analysis/getting-started/databox) is a file storage system that Prophecy manages for your team. Upload files once, then use them across projects, add them to pipelines as sources, and give the Agent access to them. Each fabric has one DataBox, shared by everyone who uses that fabric.
+
+When you upload files into Agent chat or onto the canvas, these files are stored in DataBox in the project's folder. The Agent can also browse, read, upload, organize, and delete DataBox files; the Agent asks for confirmation before deleting anything.
+
+Open DataBox from the left navigation bar, or from the **DataBox** icon on the pipeline canvas. From DataBox you can:
+
+- Organize files in your personal folder, project folders, and team members' folders.
+- Upload files up to 2 GB each, create folders, and rename files.
+- Search files, tables, and schemas across DataBox and your connections.
+- Preview files, and add them to a pipeline with **Add as Source** or by dragging them onto the canvas.
+- Restore deleted files from **Trash** for up to 30 days.
+- Browse your connections and add new ones with **Add Connection**.
+
+In pipelines, DataBox appears as the [Prophecy File System](/data-analysis/environment/connections/prophecy-file-system) connection.
+
+## Connections in Professional Edition
+
+[Professional Edition](/data-analysis/getting-started/professional-edition) now supports connections and secrets. Add a [connection](/data-analysis/environment/connections/connections) from DataBox to work with data from platforms such as Databricks, Snowflake, and BigQuery.
+
+
+## Snowflake password authentication is deprecated
+
+Snowflake is deprecating password-based sign-in for service users, enforced starting October 2026. Snowflake fabrics and connections that authenticate with a username and password stop working once Snowflake enforces the cutover. Use key-pair or OAuth authentication instead.
+
+- **New Snowflake fabrics** offer only **Key-pair** and **OAuth** authentication. **Username and Password** appears only on existing fabrics that already use it.
+- **Existing Snowflake fabrics** that use password authentication show a banner and a **Migrate** action. Click **Migrate** to move the fabric to key-pair or OAuth authentication. See [Migrate from password authentication](/data-analysis/environment/fabrics/create-fabrics/snowflake#migrate-from-password-authentication).
+- **Snowflake connections** that use password authentication are flagged with a **Password auth** badge on the **Connections** tab. Edit these connections to use key-pair or OAuth authentication. See [Snowflake connections](/data-analysis/environment/connections/snowflake).
+- **Snowflake SQL fabrics for Data Engineering** support only username and password, and can't be switched to another method. These fabrics are also flagged with a **Password auth** badge. To use key-pair or OAuth, move to a [unified Snowflake fabric](/data-analysis/environment/fabrics/create-fabrics/snowflake). Contact your Prophecy admin about migrating before Snowflake enforces the cutover.
+
+For OAuth, a cluster admin first creates a **Snowflake** or **ID Anywhere (Snowflake)** app registration. See [OAuth app registrations](/administration/management/cluster-admin-settings/oauth-setup).
+
+</Update>
+
 <Update label="Prophecy 4.2.11" description="September 4, 2026" tags={["Data Analysis"]}>
 
 ## Large SQL projects load and compile faster
