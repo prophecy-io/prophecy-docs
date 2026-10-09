@@ -1,0 +1,111 @@
+---
+title: DataBox
+description: Store, browse, and manage the files your team works with in Prophecy
+---
+
+DataBox is file storage that Prophecy manages for your team. Upload files once, then use them across projects, add them to pipelines as sources, and give the Agent access to them. Files you upload through the Agent chat or the pipeline canvas also land in DataBox.
+
+Each fabric has one DataBox, shared by everyone who uses that fabric. In pipelines, DataBox appears as the [Prophecy File System](/data-analysis/environment/connections/prophecy-file-system) connection.
+
+<Callout icon="/images/icon.png" color="#FFC107">
+  Available for the [Free and Professional Editions](/administration/platform/editions).
+</Callout>
+
+## Open DataBox
+
+You can open DataBox in two places:
+
+- Select **DataBox** in the left navigation bar to open the full DataBox page.
+- In a pipeline, select the **DataBox** icon at the top left of the canvas to open DataBox in a panel. Use the maximize button to expand the panel to fill the canvas.
+
+## How files are organized
+
+The **Home** view groups files into three sections:
+
+| Section      | Contents                                                                                                      |
+| ------------ | ------------------------------------------------------------------------------------------------------------- |
+| **My files** | Your personal folder. Files you upload from Home go here.                                                     |
+| **Projects** | One folder per project. Files you upload through the Agent chat or the pipeline canvas go into the project's folder. |
+| **Users**    | Personal folders that belong to other members of your team.                                                   |
+
+Each section shows up to six items. If a section has more, select the chip at the end of the section to see the rest. Inside a folder, folders appear first, then files, each sorted alphabetically.
+
+Deleted files and folders go to **Trash**, which appears below **Home** in the sidebar.
+
+## Browse connections
+
+The **Connections** section of the sidebar lists the fabric's connections, such as Databricks and Snowflake. Expand a connection to browse its databases, schemas, and tables, along with its files in volumes or stages. Search results include tables and schemas from these connections.
+
+Connections in DataBox are read-only. You can't upload, rename, or delete items on a connection, and files on a connection can't be previewed.
+
+To add a connection, select **Add Connection** at the bottom of the sidebar.
+
+<Warning>
+  Everyone with access to the fabric can view, replace, and delete every file in its DataBox,
+  including files in other people's personal folders.
+</Warning>
+
+## Upload files
+
+1. Open the folder where you want the files. Uploads from **Home** go to your personal folder.
+1. Open the folder's ⋮ menu and select **Upload files**, or drag files onto the page.
+1. If a file with the same name already exists, choose **Replace file** to overwrite it or **Skip duplicate file** to keep the existing copy.
+
+You can upload files only into your personal folder, a project folder, or folders inside them. If you drag in a folder, its files upload into the current folder without the folder structure. Each file can be up to 2 GB.
+
+<Note>
+  Replacing a file overwrites the stored copy. Any pipeline that reads the file uses the new
+  version from its next run.
+</Note>
+
+<Warning>
+  Uploads are not currently scanned for viruses, zip bombs, or disguised file types.
+</Warning>
+
+## Organize files
+
+- To create a folder, open the folder's ⋮ menu and select **New folder**.
+- To rename a file, open the file's ⋮ menu and select **Rename**. A file name must include an extension. Folders can't be renamed.
+- To reload the current view, open the folder's ⋮ menu and select **Refresh**.
+
+Names can be up to 255 characters and can't contain slashes or control characters. `trash` and `tmp` are reserved and can't be used as names in the top-level folder.
+
+## Find files
+
+Use the search bar to search files, tables, and schemas across DataBox, including **Trash**. Each result shows its path. When you open a file result, DataBox opens its folder and highlights the file.
+
+To narrow the current view, open **Filters** and select **Folders**, **Files**, or **Tables**.
+
+## Preview and download files
+
+Select the eye icon on a file card to open the file in a read-only tab. Large CSV and text files show only the beginning of the file. Spreadsheets over 32 MB, and file types without a preview, show a **Download File** button instead.
+
+Files in **Trash** can't be previewed. Restore the file first.
+
+## Use a file in a pipeline
+
+From the DataBox panel on the pipeline canvas, you can add a file to your pipeline as a [Source gem](/data-analysis/gems/source-target/source-target) connected to the **Prophecy File System** connection:
+
+- Open the file's ⋮ menu and select **Add as Source**.
+- Drag the file card onto the canvas.
+
+If no pipeline is open, Prophecy asks you to choose an existing pipeline or create a new one. **Add as Source** appears only for file formats your fabric can read. For PDF files, the menu shows **Extract tables** instead, which opens the PDF in a file tab.
+
+**Add as Source** is unavailable while the project is read-only, while the project is locked, while another user is editing, or while the Agent is working.
+
+## Delete and restore files
+
+1. Open the file or folder's ⋮ menu and select **Delete**.
+1. Confirm the deletion. The item moves to **Trash**. Deleting a folder moves everything inside it.
+
+<Warning>
+  If a pipeline uses a file you delete, the pipeline fails until you restore the file.
+</Warning>
+
+To restore an item, open **Trash**, open the item's ⋮ menu, and select **Restore**. The item returns to its original location. If an item with the same name already exists there, Prophecy asks whether to replace it.
+
+Items stay in **Trash** for 30 days, then Prophecy deletes them permanently. Deleting an item from **Trash** is permanent. To permanently delete everything in **Trash**, open the ⋮ menu in **Trash** and select **Empty Trash**.
+
+## Work with DataBox through the Agent
+
+The Agent can browse, read, upload, organize, and delete files in DataBox. When you mention a file you uploaded, the Agent checks DataBox for it. Before the Agent deletes anything, it asks you to confirm with **Delete**, **Always allow**, or **Deny**. **Always allow** isn't offered when the deletion is permanent.

@@ -29,6 +29,7 @@
                       "data-analysis/getting-started/concepts",
                       "data-analysis/getting-started/quick-start",
                       "data-analysis/getting-started/professional-edition",
+                      "data-analysis/getting-started/databox",
                       {
                         "group": "Use Structured Finance",
                         "pages": [
@@ -247,6 +248,7 @@
                               "data-analysis/environment/connections/oracle",
                               "data-analysis/environment/connections/postgres",
                               "data-analysis/environment/connections/power-bi",
+                              "data-analysis/environment/connections/prophecy-file-system",
                               "data-analysis/environment/connections/prophecy-managed",
                               "data-analysis/environment/connections/redshift",
                               "data-analysis/environment/connections/s3",
