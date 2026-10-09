@@ -41,7 +41,7 @@ websockets
 Matchers
 athena
 Anthropic
-Databox
+DataBox
 
 # Prophecy Concepts
 Subgraph

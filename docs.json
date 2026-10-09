@@ -896,8 +896,7 @@
                           "administration/management/cluster-admin-settings/copilot-settings",
                           "administration/management/cluster-admin-settings/configure-endpoint",
                           "administration/management/cluster-admin-settings/feature-management",
-                          "administration/management/cluster-admin-settings/knowledge-graph-config",
-                          "administration/management/cluster-admin-settings/databox-config"
+                          "administration/management/cluster-admin-settings/knowledge-graph-config"
                         ]
                       },
                       {
@@ -1703,8 +1702,7 @@
                           "administration/management/cluster-admin-settings/oauth-setup",
                           "administration/management/cluster-admin-settings/copilot-settings",
                           "administration/management/cluster-admin-settings/configure-endpoint",
-                          "administration/management/cluster-admin-settings/feature-management",
-                          "administration/management/cluster-admin-settings/databox-config"
+                          "administration/management/cluster-admin-settings/feature-management"
                         ]
                       },
                       {

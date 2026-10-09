@@ -1,32 +1,121 @@
 ---
 title: Upload files gem for Data Analysis
-description: Upload a file to the Prophecy File System from the visual canvas
+description: Upload files to your data warehouse from the visual canvas
 ---
 
-You can upload a file to your fabric's DataBox directly from the visual canvas, then add it to your pipeline as a source. This gives you a quick way to bring a local file into a project without first setting up a connection.
+{/* TODO TODO TODO — UNRESOLVED BEFORE PUBLISHING
+Need to confirm with engineering: how does "union of multiple sheets" interact with multi-table
+extraction? Does union always produce one combined table, with multi-table marking only available
+in single-sheet mode? Or can both be used together (union some sheets into one table while also
+marking separate regions elsewhere in the workbook)? This affects how the Excel-specific properties
+section and the "Extract multiple tables" section below relate to each other — do not ship without
+resolving this. TODO TODO TODO */}
 
-<Note>The DataBox is available only when a cluster admin has enabled it for your fabric.</Note>
+You can add a source table to your primary SQL warehouse by uploading a file directly onto the visual canvas. This gives you greater control over your data and how you incorporate it into your model transformation.
 
-<Warning>
-  Uploads are not currently scanned for viruses, zip bombs, or disguised file types.
-</Warning>
+When you upload your file through Prophecy, it's added directly to your SQL warehouse as a [table](/data-analysis/gems/source-target/source-target).
 
-## Upload a file
+<Note>The recommended maximum file size is 100&nbsp;MB.</Note>
+
+<AccordionGroup>
+<Accordion title="Supported file formats">
+You can upload the following file formats:
+
+- CSV
+- Excel (XLS, XLSX)
+- JSON
+- Parquet
+- XML
+
+</Accordion>
+</AccordionGroup>
+
+## File upload
+
+To upload your file:
 
 1. Open a pipeline.
-1. In the canvas, open the **Source/Target** menu and select **Upload Files**.
-1. Choose the file you want to upload.
+1. Drag and drop your file onto the canvas. This opens a new Source gem.
 
-<Note>Dragging a file directly onto the canvas does the same thing.</Note>
+![Upload file by dragging and dropping](/data-analysis/gems/source-target/table/img/upload-file-drag-drop.png)
 
-A confirmation showing the file name appears once the upload completes. The file is stored in the fabric's [Prophecy File System](/data-analysis/environment/connections/prophecy-file-system), inside a **projects** folder named for your project.
+## Type and format
 
-<Note>Uploads are limited to 20 files and 2 GB per batch.</Note>
+Once the Source gem opens, you can review the type and format of the file.
 
-## Use the uploaded file in your pipeline
+1. Optional: Replace or delete your uploaded file.
+1. Optional: Change the type and format of the file.
+1. Click **Next**.
 
-From the Environment browser, use the three-dot menu next to the file to:
+![Select your file type and format](/data-analysis/gems/source-target/table/img/upload-file-type-format.png)
 
-- Select **Add as Source** to add the file to your pipeline as a [Source gem](/data-analysis/gems/source-target/source-target), with the connection already set to **Prophecy File System**.
-- Preview the file.
-- Delete the file.
+## Location
+
+Now, set the location where the table will be stored in the primary SQL warehouse configured in your fabric.
+
+1. Choose the database.
+1. Choose the schema.
+1. Choose the table. You can either select an existing table or create a new one.
+
+![Select the table location](/data-analysis/gems/source-target/table/img/upload-file-location.png)
+
+<Warning>
+  If you select an existing table, Prophecy deletes and recreates the table with your uploaded file.
+</Warning>
+
+## Properties
+
+You can configure the table properties before completing the file upload.
+
+1. Review the file's options. Depending on the file type and format, common defaults are already chosen for you.
+2. Optional: Modify the options. For example, you can change the header row by selecting **First row is header**.
+3. Optional: If you made any changes to the options, click **Infer Schema**. This will update the schema according to the defined options.
+
+![Configure the table properties](/data-analysis/gems/source-target/table/img/upload-file-properties.png)
+
+<Accordion title="Excel-specific properties">
+
+Excel files (XLS, XLSX) expose additional options in the Properties panel:
+
+| Field | Purpose |
+| ----- | ------- |
+| **Read mode** | How the workbook is read: a single sheet, or a union of multiple sheets combined into one table. |
+| **Sheet Name** | Which sheet to read from. When reading a union of multiple sheets, select each sheet to include. |
+| **Enter Cell Range** | Restrict extraction to a specific range, for example `A1:`. |
+| **Header** | Treat the first row of the range as column headers. |
+| **Allow Undefined Rows** | Include rows that fall outside the detected schema. |
+| **Allow Incomplete Rows** | Include rows missing values in some columns. |
+| **Enable Schema Merging** | Merge schemas across sheets or tables where they differ. |
+| **Ignore Cell Formatting** | Read cell values without applying Excel display formatting. |
+
+After you configure these options, click **Infer Schema** to populate the column list. Column names, types (such as `String` or `Bigint`), and other metadata are editable.
+
+</Accordion>
+
+### Extract multiple tables from one workbook
+
+You can mark multiple regions of an Excel workbook as separate tables. Each marked table becomes its own output port on the gem, and you can:
+
+- Edit the schema for each table independently.
+- Set drift-handling behavior per table.
+- Unmark or delete a table you no longer need.
+
+## Preview
+
+The preview step shows your table data and gives you the option to download it.
+
+1. To generate the preview, click **Load**. This loads the data.
+1. Check that your preview looks correct and click **Done**.
+1. If you selected a table to write your uploaded file to, you'll need to confirm the upload in the pop-up window by clicking **Proceed**.
+
+![Preview the table](/data-analysis/gems/source-target/table/img/upload-file-preview.png)
+
+<Note>
+For Excel files, the preview grid loads additional rows and columns as you scroll, rather than fetching the entire sheet at once. Merged cells and blank rows in the source sheet are handled automatically.
+</Note>
+
+The new table is now in your environment and available in Source/Target gems. You can upload another file or start working with your new source gem.
+
+## Connect extracted tables to your pipeline
+
+Once a table is extracted, connect it into the canvas like any other dataset using the standard add-connection menu. Hover over an output port to see a schema hint before connecting it.
