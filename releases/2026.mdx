@@ -5,6 +5,31 @@ description: 'Features and enhancements from new releases'
 
 <Update label="Prophecy 4.2.12" description="October 7, 2026" tags={["Data Analysis"]}>
 
+## DataBox
+
+Available for the Professional Edition, [DataBox](/data-analysis/getting-started/databox) is file storage that Prophecy manages for your team. Upload files once, then use them across projects, add them to pipelines as sources, and give the Agent access to them. Each fabric has one DataBox, shared by everyone who uses that fabric.
+
+Files you upload in the Agent chat or onto the canvas are stored in DataBox, in the project's folder. The Agent can also browse, read, upload, organize, and delete DataBox files, and it asks for confirmation before deleting anything.
+
+Open DataBox from the left navigation bar, or from the **DataBox** icon on the pipeline canvas. From DataBox you can:
+
+- Organize files in your personal folder, project folders, and team members' folders.
+- Upload files up to 2 GB each, create folders, and rename files.
+- Search files, tables, and schemas across DataBox and your connections.
+- Preview files, and add them to a pipeline with **Add as Source** or by dragging them onto the canvas.
+- Restore deleted files from **Trash** for up to 30 days.
+- Browse your connections and add new ones with **Add Connection**.
+
+In pipelines, DataBox appears as the [Prophecy File System](/data-analysis/environment/connections/prophecy-file-system) connection.
+
+## Connections in Professional Edition
+
+[Professional Edition](/data-analysis/getting-started/professional-edition) now supports connections and secrets. Add a [connection](/data-analysis/environment/connections/connections) from DataBox to work with data from platforms such as Databricks, Snowflake, and BigQuery.
+
+## DataBox configuration
+
+DataBox is off by default for self-hosted deployments. To turn it on, cluster admins set up an S3 bucket and IAM role, then set `DATABOX_ENABLED` in the orchestrator, UI, and Agent sandbox ConfigMaps. See [DataBox configuration](/administration/management/cluster-admin-settings/databox-config).
+
 ## Snowflake password authentication is deprecated
 
 Snowflake is deprecating password-based sign-in for service users, enforced starting October 2026. Snowflake fabrics and connections that authenticate with a username and password stop working once Snowflake enforces the cutover. Use key-pair or OAuth authentication instead.
