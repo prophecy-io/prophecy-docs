@@ -7,9 +7,9 @@ description: 'Features and enhancements from new releases'
 
 ## DataBox
 
-Available for the Professional Edition, [DataBox](/data-analysis/getting-started/databox) is file storage that Prophecy manages for your team. Upload files once, then use them across projects, add them to pipelines as sources, and give the Agent access to them. Each fabric has one DataBox, shared by everyone who uses that fabric.
+Available for the Professional Edition, [DataBox](/data-analysis/getting-started/databox) is a file storage system that Prophecy manages for your team. Upload files once, then use them across projects, add them to pipelines as sources, and give the Agent access to them. Each fabric has one DataBox, shared by everyone who uses that fabric.
 
-Files you upload in the Agent chat or onto the canvas are stored in DataBox, in the project's folder. The Agent can also browse, read, upload, organize, and delete DataBox files, and it asks for confirmation before deleting anything.
+When you upload files into Agent chat or onto the canvas, these files are stored in DataBox in the project's folder. The Agent can also browse, read, upload, organize, and delete DataBox files; the Agent asks for confirmation before deleting anything.
 
 Open DataBox from the left navigation bar, or from the **DataBox** icon on the pipeline canvas. From DataBox you can:
 
@@ -26,9 +26,6 @@ In pipelines, DataBox appears as the [Prophecy File System](/data-analysis/envir
 
 [Professional Edition](/data-analysis/getting-started/professional-edition) now supports connections and secrets. Add a [connection](/data-analysis/environment/connections/connections) from DataBox to work with data from platforms such as Databricks, Snowflake, and BigQuery.
 
-## DataBox configuration
-
-DataBox is off by default for self-hosted deployments. To turn it on, cluster admins set up an S3 bucket and IAM role, then set `DATABOX_ENABLED` in the orchestrator, UI, and Agent sandbox ConfigMaps. See [DataBox configuration](/administration/management/cluster-admin-settings/databox-config).
 
 ## Snowflake password authentication is deprecated
 
