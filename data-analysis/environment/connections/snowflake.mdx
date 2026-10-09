@@ -57,7 +57,36 @@ To create a connection with Snowflake, enter the following parameters:
 | Schema                | Default schema for reading and writing data |
 | Warehouse             | Name of the Snowflake virtual warehouse used to execute queries for this connection |
 | Role                  | Snowflake [role](https://docs.snowflake.com/en/user-guide/security-access-control-overview) used for the connection. Use a role with only the privileges listed in [Prerequisites](#prerequisites).<br />Example: `PROPHECY_ROLE` |
-| Authentication method | Use key-pair or OAuth authentication. To learn how to configure these methods, see [Create a Snowflake fabric](/data-analysis/environment/fabrics/create-fabrics/snowflake).<br />Password authentication is deprecated. If you still use it, enter your Snowflake username and use a [secret](/data-analysis/environment/secrets/secrets) to enter your password. |
+| Authentication method | Use key-pair or OAuth authentication. To configure key-pair authentication, see [Key-pair authentication](#key-pair-authentication). To configure OAuth, see [Create a Snowflake fabric](/data-analysis/environment/fabrics/create-fabrics/snowflake#oauth). OAuth requires a Snowflake app registration that a cluster admin creates. See [OAuth app registrations](/administration/management/cluster-admin-settings/oauth-setup).<br />Password authentication is deprecated. If you still use it, enter your Snowflake username and use a [secret](/data-analysis/environment/secrets/secrets) to enter your password. |
+
+### Key-pair authentication
+
+Key-pair authentication signs in to Snowflake with an RSA private key that you store in a Prophecy [secret](/data-analysis/environment/secrets/secrets). Before you begin, [assign the public key](https://docs.snowflake.com/en/user-guide/key-pair-auth) to the Snowflake user that the connection uses.
+
+The private key must be an unencrypted PKCS#8 key. The first line of the key file must be `-----BEGIN PRIVATE KEY-----`. If your key is encrypted (`-----BEGIN ENCRYPTED PRIVATE KEY-----`) or in PKCS#1 format (`-----BEGIN RSA PRIVATE KEY-----`), convert it with OpenSSL:
+
+```bash
+openssl pkey -in rsa_key.p8 -out rsa_key_unencrypted.p8
+```
+
+To configure key-pair authentication:
+
+1. In the fabric, create a **Text** secret. Click **Or Upload File** and upload the private key file.
+
+   Upload the file instead of pasting the key into **Value**. Pasting can remove the line breaks the key requires.
+
+1. In the connection, under **Authentication method**, select **Key Pair**.
+1. Enter the **Username** of the Snowflake user that has the public key assigned.
+1. For **Private Key**, select the secret you created.
+1. Leave **Private Key Passphrase (Optional)** empty.
+
+<Note>
+Key-pair authentication doesn't support passphrase-protected private keys. Use an unencrypted private key.
+</Note>
+
+<Warning>
+Anyone with the unencrypted key file can sign in as its Snowflake user. After you upload the key to the secret, delete the local file or store it securely.
+</Warning>
 
 ## Data type mapping
 

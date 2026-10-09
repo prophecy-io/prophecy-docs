@@ -1803,6 +1803,11 @@
   },
   "redirects": [
     {
+      "source": "/data-engineering/administration/management/cluster-admin-settings/oauth-setup",
+      "destination": "/administration/management/cluster-admin-settings/oauth-setup",
+      "permanent": true
+    },
+    {
       "source": "/data-analysis/ai/agent/harmonization/data-analysis/getting-started/professional-edition",
       "destination": "/data-analysis/getting-started/professional-edition",
       "permanent": true

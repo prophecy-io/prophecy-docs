@@ -107,6 +107,12 @@ Key-pair authentication uses an RSA key pair instead of a password.
 1. Enter the **Username**.
 1. Upload your **Private Key** file.
 
+The private key must be an unencrypted PKCS#8 key. The first line of the key file must be `-----BEGIN PRIVATE KEY-----`. If your key is encrypted (`-----BEGIN ENCRYPTED PRIVATE KEY-----`) or in PKCS#1 format (`-----BEGIN RSA PRIVATE KEY-----`), convert it with OpenSSL:
+
+```bash
+openssl pkey -in rsa_key.p8 -out rsa_key_unencrypted.p8
+```
+
 <Note>
 Key-pair authentication doesn't support passphrase-protected private keys. Use an unencrypted private key or a different authentication method.
 </Note>
@@ -115,7 +121,9 @@ Key-pair authentication doesn't support passphrase-protected private keys. Use a
 
 Use OAuth when an identity provider or service principal manages authentication.
 
-Select an **App Registration** from the dropdown. The dropdown lists the OAuth app registrations your cluster admin has configured for Snowflake, including native Snowflake OAuth registrations and any [ID Anywhere (Snowflake)](/administration/management/cluster-admin-settings/oauth-setup) registrations. ID Anywhere registrations authenticate through an ADFS or ID Anywhere identity provider instead of Snowflake's native OAuth. If the registration you need isn't listed, ask your cluster admin to add it under **Settings** > **Admin** > **Security**.
+Select an **App Registration** from the dropdown. The dropdown lists the OAuth app registrations your cluster admin has configured for Snowflake, including native **Snowflake** registrations and any **ID Anywhere (Snowflake)** registrations. ID Anywhere registrations authenticate through an ADFS or ID Anywhere identity provider instead of Snowflake's native OAuth. If the registration you need isn't listed, ask your cluster admin to add it under **Settings** > **Admin** > **Security**. To learn how to create app registrations, see [OAuth app registrations](/administration/management/cluster-admin-settings/oauth-setup).
+
+If sign-in through an ID Anywhere (Snowflake) registration fails with a claim mismatch error, the claim that carries the Snowflake username in the ADFS access token doesn't match Snowflake's `EXTERNAL_OAUTH_TOKEN_USER_MAPPING_CLAIM`. Ask your cluster admin to check the [ID Anywhere (Snowflake) setup](/administration/management/cluster-admin-settings/oauth-setup#id-anywhere-snowflake).
 
 ## Migrate from password authentication
 
