@@ -1,28 +1,28 @@
 ---
-title: Databox configuration
-description: Enable and configure Databox file storage for your Prophecy deployment
+title: DataBox configuration
+description: Enable and configure DataBox file storage for your Prophecy deployment
 ---
 
 <Callout icon="/images/icon.png" color="#FFC107">
   Applicable to the [Express and Enterprise Editions](/administration/platform/editions) only.
 </Callout>
 
-Databox gives every fabric a place to upload, browse, and share files. Files in Databox are available to agents and can be used as a source or target in pipelines. This page covers how to enable Databox on a self-hosted deployment and the infrastructure it requires.
+DataBox gives every fabric a place to upload, browse, and share files. Files in DataBox are available to agents and can be used as a source or target in pipelines. This page covers how to enable DataBox on a self-hosted deployment and the infrastructure it requires.
 
-Databox is off by default. No fabric gets a Databox until you enable it with the settings below.
+DataBox is off by default. No fabric gets a DataBox until you enable it with the settings below.
 
 ## Prerequisites
 
 - Kubernetes access to the namespace where Prophecy is deployed.
-- An S3 bucket for Databox files.
+- An S3 bucket for DataBox files.
 - An IAM role that Prophecy can assume to read, write, list, and delete objects under `<bucket>/databox/*`.
 
 <Warning>
   The IAM role must grant `ListBucket` with an `s3:prefix` condition of `databox/*`. If you scope
-  the role to a narrower prefix, every Databox request is denied.
+  the role to a narrower prefix, every DataBox request is denied.
 </Warning>
 
-## Configure Databox storage
+## Configure DataBox storage
 
 Add the following keys under `data` in the `orchestrator-cm` ConfigMap. If the ConfigMap already exists, append them to it.
 
@@ -43,8 +43,8 @@ data:
 
 | Setting                  | Required                             | Description                                                                                          |
 | ------------------------ | ------------------------------------ | ---------------------------------------------------------------------------------------------------- |
-| `DATABOX_ENABLED`        | Yes                                  | Turns on Databox for the deployment.                                                                 |
-| `DATABOX_S3_BUCKET`      | Yes                                  | The S3 bucket that stores Databox files.                                                             |
+| `DATABOX_ENABLED`        | Yes                                  | Turns on DataBox for the deployment.                                                                 |
+| `DATABOX_S3_BUCKET`      | Yes                                  | The S3 bucket that stores DataBox files.                                                             |
 | `DATABOX_ROLE_ARN`       | Yes                                  | The IAM role Prophecy assumes to access the bucket.                                                  |
 | `DATABOX_S3_REGION`      | Only if the bucket isn't `us-west-1` | The bucket's AWS region.                                                                             |
 | `KNOWLEDGEGRAPH_ENABLED` | Yes                                  | Lets deleted files go to a trash where they stay recoverable for 30 days. Without it, deletes are permanent. |
@@ -61,6 +61,50 @@ Restart the orchestrator to pick up the changes:
 ```bash
 kubectl -n <namespace> rollout restart deploy orchestrator-<namespace>
 ```
+
+## Enable DataBox in the UI and Agent
+
+The orchestrator setting turns on DataBox storage only. The Prophecy UI and the Agent each read `DATABOX_ENABLED` from their own ConfigMap, so set it in both.
+
+To show DataBox in the UI, add the key to the Prophecy environment ConfigMap. By default, this ConfigMap is named `<release-name>-env-cm`.
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: <release-name>-env-cm
+  namespace: <namespace>
+data:
+  DATABOX_ENABLED: "true"
+```
+
+To give the Agent access to DataBox files, add the key to the `sql-sandbox-config-map` ConfigMap:
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sql-sandbox-config-map
+  namespace: <namespace>
+data:
+  DATABOX_ENABLED: "true"
+```
+
+Apply each configuration:
+
+```bash
+kubectl apply -f <filename>.yaml
+```
+
+<Note>
+  If `DATABOX_ENABLED` is set in the orchestrator but not in the UI, the DataBox page, the canvas
+  DataBox panel, and the **ProphecyFileSystem** connection don't appear. If it's not set in
+  `sql-sandbox-config-map`, the Agent can't read or manage DataBox files.
+</Note>
+
+## Access to files
+
+DataBox is scoped to a fabric. Everyone with access to a fabric can read, replace, and delete every file in that fabric's DataBox, including files in other users' personal folders. Files in one fabric's DataBox aren't accessible from another fabric.
 
 ## Infrastructure requirements
 
