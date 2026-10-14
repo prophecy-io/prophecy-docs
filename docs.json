@@ -1840,6 +1840,11 @@
       "permanent": true
     },
     {
+      "source": "/data-analysis/ai/agent/chat/revert",
+      "destination": "/data-analysis/ai/agent/chat/using-chat",
+      "permanent": true
+    },
+    {
       "source": "/data-analysis/gems/data-analysis/development/runs/data-explorer/data-explorer",
       "destination": "/data-analysis/development/runs/data-explorer/data-explorer",
       "permanent": true
