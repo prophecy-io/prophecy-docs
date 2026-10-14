@@ -195,7 +195,7 @@ You can choose:
 * **Always allow** to approve the current run and skip the prompt for later pipeline runs in the current session.
 * **Deny** to prevent the run.
 
-{/* TODO(eng): Confirm what ends a session for Always allow (page reload, new chat, closing the project). Grants are in-memory and cleared when the Agent connection closes. */}
+**Always allow** applies only to the current session. If you refresh the page, the Agent prompts for approval again.
 
 This confirmation step helps prevent unintended data modifications while giving you control over Agent-initiated pipeline runs.
 
