@@ -44,7 +44,7 @@ When you write data through a Snowflake connection, Prophecy uploads Parquet fil
 ## Connection parameters
 
 <Warning>
-Starting October 2026, Snowflake enforces the deprecation of password-based sign-in for service users. Connections that authenticate with a username and password stop working once Snowflake enforces the cutover. Prophecy flags affected connections with a **Password auth** badge on the **Connections** tab. Move these connections to [key-pair or OAuth authentication](/data-analysis/environment/fabrics/create-fabrics/snowflake).
+Starting October 2026, Snowflake enforces the deprecation of password-based sign-in for service users. Connections that authenticate with a username and password stop working once Snowflake enforces the cutover. Prophecy flags affected connections with a **Password auth** badge on the **Connections** tab. Move these connections to [key-pair, OAuth, or OIDC authentication](/data-analysis/environment/fabrics/create-fabrics/snowflake#authentication-methods).
 </Warning>
 
 To create a connection with Snowflake, enter the following parameters:
@@ -57,7 +57,7 @@ To create a connection with Snowflake, enter the following parameters:
 | Schema                | Default schema for reading and writing data |
 | Warehouse             | Name of the Snowflake virtual warehouse used to execute queries for this connection |
 | Role                  | Snowflake [role](https://docs.snowflake.com/en/user-guide/security-access-control-overview) used for the connection. Use a role with only the privileges listed in [Prerequisites](#prerequisites).<br />Example: `PROPHECY_ROLE` |
-| Authentication method | Use key-pair or OAuth authentication. To configure key-pair authentication, see [Key-pair authentication](#key-pair-authentication). To configure OAuth, see [Create a Snowflake fabric](/data-analysis/environment/fabrics/create-fabrics/snowflake#oauth). OAuth requires a Snowflake app registration that a cluster admin creates. See [OAuth app registrations](/administration/management/cluster-admin-settings/oauth-setup).<br />Password authentication is deprecated. If you still use it, enter your Snowflake username and use a [secret](/data-analysis/environment/secrets/secrets) to enter your password. |
+| Authentication method | Use key-pair, OAuth, or OIDC authentication. To configure key-pair authentication, see [Key-pair authentication](#key-pair-authentication). To configure OIDC, see [OIDC authentication](#oidc-authentication). To configure OAuth, see [Create a Snowflake fabric](/data-analysis/environment/fabrics/create-fabrics/snowflake#oauth). OAuth requires a Snowflake app registration that a cluster admin creates. See [OAuth app registrations](/administration/management/cluster-admin-settings/oauth-setup).<br />Password authentication is deprecated. If you still use it, enter your Snowflake username and use a [secret](/data-analysis/environment/secrets/secrets) to enter your password. |
 
 ### Key-pair authentication
 
@@ -87,6 +87,29 @@ Key-pair authentication doesn't support passphrase-protected private keys. Use a
 <Warning>
 Anyone with the unencrypted key file can sign in as its Snowflake user. After you upload the key to the secret, delete the local file or store it securely.
 </Warning>
+
+### OIDC authentication
+
+OIDC authentication signs in to Snowflake as a service principal whose credentials are issued by your identity provider. Prophecy exchanges these credentials for a bearer token through an OIDC federator, caches the token, and reconnects with a new token before the old one expires. OIDC doesn't require an app registration or an interactive sign-in.
+
+Unlike key-pair authentication, the certificate and private key come from your identity provider, not from a key pair registered on a Snowflake user. The connection doesn't take a username. Instead, Snowflake maps a claim in the token to a Snowflake user through an [External OAuth security integration](https://docs.snowflake.com/en/user-guide/oauth-ext-overview), which must exist before you create the connection.
+
+To configure OIDC authentication:
+
+1. In the fabric, create [secrets](/data-analysis/environment/secrets/secrets) for the service principal's certificate and private key, and for its client secret if you have one.
+1. In the connection, under **Authentication method**, select **OIDC**.
+1. Enter the **Auth Server URL** of the token issuer.
+1. Enter the **Resource** that the token is requested for.
+1. Enter the **Service Principal Client ID**.
+1. Optionally, for **Service Principal Client Secret**, select the client secret.
+1. For **Certificate**, select the certificate secret.
+1. For **Private Key**, select the private key secret.
+
+The certificate and private key are required because the federator signs a client assertion with the private key. A client secret alone cannot authenticate the connection.
+
+<Note>
+OIDC authentication requires an OIDC federator URL in the Prophecy deployment configuration. If the federator URL isn't configured, connections that use OIDC fail with the error `OIDC federator URL is not configured`. Contact your Prophecy administrator to configure it.
+</Note>
 
 ## Data type mapping
 
