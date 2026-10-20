@@ -1,0 +1,48 @@
+---
+title: Permissions and data handling
+description: Learn what DataGPT can access and how it handles your data
+---
+
+DataGPT acts on your behalf in Prophecy, with the same access you have when you sign in. This page explains what DataGPT can do with your account, how your data moves between Prophecy and your AI client, and how to control access.
+
+<Callout icon="/images/icon.png" color="#FFC107">
+  Available for the [Free and Professional Editions](/administration/platform/editions).
+</Callout>
+
+## Access to your account
+
+DataGPT signs in with your Prophecy account through the consent page you approve when you [connect DataGPT](/data-analysis/datagpt/datagpt#connect-datagpt). It can access only the projects, fabrics, connections, and files available to your account, in the workspace you last selected in Prophecy.
+
+DataGPT can't access other websites or services on your behalf. It works only with your Prophecy account.
+
+### Session length
+
+Each access token lasts 30 minutes and renews automatically. If DataGPT goes unused for 30 days, its access expires and you need to reconnect. To end access immediately, ask the AI client to [sign you out](/data-analysis/datagpt/datagpt#sign-out).
+
+## How your data is handled
+
+Prophecy calculates every number, table, and chart that DataGPT shows. The AI client is instructed not to calculate or chart your data itself, and not to download your files to read them. When you attach a data file, DataGPT uploads it to DataBox, and Prophecy reads it from there.
+
+Results appear in interactive views in the chat. These views may include sample rows from your data. Data previews are limited in size, and long results are trimmed.
+
+### What DataGPT saves
+
+- **Attached files** are saved in DataBox. See [Files and DataBox in DataGPT](/data-analysis/datagpt/files).
+- **Projects** are created when you make a request without naming a project.
+- **Changes to projects** are saved to the project's default development branch. They aren't committed or published.
+- **View results** are saved in DataBox in a hidden `.data-gpt` folder.
+
+### Credentials
+
+When you add a connection, you enter credentials in a form inside the chat. The form sends them directly to Prophecy. They're never passed to the AI client.
+
+## Confirmations
+
+DataGPT asks you to confirm before it makes changes that are hard to undo, including:
+
+- Deleting projects, pipelines, analyses, or files.
+- Creating, editing, or deleting project source files.
+- Changing metric definitions.
+- Creating warehouse tables from Excel or PDF files.
+
+Prophecy AI may also ask for your permission before taking an action.

@@ -1,0 +1,75 @@
+---
+title: DataGPT
+description: Use Prophecy from Claude and ChatGPT
+---
+
+DataGPT connects Claude and ChatGPT to your Prophecy account. Once connected, you can ask the AI client to build and run pipelines, chart your data, browse your warehouse, and work with files in [DataBox](/data-analysis/getting-started/databox), all without leaving the chat.
+
+Results come from Prophecy, not from the AI client. Pipeline canvases, data tables, analysis dashboards, and file previews appear directly in the chat as interactive views, each with an **Open in Prophecy** link to continue the work in Prophecy.
+
+<Callout icon="/images/icon.png" color="#FFC107">
+  Available for the [Free and Professional Editions](/administration/platform/editions).
+</Callout>
+
+## Supported clients
+
+You can use DataGPT from:
+
+- Claude on the web (claude.ai)
+- Claude Desktop
+- ChatGPT
+
+## Connect DataGPT
+
+DataGPT is added to your AI client as a custom connector that signs in with your Prophecy account. The connector URL is your Prophecy URL followed by `/datagpt/mcp`:
+
+```
+https://<your-prophecy-host>/datagpt/mcp
+```
+
+To connect from Claude:
+
+1. In Claude, open **Settings** > **Connectors** and select **Add custom connector**.
+1. Enter a name for the connector and the connector URL.
+1. Start the connection. Claude opens Prophecy in your browser.
+1. If you aren't signed in to Prophecy, sign in.
+1. Review the permissions and select **Allow access**.
+
+To connect from ChatGPT, add the connector URL as an app from **Settings** > **Apps**, then complete the same Prophecy sign-in and consent steps.
+
+### Permissions you grant
+
+The consent page lists the access DataGPT receives. You must grant all permissions together.
+
+| Permission                                | What it allows                                                          |
+| ----------------------------------------- | ----------------------------------------------------------------------- |
+| **Connect to your Prophecy account**      | Read your name and email.                                               |
+| **Stay signed in between chat sessions**  | Refresh access for up to 30 days, so you don't sign in every chat.      |
+| **Manage & store data files and connections** | Create, read, update, and delete data assets in your DataBox.       |
+| **Transform & restructure data**          | Run, view, and edit Prophecy pipelines.                                 |
+| **Analyze your data with Prophecy AI**    | Generate analyses based on your data.                                   |
+
+To learn what DataGPT can access and how it handles your data, see [Permissions and data handling](/data-analysis/datagpt/permissions).
+
+## Workspace and branch
+
+DataGPT works in the workspace you last selected in Prophecy. To work in a different workspace, switch workspaces in Prophecy, then return to the chat.
+
+Changes that DataGPT makes to projects are saved to the project's default development branch. You can't choose a different branch from the chat.
+
+## Reconnect DataGPT
+
+If your Prophecy session expires or is revoked, DataGPT responds with instructions to reconnect instead of running your request.
+
+1. Reconnect the connector from your AI client's settings: **Connectors** in Claude, or **Apps** in ChatGPT.
+1. Return to the chat and ask the AI client to try again, or start a new chat.
+
+## Sign out
+
+Ask the AI client to sign you out of Prophecy. DataGPT revokes its access to your account. To disconnect completely, also remove the connector from your AI client's settings.
+
+## What's next
+
+- [What you can do with DataGPT](/data-analysis/datagpt/capabilities)
+- [Files and DataBox in DataGPT](/data-analysis/datagpt/files)
+- [Permissions and data handling](/data-analysis/datagpt/permissions)
