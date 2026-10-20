@@ -64,6 +64,25 @@ const baseSettings = {
   },
 };
 
+function currentPageUrl() {
+  // origin + pathname only, so in-page anchor changes don't count as navigation
+  return window.location.origin + window.location.pathname;
+}
+
+function buildPrompts() {
+  const path = window.location.pathname;
+  const prompts = [`The user is currently viewing the documentation page ${currentPageUrl()}.`];
+
+  if (path.startsWith('/data-analysis')) {
+    prompts.push('The user is likely asking about Prophecy Data Analysis (SQL projects).');
+  } else if (path.startsWith('/data-engineering')) {
+    prompts.push('The user is likely asking about Prophecy Data Engineering (Spark projects).');
+  }
+  return prompts;
+}
+
+baseSettings.aiChatSettings.prompts = buildPrompts();
+
 // Load the original script for SidebarChat functionality
 loadScript('https://cdn.jsdelivr.net/npm/@inkeep/cxkit-js@0.5/dist/embed.js', () => {
   // Track sidebar state for toggle functionality
@@ -139,6 +158,20 @@ loadScript('https://cdn.jsdelivr.net/npm/@inkeep/cxkit-js@0.5/dist/embed.js', ()
     }
   }
 
+  let modal; // assigned when the Mintlify script loads
+let lastPage = currentPageUrl();
+
+function refreshChatContext() {
+  const page = currentPageUrl();
+  if (page === lastPage) return;
+  lastPage = page;
+
+  const aiChatSettings = { ...baseSettings.aiChatSettings, prompts: buildPrompts() };
+  baseSettings.aiChatSettings = aiChatSettings;
+  widget?.update({ aiChatSettings });
+  modal?.update?.({ aiChatSettings });
+}
+
   // Call the function when DOM is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', addSiblingButton);
@@ -170,27 +203,24 @@ loadScript('https://cdn.jsdelivr.net/npm/@inkeep/cxkit-js@0.5/dist/embed.js', ()
 
   history.pushState = function (...args) {
     originalPushState.apply(history, args);
-    setTimeout(addSiblingButton, 100);
+    setTimeout(() => { addSiblingButton(); refreshChatContext(); }, 100);
   };
 
   history.replaceState = function (...args) {
     originalReplaceState.apply(history, args);
-    setTimeout(addSiblingButton, 100);
+    setTimeout(() => { addSiblingButton(); refreshChatContext(); }, 100);
   };
 
   window.addEventListener('popstate', () => {
-    setTimeout(addSiblingButton, 100);
+    setTimeout(() => { addSiblingButton(); refreshChatContext(); }, 100);
   });
-
-  // Initialize the SidebarChat widget
-  const widget = Inkeep.SidebarChat('#inkeep-sidebar', sidebarSettings);
 
   // Load the Mintlify script for ModalSearchAndChat
   loadScript(
     'https://cdn.jsdelivr.net/npm/@inkeep/cxkit-mintlify@0.5/dist/index.js',
     () => {
       // Initialize ModalSearchAndChat component
-      Inkeep.ModalSearchAndChat(baseSettings);
+      modal = Inkeep.ModalSearchAndChat(baseSettings);
     },
     'text/javascript'
   );
