@@ -1,0 +1,79 @@
+---
+title: DataGPT configuration
+description: Enable DataGPT so your users can connect Claude and ChatGPT to Prophecy
+---
+
+[DataGPT](/data-analysis/datagpt/datagpt) lets your users connect Claude and ChatGPT to their Prophecy accounts. This page covers how to deploy DataGPT on your Prophecy cluster and configure the sign-in flow that AI clients use to connect.
+
+DataGPT is off by default. It's deployed only when you add it to your cluster's enabled apps.
+
+## How DataGPT connects
+
+DataGPT runs as a `datagpt` service in your Prophecy control plane. AI clients never reach the service directly. Instead, requests go through the Prophecy app service, which handles authentication and forwards them to DataGPT.
+
+Prophecy acts as the OAuth 2.1 authorization server for AI clients. When a user adds the DataGPT connector, the AI client registers itself with Prophecy, sends the user to Prophecy to sign in and approve access, and receives a token. Users sign in with your existing Prophecy authentication, including SSO.
+
+## Prerequisites
+
+- Access to the Helm values for your Prophecy control plane.
+- The NGINX ingress controller. The DataGPT ingress routes aren't created when the ingress controller type is `istio`.
+- A public URL for your Prophecy deployment that AI clients can reach.
+
+## Enable DataGPT
+
+1. Add `datagpt` to `prophecy.enabledapps` in your Helm values.
+
+   ```yaml
+   prophecy:
+     enabledapps: <existing-apps>,datagpt
+   ```
+
+   <Warning>
+     Setting `enabledapps` to `all`, or leaving it empty, doesn't enable DataGPT. You must list
+     `datagpt` explicitly.
+   </Warning>
+
+1. Set the OAuth issuer for the Prophecy app service to your deployment's public URL:
+
+   ```
+   APP_OAUTH2_ISSUER=https://<your-prophecy-host>
+   ```
+
+1. Set the domain for the DataGPT service to your deployment's host name:
+
+   ```
+   DOMAIN_VALUE=<your-prophecy-host>
+   ```
+
+1. Apply the Helm upgrade.
+
+When DataGPT is enabled, Prophecy creates the `datagpt` service and two ingress routes:
+
+| Route                                    | Purpose                                                        |
+| ---------------------------------------- | -------------------------------------------------------------- |
+| `/datagpt`                               | The DataGPT connector endpoint, including `/datagpt/mcp`.      |
+| `/.well-known/oauth-authorization-server` | OAuth discovery for AI clients.                               |
+
+Users connect with the connector URL `https://<your-prophecy-host>/datagpt/mcp`.
+
+## OAuth settings
+
+The following optional settings on the Prophecy app service control how AI clients register and how long access lasts.
+
+| Setting                                    | Default              | Description                                                                                                                                                       |
+| ------------------------------------------ | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `APP_OAUTH2_VERIFIED_CLIENTS`              | None                 | AI clients to show as verified on the consent page, identified by their redirect hosts. Use the format `Name\|host\|host`, with multiple clients separated by commas. Clients not in the list can still connect, but the consent page marks them as unverified. |
+| `APP_OAUTH2_ALLOWLIST_ONLY`                | `false`              | When `true`, only clients listed in `APP_OAUTH2_VERIFIED_CLIENTS` can connect.                                                                                    |
+| `APP_OAUTH2_ACCESS_TOKEN_TTL_SECONDS`      | `1800` (30 minutes)  | How long each access token is valid. Tokens are verified without a server check, so a revoked connection can keep working until its token expires.                |
+| `APP_OAUTH2_GRANT_IDLE_TIMEOUT_SECONDS`    | `2592000` (30 days)  | How long a connection can go unused before the user must reconnect. Set to `0` to disable.                                                                        |
+| `APP_OAUTH2_AUTHORIZATION_CODE_TTL_SECONDS` | `60`                | How long an authorization code is valid during sign-in.                                                                                                           |
+| `APP_OAUTH2_CONSENT_REQUEST_TTL_SECONDS`   | `600` (10 minutes)   | How long a user has to approve the consent page.                                                                                                                  |
+| `APP_OAUTH2_SIGNING_PRIVATE_KEY`, `APP_OAUTH2_SIGNING_PUBLIC_KEY` | None | The key pair used to sign tokens. If you don't set them, Prophecy generates a key pair and stores it.                                                    |
+
+## Limits
+
+| Limit                 | Value                                    |
+| --------------------- | ---------------------------------------- |
+| Request body size     | 2 GB through the `/datagpt` route.       |
+| Request timeout       | 300 seconds for reads and sends.         |
+| DataGPT replicas      | 1                                        |
