@@ -82,6 +82,7 @@ Choose one of the supported authentication methods:
 - **Basic Auth** — Authenticate using a username and password stored in a [Username & Password secret](/data-analysis/environment/secrets/secrets).
 - **Bearer Token** — Authenticate using a bearer token. Select an existing secret to supply the token value, or enter a new token as a secret.
 - **API Key** — Send an API key in either a request header or query parameter.
+- **Connection** — Authenticate using a bearer token from a [REST API connection](/data-analysis/environment/connections/rest-api). Select the connection under **REST API Connection**. Use a connection with the **OIDC** authentication method for scheduled and deployed pipelines, because it doesn't require an interactive sign-in.
 
 You can also configure:
 
@@ -203,6 +204,7 @@ If requests return `401 Unauthorized` or `403 Forbidden`:
 - Verify that the token or credentials are correct and have not expired.
 - Check that the secret is attached to the correct fabric.
 - If using **None** authentication, confirm that the `Authorization` header is formatted correctly. Bearer tokens should use the format `Bearer <token>`.
+- If using a REST API connection with **OIDC** authentication, test the connection to confirm that the identity provider issues a token. If token endpoint discovery fails, enter the **Token Endpoint** in the connection explicitly.
 
 ### Unexpected response shape
 

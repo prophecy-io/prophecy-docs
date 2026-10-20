@@ -209,4 +209,158 @@ Reference to a Prophecy secret containing the OAuth client secret.
 
 </Tab>
 
+<Tab title="OIDC">
+
+<ParamField body="authType" type="string" required>
+
+Authentication method for your Databricks connection. Must be `oidc` for OIDC authentication.
+
+</ParamField>
+
+<ParamField body="jdbcUrl" type="string" required>
+
+JDBC connection URL for the Databricks SQL warehouse.
+
+Format: `jdbc:databricks://{workspace - url}:{port}/{database};transportMode=http;ssl=1;AuthMech=3;httpPath={http - path};`
+
+</ParamField>
+
+<ParamField body="catalog" type="string" required>
+  Unity Catalog catalog name for the default write location.
+</ParamField>
+
+<ParamField body="schema" type="string" required>
+  Schema name within the catalog for the default write location.
+</ParamField>
+
+<ParamField body="authServerUrl" type="string" required>
+  URL of the token issuer.
+</ParamField>
+
+<ParamField body="resource" type="string" required>
+  Resource that the token is requested for.
+</ParamField>
+
+<ParamField body="clientId" type="string" required>
+  Client ID of the service principal.
+</ParamField>
+
+<ParamField body="clientSecret" type="object">
+
+Reference to a Prophecy secret containing the service principal client secret. Optional, because the certificate and private key authenticate the service principal.
+
+- When using the [create connection API](/api-reference/connections/add-connection-to-fabric), the secret must be stored in Prophecy before creating the connection.
+- When using the [create fabric API](/api-reference/fabrics/create-a-new-fabric), replace this whole object with the string `{{SECRET}}`, which references the secret being created in parallel to the connection.
+
+<Expandable title="clientSecret properties">
+<ParamField body="clientSecret.kind" type="string" required>
+  Secret kind. Must be `prophecy`.
+</ParamField>
+
+<ParamField body="clientSecret.subKind" type="string" required>
+  Secret sub-type, such as `text`.
+</ParamField>
+
+<ParamField body="clientSecret.type" type="string" required>
+  Type of reference. Must be `secret`.
+</ParamField>
+
+<ParamField body="clientSecret.properties" type="object" required>
+  Properties identifying the secret by ID and name.
+</ParamField>
+
+<ParamField body="clientSecret.properties.id" type="string" required>
+  The ID of the secret stored in Prophecy. Find the ID using the [List secrets per fabric
+  API](/api-reference/secrets/list-secrets-per-fabric).
+</ParamField>
+
+<ParamField body="clientSecret.properties.name" type="string" required>
+  The name of the secret stored in Prophecy.
+</ParamField>
+
+</Expandable>
+
+</ParamField>
+
+<ParamField body="certificate" type="object" required>
+
+Reference to a Prophecy secret containing the service principal's PEM certificate.
+
+- When using the [create connection API](/api-reference/connections/add-connection-to-fabric), the secret must be stored in Prophecy before creating the connection.
+- When using the [create fabric API](/api-reference/fabrics/create-a-new-fabric), replace this whole object with the string `{{SECRET}}`, which references the secret being created in parallel to the connection.
+
+<Expandable title="certificate properties">
+<ParamField body="certificate.kind" type="string" required>
+  Secret kind. Must be `prophecy`.
+</ParamField>
+
+<ParamField body="certificate.subKind" type="string" required>
+  Secret sub-type, such as `text`.
+</ParamField>
+
+<ParamField body="certificate.type" type="string" required>
+  Type of reference. Must be `secret`.
+</ParamField>
+
+<ParamField body="certificate.properties" type="object" required>
+  Properties identifying the secret by ID and name.
+</ParamField>
+
+<ParamField body="certificate.properties.id" type="string" required>
+  The ID of the secret stored in Prophecy. Find the ID using the [List secrets per fabric
+  API](/api-reference/secrets/list-secrets-per-fabric).
+</ParamField>
+
+<ParamField body="certificate.properties.name" type="string" required>
+  The name of the secret stored in Prophecy.
+</ParamField>
+
+</Expandable>
+
+</ParamField>
+
+<ParamField body="privateKey" type="object" required>
+
+Reference to a Prophecy secret containing the service principal's PEM private key.
+
+- When using the [create connection API](/api-reference/connections/add-connection-to-fabric), the secret must be stored in Prophecy before creating the connection.
+- When using the [create fabric API](/api-reference/fabrics/create-a-new-fabric), replace this whole object with the string `{{SECRET}}`, which references the secret being created in parallel to the connection.
+
+<Expandable title="privateKey properties">
+<ParamField body="privateKey.kind" type="string" required>
+  Secret kind. Must be `prophecy`.
+</ParamField>
+
+<ParamField body="privateKey.subKind" type="string" required>
+  Secret sub-type, such as `text`.
+</ParamField>
+
+<ParamField body="privateKey.type" type="string" required>
+  Type of reference. Must be `secret`.
+</ParamField>
+
+<ParamField body="privateKey.properties" type="object" required>
+  Properties identifying the secret by ID and name.
+</ParamField>
+
+<ParamField body="privateKey.properties.id" type="string" required>
+  The ID of the secret stored in Prophecy. Find the ID using the [List secrets per fabric
+  API](/api-reference/secrets/list-secrets-per-fabric).
+</ParamField>
+
+<ParamField body="privateKey.properties.name" type="string" required>
+  The name of the secret stored in Prophecy.
+</ParamField>
+
+</Expandable>
+
+</ParamField>
+
+<ParamField body="kgConfig" type="object">
+  Knowledge graph configuration settings for the connection. See the [Knowledge graph
+  indexer](/api-reference/connections/properties/kgconfig) properties for more information.
+</ParamField>
+
+</Tab>
+
 </Tabs>
