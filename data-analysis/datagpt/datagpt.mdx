@@ -29,18 +29,41 @@ https://<your-prophecy-host>/datagpt/mcp
 
 To connect from Claude:
 
-1. In Claude, open **Settings** > **Connectors** and select **Add custom connector**.
-1. Enter a name for the connector and the connector URL.
-1. Start the connection. Claude opens Prophecy in your browser.
+1. In Claude, open **Settings** > **Connectors**.
+1. Click **Add**, and then select **Custom connector**.
+1. Enter a name for the connector, such as `DataGPT`, and the connector URL:
+
+```
+   https://<your-prophecy-host>/datagpt/mcp
+```
+
+1. Leave the other settings at their defaults, and then click **Add**.
+1. Click **Connect**. Claude opens Prophecy in your browser.
 1. If you aren't signed in to Prophecy, sign in.
-1. Review the permissions and select **Allow access**.
+1. Review the permissions that DataGPT requests, and then click **Allow access**.
+
+DataGPT is now connected to Claude.
+
+<Note>
+  On Team and Enterprise plans, an Owner must first add the custom connector to your organization. After that, members open **Settings** > **Connectors** and click **Connect** next to DataGPT.
+</Note>
 
 To connect from ChatGPT:
 
-1. In ChatGPT, open **Settings** > **Apps** and add a new app with the connector URL.
-1. Set the authentication method to **OAuth**.
-1. Start the connection, then sign in to Prophecy if prompted.
-1. Review the permissions and select **Allow access**.
+1. In ChatGPT, open **Settings** and scroll to **Plugins**.
+1. Click **Browse directory**, click **Add**, and then select **Add custom MCP server**.
+1. Enter a name for the plugin, such as `DataGPT`.
+1. Enter the connector URL:
+```
+https://<your-prophecy-host>/datagpt/mcp
+
+```
+1. Leave the OAuth settings at their defaults.
+1. Click **Create**.
+1. In the dialog that opens, click **Connect DataGPT**. If you aren't signed in to Prophecy, sign in.
+1. Review the permissions that DataGPT requests, and then click **Allow access**.
+
+ChatGPT installs the DataGPT plugin.
 
 ### Permissions you grant
 
