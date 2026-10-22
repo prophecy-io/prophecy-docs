@@ -22,6 +22,16 @@ By default, Prophecy uses **Prophecy Managed** authentication. This option requi
 
 If you set up SSO after creating users in Prophecy, sign-ins will map to existing users if the sign-in email matches the user email in Prophecy.
 
+## Automatic SSO sign-in
+
+When your deployment uses a single SSO provider, Prophecy skips its own sign-in page for returning SSO users. If you previously signed in with SSO in your browser, Prophecy sends you directly to your identity provider the next time you open Prophecy. If your identity provider session is still active, you're signed in to Prophecy without entering credentials.
+
+Signing out of Prophecy turns this off in that browser, so your next visit shows the Prophecy sign-in page.
+
+To reach the Prophecy sign-in page directly, for example to sign in with a Prophecy-managed account, add `?autoLogin=false` to your Prophecy URL.
+
+Automatic sign-in doesn't apply to deployments with more than one SSO provider.
+
 ## Fabric OAuth
 
 To set up OAuth for fabric connection authentication, see [OAuth app registrations](/administration/management/cluster-admin-settings/oauth-setup).
