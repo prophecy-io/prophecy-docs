@@ -102,6 +102,16 @@
                     ]
                   },
                   {
+                    "group": "DataGPT",
+                    "pages": [
+                      "data-analysis/datagpt/datagpt",
+                      "data-analysis/datagpt/datagpt-in-prophecy",
+                      "data-analysis/datagpt/capabilities",
+                      "data-analysis/datagpt/files",
+                      "data-analysis/datagpt/permissions"
+                    ]
+                  },
+                  {
                     "group": "Build and inspect pipelines",
                     "pages": [
                       {
