@@ -109,6 +109,8 @@ ad-hoc
 subqueries
 subquery
 Unmark
+Keytab
+Keytabs
 
 # Prophecy Tools
 PBT

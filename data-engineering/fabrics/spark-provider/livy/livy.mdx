@@ -39,9 +39,26 @@ Prophecy supports the following authentication types for Livy.
 
 - **Bearer Token**: Use this option to authenticate using a secure token-based system. All team members who use this fabric will use the same token configured by a team admin here for authentication.
 
-- **Kerberos**: If using a Kerberized Hadoop cluster, you can authenticate via Kerberos. For this option, Prophecy cluster admins must first add Keytab files in **Settings > Admin > Security**.
+- **Kerberos**: If using a Kerberized Hadoop cluster, you can authenticate via Kerberos. For this option, Prophecy cluster admins must first add Keytab files in **Settings > Admin > Security**. See [Add Kerberos keytabs](#add-kerberos-keytabs).
 
   You can also enable the **impersonate using Proxy-user** toggle to allow user-level authorization. Prophecy cluster admins can configure the proxy-user settings in **Settings > Admin > Security**.
+
+### Add Kerberos keytabs
+
+Prophecy stores keytab files in its metadata storage in encrypted format. Keytab changes take effect only after Prophecy restarts its services, so restart services after you finish adding or editing keytabs.
+
+To add keytabs and apply them:
+
+1. Sign in to Prophecy as an admin.
+1. Go to **Settings > Admin > Security**.
+1. Under **Keytabs for Kerberos Authentication**, click **Add Keytab File** and add each keytab you need.
+1. Click **Restart services**.
+1. In the **Restart services** dialog, select when to restart:
+   - **Restart in 15 minutes**: All users see a maintenance banner until the restart. This is the default option.
+   - **Restart now**: The restart begins immediately.
+1. Click **Schedule restart** or **Restart now**.
+
+Prophecy is unavailable to all users for about a minute during the restart. If a restart is already scheduled, the dialog shows when, and your new choice replaces the scheduled time.
 
 ## Additional Livy configurations
 
