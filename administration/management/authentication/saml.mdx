@@ -49,10 +49,40 @@ To set up SAML authentication in Prophecy:
    | Skip certificate verification | Disable TLS certificate/host verification when calling the IdP SSO endpoint.                                                                       |
    | Entity issuer                 | The entity issuer you configured in the IdP. Usually, this is the label for your SAML configuration.                                               |
    | SSO issuer                    | The SSO issuer. For Azure AD this is the Azure AD Identifier; for Okta, it is the issuer link in the XML.                                          |
+   | Enable Single Logout          | When on, signing out of Prophecy also signs the user out of your IdP. See [Set up single logout](#set-up-single-logout).                          |
+   | Single Logout URL             | Your IdP's Single Logout endpoint, from its metadata. Required when **Enable Single Logout** is on.                                                 |
+   | Sign single logout (SLO) messages | Signs the single logout messages Prophecy sends to your IdP. Available after you save Single Logout settings and generate a signature certificate. |
+   | Generate Signature Certificate | Creates a signing certificate for single logout messages and downloads it as `prophecy-slo-signing.crt`.                                          |
 
 1. Click **Save** at the bottom of the page to save your changes.
 
-![SSO settings for SAML and SCIM configurations](/administration/management/authentication/img/sso-scim.png)
+### Set up single logout
+
+Single logout (SLO) keeps Prophecy and IdP sessions in sync when a user signs out:
+
+- When **Enable Single Logout** is on, signing out of Prophecy also signs the user out of your IdP. If the IdP sign-out fails, the user is still signed out of Prophecy.
+- When a user signs out of your IdP, their Prophecy session ends. This works whenever the Prophecy logout URL is registered in your IdP, even if **Enable Single Logout** is off.
+
+To set up single logout:
+
+1. Navigate to the **SSO** tab of the Prophecy **Settings** page.
+1. Turn on **Enable Single Logout**.
+1. In **Single Logout URL**, enter the Single Logout endpoint from your IdP metadata.
+1. Click **Save**.
+1. In your IdP's SAML settings, set the single logout URL to `https://your-prophecy-ide-url.domain/api/oauth/samlLogout`.
+
+To sign the single logout messages that Prophecy sends to your IdP:
+
+1. Click **Generate Signature Certificate**. Prophecy downloads the certificate as `prophecy-slo-signing.crt`.
+1. Upload the certificate to your IdP's signature certificate field.
+1. Turn on **Sign single logout (SLO) messages**.
+1. Click **Save**.
+
+<Warning>
+  Generating a new certificate replaces the current one immediately. Single logout fails until you upload the new certificate to your IdP.
+</Warning>
+
+If the **SSO** tab shows "Single Logout is turned off for this deployment, so these settings have no effect," single logout is turned off at the deployment level, and these settings don't apply.
 
 ### Set up SCIM
 
