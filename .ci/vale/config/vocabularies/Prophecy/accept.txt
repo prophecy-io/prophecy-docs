@@ -43,6 +43,7 @@ athena
 Anthropic
 DataBox
 DataGPT
+workspace's
 
 # Prophecy Concepts
 Subgraph

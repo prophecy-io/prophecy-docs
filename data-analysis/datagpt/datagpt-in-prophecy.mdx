@@ -1,0 +1,60 @@
+---
+title: Use DataGPT in Prophecy
+description: Chat with DataGPT directly in Prophecy
+---
+
+You can use DataGPT directly in Prophecy, without connecting Claude or ChatGPT. DataGPT in Prophecy works across your projects: ask questions about your data, attach files, and build analyses and pipelines from one chat. Results appear in the same interactive views you see in Claude and ChatGPT.
+
+DataGPT in Prophecy uses your Prophecy sign-in, so there's no connector to set up.
+
+<Callout icon="/images/icon.png" color="#FFC107">
+  Available for the [Free and Professional Editions](/administration/platform/editions).
+</Callout>
+
+## Open DataGPT
+
+You can start a DataGPT chat in two ways:
+
+- Select **DataGPT** in the left navigation bar.
+- On the home page, enter a prompt or attach files. Prophecy opens a new DataGPT chat with your prompt and files.
+
+## Start a chat
+
+1. In the message box, describe what you want to know or do.
+1. To attach files, select **Attach files** or drag files anywhere onto the page. Wait for the files to finish uploading.
+1. To refer to a project or pipeline, type `@` and select it from the list.
+1. Send the message.
+
+The first message in a new chat can take a moment while DataGPT starts. If DataGPT isn't ready yet, try again shortly.
+
+Attached files are saved in your personal [DataBox](/data-analysis/getting-started/databox) folder, in a `user-uploads` folder. If you ask DataGPT to put a file somewhere else, it moves the file there.
+
+## Work in a chat
+
+As DataGPT works, the chat shows each step it takes, followed by its answer. Interactive views, such as pipeline canvases, data tables, and analysis dashboards, appear right after the step that created them.
+
+- To expand a view, use its full-screen control. Press **Escape** to return to the chat.
+- To open a result in Prophecy, select **Open in Prophecy** in the view.
+- To stop DataGPT while it's working, select the stop button in the message box.
+
+If DataGPT needs more information or your permission, it shows a question above the message box. When several questions are waiting, a counter shows how many remain.
+
+If you send a message while DataGPT is still working, the message is queued and sent when DataGPT finishes. Queued messages appear above the message box, where you can remove them before they're sent.
+
+To learn what DataGPT can do, see [What you can do with DataGPT](/data-analysis/datagpt/capabilities).
+
+## Manage chats
+
+The chat list shows your chats in the current workspace. DataGPT names each chat automatically after your first messages.
+
+- To start a new chat, select **New chat**.
+- To find a chat by name, use **Search chats**.
+- To rename, pin, or delete a chat, open the chat's menu in the list or in the chat header. You can also double-click a chat in the list to rename it.
+
+Pinned chats appear in the **Pinned** section at the top of the list. Deleting a chat can't be undone.
+
+## How DataGPT in Prophecy differs from Claude and ChatGPT
+
+- DataGPT in Prophecy uses your Prophecy session. To sign out, sign out of Prophecy.
+- DataGPT in Prophecy uses the AI provider your organization configured in Prophecy.
+- Each chat runs one request at a time. If the same chat is open in another tab and DataGPT is still answering there, wait for it to finish.

@@ -13,6 +13,8 @@ DataGPT acts on your behalf in Prophecy, with the same access you have when you 
 
 DataGPT signs in with your Prophecy account through the consent page you approve when you [connect DataGPT](/data-analysis/datagpt/datagpt#connect-datagpt). It can access only the projects, fabrics, connections, and files available to your account, in the workspace you last selected in Prophecy.
 
+If your organization's Claude or ChatGPT Owner added DataGPT for everyone, each member still signs in with their own Prophecy account. A shared connector never gives members the Owner's access.
+
 DataGPT can't access other websites or services on your behalf. It works only with your Prophecy account.
 
 ### Session length
@@ -29,8 +31,8 @@ Results appear in interactive views in the chat. These views may include sample 
 
 - **Attached files** are saved in DataBox. See [Files and DataBox in DataGPT](/data-analysis/datagpt/files).
 - **Projects** are created when you make a request without naming a project.
-- **Changes to projects** are saved to the project's default development branch. They aren't committed or published.
-- **View results** are saved in DataBox in a hidden `.data-gpt` folder.
+- **Changes to projects** are saved to the project's default development branch. They're committed only when you publish the project from the chat.
+- **View results** are saved in a hidden `.data-gpt` folder in your personal DataBox folder.
 
 ### Credentials
 
@@ -42,7 +44,8 @@ DataGPT asks you to confirm before it makes changes that are hard to undo, inclu
 
 - Deleting projects, pipelines, analyses, or files.
 - Creating, editing, or deleting project source files.
-- Changing metric definitions.
-- Creating warehouse tables from Excel or PDF files.
+- Creating warehouse tables from Excel files.
+- Publishing a project.
+- Overwriting a file in DataBox when you move or copy a file.
 
 Prophecy AI may also ask for your permission before taking an action.

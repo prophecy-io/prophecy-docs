@@ -33,7 +33,7 @@ Ask DataGPT to open DataBox to browse your files in the chat. The DataBox view s
 - Select a table on a connection to see its data.
 - Add a connection.
 
-You can also ask DataGPT to search for files, create folders, move, rename, copy, or delete files. Before DataGPT deletes anything, it asks you to confirm. Files on connections are read-only.
+You can also ask DataGPT to search for files, create folders, move, rename, copy, or delete files. Before DataGPT deletes anything, it asks you to confirm. Deleted files move to the DataBox **Trash**, where you can restore them. Deleting a file that's already in the **Trash** is permanent. Files on connections are read-only.
 
 ## Preview and download files
 
@@ -51,14 +51,6 @@ DataGPT can find tables in Excel workbooks and add them to a pipeline as sources
 1. Select **Extract Tables** to create a warehouse table for each marked table.
 
 Extracted tables are created from a preview of the data, so very large tables may be created as a sample.
-
-## Extract tables and sections from PDF files
-
-1. Attach the PDF and ask DataGPT to analyze it.
-1. In the PDF view, review the tables and sections that Prophecy AI detected.
-1. Select **Save** on each item you want to keep.
-
-Saved tables become warehouse tables. Saved sections become Markdown files in your project.
 
 ## Files in cloud storage
 
