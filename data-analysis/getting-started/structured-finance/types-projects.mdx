@@ -3,7 +3,7 @@ title: Types projects
 description: Define your organization's shared business types, fields, and data checks, and publish them as versioned ontologies.
 ---
 
-A Types project holds your organization's ontology: a shared set of business types, such as Loan, Deal, and Tranche, with typed fields and data checks. Other projects can use these types as harmonization targets.
+A Types project holds your organization's ontology: a shared set of business types, such as Loan, Deal, and Tranche, with typed fields and data checks. Other projects can use these types as harmonization targets. The Agent uses types to classify incoming tapes and map their columns.
 
 You can build types by hand or have the Agent build them from a source document. When the ontology is ready, you publish it as a numbered version.
 
@@ -13,26 +13,28 @@ You can build types by hand or have the Agent build them from a source document.
 
 ## Create a Types project
 
-Only workspace admins can create a Types project. For other users, **Types project** is greyed out with the tooltip "Only workspace admins can create a Types project".
+Only workspace admins can create a Types project. For other users, **Types project** is unavailable.
 
-1. Go to **All Projects** and click **Create New → Types project**.
+1. Open **Projects** in the left navigation.
+1. Once in **Projects**, select **Create New → Types project**.
 2. In **Create a Types Project**, enter a **Name**. Use only letters, numbers, and underscores (for example, `us_auto_abs`).
 3. Optionally, enter a **Description** (for example, "Shared types for structured finance: Loan, Deal, Tranche.").
 4. Click **Create Types Project**. The project opens in the Types editor.
 
-The name is required. If it's missing, the dialog shows "Name is required". If it contains characters other than letters, numbers, and underscores, the dialog shows "SQL Project name should contain only alphanumeric and underscore".
+A project name is required. If it's missing, the dialog shows "Name is required". If it contains characters other than letters, numbers, and underscores, Prophecy rejects the name.
 
-To find Types projects later, open **All Projects** and select the **Types** filter.
+To find Types projects later, open **Projects** and select the **Types** tab.
 
 ## Build types from a source document
 
-You can have the Agent create types and fields from a source document. The upload accepts one file at a time, up to 4 GB, in XLSX, PDF, DOCX, YAML, JSON, CSV, XML, or ZIP format.
+You can have the Agent create types and fields from a source document. You can upload one file at a time. File types can be `xlsx`, `pdf`, `docx`, `yaml`, `json`, `csv`, `xml`, or `zip`, and files can be up to 4GB in size.
 
-1. On the **Create a new Types Project** screen, click **Click to upload** or drag a file into the drop zone.
-2. Click **Build Types Project**. The Agent reads the file, creates types and fields, and summarizes what it built in the chat.
-3. Review the proposed types. On each type, click **Accept all**, and then confirm in **Accept all suggestions on this type**.
+1. On the **Create a new Types Project** screen, click **Click to upload** or drag a file onto the page.
+2. Click **Build Types Project**. The Agent reads the file, creates types and fields, and summarizes what it built in the chat. (This may take a few minutes.)
+3. Review the proposed types. 
+4. For each type, click **Accept all**, and then confirm in **Accept all suggestions on this type**.
 
-## Add types
+## Add types manually
 
 A type can be a root type or a child of another type. A new type requires both a name and a description.
 
