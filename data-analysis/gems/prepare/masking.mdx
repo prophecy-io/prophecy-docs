@@ -13,7 +13,8 @@ The DataMasking gem allows you to obfuscate sensitive string data in one or more
 
 ## Prerequisites
 
-- Add `prophecy_basics` package version 1.0.0 or higher to your project.
+- Add `prophecy_basics` package version 1.0.0 or higher to your project. 
+{/*For BigQuery projects, use version `TBD` or higher.*/}
 
 ## Input and Output
 
@@ -74,6 +75,8 @@ Applies a hash function to column values. This method will apply the hash in one
 
 Applies the CRC32 hash function to each selected column. This method has no additional parameters.
 
+<Note>The `crc32` method is not available in BigQuery projects.</Note>
+
 #### `sha`
 
 Applies the SHA-1 hash function to each selected column. This method has no additional parameters.
@@ -83,6 +86,7 @@ Applies the SHA-1 hash function to each selected column. This method has no addi
 Applies the SHA-2 hashing algorithm to each selected column. This method lets you select the bit length for masking:
 
 - Bit length can be `224`, `256`, `384`, or `512`.
+- In BigQuery projects, bit length can be `256` or `512`. The default is `256`.
 
 #### `md5`
 
