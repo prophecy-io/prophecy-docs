@@ -22,14 +22,25 @@
               {
                 "tab": "Documentation",
                 "groups": [
-                  {
+                    {
                     "group": "Getting started",
                     "pages": [
                       "index",
                       "data-analysis/getting-started/concepts",
                       "data-analysis/getting-started/quick-start",
-                      "data-analysis/getting-started/professional-edition",
-                      "data-analysis/getting-started/databox",
+                      "data-analysis/getting-started/professional-edition"
+                      ]
+                      },
+                      {
+                      "group": "Use DataGPT",
+                        "pages": [
+                          "data-analysis/datagpt/datagpt",
+                          "data-analysis/datagpt/capabilities",
+                          "data-analysis/datagpt/files",
+                          "data-analysis/getting-started/databox",
+                          "data-analysis/datagpt/permissions"
+                        ]
+                      },
                       {
                         "group": "Use Structured Finance",
                         "pages": [
@@ -40,9 +51,7 @@
                           "data-analysis/getting-started/structured-finance/adhoc-document-workflows",
                           "data-analysis/getting-started/structured-finance/export-sharing"
                         ]
-                      }
-                    ]
-                  },
+                      },
                   {
                     "group": "Build with Agent",
                     "pages": [
@@ -1763,7 +1772,7 @@
               }
             ]
           }
-        ]
+          ]
   },
   "logo": {
     "light": "/images/logo/logo-light.png",

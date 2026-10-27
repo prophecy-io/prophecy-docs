@@ -1,0 +1,149 @@
+---
+title: DataGPT
+description: Use Prophecy from Claude and ChatGPT
+---
+
+DataGPT connect Prophecy to Claude, ChatGPT, or Microsoft Pilot.
+
+Once connected, you can ask Claude, ChatGPT, or Copilot to build and run pipelines, chart your data, browse your warehouse, and work with files in [DataBox](/data-analysis/getting-started/databox), all without leaving the chat.
+
+Results come from Prophecy, not from the AI client. In Claude and ChatGPT, pipeline canvases, data tables, analysis dashboards, and file previews appear directly in the chat as interactive views, each with an **Open in Prophecy** link to continue the work in Prophecy. In Microsoft Copilot, results return in the chat along with an **Open in Prophecy** link.
+
+<Callout icon="/images/icon.png" color="#FFC107">
+  Available for the [Free and Professional Editions](/administration/platform/editions).
+</Callout>
+
+
+DataGPT is added to your AI client as a custom connector that signs in with your Prophecy account. The connector URL is your Prophecy URL followed by `/datagpt/mcp`:
+
+```
+https://<your-prophecy-host>/datagpt/mcp
+```
+
+## Supported clients
+
+You can use DataGPT from:
+
+- Claude on the web (claude.ai)
+- Claude Desktop
+- ChatGPT
+- Microsoft Copilot
+
+## Connect DataGPT to Claude
+
+To connect from Claude:
+
+1. In Claude, open **Settings** > **Connectors**.
+1. Click **Add**, and then select **Custom connector**.
+1. Enter a name for the connector, such as `DataGPT`, and the connector URL:
+
+   ```
+   https://app.prophecy.ai/datagpt/mcp
+   ```
+
+1. Leave the other settings at their defaults, and then click **Add**.
+1. Click **Connect**. Claude opens Prophecy in your browser.
+1. If you aren't signed in to Prophecy, sign in.
+1. Review the permissions that DataGPT requests, and then click **Allow access**.
+
+DataGPT is now connected to Claude.
+
+<Note>
+  On Team and Enterprise plans, an Owner must first add the custom connector to your organization. After that, members open **Settings** > **Connectors** and click **Connect** next to DataGPT. Each member signs in with their own Prophecy account, so DataGPT has only the access that member has in Prophecy.
+</Note>
+
+## Connect DataGPT to ChatGPT
+
+To connect from ChatGPT:
+
+1. In ChatGPT, open **Settings** and scroll to **Plugins**.
+1. Click **Browse directory**, click **Add**, and then select **Add custom MCP server**.
+1. Enter a name for the plugin, such as `DataGPT`.
+1. Enter the connector URL:
+   ```
+   https://app.prophecy.ai/datagpt/mcp
+   ```
+1. Leave the OAuth settings at their defaults.
+1. Click **Create**.
+1. In the dialog that opens, click **Connect DataGPT**. If you aren't signed in to Prophecy, sign in.
+1. Review the permissions that DataGPT requests, and then click **Allow access**.
+
+ChatGPT installs the DataGPT plugin.
+
+## Connect DataGPT to Microsoft Copilot Studio
+
+To use Prophecy with Microsoft Copilot Studio, add the Prophecy MCP server as a tool in a Copilot Studio agent. For Microsoft's reference on MCP tools, see [Connect your agent to an existing Model Context Protocol (MCP) server](https://learn.microsoft.com/en-us/microsoft-copilot-studio/mcp-add-existing-server-to-agent).
+
+<Note>
+In Copilot Studio, Prophecy results appear as text and links. Interactive views, such as the pipeline canvas, don’t render in the chat. To see them, open the link to Prophecy.
+</Note>
+
+### Prerequisites
+
+Before you add the tool, make sure you have:
+
+- Access to Copilot Studio in a browser at `copilotstudio.microsoft.com`.
+- A Power Platform environment with a Dataverse data store.
+- The System Administrator or System Customizer security role in that environment.
+- An agent in that environment. To create one, click **Agents**, then click **Create blank agent**.
+
+### Add Prophecy as a tool
+
+To use Prophecy with Microsoft Copilot Studio, add the Prophecy MCP server as a tool in a Copilot Studio agent. You can then ask the agent to analyze data, explore tables, and build and run pipelines in Prophecy.
+
+1. In Copilot Studio, open your agent and click **Tools**.
+2. Click **Add a tool**.
+3. In the window that opens, click **Add** > **Model Context Protocol (MCP)**.
+4. Enter a name for the tool in the **Server name** field, such as "DataGPT."
+5. Describe what Prophecy does in the **Server description** field. The agent uses this description to decide when to call Prophecy, so name the tasks you want it to handle. Use text along the following lines:
+
+   ```text
+   Connects to Prophecy, a data analysis and pipeline platform. Use it to answer questions about data in the user's connected warehouses and files, explore tables and schemas, create charts and analyses, analyze uploaded spreadsheets, and build, run, and schedule SQL data pipelines in Prophecy projects.
+   ```
+
+6. In **Server URL**, enter `https://app.prophecy.ai/datagpt/mcp`.
+7. Under **Authentication**, select **OAuth 2.0**, then select **Dynamic discovery**.
+8. Click **Create**, then click **Next**.
+9. In the **Add tool** dialog, select **Create a new connection**, and sign in to Prophecy when prompted.
+10. Once in the Prophecy permissions page, approve access for Copilot Studio.
+11. Click **Add to agent**.
+12. To add the new tool to your agent, click **Tools**.
+13. In the window that opens, click **MCP**, scroll to the tool you created, and click it to add it to the agent.
+
+
+### Permissions you grant
+
+The consent page lists the access DataGPT receives. You must grant all permissions together.
+
+| Permission                                | What it allows                                                          |
+| ----------------------------------------- | ----------------------------------------------------------------------- |
+| **Connect to your Prophecy account**      | Read your name and email.                                               |
+| **Stay signed in between chat sessions**  | Refresh access for up to 30 days, so you don't sign in every chat.      |
+| **Manage & store data files and connections** | Create, read, update, and delete data assets in your DataBox.       |
+| **Transform & restructure data**          | Run, view, and edit Prophecy pipelines.                                 |
+| **Analyze your data with Prophecy AI**    | Generate analyses based on your data.                                   |
+
+To learn what DataGPT can access and how it handles your data, see [Permissions and data handling](/data-analysis/datagpt/permissions).
+
+## Workspace and branch
+
+DataGPT works in your current workspace, which is the team you last selected with the workspace switcher in Prophecy. New projects are created in this workspace, and DataGPT uses the workspace's default fabric and its DataBox unless you're working in a project with its own fabric. To work in a different workspace, switch workspaces in Prophecy, then continue in the chat.
+
+Changes that DataGPT makes to projects are saved to the project's default development branch. You can't choose a different branch from the chat.
+
+## Reconnect DataGPT
+
+If your Prophecy session expires or is revoked, DataGPT responds with instructions to reconnect instead of running your request.
+
+1. Reconnect DataGPT from your AI client's settings: **Connectors** in Claude, or **Plugins** in ChatGPT.
+1. Return to the chat and ask the AI client to try again, or start a new chat.
+
+## Sign out
+
+Ask the AI client to sign you out of Prophecy. DataGPT revokes its access to your account. To disconnect completely, also remove the connector from your AI client's settings.
+
+## What's next
+
+- [What you can do with DataGPT](/data-analysis/datagpt/capabilities)
+- [Files and DataBox in DataGPT](/data-analysis/datagpt/files)
+- [Permissions and data handling](/data-analysis/datagpt/permissions)
