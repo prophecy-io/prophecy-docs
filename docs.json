@@ -34,7 +34,7 @@
                       {
                       "group": "Use DataGPT",
                         "pages": [
-                          "data-analysis/getting-started/datagpt/datagpt",
+                          "data-analysis/getting-started/datagpt/connect-datagpt",
                           "data-analysis/getting-started/datagpt/capabilities",
                           "data-analysis/getting-started/datagpt/files",
                           "data-analysis/getting-started/datagpt/permissions"
