@@ -1819,7 +1819,7 @@
     },
     {
       "source": "/data-analysis/getting-started/databox",
-      "destination": "/data-analysis/getting-started/datagpt/databox",
+      "destination": "data-analysis/getting-started/datagpt/files",
       "permanent": true
     },
     {
