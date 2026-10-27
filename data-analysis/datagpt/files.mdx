@@ -1,0 +1,69 @@
+---
+title: Files and DataBox in DataGPT
+description: Attach, browse, and analyze files in DataGPT
+---
+
+DataGPT stores files you attach in [DataBox](/data-analysis/getting-started/databox), the file storage Prophecy manages for your team. From there, Prophecy reads the files, not the AI client. This page covers attaching files, browsing DataBox from the chat, and turning files into data you can use in pipelines and analyses
+
+<Callout icon="/images/icon.png" color="#FFC107">
+  Available for the [Free and Professional Editions](/administration/platform/editions).
+</Callout>
+
+## Attach files
+
+When you attach a file to the chat, DataGPT uploads it to DataBox:
+
+- If you're working in a project, the file goes into the project's DataBox folder.
+- Otherwise, the file goes into your personal folder.
+
+If you attach a file without a request, DataGPT shows the folder where the file was saved. If you include a request, such as a question about the data, DataGPT uploads the file and then works on your request.
+
+Files attached to the chat are stored in DataBox, even when you're working in a project. They aren't added to the project's source files unless you explicitly ask DataGPT to do so.
+
+### Upload large files
+
+Your AI client may not pass large attachments to DataGPT. If that happens, DataGPT opens the DataBox view so you can drag the file in directly. Files uploaded this way can be up to 2 GB each.
+
+## Browse DataBox
+
+Ask DataGPT to open DataBox to browse your files in the chat. The DataBox view shows your personal files, project folders, team members' folders, and connections, and includes a search bar.
+
+In the DataBox view, you can:
+
+- Drag files in to upload them.
+- Select a file to preview it.
+- Select a table on a connection to explore its data.
+- Add a connection.
+
+You can also ask DataGPT to search for files, create folders, move, rename, copy, or delete files.
+
+Before DataGPT deletes anything, it asks you to confirm. Files deleted through the DataBox browser move to **Trash**, where you can restore them. Deleting a file from **Trash** is permanent.
+
+Files on connections are read-only.
+
+## Preview and download files
+
+Select a file in DataBox to preview it in the chat. DataGPT supports previews of PDF, Excel, CSV, image, and Markdown files. Password-protected PDF and Excel files can't be previewed. Other file types show a download card instead.
+
+Select a table on a warehouse connection to open the data explorer, where you can browse rows and inspect column information.
+
+When you ask to download a file, DataGPT creates a download link that expires after 15 minutes.
+
+## Extract tables from Excel files
+
+DataGPT detects tables in Excel workbooks and lets you review them before extracting their data into warehouse tables. XLSX and XLSM files are supported. To use a legacy XLS file, save it as XLSX first.
+
+1. Attach the workbook and ask DataGPT to analyze it.
+2. In the extraction view, review the detected tables. Switch between the **Source** view, which highlights table ranges in the workbook, and the **Datasets** view, which lists the detected tables.
+3. If necessary, adjust a table's range by dragging its corners. Mark or unmark tables to include them in the extraction. Changes save automatically.
+4. Select **Extract Tables** to create a warehouse table for each selected table.
+
+The extracted tables are available through your warehouse connection for use in pipelines and analyses.
+
+For large tables, extraction may use a sample of the data rather than the entire table.
+
+## Files in cloud storage
+
+DataGPT can read files from cloud storage through your Prophecy [connections](/data-analysis/environment/connections/connections), including SharePoint, OneDrive, Amazon S3, Google Cloud Storage, SFTP, Smartsheet, and Databricks Volumes.
+
+Files in Box, Dropbox, Google Drive, and Azure storage aren't available through DataGPT. Download these files and attach them to the chat instead.
