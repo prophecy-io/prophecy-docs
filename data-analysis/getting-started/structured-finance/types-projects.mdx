@@ -36,7 +36,7 @@ You can have the Agent create types and fields from a source document. You can u
 
 ## Add types manually
 
-A type can be a root type or a child of another type. A new type requires both a name and a description.
+A type can be a root type or a child of another type. A child type can have only one parent. A new type requires both a name and a description.
 
 1. To add a root type, click **+** next to **Types** in the tree. Enter a **Name** and **Description**, and then click **Create type**.
 2. To add a child type, hover over a type in the tree and click its **+**. In **Extend \<type\>**, enter a **Name** and **Description**, and then click **Create type**.
@@ -44,9 +44,11 @@ A type can be a root type or a child of another type. A new type requires both a
 A child type inherits all of its parent's fields. On the child type, these fields appear under **Inherited from \<parent\>** and are read-only, with the message "Inherited fields are read-only. Open the parent type to edit them." Fields declared on the child appear under **Declared on \<type\>**.
 
 ## Add and edit fields
-
+Fields are the typed attributes of a type. Each field has a name and a data type, and a description and data checks.
+ 
+Fields you add to a type are inherited by all of its child types.
 1. Select a type, and then click **Add field**.
-2. In **New Field**, enter a **Name**, choose a **Type**, and optionally enter a **Description**. Available types are String, Integer, Decimal, Float, Boolean, Date, Time, DateTime, and DateTimeTz.
+2. In **New Field**, enter a **Name**, choose a **Type**, and enter a **Description**. Available types are String, Integer, Decimal, Float, Boolean, Date, Time, DateTime, and DateTimeTz.
 3. Click **Create Field**.
 4. To edit a field, click its row in the fields table. The field panel opens on the right.
 
@@ -61,7 +63,7 @@ An empty description appears as `-`.
 
 ## Add checks to a field
 
-A check is a SQL expression that is true for every valid row. Checks on a parent field also apply to every child type.
+A check is a SQL expression that is true for every valid row. Checks run during harmonization. Checks on a parent field also apply to every child type.
 
 1. In the field panel, under **Checks**, click **Add check**.
 2. Enter a SQL expression (for example, `current_balance >= 0`), and then click **Save**.
@@ -91,6 +93,8 @@ The **Decisions** tab lists pending **Suggestions** and saved **Memories** for r
 
 To see the underlying `ontology.yml`, click the **⋮** menu on a type and select **Code view**. Click **Back to fields** to return.
 
+You can't edit `ontology.yml` directly. Make changes to types, fields, and checks in the Types editor.
+
 ## Publish a version
 
 Publishing creates a tagged version of the ontology.
@@ -100,6 +104,8 @@ Publishing creates a tagged version of the ontology.
 3. Click **Publish**.
 
 After a publish, the next version number is suggested automatically (for example, v1 → v2), and the release note is drafted from your changes.
+
+If you remove a field in a new version, existing mappings and hints for that field are kept.
 
 **Publish** is disabled in the following cases:
 
@@ -114,5 +120,9 @@ After a publish, the next version number is suggested automatically (for example
 ## Manage the project
 
 Click the **⋯** menu next to the project name to open **Version History**, **Duplicate Project**, **Rename Project**, and **Delete Project**. Select **Version History** to see the project's published versions.
+
+To roll back to an earlier version, select **Version History**, and then select the version you want to return to. **Version History** lists all of the project's published versions.
+
+When you duplicate a Types project, the copy keeps everything from the original except prompts entered in the Agent chat.
 
 Clicking the project name in the header keeps you in the Types editor.
