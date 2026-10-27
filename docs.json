@@ -34,11 +34,11 @@
                       {
                       "group": "Use DataGPT",
                         "pages": [
-                          "data-analysis/datagpt/datagpt",
-                          "data-analysis/datagpt/capabilities",
-                          "data-analysis/datagpt/files",
-                          "data-analysis/getting-started/databox",
-                          "data-analysis/datagpt/permissions"
+                          "data-analysis/getting-started/datagpt/datagpt",
+                          "data-analysis/getting-started/datagpt/capabilities",
+                          "data-analysis/getting-started/datagpt/files",
+                          "data-analysis/getting-started/datagpt/databox",
+                          "data-analysis/getting-started/datagpt/permissions"
                         ]
                       },
                       {
@@ -1813,6 +1813,16 @@
     }
   },
   "redirects": [
+    {
+      "source": "/data-analysis/datagpt/:path*",
+      "destination": "/data-analysis/getting-started/datagpt/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/data-analysis/getting-started/databox",
+      "destination": "/data-analysis/getting-started/datagpt/databox",
+      "permanent": true
+    },
     {
       "source": "/data-engineering/administration/management/cluster-admin-settings/oauth-setup",
       "destination": "/administration/management/cluster-admin-settings/oauth-setup",
