@@ -9,6 +9,10 @@ DataGPT stores files you attach in DataBox, the file storage Prophecy manages fo
   Available for the [Free and Professional Editions](/administration/platform/editions).
 </Callout>
 
+<Note>
+  The DataBox view, file previews, and the Excel extraction view are interactive views that appear in the chat in Claude and ChatGPT. In Microsoft Copilot Studio, interactive views don't render in the chat. To see them, open the link to Prophecy.
+</Note>
+
 ## Attach files
 
 When you attach a file to the chat, DataGPT uploads it to DataBox:
@@ -16,13 +20,11 @@ When you attach a file to the chat, DataGPT uploads it to DataBox:
 - If you're working in a project, the file goes into the project's DataBox folder.
 - Otherwise, the file goes into your personal folder.
 
-If you attach a file without a request, DataGPT shows the folder where the file was saved. If you include a request, such as a question about the data, DataGPT uploads the file and then works on your request.
-
-Files attached to the chat are stored in DataBox, even when you're working in a project. They aren't added to the project's source files unless you explicitly ask DataGPT to do so.
+If you attach a file without a request, DataGPT displays the folder where the file was saved. If you include a request, such as a question about the data, DataGPT uploads the file and then works on your request.
 
 ### Upload large files
 
-Your AI client may not pass large attachments to DataGPT. If that happens, DataGPT opens the DataBox view so you can drag the file in directly. Files uploaded this way can be up to 2 GB each.
+Your AI assistant may not pass large attachments to DataGPT. If that happens, DataGPT opens the DataBox view so you can drag the file in directly. Files uploaded this way can be up to 2 GB each.
 
 ## Browse DataBox
 
@@ -43,9 +45,9 @@ Files on connections are read-only.
 
 ## Preview and download files
 
-Select a file in DataBox to preview it in the chat. DataGPT supports previews of PDF, Excel, CSV, image, and Markdown files. Password-protected PDF and Excel files can't be previewed. Other file types show a download card instead.
+Select a file in DataBox to preview it in the chat. DataGPT supports previews of PDF, Excel, CSV, and Markdown files. Password-protected PDF and Excel files can't be previewed. Other file types show a download card instead.
 
-Select a table on a warehouse connection to open the data explorer, where you can browse rows and inspect column information.
+Select a table on a warehouse connection to open Prophecy's [Data Explorer](/data-analysis/development/runs/data-explorer/data-explorer), where you can browse rows and inspect column information.
 
 When you ask to download a file, DataGPT creates a download link that expires after 15 minutes.
 
