@@ -1,0 +1,307 @@
+---
+title: End-to-end API workflow
+description: Create a team, fabric, connections, and project, then release, deploy, and run pipelines from a command line.
+---
+
+This page walks through a complete setup using Prophecy's REST and GraphQL APIs with `curl`. You create a team and add people to it, create a Prophecy In Memory fabric, store secrets and add connections, create a project and pipeline, publish a release, and then deploy and run pipelines.
+
+Each step links to the full API reference for the call it uses. Several calls return an ID that a later call needs, so keep a note of the [values you collect](#values-you-collect) as you go.
+
+## Before you start
+
+### Choose a terminal
+
+The commands on this page use bash syntax, such as `export`, `$(...)`, `<<'EOF'`, and single-quoted JSON.
+
+| Your computer | Run the commands in                                                                | Notes                                      |
+| ------------- | ---------------------------------------------------------------------------------- | ------------------------------------------ |
+| macOS         | **Terminal** (zsh, the default shell)                                              | `curl` is already installed.               |
+| Linux         | Any terminal (bash or zsh)                                                         | `curl` is installed on most distributions. |
+| Windows       | **Git Bash** (installed with Git for Windows) or WSL (Windows Subsystem for Linux) | Run the commands exactly as written.       |
+
+<Warning>
+  Windows PowerShell and Command Prompt do not run these commands as written. In Windows PowerShell,
+  `curl` is a different command. Use Git Bash or WSL instead.
+</Warning>
+
+### Set your Prophecy URL and token
+
+[Generate a personal access token](/api-reference/introduction#generate-an-access-token), then run these two lines once in each new terminal window. Every command on this page reads them.
+
+```bash
+export PROPHECY_URL=<PROPHECY_URL>
+export PROPHECY_TOKEN=<PROPHECY_TOKEN>
+```
+
+| Placeholder        | Replace with                                                                                                                                                          |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `<PROPHECY_URL>`   | The address of your Prophecy instance, starting with `https://` and with no trailing `/`. Copy it from your browser's address bar when you are signed in to Prophecy. |
+| `<PROPHECY_TOKEN>` | Your personal access token.                                                                                                                                           |
+
+Check that both are set. This command prints the URL and the token's length, never the token itself:
+
+```bash
+echo "url=[$PROPHECY_URL] token_length=${#PROPHECY_TOKEN}"
+```
+
+### Read the examples
+
+- Anything in angle brackets, such as `<FABRIC_ID>`, is a placeholder. Replace the brackets too: `<FABRIC_ID>` becomes `3`, not `<3>`.
+- REST calls go to `$PROPHECY_URL/api/...`. GraphQL calls all go to `$PROPHECY_URL/api/md/graphql`. See [GraphQL API](/api-reference/graphql) for the request format.
+- Responses come back on one line. The reference pages show them formatted. IDs and other values in example responses are samples.
+- In macOS Terminal, a `%` after a response is not part of the response. It marks that the response did not end with a new line.
+
+<Tip>
+  To also see the HTTP status of any call, add `-w '\nHTTP %{http_code}\n'` after `curl -sS`.
+</Tip>
+
+### Values you collect
+
+Several calls return an ID that a later call needs. Keep a note of these as you go:
+
+| Value             | Returned by                                                       | Used by                                          |
+| ----------------- | ----------------------------------------------------------------- | ------------------------------------------------ |
+| `<TEAM_ID>`       | Create a team (`data.addTeam._id`)                                | Create a project, get team members               |
+| `<TEAM_NAME>`     | The name you choose when you create a team                        | Add users, create a fabric                       |
+| `<FABRIC_ID>`     | Create a fabric (`data.id`)                                       | Secrets, connections, trigger, and cancel        |
+| `<FABRIC_NAME>`   | The name you choose when you create a fabric                      | Deploy                                           |
+| `<SECRET_ID>`     | Create a secret (`data.id`)                                       | Connections                                      |
+| `<PROJECT_ID>`    | Create a project (`data.addProject._id`)                          | Pipeline, commit, publish, releases, and trigger |
+| `<PROJECT_NAME>`  | The name you choose when you create a project                     | Deploy                                           |
+| `<PIPELINE_NAME>` | The name you choose when you create a pipeline                    | Trigger                                          |
+| `<VERSION>`       | The version you choose when you publish (listed by list releases) | Deploy and trigger                               |
+| `<RUN_ID>`        | Trigger a pipeline run (`runId`)                                  | Run status and cancel                            |
+
+## Set up users and teams
+
+1. Get your user ID with the [get current user API](/api-reference/users/get-current-user). The call identifies you from your token.
+
+   ```bash
+   curl -sS "$PROPHECY_URL/api/get-user" -H "X-Auth-Token: $PROPHECY_TOKEN"
+   ```
+
+   The response's `type` tells you whether you are a Prophecy administrator for the whole instance (`ClusterAdmin`).
+
+2. Create a team with the GraphQL [`addTeam` mutation](/api-reference/teams/create-team). You become its admin. Save `data.addTeam._id` as `<TEAM_ID>`. Teams cannot be renamed later.
+
+   ```bash
+   QUERY=$(tr '\n' ' ' <<'EOF'
+   mutation($name: String!) {
+     addTeam(name: $name) { _id name teamKind }
+   }
+   EOF
+   )
+   VARS='{"name": "<TEAM_NAME>"}'
+   curl -sS "$PROPHECY_URL/api/md/graphql" \
+     -H "X-Auth-Token: $PROPHECY_TOKEN" -H "Content-Type: application/json" \
+     -d "$(printf '{"query": "%s", "variables": %s}' "$QUERY" "$VARS")"
+   ```
+
+3. Add people who already have a Prophecy account to the team with the [add users to teams API](/api-reference/users/invite-users). Use the team's name, not its ID. (Replace `<USER_EMAIL>` and `<TEAM_NAME>` with actual values.)
+
+   ```bash
+   curl -sS -X POST "$PROPHECY_URL/api/auth/inviteUsers" \
+     -H "X-Auth-Token: $PROPHECY_TOKEN" -H "Content-Type: application/json" \
+     -d '{
+       "users": [
+         {"emailID": "<USER_EMAIL>", "invitationStatus": "Accepted", "createUser": false}
+       ],
+       "teams": ["<TEAM_NAME>"],
+       "isAdmin": false,
+       "seatsRequested": 0,
+       "isRequesterGlobalAdmin": false
+     }'
+   ```
+
+   To invite people who don't have an account yet, send `"createUser": true`, omit `invitationStatus`, and set `isRequesterGlobalAdmin` to `true` only if your account type is `ClusterAdmin`.
+
+4. Confirm the team's members with the [`Team` query](/api-reference/teams/get-team-members).
+
+## Create a fabric
+
+Create a Prophecy In Memory fabric with the [create fabric API](/api-reference/fabrics/create-a-new-fabric). A [Prophecy In Memory](/data-analysis/gems/source-target/table/prophecy-warehouse) fabric runs on DuckDB, needs no warehouse of your own, and creates its own default warehouse connection. Save `data.id` as `<FABRIC_ID>`.
+
+```bash
+curl -sS -X POST "$PROPHECY_URL/api/orchestration/fabric" \
+  -H "X-Auth-Token: $PROPHECY_TOKEN" -H "Content-Type: application/json" \
+  -d '{
+    "name": "<FABRIC_NAME>",
+    "teamName": "<TEAM_NAME>",
+    "provider": "ProphecyManaged",
+    "description": "<FABRIC_DESCRIPTION>"
+  }'
+```
+
+The `description` is optional. Other `provider` values include `databricks` and `bigquery`, which also need a warehouse connection.
+
+## Add secrets and connections
+
+A connection never holds a password or key directly. Store each one as a secret on the fabric first, then reference the secret from the connection.
+
+1. Store a secret with the [add secret to fabric API](/api-reference/secrets/add-secret-to-fabric). Save `data.id` as `<SECRET_ID>`. A connection refers to a secret by this ID and its name.
+
+   ```bash
+   curl -sS -X POST "$PROPHECY_URL/api/orchestration/fabric/<FABRIC_ID>/secret" \
+     -H "X-Auth-Token: $PROPHECY_TOKEN" -H "Content-Type: application/json" \
+     -d '{
+       "kind": "prophecy",
+       "subKind": "text",
+       "properties": {"name": "<SECRET_NAME>", "value": "<SECRET_VALUE>"}
+     }'
+   ```
+
+   Prophecy never returns the stored value again. If the value contains a single quote (`'`), it ends the JSON text early; write it as `'\''`.
+
+2. Add a connection with the [add connection to fabric API](/api-reference/connections/add-connection-to-fabric). (Replace `<FABRIC_ID>`, `<CONNECTION_NAME>`, `<PG_HOST>`, `<PG_PORT>`, `<PG_DATABASE>`, `<PG_USERNAME>`, `<SECRET_ID>`, and `<SECRET_NAME>` with actual values.) For example, this request adds a PostgreSQL connection that references the secret holding the database user's password:
+
+   ```bash
+   curl -sS -X POST "$PROPHECY_URL/api/orchestration/fabric/<FABRIC_ID>/connection" \
+     -H "X-Auth-Token: $PROPHECY_TOKEN" -H "Content-Type: application/json" \
+     -d '{
+       "name": "<CONNECTION_NAME>",
+       "kind": "postgres",
+       "isDefaultWarehouseConnection": false,
+       "properties": {
+         "server": "<PG_HOST>",
+         "port": "<PG_PORT>",
+         "database": "<PG_DATABASE>",
+         "username": "<PG_USERNAME>",
+         "password": {
+           "kind": "prophecy", "subKind": "text", "type": "secret",
+           "properties": {"id": "<SECRET_ID>", "name": "<SECRET_NAME>"}
+         }
+       }
+     }'
+   ```
+
+   Keep the quotes around `<PG_PORT>`; the port is sent as text. Prophecy tests that it can reach the database before saving the connection. To skip the test, add `"shouldTest": false`.
+
+For other connection types, use the matching `properties` object:
+
+- [PostgreSQL](/api-reference/connections/properties/postgres) (`kind`: `postgres`) needs one secret for the password.
+- [SharePoint](/api-reference/connections/properties/sharepoint) (`kind`: `sharepoint`) uses an Azure Active Directory (Microsoft Entra ID) app registration and needs one secret for the app's client secret.
+- [OneDrive](/api-reference/connections/properties/onedrive) (`kind`: `onedrive`) uses an Azure Active Directory (Microsoft Entra ID) app registration and needs two secrets: the app's client secret and the OneDrive user name.
+
+## Create a project and release it
+
+1. Create a SQL project with the [`addProject` mutation](/api-reference/projects/create-project). Use the team's ID, not its name. Save `data.addProject._id` as `<PROJECT_ID>`. (Replace `<PROJECT_NAME>`, `<TEAM_ID>`, `<PROJECT_ID>`, and other placeholders with actual values.)
+
+   ```bash
+   QUERY=$(tr '\n' ' ' <<'EOF'
+   mutation($name: String!, $team: String!, $main: String!, $provider: String!) {
+     addProject(
+       name: $name, ownerUID: $team, mainBranch: $main, providerType: $provider,
+       language: sql, forkMode: Single, versionControlMode: Simple,
+       defaultTransformationEntity: Pipeline, dependencyProjectUIDs: [], isImport: false
+     ) { _id name }
+   }
+   EOF
+   )
+   VARS='{"name": "<PROJECT_NAME>", "team": "<TEAM_ID>", "main": "main", "provider": "ProphecyManaged"}'
+   curl -sS "$PROPHECY_URL/api/md/graphql" \
+     -H "X-Auth-Token: $PROPHECY_TOKEN" -H "Content-Type: application/json" \
+     -d "$(printf '{"query": "%s", "variables": %s}' "$QUERY" "$VARS")"
+   ```
+
+   The project uses Simple Git on a Prophecy-managed repository. Everyone works on one `dev` branch, and publishing merges it into `main`.
+
+2. Add an empty pipeline with the [create pipeline API](/api-reference/pipelines/create-pipeline). (Replace `<PROJECT_ID>` and `<PIPELINE_NAME>` with actual values.) Then build its steps in Prophecy.
+
+   ```bash
+   curl -sS -X POST "$PROPHECY_URL/api/editor/sqlEditor/pipeline/create" \
+     -H "X-Auth-Token: $PROPHECY_TOKEN" -H "Content-Type: application/json" \
+     -d '{
+       "projectId": "<PROJECT_ID>",
+       "branch": "dev",
+       "pipelineName": "<PIPELINE_NAME>"
+     }'
+   ```
+
+3. Commit the changes to `dev` with the [`commit` mutation](/api-reference/projects/commit-changes). (Replace `<PROJECT_ID>`, `<COMMIT_MESSAGE>`, and other placeholders with actual values.)
+
+   ```bash
+   QUERY=$(tr '\n' ' ' <<'EOF'
+   mutation($p: String!, $msg: String!, $branch: String!) {
+     commit(projectUID: $p, commitMsg: $msg, branch: $branch) { commitHash merged }
+   }
+   EOF
+   )
+   VARS='{"p": "<PROJECT_ID>", "msg": "<COMMIT_MESSAGE>", "branch": "dev"}'
+   curl -sS "$PROPHECY_URL/api/md/graphql" \
+     -H "X-Auth-Token: $PROPHECY_TOKEN" -H "Content-Type: application/json" \
+     -d "$(printf '{"query": "%s", "variables": %s}' "$QUERY" "$VARS")"
+   ```
+
+4. Publish a release with the [`publish` mutation](/api-reference/projects/publish-release). (Replace `<PROJECT_ID>`, `<VERSION>`, and `<RELEASE_NOTES>` with actual values.) This merges `dev` into `main` and tags the release `<PROJECT_NAME>/<VERSION>`. Each release needs a new version, for example `0.1.0`.
+
+   ```bash
+   QUERY=$(tr '\n' ' ' <<'EOF'
+   mutation($p: String!, $version: String!, $notes: String!) {
+     publish(uid: $p, releaseVersion: $version, releaseNotes: $notes) {
+       merged fromBranch toBranch
+     }
+   }
+   EOF
+   )
+   VARS='{"p": "<PROJECT_ID>", "version": "<VERSION>", "notes": "<RELEASE_NOTES>"}'
+   curl -sS "$PROPHECY_URL/api/md/graphql" \
+     -H "X-Auth-Token: $PROPHECY_TOKEN" -H "Content-Type: application/json" \
+     -d "$(printf '{"query": "%s", "variables": %s}' "$QUERY" "$VARS")"
+   ```
+
+5. To confirm the exact version name, list the project's releases with the [`Versions` query](/api-reference/projects/list-releases). Entries with `versionType` `Published` are releases.
+
+## Deploy and run
+
+1. To run the pipelines on their schedules, deploy the release to a fabric with the [deploy project API](/api-reference/projects/deploy-project). Use the project and fabric names, not their IDs. (Replace `<PROJECT_NAME>`, `<FABRIC_NAME>`, and `<VERSION>` with actual values.) Skip this step if you only want to run pipelines on demand.
+
+   ```bash
+   curl -sS -X POST "$PROPHECY_URL/api/deploy/project" \
+     -H "X-Auth-Token: $PROPHECY_TOKEN" -H "Content-Type: application/json" \
+     -d '{
+       "projectName": "<PROJECT_NAME>",
+       "fabricName": "<FABRIC_NAME>",
+       "gitTag": "<PROJECT_NAME>/<VERSION>"
+     }'
+   ```
+
+2. Start a run with the [trigger pipeline run API](/api-reference/pipelines/trigger-pipeline-run). (Replace `<FABRIC_ID>`, `<PIPELINE_NAME>`, `<PROJECT_ID>`, `<VERSION>`, and `<BRANCH_NAME>` with actual values.) Send `fabricId` as a number without quotes and `projectId` in quotes. Add `"version": "<VERSION>"` to run the published release, or `"branch": "<BRANCH_NAME>"` to run a branch. Without either, the run uses the project's current working state. Save `runId` as `<RUN_ID>`.
+
+   ```bash
+   curl -sS -X POST "$PROPHECY_URL/api/trigger/pipeline" \
+     -H "X-Auth-Token: $PROPHECY_TOKEN" -H "Content-Type: application/json" \
+     -d '{
+       "fabricId": <FABRIC_ID>,
+       "pipelineName": "<PIPELINE_NAME>",
+       "projectId": "<PROJECT_ID>",
+       "version": "<VERSION>"
+     }'
+   ```
+
+3. Check the run with the [get pipeline run status API](/api-reference/pipelines/get-pipeline-run-status). Repeat the call until `runStatus` is `SUCCEEDED` or `ERROR`. On `ERROR`, `errorMessage` says what failed.
+
+   ```bash
+   curl -sS "$PROPHECY_URL/api/trigger/pipeline/<RUN_ID>" -H "X-Auth-Token: $PROPHECY_TOKEN"
+   ```
+
+4. To stop a run that is still in progress, use the [cancel pipeline run API](/api-reference/pipelines/cancel-pipeline-run). (Replace `<RUN_ID>` and `<FABRIC_ID>` with actual values.)
+
+   ```bash
+   curl -sS -X POST "$PROPHECY_URL/api/trigger/pipeline/<RUN_ID>/cancel" \
+     -H "X-Auth-Token: $PROPHECY_TOKEN" -H "Content-Type: application/json" \
+     -d '{"fabricId": <FABRIC_ID>}'
+   ```
+
+## Troubleshooting
+
+| What you see                                                 | Likely cause                                                                                                      | What to do                                                                                                                         |
+| ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| No output at all                                             | `PROPHECY_URL` or `PROPHECY_TOKEN` is not set in this terminal, or the URL is mistyped.                           | Run the check in [Set your Prophecy URL and token](#set-your-prophecy-url-and-token). Set both again in every new terminal window. |
+| HTTP `401`                                                   | The token is wrong, expired, or from a different Prophecy instance.                                               | Create a new token on the instance in `PROPHECY_URL`.                                                                              |
+| `"message": "Invalid request"`                               | The JSON body is malformed, most often a missing comma between two fields.                                        | Check that every line inside the braces ends with a comma except the last.                                                         |
+| HTTP `503` on a fabric call                                  | A placeholder such as `<FABRIC_ID>` was left in the URL, or the fabric is still starting.                         | Replace every placeholder. If it persists, wait a minute and try again.                                                            |
+| A GraphQL response with an `errors` array                    | The call failed even though the HTTP status is `200`.                                                             | Read the `message` in `errors`; it names the argument or value at fault.                                                           |
+| `N team invitation failures` when adding users               | A person has no account and `createUser` is `false`, the team name is wrong, or you are not an admin of the team. | See [Troubleshoot team invitation failures](/api-reference/users/invite-users#troubleshoot-team-invitation-failures).              |
+| `Invalid config override` on trigger                         | A name in `parameters` is not one of the pipeline's own parameters.                                               | Check the spelling, and remove project-level parameters.                                                                           |
+| `Fabric '<FABRIC_NAME>' not found for user's team` on deploy | The fabric name does not match exactly, or the fabric is not in your default (first) team.                        | Check the name's spelling and capitalization. Deploy looks for the fabric in your first team.                                      |
+| `Project '<PROJECT_NAME>' not found for user` on deploy      | The project name does not match exactly, or you cannot access the project.                                        | Use the project's exact name.                                                                                                      |

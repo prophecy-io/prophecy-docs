@@ -1,0 +1,64 @@
+---
+title: Create team
+description: Create a team with the `addTeam` GraphQL mutation.
+---
+
+Use the `addTeam` mutation to create a team. You become the team's admin. Teams own fabrics and projects, so you typically create a team before you create those resources.
+
+```
+POST /api/md/graphql
+```
+
+## Arguments
+
+<ParamField body="name" type="string" required>
+  Name of the new team, for example `analytics_team`. Teams cannot be renamed later, so choose the
+  name carefully.
+</ParamField>
+
+## Response
+
+<ResponseField name="data.addTeam._id" type="string">
+  ID of the team. The create project mutation needs this ID.
+</ResponseField>
+
+<ResponseField name="data.addTeam.name" type="string">
+  Name of the team. The create fabric API and the add users to teams API need this name.
+</ResponseField>
+
+<ResponseField name="data.addTeam.teamKind" type="string">
+  Kind of team, for example `ProphecyManaged`.
+</ResponseField>
+
+<RequestExample>
+
+```bash cURL
+QUERY=$(tr '\n' ' ' <<'EOF'
+mutation($name: String!) {
+  addTeam(name: $name) { _id name teamKind }
+}
+EOF
+)
+VARS='{"name": "<TEAM_NAME>"}'
+curl -sS "$PROPHECY_URL/api/md/graphql" \
+  -H "X-Auth-Token: $PROPHECY_TOKEN" -H "Content-Type: application/json" \
+  -d "$(printf '{"query": "%s", "variables": %s}' "$QUERY" "$VARS")"
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "data": {
+    "addTeam": {
+      "_id": "8",
+      "name": "analytics_team",
+      "teamKind": "ProphecyManaged"
+    }
+  }
+}
+```
+
+</ResponseExample>

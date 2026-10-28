@@ -55,7 +55,7 @@
                   },
                   "gitTag": {
                     "type": "string",
-                    "description": "Git tag identifying the specific version of the project to deploy. Must follow the format {projectName}/{version}."
+                    "description": "Git tag identifying the published release of the project to deploy. Must follow the format `{projectName}/{version}`, which is the tag that publishing a release creates."
                   },
                   "pipelineConfigurations": {
                     "type": "object",

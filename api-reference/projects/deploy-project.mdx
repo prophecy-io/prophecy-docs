@@ -1,19 +1,20 @@
 ---
 openapi: post /api/deploy/project
-
 ---
+
+Deploy a published release to a fabric so that the pipelines' schedules run there. Every pipeline in the release is deployed. One call deploys to one fabric; to deploy to several fabrics, call the API once for each. Running a pipeline on demand with the [trigger pipeline run API](/api-reference/pipelines/trigger-pipeline-run) does not need a deployment.
 
 ## Requirements
 
 To run the API, you need to:
 
-- Reference a fabric that exists in your environment.
+- Reference a fabric that exists in your environment, by name (not ID).
 - Use an existing Git tag that defines the project version.
 
 <Note>
-Unlike in the Prophecy UI where Git tags are created automatically during publish, when using this API you must create the Git tag externally.
-
-The tag must follow the exact format `{projectName}/{version}`.
+  The tag must follow the exact format `{projectName}/{version}`. Publishing a release, either in
+  the Prophecy UI or with the [publish release mutation](/api-reference/projects/publish-release),
+  creates this tag.
 </Note>
 
 ## Parameter Precedence
@@ -24,3 +25,10 @@ Configuration parameters follow this precedence order:
 2. Project configuration overrides
 3. Default pipeline parameters
 4. Default project configuration (lowest priority)
+
+## Troubleshooting
+
+| Error                                              | Likely cause                                                                               | Fix                                                                                           |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------- |
+| `Fabric '<FABRIC_NAME>' not found for user's team` | The fabric name does not match exactly, or the fabric is not in your default (first) team. | Check the name's spelling and capitalization. Deploy looks for the fabric in your first team. |
+| `Project '<PROJECT_NAME>' not found for user`      | The project name does not match exactly, or you cannot access the project.                 | Use the project's exact name.                                                                 |

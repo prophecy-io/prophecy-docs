@@ -1,0 +1,273 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Prophecy API - Users",
+    "description": "API for retrieving user details and adding users to teams",
+    "version": "1.0.0"
+  },
+  "components": {
+    "parameters": {
+      "X-AUTH-TOKEN": {
+        "name": "X-AUTH-TOKEN",
+        "in": "header",
+        "description": "Prophecy authentication token. Required for all API requests.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "paths": {
+    "/api/get-user": {
+      "parameters": [
+        {
+          "name": "X-AUTH-TOKEN",
+          "in": "header",
+          "description": "Prophecy access token",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get current user",
+        "description": "Return the account that owns the access token, including its user ID.",
+        "operationId": "getCurrentUser",
+        "responses": {
+          "200": {
+            "description": "User details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "description": "Email address of the user."
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "User ID. A string of digits; pass it in quotes wherever a call asks for it."
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "Account type. `ClusterAdmin` indicates a Prophecy administrator for the whole instance."
+                    },
+                    "created": {
+                      "type": "integer",
+                      "format": "int64",
+                      "description": "Time the account was created, in milliseconds since the Unix epoch."
+                    },
+                    "userState": {
+                      "type": "string",
+                      "nullable": true,
+                      "description": "State of the user account."
+                    },
+                    "invitationStatus": {
+                      "type": "string",
+                      "description": "Invitation status of the account."
+                    }
+                  }
+                },
+                "example": {
+                  "email": "user@example.com",
+                  "id": "2",
+                  "type": "User",
+                  "created": 1792561681606,
+                  "userState": null,
+                  "invitationStatus": "accepted"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/inviteUsers": {
+      "parameters": [
+        {
+          "name": "X-AUTH-TOKEN",
+          "in": "header",
+          "description": "Prophecy access token",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "tags": ["Users"],
+        "summary": "Add users to teams",
+        "description": "Add one or more people to one or more teams. Every person in `users` is added to every team in `teams`. For people who already have a Prophecy account, set `createUser` to `false` and `invitationStatus` to `Accepted`; they join the team immediately. For new people, set `createUser` to `true` and omit `invitationStatus`; the same call creates their account.",
+        "operationId": "inviteUsers",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "users": {
+                    "type": "array",
+                    "description": "One entry per person.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "emailID": {
+                          "type": "string",
+                          "description": "Email address the person signs in to Prophecy with."
+                        },
+                        "invitationStatus": {
+                          "type": "string",
+                          "enum": ["Accepted"],
+                          "description": "Send `Accepted` with `createUser: false`. Omit it with `createUser: true`; Prophecy sets it from `isRequesterGlobalAdmin`."
+                        },
+                        "createUser": {
+                          "type": "boolean",
+                          "description": "`false` if the person already has an account. `true` to create one. With `false`, someone without an account is not added."
+                        }
+                      }
+                    }
+                  },
+                  "teams": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "One or more team names (not team IDs)."
+                  },
+                  "isAdmin": {
+                    "type": "boolean",
+                    "description": "`true` makes the people team admins as well as members."
+                  },
+                  "seatsRequested": {
+                    "type": "integer",
+                    "description": "Leave as `0` unless your Prophecy administrator gives you a number of seats to request."
+                  },
+                  "isRequesterGlobalAdmin": {
+                    "type": "boolean",
+                    "description": "Whether your account is a Prophecy administrator for the whole instance (account type `ClusterAdmin`). When creating users, `true` means invited people can use Prophecy as soon as they sign in, and `false` means the invitation waits until a Prophecy administrator approves it. Leave as `false` when adding people who already have an account."
+                  }
+                }
+              },
+              "examples": {
+                "existing": {
+                  "summary": "Add people who already have an account",
+                  "value": {
+                    "users": [
+                      {
+                        "emailID": "user@example.com",
+                        "invitationStatus": "Accepted",
+                        "createUser": false
+                      }
+                    ],
+                    "teams": ["analytics_team"],
+                    "isAdmin": false,
+                    "seatsRequested": 0,
+                    "isRequesterGlobalAdmin": false
+                  }
+                },
+                "new": {
+                  "summary": "Invite new people",
+                  "value": {
+                    "users": [
+                      {
+                        "emailID": "new.user@example.com",
+                        "createUser": true
+                      }
+                    ],
+                    "teams": ["analytics_team"],
+                    "isAdmin": false,
+                    "seatsRequested": 0,
+                    "isRequesterGlobalAdmin": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Invitation results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates whether all invitations succeeded."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Summary of the outcome, for example `1 invitations successful.` or `N team invitation failures`."
+                    },
+                    "details": {
+                      "type": "object",
+                      "properties": {
+                        "totalUsers": {
+                          "type": "integer"
+                        },
+                        "totalTeams": {
+                          "type": "integer"
+                        },
+                        "totalPossibleInvitations": {
+                          "type": "integer"
+                        },
+                        "attemptedInvitations": {
+                          "type": "integer"
+                        },
+                        "successfulInvitations": {
+                          "type": "integer"
+                        },
+                        "userCreationFailures": {
+                          "type": "integer"
+                        },
+                        "teamInvitationFailures": {
+                          "type": "integer"
+                        },
+                        "skippedInvitations": {
+                          "type": "integer"
+                        },
+                        "athenaCallResult": {
+                          "type": "string"
+                        },
+                        "emailResult": {
+                          "type": "string",
+                          "description": "Whether an invitation email was sent. New people get an invitation email only if Prophecy sends email on your instance."
+                        },
+                        "seatsRequested": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "1 invitations successful.",
+                  "details": {
+                    "totalUsers": 1,
+                    "totalTeams": 1,
+                    "totalPossibleInvitations": 1,
+                    "attemptedInvitations": 1,
+                    "successfulInvitations": 1,
+                    "userCreationFailures": 0,
+                    "teamInvitationFailures": 0,
+                    "skippedInvitations": 0,
+                    "athenaCallResult": "<RESULT>",
+                    "emailResult": "<RESULT>",
+                    "seatsRequested": 0
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

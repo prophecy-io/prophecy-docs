@@ -1,0 +1,79 @@
+---
+title: Create project
+description: Create a SQL project with the `addProject` GraphQL mutation.
+---
+
+Use the `addProject` mutation to create a project owned by a team. The example on this page creates a SQL project for a Prophecy In Memory fabric, with Simple Git on a Prophecy-managed repository. Everyone works on one `dev` branch, and [publishing a release](/api-reference/projects/publish-release) merges it into `main`.
+
+```
+POST /api/md/graphql
+```
+
+After you create the project, [add pipelines](/api-reference/pipelines/create-pipeline) and build them in Prophecy before you release the project.
+
+## Arguments
+
+<ParamField body="name" type="string" required>
+  Name of the project, for example `sales_reporting`. The deploy project API needs this name.
+</ParamField>
+
+<ParamField body="ownerUID" type="string" required>
+  ID (not the name) of the team that will own the project, as returned in `data.addTeam._id` when
+  you [create the team](/api-reference/teams/create-team).
+</ParamField>
+
+<ParamField body="mainBranch" type="string" required>
+  Name of the main branch, for example `main`.
+</ParamField>
+
+<ParamField body="providerType" type="string" required>
+  Provider type. Use `ProphecyManaged` for Prophecy In Memory.
+</ParamField>
+
+The example also sets these arguments inline in the mutation: `language: sql`, `forkMode: Single`, `versionControlMode: Simple`, `defaultTransformationEntity: Pipeline`, `dependencyProjectUIDs: []`, and `isImport: false`.
+
+## Response
+
+<ResponseField name="data.addProject._id" type="string">
+  ID of the project. Pipeline, commit, publish, list releases, and trigger calls need this ID.
+</ResponseField>
+
+<ResponseField name="data.addProject.name" type="string">
+  Name of the project.
+</ResponseField>
+
+<RequestExample>
+
+```bash cURL
+QUERY=$(tr '\n' ' ' <<'EOF'
+mutation($name: String!, $team: String!, $main: String!, $provider: String!) {
+  addProject(
+    name: $name, ownerUID: $team, mainBranch: $main, providerType: $provider,
+    language: sql, forkMode: Single, versionControlMode: Simple,
+    defaultTransformationEntity: Pipeline, dependencyProjectUIDs: [], isImport: false
+  ) { _id name }
+}
+EOF
+)
+VARS='{"name": "<PROJECT_NAME>", "team": "<TEAM_ID>", "main": "main", "provider": "ProphecyManaged"}'
+curl -sS "$PROPHECY_URL/api/md/graphql" \
+  -H "X-Auth-Token: $PROPHECY_TOKEN" -H "Content-Type: application/json" \
+  -d "$(printf '{"query": "%s", "variables": %s}' "$QUERY" "$VARS")"
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "data": {
+    "addProject": {
+      "_id": "28",
+      "name": "sales_reporting"
+    }
+  }
+}
+```
+
+</ResponseExample>

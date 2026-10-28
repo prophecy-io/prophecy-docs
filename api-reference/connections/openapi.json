@@ -173,6 +173,7 @@
                       "snowflake",
                       "mssql",
                       "oracle",
+                      "postgres",
                       "mongodb",
                       "hana",
                       "smtp",
@@ -196,6 +197,11 @@
                   "properties": {
                     "type": "object",
                     "description": "Connection configuration properties. The structure varies by connection `kind`. Find specific properties in the **Connections > Properties** section of the API documentation."
+                  },
+                  "shouldTest": {
+                    "type": "boolean",
+                    "description": "Whether Prophecy tests that it can reach the external system before saving the connection. Defaults to `true`. Set to `false` to save the connection without the reachability test.",
+                    "default": true
                   }
                 }
               },

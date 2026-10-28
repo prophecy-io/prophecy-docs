@@ -1,9 +1,16 @@
 ---
 openapi: post /api/orchestration/fabric/{fabricId}/connection
-
 ---
 
 <Tip>
   The `properties` object in the connection request body depends on the connection type. Find
   specific properties in the **Connections > Properties** section of the API documentation.
 </Tip>
+
+## Reachability test
+
+Prophecy checks the connection and tests that it can reach the external system before saving it. Prophecy In Memory runs in Prophecy's cloud, so the external system must accept connections from Prophecy. To save the connection without the reachability test, add `"shouldTest": false` to the request body.
+
+## Store credentials as secrets
+
+A connection never holds a password or key directly. [Store each one as a secret](/api-reference/secrets/add-secret-to-fabric) on the fabric first, then reference the secret from the connection by its ID and name. Prophecy never returns a stored secret value again.

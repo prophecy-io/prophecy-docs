@@ -4,9 +4,32 @@ openapi: post /api/trigger/pipeline
 
 ## Requirements
 
-To run the API, the target pipeline must:
+To run the API, the target pipeline must run on a [Prophecy fabric](/data-analysis/environment/fabrics/prophecy-fabrics). The pipeline does not need to be deployed.
 
-- Run on a [Prophecy fabric](/data-analysis/environment/fabrics/prophecy-fabrics).
-- Be part of a published project.
+## Choose what to run
 
-In other words, the pipeline must be deployed.
+Choose what to run by adding one of these fields to the request:
+
+| To run                                                                                   | Add to the request          |
+| ---------------------------------------------------------------------------------------- | --------------------------- |
+| The project as it is now in Prophecy, including saved changes that are not committed yet | Nothing (default)           |
+| A specific branch                                                                        | `"branch": "<BRANCH_NAME>"` |
+| A published release                                                                      | `"version": "<VERSION>"`    |
+
+<Warning>
+  If `version` does not match a release exactly, Prophecy runs the current working state instead and
+  still reports success. Copy the version from the [list releases
+  query](/api-reference/projects/list-releases).
+</Warning>
+
+`success` in the response means the run was accepted, not that it finished. Check progress with the [get pipeline run status API](/api-reference/pipelines/get-pipeline-run-status), and stop a run with the [cancel pipeline run API](/api-reference/pipelines/cancel-pipeline-run).
+
+## Parameters
+
+`parameters` works the same way for all three run types. Each key must be one of the pipeline's own parameters; otherwise, the request returns `Invalid config override`. Project-level parameters cannot be overridden here. Set them per fabric when you [deploy the project](/api-reference/projects/deploy-project).
+
+A parameter of type SQL expression needs its own single quotes around text. Inside a single-quoted shell command, write each quote as `'\''`:
+
+```bash
+"parameters": {"run_date": "'\''2026-01-01'\''"}
+```
