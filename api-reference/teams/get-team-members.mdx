@@ -1,0 +1,68 @@
+---
+title: Get team members
+description: List the members of a team with the Team GraphQL query.
+---
+
+Use the `Team` query to list the members of a team. For example, run it after you [add users to a team](/api-reference/users/invite-users) to confirm that they joined.
+
+```
+POST /api/md/graphql
+```
+
+## Arguments
+
+<ParamField body="uid" type="string" required>
+  ID (not the name) of the team, as returned in `data.addTeam._id` when you [create the
+  team](/api-reference/teams/create-team).
+</ParamField>
+
+## Response
+
+<ResponseField name="data.Team.name" type="string">
+  Name of the team.
+</ResponseField>
+
+<ResponseField name="data.Team.members" type="object[]">
+  Members of the team. Each member has an `_id` (user ID) and an `email`.
+</ResponseField>
+
+<RequestExample>
+
+```bash cURL
+QUERY=$(tr '\n' ' ' <<'EOF'
+query($team: String!) {
+  Team(uid: $team) { name members { _id email } }
+}
+EOF
+)
+VARS='{"team": "<TEAM_ID>"}'
+curl -sS "$PROPHECY_URL/api/md/graphql" \
+  -H "X-Auth-Token: $PROPHECY_TOKEN" -H "Content-Type: application/json" \
+  -d "$(printf '{"query": "%s", "variables": %s}' "$QUERY" "$VARS")"
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "data": {
+    "Team": {
+      "name": "analytics_team",
+      "members": [
+        {
+          "_id": "2",
+          "email": "user@example.com"
+        },
+        {
+          "_id": "5",
+          "email": "new.user@example.com"
+        }
+      ]
+    }
+  }
+}
+```
+
+</ResponseExample>

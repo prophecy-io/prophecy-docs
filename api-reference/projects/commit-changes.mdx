@@ -1,0 +1,67 @@
+---
+title: Commit changes
+description: Commit a project's saved changes with the commit GraphQL mutation.
+---
+
+Use the `commit` GraphQL mutation to commit a project's current changes to a branch. This is the API equivalent of saving to draft. For example, after you [create a pipeline](/api-reference/pipelines/create-pipeline), commit to record the new pipeline in the project's Git history.
+
+```
+POST /api/md/graphql
+```
+
+## Arguments
+
+<ParamField body="projectUID" type="string" required>
+  ID of the project to commit, as returned in `data.addProject._id` when you [create the
+  project](/api-reference/projects/create-project).
+</ParamField>
+
+<ParamField body="commitMsg" type="string" required>
+  Short description of the change.
+</ParamField>
+
+<ParamField body="branch" type="string" required>
+  Branch to commit to. Use `dev` in a project that uses Simple Git.
+</ParamField>
+
+## Response
+
+<ResponseField name="data.commit.commitHash" type="string">
+  Hash of the new commit.
+</ResponseField>
+
+<ResponseField name="data.commit.merged" type="string">
+  Outcome of the commit, for example `Success`.
+</ResponseField>
+
+<RequestExample>
+
+```bash cURL
+QUERY=$(tr '\n' ' ' <<'EOF'
+mutation($p: String!, $msg: String!, $branch: String!) {
+  commit(projectUID: $p, commitMsg: $msg, branch: $branch) { commitHash merged }
+}
+EOF
+)
+VARS='{"p": "<PROJECT_ID>", "msg": "<COMMIT_MESSAGE>", "branch": "dev"}'
+curl -sS "$PROPHECY_URL/api/md/graphql" \
+  -H "X-Auth-Token: $PROPHECY_TOKEN" -H "Content-Type: application/json" \
+  -d "$(printf '{"query": "%s", "variables": %s}' "$QUERY" "$VARS")"
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "data": {
+    "commit": {
+      "commitHash": "<COMMIT_HASH>",
+      "merged": "Success"
+    }
+  }
+}
+```
+
+</ResponseExample>

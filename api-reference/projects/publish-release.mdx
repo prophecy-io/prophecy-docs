@@ -1,0 +1,76 @@
+---
+title: Publish release
+description: Merge dev into main and tag a release with the publish GraphQL mutation.
+---
+
+Use the `publish` mutation to merge a project's `dev` branch into `main` and tag the result as a release version. You can then [deploy the release](/api-reference/projects/deploy-project) to a fabric or [run a pipeline](/api-reference/pipelines/trigger-pipeline-run) from it.
+
+```
+POST /api/md/graphql
+```
+
+The release is tagged `{projectName}/{version}`, for example `sales_reporting/0.1.0`. Use this tag as the `gitTag` value when you deploy the release.
+
+## Arguments
+
+<ParamField body="uid" type="string" required>
+  ID of the project to publish, as returned in `data.addProject._id` when you [create the
+  project](/api-reference/projects/create-project).
+</ParamField>
+
+<ParamField body="releaseVersion" type="string" required>
+  New version number, for example `0.1.0`. Each release needs a new version.
+</ParamField>
+
+<ParamField body="releaseNotes" type="string" required>
+  Short description of the release.
+</ParamField>
+
+## Response
+
+<ResponseField name="data.publish.merged" type="string">
+  Outcome of the merge, for example `Success`.
+</ResponseField>
+
+<ResponseField name="data.publish.fromBranch" type="string">
+  Branch that was merged, for example `dev`.
+</ResponseField>
+
+<ResponseField name="data.publish.toBranch" type="string">
+  Branch that was merged into, for example `main`.
+</ResponseField>
+
+<RequestExample>
+
+```bash cURL
+QUERY=$(tr '\n' ' ' <<'EOF'
+mutation($p: String!, $version: String!, $notes: String!) {
+  publish(uid: $p, releaseVersion: $version, releaseNotes: $notes) {
+    merged fromBranch toBranch
+  }
+}
+EOF
+)
+VARS='{"p": "<PROJECT_ID>", "version": "<VERSION>", "notes": "<RELEASE_NOTES>"}'
+curl -sS "$PROPHECY_URL/api/md/graphql" \
+  -H "X-Auth-Token: $PROPHECY_TOKEN" -H "Content-Type: application/json" \
+  -d "$(printf '{"query": "%s", "variables": %s}' "$QUERY" "$VARS")"
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "data": {
+    "publish": {
+      "merged": "Success",
+      "fromBranch": "dev",
+      "toBranch": "main"
+    }
+  }
+}
+```
+
+</ResponseExample>

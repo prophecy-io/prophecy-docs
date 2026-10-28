@@ -1,0 +1,15 @@
+---
+openapi: post /api/trigger/pipeline/{runId}/cancel
+---
+
+Use the `runId` returned by the [trigger pipeline run API](/api-reference/pipelines/trigger-pipeline-run).
+
+The `status` field in the response is one of:
+
+- `cancelling`: Prophecy is stopping the run.
+- `cancelled`: The run was stopped.
+- `already_finished`: The run had already completed.
+
+`descendantsCancelled` counts runs of other pipelines that this run had started.
+
+A `404` response with `run_not_found` means the run ID is unknown or belongs to a different fabric.

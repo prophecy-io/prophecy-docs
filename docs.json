@@ -745,12 +745,23 @@
                   {
                     "group": "API documentation",
                     "pages": [
-                      "api-reference/introduction"
+                      "api-reference/introduction",
+                      "api-reference/end-to-end-workflow",
+                      "api-reference/graphql"
                     ]
                   },
                   {
                     "group": "Endpoints",
                     "pages": [
+                      {
+                        "group": "Users and teams",
+                        "pages": [
+                          "api-reference/users/get-current-user",
+                          "api-reference/users/invite-users",
+                          "api-reference/teams/create-team",
+                          "api-reference/teams/get-team-members"
+                        ]
+                      },
                       {
                         "group": "Fabrics",
                         "pages": [
@@ -819,14 +830,20 @@
                       {
                         "group": "Projects",
                         "pages": [
+                          "api-reference/projects/create-project",
+                          "api-reference/projects/commit-changes",
+                          "api-reference/projects/publish-release",
+                          "api-reference/projects/list-releases",
                           "api-reference/projects/deploy-project"
                         ]
                       },
                       {
                         "group": "Pipelines",
                         "pages": [
+                          "api-reference/pipelines/create-pipeline",
                           "api-reference/pipelines/trigger-pipeline-run",
                           "api-reference/pipelines/get-pipeline-run-status",
+                          "api-reference/pipelines/cancel-pipeline-run",
                           "api-reference/pipelines/run-data-tests"
                         ]
                       }
@@ -1552,12 +1569,23 @@
                   {
                     "group": "API documentation",
                     "pages": [
-                      "api-reference/introduction"
+                      "api-reference/introduction",
+                      "api-reference/end-to-end-workflow",
+                      "api-reference/graphql"
                     ]
                   },
                   {
                     "group": "Endpoints",
                     "pages": [
+                      {
+                        "group": "Users and teams",
+                        "pages": [
+                          "api-reference/users/get-current-user",
+                          "api-reference/users/invite-users",
+                          "api-reference/teams/create-team",
+                          "api-reference/teams/get-team-members"
+                        ]
+                      },
                       {
                         "group": "Fabrics",
                         "pages": [
@@ -1626,14 +1654,20 @@
                       {
                         "group": "Projects",
                         "pages": [
+                          "api-reference/projects/create-project",
+                          "api-reference/projects/commit-changes",
+                          "api-reference/projects/publish-release",
+                          "api-reference/projects/list-releases",
                           "api-reference/projects/deploy-project"
                         ]
                       },
                       {
                         "group": "Pipelines",
                         "pages": [
+                          "api-reference/pipelines/create-pipeline",
                           "api-reference/pipelines/trigger-pipeline-run",
                           "api-reference/pipelines/get-pipeline-run-status",
+                          "api-reference/pipelines/cancel-pipeline-run",
                           "api-reference/pipelines/run-data-tests"
                         ]
                       }

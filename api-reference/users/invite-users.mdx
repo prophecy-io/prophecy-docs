@@ -1,0 +1,42 @@
+---
+openapi: post /api/auth/inviteUsers
+---
+
+## Add existing or new users
+
+Choose the request shape based on whether each person already has a Prophecy account:
+
+| Person                   | `createUser` | `invitationStatus` | Result                                                  |
+| ------------------------ | ------------ | ------------------ | ------------------------------------------------------- |
+| Already has an account   | `false`      | `Accepted`         | They join the team immediately.                         |
+| Does not have an account | `true`       | Omit               | Prophecy creates their account and adds it to the team. |
+
+When you create users, `isRequesterGlobalAdmin` controls what happens next:
+
+| `isRequesterGlobalAdmin` | What happens to the new person                                   |
+| ------------------------ | ---------------------------------------------------------------- |
+| `true`                   | They are invited and can use Prophecy as soon as they sign in.   |
+| `false`                  | The invitation waits until a Prophecy administrator approves it. |
+
+Set `isRequesterGlobalAdmin` to `true` only if your account is a Prophecy administrator for the whole instance. The [get current user API](/api-reference/users/get-current-user) returns `ClusterAdmin` as the account `type` in that case.
+
+If Prophecy sends email on your instance, new people also get an invitation email. The response's `emailResult` says whether one was sent.
+
+To confirm that people joined a team, use the [get team members query](/api-reference/teams/get-team-members).
+
+## Troubleshoot team invitation failures
+
+A response with `"success": false` and `N team invitation failures` means that many people were not added. The response does not say why. It is one of these causes:
+
+| Cause                                                                  | Fix                                                       |
+| ---------------------------------------------------------------------- | --------------------------------------------------------- |
+| The person has no Prophecy account and `createUser` is `false`.        | Invite them with `"createUser": true`.                    |
+| No team has exactly that name, for example because a team ID was sent. | Use the team's exact name.                                |
+| Your account is not an admin of that team.                             | Ask a team admin to add them, or to make you an admin.    |
+| Prophecy could not add the member.                                     | Try again. If it keeps failing, contact Prophecy support. |
+
+<Note>
+  `Invite registration failed` in the message is a different error. The account was created, but
+  Prophecy's seat registration did not accept it. Ask your Prophecy administrator about available
+  seats.
+</Note>

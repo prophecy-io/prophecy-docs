@@ -1,0 +1,7 @@
+---
+openapi: get /api/get-user
+---
+
+The call identifies you from your access token, so it takes no parameters. Use the returned `id` wherever a call asks for your user ID, and pass it in quotes.
+
+Check the `type` field to find out whether your account is a Prophecy administrator for the whole instance. `ClusterAdmin` means it is. The [add users to teams API](/api-reference/users/invite-users) uses this in `isRequesterGlobalAdmin`.
