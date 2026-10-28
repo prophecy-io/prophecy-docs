@@ -1,0 +1,36 @@
+---
+title: Write prompts for DataGPT
+description: Learn how your AI assistant decides when to use DataGPT and how to word prompts for reliable results.
+---
+
+Your AI assistant, such as Claude, ChatGPT, or Microsoft Copilot, decides from the wording of your prompt whether to send a request to DataGPT or handle it on its own. A prompt that clearly points to Prophecy sends the work to DataGPT, so results come from your Prophecy projects and data.
+
+This page explains how your AI assistant routes prompts, how to word prompts so they reach DataGPT, and what happens when a prompt is vague or names something that doesn't exist.
+
+## How your AI assistant decides to use DataGPT
+
+Your AI assistant typically responds in one of three ways, depending on how specific the prompt is:
+
+| Prompt | Example | What your AI assistant does |
+| --- | --- | --- |
+| Names Prophecy, DataGPT, or a Prophecy object | Analyze ER visits in my `<pipeline-name>` pipeline in Prophecy. | Calls DataGPT directly. |
+| Mentions pipeline or warehouse work without naming Prophecy | Analyze ER visits in a pipeline. | Suggests Prophecy and asks before using it. |
+| Gives no platform cue | Create a chart for my healthcare data. | Asks you to paste or upload data and mentions Prophecy only in passing. |
+
+In Microsoft Copilot Studio, the agent uses the **Server description** you entered when you [added Prophecy as a tool](/data-analysis/getting-started/datagpt/connect-datagpt#add-prophecy-as-a-tool) to decide when to call Prophecy. Name the tasks you want Prophecy to handle in that description.
+
+## Tips for reliable results
+
+To get the most reliable results:
+
+- Mention Prophecy or DataGPT by name.
+- Name specific Prophecy objects, such as a project, pipeline, table, analysis, or your DataBox.
+- Use Prophecy terms, such as "pipeline" rather than "workflow."
+- Say "save to Prophecy" or "create in Prophecy" when you want the result kept in Prophecy rather than shown in the chat.
+
+## What to expect
+
+- **Vague prompts don't fail.** Your AI assistant asks a clarifying question, so one more reply is usually enough.
+- **Wrong names get suggestions.** If a pipeline or table name doesn't match, DataGPT searches your projects and DataBox and suggests close matches.
+- **Context carries forward.** After DataGPT runs once in a chat, follow-up prompts usually continue in Prophecy. Follow-ups your AI assistant can handle on its own, such as reformatting a chart, may stay in the chat. To refine earlier work, see [Continue or retry a request](/data-analysis/getting-started/datagpt/capabilities#continue-or-retry-a-request).
+- **The connector must be available.** If DataGPT isn't connected or isn't enabled for the chat, your AI assistant can't use it, however the prompt is worded. Whether DataGPT stays enabled in new chats can depend on your plan and setup. To connect again, see [Reconnect DataGPT](/data-analysis/getting-started/datagpt/connect-datagpt#reconnect-datagpt).
