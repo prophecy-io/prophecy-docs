@@ -1,0 +1,80 @@
+---
+title: Git connection policy
+description: Restrict which external Git repositories projects in your Prophecy deployment can use
+---
+<Callout icon="/images/icon.png" color="#FFC107">
+  Available for the [Enterprise Edition](/administration/platform/editions) only.
+</Callout>
+
+A Git connection policy restricts which external Git repositories can be accessed by Prophecy projects. The policy applies to every team and user in a given deployment.
+
+<Note>
+Projects that use Prophecy-managed Git are never affected.
+</Note>
+
+## Prerequisites
+
+To configure the Git connection policy, you must be logged in as a Prophecy administrator.
+
+## When the policy applies
+
+Prophecy checks the policy only when a user connects a repository to a project, such as when they create a project with an external Git repository or connect an existing project to a different repository. Projects that are already connected to a repository keep working, even if the repository doesn't comply with the policy.
+
+## Configure the policy
+
+To configure the policy:
+
+1. Click the three dots at the bottom of the left navigation, then click the Settings icon.
+1. Open the **Admin** tab.
+1. Open the **Git Connection Policy** tab.
+1. In the **Policy** tab, configure the fields described below.
+1. Click **Save policy**.
+
+| Field                                   | Description                                                                                                                                                                                                                                                  |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Mode                                    | Choose **Unrestricted** to allow any repository, or **Allowlist** to allow only the repositories listed in **Allowed organisations**. The default is **Unrestricted**.                                                                                        |
+| Enforcement                             | Choose how Prophecy handles a repository that the policy doesn't allow: <br/><br/>- **Warn (record only)** lets the user connect the repository and records the violation. <br/><br/>- **Block (refuse)** prevents the user from connecting the repository. <br/><br/>The default is **Warn (record only)**. |
+| Allow personal repositories             | Choose **Yes** to allow repositories that belong to the user's own Git account, even when the account isn't in **Allowed organisations**.                                                                                                                       |
+| Admin contact (shown to a blocked user) | Optional. Enter an email address, that users see when the policy refuses or flags their repository. If you leave this field empty, users are told to contact their Prophecy cluster admin.                                                    |
+| Allowed organisations                   | Enter the organizations and repositories that projects can use. Separate entries with commas or new lines. See [Allowed organisation patterns](#allowed-organisation-patterns).                                                                               |
+
+When the mode is **Allowlist**, you must add at least one organization before you can save the policy. If any line in **Allowed organisations** isn't valid, Prophecy shows the error for that line and skips it when you save.
+
+### Allowed organisation patterns
+
+Each entry in **Allowed organisations** matches the path of a repository after the Git host. For example, the repository `https://github.com/acme-data/pipelines-sales` has the path `acme-data/pipelines-sales`.
+
+| Entry                                | What it allows                                                                                        |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------- |
+| `acme-data`                          | Every repository in the `acme-data` organization, including repositories in nested groups or projects. |
+| `acme-data/team-a`                   | Every repository under `acme-data/team-a`.                                                            |
+| `acme-data: pipelines-*, reports-*`  | Repositories in `acme-data` whose names start with `pipelines-` or `reports-`.                        |
+
+Matching is case-insensitive and compares whole path segments. For example, `acme-data` doesn't allow `acme-datastore`. In a pattern, `*` matches any number of characters and `?` matches exactly one character. Neither wildcard matches across a `/`.
+
+## What users see
+
+When a user enters a repository that the policy doesn't allow, Prophecy shows a message next to the repository that explains why and lists the allowed organizations.
+
+- If enforcement is **Block (refuse)**, the user can't connect the repository.
+- If enforcement is **Warn (record only)**, the user can connect the repository, and Prophecy records the violation.
+
+## Review compliance
+
+Open the **Compliance report** tab to see which existing projects use repositories that the current policy doesn't allow. Projects that use Prophecy-managed Git aren't listed.
+
+The report summarizes how many repositories violate the policy and lists the organizations currently in use. If you haven't configured a policy yet, use this list to decide which organizations to allow.
+
+For each project, the report shows the following information.
+
+| Column       | Description                                                       |
+| ------------ | ----------------------------------------------------------------- |
+| Status       | **Compliant** or **Violation**.                                   |
+| Project      | Name of the project.                                              |
+| Team         | Team that owns the project.                                       |
+| Organisation | Organization that owns the repository.                            |
+| Host         | Git host of the repository.                                       |
+| Repository   | Repository that the project is connected to.                      |
+| Reason       | Why the repository violates the policy, as shown to a user.       |
+
+You can search the report and filter it by status or organization. Flagged projects keep working. The policy only applies when a user connects a project to a repository.

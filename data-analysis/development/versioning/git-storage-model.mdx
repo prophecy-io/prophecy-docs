@@ -44,3 +44,27 @@ The table below reiterates the diagram.
 | Save to draft            | <ul><li>Pull changes from the remote `dev` branch</li><li>Pull changes from the local `main` branch</li><li>Commit changes to local `dev`</li><li>Push changes to remote `dev`</li></ul>                              |
 | Publish                  | <ul><li>Merge changes into local `main`</li><li>Add a Git Tag with the published version number</li><li>Push changes to remote `main`</li></ul>                                                                       |
 | Restore previous version | <ul><li>Run `git reset --soft`</li><li>Commit the changes to revert in `dev`</li><li>Push changes to remote `dev` branch</li></ul> (You must manually publish the project again to merge what you reverted to `main`) |
+
+## Delete branch copies
+
+In projects that use the Normal or Fork per user Git storage model, Prophecy keeps a local copy of each branch that a user checks out. Project admins can delete these copies to free up storage. Deleting a copy never changes your Git repository, and a user can restore a copy later by checking out the branch again.
+
+To delete branch copies:
+
+1. Open the **Metadata** page from the left sidebar.
+1. Open the project.
+1. Open the **Branches** tab.
+1. Select the branches you want to delete.
+1. Click **Delete selected**.
+1. Review the branches in the confirmation dialog, then confirm the deletion.
+
+The **Branches** tab summarizes the total number of branch copies, the storage they use, and how many haven't been used in 30 or more days. For each branch copy, the table shows the author of the last commit, when the branch was last updated, its status, and its size.
+
+A branch copy can have the following statuses:
+
+- **Active**: The branch is a user's current working branch.
+- **Uncommitted**: The branch copy has changes that haven't been committed. Deleting the copy discards these changes.
+
+<Note>
+You can't delete a user's current working branch or the copy of the project's main branch, which is labeled **Default**.
+</Note>
