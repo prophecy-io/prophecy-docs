@@ -3,6 +3,60 @@ title: '2026 releases'
 description: 'Features and enhancements from new releases'
 ---
 
+<Update label="Prophecy 4.2.13" description="TBD" tags={["Data Analysis"]}>
+
+## Edit analysis code
+
+You can now edit an analysis directly as code. Each analysis is stored as a Python file in the project at `apps/<analysis_name>.py`. Open the file in the Code view, and when you save, Prophecy compiles it and updates the analysis in the visual editor.
+
+If the file doesn't compile, Prophecy keeps your code, reports the error on the file, and marks the analysis as stale until you fix it. See [Edit the analysis code](/data-analysis/analysis/create-analysis#edit-the-analysis-code).
+
+## Handle target rows not in source for Upsert and Append Unique
+
+On Databricks, the [Upsert Row](/data-analysis/gems/source-target/table/write/upsert#handle-target-rows-not-in-source) and [Append Unique Rows](/data-analysis/gems/source-target/table/write/append-unique#handle-target-rows-not-in-source) write modes now let you choose what happens to target rows that have no match in the incoming dataset: **Do nothing** (default), **Delete rows**, or **Update columns**. Add a **Run only when** condition to apply the action to only some unmatched rows.
+
+## Limit gem: Offset
+
+The [Limit gem](/data-analysis/gems/prepare/limit) now has an optional **Offset** parameter that skips a number of rows before returning rows. **Limit** and **Offset** both accept whole numbers, configuration variables, and arithmetic on them, such as `{{ page_size }} * 2`.
+
+## Alteryx import: analyses and more Source gem types
+
+When you import Alteryx workflows, Prophecy now creates an [analysis](/import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-to-sql#analyses-from-reporting-tools) for each workflow that contains Interactive Chart or Table (Reporting) tools. Each chart or table becomes a widget, and tables keep their configured column selection, order, and labels.
+
+Input tools that read tables now convert to [Source gems](/import-tool/alteryx/alteryx-to-prophecy-sql/alteryx-connections) that match the tool's connection: Databricks, Amazon Redshift, Postgres, or SAP HANA, with Oracle used when the Transpiler doesn't recognize the database.
+
+</Update>
+
+<Update label="Prophecy 4.2.13" description="TBD" tags={["Data Engineering"]}>
+
+## Choose the OAuth app registration for Databricks fabrics
+
+Databricks fabrics, including fabrics that use a compute cluster for Spark, no longer always use the provider's default app registration. If you have more than one Databricks or ID Anywhere app registration, select the one the fabric uses when you configure OAuth. The fabric uses that registration for sign-in, interactive runs, scheduled runs, and test connections. See [App registration selection](/administration/management/cluster-admin-settings/oauth-setup#app-registration-selection).
+
+The [Databricks Serverless](/data-engineering/fabrics/spark-provider/databricks/databricks-serverless) personal access token requirement has been removed.
+
+## Restart services after adding Kerberos keytabs
+
+Keytab changes for [Livy fabrics](/data-engineering/fabrics/spark-provider/livy/livy#add-kerberos-keytabs) take effect after Prophecy restarts its services. Admins can now click **Restart services** in **Settings > Admin > Security** and either restart immediately or schedule the restart in 15 minutes, with a maintenance banner shown to all users until then.
+
+</Update>
+
+<Update label="Prophecy 4.2.13" description="TBD" tags={["Administration"]}>
+
+## SAML single logout
+
+[SAML authentication](/administration/management/authentication/saml#set-up-single-logout) now supports single logout (SLO). When enabled, signing out of Prophecy also signs the user out of your IdP, and signing out of your IdP ends the user's Prophecy session. You can optionally sign SLO messages with a certificate that Prophecy generates.
+
+## Automatic SSO sign-in
+
+When your deployment uses a single SSO provider, returning SSO users skip the Prophecy sign-in page and go directly to the identity provider. To reach the Prophecy sign-in page, add `?autoLogin=false` to your Prophecy URL. See [Automatic SSO sign-in](/administration/management/authentication/authentication#automatic-sso-sign-in).
+
+## OAuth token lifetime guidance
+
+For [OAuth app registrations](/administration/management/cluster-admin-settings/oauth-setup), set **Token Lifetime** longer than the login grace period (720 minutes by default). A shorter lifetime requires users to sign in again on every connection.
+
+</Update>
+
 <Update label="Prophecy 4.2.12" description="October 7, 2026" tags={["Data Analysis"]}>
 
 ## DataBox
