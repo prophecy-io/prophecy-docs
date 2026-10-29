@@ -204,6 +204,14 @@ Prophecy audit logs also capture actions performed directly on the execution pla
 | `schedule_update`  | `compute` | A schedule was updated      |
 | `schedule_delete`  | `compute` | A schedule was deleted      |
 
+### DataBox uploads
+
+| Event type                   | Category        | Description                                                                                             |
+| ---------------------------- | --------------- | ------------------------------------------------------------------------------------------------------- |
+| `databox_upload_removed`     | `data_platform` | A DataBox upload failed its background safety scan and was permanently deleted                         |
+| `databox_upload_scan_failed` | `data_platform` | A DataBox upload couldn't be scanned after repeated attempts and was kept without a scan                |
+| `databox_upload_vanished`    | `data_platform` | A DataBox upload was moved or deleted outside DataBox, for example by a pipeline, before its scan finished |
+
 ## Sync data to S3
 
 If your Prophecy deployment is hosted on AWS, you can sync your Prophecy audit logs to your own Amazon S3 bucket. Follow these steps to configure your S3 bucket and grant Prophecy the required access.
