@@ -14,23 +14,54 @@ If you need details on configuring a Source or Target gem end to end (including 
 
 ## Properties
 
-### Source properties
+### Properties for reading CSVs
 
-The following properties are available for the CSV Source gem.
+The following properties are available when CSV is used as a source format. You can remove some properties by clicking the trash can icon to its right. You can also [add additional properties](#add-additional-properties) using the **+** at the top of the page.
 
-| Property                      | Description                                                                                                        | Default |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------- |
-| Description                   | Description of the table.                                                                                          | None    |
-| Separator                     | Character used to separate values in the CSV file.                                                                 | `,`     |
-| Header                        | Whether the first row is the column header.                                                                        | True    |
-| Null Value                    | String that represents a null or missing value in the CSV.                                                         | None    |
-| Comment Character             | Character used to denote lines in the file that should be treated as comments.                                     | None    |
-| Inference Data Sampling Limit | Maximum number of rows to sample for inferring the schema.                                                         | `0`     |
-| File Encoding                 | Character set used to decode the CSV file when reading. See [supported encodings](#supported-character-encodings). | `UTF-8` |
+| Property | Description | Default |
+| -------- | ----------- | ------- |
+| Description | Description of the table. | None |
+| Separator | Character used to separate values in the CSV file. Must be a single character, such as `,`, `;`, a tab, or `\|`. | `,` |
+| Header | Whether the first row is the column header. | True |
+| Null Value | String that represents a null or missing value in the CSV. | None |
+| Allow Empty Column Names | Whether to allow columns without a name in the header row. If enabled, Prophecy generates names for these columns. If disabled, the read fails when the header contains an empty column name. | True |
+| Enable Schema Merging | Whether to combine files with different columns when the gem reads multiple files. See [Schema options](#schema-options). Can't be used with **Master Schema File Path**. | False |
+| Master Schema File Path | Path to a CSV file on the same source whose first row defines the column names. See [Schema options](#schema-options). Cannnot be used with **Enable Schema Merging**. | None |
+| Enforce Schema | Whether to keep the saved schema table when you click **Infer Schema**. See [Schema options](#schema-options). | False |
+| Flexible Quote Handling | Whether to allow quoted fields to contain unescaped quotes. Useful for malformed CSV files. If disabled, Prophecy enforces strict quoting rules. | False |
+| Allow Reading Incomplete Rows | Whether to read rows that have fewer columns than the header. If disabled, the read fails on an incomplete row. | False |
+| File Encoding | Character set used to decode the CSV file when reading. See [supported encodings](#supported-character-encodings). | `UTF-8` |
+| Source File Column Name | Name of the column that stores each row's source file name. Appears only when **Include filename Column** is enabled. After you change this value, click **Infer Schema** to update the output schema. | `FileName` |
+| Last Modified Timestamp Column Name | Name of the column that stores each source file's last modified timestamp. Appears only when the gem includes a last modified timestamp column. After you change this value, click **Infer Schema** to update the output schema. | `FileModifiedDate` |
+| Record ID Column Name | Name of the record ID column. Appears only when **Append Record Id column to the output schema** is enabled. | `RecordId` |
 
-### Target properties
+#### Add additional properties
 
-The following properties are available for the CSV Target gem.
+You can add the following properties by clicking the **+** at the top of the Properties page.
+
+| Property | Description | Default |
+| -------- | ----------- | ------- |
+| Skip reading top n rows | Number of rows to skip at the beginning of the file. If **Header** is enabled, the first row after the skipped rows is the header. Otherwise, it is the first data row. | `0` |
+| Default column prefix | Prefix for generated column names when **Header** is disabled or a header cell is empty. Prophecy appends the column index to the prefix. For example, the prefix `F` produces `F1`, `F2`, and so on. | `_c` |
+| Comment Character | Character used to denote lines in the file that should be treated as comments. | None |
+| Inference Data Sampling Limit | Maximum number of rows to sample for inferring the schema. | `0` |
+| Append Record Id column to the output schema | Whether to add a record ID column to the output schema. | False |
+
+#### Schema options
+
+By default, **Infer Schema** rebuilds the schema table from the files each time you click it. Use the following properties to control how the gem determines the schema:
+
+- **Enable Schema Merging:** When the gem reads multiple files, Prophecy combines their columns by name. Rows from a file that doesn't contain a column get null values in that column. If the schema table already has columns, Prophecy maps the merged columns onto the schema table by position and drops any extra columns.
+- **Master Schema File Path:** **Infer Schema** uses the first row of this file as the column names and infers data types from its data rows. When the gem reads data, Prophecy fills an empty schema table from this file. If the schema table already has columns, Prophecy uses its names and types instead and maps data columns by position. Leave this property empty to infer the schema from the data files.
+- **Enforce Schema:** **Infer Schema** returns the saved schema table instead of rebuilding it from the files, and Prophecy reads the data with those column names and data types. For example, if an `id` column is typed as `String`, values such as `010` keep their leading zero. This property has no effect while the schema table is empty.
+
+<Note>
+The source file name column must be the last column in the schema table, and its name can't match an existing column in the data. If the names collide, the read fails with the error `column name "<name>" already exists in the data schema`. To fix this, change **Source File Column Name**.
+</Note>
+
+### Properties for writing CSVs
+
+The following properties are available when CSV is used as a target format.
 
 | Property                         | Description                                                                                                                                                                                                                                                                                                                                                                                                     | Default                |
 | -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- |
