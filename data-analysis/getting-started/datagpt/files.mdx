@@ -24,6 +24,22 @@ Files attached to the chat are stored in DataBox, even when you're working in a 
 
 Your AI client may not pass large attachments to DataGPT. If that happens, DataGPT opens the DataBox view so you can drag the file in directly. Files uploaded this way can be up to 2 GB each.
 
+### Upload restrictions
+
+Prophecy checks every file that you upload to DataBox, including chat attachments. If a file isn't allowed, the upload fails with an error that explains why. DataBox doesn't accept the following files:
+
+- Executables, scripts, installers, and disk images, such as `.exe`, `.jar`, `.sh`, `.ps1`, `.js`, `.msi`, and `.dmg` files.
+- Macro-enabled Office files, such as `.xlsm`, `.xlsb`, `.docm`, and `.pptm` files.
+- SVG images.
+- `.7z`, `.rar`, and `.xz` archives.
+- Browser network captures (`.har` files).
+- Password-protected or encrypted Office files, PDFs, and ZIP files. A PDF that only restricts editing or printing, and doesn't need a password to open, is accepted.
+- CSV files with formulas that run programs or reach the internet, such as `WEBSERVICE` or `IMPORTDATA`.
+
+These checks also apply to files inside ZIP archives.
+
+After a file is stored, Prophecy also scans it for malware in the background. If the scan finds a problem, Prophecy permanently deletes the file.
+
 ## Browse DataBox
 
 Ask DataGPT to open DataBox to browse your files in the chat. The DataBox view shows your personal files, project folders, team members' folders, and connections, and includes a search bar.
@@ -43,7 +59,7 @@ Files on connections are read-only.
 
 ## Preview and download files
 
-Select a file in DataBox to preview it in the chat. DataGPT supports previews of PDF, Excel, CSV, image, and Markdown files. Password-protected PDF and Excel files can't be previewed. Other file types show a download card instead.
+Select a file in DataBox to preview it in the chat. DataGPT supports previews of PDF, Excel, CSV, image, and Markdown files. Other file types show a download card instead.
 
 Select a table on a warehouse connection to open the data explorer, where you can browse rows and inspect column information.
 
@@ -51,16 +67,27 @@ When you ask to download a file, DataGPT creates a download link that expires af
 
 ## Extract tables from Excel files
 
-DataGPT detects tables in Excel workbooks and lets you review them before extracting their data into warehouse tables. XLSX and XLSM files are supported. To use a legacy XLS file, save it as XLSX first.
+DataGPT detects tables in Excel workbooks and lets you review them before extracting their data into warehouse tables. XLSX files are supported. To use a legacy XLS file, save it as XLSX first.
 
 1. Attach the workbook and ask DataGPT to analyze it.
 2. In the extraction view, review the detected tables. Switch between the **Source** view, which highlights table ranges in the workbook, and the **Datasets** view, which lists the detected tables.
-3. If necessary, adjust a table's range by dragging its corners. Mark or unmark tables to include them in the extraction. Changes save automatically.
+3. If necessary, adjust a table's range by dragging its corners, or with keyboard shortcuts. Mark or unmark tables to include them in the extraction. Changes save automatically.
 4. Select **Extract Tables** to create a warehouse table for each selected table.
 
 The extracted tables are available through your warehouse connection for use in pipelines and analyses.
 
 For large tables, extraction may use a sample of the data rather than the entire table.
+
+### Keyboard shortcuts for Excel selection
+
+| Action                                                  | Mac                  | Windows               |
+| ------------------------------------------------------- | -------------------- | --------------------- |
+| Extend selection by one cell                            | Shift+Arrow          | Shift+Arrow           |
+| Extend to the edge of the data                          | Cmd+Shift+Arrow      | Ctrl+Shift+Arrow      |
+| Select the used range (press again for the whole sheet) | Cmd+A                | Ctrl+A                |
+| Extend to the first cell / last used cell               | Cmd+Shift+Home / End | Ctrl+Shift+Home / End |
+| Select entire column(s)                                 | Ctrl+Space           | Ctrl+Space            |
+| Select entire row(s)                                    | Shift+Space          | Shift+Spac            |
 
 ## Files in cloud storage
 
