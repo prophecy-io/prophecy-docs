@@ -16,15 +16,44 @@ To configure a schedule for a pipeline:
 1. Open a pipeline in the project editor.
 1. Expand the **...** menu in the pipeline canvas header.
 1. Click **Schedule**.
-1. To create a new schedule, click **New Schedule**. To edit an existing schedule, select it from the schedules list.
+1. To create a new schedule, click **New schedule**. To edit an existing schedule, select it from the schedules list.
+1. In . **Choose Pipeline Parameter Set**, select a pipeline [parameter set](/data-analysis/development/parameters/parameter-sets) you want to use for this schedule.
+1. Set a **Concurrency Policy** for the schedule: Skip, Queue, or Cancel. See [Set a concurrency policy](#set-a-concurrency-policy) below.
+1. Under **Trigger**, configure the [trigger](/data-analysis/production/scheduling/triggers) for the schedule.
 1. Under **Which version runs**, choose whether the schedule always uses the latest published version or locks to one specific version. See [Lock a schedule to a version](#lock-a-schedule-to-a-version) below.
-1. Expand the **Choose Pipeline Parameter Set** dropdown and select the pipeline [parameter set](/data-analysis/development/parameters/parameter-sets) you want to use for this schedule.
-1. Configure the [trigger](/data-analysis/production/scheduling/triggers) for the schedule.
-1. Optionally, set up an [email alert](/data-analysis/production/scheduling/alerts) in your schedule.
-1. Click the **On** toggle to enable the schedule.
-1. Click **Schedule** to save the schedule.
+1. Optionally, set up an [email alert](/data-analysis/production/scheduling/alerts) in your schedule. You can also choose to run data quality **Tests** as part of the schedule.
+1. Click the switch next to the schedule name to enable the schedule.
+1. Click **Save**.
+1. In the confirmation dialog, click **Publish Now** to publish the project and activate the schedule, or click **Later** to publish another time.
+
+For time-based schedules, the dialog summarizes the schedule and its time zone and shows when the next run occurs. If the project has unpublished changes, the summary notes that the schedule starts running after you publish the project. Click **Show the next 5 runs** to see upcoming run times.
 
 You can create multiple schedules for the same pipeline, each with different parameter sets, triggers, and timing configurations. This allows you to run the same pipeline with different settings at different times or frequencies.
+
+## Set a concurrency policy
+
+The **Concurrency Policy** setting controls what happens when a scheduled run is due to start while the previous run of the same pipeline is still in progress. Concurrency policies apply only to time-based schedules, not to file arrival [triggers](/data-analysis/production/scheduling/triggers).
+
+For example, suppose you schedule a pipeline to run every hour, on the hour. The 5:00 PM run is slow and doesn't finish until 6:30 PM, so the 6:00 PM run comes due while the 5:00 PM run is still in progress. The concurrency policy determines how Prophecy handles the 6:00 PM run:
+
+| Policy | What happens to the 6:00 PM run | Result |
+| :-- | :-- | :-- |
+| **Queue** (default) | Waits, then starts as soon as the 5:00 PM run finishes at 6:30 PM. | Every run happens, but runs can drift off schedule. |
+| **Skip** | Doesn't run. The next run starts at 7:00 PM as usual. | Runs stay on schedule, but some time slots are missed. |
+| **Cancel** | Prophecy stops the 5:00 PM run so the 6:00 PM run can start. | The newest run always proceeds, and the older run is cut short. |
+
+Schedules that don't have a concurrency policy set use **Queue**.
+
+Consider **Skip** or **Cancel** when a pipeline can take longer to run than the interval between scheduled runs. For example, if a pipeline takes 20 minutes but is scheduled every 5 minutes, **Queue** causes each run to start as soon as the previous one ends, so the pipeline runs back to back indefinitely.
+
+The policy you choose affects how runs appear in [Observability](/data-analysis/production/monitoring):
+
+- **Cancel**: The stopped run appears with a **Cancelled** status rather than as a failure, and no failure [alert](/data-analysis/production/scheduling/alerts) is sent.
+- **Skip**: A skipped time slot doesn't create a run record.
+
+<Note>
+If Prophecy can't cancel the in-progress run, the schedule falls back to **Queue** behavior for that run.
+</Note>
 
 ## Lock a schedule to a version
 
@@ -57,8 +86,9 @@ To delete a schedule:
 1. Expand the **...** menu in the pipeline canvas header.
 1. Click **Schedule**.
 1. Select the schedule you want to delete.
-1. Click **Delete Schedule**.
-1. Click **Delete** to confirm the deletion.
+1. Click the trash icon next to the schedule name.
+1. Click **Delete schedule** to confirm the deletion.
+1. Click **Save**.
 
 When you delete a schedule, you still have to publish the project for the changes to take effect in the deployed pipeline.
 
