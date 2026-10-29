@@ -55,12 +55,23 @@ DataGPT detects tables in Excel workbooks and lets you review them before extrac
 
 1. Attach the workbook and ask DataGPT to analyze it.
 2. In the extraction view, review the detected tables. Switch between the **Source** view, which highlights table ranges in the workbook, and the **Datasets** view, which lists the detected tables.
-3. If necessary, adjust a table's range by dragging its corners. Mark or unmark tables to include them in the extraction. Changes save automatically.
+3. If necessary, adjust a table's range by dragging its corners, or with keyboard shortcuts. Mark or unmark tables to include them in the extraction. Changes save automatically.
 4. Select **Extract Tables** to create a warehouse table for each selected table.
 
 The extracted tables are available through your warehouse connection for use in pipelines and analyses.
 
 For large tables, extraction may use a sample of the data rather than the entire table.
+
+### Keyboard shortcuts for Excel selection
+
+| Action                                                  | Mac                  | Windows               |
+| ------------------------------------------------------- | -------------------- | --------------------- |
+| Extend selection by one cell                            | Shift+Arrow          | Shift+Arrow           |
+| Extend to the edge of the data                          | Cmd+Shift+Arrow      | Ctrl+Shift+Arrow      |
+| Select the used range (press again for the whole sheet) | Cmd+A                | Ctrl+A                |
+| Extend to the first cell / last used cell               | Cmd+Shift+Home / End | Ctrl+Shift+Home / End |
+| Select entire column(s)                                 | Ctrl+Space           | Ctrl+Space            |
+| Select entire row(s)                                    | Shift+Space          | Shift+Spac            |
 
 ## Files in cloud storage
 
