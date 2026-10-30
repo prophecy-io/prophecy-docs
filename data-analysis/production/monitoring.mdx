@@ -44,10 +44,14 @@ For each scheduled pipeline, Prophecy provides the following information.
 | Column          | Description                                                                                           |
 | --------------- | ----------------------------------------------------------------------------------------------------- |
 | **Pipeline**    | Name of the pipeline. Click to view the pipeline in the project editor.                               |
+| **Schedule Name** | Name of the schedule.                                                                               |
 | **Fabric**      | Fabric where the pipeline is deployed.                                                                |
-| **Project**     | Project that contains the pipeline.                                                                   |
+| **Project**     | Project that contains the pipeline. Click the name to open the project.                               |
 | **Triggers**    | Type of trigger for the schedule. Schedules can include multiple triggers.                            |
-| **Last 5 Runs** | Status of the 5 most recent runs. To find the history of all pipeline runs, open the Run History tab. |
+| **Concurrency Policy** | [Concurrency policy](/data-analysis/production/scheduling/schedule-setup#set-a-concurrency-policy) of the schedule: Queue, Skip, or Cancel. |
+| **Last Trigger Status** | What happened the last time the schedule came due: **Ran** or **Skipped**. A time slot is skipped when the schedule uses the Skip concurrency policy and the previous run is still in progress. |
+| **Last Trigger Time** | When the schedule last came due.                                                                    |
+| **Last 5 runs** | Status of the 5 most recent completed runs. To find the history of all pipeline runs, open the Run History tab. |
 
 <Info>
   You may see multiple rows for the same pipeline if the parent project is deployed to multiple
@@ -89,8 +93,56 @@ For each historical pipeline run, Prophecy provides the following information.
 | **Start Time** | Timestamp when the run started.                                                                                                                                                                                          |
 | **End Time**   | Timestamp when the run completed.                                                                                                                                                                                        |
 | **Duration**   | Elapsed time of the run.                                                                                                                                                                                                 |
-| **Result**     | Status of the run: `Success` (green) or `Failed` (red).                                                                                                                                                                  |
-| **See logs**   | Opens historical runtime logs and the associated pipeline snapshot in Historical Mode.                                                                                                                                   |
+| **Logs**       | Click **See logs** to open historical runtime logs and the associated pipeline snapshot in Historical Mode. Shows **No logs available** when logs aren't available, such as for analysis runs and runs that are still in progress. |
+| **Status**     | Status of the run. See [Run statuses](#run-statuses). <br />For failed, warning, and cancelled runs, hover over the status to see the message. |
+
+To see who or what triggered a run, click the **Run details** icon at the end of the row. See [View run details](#view-run-details).
+
+### Run statuses
+
+| Status         | Description                                                                                     |
+| -------------- | ----------------------------------------------------------------------------------------------- |
+| **Queued**     | The run is waiting to start.                                                                    |
+| **Running**    | The run is in progress.                                                                         |
+| **Cancelling** | Prophecy is stopping the run.                                                                   |
+| **Success**    | The run finished successfully.                                                                  |
+| **Warning**    | The run finished with warnings.                                                                 |
+| **Failed**     | The run failed.                                                                                 |
+| **Cancelled**  | The run was stopped before it finished, by a user, a parent run, or a schedule's concurrency policy. |
+| **Skipped**    | The run didn't execute.                                                                         |
+
+### Stop a run
+
+To stop a run that's in progress:
+
+1. In the **Status** column of the run, click the **Stop run** icon.
+1. Click **Stop run** to confirm.
+
+Prophecy discards any work in progress and marks the run as **Cancelled**. If the run finishes before Prophecy can stop it, Prophecy tells you that the run already finished.
+
+### Restart a scheduled run
+
+You can restart a scheduled run that failed, finished with warnings, or was cancelled. The restart uses the schedule's current version and parameters.
+
+To restart a run:
+
+1. In the **Status** column of the run, click the **Restart run** icon.
+1. Click **Restart run** to confirm.
+
+The restart appears in Run History as a new attempt of the original run. You can only restart the latest attempt.
+
+### View run details
+
+Click the **Run details** icon at the end of a row to open the run details panel. The panel shows the run ID, which you can copy, and the run status. It also includes the following sections.
+
+| Section      | Description |
+| ------------ | ----------- |
+| Trigger Info | What started the run: **User**, **Schedule**, **API**, **CLI**, or **Parent run**. For runs that a user started, the section shows the user's name and email. For related runs, it links to the **Parent Run ID**, the run that this run is a **Restart Of**, and the **Root Run ID**. |
+| Cancel Info  | For cancelled runs, what stopped the run: **User**, **Schedule policy**, or **Parent run**. |
+
+Click a linked run ID to open the details of that run. Click the back arrow to return to the previous run.
+
+The **Run details** icon doesn't appear for older runs that don't have this information.
 
 ## Open historical runtime logs
 
@@ -99,7 +151,7 @@ You can inspect completed pipeline executions directly from the Run History tabl
 To open historical runtime logs:
 
 1. Open the **Run History** tab and locate the run you want to inspect.
-3. Click **See logs** in the far-right column.
+1. In the **Logs** column, click **See logs**.
 
 ![Open historical runtime logs](/data-analysis/development/runs/img/historical-logs.png)
 

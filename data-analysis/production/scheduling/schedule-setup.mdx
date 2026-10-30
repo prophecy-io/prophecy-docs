@@ -17,7 +17,7 @@ To configure a schedule for a pipeline:
 1. Expand the **...** menu in the pipeline canvas header.
 1. Click **Schedule**.
 1. To create a new schedule, click **New schedule**. To edit an existing schedule, select it from the schedules list.
-1. In . **Choose Pipeline Parameter Set**, select a pipeline [parameter set](/data-analysis/development/parameters/parameter-sets) you want to use for this schedule.
+1. In **Choose Pipeline Parameter Set**, select a pipeline [parameter set](/data-analysis/development/parameters/parameter-sets) you want to use for this schedule.
 1. Set a **Concurrency Policy** for the schedule: Skip, Queue, or Cancel. See [Set a concurrency policy](#set-a-concurrency-policy) below.
 1. Under **Trigger**, configure the [trigger](/data-analysis/production/scheduling/triggers) for the schedule.
 1. Under **Which version runs**, choose whether the schedule always uses the latest published version or locks to one specific version. See [Lock a schedule to a version](#lock-a-schedule-to-a-version) below.
@@ -42,7 +42,7 @@ For example, suppose you schedule a pipeline to run every hour, on the hour. The
 | **Skip** | Doesn't run. The next run starts at 7:00 PM as usual. | Runs stay on schedule, but some time slots are missed. |
 | **Cancel** | Prophecy stops the 5:00 PM run so the 6:00 PM run can start. | The newest run always proceeds, and the older run is cut short. |
 
-Schedules that don't have a concurrency policy set use **Queue**.
+Schedules that don't have a concurrency policy set use **Queue**. **Queue** holds at most one waiting run. If a long run overlaps several time slots, Prophecy starts one late run when the long run finishes, not one run for each missed slot.
 
 Consider **Skip** or **Cancel** when a pipeline can take longer to run than the interval between scheduled runs. For example, if a pipeline takes 20 minutes but is scheduled every 5 minutes, **Queue** causes each run to start as soon as the previous one ends, so the pipeline runs back to back indefinitely.
 

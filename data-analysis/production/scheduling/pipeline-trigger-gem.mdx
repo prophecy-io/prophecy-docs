@@ -13,10 +13,6 @@ A single Pipeline gem execution can trigger the target pipeline multiple times. 
   You can create pipelines solely dedicated to pipeline orchestration using multiple instances of this gem. We recommend labeling your orchestration pipelines to differentiate them from standard data pipelines.
 </Tip>
 
-## Limitations
-
-The [Monitoring](/data-analysis/production/monitoring) page doesn't show the parent pipeline that triggered a run using the Pipeline gem.
-
 ## Input and Output
 
 The following table describes what the Pipeline gem expects as input and what it will produce as output.
@@ -71,6 +67,8 @@ The Pipeline gem accepts the following parameters.
 | Version                             | Choose which published version of the target pipeline to trigger. See [Version](#version) below.                                                                                                                                                                                          |
 | Trigger only if                     | Choose a [condition](#trigger-conditions) to control when the trigger fires based on the `status` column of the input dataset (if present). If the condition is not met, the Pipeline gem runs, but no pipelines are triggered. The output will show that all pipeline runs were `skipped`. |
 | Maximum number of pipeline triggers | Set a maximum number of times the child pipeline runs per Pipeline gem execution. Maximum is `10,000`.                                                                                                                                                                                      |
+| Iterator mode                       | Run the child pipeline repeatedly, up to **Maximum number of pipeline triggers**. Applies only when no input is connected. See [Iterator mode](#iterator-mode). |
+| Fail if child pipeline fails        | Fail the Pipeline gem when a triggered pipeline run fails. The error names the child pipeline and its run ID. If this option is disabled, the Pipeline gem succeeds and reports the failure in the `status` column of its output. |
 | Iterator mode | If selected, the pipeline trigger will run in iterator mode till MaxTriggers is reached or the termination condition is met. |
 | Fail if child pipeline fails        | If selected, the Pipeline gem will fail if any triggered child pipeline run fails. |
 | Set pipeline parameters             | Set values for the [pipeline parameters](/data-analysis/development/parameters/parameters) defined in the child pipeline. You can specify constants, expressions, or column values for each parameter. If you don't specify a value, the child pipeline uses its default parameter value.         |
@@ -111,10 +109,26 @@ A Pipeline gem requires at least one non-empty input row to execute. If input is
 | Trigger condition | Description |
 |---|---|
 | **Always run** (default) | Executes the pipeline whenever at least one input row is present, regardless of input status. |
-| **All pipelines ran successfully** | Executes only when every input row has a `success` status. |
-| **All pipelines failed** | Executes only when every input row has a `failure` status. |
+| **All pipelines run successfully** | Executes only when every input row has a `success` status. |
+| **All pipelines failed** | Executes only when no input row has a `success` status. |
 | **Any pipeline succeeded** | Executes if at least one input row has a `success` status. |
-| **Any pipeline failed** | Executes if at least one input row has a `failure` status. |
+| **Any pipeline failed** | Executes if at least one input row has a status other than `success`. |
+
+The trigger conditions treat any `status` value other than `success` as a failure.
+
+### Iterator mode
+
+Use iterator mode to run the same child pipeline repeatedly, for example to process data in rounds until nothing is left to process. Iterator mode applies only when the Pipeline gem has no input connected.
+
+When you enable **Iterator mode**, the Pipeline gem runs the child pipeline one iteration at a time, up to **Maximum number of pipeline triggers**. If you don't set a maximum, the limit is 10,000 iterations. You can also configure the following optional fields.
+
+| Field                    | Description |
+| ------------------------ | ----------- |
+| Iterative Input Table    | Table that controls when iteration stops. Before each iteration, Prophecy checks this table. If it's empty, the Pipeline gem stops. |
+| Iterative Output Table   | Table that feeds the next iteration. Before each iteration, Prophecy replaces the contents of the **Iterative Input Table** with the contents of this table. |
+| Iteration Parameter Name | Name of a child pipeline parameter that receives the iteration number, starting at `1`. |
+
+The output of the Pipeline gem contains one row for each iteration.
 
 ## Execution behavior
 
