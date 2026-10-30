@@ -26,6 +26,11 @@ The following properties are available for the Excel Source gem.
 | Allow Incomplete Rows         | Whether to permit rows with missing values for some columns.                                                                              | True                   |
 | Ignore Cell Formatting        | Whether to apply the number format for the cell value or get the raw value.                                                               | True                   |
 | Sheet Reading method          | Whether to read one sheet of data or union the data from multiple sheets into one table. Learn more in [Reading sheets](#reading-sheets). | Read single sheet data |
+| Enter Cell Range | Range of cells to read, such as `A2:C5`. Leave empty to read the whole sheet. Can't be used with **Skip reading top n rows**. | None |
+| Skip reading top n rows | Number of rows to skip at the top of each sheet. If **Header** is enabled, the first row after the skipped rows is the header. Otherwise, it's the first data row. Can't be used with **Enter Cell Range**. | `0` |
+| Default column prefix | Prefix for generated column names when **Header** is disabled or a header cell is empty. Prophecy appends the column index to the prefix. | `Column-` |
+| Allow reading rows with all column cells as empty | Whether to keep rows in which every cell is empty. Empty rows at the end of a sheet are always dropped. | False |
+| Number of rows to check for nulls in all columns | Maximum number of consecutive empty rows to keep before Prophecy skips empty rows until the next row with data. Appears only when **Allow reading rows with all column cells as empty** is enabled. | `100` |
 | Skip Undefined Rows           | Whether to skip rows where all values are undefined.                                                                                      | False                  |
 | Date Format Reference         | Date format to use when parsing date values.                                                                                              | `2006-01-02`           |
 | Time Format Reference         | Time format to use when parsing time values.                                                                                              | `15:04:05`             |
