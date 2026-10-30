@@ -19,7 +19,7 @@ With Prophecy Managed authentication:
 - User accounts are created and managed inside Prophecy.
 - Passwords are stored securely within Prophecy.
 
-Use this mode if you require external SSO.
+Use this mode if you don't require external SSO.
 
 If you set up SSO after creating users in Prophecy, sign-ins will map to existing users if the sign-in email matches the user email in Prophecy.
 
@@ -27,9 +27,12 @@ If you set up SSO after creating users in Prophecy, sign-ins will map to existin
 
 When your deployment uses a single SSO provider, Prophecy skips its own sign-in page for returning SSO users. If you previously signed in with SSO in your browser, Prophecy sends you directly to your identity provider the next time you open Prophecy. If your identity provider session is still active, you will be signed in to Prophecy without entering credentials.
 
-When you sign out of Prophecy, SSO will be turned off, and your next visit will display the Prophecy sign-in page.
+Notes:
 
-Automatic sign-in does not apply to deployments with more than one SSO provider.
+- When you sign out of Prophecy, automatic sign-in is skipped, and the Prophecy sign-in page will be displayed on your next visit.
+- To reach the Prophecy sign-in page without signing out, add `?autoLogin=false` to your Prophecy URL.
+- Automatic sign-in does not apply to deployments with more than one SSO provider.
+- Automatic sign-in is on by default. On by default. To turn it off, set `prophecy.ui.unsecured.ssoAutoLogin.disabled` in your deployment.
 
 ## Fabric OAuth
 
