@@ -1,6 +1,6 @@
 ---
 title: Limit gem for Data Analysis
-description: Limit the number of columns processed
+description: Return a fixed number of rows, optionally skipping rows first
 ---
 
 import Execution from '/snippets/gem-execution-engine.mdx';
@@ -10,13 +10,24 @@ import GemExample from '/snippets/interactive-gem.mdx';
 
 ## Overview
 
-Limits the number of rows in the output.
+Limits the number of rows in the output. You can optionally skip a number of rows before the gem starts returning rows.
 
 <GemExample gemName="Limit" />
 
 ### Parameters
 
-| Parameter | Description                                                                        | Required |
-| :-------- | :--------------------------------------------------------------------------------- | :------- |
-| Input     | The dataset to limit.                                                              | True     |
-| Limit     | Number of rows required in output. <br />**Allowed range**: [0, 2<sup>31</sup> -1] | True     |
+| Parameter | Description                                                                                                                   | Required |
+| :-------- | :---------------------------------------------------------------------------------------------------------------------------- | :------- |
+| Input     | The dataset to limit.                                                                                                         | True     |
+| Limit     | Number of rows required in output. <br />**Allowed range**: [0, 2<sup>31</sup> -1]                                            | True     |
+| Offset    | Number of rows to skip before returning rows. Leave blank to skip no rows. <br />**Allowed range**: [0, 2<sup>31</sup> -1] | False    |
+
+### Allowed values
+
+**Limit** and **Offset** each accept one of the following:
+
+- A whole number, such as `100`.
+- A configuration variable, such as `{{ page_size }}`.
+- Arithmetic on whole numbers and configuration variables using `+`, `-`, `*`, and parentheses, such as `{{ page_size }} * 2`.
+
+Column references, functions, and `CASE` expressions are not supported.

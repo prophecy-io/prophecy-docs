@@ -136,11 +136,11 @@ To add a new OAuth app registration:
    | Field                    | Description                                                  | Required                             |
    | ------------------------ | ------------------------------------------------------------ | ------------------------------------ |
    | Provider                 | Select your identity provider.                               | Yes                                  |
-   | Default for Provider     | When enabled, this registration becomes the default OAuth configuration for fabrics for the selected provider. The default is always used for Spark fabrics and cannot be changed at the fabric level. | No                                   |
+   | Default for Provider     | When enabled, this registration becomes the default OAuth configuration for fabrics for the selected provider. | No                                   |
    | Name                     | A descriptive name to identify this registration. Useful when you manage multiple registrations for the same provider. | Yes                                  |
    | App Client ID            | The client ID from your OAuth application.                   | Yes                                  |
    | App Client Secret        | The client secret from your OAuth application.               | Google, Snowflake                    |
-   | Token Lifetime (minutes) | Token lifetime in minutes. Overrides the default token lifetime set by your provider. | Yes                                  |
+   | Token Lifetime (minutes) | Token lifetime in minutes. Overrides the default token lifetime set by your provider. Set this longer than the login grace period, which is 720 minutes by default. A shorter lifetime requires users to sign in again on every connection. | Yes                                  |
    | Authorization Endpoint   | The authorization URL for your identity provider.            | ID Anywhere, ID Anywhere (Snowflake) |
    | Default Scope            | Space-separated list of OAuth scopes. Optional for Databricks, Google, and Snowflake to override [default scopes](#default-and-custom-scopes). | ID Anywhere, ID Anywhere (Snowflake) |
 
@@ -160,8 +160,10 @@ Default scopes vary by provider. To override them, enter a space-separated list 
 
 ## App registration selection
 
-You can create more than one app registration for the same provider. How a fabric chooses among them depends on the fabric type.
+You can create more than one app registration for the same provider and choose which one each fabric uses.
 
 In Prophecy fabrics, you select the app registration from a dropdown in the fabric connection settings and can switch between registrations. For example, if you configure a Databricks connection and have multiple Databricks app registrations, you choose which one the connection uses.
 
-Spark fabrics always use the provider's default app registration, and you can't change it at the fabric level. To control which registration a Spark fabric uses, enable **Default for Provider** on that registration.
+In Databricks fabrics, you select the app registration when you configure OAuth for the fabric. This includes Databricks fabrics that use a compute cluster for Spark. The fabric uses the selected registration for sign-in, interactive runs, scheduled runs, and test connections. The registration's provider must be Databricks or ID Anywhere.
+
+Because each app registration belongs to a single Databricks account, use a separate registration for each Databricks account you connect to.
