@@ -1,0 +1,56 @@
+---
+title: REST API
+description: Authenticate RestAPI gem requests with an OAuth or OIDC connection
+---
+
+A REST API connection stores how Prophecy obtains an access token for an API. When the [RestAPI gem](/data-analysis/gems/custom/rest-api) uses the **Connection** authentication type, Prophecy gets a bearer token from the selected connection and sends it with each request.
+
+REST API connections support two authentication methods: interactive OAuth, where a person signs in through a browser, and OIDC, where Prophecy authenticates as a service principal. Use OIDC for scheduled and deployed pipelines, because it doesn't require anyone to sign in.
+
+## Connection parameters
+
+To create a REST API connection, enter the following parameters:
+
+| Parameter             | Description                                                                                                       |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Connection Name       | Name to identify your connection.                                                                                 |
+| Base URL              | Base URL of the API.<br />Example: `https://api.example.com/v1`                                                   |
+| Authentication Method | **OAuth** or **OIDC**. Defaults to **OAuth**. Learn more in [Authentication methods](#authentication-methods). |
+
+## Authentication methods
+
+### OAuth
+
+OAuth uses the interactive authorization code flow. A person signs in to the identity provider in a browser, and Prophecy stores the resulting token for that person.
+
+| Parameter              | Description                                                                                                                                                                 |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Identity Provider      | **Generic OAuth 2.0** or **ID Anywhere**.                                                                                                                                   |
+| OAuth App Registration | App registration for the identity provider. A cluster admin creates app registrations. See [OAuth app registrations](/administration/management/cluster-admin-settings/oauth-setup). |
+
+After you configure the connection, click **OAuth Login** to authorize it.
+
+### OIDC
+
+OIDC uses the OAuth 2.0 client credentials flow. Prophecy requests a token from your identity provider as a service principal, with no browser sign-in. Prophecy caches the token and requests a new one shortly before it expires. When you test an OIDC connection, Prophecy requests a fresh token to confirm that the credentials work.
+
+| Parameter             | Description                                                                                                                                                                                         |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Issuer URL            | URL of the OIDC issuer.<br />Example: `https://idp.example.com/adfs`                                                                                                                                |
+| Token Endpoint        | Token endpoint URL. If you leave this blank, Prophecy discovers the endpoint from the issuer's `/.well-known/openid-configuration` document.                                                        |
+| Client ID             | Client ID of the service principal. Required.                                                                                                                                                       |
+| Client Authentication | How the service principal authenticates at the token endpoint: **Private Key JWT** (default), **Client Secret (POST)**, or **Client Secret (Basic)**. See [Client authentication](#client-authentication). |
+| Audience Parameter    | Request parameter that carries the audience: **scope** (default) or **resource**. ADFS expects **resource**. Most other OIDC servers expect **scope**.                                               |
+| Audience              | Scope value, or the relying party identifier for ADFS. Required when **Audience Parameter** is **resource**.                                                                                        |
+
+#### Client authentication
+
+The fields that the connection requires depend on the **Client Authentication** method:
+
+| Method                 | Required fields                | Behavior                                                                                                    |
+| ---------------------- | ------------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| Private Key JWT        | **Certificate**, **Private Key** | Prophecy signs a JWT client assertion with the private key. The certificate identifies the key to the identity provider. |
+| Client Secret (POST)   | **Client Secret**              | Prophecy sends the client ID and client secret in the request body.                                         |
+| Client Secret (Basic)  | **Client Secret**              | Prophecy sends the client ID and client secret in an HTTP Basic authorization header.                       |
+
+Store the certificate, private key, and client secret as [secrets](/data-analysis/environment/secrets/secrets). The certificate must be a PEM X.509 certificate registered with the identity provider, and the private key must be an unencrypted PEM RSA private key.
