@@ -8,29 +8,28 @@ description: Use your identity provider to sign in to Prophecy
 
 </Callout>
 
-When logging in to Prophecy, you can either credentials managed directly by Prophecy, or set up SSO. Prophecy integrates with multiple identity providers to let you log in using your external credentials. You can configure SSO under **Settings > SSO**.
-
-Only [Prophecy cluster admins](/administration/management/users/access/role-based-access) have permission to view and edit SSO settings.
+When logging in to Prophecy, you can either enter credentials managed directly by Prophecy, or set up an SSO (Single Sign On) provider such as Google. Prophecy integrates with multiple identity providers to let you log in using your external credentials. Your [Prophecy cluster administrator](/administration/management/users/access/role-based-access) can configure SSO under **Settings > SSO**.
 
 ## Prophecy-managed authentication
 
 By default, Prophecy uses **Prophecy Managed** authentication. This option requires no external identity provider.
 
+With Prophecy Managed authentication:
+
 - User accounts are created and managed inside Prophecy.
 - Passwords are stored securely within Prophecy.
-- Use this mode if you don't have an external SSO requirement.
+
+Use this mode if you require external SSO.
 
 If you set up SSO after creating users in Prophecy, sign-ins will map to existing users if the sign-in email matches the user email in Prophecy.
 
 ## Automatic SSO sign-in
 
-When your deployment uses a single SSO provider, Prophecy skips its own sign-in page for returning SSO users. If you previously signed in with SSO in your browser, Prophecy sends you directly to your identity provider the next time you open Prophecy. If your identity provider session is still active, you're signed in to Prophecy without entering credentials.
+When your deployment uses a single SSO provider, Prophecy skips its own sign-in page for returning SSO users. If you previously signed in with SSO in your browser, Prophecy sends you directly to your identity provider the next time you open Prophecy. If your identity provider session is still active, you will be signed in to Prophecy without entering credentials.
 
-Signing out of Prophecy turns this off in that browser, so your next visit shows the Prophecy sign-in page.
+When you sign out of Prophecy, SSO will be turned off, and your next visit will display the Prophecy sign-in page.
 
-To reach the Prophecy sign-in page directly, for example to sign in with a Prophecy-managed account, add `?autoLogin=false` to your Prophecy URL.
-
-Automatic sign-in doesn't apply to deployments with more than one SSO provider.
+Automatic sign-in does not apply to deployments with more than one SSO provider.
 
 ## Fabric OAuth
 
