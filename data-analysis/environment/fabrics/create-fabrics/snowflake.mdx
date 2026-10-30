@@ -22,7 +22,7 @@ Before you create a Snowflake fabric, make sure you have:
 - A Snowflake account URL.
 - A Snowflake warehouse to execute queries.
 - A role with permissions to use the warehouse, access the database and schema, and read and write to the stage Prophecy uses for temporary files.
-- Credentials for your authentication method: for key-pair authentication, a key pair whose public key is assigned to your Snowflake user; for OAuth, an app registration configured by your cluster admin.
+- Credentials for your authentication method: for key-pair authentication, a key pair whose public key is assigned to your Snowflake user; for OAuth, an app registration configured by your cluster admin; for OIDC, service principal credentials issued by your identity provider and a Snowflake External OAuth security integration.
 
 ## Create a Snowflake fabric
 
@@ -124,6 +124,18 @@ Use OAuth when an identity provider or service principal manages authentication.
 Select an **App Registration** from the dropdown. The dropdown lists the OAuth app registrations your cluster admin has configured for Snowflake, including native **Snowflake** registrations and any **ID Anywhere (Snowflake)** registrations. ID Anywhere registrations authenticate through an ADFS or ID Anywhere identity provider instead of Snowflake's native OAuth. If the registration you need isn't listed, ask your cluster admin to add it under **Settings** > **Admin** > **Security**. To learn how to create app registrations, see [OAuth app registrations](/administration/management/cluster-admin-settings/oauth-setup).
 
 If sign-in through an ID Anywhere (Snowflake) registration fails with a claim mismatch error, the claim that carries the Snowflake username in the ADFS access token doesn't match Snowflake's `EXTERNAL_OAUTH_TOKEN_USER_MAPPING_CLAIM`. Ask your cluster admin to check the [ID Anywhere (Snowflake) setup](/administration/management/cluster-admin-settings/oauth-setup#id-anywhere-snowflake).
+
+### OIDC
+
+Use OIDC to authenticate as a service principal whose credentials are issued by your identity provider, without an app registration or an interactive sign-in. Prophecy exchanges the credentials for a bearer token through an OIDC federator. Snowflake maps a claim in the token to a Snowflake user through an [External OAuth security integration](https://docs.snowflake.com/en/user-guide/oauth-ext-overview), so OIDC doesn't take a username.
+
+1. Enter the **Auth Server URL** of the token issuer.
+1. Enter the **Resource** that the token is requested for.
+1. Enter the **Service Principal Client ID**.
+1. Optionally, select a **Service Principal Client Secret**.
+1. Select the **Certificate** and **Private Key** issued by your identity provider.
+
+For details, see [OIDC authentication](/data-analysis/environment/connections/snowflake#oidc-authentication).
 
 ## Migrate from password authentication
 
