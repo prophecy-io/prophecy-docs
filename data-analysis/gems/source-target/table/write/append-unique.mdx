@@ -7,7 +7,9 @@ When you choose the **Append Unique Rows** option, if a row's unique key already
 
 <Note>
   Unlike [Upsert Row](/data-analysis/gems/source-target/table/write/upsert), this mode never
-  modifies existing records; it only inserts new ones.
+  modifies existing records that match incoming rows; it only inserts new ones. To change target
+  rows that have no match in the incoming dataset, see [Handle target rows not in
+  source](#handle-target-rows-not-in-source).
 </Note>
 
 ## Parameters
@@ -17,12 +19,29 @@ When you choose the **Append Unique Rows** option, if a row's unique key already
 | Unique Key                                          | Column(s) used to find records that already exist in the target table. Matching records are left unchanged; only the remaining records are inserted.                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | Use Predicate                                       | Limits which target rows are checked for duplicates. Keys outside the predicate range may be re-inserted.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | Use a condition to filter data or incremental runs  | Enables applying conditions for filtering the incoming data into the table.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| How to handle target rows not present in source?    | Databricks only. Specifies what happens to target rows whose unique key doesn't appear in the incoming dataset. See [Handle target rows not in source](#handle-target-rows-not-in-source).                                                                                                                                                                                                                                                                                                                                                                                                                         |
 
 <Note>
   Merge Columns, Exclude Columns, and On Schema Change don't apply to this write mode. If you
   switch to Append Unique Rows from another merge approach, any values set for those options are
   cleared.
 </Note>
+
+## Handle target rows not in source
+
+On Databricks, you can choose what happens to rows in the target table that have no matching row in the incoming dataset. Under **How to handle target rows not present in source?**, select one of the following:
+
+- **Do nothing**: Leave unmatched target rows unchanged. This is the default option.
+- **Delete rows**: Delete unmatched target rows.
+- **Update columns**: Set column values in unmatched target rows. For each column, select an **Output column** and enter an **Expression**. Click **Add column** to update more columns.
+
+To apply the action to only some unmatched rows, add a condition under **Run only when**. If you leave it empty, the action applies to all unmatched target rows.
+
+The condition and update expressions can only reference columns from the target table, because unmatched rows have no corresponding row in the incoming dataset.
+
+<Warning>
+  If you select **Delete rows** with no **Run only when** condition while an incremental filter is applied, the merge can delete most of the target table. Rows outside the incremental filter don't match any incoming row, so they count as unmatched.
+</Warning>
 
 ## Example: Append new orders only
 
