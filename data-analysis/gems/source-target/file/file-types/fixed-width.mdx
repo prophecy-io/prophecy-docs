@@ -92,3 +92,7 @@ The following properties are available to customize how fixed-width files are re
 | Time Format Reference                | Global default format for parsing time columns.                                 | `15:04:05`            |
 | Timestamp Format Reference           | Global default format for parsing timestamp columns.                            | `2006-01-02 15:04:05` |
 | Decimal Point                        | Character used as a decimal point.                                              | `.`                   |
+| Source File Column Name | Name of the column that stores each row's source file name. Appears only when **Include filename Column** is enabled in the Source gem. After you change this value, click **Infer Schema** to update the output schema. | `FileName` |
+| Last Modified Timestamp Column Name | Name of the column that stores each source file's last modified timestamp. Appears only when **Include file last modified timestamp Column** is enabled in an [SFTP](/data-analysis/gems/source-target/file/sftp) Source gem. After you change this value, click **Infer Schema** to update the output schema. | `FileModifiedDate` |
+| Append Record Id column to the output schema | Whether to add a record ID column to the output schema. | False |
+| Record ID Column Name | Name of the record ID column. Appears only when **Append Record Id column to the output schema** is enabled. | `RecordId` |
