@@ -8,14 +8,14 @@ Prophecy's Agent lets you build and modify pipelines, analyses, and other projec
 
 ## What you can do with the Agent
 
-You can use the Agent
+You can use the Agent to:
 
 - create or update entities.
 - ask questions about your project.
 - reference existing project entities.
 - upload files for context.
 - review AI-generated changes.
-- manage multiple chat sessions
+- manage multiple chat sessions.
 
 ## Send prompts
 
@@ -23,17 +23,17 @@ Use the message box at the bottom of the chat panel to send prompts to the Agent
 
 You can ask the Agent to:
 
-- create new transformations or analyses
+- create new transformations or analyses.
 
-- modify existing entities
+- modify existing entities.
 
-- explain project logic
+- explain project logic.
 
-- troubleshoot pipelines
+- troubleshoot pipelines.
 
-- answer questions about project assets
+- answer questions about project assets.
 
-  Example prompts:
+Example prompts:
 
 - `Create a new transformation that filters failed orders`
 
@@ -51,15 +51,15 @@ Use the attachment icon in the message box to upload files.
 
 Uploaded files can help the Agent:
 
-- understand schemas
+- understand schemas.
 
-- review requirements
+- review requirements.
 
-- reference specifications
+- reference specifications.
 
-- analyze supporting documents
+- analyze supporting documents.
 
-  For more information, see Upload files.
+For more information, see [Upload files](/data-analysis/ai/agent/chat/upload-files).
 
 ### Reference project entities
 
@@ -67,17 +67,17 @@ Use `@` mentions to reference project entities directly in chat.
 
 You can reference:
 
-- pipelines
+- pipelines.
 
-- models
+- models.
 
-- analyses
+- analyses.
 
-- project assets
+- project assets.
 
-  Referencing entities gives the Agent additional project context and helps it understand which assets you want to modify or discuss.
+Referencing entities gives the Agent additional project context and helps it understand which assets you want to modify or discuss.
 
-  For more information, see Reference project entities.
+For more information, see [Reference project entities](/data-analysis/ai/agent/chat/mentions).
 
 ## Manage conversations
 
@@ -91,10 +91,10 @@ The currently active chat is labeled **Current**.
 
 From chat history, you can:
 
-- reopen previous chats
-- rename chats
-- delete chats
-- copy session details
+- reopen previous chats.
+- rename chats.
+- delete chats.
+- [copy session details](/data-analysis/ai/agent/chat/export).
 
 ### Start a new chat
 
@@ -104,19 +104,19 @@ Starting a new chat does not remove existing project entities.
 
 When starting a new chat, the Agent may reference existing project entities and suggest:
 
-- updating existing transformations
-- creating new analyses
-- continuing work within the current project
+- updating existing transformations.
+- creating new analyses.
+- continuing work within the current project.
 
 ### Rename chats
 
 You can rename chats from:
 
-- the chat header
+- the chat header.
 
-- the chat history panel
+- the chat history panel.
 
-  To rename a chat:
+To rename a chat:
 
 1. Click the chat name.
 
@@ -124,7 +124,7 @@ You can rename chats from:
 
 3. Save the updated name.
 
-   Use descriptive names to organize project conversations.
+Use descriptive names to organize project conversations.
 
 ### Delete chats
 
@@ -136,19 +136,19 @@ Deleting the current chat automatically opens a new chat session.
 
 ### Copy session details
 
-Use **Copy session details** from chat history to copy information about a conversation.
+In chat history, use the copy button to copy information about a conversation. The button's tooltip reads **Copy Session Details**.
 
 This can help when:
 
-- sharing troubleshooting context
+- sharing troubleshooting context.
 
-- collaborating with teammates
+- collaborating with teammates.
 
-- reporting issues
+- reporting issues.
 
-- documenting AI-generated changes
+- documenting AI-generated changes.
 
-  For more information, see Copy chat session details.
+For more information, see [Copy chat session details](/data-analysis/ai/agent/chat/export).
 
 ## Review AI-generated changes
 
@@ -162,43 +162,41 @@ Review changes carefully before continuing work.
 
 Modified entities may include:
 
-- pipelines
-- models
-- analyses
-- transformations
+- pipelines.
+- models.
+- analyses.
+- transformations.
 
-### Undo the latest AI action
+### Undo or roll back AI changes
 
-The most recent AI-generated change includes an **Undo this** action below the response.
+Responses that changed your project include an action below the response that reverts those changes:
 
-Use this action to revert the latest AI-generated modification.
+- **Undo** appears on the most recent response with changes. It reverts the changes from that response.
+- **Rollback** appears on older responses with changes. It restores the project to its state before that response and reverts the changes from every later response.
 
-The undo option is only available for the most recent response containing changes.
+When you click **Undo** or **Rollback**, Prophecy asks you to confirm. Click **Undo changes** or **Rollback changes** to continue. You can't undo or roll back changes when the project is in read-only mode.
 
-Older responses display standard copy actions instead.
-
-## Interactive clarification questions in SQL Copilot
+## Interactive clarification questions in Prophecy Agent
 
 The Agent may pause during generation to ask for additional input before continuing.
 
-When the Agent needs clarification, it displays a question directly in the chat along with available answer options. After you select a response, the agent continues generation using your choice.
+When the Agent needs clarification, it displays a question directly in the chat along with available answer options. After you select a response, the Agent continues generation using your choice. This lets the Agent gather missing information and resolve ambiguities instead of making assumptions or failing when it needs more context.
 
-This improvement allows the Agent to gather missing information and resolve ambiguities instead of making assumptions or failing when additional context is required.
+You can also dismiss a question if you do not want to provide an answer. The Agent continues with the available context.
 
-You can also dismiss a question if you do not want to provide an answer. The agent handles skipped questions gracefully and continues with the best available context.
+## Approve Agent pipeline runs
 
+The Agent requests approval in the chat before it runs a pipeline that writes data to your warehouse. The prompt names the pipeline and warns that the operation will write data to your warehouse, may overwrite existing data, and can't be reverted.
 
-### Confirmation prompts for Agent pipeline execution
+You can choose:
 
-The Agent requests confirmation before executing pipelines that can write data to your warehouse.
+* **Allow once** to approve the current run.
+* **Always allow** to approve the current run and skip the prompt for later pipeline runs in the current session.
+* **Deny** to prevent the run.
 
-When the Agent attempts to run a pipeline, you'll see a prompt identifying the pipeline and warning that the operation may write or overwrite data. You can choose to:
+**Always allow** applies only to the current session. If you refresh the page, the Agent prompts for approval again.
 
-* **Allow Once** to approve the current execution
-* **Always Allow** to automatically approve future executions
-* **Deny** to prevent the execution
-
-This additional confirmation step helps prevent unintended data modifications while giving you control over Agent-initiated pipeline runs.
+This confirmation step helps prevent unintended data modifications while giving you control over Agent-initiated pipeline runs.
 
 ## Continue work across chats
 

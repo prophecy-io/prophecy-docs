@@ -186,6 +186,22 @@ If a project is shared with your team, you **cannot** edit any pipeline's or ana
   access](/data-analysis/administration/management/users/access/team-based-access).
 </Info>
 
+## Edit the analysis code
+
+Each analysis is stored as a Python file in the project, located at `apps/<analysis_name>.py` by default. To edit an analysis as code, switch to the [Code view](/data-analysis/development/studio/studio#visual-code-toggle) and open the analysis `.py` file.
+
+When you save the file, Prophecy compiles it and updates the analysis, so your changes appear in the visual editor and when the analysis runs. Prophecy then rewrites the file in its standard generated format. 
+
+For example, if you build a list of dropdown options with a Python expression, the saved file lists each option explicitly.
+
+If the file doesn't compile, Prophecy keeps your code and reports the error on the file. For example, a chart that references a gem that isn't in the pipeline causes an error. Until you fix the error:
+
+- The analysis keeps its last successfully saved version.
+- The analysis editor shows a banner that says the analysis is stale. Click **Open Code** to return to the file.
+- You can't edit the analysis in the visual editor.
+
+When you save code that compiles, the banner clears and you can edit the analysis visually again.
+
 ## What's next
 
 To address your specific business requirements, leverage more complex [components](/data-analysis/analysis/analysis-components) to construct robust analysis dashboards.

@@ -107,7 +107,7 @@ Key-pair authentication uses an RSA key pair instead of a password.
 1. Enter the **Username**.
 1. Upload your **Private Key** file.
 
-The private key must be an unencrypted PKCS#8 key. The first line of the key file must be `-----BEGIN PRIVATE KEY-----`. If your key is encrypted (`-----BEGIN ENCRYPTED PRIVATE KEY-----`) or in PKCS#1 format (`-----BEGIN RSA PRIVATE KEY-----`), convert it with OpenSSL:
+The private key must be an unencrypted PKCS#8 key. If your key is encrypted or in PKCS#1 (RSA) format, convert it with OpenSSL:
 
 ```bash
 openssl pkey -in rsa_key.p8 -out rsa_key_unencrypted.p8
@@ -140,7 +140,7 @@ For details, see [OIDC authentication](/data-analysis/environment/connections/sn
 ## Migrate from password authentication
 
 <Warning>
-Snowflake is deprecating password-based sign-in for service users as of October 2026. New fabrics don't offer **Username and Password**. This option appears only on existing fabrics that already use it, and those fabrics stop connecting once Snowflake enforces the cutover. To switch to a supported method, see [Migrate from password authentication](#migrate-from-password-authentication).
+Snowflake is deprecating password-based sign-in for service users as of October 2026. New fabrics don't offer **Username and Password**. This option appears only on existing fabrics that already use it, and those fabrics stop connecting once Snowflake enforces the cutover.
 </Warning>
 
 Prophecy shows a banner and a **Migrate** action on fabrics that still use **Username and Password** authentication. To move an affected fabric to **Key-pair** or **OAuth** authentication, click **Migrate** on the fabric.

@@ -63,11 +63,7 @@ To create a connection with Snowflake, enter the following parameters:
 
 Key-pair authentication signs in to Snowflake with an RSA private key that you store in a Prophecy [secret](/data-analysis/environment/secrets/secrets). Before you begin, [assign the public key](https://docs.snowflake.com/en/user-guide/key-pair-auth) to the Snowflake user that the connection uses.
 
-The private key must be an unencrypted PKCS#8 key. The first line of the key file must be `-----BEGIN PRIVATE KEY-----`. If your key is encrypted (`-----BEGIN ENCRYPTED PRIVATE KEY-----`) or in PKCS#1 format (`-----BEGIN RSA PRIVATE KEY-----`), convert it with OpenSSL:
-
-```bash
-openssl pkey -in rsa_key.p8 -out rsa_key_unencrypted.p8
-```
+The private key must be an unencrypted `PKCS#8` key. If your key is encrypted, convert it with OpenSSL.
 
 To configure key-pair authentication:
 
@@ -160,8 +156,6 @@ Snowflake connections have the following data type limitations:
 ## Sharing connections within teams
 
 Prophecy stores connections in [fabrics](/data-analysis/environment/fabrics/prophecy-fabrics), which are assigned to specific teams. When you add a Snowflake connection to a fabric, every team member with access to that fabric can use the connection in their projects. Team members don't authenticate separately. They inherit the access and permissions of the stored connection credentials.
-
-How sharing works for connections that use OAuth authentication: Not specified in source material.
 
 <Warning>
 Anyone on the team has the same permissions as the stored credentials, including access to sensitive data if those credentials allow it.
