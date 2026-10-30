@@ -1,0 +1,110 @@
+---
+title: What you can do with DataGPT
+description: Build pipelines, run analyses, and explore data from Claude and ChatGPT
+---
+
+DataGPT connects Claude and ChatGPT to your Prophecy projects and data. You can use natural language to explore data, run pipelines, create analyses, and make changes to your projects. DataGPT handles some requests directly and uses Prophecy AI to build or modify pipelines and analyses. Results appear as interactive views in the chat, where you can inspect data, review progress, and continue working.
+
+<Callout icon="/images/icon.png" color="#FFC107">
+  Available for the [Free and Professional Editions](/administration/platform/editions).
+</Callout>
+
+## Build and edit with Prophecy AI
+
+Requests to build or change pipelines and analyses go to Prophecy AI, the agent that works inside your Prophecy project. Prophecy AI can also answer questions about your projects and your DataBox files.
+
+If Prophecy AI needs more information or permission to perform an operation, it pauses and displays a question in the chat. Answer the question in the Prophecy AI view to continue the request. You can review the operation before approving it.
+
+- Prophecy AI processes one request at a time per project.
+- To revert Prophecy AI's last change, ask it to undo the change.
+
+<Note>
+  If you don't name a project, DataGPT creates a new project for your request and tells you its name.
+</Note>
+
+### Continue or retry a request
+You can refine a pipeline or analysis through follow-up requests in the same conversation. DataGPT uses your existing project and saved artifacts, so you don't need to start over each time.
+
+If Prophecy AI pauses for information or approval, answer its question in the chat to continue. If a request fails or times out, check which changes were saved before retrying. You can ask Prophecy AI to complete a specific unfinished step without rebuilding everything.
+
+## Work with projects
+
+You can list your projects, view a project's pipelines and analyses, create a project, rename it or change its description, and delete it. DataGPT works with SQL projects. You can list your projects, view their pipelines and analyses, create projects, update their names and descriptions, or delete them.
+
+DataGPT can also read and edit text files in a project, such as SQL and YAML files. Changes stay on the project's development branch until you publish the project. Committing changes on their own and opening pull requests aren't available from the chat.
+
+## Explore your warehouse
+
+DataGPT can browse the databases, schemas, tables, and columns on your fabric's connections, and show sample rows from a table along with a profile of each column. Data previews show 25 rows by default and up to 200 rows. For tables on the default connection, select **Load More** in the data view to load more rows, up to 100,000.
+
+You can also ask DataGPT to run a query. Queries must be `SELECT` statements with a `LIMIT`, and they run on the fabric's default connection.
+
+## Extract tables from Excel files
+
+DataGPT can identify tables in Excel workbooks (XLSX) and display the detected ranges and columns. You can review the extracted tables and create warehouse tables from them. DataGPT can then use these tables as sources for pipelines and analyses. See [Files and DataBox in DataGPT](/data-analysis/getting-started/datagpt/files#extract-tables-from-excel-files).
+
+## Add connections
+
+Ask DataGPT to add a connection, and it opens a connection form in the chat. Choose the connector type, fill in the details, then select **Test connection** and **Save**. You can create a new secret from the form. Credentials you enter in the form go directly to Prophecy and aren't shared with the AI client.
+
+## Run pipelines
+
+DataGPT can show a pipeline's canvas, run the whole pipeline, or run a single gem. When you run a pipeline, the canvas shows row counts for each step as the run progresses.
+
+In the pipeline view, you can:
+
+- Zoom and fit the canvas to the view.
+- Start or stop a run.
+- Select a gem's output to see its data.
+- Open run errors, copy them, or select **Ask Prophecy to diagnose**.
+- Share the pipeline.
+
+You can also ask DataGPT to create an empty pipeline or delete one. DataGPT won't delete a pipeline that analyses depend on unless you confirm that you want to delete it anyway.
+
+### Share pipelines and analyses
+
+Select **Share pipeline** or **Share analysis** to share a read-only snapshot, including sample rows and the column profile. Enter the email addresses of the people you want to invite, separated by commas. Sharing again keeps the same link and updates the snapshot. You can revoke access at any time.
+
+## Schedule and publish pipelines
+
+DataGPT can show a pipeline's schedules and create, change, pause, or delete time-based schedules. Schedules use [Quartz cron expressions](/data-analysis/production/scheduling/schedule-setup), which start with seconds, such as `0 0 2 * * ? *` for 2:00 AM every day. Time zones default to UTC.
+
+You can also set a schedule's parameter set, what happens when a run is still in progress, which published version it runs, email notifications, and whether to run data tests.
+
+A schedule you save in the chat is saved to the project only. It doesn't run until you publish the project and deploy it to a fabric. Deleting a schedule works the same way: the deployed schedule keeps running until you publish again.
+
+To publish, ask DataGPT to publish the project with a version number and release notes:
+
+1. DataGPT shows a preview of what will be published, including uncommitted files and each schedule that is new, edited, unchanged, removed, or disabled.
+1. Confirm the preview. DataGPT commits pending changes, publishes the new version of the whole project, and deploys it to the fabrics you chose.
+1. DataGPT reports whether the deployment succeeded. If it's still running after 10 minutes, check the result in Prophecy.
+
+If you don't choose a fabric, the version is published but not deployed, so no schedules run.
+
+Publishing from the chat has the following requirements:
+
+- The project uses simple version control. Projects that use advanced version control must be published from Prophecy.
+- Schedules deploy only to fabrics that can run them. DataGPT marks these fabrics when it lists your fabrics.
+- The version number must be new.
+
+## Analyze and chart data
+
+DataGPT runs [analyses](/data-analysis/ai/agent/analyses) on your fabric and shows their charts in the chat. In the analysis view, you can:
+
+- Audit a chart to see how a value was calculated. The pipeline opens in audit mode, with the steps that contributed to the value highlighted. Audit is available for saved analyses.
+- Download a chart as a PNG image. Map and metric charts can't be downloaded.
+- Share the analysis.
+
+To explore a warehouse table without building a pipeline, ask DataGPT to chart it. These quick charts aren't saved. To keep one, ask DataGPT to save it, and Prophecy AI turns it into a pipeline and analysis in your project.
+
+You can also ask DataGPT to create an analysis or add charts to an existing one. Prophecy AI builds the analysis using data from your pipeline. After the analysis is created, you can run it to see the charts populated with current results.
+
+
+## What isn't available from chat
+
+The following tasks require Prophecy:
+
+- Creating or changing file-arrival schedules.
+- Publishing projects that use advanced version control.
+- Committing changes without publishing, and opening pull requests.
+- Choosing a branch other than the default development branch.
