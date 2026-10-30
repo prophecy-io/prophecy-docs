@@ -3,69 +3,85 @@ title: Livy
 description: Set up a Livy fabric
 ---
 
-<Callout icon="/images/icon.png" color="#FFC107">
-  Available for [Enterprise Edition](/data-engineering/administration/platform/editions) only.
-</Callout>
+[Apache Livy](https://livy.apache.org/) is a service that exposes a Spark cluster through a REST interface. Most Hadoop distributions, such as CDP and MapR, include Livy. For Spark on Kubernetes, you can deploy Livy in the Kubernetes cluster to expose Spark over a REST API.
 
-[Apache Livy](https://livy.apache.org/) is a service that enables easy interaction with a Spark cluster over a REST interface. If you're running Hadoop, most Hadoop distributions (CDP/MapR) come with Livy bundled. For Spark-on-k8s, you can put a Livy in the K8s cluster, which exposes Spark over a REST API.
-You can create a generic Livy fabric to connect Prophecy to any Spark cluster accessible via Apache Livy.
+Create a Livy fabric to connect Prophecy to any Spark cluster that is accessible through Apache Livy. This page covers how to create the fabric, configure authentication, and set job sizes and advanced Spark settings.
+
+<Callout icon="/images/icon.png" color="#FFC107">
+  Available for [Enterprise Edition](/administration/platform/editions) only.
+</Callout>
 
 ## Create the Livy fabric
 
-Let's get started with creating Livy fabric.
+1. Click **Create Entity** in the left navigation bar.
 
-1. Click on the **Create Entity** button from the left navigation bar.
-
-1. Click on the **Fabric** tile.
+1. Click the **Fabric** tile.
 
 1. Fill out the basic information and click **Continue**.
 
-1. Fill in the information about the Spark provider.
+1. Fill in the information about the Spark provider:
    - **Provider**: Livy
 
-   - **Livy URL**: The URL to your Livy environment
+   - **Livy URL**: The URL of your Livy environment.
 
    - **Use mTLS Encryption (optional)**: The Client Certificate and Client Key required for mTLS.
 
-   - **Authentication type**: How you will authenticate Livy in Prophecy
+   - **Authentication type**: The method Prophecy uses to authenticate with Livy. See [Authentication types](#authentication-types).
 
 1. Test the connection to validate the fabric.
 
 ### Authentication types
 
-Prophecy supports the following authentication types for Livy.
+Prophecy supports the following authentication types for Livy:
 
-- **None**: This applies when Livy and Prophecy are on the same private network or when Prophecy can securely communicate with Livy through IP whitelisting.
+- **None**: Use this option when Livy and Prophecy are on the same private network, or when Prophecy can securely communicate with Livy through IP whitelisting.
 
-- **Bearer Token**: Use this option to authenticate using a secure token-based system. All team members who use this fabric will use the same token configured by a team admin here for authentication.
+- **Bearer Token**: Use this option to authenticate with a token. Every team member who uses this fabric authenticates with the same token, which a team admin configures here.
 
-- **Kerberos**: If using a Kerberized Hadoop cluster, you can authenticate via Kerberos. For this option, Prophecy cluster admins must first add Keytab files in **Settings > Admin > Security**.
+- **Kerberos**: Use this option to authenticate with a Kerberized Hadoop cluster. Prophecy cluster admins must first add keytab files in **Settings > Admin > Security**. See [Add Kerberos keytabs](#add-kerberos-keytabs).
 
-  You can also enable the **impersonate using Proxy-user** toggle to allow user-level authorization. Prophecy cluster admins can configure the proxy-user settings in **Settings > Admin > Security**.
+  To allow user-level authorization, enable the **impersonate using Proxy-user** toggle. Prophecy cluster admins can configure the proxy-user settings in **Settings > Admin > Security**.
+
+### Add Kerberos keytabs
+
+Prophecy stores keytab files in its metadata storage in encrypted format. Keytab changes take effect only after Prophecy restarts its services, so restart services after you finish adding or editing keytabs.
+
+To add keytabs and apply them:
+
+1. Sign in to Prophecy as an admin.
+1. Go to **Settings > Admin > Security**.
+1. Under **Keytabs for Kerberos Authentication**, click **Add Keytab File** and add each keytab you need.
+1. Click **Restart services**.
+1. In the **Restart services** dialog, select when to restart:
+   - **Restart in 15 minutes**: All users see a maintenance banner until the restart. This is the default option.
+   - **Restart now**: The restart begins immediately.
+1. Click **Schedule restart** or **Restart now**.
+
+Prophecy is unavailable to all users for about a minute during the restart. If a restart is already scheduled, your new choice replaces the scheduled time.
 
 ## Additional Livy configurations
 
-Once the connection is validated:
+After the connection is validated:
 
-1. Edit or add job sizes. A job size consists of the following.
+1. Edit or add job sizes. A job size consists of the following:
    - **Name**: The name of the job size.
 
-   - **Drivers**: The number of cores and amount of memory of the drivers
+   - **Drivers**: The number of cores and amount of memory for the drivers.
 
-   - **Executors**: The number of cores and the amount of memory of the executors, and the total number of executors
+   - **Executors**: The number of cores and amount of memory for the executors, and the total number of executors.
 
-   - **(Optional) Spark Config**: The Spark configuration parameters at the job size level. These settings control cluster behavior when using this job size. If the same config key is also defined at the fabric level, the value set at the job size level will override it.
+   - **(Optional) Spark Config**: The Spark configuration parameters at the job size level. These settings control cluster behavior when you use this job size. If the same config key is also defined at the fabric level, the job size value overrides it.
 
-1. Configure the Prophecy Library settings.
-   - **Spark version**: Version that is used when a user attaches to a cluster using this fabric
+1. Configure the Prophecy Library settings:
+   - **Spark version**: The Spark version used when you attach to a cluster with this fabric.
 
-   - **Scala version**: Version that is used when a user attaches to a cluster using this fabric
+   - **Scala version**: The Scala version used when you attach to a cluster with this fabric.
 
-   - **Scala/Python resolution mode**: Location of libraries to use for Scala or Python
+   - **Scala/Python resolution mode**: The location of the libraries to use for Scala or Python.
 
 ## Advanced settings
 
-You can provide advanced options like Yarn queue, extra jars, and Spark configs here. Spark configs are additional [Spark properties](https://spark.apache.org/docs/latest/configuration.html#available-properties), which you can set to be applied at Spark session initialization. For example, if your Spark installation is configured to enable dynamic allocation, you can disable it for sessions created through Prophecy.
+You can set advanced options such as the YARN queue, extra JARs, and Spark configs. Spark configs are additional [Spark properties](https://spark.apache.org/docs/latest/configuration.html#available-properties) that Prophecy applies at Spark session initialization. For example, if your Spark installation enables dynamic allocation, you can disable it for sessions that Prophecy creates.
 
 ## Connections and secrets
 

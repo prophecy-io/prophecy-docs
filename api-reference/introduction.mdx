@@ -3,7 +3,9 @@ title: Prophecy API
 description: 'Use APIs to interact with your Prophecy deployment'
 ---
 
-The Prophecy API provides programmatic access to your Prophecy deployment through REST endpoints. These endpoints accept JSON payloads and return structured responses, enabling integration with CI/CD pipelines, monitoring systems, and custom automation scripts. All requests require authentication via a Personal Access Token in the request headers.
+The Prophecy API provides programmatic access to your Prophecy deployment through REST endpoints and a [GraphQL API](/api-reference/graphql). These endpoints accept JSON payloads and return structured responses, enabling integration with CI/CD pipelines, monitoring systems, and custom automation scripts. All requests require authentication via a Personal Access Token in the request headers.
+
+To set up a team, fabric, connections, and project and then release, deploy, and run pipelines from a command line, follow the [end-to-end API workflow](/api-reference/end-to-end-workflow).
 
 <Info>
   Prophecy has an additional set of APIs that you can request through Prophecy Support. Reach out to
@@ -13,6 +15,11 @@ The Prophecy API provides programmatic access to your Prophecy deployment throug
 ## Endpoints
 
 Each endpoint uses your Prophecy environment URL as the base URL. Replace the base URL with your environment URL for Dedicated SaaS deployments.
+
+- REST endpoints use paths under `{PROPHECY_URL}/api/`.
+- All GraphQL queries and mutations go to `{PROPHECY_URL}/api/md/graphql`.
+
+`{PROPHECY_URL}` is the address of your Prophecy instance, starting with `https://` and with no trailing `/`. Pass your access token in the `X-Auth-Token` header.
 
 ## Access tokens
 
@@ -26,7 +33,8 @@ Prophecy uses your Personal Access Token (PAT) for authentication with our API s
 Here, you will see any PATs you have previously created. You can also find information such as creation date, expiration status, and time of last use.
 
 <Note>
-  Access tokens are per user. Therefore, API permissions are scoped to your user permissions.
+  Access tokens are per user. Therefore, API permissions are scoped to your user permissions. A
+  token only works on the Prophecy instance that issued it.
 </Note>
 
 ### Generate an access token
@@ -39,3 +47,5 @@ To generate a new access token:
 4. Choose an expiration date from the dropdown menu.
 5. Click **Create**.
 6. Copy your newly-generated token before closing the dialog. You will not be able to access the token value again.
+
+Treat the token like a password. Do not paste it into shared documents, tickets, or chat.

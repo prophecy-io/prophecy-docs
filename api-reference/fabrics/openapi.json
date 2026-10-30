@@ -52,7 +52,7 @@
                   },
                   "provider": {
                     "type": "string",
-                    "description": "SQL warehouse provider for the fabric.",
+                    "description": "SQL warehouse provider for the fabric. Use `ProphecyManaged` for a Prophecy In Memory fabric, which runs on DuckDB and creates its own default warehouse connection. `databricks` and `bigquery` fabrics also need a warehouse connection.",
                     "enum": ["databricks", "bigquery", "ProphecyManaged"]
                   },
                   "dataplaneUrl": {
@@ -99,6 +99,7 @@
                           "snowflake",
                           "mssql",
                           "oracle",
+                          "postgres",
                           "mongodb",
                           "hana",
                           "smtp",

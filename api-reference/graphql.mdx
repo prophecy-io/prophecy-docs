@@ -1,0 +1,55 @@
+---
+title: GraphQL API
+description: Send GraphQL queries and mutations to manage teams, projects, commits, and releases.
+---
+
+Some Prophecy operations, such as creating teams and projects, committing changes, and publishing releases, are available through a GraphQL API instead of REST endpoints. Every GraphQL query and mutation goes to the same address and uses the same personal access token as the REST API.
+
+## Endpoint
+
+Send all GraphQL requests as `POST` requests to:
+
+```
+{PROPHECY_URL}/api/md/graphql
+```
+
+Include these headers:
+
+- `X-Auth-Token`: your personal access token.
+- `Content-Type`: `application/json`.
+
+The request body is a JSON object with a `query` string and a `variables` object.
+
+## Request format
+
+The GraphQL examples in this documentation write the query over several lines in a shell variable, `QUERY`, so that it is easy to read. The `tr` command joins it into one line before sending. Your own values go in `VARS`.
+
+```bash
+QUERY=$(tr '\n' ' ' <<'EOF'
+mutation($name: String!) {
+  addTeam(name: $name) { _id name teamKind }
+}
+EOF
+)
+VARS='{"name": "<TEAM_NAME>"}'
+curl -sS "$PROPHECY_URL/api/md/graphql" \
+  -H "X-Auth-Token: $PROPHECY_TOKEN" -H "Content-Type: application/json" \
+  -d "$(printf '{"query": "%s", "variables": %s}' "$QUERY" "$VARS")"
+```
+
+These examples use bash syntax, such as `export`, `$(...)`, `<<'EOF'`, and single-quoted JSON. Run them in a bash or zsh terminal on macOS or Linux, or in Git Bash or WSL on Windows. Windows PowerShell and Command Prompt do not run as written.
+
+## Errors
+
+A GraphQL response with an `errors` array means the call failed, even when the HTTP status is `200`. Read the `message` in `errors`; it names the argument or value at fault.
+
+## Available operations
+
+| Operation    | Type     | Description                                                    |
+| ------------ | -------- | -------------------------------------------------------------- |
+| `addTeam`    | Mutation | [Create a team](/api-reference/teams/create-team)              |
+| `Team`       | Query    | [Get team members](/api-reference/teams/get-team-members)      |
+| `addProject` | Mutation | [Create a project](/api-reference/projects/create-project)     |
+| `commit`     | Mutation | [Commit changes](/api-reference/projects/commit-changes)       |
+| `publish`    | Mutation | [Publish a release](/api-reference/projects/publish-release)   |
+| `Versions`   | Query    | [List project releases](/api-reference/projects/list-releases) |
