@@ -24,6 +24,8 @@ The following properties are available for the XML Source gem.
 | Description                   | Add a description of the table.<br /><br />Click **Auto-description** to automatically generate the description.                                                                                                            | None    |
 | Row Tag                       | Specify the XML tag that identifies a single row or record in the dataset.                                                                                                                                                  | None    |
 | Inference Data Sampling Limit | Define the maximum number of rows to sample for inferring the schema. Set to `0` to use all rows.                                                                                                                           | `0`     |
+| Source File Column Name | Name of the column that stores each row's source file name. Appears only when **Include filename Column** is enabled in the Source gem. After you change this value, click **Infer Schema** to update the output schema. | `FileName` |
+| Last Modified Timestamp Column Name | Name of the column that stores each source file's last modified timestamp. Appears only when **Include file last modified timestamp Column** is enabled in an [SFTP](/data-analysis/gems/source-target/file/sftp) Source gem. After you change this value, click **Infer Schema** to update the output schema. | `FileModifiedDate` |
 
 ### Target properties
 
