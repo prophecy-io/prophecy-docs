@@ -19,6 +19,85 @@
     }
   },
   "paths": {
+    "/api/editor/sqlEditor/pipeline/create": {
+      "parameters": [
+        {
+          "name": "X-AUTH-TOKEN",
+          "in": "header",
+          "description": "Prophecy access token",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "tags": ["Pipelines"],
+        "summary": "Create pipeline",
+        "description": "Add an empty pipeline to a SQL project. Build the pipeline's steps in Prophecy afterwards. The new pipeline is a saved change on the branch; commit it to record it in the project's Git history.",
+        "operationId": "createPipeline",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["projectId", "branch", "pipelineName"],
+                "properties": {
+                  "projectId": {
+                    "type": "string",
+                    "description": "ID of the project to add the pipeline to. Send it as a string, in quotes."
+                  },
+                  "branch": {
+                    "type": "string",
+                    "description": "Branch to add the pipeline to. Use `dev` in a project that uses Simple Git."
+                  },
+                  "pipelineName": {
+                    "type": "string",
+                    "description": "Name of the pipeline. Use letters, digits, and underscores, starting with a letter or underscore. The name must be unique in the project, including pipelines in other folders."
+                  },
+                  "filePath": {
+                    "type": "string",
+                    "description": "Folder to place the pipeline in, in the format `pipelines/{folderName}`. If omitted, the pipeline goes in the project's `pipelines` folder."
+                  }
+                }
+              },
+              "example": {
+                "projectId": "28",
+                "branch": "dev",
+                "pipelineName": "daily_sales"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pipeline created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates whether the pipeline was created."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Message that explains the outcome of the request."
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "Pipeline 'daily_sales' created"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/trigger/pipeline": {
       "parameters": [
         {
@@ -34,7 +113,7 @@
       "post": {
         "tags": ["Pipeline Runs"],
         "summary": "Trigger pipeline run",
-        "description": "Trigger the execution of a pipeline in a deployed project. This is useful when you want to automate pipeline runs without relying on Prophecy's built-in scheduling.",
+        "description": "Start one run of one pipeline on one fabric and return its run ID. The pipeline does not need to be deployed. By default, the run uses the project as it is now in Prophecy, including saved changes that are not committed yet. Use `branch` or `version` to run a specific branch or published release instead.",
         "operationId": "triggerPipelineRun",
         "requestBody": {
           "description": "Pipeline run trigger parameters",
@@ -48,7 +127,7 @@
                   "fabricId": {
                     "type": "integer",
                     "format": "int64",
-                    "description": "Unique identifier of the data fabric where the pipeline resides. You can find the ID in the URL of the fabric metadata page."
+                    "description": "Unique identifier of the fabric to run the pipeline on. Send it as a number, without quotes."
                   },
                   "pipelineName": {
                     "type": "string",
@@ -64,15 +143,15 @@
                       "type": "string",
                       "description": "Pipeline parameter name and value. The key is the name of a pipeline parameter, and the value is the parameter value to assign."
                     },
-                    "description": "Map of key-value pairs representing pipeline parameters. These will override default parameter values."
+                    "description": "Map of key-value pairs representing pipeline parameters. These override default parameter values for this run. Each key must be one of the pipeline's own parameters. Project-level parameters cannot be overridden here; set them per fabric when you deploy the project.\n\nA parameter of type SQL expression needs its own single quotes around text values, for example `\"'2026-01-01'\"`."
                   },
                   "branch": {
                     "type": "string",
-                    "description": "Specific branch of the pipeline to execute. If omitted, the current working branch is used."
+                    "description": "Specific branch of the project to run, for example `main`. If omitted, the run uses the current working state of the project."
                   },
                   "version": {
                     "type": "string",
-                    "description": "Specific version of the project containing the pipeline. If omitted, the latest version is used."
+                    "description": "Published release of the project to run. Use the version exactly as the list releases query returns it. If the value does not match a release exactly, Prophecy runs the current working state instead and still reports success."
                   },
                   "processName": {
                     "type": "string",
@@ -218,6 +297,100 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/trigger/pipeline/{runId}/cancel": {
+      "parameters": [
+        {
+          "name": "runId",
+          "in": "path",
+          "description": "ID of the pipeline run to stop, as returned by the trigger pipeline run API.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "X-AUTH-TOKEN",
+          "in": "header",
+          "description": "Prophecy access token",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "tags": ["Pipeline Runs"],
+        "summary": "Cancel pipeline run",
+        "description": "Cancel a pipeline run that is still in progress.",
+        "operationId": "cancelPipelineRun",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["fabricId"],
+                "properties": {
+                  "fabricId": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "ID of the fabric the run is on. Send it as a number, without quotes."
+                  }
+                }
+              },
+              "example": {
+                "fabricId": 3
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cancellation request accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "runId": {
+                      "type": "string",
+                      "description": "Unique identifier of the pipeline run."
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": ["cancelling", "cancelled", "already_finished"],
+                      "description": "Outcome of the cancellation request."
+                    },
+                    "runStatus": {
+                      "type": "string",
+                      "description": "Execution status of the pipeline run at the time of the request."
+                    },
+                    "descendantsCancelled": {
+                      "type": "integer",
+                      "description": "Number of runs of other pipelines that this run had started and that were cancelled."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Message that explains the outcome of the request."
+                    }
+                  }
+                },
+                "example": {
+                  "runId": "MDAw-xZGYzYzc3LTYzdsSdfx--LTQ3NTQ1ZYjI2Mw==",
+                  "status": "cancelling",
+                  "runStatus": "RUNNING",
+                  "descendantsCancelled": 0,
+                  "message": "<MESSAGE>"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "`run_not_found`: the run ID is unknown or belongs to a different fabric."
           }
         }
       }

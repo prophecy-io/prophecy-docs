@@ -1,0 +1,74 @@
+---
+title: List releases
+description: List a project's versions with the `Versions` GraphQL query.
+---
+
+Use the `Versions` query to list a project's versions. Copy a release's exact version name from the response when you [trigger a pipeline run](/api-reference/pipelines/trigger-pipeline-run) for a published release.
+
+```
+POST /api/md/graphql
+```
+
+## Arguments
+
+<ParamField body="projectUID" type="string" required>
+  ID of the project whose releases to list, as returned in `data.addProject._id` when you [create
+  the project](/api-reference/projects/create-project).
+</ParamField>
+
+## Response
+
+<ResponseField name="data.Versions" type="object[]">
+  Versions of the project.
+
+<Expandable title="Version properties">
+  <ResponseField name="version" type="string">
+    Version name. Use this value exactly as listed.
+  </ResponseField>
+  <ResponseField name="versionType" type="string">
+    Type of version. Entries with `Published` are releases.
+  </ResponseField>
+  <ResponseField name="commitHash" type="string">
+    Hash of the commit the version points to.
+  </ResponseField>
+  <ResponseField name="created" type="integer">
+    Time the version was created, in milliseconds since the Unix epoch.
+  </ResponseField>
+</Expandable>
+</ResponseField>
+
+<RequestExample>
+
+```bash cURL
+QUERY=$(tr '\n' ' ' <<'EOF'
+query($p: String!) {
+  Versions(projectUID: $p) { version versionType commitHash created }
+}
+EOF
+)
+VARS='{"p": "<PROJECT_ID>"}'
+curl -sS "$PROPHECY_URL/api/md/graphql" \
+  -H "X-Auth-Token: $PROPHECY_TOKEN" -H "Content-Type: application/json" \
+  -d "$(printf '{"query": "%s", "variables": %s}' "$QUERY" "$VARS")"
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "data": {
+    "Versions": [
+      {
+        "version": "0.1.0",
+        "versionType": "Published",
+        "commitHash": "<COMMIT_HASH>",
+        "created": 1792561681606
+      }
+    ]
+  }
+}
+```
+
+</ResponseExample>

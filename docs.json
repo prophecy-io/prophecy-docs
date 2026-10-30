@@ -22,14 +22,24 @@
               {
                 "tab": "Documentation",
                 "groups": [
-                  {
+                    {
                     "group": "Getting started",
                     "pages": [
                       "index",
                       "data-analysis/getting-started/concepts",
                       "data-analysis/getting-started/quick-start",
-                      "data-analysis/getting-started/professional-edition",
-                      "data-analysis/getting-started/databox",
+                      "data-analysis/getting-started/professional-edition"
+                      ]
+                      },
+                      {
+                      "group": "Use DataGPT",
+                        "pages": [
+                          "data-analysis/getting-started/datagpt/connect-datagpt",
+                          "data-analysis/getting-started/datagpt/capabilities",
+                          "data-analysis/getting-started/datagpt/files",
+                          "data-analysis/getting-started/datagpt/permissions"
+                        ]
+                      },
                       {
                         "group": "Use Structured Finance",
                         "pages": [
@@ -40,9 +50,7 @@
                           "data-analysis/getting-started/structured-finance/adhoc-document-workflows",
                           "data-analysis/getting-started/structured-finance/export-sharing"
                         ]
-                      }
-                    ]
-                  },
+                      },
                   {
                     "group": "Build with Agent",
                     "pages": [
@@ -737,12 +745,23 @@
                   {
                     "group": "API documentation",
                     "pages": [
-                      "api-reference/introduction"
+                      "api-reference/introduction",
+                      "api-reference/end-to-end-workflow",
+                      "api-reference/graphql"
                     ]
                   },
                   {
                     "group": "Endpoints",
                     "pages": [
+                      {
+                        "group": "Users and teams",
+                        "pages": [
+                          "api-reference/users/get-current-user",
+                          "api-reference/users/invite-users",
+                          "api-reference/teams/create-team",
+                          "api-reference/teams/get-team-members"
+                        ]
+                      },
                       {
                         "group": "Fabrics",
                         "pages": [
@@ -811,14 +830,20 @@
                       {
                         "group": "Projects",
                         "pages": [
+                          "api-reference/projects/create-project",
+                          "api-reference/projects/commit-changes",
+                          "api-reference/projects/publish-release",
+                          "api-reference/projects/list-releases",
                           "api-reference/projects/deploy-project"
                         ]
                       },
                       {
                         "group": "Pipelines",
                         "pages": [
+                          "api-reference/pipelines/create-pipeline",
                           "api-reference/pipelines/trigger-pipeline-run",
                           "api-reference/pipelines/get-pipeline-run-status",
+                          "api-reference/pipelines/cancel-pipeline-run",
                           "api-reference/pipelines/run-data-tests"
                         ]
                       }
@@ -896,6 +921,7 @@
                           "administration/management/cluster-admin-settings/copilot-settings",
                           "administration/management/cluster-admin-settings/configure-endpoint",
                           "administration/management/cluster-admin-settings/feature-management",
+                          "administration/management/cluster-admin-settings/git-connection-policy",
                           "administration/management/cluster-admin-settings/knowledge-graph-config"
                         ]
                       },
@@ -1544,12 +1570,23 @@
                   {
                     "group": "API documentation",
                     "pages": [
-                      "api-reference/introduction"
+                      "api-reference/introduction",
+                      "api-reference/end-to-end-workflow",
+                      "api-reference/graphql"
                     ]
                   },
                   {
                     "group": "Endpoints",
                     "pages": [
+                      {
+                        "group": "Users and teams",
+                        "pages": [
+                          "api-reference/users/get-current-user",
+                          "api-reference/users/invite-users",
+                          "api-reference/teams/create-team",
+                          "api-reference/teams/get-team-members"
+                        ]
+                      },
                       {
                         "group": "Fabrics",
                         "pages": [
@@ -1618,14 +1655,20 @@
                       {
                         "group": "Projects",
                         "pages": [
+                          "api-reference/projects/create-project",
+                          "api-reference/projects/commit-changes",
+                          "api-reference/projects/publish-release",
+                          "api-reference/projects/list-releases",
                           "api-reference/projects/deploy-project"
                         ]
                       },
                       {
                         "group": "Pipelines",
                         "pages": [
+                          "api-reference/pipelines/create-pipeline",
                           "api-reference/pipelines/trigger-pipeline-run",
                           "api-reference/pipelines/get-pipeline-run-status",
+                          "api-reference/pipelines/cancel-pipeline-run",
                           "api-reference/pipelines/run-data-tests"
                         ]
                       }
@@ -1702,7 +1745,8 @@
                           "administration/management/cluster-admin-settings/oauth-setup",
                           "administration/management/cluster-admin-settings/copilot-settings",
                           "administration/management/cluster-admin-settings/configure-endpoint",
-                          "administration/management/cluster-admin-settings/feature-management"
+                          "administration/management/cluster-admin-settings/feature-management",
+                          "administration/management/cluster-admin-settings/git-connection-policy"
                         ]
                       },
                       {
@@ -1763,7 +1807,7 @@
               }
             ]
           }
-        ]
+          ]
   },
   "logo": {
     "light": "/images/logo/logo-light.png",
@@ -1804,6 +1848,16 @@
     }
   },
   "redirects": [
+    {
+      "source": "/data-analysis/datagpt/:path*",
+      "destination": "/data-analysis/getting-started/datagpt/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/data-analysis/getting-started/databox",
+      "destination": "data-analysis/getting-started/datagpt/files",
+      "permanent": true
+    },
     {
       "source": "/data-engineering/administration/management/cluster-admin-settings/oauth-setup",
       "destination": "/administration/management/cluster-admin-settings/oauth-setup",
