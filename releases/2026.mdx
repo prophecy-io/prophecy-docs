@@ -3,7 +3,37 @@ title: '2026 releases'
 description: 'Features and enhancements from new releases'
 ---
 
-<Update label="Prophecy 4.2.13" description="TBD" tags={["Data Analysis"]}>
+<Update label="Prophecy 4.2.13" description="October 30, 2026" tags={["Data Analysis"]}>
+
+## DataGPT
+
+You can now use Prophecy directly from Claude, ChatGPT, or Microsoft Copilot. To do so, add DataGPT as a connnector in Claude, as a plugin in ChatGPT, or as a custom MCP server in Microsoft Copilot Studio.
+
+Once connected, you can ask Claude, ChatGPT, or Copilot to build and run pipelines, chart your data, browse your warehouse, and work with files in DataBox, all without leaving the chat. See [Connecting to DataGPT](/data-analysis/getting-started/datagpt/connect-datagpt) for more information.
+
+## DataBox upload restrictions
+
+[DataBox](/data-analysis/getting-started/datagpt/files#upload-restrictions) now checks every uploaded file, including chat attachments, and rejects files that aren't allowed with an error that explains why. Blocked files include:
+
+- Executables, scripts, installers, and disk images, such as `.exe`, `.jar`, `.sh`, and `.dmg` files.
+- Macro-enabled Office files, such as `.xlsm`, `.xlsb`, `.docm`, and `.pptm` files.
+- SVG images, `.7z`, `.rar`, and `.xz` archives, and browser network captures (`.har` files).
+- Password-protected or encrypted Office files, PDFs, and ZIP files.
+- CSV files with formulas that run programs or reach the internet, such as `WEBSERVICE` or `IMPORTDATA`.
+
+These checks also apply to files inside ZIP archives. After a file is stored, Prophecy scans it for malware in the background and permanently deletes it if the scan finds a problem.
+
+Because macro-enabled files are now blocked, DataGPT [Excel table extraction](/data-analysis/getting-started/datagpt/files#extract-tables-from-excel-files) supports XLSX files only.
+
+## Sign out of DataGPT from your AI client
+
+To [sign out of DataGPT](/data-analysis/getting-started/datagpt/connect-datagpt#sign-out), disconnect or remove DataGPT in your AI client's settings: **Connectors** in Claude, or **Plugins** in ChatGPT. You can no longer sign out by asking the AI client in the chat.
+
+## Roll back Agent changes
+
+Agent chat responses that changed your project now include an action to revert those changes. **Undo** appears on the most recent response with changes. **Rollback** appears on older responses and restores the project to its state before that response, reverting the changes from every later response. Both actions ask for confirmation and aren't available when the project is in read-only mode.
+
+See [Undo or roll back AI changes](/data-analysis/ai/agent/chat/using-chat#undo-or-roll-back-ai-changes).
 
 ## Edit analysis code
 
@@ -27,21 +57,19 @@ Input tools that read tables now convert to [Source gems](/import-tool/alteryx/a
 
 </Update>
 
-<Update label="Prophecy 4.2.13" description="TBD" tags={["Data Engineering"]}>
+<Update label="Prophecy 4.2.13" description="October 30, 2026" tags={["Administration"]}>
 
-## Choose the OAuth app registration for Databricks fabrics
+## DataBox upload events in audit logs
 
-Databricks fabrics, including fabrics that use a compute cluster for Spark, no longer always use the provider's default app registration. If you have more than one Databricks or ID Anywhere app registration, select the one the fabric uses when you configure OAuth. The fabric uses that registration for sign-in, interactive runs, scheduled runs, and test connections. See [App registration selection](/administration/management/cluster-admin-settings/oauth-setup#app-registration-selection).
+[Audit logs](/administration/management/audit-logs#databox-uploads) now record DataBox upload events in the `data_platform` category:
 
-The [Databricks Serverless](/data-engineering/fabrics/spark-provider/databricks/databricks-serverless) personal access token requirement has been removed.
+- `databox_upload_removed`: An upload failed its background safety scan and was permanently deleted.
+- `databox_upload_scan_failed`: An upload couldn't be scanned after repeated attempts and was kept without a scan.
+- `databox_upload_vanished`: An upload was moved or deleted outside DataBox, for example by a pipeline, before its scan finished.
 
-## Restart services after adding Kerberos keytabs
+## Git connection policy
 
-Keytab changes for [Livy fabrics](/data-engineering/fabrics/spark-provider/livy/livy#add-kerberos-keytabs) take effect after Prophecy restarts its services. Admins can now click **Restart services** in **Settings > Admin > Security** and either restart immediately or schedule the restart in 15 minutes, with a maintenance banner shown to all users until then.
-
-</Update>
-
-<Update label="Prophecy 4.2.13" description="TBD" tags={["Administration"]}>
+Available for the Enterprise Edition, a [Git connection policy](/administration/management/cluster-admin-settings/git-connection-policy) lets cluster admins restrict which external Git repositories projects can use. The policy applies to every team and user in the deployment. It doesn't affect projects that use Prophecy-managed Git. To set up the policy, go to **Settings > Admin > Git Connection Policy**. From there you can choose an allow list, an enforcement mode, whether or not to allow users to connect their personal repositors, and generate a compliance report.
 
 ## SAML single logout
 
@@ -54,6 +82,20 @@ When your deployment uses a single SSO provider, returning SSO users skip the Pr
 ## OAuth token lifetime guidance
 
 For [OAuth app registrations](/administration/management/cluster-admin-settings/oauth-setup), set **Token Lifetime** longer than the login grace period (720 minutes by default). A shorter lifetime requires users to sign in again on every connection.
+
+</Update>
+
+<Update label="Prophecy 4.2.13" description="November X, 2026" tags={["Data Engineering"]}>
+
+## Choose the OAuth app registration for Databricks fabrics
+
+Databricks fabrics, including fabrics that use a compute cluster for Spark, no longer always use the provider's default app registration. If you have more than one Databricks or ID Anywhere app registration, select the one the fabric uses when you configure OAuth. The fabric uses that registration for sign-in, interactive runs, scheduled runs, and test connections. See [App registration selection](/administration/management/cluster-admin-settings/oauth-setup#app-registration-selection).
+
+The [Databricks Serverless](/data-engineering/fabrics/spark-provider/databricks/databricks-serverless) personal access token requirement has been removed.
+
+## Restart services after adding Kerberos keytabs
+
+Keytab changes for [Livy fabrics](/data-engineering/fabrics/spark-provider/livy/livy#add-kerberos-keytabs) take effect after Prophecy restarts its services. Admins can now click **Restart services** in **Settings > Admin > Security** and either restart immediately or schedule the restart in 15 minutes, with a maintenance banner shown to all users until then.
 
 </Update>
 
