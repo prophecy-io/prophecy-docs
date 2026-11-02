@@ -1,9 +1,9 @@
 ---
 title: Connect DataGPT
-description: Use Prophecy Claude, ChatGPT, and Microsoft Copilot to build and run pipelines, chart your data, browse your warehouse, and work with files in DataBox.
+description: Add DataGPT to Claude, ChatGPT, or Microsoft Copilot to build and run pipelines, chart your data, browse your warehouse, and work with files in DataBox.
 ---
 
-DataGPT connect Prophecy to Claude, ChatGPT, or Microsoft Pilot.
+Prophecy DataGPT brings Prophecy into the AI app you already use. DataGPT is available as a connector in the Claude connector directory and as a plugin in the ChatGPT app directory. You can also add it to Microsoft Copilot Studio as a custom MCP connector.
 
 Once connected, you can ask Claude, ChatGPT, or Copilot to build and run pipelines, chart your data, browse your warehouse, and work with files in [DataBox](/data-analysis/getting-started/datagpt/files), all without leaving the chat.
 
@@ -12,13 +12,6 @@ Results come from Prophecy, not from the AI client. In Claude and ChatGPT, pipel
 <Callout icon="/images/icon.png" color="#FFC107">
   Available for the [Free and Professional Editions](/administration/platform/editions).
 </Callout>
-
-
-DataGPT is added to your AI client as a custom connector that signs in with your Prophecy account. The connector URL is your Prophecy URL followed by `/datagpt/mcp`:
-
-```
-https://<your-prophecy-host>/datagpt/mcp
-```
 
 ## Supported clients
 
@@ -29,19 +22,13 @@ You can use DataGPT from:
 - ChatGPT
 - Microsoft Copilot
 
+DataGPT signs in with your Prophecy account. If you don't have one, you can create one when you connect.
+
 ## Connect DataGPT to Claude
 
-To connect from Claude:
+Add DataGPT from the Claude connector directory:
 
-1. In Claude, open **Settings** > **Connectors**.
-1. Click **Add**, and then select **Custom connector**.
-1. Enter a name for the connector, such as `DataGPT`, and the connector URL:
-
-   ```
-   https://app.prophecy.ai/datagpt/mcp
-   ```
-
-1. Leave the other settings at their defaults, and then click **Add**.
+1. Open the [DataGPT listing](https://claude.com/marketplace/connectors/datagpt-prophecy) in the Claude connector directory. You can also find it in Claude under **Settings** > **Connectors** by browsing the directory for DataGPT.
 1. Click **Connect**. Claude opens Prophecy in your browser.
 1. If you aren't signed in to Prophecy, sign in.
 1. Review the permissions that DataGPT requests, and then click **Allow access**.
@@ -49,26 +36,43 @@ To connect from Claude:
 DataGPT is now connected to Claude.
 
 <Note>
-  On Team and Enterprise plans, an Owner must first add the custom connector to your organization. After that, members open **Settings** > **Connectors** and click **Connect** next to DataGPT. Each member signs in with their own Prophecy account, so DataGPT has only the access that member has in Prophecy.
+  On Team and Enterprise plans, an Owner can add DataGPT to your organization from the connector directory. After that, members open **Settings** > **Connectors** and click **Connect** next to DataGPT. Each member signs in with their own Prophecy account, so DataGPT has only the access that member has in Prophecy.
 </Note>
 
 ## Connect DataGPT to ChatGPT
 
-To connect from ChatGPT:
+Add the DataGPT plugin from the ChatGPT app directory:
 
-1. In ChatGPT, open **Settings** and scroll to **Plugins**.
-1. Click **Browse directory**, click **Add**, and then select **Add custom MCP server**.
-1. Enter a name for the plugin, such as `DataGPT`.
-1. Enter the connector URL:
-   ```
-   https://app.prophecy.ai/datagpt/mcp
-   ```
-1. Leave the OAuth settings at their defaults.
-1. Click **Create**.
-1. In the dialog that opens, click **Connect DataGPT**. If you aren't signed in to Prophecy, sign in.
+1. Open the [DataGPT plugin](https://chatgpt.com/plugins/plugin_asdk_app_6ad6862892b08191a6aa562e6ae1547f) in ChatGPT. You can also find it in ChatGPT under **Settings** > **Plugins** by clicking **Browse directory** and searching for DataGPT.
+1. Click **Connect DataGPT**. If you aren't signed in to Prophecy, sign in.
 1. Review the permissions that DataGPT requests, and then click **Allow access**.
 
 ChatGPT installs the DataGPT plugin.
+
+## Connect DataGPT as a custom connector
+
+If your organization doesn't allow connectors from the Claude or ChatGPT directory, an administrator can add DataGPT as a custom MCP connector instead. The connector URL is:
+
+```
+https://app.prophecy.ai/datagpt/mcp
+```
+
+To add DataGPT as a custom connector in Claude:
+
+1. In Claude, open **Settings** > **Connectors**.
+1. Click **Add**, and then select **Custom connector**.
+1. Enter a name for the connector, such as `DataGPT`, and the connector URL.
+1. Leave the other settings at their defaults, and then click **Add**.
+1. Click **Connect**, sign in to Prophecy if prompted, and then click **Allow access**.
+
+To add DataGPT as a custom MCP server in ChatGPT:
+
+1. In ChatGPT, open **Settings** and scroll to **Plugins**.
+1. Click **Browse directory**, click **Add**, and then select **Add custom MCP server**.
+1. Enter a name for the plugin, such as `DataGPT`, and the connector URL.
+1. Leave the OAuth settings at their defaults.
+1. Click **Create**.
+1. In the dialog that opens, click **Connect DataGPT**, sign in to Prophecy if prompted, and then click **Allow access**.
 
 ## Connect DataGPT to Microsoft Copilot Studio
 

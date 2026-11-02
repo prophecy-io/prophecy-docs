@@ -1850,6 +1850,11 @@
   },
   "redirects": [
     {
+      "source": "/data-analysis/getting-started/datagpt/datagpt",
+      "destination": "/data-analysis/getting-started/datagpt/connect-datagpt",
+      "permanent": true
+    },
+    {
       "source": "/data-analysis/datagpt/:path*",
       "destination": "/data-analysis/getting-started/datagpt/:path*",
       "permanent": true
