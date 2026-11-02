@@ -3,7 +3,13 @@ title: '2026 releases'
 description: 'Features and enhancements from new releases'
 ---
 
-<Update label="Prophecy 4.2.13" description="TBD" tags={["Data Analysis"]}>
+<Update label="Prophecy 4.2.13" description="October 30, 2026" tags={["Data Analysis"]}>
+
+## DataGPT
+
+You can now use Prophecy directly from Claude, ChatGPT, or Microsoft Copilot. To do so, add DataGPT as a connnector in Claude, as a plugin in ChatGPT, or as a custom MCP server in Microsoft Copilot Studio.
+
+Once connected, you can ask Claude, ChatGPT, or Copilot to build and run pipelines, chart your data, browse your warehouse, and work with files in DataBox, all without leaving the chat. See [Connecting to DataGPT](/data-analysis/getting-started/datagpt/connect-datagpt) for more information.
 
 ## DataBox upload restrictions
 
@@ -29,22 +35,6 @@ Agent chat responses that changed your project now include an action to revert t
 
 See [Undo or roll back AI changes](/data-analysis/ai/agent/chat/using-chat#undo-or-roll-back-ai-changes).
 
-</Update>
-
-<Update label="Prophecy 4.2.13" description="TBD" tags={["Administration"]}>
-
-## DataBox upload events in audit logs
-
-[Audit logs](/administration/management/audit-logs#databox-uploads) now record DataBox upload events in the `data_platform` category:
-
-- `databox_upload_removed`: An upload failed its background safety scan and was permanently deleted.
-- `databox_upload_scan_failed`: An upload couldn't be scanned after repeated attempts and was kept without a scan.
-- `databox_upload_vanished`: An upload was moved or deleted outside DataBox, for example by a pipeline, before its scan finished.
-
-</Update>
-
-<Update label="Prophecy 4.2.13" description="November X, 2026" tags={["Data Analysis"]}>
-
 ## Edit analysis code
 
 You can now edit an analysis directly as code. Each analysis is stored as a Python file in the project at `apps/<analysis_name>.py`. Open the file in the Code view, and when you save, Prophecy compiles it and updates the analysis in the visual editor.
@@ -67,36 +57,19 @@ Input tools that read tables now convert to [Source gems](/import-tool/alteryx/a
 
 </Update>
 
-<Update label="Prophecy 4.2.13" description="November X, 2026" tags={["Data Engineering"]}>
+<Update label="Prophecy 4.2.13" description="October 30, 2026" tags={["Administration"]}>
 
-## Choose the OAuth app registration for Databricks fabrics
+## DataBox upload events in audit logs
 
-Databricks fabrics, including fabrics that use a compute cluster for Spark, no longer always use the provider's default app registration. If you have more than one Databricks or ID Anywhere app registration, select the one the fabric uses when you configure OAuth. The fabric uses that registration for sign-in, interactive runs, scheduled runs, and test connections. See [App registration selection](/administration/management/cluster-admin-settings/oauth-setup#app-registration-selection).
+[Audit logs](/administration/management/audit-logs#databox-uploads) now record DataBox upload events in the `data_platform` category:
 
-The [Databricks Serverless](/data-engineering/fabrics/spark-provider/databricks/databricks-serverless) personal access token requirement has been removed.
-
-## Restart services after adding Kerberos keytabs
-
-Keytab changes for [Livy fabrics](/data-engineering/fabrics/spark-provider/livy/livy#add-kerberos-keytabs) take effect after Prophecy restarts its services. Admins can now click **Restart services** in **Settings > Admin > Security** and either restart immediately or schedule the restart in 15 minutes, with a maintenance banner shown to all users until then.
-
-</Update>
-
-<Update label="Prophecy 4.2.13" description="November X, 2026" tags={["Administration"]}>
+- `databox_upload_removed`: An upload failed its background safety scan and was permanently deleted.
+- `databox_upload_scan_failed`: An upload couldn't be scanned after repeated attempts and was kept without a scan.
+- `databox_upload_vanished`: An upload was moved or deleted outside DataBox, for example by a pipeline, before its scan finished.
 
 ## Git connection policy
 
-Available for the Enterprise Edition, a [Git connection policy](/administration/management/cluster-admin-settings/git-connection-policy) lets cluster admins restrict which external Git repositories projects can use. The policy applies to every team and user in the deployment. It doesn't affect projects that use Prophecy-managed Git.
-
-To set up the policy, go to **Settings > Admin > Git Connection Policy**. From there you can:
-
-- Choose **Allowlist** mode to allow only the organizations and repositories you list. You can match a whole organization (`acme-data`), a nested group (`acme-data/team-a`), or repository names with wildcards (`acme-data: pipelines-*, reports-*`).
-- Choose an enforcement mode. **Warn (record only)** lets users connect a repository and records the violation. **Block (refuse)** stops users from connecting it.
-- Allow users to connect repositories from their personal Git accounts.
-- Set an admin contact email that users see when the policy refuses or flags their repository.
-
-Prophecy checks the policy when a user connects a repository to a project, such as when they create a project. If the policy doesn't allow a repository, Prophecy shows a message next to it that explains why and lists the allowed organizations. Projects that are already connected keep working.
-
-The **Compliance report** tab shows which existing projects use repositories that the current policy doesn't allow. It also lists the organizations currently in use, which you can use to decide what to allow before you turn on the policy.
+Available for the Enterprise Edition, a [Git connection policy](/administration/management/cluster-admin-settings/git-connection-policy) lets cluster admins restrict which external Git repositories projects can use. The policy applies to every team and user in the deployment. It doesn't affect projects that use Prophecy-managed Git. To set up the policy, go to **Settings > Admin > Git Connection Policy**. From there you can choose an allow list, an enforcement mode, whether or not to allow users to connect their personal repositors, and generate a compliance report.
 
 ## SAML single logout
 
@@ -109,6 +82,20 @@ When your deployment uses a single SSO provider, returning SSO users skip the Pr
 ## OAuth token lifetime guidance
 
 For [OAuth app registrations](/administration/management/cluster-admin-settings/oauth-setup), set **Token Lifetime** longer than the login grace period (720 minutes by default). A shorter lifetime requires users to sign in again on every connection.
+
+</Update>
+
+<Update label="Prophecy 4.2.13" description="November X, 2026" tags={["Data Engineering"]}>
+
+## Choose the OAuth app registration for Databricks fabrics
+
+Databricks fabrics, including fabrics that use a compute cluster for Spark, no longer always use the provider's default app registration. If you have more than one Databricks or ID Anywhere app registration, select the one the fabric uses when you configure OAuth. The fabric uses that registration for sign-in, interactive runs, scheduled runs, and test connections. See [App registration selection](/administration/management/cluster-admin-settings/oauth-setup#app-registration-selection).
+
+The [Databricks Serverless](/data-engineering/fabrics/spark-provider/databricks/databricks-serverless) personal access token requirement has been removed.
+
+## Restart services after adding Kerberos keytabs
+
+Keytab changes for [Livy fabrics](/data-engineering/fabrics/spark-provider/livy/livy#add-kerberos-keytabs) take effect after Prophecy restarts its services. Admins can now click **Restart services** in **Settings > Admin > Security** and either restart immediately or schedule the restart in 15 minutes, with a maintenance banner shown to all users until then.
 
 </Update>
 
