@@ -34,7 +34,13 @@ When planning your migration, make sure to:
 When you use the Transpiler to migrate Alteryx workflows:
 
 - Input/Output tools that read **files** will be converted to SFTP Source/Target gems as placeholders.
-- Input/Output tools that read **tables** will be converted to Databricks Source/Target gems as placeholders.
+- Input tools that read **tables** will be converted to Source gems as placeholders. The Transpiler uses the tool's connection string or driver to choose the gem type:
+  - [Databricks](/data-analysis/gems/source-target/external-table/databricks)
+  - [Amazon Redshift](/data-analysis/gems/source-target/external-table/redshift)
+  - [Postgres](/data-analysis/gems/source-target/external-table/postgres)
+  - [SAP HANA](/data-analysis/gems/source-target/external-table/hana/hana)
+  - [Oracle](/data-analysis/gems/source-target/external-table/oracle), when the Transpiler doesn't recognize the database
+- Output tools that write **tables** will be converted to Databricks Target gems as placeholders.
 
 These gems **will not run automatically** after the migration. At minimum, you will have to create new connections in Prophecy and define the file/table location in the placeholder gems to point to the correct data.
 

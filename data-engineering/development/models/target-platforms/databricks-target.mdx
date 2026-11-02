@@ -68,6 +68,8 @@ You can reference any column present in the list of input ports beside the SQL q
 
 For a complete guide to defining how to write target tables, visit [Write strategies](/data-analysis/gems/source-target/table/write/write-options).
 
+When you use the **Merge - Upsert Row** write mode, you can also choose what happens to target rows that don't appear in the incoming data. See [Handle target rows not in source](/data-analysis/gems/source-target/table/write/upsert#handle-target-rows-not-in-source).
+
 ## Data Tests
 
 A data test is an assertion you define about a dataset in your project. Data tests are run on target models to ensure the quality and integrity of the final data that gets written to the warehouse. Learn how to build tests in [Table tests](/data-analysis/development/tests/table-tests).

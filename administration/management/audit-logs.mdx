@@ -2,9 +2,10 @@
 title: Audit logs
 description: How Prophecy generates, stores, and shares audit logs
 ---
+
 This page describes how Prophecy generates, stores, and shares audit logs for Prophecy deployments.
 
-Setting up audit logs requires collaboration with Prophecy. [Contact Prophecy](https://www.prophecy.io/request-a-demo) to:
+Setting up audit logs requires collaboration with Prophecy. [Contact Prophecy](/administration/getting-help/get-in-touch) to:
 
 - Export audit logs on demand.
 - Configure automatic syncing to your own storage.
@@ -18,7 +19,7 @@ Prophecy stores audit logs in the same cloud platform as your deployment:
 - For Azure deployments, audit logs are stored in Azure Blob Storage.
 - For Google Cloud Platform deployments, audit logs are stored in Google Cloud Storage.
 
-## Audit event reference
+## Control plane events
 
 When audit logs are enabled for your Prophecy deployment, they capture the following information:
 
@@ -29,17 +30,18 @@ When audit logs are enabled for your Prophecy deployment, they capture the follo
 The following tables list the audit events that Prophecy logs, organized by entity type.
 
 <Note>
-  Prophecy uses GraphQL for control plane API operations. Request and response parameters may vary depending on where you call the query.
+  Prophecy uses GraphQL for control plane API operations. The request parameters recorded for a query may vary
+  depending on where you call the query.
 </Note>
 
 ### Fabric
 
-| Query               | Description                  | Request Parameters     |
-| ------------------- | ---------------------------- | ---------------------- |
-| `fabricDetailQuery` | Get Fabric Details           | `["id"]`               |
-| `addFabric`         | Add a Fabric                 | `["name", "ownerUid"]` |
-| `updateOwnedBy`     | Update Team owing the Fabric | `["id","targetUid"]`   |
-| `userFabricQuery`   | Get all Fabrics for User     | `["uid"]`              |
+| Query               | Description                   | Request Parameters     |
+| ------------------- | ----------------------------- | ---------------------- |
+| `fabricDetailQuery` | Get Fabric Details            | `["id"]`               |
+| `addFabric`         | Add a Fabric                  | `["name", "ownerUid"]` |
+| `updateOwnedBy`     | Update Team owning the Fabric | `["id","targetUid"]`   |
+| `userFabricQuery`   | Get all Fabrics for User      | `["uid"]`              |
 
 ### Project
 
@@ -56,7 +58,7 @@ The following tables list the audit events that Prophecy logs, organized by enti
 | `projectReleaseStatus`     | Gives Status of last Release for given project      | `["projectID", "statuses"]`                                                   |
 | `projectSyncFromGit`       | Status of Git sync of project                       | `["uid"]`                                                                     |
 | `releaseProject`           | Release a Project                                   | `["branch", "message","version","projectID", "CommitHash"]`                   |
-| `gitFooter`                | Details for Git for commit/branchNAme etc           | `["projectID"]`                                                               |
+| `gitFooter`                | Details for Git for commit/branchName etc           | `["projectID"]`                                                               |
 | `addSubscriberToProject`   | Add Subscriber to a Project                         | `["uid", "teamId"]`                                                           |
 | `projectBranches`          | List of available branches for this project         | `["projectId"]`                                                               |
 | `cloneProject`             | Created clone of current project                    | `["uid", "name", "teamUid", "copyMainBranchReleaseTags"]`                     |
@@ -72,7 +74,7 @@ The following tables list the audit events that Prophecy logs, organized by enti
 | `clonePipeline`        | Cloned a Pipeline                    | `["branch", "sourcePipelineId", "targetPipelineName", "ownerUid", "doCheckout"]` |
 | `addSubgraph`          | When Subgraph is added to a Pipeline | `["mode", "name", "language", "ownerUID"]`                                       |
 | `addUDFBulk`           | UDFs added to a Project              | `["udfs.name","udfs.description", "projectUID"]`                                 |
-| `removeUDFBulk`        | UDFs removed form a project          | `["uids"]`                                                                       |
+| `removeUDFBulk`        | UDFs removed from a project          | `["uids"]`                                                                       |
 | `getSubgraph`          | Get Subgraph by given Id             | `["uid"]`                                                                        |
 
 ### Job
@@ -101,7 +103,7 @@ The following tables list the audit events that Prophecy logs, organized by enti
 | -------------- | ------------------------------------- | ---------------------------------------------- |
 | `addTeam`      | Added a new Team                      | `["name", "adminUid"]`                         |
 | `getUserTeam`  | Get Teams for a User                  | `["uid"]`                                      |
-| `addteamAdmin` | Add a user as Admin                   | `["teamUid", "userUid", "invitationAccepted"]` |
+| `addTeamAdmin` | Add a user as Admin                   | `["teamUid", "userUid", "invitationAccepted"]` |
 | `user`         | List All teams for Users with Members | `["uid"]`                                      |
 
 ### User
@@ -120,13 +122,13 @@ The following tables list the audit events that Prophecy logs, organized by enti
 | `deleteBranch`                | Deleted a Branch                                  | `["projectId", "branchName"]`                                                           |
 | `checkout`                    | Checkout a new branch                             | `["projectId" , "branchName"]`                                                          |
 | `prCreationRedirectUrl`       | Pr Creation button clicked                        | `["to", "from", "projectId"]`                                                           |
-| `createPR`                    | Pr Creation button clicked                        | `["to", "from", "toFork", "fromFork":, "projectId"]`                                    |
+| `createPR`                    | Pr Creation button clicked                        | `["to", "from", "toFork", "fromFork", "projectId"]`                                     |
 | `cleanCommit`                 | Committed any changes                             | `["message", "projectId"]`                                                              |
 | `commit`                      | Commit button clicked                             | `["branch", "message", "projectId"]`                                                    |
 | `pullOrigin`                  | pull origin branch                                | `["branch", "projectId"]`                                                               |
 | `checkGitConnection`          | Test Git connection                               | `["externalUriArg", "pushAccessCheck", "userGitCredsUID"]`                              |
 | `linkSavedCredsToExternalGit` | Linked Saved Creds to a project                   | `["projectUID", "userGitCredsUID"]`                                                     |
-| `unlinkExternalGit`           | Unlink the saved creds                            | `["projectUID"]`                                                                        |                                                       |
+| `unlinkExternalGit`           | Unlink the saved creds                            | `["projectUID"]`                                                                        |
 | `branchDivergence`            | When user compares two branches for commit screen | `["projectId", "branchName", "baseBranchName"]`                                         |
 | `branchInfo`                  | Gives details of a particular working branch      | `["projectId", "branchName", "remoteType"]`                                             |
 | `setPrCreationTemplate`       | When user Sets PR creation template               | `["projectId", "customPrTemplate", "prCreationEnabled"]`                                |
@@ -154,63 +156,69 @@ The following tables list the audit events that Prophecy logs, organized by enti
 Prophecy audit logs also capture actions performed directly on the execution plane (the orchestrator service running in your environment), not just control plane GraphQL calls. These events are recorded locally on the execution plane first, then forwarded to the control plane in batches (every 30 minutes by default). As a result, there's a short delay between an execution action occurring and its event appearing in the central audit log.
 
 <Note>
-  Execution plane events are identified by a fixed event type and category rather than a GraphQL query name.
+  Execution plane events are identified by a fixed event type and category rather than a GraphQL
+  query name.
 </Note>
 
 ### Authentication and identity
 
-| Event type         | Category   | Description                                                                               |
-| ------------------- | ---------- | -------------------------------------------------------------------------------------------- |
-| `login_federated`  | `auth`     | A user signed in through a federated identity provider (OAuth, OIDC, or SAML)                |
-| `login_ldap`       | `auth`     | A user signed in through LDAP                                                                |
-| `login_builtin`    | `auth`     | A user signed in with a Prophecy-native username and password                                |
-| `login_token`      | `auth`     | A user signed in with a bearer token (reserved for future use)                               |
-| `logout`           | `auth`     | A user ended their own session                                                               |
-| `user_impersonate` | `identity` | A privileged user (for example, a Support role) requested a token to act as another user     |
+| Event type         | Category   | Description                                                                              |
+| ------------------ | ---------- | ---------------------------------------------------------------------------------------- |
+| `LOGIN_FEDERATED`  | `AUTH`     | A user signed in through a federated identity provider (OAuth, OIDC, or SAML)            |
+| `LOGIN_LDAP`       | `AUTH`     | A user signed in through LDAP                                                            |
+| `LOGIN_BUILTIN`    | `AUTH`     | A user signed in with a Prophecy-native username and password                            |
+| `LOGIN_TOKEN`      | `AUTH`     | A user signed in with a bearer token (reserved for future use)                           |
+| `LOGOUT`           | `AUTH`     | A user ended their own session                                                           |
+| `USER_IMPERSONATE` | `IDENTITY` | A privileged user (for example, a Support role) requested a token to act as another user |
 
 ### Fabric
 
 | Event type             | Category    | Description                          |
-| ----------------------- | ----------- | -------------------------------------- |
-| `fabric_create`        | `data_flow` | A fabric was created                   |
-| `fabric_config_update` | `data_flow` | A fabric's configuration was updated   |
-| `fabric_delete`        | `data_flow` | A fabric was deleted                   |
+| ---------------------- | ----------- | ------------------------------------ |
+| `FABRIC_CREATE`        | `DATA_FLOW` | A fabric was created                 |
+| `FABRIC_CONFIG_UPDATE` | `DATA_FLOW` | A fabric's configuration was updated |
+| `FABRIC_DELETE`        | `DATA_FLOW` | A fabric was deleted                 |
 
 ### Connections and secrets
 
-| Event type            | Category    | Description                    |
-| ---------------------- | ----------- | --------------------------------- |
-| `connection_create`   | `data_flow` | A connection was created          |
-| `connection_update`   | `data_flow` | A connection was updated          |
-| `connection_delete`   | `data_flow` | A connection was deleted          |
-| `fabric_secret_create`| `secrets`   | A secret was added to a fabric    |
-| `fabric_secret_update`| `secrets`   | A fabric secret was updated       |
-| `fabric_secret_delete`| `secrets`   | A fabric secret was deleted       |
+| Event type             | Category    | Description                    |
+| ---------------------- | ----------- | ------------------------------ |
+| `CONNECTION_CREATE`    | `DATA_FLOW` | A connection was created       |
+| `CONNECTION_UPDATE`    | `DATA_FLOW` | A connection was updated       |
+| `CONNECTION_DELETE`    | `DATA_FLOW` | A connection was deleted       |
+| `FABRIC_SECRET_CREATE` | `SECRETS`   | A secret was added to a fabric |
+| `FABRIC_SECRET_UPDATE` | `SECRETS`   | A fabric secret was updated    |
+| `FABRIC_SECRET_DELETE` | `SECRETS`   | A fabric secret was deleted    |
 
 ### Deployment and pipeline runs
 
-| Event type                | Category  | Description                                                        |
-| --------------------------- | --------- | ---------------------------------------------------------------------- |
-| `project_deploy`          | `compute` | A project was deployed to a fabric                                     |
-| `pipeline_run_interactive`| `compute` | A pipeline was run interactively, for example from the Prophecy IDE    |
-| `pipeline_run_scheduled`  | `compute` | A pipeline run was triggered by a schedule                             |
-| `pipeline_run_sync_api`   | `compute` | A pipeline was run synchronously through the REST API                  |
+| Event type                 | Category  | Description                                                                                                                     |
+| -------------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `PROJECT_DEPLOY`           | `COMPUTE` | A project was deployed to a fabric                                                                                              |
+| `PIPELINE_RUN_INTERACTIVE` | `COMPUTE` | A pipeline was run interactively, for example from the Prophecy IDE                                                             |
+| `PIPELINE_RUN_SCHEDULED`   | `COMPUTE` | A pipeline run was triggered by a schedule                                                                                      |
+| `PIPELINE_RUN_SYNC_API`    | `COMPUTE` | A pipeline was run synchronously through the REST API                                                                           |
+| `PIPELINE_RUN_TRIGGERED`   | `COMPUTE` | A pipeline run started. Recorded for every kind of run, with who or what started it                                             |
+| `PIPELINE_RUN_CANCEL`      | `COMPUTE` | A request to stop a pipeline run was made in the UI or through the API, whether or not the run was stopped                      |
+| `PIPELINE_RUN_CANCELLED`   | `COMPUTE` | A pipeline run ended because it was cancelled, with who or what cancelled it, such as a user or a schedule's concurrency policy |
+| `PIPELINE_RUN_RESTART`     | `COMPUTE` | A user restarted a scheduled pipeline run                                                                                       |
 
 ### Schedules
 
-| Event type        | Category  | Description              |
-| ------------------- | --------- | --------------------------- |
-| `schedule_create`  | `compute` | A schedule was created      |
-| `schedule_update`  | `compute` | A schedule was updated      |
-| `schedule_delete`  | `compute` | A schedule was deleted      |
+| Event type        | Category  | Description                                                                      |
+| ----------------- | --------- | -------------------------------------------------------------------------------- |
+| `SCHEDULE_CREATE` | `COMPUTE` | A schedule was created                                                           |
+| `SCHEDULE_UPDATE` | `COMPUTE` | A schedule was updated                                                           |
+| `SCHEDULE_DELETE` | `COMPUTE` | A schedule was deleted                                                           |
+| `SCHEDULE_PIN`    | `COMPUTE` | A pipeline's schedules were locked to a project version, or the lock was removed |
 
 ### DataBox uploads
 
-| Event type                   | Category        | Description                                                                                             |
-| ---------------------------- | --------------- | ------------------------------------------------------------------------------------------------------- |
-| `databox_upload_removed`     | `data_platform` | A DataBox upload failed its background safety scan and was permanently deleted                         |
-| `databox_upload_scan_failed` | `data_platform` | A DataBox upload couldn't be scanned after repeated attempts and was kept without a scan                |
-| `databox_upload_vanished`    | `data_platform` | A DataBox upload was moved or deleted outside DataBox, for example by a pipeline, before its scan finished |
+| Event type                   | Category        | Description                                                                                                |
+| ---------------------------- | --------------- | ---------------------------------------------------------------------------------------------------------- |
+| `DATABOX_UPLOAD_REMOVED`     | `DATA_PLATFORM` | A DataBox upload failed its background safety scan and was permanently deleted                             |
+| `DATABOX_UPLOAD_SCAN_FAILED` | `DATA_PLATFORM` | A DataBox upload couldn't be scanned after repeated attempts and was kept without a scan                   |
+| `DATABOX_UPLOAD_VANISHED`    | `DATA_PLATFORM` | A DataBox upload was moved or deleted outside DataBox, for example by a pipeline, before its scan finished |
 
 ## Sync data to S3
 
@@ -221,9 +229,8 @@ If your Prophecy deployment is hosted on AWS, you can sync your Prophecy audit l
 1. Open the Amazon S3 console and choose **Create bucket**.
 1. Enter a **Bucket name**, following the format `prophecy-customer-audit-events-foo`. Replace `foo` with an identifier for your organization.
 1. Choose a **Region**. Prophecy syncs to whichever region your bucket is created in — there's no region you need to avoid or request special handling for.
+1. Set **Object Ownership** to **ACLs disabled (recommended)**. You can also apply this setting after creation by editing the bucket permissions.
 1. Complete the remaining setup options as needed, then create the bucket.
-1. Set **Object Ownership** to **ACLs disabled (recommended)**. You can apply this setting during bucket creation or by editing bucket permissions after creation.
-1. If your bucket uses a customer-managed KMS key, grant the Prophecy role `kms:Encrypt`, `kms:GenerateDataKey*`, and `kms:DescribeKey` in your key policy. Without this, the sync will create successfully but fail when Prophecy tries to write objects.
 
 ### 2. Configure bucket permissions for Prophecy
 
@@ -273,10 +280,17 @@ If your Prophecy deployment is hosted on AWS, you can sync your Prophecy audit l
 
 To use this example JSON:
 
-- Replace all instances of `prophecy-customer-audit-events-foo` with your bucket ARN.
+- Replace all instances of `prophecy-customer-audit-events-foo` with your bucket name. Don't use the full bucket ARN, because the policy already includes the `arn:aws:s3:::` prefix.
+- Replace `##############` with Prophecy's AWS account ID. Contact Prophecy to get the account ID.
 - The two statements grant access for different purposes: the first lets Prophecy's sync role read your bucket's location and read/write objects at transfer time. The second — the `DataSyncCreateS3Location` statement — grants Prophecy's `s3access` IAM user the `s3:ListBucket` permission it needs to register your bucket as a sync destination in the first place. Both are required.
-- After applying the policy, contact Prophecy and provide:
-  - Your bucket ARN.
-  - The AWS region.
+
+If your bucket uses a customer-managed KMS key, also grant the Prophecy sync role (`AWSDataSyncS3BucketAccessCustomerAuditEventsRole`) `kms:Encrypt`, `kms:GenerateDataKey*`, and `kms:DescribeKey` in your key policy. Without this, the sync will create successfully but fail when Prophecy tries to write objects.
+
+### 3. Send Prophecy your bucket details
+
+After applying the policy, contact Prophecy and provide:
+
+- Your bucket ARN.
+- The AWS region.
 
 Prophecy will complete the configuration and enable syncing for your environment.
