@@ -3,7 +3,7 @@ title: Microsoft SharePoint
 description: Learn how to connect with SharePoint
 ---
 
-Prophecy supports integration with Microsoft SharePoint, allowing you to read from and write to SharePoint document libraries as part of your data pipelines. This connection enables you to work directly with files stored in SharePoint for processing, transformation, and reporting.
+Prophecy supports integration with Microsoft SharePoint, allowing you to read from and write to SharePoint document libraries and lists as part of your data pipelines. This connection enables you to work directly with files and list data stored in SharePoint for processing, transformation, and reporting.
 
 ## Prerequisites
 
@@ -27,12 +27,13 @@ The table below outlines whether the connection supports certain Prophecy featur
 | ------------------------------------------------------------------------------------------ | --------- |
 | Read data with a [Source gem](/data-analysis/gems/source-target/file/sharepoint)           | Yes       |
 | Write data with a [Target gem](/data-analysis/gems/source-target/file/sharepoint)          | Yes       |
+| Read and write SharePoint lists with the [SharePoint list gem](/data-analysis/gems/source-target/external-table/sharepoint-list) | Yes |
 | Browse data in the [Environment browser](/data-analysis/development/studio/studio#sidebar) | Yes       |
 | Index files in the [Knowledge Graph](/data-analysis/ai/knowledge-graph/knowledge-graph)    | No        |
 
 ## Limitations
 
-Prophecy can only access files stored in the [document library](https://support.microsoft.com/en-us/office/what-is-a-document-library-3b5976dd-65cf-4c9e-bf5a-713c10ca2872) of your SharePoint site. Make sure any files you want to import are placed there.
+Prophecy can only access files stored in the [document library](https://support.microsoft.com/en-us/office/what-is-a-document-library-3b5976dd-65cf-4c9e-bf5a-713c10ca2872) of your SharePoint site. Make sure any files you want to import are placed there. To work with SharePoint lists, use the [SharePoint list gem](/data-analysis/gems/source-target/external-table/sharepoint-list).
 
 Prophecy can only access sites that have been explicitly granted to it via `Sites.Selected`. If a connection can't reach a site, confirm the site has been granted access — see [Grant service principal access to SharePoint sites](/data-analysis/gems/source-target/file/sharepoint#grant-service-principal-access-to-sharepoint-sites).
 
