@@ -1,0 +1,98 @@
+---
+title: SharePoint list external table gem
+description: Read from and write to SharePoint lists
+---
+
+import Execution from '/snippets/gem-execution-engine.mdx';
+
+<Execution execution_engine="Prophecy Automate" />
+
+## Overview
+
+Use a Source or Target gem to read from or write to a [SharePoint list](https://support.microsoft.com/en-us/office/introduction-to-lists-0a1c3ace-def0-44af-b225-cfa8d92c52d7) in Prophecy pipelines. Each list item becomes a row, and each list column becomes a column.
+
+The gem uses the same [SharePoint connection](/data-analysis/environment/connections/sharepoint) as the [SharePoint file gem](/data-analysis/gems/source-target/file/sharepoint). The connection's service principal must have access to the site that contains the list. To learn more, see [Grant service principal access to SharePoint sites](/data-analysis/gems/source-target/file/sharepoint#grant-service-principal-access-to-sharepoint-sites).
+
+## Create a SharePoint list gem
+
+To create a SharePoint list Source or Target gem in your pipeline:
+
+<Steps>
+<Step title="Add a Source or Target gem to the pipeline">
+
+1. Open your pipeline in the [Studio](/data-analysis/development/studio/studio).
+1. Click **Source/Target** in the canvas.
+1. Select **Source** or **Target** from the dropdown.
+1. Click the gem to open the configuration.
+
+</Step>
+
+<Step title="Select SharePoint list format">
+  In the **Type** tab, under **Table**, select **Sharepoint List**. Then, click **Next**.
+</Step>
+
+<Step title="Set location details">
+
+In the **Location** tab, select a connection and enter the list name. To learn more, see [Location](#location).
+
+</Step>
+
+<Step title="Set table properties">
+  In the **Properties** tab, set the table properties. To learn more, see [Source
+  properties](#source-properties) and [Target properties](#target-properties).
+</Step>
+
+<Step title="Preview data (Source only)">
+  In the **Preview** tab, load a sample of the data and verify that it looks correct.
+</Step>
+
+</Steps>
+
+## Location
+
+The Source and Target gems use the same location parameters.
+
+| Parameter                   | Description                                                                                                                                         |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Select or create connection | Select or create a new [SharePoint connection](/data-analysis/environment/connections/sharepoint) in the Prophecy fabric you will use.              |
+| List Name                   | Name of the SharePoint list. You can enter the list's display name or its internal name. The list must be in the site configured in the connection. |
+
+## Source properties
+
+The following properties are available for the SharePoint list Source gem.
+
+| Property                                 | Description                                                                                                                                                               | Default  |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| Description                              | Text description of the source table.                                                                                                                                     | None     |
+| Include Sharepoint list internal fields  | Enable to include hidden, read-only, and system columns in the output, such as `Created`, `Modified`, `Attachments`, and `ContentType`. When disabled, the gem returns only the list's user columns, including `Title`. | Disabled |
+
+## Target properties
+
+The following properties are available for the SharePoint list Target gem.
+
+| Property                | Description                                                                                                       | Default  |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------- | -------- |
+| Skip if zero input rows | Enable to skip the write when the input has no rows.                                                              | Disabled |
+| Description             | Text description of the target table.                                                                             | None     |
+| Write Mode              | How the gem writes to the list. To learn more, see [Write modes](#write-modes).                                   | Append   |
+
+### Write modes
+
+| Write mode      | Behavior                                                                                                                                                                                                                       |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Append          | Adds the input rows as new items in an existing list. The list must already exist.                                                                                                                                             |
+| Overwrite       | Deletes the existing list and recreates it with the input rows. The list must already exist. If the input schema doesn't match the incoming data, the gem stops before deleting anything and the existing list stays intact. |
+| Create New List | Creates a new list and writes the input rows to it. The list must not already exist. If the write fails, Prophecy deletes the new list.                                                                                     |
+
+In every write mode, if the input has a column that the list doesn't have, the gem adds that column to the list.
+
+<Warning>
+  You can't write to read-only SharePoint columns, such as `Created` or `Modified`. If the input
+  schema includes a read-only column, the gem fails before writing any data. Remove those columns
+  from the input first.
+</Warning>
+
+<Note>
+  Overwrite mode deletes and recreates the list, so anything attached to the original list, such as
+  views, permissions, and column settings made in SharePoint, is not kept.
+</Note>

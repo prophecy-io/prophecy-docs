@@ -383,6 +383,7 @@
                           "data-analysis/gems/source-target/external-table/postgres",
                           "data-analysis/gems/source-target/external-table/redshift",
                           "data-analysis/gems/source-target/external-table/salesforce",
+                          "data-analysis/gems/source-target/external-table/sharepoint-list",
                           "data-analysis/gems/source-target/external-table/snowflake",
                           "data-analysis/gems/source-target/external-table/synapse",
                           {
