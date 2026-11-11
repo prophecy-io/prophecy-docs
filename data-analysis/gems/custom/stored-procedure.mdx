@@ -9,17 +9,23 @@ import Execution from '/snippets/gem-execution-engine.mdx';
 
 ## Overview
 
-Use the StoredProcedure gem to call stored procedures defined in your project. Stored procedures allow you to run procedural logic (such as loops, conditional statements, or DDL operations) as a step in your pipeline.
+Use the StoredProcedure gem to call a stored procedure as a step in your pipeline. Stored procedures allow you to run procedural logic, such as loops, conditional statements, or DDL operations.
 
-Stored procedures are built on top of BigQuery stored procedures and follow the same SQL syntax and execution model. To learn more about what stored procedures are, how they work in Prophecy, and how to define them, see [Stored procedures](/data-analysis/gems/custom/stored-procedure).
+The StoredProcedure gem can call two kinds of stored procedures, depending on the connection you select:
+
+- **Stored procedures defined in your project**: Select your data warehouse connection to call a procedure that you defined in Prophecy. These procedures are built on top of your warehouse's stored procedures (BigQuery or Snowflake) and follow the same syntax and execution model. To learn how to define them, see [Stored procedures](/data-analysis/development/extensibility/stored-procedure).
+- **Stored procedures in an external database**: Select an external connection to call a procedure that already exists in that database. See [Call stored procedures in an external database](#call-stored-procedures-in-an-external-database).
 
 ## Prerequisites
 
 - Run Prophecy version 4.1.2 or higher.
+- Use a BigQuery or Snowflake fabric.
 
 ## Limitations
 
-The StoredProcedure gem can only call stored procedures that have been defined in Prophecy. Stored procedures originating from BigQuery cannot be called from this gem.
+When you select your data warehouse connection, the StoredProcedure gem can only call stored procedures that have been defined in your Prophecy project. Stored procedures that were created directly in BigQuery or Snowflake can't be called through the data warehouse connection.
+
+To call a procedure that already exists in SAP HANA, Microsoft SQL Server, Azure Synapse, or Postgres, select that external connection instead. See [Call stored procedures in an external database](#call-stored-procedures-in-an-external-database).
 
 ## Input and Output
 
@@ -36,6 +42,29 @@ Configure the StoredProcedure gem using the following parameters:
 
 | Parameter            | Description                                                                                                                                                                                                                                                                 |
 | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Procedure            | Select a stored procedure from the dropdown menu of [existing procedures](/data-analysis/gems/custom/stored-procedure) in the project.                                                                                                                                      |
+| Connection           | Select the connection that runs the stored procedure. Under **Data Warehouse**, select your fabric's warehouse connection to call a procedure defined in your project. Under **External Connections · Run via Prophecy Automate**, select a connection to an external database. |
+| Procedure            | Select a stored procedure. For the data warehouse connection, choose from the [procedures defined in your project](/data-analysis/development/extensibility/stored-procedure). For an external connection, choose from the procedures in that database, or type the procedure name. |
 | Arguments            | Add values to arguments required by the stored procedure. Arguments automatically appear when you choose a stored procedure.                                                                                                                                                |
 | Pass through columns | Pass through additional columns from the input table to the output of the stored procedure. Columns can be defined using visual or SQL expressions. <br/>If no pass through columns are defined, the output contains one column per `OUT` argument in the stored procedure. |
+
+## Call stored procedures in an external database
+
+The StoredProcedure gem can call stored procedures that exist in the following external databases:
+
+- [SAP HANA](/data-analysis/environment/connections/hana)
+- [MSSQL](/data-analysis/environment/connections/mssql)
+- [Azure Synapse dedicated SQL pools](/data-analysis/environment/connections/synapse)
+- [Postgres](/data-analysis/environment/connections/postgres)
+
+Prophecy Automate runs the procedure on the external database, not on your data warehouse.
+
+To call a stored procedure in an external database:
+
+1. In **Connection**, select a connection under **External Connections · Run via Prophecy Automate**. The connection must be one of the supported database types.
+1. In **Procedure**, select a procedure from the list that Prophecy fetches from the database, or type the procedure name.
+1. Review the **Arguments**. Prophecy fetches the procedure's arguments automatically when you select a procedure. To update them after the procedure changes in the database, click the refetch arguments icon.
+1. Optionally, add **Pass through columns**.
+
+The gem's output schema contains one column for each `OUT` and `INOUT` argument of the procedure, plus any pass through columns.
+
+If Prophecy can't reach the external database, the gem shows a banner that the connection is unreachable, and pipeline runs fail at this gem until the connection is restored. The gem keeps showing the procedure information it last fetched. Use the banner to retry or to open the connection settings.
