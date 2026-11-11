@@ -13,7 +13,7 @@ Use the StoredProcedure gem to call a stored procedure as a step in your pipelin
 
 The StoredProcedure gem can call two kinds of stored procedures, depending on the connection you select:
 
-- **Stored procedures defined in your project**: Select your data warehouse connection to call a procedure that you defined in Prophecy. These procedures are built on top of BigQuery stored procedures and follow the same SQL syntax and execution model. To learn how to define them, see [Stored procedures](/data-analysis/development/extensibility/stored-procedure).
+- **Stored procedures defined in your project**: Select your data warehouse connection to call a procedure that you defined in Prophecy. These procedures are built on top of your warehouse's stored procedures (BigQuery or Snowflake) and follow the same syntax and execution model. To learn how to define them, see [Stored procedures](/data-analysis/development/extensibility/stored-procedure).
 - **Stored procedures in an external database**: Select an external connection to call a procedure that already exists in that database. See [Call stored procedures in an external database](#call-stored-procedures-in-an-external-database).
 
 ## Prerequisites
@@ -23,7 +23,9 @@ The StoredProcedure gem can call two kinds of stored procedures, depending on th
 
 ## Limitations
 
-When you select your data warehouse connection, the StoredProcedure gem can only call stored procedures that have been defined in Prophecy. Stored procedures that were created directly in BigQuery can't be called through the data warehouse connection.
+When you select your data warehouse connection, the StoredProcedure gem can only call stored procedures that have been defined in your Prophecy project. Stored procedures that were created directly in BigQuery or Snowflake can't be called through the data warehouse connection.
+
+To call a procedure that already exists in SAP HANA, Microsoft SQL Server, Azure Synapse, or Postgres, select that external connection instead. See [Call stored procedures in an external database](#call-stored-procedures-in-an-external-database).
 
 ## Input and Output
 

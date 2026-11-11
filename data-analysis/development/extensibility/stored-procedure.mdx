@@ -23,18 +23,23 @@ Use stored procedures when:
 To use stored procedures, you need:
 
 - Prophecy 4.1.2 or later.
+- A BigQuery or Snowflake fabric.
 
 ## Create stored procedure
 
 To create a stored procedure in a project, click **+ Add Entity > Stored Procedure** in the project browser. Then, configure and save the stored procedure.
 
-The following table describes the parameters of a stored procedure using the visual view. In the code view, you can write the entire procedure using BigQuery SQL syntax, including the `CREATE PROCEDURE` statement and procedure body.
+The parameters depend on your SQL warehouse. In the code view, you can write the entire procedure in your warehouse's SQL syntax, including the `CREATE PROCEDURE` statement and procedure body.
+
+### BigQuery
+
+The following table describes the parameters of a BigQuery stored procedure in the visual view.
 
 | Parameter | Description                                                                                                                                                                                |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Project   | The Google Cloud project that contains the dataset where the stored procedure will be created.                                                                                             |
 | Dataset   | The BigQuery dataset where the stored procedure will be created.                                                                                                                           |
-| Arguments | Define the parameters passed to the stored procedure. <br />Each argument includes a name, data type, and mode (`IN`, `OUT`, or `INOUT`). Learn more in [Argument Modes](#argument-modes). |
+| Arguments | Define the parameters passed to the stored procedure. <br />Each argument includes a name, data type, and mode (`IN`, `OUT`, or `INOUT`). Learn more in [Argument modes](#argument-modes). |
 | Code      | The body of the stored procedure written in BigQuery SQL.                                                                                                                                  |
 
 <Info>
@@ -42,20 +47,38 @@ The following table describes the parameters of a stored procedure using the vis
   procedures](https://cloud.google.com/bigquery/docs/procedures).
 </Info>
 
-### Argument Modes
+#### Argument modes
 
-Stored procedures support the following argument modes:
+BigQuery stored procedures support the following argument modes:
 
 - `IN` mode: Passes a value into the stored procedure. The procedure can read the value but cannot modify it.
 - `OUT` mode: Returns a value from the stored procedure. The procedure assigns a value to the argument.
 - `INOUT` mode: Passes a value into the procedure and returns a (possibly updated) value back to the caller.
 
-### Procedure Options
+#### Procedure options
 
-Prophecy supports additional options that you can find in the top right corner of the stored procedure configuration.
+For BigQuery stored procedures, Prophecy supports additional options that you can find in the top right corner of the stored procedure configuration.
 
 - **Strict Mode**: When `True` (default), the procedure body is checked for errors such as non-existent tables or columns. The procedure fails if the body fails any of these checks. When `False`, the procedure body is checked only for syntax. Learn more about `strictMode` in the [BigQuery API reference documentation](https://cloud.google.com/bigquery/docs/reference/rest/v2/routines).
 - **Description**: Use this field to document the purpose and behavior of the stored procedure. The description is saved with the procedure in BigQuery.
+
+### Snowflake
+
+The following table describes the parameters of a Snowflake stored procedure in the visual view.
+
+| Parameter   | Description                                                                                         |
+| ----------- | --------------------------------------------------------------------------------------------------- |
+| Database    | The Snowflake database where the stored procedure will be created.                                  |
+| Schema      | The schema inside the database where the stored procedure will be created.                          |
+| Return Type | The data type of the value that the stored procedure returns.                                       |
+| Language    | The language of the procedure body: `SQL` or `JAVASCRIPT`.                                          |
+| Arguments   | Define the parameters passed to the stored procedure. Each argument includes a name and data type. |
+| Code        | The body of the stored procedure, written in the selected language.                                 |
+
+<Info>
+  To learn about and view examples of stored procedures in Snowflake, visit [Stored procedures
+  overview](https://docs.snowflake.com/en/developer-guide/stored-procedure/stored-procedures-overview).
+</Info>
 
 ## Call stored procedure
 
