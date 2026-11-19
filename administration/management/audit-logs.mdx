@@ -19,157 +19,79 @@ Prophecy stores audit logs in the same cloud platform as your deployment:
 - For Azure deployments, audit logs are stored in Azure Blob Storage.
 - For Google Cloud Platform deployments, audit logs are stored in Google Cloud Storage.
 
-## Control plane events
+## Event types
 
 When audit logs are enabled for your Prophecy deployment, they capture the following information:
 
-- User interactions with the Prophecy UI.
-- GraphQL API calls made to the control plane.
-- Actions performed directly on the execution plane, such as fabric, connection, deployment, pipeline run, and schedule operations.
+- Actions in the control plane, such as sign-ins, user and team changes, project saves and publishes, and changes to credentials and security settings.
+- Actions on the execution plane, such as fabric, connection, deployment, pipeline run, schedule, and DataBox operations.
 
-The following tables list the audit events that Prophecy logs, organized by entity type.
+Each event has a fixed event type and a category. The following sections list the events that Prophecy logs.
 
-<Note>
-  Prophecy uses GraphQL for control plane API operations. The request parameters recorded for a query may vary
-  depending on where you call the query.
-</Note>
+## Control plane events
 
-### Fabric
+Control plane events record actions in the Prophecy control plane, such as the Prophecy UI and its services.
 
-| Query               | Description                   | Request Parameters     |
-| ------------------- | ----------------------------- | ---------------------- |
-| `fabricDetailQuery` | Get Fabric Details            | `["id"]`               |
-| `addFabric`         | Add a Fabric                  | `["name", "ownerUid"]` |
-| `updateOwnedBy`     | Update Team owning the Fabric | `["id","targetUid"]`   |
-| `userFabricQuery`   | Get all Fabrics for User      | `["uid"]`              |
+### Authentication
 
-### Project
+| Event type           | Category | Description |
+| -------------------- | ------ | ----------- |
+| `LOGIN_FEDERATED`    | `AUTH` | A user signed in through a federated identity provider (OAuth, OIDC, or SAML) |
+| `LOGIN_LDAP`         | `AUTH` | A user signed in through LDAP |
+| `LOGIN_BUILTIN`      | `AUTH` | A user signed in with a Prophecy username and password |
+| `LOGOUT`             | `AUTH` | A user signed out |
+| `SESSION_REVOKE_ALL` | `AUTH` | An admin ended all of another user's sessions |
 
-| Query                      | Description                                         | Request Parameters                                                            |
-| -------------------------- | --------------------------------------------------- | ----------------------------------------------------------------------------- |
-| `addProject`               | Add a project                                       | `["name","forkMode","language", "ownerUid", "mainBranchModificationAllowed"]` |
-| `getDetails`               | Get Details of a Project                            | `["projectId"]`                                                               |
-| `project`                  | List all projects for User                          | `["uid"]`                                                                     |
-| `teamProjectAvailable`     | Available Projects for that Team                    | `["uid", "language"]`                                                         |
-| `addProjectDependency`     | Add a dependency Project to Current                 | `["projectId", "DependencyProjectUid"]`                                       |
-| `updateProjectDependency`  | Update dependency Project to a new released version | `["projectId", "DependencyProjectUid", "ReleaseTag"]`                         |
-| `removeProjectDependency`  | Removed an added dependency                         | `["projectId", "DependencyProjectUid"]`                                       |
-| `projectDependenciesQuery` | List all project Dependencies                       | `["projectId"]`                                                               |
-| `projectReleaseStatus`     | Gives Status of last Release for given project      | `["projectID", "statuses"]`                                                   |
-| `projectSyncFromGit`       | Status of Git sync of project                       | `["uid"]`                                                                     |
-| `releaseProject`           | Release a Project                                   | `["branch", "message","version","projectID", "CommitHash"]`                   |
-| `gitFooter`                | Details for Git for commit/branchName etc           | `["projectID"]`                                                               |
-| `addSubscriberToProject`   | Add Subscriber to a Project                         | `["uid", "teamId"]`                                                           |
-| `projectBranches`          | List of available branches for this project         | `["projectId"]`                                                               |
-| `cloneProject`             | Created clone of current project                    | `["uid", "name", "teamUid", "copyMainBranchReleaseTags"]`                     |
+### Users and teams
 
-### Pipeline
+| Event type           | Category   | Description |
+| -------------------- | ---------- | ----------- |
+| `USER_CREATE`        | `IDENTITY` | A user was created |
+| `USER_DELETE`        | `IDENTITY` | A user was deleted |
+| `USER_DEACTIVATE`    | `IDENTITY` | An admin deactivated a user. The user's sessions end at the same time |
+| `USER_REACTIVATE`    | `IDENTITY` | An admin reactivated a user |
+| `USER_IMPERSONATE`   | `IDENTITY` | A privileged user, such as a Support user, requested access to act as another user |
+| `PASSWORD_CHANGE`    | `IDENTITY` | An admin set a user's password |
+| `TEAM_CREATE`        | `IDENTITY` | A team was created |
+| `TEAM_DELETE`        | `IDENTITY` | A team was deleted |
+| `TEAM_MEMBER_ADD`    | `IDENTITY` | A user was added to a team |
+| `TEAM_MEMBER_REMOVE` | `IDENTITY` | A user was removed from a team |
+| `ROLE_CHANGE`        | `IDENTITY` | A team member's role changed, for example when a member was made a team admin |
 
-| Query                  | Description                          | Request Parameters                                                               |
-| ---------------------- | ------------------------------------ | -------------------------------------------------------------------------------- |
-| `addPipeline`          | Add a new Pipeline                   | `["name", "branch", "ownerId", "doCheckout"]`                                    |
-| `tableQueryPipeline`   | Lists all pipelines for project      | `["projectId", "sortOrder", "sortColumn"]`                                       |
-| `tableQueryPipeline`   | Lists all pipelines for User         | `["uid", "sortOrder", "sortColumn"]`                                             |
-| `pipelineDetailsQuery` | Get Details of Pipeline              | `["Uid"]`                                                                        |
-| `clonePipeline`        | Cloned a Pipeline                    | `["branch", "sourcePipelineId", "targetPipelineName", "ownerUid", "doCheckout"]` |
-| `addSubgraph`          | When Subgraph is added to a Pipeline | `["mode", "name", "language", "ownerUID"]`                                       |
-| `addUDFBulk`           | UDFs added to a Project              | `["udfs.name","udfs.description", "projectUID"]`                                 |
-| `removeUDFBulk`        | UDFs removed from a project          | `["uids"]`                                                                       |
-| `getSubgraph`          | Get Subgraph by given Id             | `["uid"]`                                                                        |
+### Fabrics and projects
 
-### Job
+| Event type        | Category    | Description |
+| ----------------- | ----------- | ----------- |
+| `FABRIC_CREATE`   | `DATA_FLOW` | A fabric was created |
+| `FABRIC_DELETE`   | `DATA_FLOW` | A fabric was deleted |
+| `PROJECT_CREATE`  | `COMPUTE`   | A project was created |
+| `PROJECT_DELETE`  | `COMPUTE`   | A project was deleted |
+| `PROJECT_SAVE`    | `COMPUTE`   | Changes to a project were saved (committed) |
+| `PROJECT_PUBLISH` | `COMPUTE`   | A project version was published |
 
-| Query                                | Description                                    | Request Parameters                                                                                                |
-| ------------------------------------ | ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `addJob`                             | Add a Job                                      | `["name", "branch","fabricUID", "scheduler", "doCheckout", "projectUID"]`                                         |
-| `updateJobConfiguration`             | Job configurations are updated                 | `["emails", "jobUID", "enabled", "onStart", "fabricId", "onFailure", "onSuccess", "clusterMode", "scheduleCron"]` |
-| `latestJobReleaseByJobIdAndFabricID` | Get Jobs Release by Fabric Id                  | `["jobUID", "fabricUID"]`                                                                                         |
-| `jobReleaseByProjectRelease`         | Gets Jobs Released by Project ID               | `["projectReleaseUID"]`                                                                                           |
-| `jobQuery`                           | Get a Job by given Id                          | `["uid"]`                                                                                                         |
-| `addJobRelease`                      | Adds a Job released mapping to project Release | `["jobUID", "fabricUID", "scheduler", "schedulerJobUID", "projectReleaseUID"]`                                    |
-| `tableQueryJob`                      | list query for Jobs                            | `["uid", "sortOrder", "sortColumn"]`                                                                              |
+### Pipeline activity
 
-### Dataset
+| Event type      | Category   | Description |
+| --------------- | ---------- | ----------- |
+| `PIPELINE_OPEN` | `ACTIVITY` | A user opened a pipeline in the editor |
+| `PIPELINE_EDIT` | `ACTIVITY` | A user edited a pipeline. Recorded once per editing session |
 
-| Query                 | Description                             | Request Parameters                                                                                                      |
-| --------------------- | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `queryDataset`        | When Datasets are queried from any page | `["uid", "optionalProjectUID"]`                                                                                         |
-| `addDataset`          | Added a new Dataset                     | `["mode", "name", "ownerUID", "fabricUID", "datasetType"]`                                                              |
-| `addMultipleDatasets` | Add Multiple Datasets                   | `["names", "ownerUID", "tableNameList", "schemaNameList", "descriptionsList", "schemaAspectList", "databaseNamesList"]` |
+### Credentials and security settings
 
-### Team
-
-| Query          | Description                           | Request Parameters                             |
-| -------------- | ------------------------------------- | ---------------------------------------------- |
-| `addTeam`      | Added a new Team                      | `["name", "adminUid"]`                         |
-| `getUserTeam`  | Get Teams for a User                  | `["uid"]`                                      |
-| `addTeamAdmin` | Add a user as Admin                   | `["teamUid", "userUid", "invitationAccepted"]` |
-| `user`         | List All teams for Users with Members | `["uid"]`                                      |
-
-### User
-
-| Query                     | Description              | Request Parameters                   |
-| ------------------------- | ------------------------ | ------------------------------------ |
-| `getUser`                 | Get User                 | `["email"]`                          |
-| `tableQueryUser`          | List query for the User  | `["uid", "sortOrder", "sortColumn"]` |
-| `userAllFabricInfoAspect` | Get User Details         | `["uid"]`                            |
-| `setPassword`             | user Sets a new Password | `["uid", "newPassword"]`             |
-
-### Git
-
-| Query                         | Description                                       | Request Parameters                                                                      |
-| ----------------------------- | ------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| `deleteBranch`                | Deleted a Branch                                  | `["projectId", "branchName"]`                                                           |
-| `checkout`                    | Checkout a new branch                             | `["projectId" , "branchName"]`                                                          |
-| `prCreationRedirectUrl`       | Pr Creation button clicked                        | `["to", "from", "projectId"]`                                                           |
-| `createPR`                    | Pr Creation button clicked                        | `["to", "from", "toFork", "fromFork", "projectId"]`                                     |
-| `cleanCommit`                 | Committed any changes                             | `["message", "projectId"]`                                                              |
-| `commit`                      | Commit button clicked                             | `["branch", "message", "projectId"]`                                                    |
-| `pullOrigin`                  | pull origin branch                                | `["branch", "projectId"]`                                                               |
-| `checkGitConnection`          | Test Git connection                               | `["externalUriArg", "pushAccessCheck", "userGitCredsUID"]`                              |
-| `linkSavedCredsToExternalGit` | Linked Saved Creds to a project                   | `["projectUID", "userGitCredsUID"]`                                                     |
-| `unlinkExternalGit`           | Unlink the saved creds                            | `["projectUID"]`                                                                        |
-| `branchDivergence`            | When user compares two branches for commit screen | `["projectId", "branchName", "baseBranchName"]`                                         |
-| `branchInfo`                  | Gives details of a particular working branch      | `["projectId", "branchName", "remoteType"]`                                             |
-| `setPrCreationTemplate`       | When user Sets PR creation template               | `["projectId", "customPrTemplate", "prCreationEnabled"]`                                |
-| `getPrCreationTemplate`       | Gets PR creation template                         | `["projectId"]`                                                                         |
-| `deleteUserGitCreds`          | When user deleted saved Git creds                 | `["uid"]`                                                                               |
-| `linkExternalGit`             | Link saved Git creds                              | `["projectUID", "externalRepoUri", "userGitCredsUID"]`                                  |
-| `mergeMaster`                 | Merge to master branch                            | `["prNumber", "projectId", "entityConflicts", "projectConflicts", "resolvedConflicts"]` |
-
-### Transpiler
-
-| Query                 | Description                            | Request Parameters                                    |
-| --------------------- | -------------------------------------- | ----------------------------------------------------- |
-| `transpilerImport`    | Transpiler Import started              | `["uid"]`                                             |
-| `addTranspilerImport` | Importing files to Prophecy Transpiler | `["name", "status", "storagePath", "transpilerType"]` |
-
-### Generic
-
-| Query          | Description                | Request Parameters                                             |
-| -------------- | -------------------------- | -------------------------------------------------------------- |
-| `removeEntity` | When any entity is removed | `["uid", "entityKind"]`                                        |
-| `updateEntity` | When any entity is updated | `["uid", "entityKind", "entityFieldName", "entityFieldValue"]` |
+| Event type                 | Category         | Description |
+| -------------------------- | ---------------- | ----------- |
+| `ACCESS_TOKEN_CREATE`      | `SECRETS`        | A personal access token was created |
+| `ACCESS_TOKEN_DELETE`      | `SECRETS`        | A personal access token was deleted |
+| `GIT_CREDENTIAL_ADD`       | `SECRETS`        | Git credentials were added |
+| `GIT_CREDENTIAL_UPDATE`    | `SECRETS`        | Git credentials were updated |
+| `GIT_CREDENTIAL_DELETE`    | `SECRETS`        | Git credentials were deleted |
+| `GIT_CONNECTION_POLICY`    | `SECURITY`       | The [Git connection policy](/administration/management/cluster-admin-settings/git-connection-policy) was checked when a user connected a project to a repository. The outcome shows whether the policy blocked the connection |
+| `SECURITY_SETTINGS_CHANGE` | `SECURITY`       | A security setting changed, such as an OAuth app registration or the Git connection policy |
+| `COPILOT_SETTINGS_CHANGE`  | `INFRASTRUCTURE` | AI model settings changed. The event records which settings changed, not their values |
 
 ## Execution plane events
 
-Prophecy audit logs also capture actions performed directly on the execution plane (the orchestrator service running in your environment), not just control plane GraphQL calls. These events are recorded locally on the execution plane first, then forwarded to the control plane in batches (every 30 minutes by default). As a result, there's a short delay between an execution action occurring and its event appearing in the central audit log.
-
-<Note>
-  Execution plane events are identified by a fixed event type and category rather than a GraphQL
-  query name.
-</Note>
-
-### Authentication and identity
-
-| Event type         | Category   | Description                                                                              |
-| ------------------ | ---------- | ---------------------------------------------------------------------------------------- |
-| `LOGIN_FEDERATED`  | `AUTH`     | A user signed in through a federated identity provider (OAuth, OIDC, or SAML)            |
-| `LOGIN_LDAP`       | `AUTH`     | A user signed in through LDAP                                                            |
-| `LOGIN_BUILTIN`    | `AUTH`     | A user signed in with a Prophecy-native username and password                            |
-| `LOGIN_TOKEN`      | `AUTH`     | A user signed in with a bearer token (reserved for future use)                           |
-| `LOGOUT`           | `AUTH`     | A user ended their own session                                                           |
-| `USER_IMPERSONATE` | `IDENTITY` | A privileged user (for example, a Support role) requested a token to act as another user |
+Execution plane events record actions performed directly on the execution plane, the orchestrator service running in your environment. The execution plane sends these events to the control plane as they happen, and Prophecy stores them with the control plane events.
 
 ### Fabric
 
