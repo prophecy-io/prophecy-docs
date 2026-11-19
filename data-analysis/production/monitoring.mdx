@@ -120,16 +120,25 @@ To stop a run that's in progress:
 
 Prophecy discards any work in progress and marks the run as **Cancelled**. If the run finishes before Prophecy can stop it, Prophecy tells you that the run already finished.
 
-### Restart a scheduled run
+### Restart or repair a scheduled run
 
-You can restart a scheduled run that failed, finished with warnings, or was cancelled. The restart uses the schedule's current version and parameters.
+If a scheduled run failed, finished with warnings, or was cancelled, you can run it again in one of two ways:
+
+- **Restart** runs the whole pipeline again from the start.
+- **Repair** resumes from where the run failed. Gems that already finished don't run again. Instead, Prophecy reads back the tables they wrote and replays the output of their Pipeline gems.
+
+In both cases, the gems that run use the schedule's current version and parameters.
 
 To restart a run:
 
-1. In the **Status** column of the run, click the **Restart run** icon.
-1. Click **Restart run** to confirm.
+1. In the **Status** column of the run, click the **Restart run** or or **Repair run** icon.
+1. In the dialog box that opens, click **Restart run** or **Repair run** to confirm.
 
-The restart appears in Run History as a new attempt of the original run. You can only restart the latest attempt.
+The new attempt appears in Run History, linked to the original run. 
+
+When a repair starts, a message tells you which gems it resumes from. If there's nothing to resume from, the repair runs all gems.
+
+You can only restart or repair the latest attempt of a top-level scheduled run. Runs that a parent run started can't be restarted or repaired on their own.
 
 ### View run details
 

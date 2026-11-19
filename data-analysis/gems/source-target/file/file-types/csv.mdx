@@ -68,7 +68,9 @@ The following properties are available when CSV is used as a target format.
 | Description                      | Description of the table.                                                                                                                                                                                                                                                                                                                                                                                       | None                   |
 | File Write Method                | Choose how rows are written. <ul><li><strong>Write to a single file</strong>: All rows are written to one CSV file at the configured path.</li><li><strong>Dynamic data write to multiple files as per file column name</strong>: Rows are grouped by the value in <em>File Column Name</em>, and each group is written to its own CSV file. See [Write to multiple files](#write-to-multiple-files).</li></ul> | Write to a single file |
 | File Column Name                 | Column whose values determine which file each row is written to. Must be a column in the input schema. Only appears when writing to multiple files.                                                                                                                                                                                                                                                             | None                   |
-| File Prefix for multi file write | Text added to the start of each file name. Only appears when writing to multiple files.                                                                                                                                                                                                                                                                                                                         | None                   |
+| File Prefix for multi file write | Text added to the start of each file name. Leave empty for no prefix. Only appears when writing to multiple files. | None |
+| File Suffix for multi file write | Text added to the end of each file name, before the `.csv` extension. Leave empty for no suffix. Only appears when writing to multiple files. | None |
+| Include file name column in output files | Whether to keep the **File Column Name** column in each output file. If disabled, the column is used only to split the data and is dropped from the files. Only appears when writing to multiple files. | True |
 | Separator                        | Character used to separate values in the CSV file.                                                                                                                                                                                                                                                                                                                                                              | `,`                    |
 | Header                           | Whether to make the first row the column header.                                                                                                                                                                                                                                                                                                                                                                | True                   |
 | Null Value                       | String to write for null values. | `NULL` |
@@ -79,14 +81,14 @@ The following properties are available when CSV is used as a target format.
 
 ### Write to multiple files
 
-When **File Write Method** is set to **Dynamic data write to multiple files as per file column name**, the gem writes one CSV file for each unique value in the **File Column Name** column. Each file is named `<prefix><value>.csv`, where `<prefix>` is the **File Prefix for multi file write** value.
+When **File Write Method** is set to **Dynamic data write to multiple files as per file column name**, the gem writes one CSV file for each unique value in the **File Column Name** column. Each file is named `<prefix><value><suffix>.csv`, where `<prefix>` and `<suffix>` are the optional **File Prefix for multi file write** and **File Suffix for multi file write** values. If you leave both empty, each file is named after the column value, such as `US.csv`.
 
 Where the files are written depends on the file path configured in the gem:
 
-- If the path ends with `/` or has no file extension, it is treated as a folder, and the files are written inside it. For example, with the prefix `File_`, the path `exports/orders/` produces `exports/orders/File_US.csv`, `exports/orders/File_EU.csv`, and so on.
+- If the path ends with `/` or has no file extension, it is treated as a folder, and the files are written inside it. For example, with the prefix `orders_` and the suffix `_2024`, the path `exports/orders/` produces `exports/orders/orders_US_2024.csv`, `exports/orders/orders_EU_2024.csv`, and so on.
 - If the path includes a file name, such as `exports/orders.csv`, the files are written to that file's parent folder. The file name itself is ignored.
 
-Rows with a null or blank value in the file column are written to `<prefix>unknown.csv`. Header, separator, encoding, and other CSV properties apply to every file.
+Rows with a null or blank value in the file column are written to `<prefix>unknown<suffix>.csv`. Header, separator, encoding, and other CSV properties apply to every file.
 
 <AccordionGroup>
   <Accordion title="Supported character encodings">

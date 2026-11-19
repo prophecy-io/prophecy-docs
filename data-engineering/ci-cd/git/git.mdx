@@ -79,7 +79,9 @@ When you fork a repository, you must already have both the upstream repository a
 
 ## Delete branch copies
 
-Prophecy keeps a local copy of each branch that a user checks out. Project admins can delete these copies from the **Branches** tab of the project's metadata page to free up storage. Deleting a copy never changes your Git repository. For details, see [Delete branch copies](/data-analysis/development/versioning/git-storage-model#delete-branch-copies).
+Prophecy keeps a local copy of each branch that a user checks out. Project admins can delete these copies from the **Branches** tab of the project's metadata page to free up storage. Deleting a copy never changes your Git repository, and a user can restore it by checking out the branch again.
+
+Cluster admins can also delete branch copies across all projects from **Settings > Admin > Git Branches**. For details, see [Delete branch copies](/data-analysis/development/versioning/git-storage-model#delete-branch-copies).
 
 ## What's next
 
