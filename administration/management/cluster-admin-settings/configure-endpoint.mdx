@@ -2,7 +2,7 @@
 title: Configure Anthropic endpoint for Prophecy
 description: Set up LLM provider for Anthropic Claude in Prophecy.
 ---
-Prophecy Agents use Anthropic Claude models. You can access Claude directly through Anthropic or through Azure AI Foundry. You choose the provider in the `transform_agent` block of your Copilot settings.
+Prophecy Agents use Anthropic Claude models. You can access Claude directly through Anthropic, or through Azure AI Foundry or AWS Bedrock. You choose the provider in the `transform_agent` block of your Copilot settings.
 
 <Callout icon="/images/icon.png" color="#FFC107">
   Applicable to the [Express and Enterprise Editions](/administration/platform/editions) only.
@@ -66,6 +66,36 @@ When you configure Azure AI Foundry:
 - Remove `/v1/messages` from the base URL provided by Azure AI Foundry.
 - The model name must match the deployment name in Azure AI Foundry.
 
+## Configure AWS Bedrock
+
+Use this option to route Claude requests through Amazon Bedrock.
+
+Apply the following configuration:
+
+```json
+{
+  "transform_agent": {
+    "bedrock_config": {
+      "use_bedrock": "true",
+      "aws_region": "us-east-1"
+    }
+  }
+}
+```
+
+### Configuration parameters
+
+| Parameter                          | Description                                                                                                                         |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| **use_bedrock**                    | Set to `true` to use AWS Bedrock.                                                                                                   |
+| **aws_region**                     | The AWS region of your Bedrock models, such as `us-east-1`. Required.                                                               |
+| **aws_bearer_token_bedrock**       | (Optional) A Bedrock API key. If you leave it out, Prophecy authenticates with the AWS credentials available in your environment, such as an instance role. |
+| **anthropic_default_sonnet_model** | (Optional) The Bedrock model ID or inference profile to use for Claude Sonnet.                                                      |
+| **anthropic_default_opus_model**   | (Optional) The Bedrock model ID or inference profile to use for Claude Opus.                                                        |
+| **claude_model**                   | (Optional) The default model family for the agent: `sonnet` or `opus`.                                                              |
+| **proxy_url**                      | (Optional) A proxy URL for the agent's outbound requests to Bedrock.                                                                |
+| **no_proxy**                       | (Optional) A comma-separated list of hosts that bypass the proxy. Used only when `proxy_url` is set.                                |
+
 ## Limit the cost of a chat
 
 You can cap the total model cost of a single agent chat with `session_cost_limit_usd`:
@@ -86,4 +116,7 @@ When a chat reaches the limit, the agent stops responding in that chat and asks 
 Prophecy uses the `transform_agent` configuration to determine which provider handles Claude requests:
 
 - If `use_foundry` is `true`, Prophecy uses Azure AI Foundry.
+- If `use_bedrock` is `true`, Prophecy uses AWS Bedrock.
 - Otherwise, Prophecy uses the Anthropic public API with `anthropic_key`.
+
+Only one of Azure AI Foundry and AWS Bedrock can be enabled at a time. If both are enabled, the agent shows an error that asks you to update your Copilot settings.
