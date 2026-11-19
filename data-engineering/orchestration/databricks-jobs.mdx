@@ -71,7 +71,7 @@ To add a pipeline gem:
    | processing_date | `string` | Date to use for filtering. |
    - To change configuration, click the **Config** tab. This tab allows you to override values in the **Schema** tab: **input_path** and **processing_date**.
 
-You can [apply conditions for the gem in the **Conditions** tab](#apply-conditions-to-gems-in-the-conditions-tab), including run conditions (whether or not this gem runs based on upstream gems' success or failure) and For Each (which lets you run the gem multiple times with different parameter values.)
+You can [apply conditions for the gem in the **Conditional** tab](#apply-conditions-to-gems-in-the-conditional-tab), including run conditions (whether or not this gem runs based on upstream gems' success or failure) and For Each (which lets you run the gem multiple times with different parameter values.)
 
 Settings for the gem can be inherited from overall job configuration or can be set in the **Settings** tab.
 
@@ -85,7 +85,7 @@ To add a Script gem:
 1. Enter a descriptive name for the gem.
 1. Enter the Python code you want to execute.
 
-You can [apply conditions for the gem in the **Conditions** tab](#apply-conditions-to-gems-in-the-conditions-tab), including run conditions (whether or not this gem runs based on upstream gems' success or failure) and For Each (which lets you run the gem multiple times with different parameter values.)
+You can [apply conditions for the gem in the **Conditional** tab](#apply-conditions-to-gems-in-the-conditional-tab), including run conditions (whether or not this gem runs based on upstream gems' success or failure) and For Each (which lets you run the gem multiple times with different parameter values.)
 
 Settings for the gem can be inherited from overall job configuration or can be set in the **Settings** tab.
 
@@ -106,7 +106,7 @@ To add a Notebook gem:
   be created and maintained within Databricks.
 </Note>
 
-You can [apply conditions for the gem in the **Conditions** tab](#apply-conditions-to-gems-in-the-conditions-tab), including run conditions (whether or not this gem runs based on upstream gems' success or failure) and For Each (which lets you run the gem multiple times with different parameter values.)
+You can [apply conditions for the gem in the **Conditional** tab](#apply-conditions-to-gems-in-the-conditional-tab), including run conditions (whether or not this gem runs based on upstream gems' success or failure) and For Each (which lets you run the gem multiple times with different parameter values.)
 
 Settings for the gem can be inherited from overall job configuration or can be set in the **Settings** tab.
 
@@ -132,7 +132,7 @@ To add an If Else gem:
 - If the condition evaluates to **true**, the job continues along the **upper branch**.
 - If the condition evaluates to **false**, the job continues along the **lower branch**.
 
-You can apply [run conditions for the gem in the **Conditions** tab](#apply-conditions-to-gems-in-the-conditions-tab). These whether or not the gem runs based on upstream gems' success or failure.
+You can apply [run conditions for the gem in the **Conditional** tab](#apply-conditions-to-gems-in-the-conditional-tab). These determine whether or not the gem runs based on upstream gems' success or failure.
 
 Settings for the gem can be inherited from overall job configuration or can be set in the **Settings** tab. Settings for the gem can be inherited from overall job configuration or can be set in the **Settings** tab.
 
@@ -147,7 +147,7 @@ To add a RunJob gem:
 1. Choose a **job** from the dropdown menu, or manually enter the **Job ID** of the job you want to trigger.
 1. (Optional) Check **Wait for job completion before proceeding** if you want the current job to pause until the triggered job finishes running.
 
-You can [apply conditions for the gem in the **Conditions** tab](#apply-conditions-to-gems-in-the-conditions-tab), including run conditions (whether or not this gem runs based on upstream gems' success or failure) and For Each (which lets you run the gem multiple times with different parameter values.)
+You can [apply conditions for the gem in the **Conditional** tab](#apply-conditions-to-gems-in-the-conditional-tab), including run conditions (whether or not this gem runs based on upstream gems' success or failure) and For Each (which lets you run the gem multiple times with different parameter values.)
 
 Settings for the gem can be inherited from overall job configuration or can be set in the **Settings** tab.
 
@@ -196,7 +196,7 @@ These options control dbt-style behavior when running a project or SQL model:
   lets you compile and run Prophecy or dbt projects as part of a Databricks job orchestration.
 </Note>
 
-You can [apply conditions for the gem in the **Conditions** tab](#apply-conditions-to-gems-in-the-conditions-tab), including run conditions (whether or not this gem runs based on upstream gems' success or failure) and For Each (which lets you run the gem multiple times with different parameter values.)
+You can [apply conditions for the gem in the **Conditional** tab](#apply-conditions-to-gems-in-the-conditional-tab), including run conditions (whether or not this gem runs based on upstream gems' success or failure) and For Each (which lets you run the gem multiple times with different parameter values.)
 
 Settings for the gem can be inherited from overall job configuration or can be set in the **Settings** tab.
 
@@ -208,35 +208,38 @@ To add a Delta Live Tables Pipeline gem:
 
 1. Drag the **Delta Live Tables Pipeline** gem onto the job canvas and click it to open its settings.
 1. Choose from available DLT pipelines for the current fabric.
-1. (Optional) Enable the **Trigger full refresh** checkbox to force a full refresh when the pipeline runs.
+1. (Optional) Select **Trigger a full refresh on the Delta Live Tables pipeline** to force a full refresh when the pipeline runs.
 
 Settings for the gem can be inherited from overall job configuration or can be set in the **Settings** tab.
 
-You can [apply conditions for the gem in the **Conditions** tab](#apply-conditions-to-gems-in-the-conditions-tab), including run conditions (whether or not this gem runs based on upstream gems' success or failure) and For Each (which lets you run the gem multiple times with different parameter values.)
+You can [apply conditions for the gem in the **Conditional** tab](#apply-conditions-to-gems-in-the-conditional-tab), including run conditions (whether or not this gem runs based on upstream gems' success or failure) and For Each (which lets you run the gem multiple times with different parameter values.)
 
 Settings for the gem can be inherited from overall job configuration or can be set in the **Settings** tab.
 
-### Apply conditions to gems in the Conditions tab
+### Apply conditions to gems in the Conditional tab
 
 Use the **Conditional** tab to control when and how the gem runs within the job. You can define **run conditions** or configure the gem to run multiple iterations with **For Each**.
 
 #### Apply Run conditions
 
-Run conditions determine when the gem executes based on the status of preceding gems.
+Run conditions determine when the gem executes based on the status of preceding gems. Select a condition in **Run condition for the component**.
 
 - **All succeeded** – Runs if all upstream gems succeed.
 - **At least one succeeded** – Runs if at least one upstream gem succeeds.
 - **None failed** – Runs if all upstream gems complete without failure.
 - **All done** – Runs after all upstream gems finish, regardless of success or failure.
 - **At least one failed** – Runs if at least one upstream gem fails.
+- **All failed** – Runs only if all upstream gems fail.
 
 #### Use For Each
 
 Use **For Each** to run the gem multiple times with different parameter values. You can use For Each for all job gems except for the **If Else** gem.
 
-1. Click **Run multiple iterations [For Each]**.
-1. Enter a **parameter name** and a **variable name** to define the iteration context.
-1. Set the **number of concurrent runs** to control parallel execution.
+1. Turn on **Run multiple iterations [For Each]**.
+1. Define the iterations:
+   - For Pipeline and Delta Live Tables Pipeline gems, enter the **Number of Iterations**.
+   - For other gems, enter the **Input Parameters** as a JSON array, such as `[1, 2, 3]` or `["a", "b"]`. Then enter an **Input Variable Name** that the gem uses to refer to the current value.
+1. Set **Concurrency** to control how many iterations run in parallel.
 
 ## Run the job
 

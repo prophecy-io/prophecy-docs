@@ -11,22 +11,22 @@ Wireless connections affect only the canvas presentation. They do not change exe
 
 ## Make connections wireless
 
-You can convert wired connections into wireless ones from a gem's [action menu](https://docs.prophecy.ai/data-analysis/gems/gems#action-menu).
+You can convert wired connections into wireless ones from a gem's [action menu](/data-analysis/gems/gems#action-menu).
 
-To make a connection wireless:
+To make a gem's connections wireless:
 
-1. Click the gem whose connection you want to modify.
+1. Click the gem whose connections you want to modify.
 1. Open the gem's action menu (`...`).
 1. Select one of the following options:
 
-   - **Make incoming connection wireless**.
-   - **Make outgoing connection wireless**.
+   - **Make Incoming Connections Wireless**: Makes all of the gem's incoming connections wireless.
+   - **Make Outgoing Connections Wireless**: Makes all of the gem's outgoing connections wireless.
 
 The visual line disappears, but the data flow between the gems is preserved.
 
 ![Wireless connection applied](/data-analysis/development/studio/img/wireless-connection-after.png)
 
-For gems with multiple incoming or outgoing connections, you can make all connections wireless by choosing a **Make incoming connections wireless** or **Make outgoing connections wireless** option.
+To change specific connections instead, select one or more connection lines on the canvas. Then click **Actions** at the bottom of the canvas and select **Make Connection Wireless** (or **Make Connections Wireless** for more than one).
 
 ## Restore wired connections
 
@@ -36,8 +36,12 @@ To restore visual connections:
 1. Open the gem's action menu (`...`).
 1. Select one of the following options:
 
-   - **Make incoming connection wired**.
-   - **Make outgoing connection wired**.
+   - **Make Incoming Connections Wired**
+   - **Make Outgoing Connections Wired**
+
+   These options appear when all of the gem's connections in that direction are already wireless.
+
+To restore specific connections, select them and choose **Make Connection Wired** from the **Actions** menu.
 
 The visual connection lines are restored.
 
