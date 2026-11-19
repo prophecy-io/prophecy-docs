@@ -17,7 +17,7 @@ In customer-managed deployments, you configure providers and models in **Copilot
 
 Prophecy uses two AI configuration patterns:
 
-- [Agents](/data-analysis/ai/agent/agent) use only the `transform_agent` configuration in **AI Model Provider Creds** to determine how Claude is accessed by Agents.
+- [Agents](/data-analysis/ai/agent/agent) use only the `transform_agent` configuration in **AI Model Providers Creds** to determine how Claude is accessed by Agents.
 - [Copilot](/data-analysis/gems/copilot/gem-expressions) uses provider credentials and model selection to power features like expression generation.
 
 These configurations serve different features, are configured independently, and live in the same settings.
@@ -27,22 +27,25 @@ These configurations serve different features, are configured independently, and
 1. Log in to Prophecy as an Administrator.
 2. Go to **Settings > Admin > Copilot Settings**.
 
-Copilot Settings includes three subtabs:
+Copilot Settings includes four subtabs:
 
-- [AI Model Providers Creds](#ai-model-providers-creds): Add credentials for LLM providers.
-- [Available AI Models](#available-ai-models): Define models for Copilot.
+- [AI Model Providers Creds](#configure-ai-model-providers-creds-agent-and-copilot): Add credentials for LLM providers.
+- [Available AI Models](#available-ai-models-for-copilot): Define models for Copilot.
 - [Available AI Speech Models](#available-ai-speech-models): Define models for speech features.
+- [Proxy Settings](#proxy-settings): Route Copilot's outbound requests through a proxy.
 
-All settings must be provided in YAML format and override values in your Kubernetes deployment.
+In the first three subtabs, you enter settings as JSON. Click **Edit**, change the JSON, and click **Save**. Prophecy checks the JSON before saving and shows **Invalid JSON** if it can't be parsed. These settings override values in your Kubernetes deployment.
 
 ## How Copilot and Agents use these settings
 
-Agents use `transform_agent` in [AI Model Providers Creds](#ai-model-providers-creds)
+Agents use `transform_agent` in [AI Model Providers Creds](#configure-ai-model-providers-creds-agent-and-copilot).
 
 Copilot uses:
-- [AI Model Providers Creds](#ai-model-providers-creds).
-- [Available AI Models](#available-ai-models).
-- [Available AI Speech Models](#available-ai-speech-models).
+
+- [AI Model Providers Creds](#configure-ai-model-providers-creds-agent-and-copilot)
+- [Available AI Models](#available-ai-models-for-copilot)
+- [Available AI Speech Models](#available-ai-speech-models)
+- [Proxy Settings](#proxy-settings)
 
 These configurations are independent and can be used together.
 
@@ -52,21 +55,21 @@ In the **AI Model Providers Creds** subtab, you provide the credentials to conne
 
 You can configure both Copilot providers and an Agent provider in the same credentials block. (It is common to use both.)
 
-The following YAML example shows the required fields for different LLM providers.
+The following example shows the required fields for different LLM providers.
 
-```yaml
+```json
 {
-  "transform_agent": { "anthropic_key": "********"},
-  'azure_openai': { 'api_key': '********', 'api_endpoint': '********' },
-  'openai': { 'api_key': '********' },
-  'gemini': { 'api_key': '********' },
-  'vertex_ai': {},
+  "transform_agent": { "anthropic_key": "********" },
+  "azure_openai": { "api_key": "********", "api_endpoint": "********" },
+  "openai": { "api_key": "********" },
+  "gemini": { "api_key": "********" },
+  "vertex_ai": {}
 }
 ```
 
-The `transform_agent` block is used only by Agents to configure access to Claude. Copilot does not use this configuration.For details on configuring endpoints for the Agents, see [Configure Claude providers](/administration/management/cluster-admin-settings/configure-endpoint).
+The `transform_agent` block is used only by Agents to configure access to Claude. Copilot does not use this configuration. For details on configuring endpoints for the Agents, see [Configure Claude providers](/administration/management/cluster-admin-settings/configure-endpoint).
 
-Other providers in this section are used only by Copilot when selecting models. You can add multiple credentials here, but Copilot will only connect to the models defined in the [Available AI Models](#available-ai-models) subtab. Agents use the `transform_agent` configuration instead.
+Other providers in this section are used only by Copilot when selecting models. You can add multiple credentials here, but Copilot will only connect to the models defined in the [Available AI Models](#available-ai-models-for-copilot) subtab. Agents use the `transform_agent` configuration instead.
 
 <Note>
   When editing credentials in Prophecy, you will not be able to see previously-entered values.
@@ -90,17 +93,17 @@ This configuration applies only to Copilot features. Agents do not use these mod
 
 In the **Available AI Models** subtab, you define two models:
 
-- **Smart model**: Prophecy uses this model for complex tasks. Recommended Model: `gpt-4.1`
-- **Fast model**: Prophecy uses this model for easy and quick tasks. Recommended Model: `gpt-4.1-mini`
+- `smart_model`: Prophecy uses this model for complex tasks. Recommended model: `gpt-4.1`
+- `fast_model`: Prophecy uses this model for easy and quick tasks. Recommended model: `gpt-4.1-mini`
 
-You can select models from any of the providers you configured in the [AI Model Providers Creds](#ai-model-providers-creds) subtab.
+You can select models from any of the providers you configured in the [AI Model Providers Creds](#configure-ai-model-providers-creds-agent-and-copilot) subtab. Copilot ignores a model if its provider has no credentials in that subtab, or if Copilot doesn't support the model name.
 
-The following YAML example shows how to format your smart and fast model configuration.
+The following example shows how to format your smart and fast model configuration.
 
-```yaml
+```json
 {
-  'smart_model': { 'provider': 'openai', 'model_name': 'gpt-4.1' },
-  'fast_model': { 'provider': 'openai', 'model_name': 'gpt-4.1-mini' },
+  "smart_model": { "provider": "openai", "model_name": "gpt-4.1" },
+  "fast_model": { "provider": "openai", "model_name": "gpt-4.1-mini" }
 }
 ```
 
@@ -110,16 +113,25 @@ This configuration applies only to Copilot speech features.
 
 In the **Available AI Speech Models** subtab, you define different models for speech-to-text and text-to-speech operations.
 
-You can select models from any of the providers you configured in the [AI Model Providers Creds](#ai-model-providers-creds) subtab.
+You can select models from any of the providers you configured in the [AI Model Providers Creds](#configure-ai-model-providers-creds-agent-and-copilot) subtab.
 
-The following YAML example shows how to format your speech-to-text (`stt`) and text-to-speech (`tts`) model configuration.
+The following example shows how to format your speech-to-text (`stt`) and text-to-speech (`tts`) model configuration.
 
-```yaml
+```json
 {
-  'stt': { 'provider': 'openai', 'model_name': 'whisper-1' },
-  'tts': { 'provider': 'openai', 'model_name': 'tts-1' },
+  "stt": { "provider": "openai", "model_name": "whisper-1" },
+  "tts": { "provider": "openai", "model_name": "tts-1" }
 }
 ```
+
+### Proxy Settings
+
+If your network requires outbound traffic to go through a proxy, enter the proxy URLs in the **Proxy Settings** subtab:
+
+- **HTTP Proxy**: The proxy for HTTP requests.
+- **HTTPS Proxy**: The proxy for HTTPS requests.
+
+Click **Save** to store the values, or **Reset** to clear them. Copilot reads these values when it starts, so changes take effect after the Copilot service restarts.
 ### Prerequisites for configuring Copilot providers
 
 These prerequisites apply only to Copilot features.
