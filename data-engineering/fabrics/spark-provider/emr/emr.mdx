@@ -9,7 +9,7 @@ description: Use Amazon EMR via Livy as your Spark execution engine
 
 Prophecy supports using Amazon EMR via Livy as your Spark execution engine for running pipelines.
 
-These page includes steps to configure both **Amazon EMR** and **Amazon EMR Serverless** fabrics.
+This page includes steps to configure both **Amazon EMR** and **Amazon EMR Serverless** fabrics.
 
 ## Create Amazon EMR cluster with Apache Livy
 
@@ -58,11 +58,11 @@ To connect EMR and Prophecy, you must create a fabric. You can either create an 
 
        ![EMR dependencies](/data-engineering/fabrics/spark-provider/emr/img/emr-setup.png)
 
-    1. Add the job size to your environment by clicking on **Add job Size**. [Configure your job size](/data-engineering/fabrics/spark-provider/emr/emr-job-sizes) and click on **Add**.
+    1. Add the job size to your environment by clicking **+ Job Size**. [Configure your job size](/data-engineering/fabrics/spark-provider/emr/emr-job-sizes) and click **Add**.
 
-    1. Select File System under **Scala Resolution mode** and input `s3://prophecy-public-bucket/prophecy-libs`
+    1. Under the Prophecy Library settings, on the **Scala** tab, set **Resolution mode** to **File System** and enter `s3://prophecy-public-bucket/prophecy-libs` in **Path**.
 
-    1. Select File System under **Python Resolution mode** and input `s3://prophecy-public-bucket/python-prophecy-libs`
+    1. On the **Python** tab, set **Resolution mode** to **File System** and enter `s3://prophecy-public-bucket/python-prophecy-libs` in **Path**.
 
     1. Click **Complete** to save your new EMR fabric.
 
@@ -89,19 +89,19 @@ To connect EMR and Prophecy, you must create a fabric. You can either create an 
 
        ![EMR Serverless select](/data-engineering/fabrics/spark-provider/emr/img/emr-serverless-dev-select.png)
 
-    1. For the **Authentication type**, select `AWS Sig V4`. This is the only option that will work for EMR Serverless.
+    1. Prophecy sets the **Authentication type** to `AWS Sig V4` automatically. This is the only option that works for EMR Serverless, so you can't change it.
 
     1. Select your **Runtime Role**. The role must have enough permissions to use the selected Serverless App.
 
     1. Enter the S3 path that points to the location where you would like your logs and pipeline artifacts to persist.
 
-    1. Add the job size to your environment by clicking on **Add Job Size**. [Configure your job size](/data-engineering/fabrics/spark-provider/emr/emr-job-sizes) and click on **Add**.
+    1. Add the job size to your environment by clicking **+ Job Size**. [Configure your job size](/data-engineering/fabrics/spark-provider/emr/emr-job-sizes) and click **Add**.
 
     1. Note that the Spark and Scala versions are fixed.
 
-    1. Select File System under Scala Resolution mode and input `s3://prophecy-public-bucket/prophecy-libs`.
+    1. Under the Prophecy Library settings, on the **Scala** tab, set **Resolution mode** to **File System** and enter `s3://prophecy-public-bucket/prophecy-libs` in **Path**.
 
-    1. Select File System under Python Resolution mode and input `s3://prophecy-public-bucket/python-prophecy-libs`.
+    1. On the **Python** tab, set **Resolution mode** to **File System** and enter `s3://prophecy-public-bucket/python-prophecy-libs` in **Path**.
 
     1. Click **Complete** to save your new EMR fabric.
 

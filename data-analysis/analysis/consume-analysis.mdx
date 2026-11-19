@@ -16,8 +16,8 @@ You can use analyses to:
 
 ## Open an analysis
 
-1. Open the **Analysis Browser** (the graph icon) in the left sidebar.
-2. Select an analysis.
+1. Click **Analysis** (the bar chart icon) in the left sidebar.
+2. Select an analysis from the **My Analysis** list.
 
 ![analysis browser page](/data-analysis/analysis/img/analysis-browser.png)
 
@@ -37,16 +37,16 @@ For example, an analysis might include:
 - A `staging` configuration
 - Configurations for different regions or business units
 
-Configurations appear under the analysis in the Analysis Browser. Each analysis can contain multiple configurations, which you can select, rename, schedule, or run independently.
+Configurations appear under the analysis in the panel on the left side of the analysis. Each analysis can contain multiple configurations, which you can select, rename, schedule, or run independently.
 
 Runtime values entered in a configuration override the pipeline's default parameter values during execution.
 
 ## Create a configuration
 
-1. In the **Analysis Browser**, hover over an analysis.
-2. Click the **+** icon.
+1. In the panel on the left side of the analysis, hover over the analysis.
+2. Click the **+** icon (**Create new configuration**).
 3. Enter a configuration name.
-4. Click **Create**.
+4. Click **Save**.
 
 Configuration names must be unique within the analysis.
 
@@ -59,7 +59,7 @@ To manage a configuration:
    - Rename
    - Delete
 
-You can switch between configurations by selecting them in the Analysis Browser.
+You can switch between configurations by selecting them in the panel on the left side of the analysis.
 
 ## Run an analysis
 
@@ -69,7 +69,7 @@ Analysis results render in charts, tables, and other visualization components.
 
 1. Open a configuration.
 2. Enter or update runtime values.
-3. Click **Run**.
+3. Click **Run Analysis**.
 4. Review the results.
 
 For example, you might:
@@ -91,7 +91,7 @@ If the pipeline definition changes after the analysis was last executed, Prophec
 
 To refresh the analysis:
 1. Open the configuration.
-2. Click **Run**.
+2. Click **Run Analysis**.
 
 ## Schedule an analysis
 
@@ -106,11 +106,13 @@ For example:
 To create a schedule:
 
 1. Open a configuration.
-2. Click **Schedule**.
-3. Configure:
-   - Cron expression
-   - Time zone
-   - Notification settings
+2. In the analysis header, open the **...** menu and select **Schedule**. This option is available only when a configuration is selected.
+3. In the **Schedule Configuration** dialog, configure:
+   - **Enabled**: Whether the schedule is active.
+   - **Choose Pipeline Parameter Set**: The parameter set to run with.
+   - **Trigger Type**: When the schedule runs. For a time-based trigger, set the frequency and time zone.
+   - **Alerts on the full job**: Email addresses to notify about the run.
+   - **Run data quality tests**: Whether to run data quality tests with each run.
 4. Save the schedule.
 
 ## Share analyses
