@@ -1,0 +1,40 @@
+---
+title: RunStoredProcedure
+description: Run a stored procedure in SQL Server, Azure Synapse, or SAP HANA
+---
+
+import Execution from '/snippets/gem-execution-engine.mdx';
+
+<Execution execution_engine="Prophecy Automate" />
+
+## Overview
+
+Use the RunStoredProcedure gem to run a stored procedure that already exists in an external database as a step in your pipeline. The gem connects to the database through one of your connections and runs the procedure by name.
+
+The gem runs the procedure for its effects, such as loading, updating, or cleaning up tables in that database. It doesn't return the procedure's results to the pipeline.
+
+<Note>
+  On BigQuery and Snowflake fabrics, use the [StoredProcedure](/data-analysis/gems/custom/stored-procedure) gem instead. RunStoredProcedure is unavailable to add on those fabrics, and existing RunStoredProcedure gems show a banner that asks you to migrate.
+</Note>
+
+## Prerequisites
+
+Create a connection to the database that contains the stored procedure:
+
+- [Microsoft SQL Server](/data-analysis/environment/connections/mssql)
+- [Azure Synapse](/data-analysis/environment/connections/synapse)
+- [SAP HANA](/data-analysis/environment/connections/hana)
+
+## Input and Output
+
+The RunStoredProcedure gem has no input or output ports.
+
+## Parameters
+
+| Parameter             | Description                                                                                                                                     |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| Connection Type       | The type of database that contains the stored procedure: **MSSQL**, **Azure Synapse**, or **SAP HANA**. Default: **MSSQL**.                     |
+| Connection            | The connection to that database.                                                                                                                |
+| Stored procedure name | The name of the procedure to run, including its schema. For example, `dbo.refresh_sales` for SQL Server or Azure Synapse, or `SALES.REFRESH_SALES` for SAP HANA. |
+
+Prophecy runs the procedure with `EXEC <name>` on SQL Server and Azure Synapse, and with `CALL <name>` on SAP HANA. If the procedure fails, the gem fails.
