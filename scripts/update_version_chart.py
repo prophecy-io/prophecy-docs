@@ -2,7 +2,7 @@
 import argparse
 import re
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 from dateutil.relativedelta import relativedelta
 from packaging import version as packaging_version
 
@@ -16,7 +16,8 @@ LTS_VERSIONS = [
 def get_commit_date(repo, tag_name):
     try:
         tag = repo.tags[tag_name]
-        return datetime.fromtimestamp(tag.commit.committed_date)
+        # Normalize to UTC so release dates are stable across CI runner timezones.
+        return datetime.fromtimestamp(tag.commit.committed_date, tz=timezone.utc)
     except git.exc.GitCommandError:
         raise IOError(f"Error checking out tag '{tag_name}'.")
 
