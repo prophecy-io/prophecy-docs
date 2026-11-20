@@ -9,12 +9,21 @@ The following tables list all the Informatica functions that Prophecy supports a
 
 ## Aggregate
 
-| Informatica Function | Equivalent Prophecy Function |
-| -------------------- | ---------------------------- |
-| `FIRST`              | `any_value`                  |
-| `LAST`               | `any_value`                  |
-| `MAX`                | `max`                        |
-| `MIN`                | `min`                        |
+| Informatica Function     | Equivalent Prophecy Function                                                       | Notes                                                                                                                     |
+| ------------------------ | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `AVG`                    | `avg`                                                                              | Direct mapping                                                                                                            |
+| `COUNT DISTINCT`         | `COUNT(DISTINCT col)` or `APPROX_COUNT_DISTINCT(col)`                              | Use `APPROX_COUNT_DISTINCT` for faster approx.                                                                            |
+| `COUNT`                  | `count`                                                                            | Direct mapping                                                                                                            |
+| `FIRST`                  | `any_value`                                                                        | Not deterministic. For deterministic “first by sort key”: `ARRAY_AGG(col ORDER BY sort_col ASC)[OFFSET(0)]`               |
+| `LAST`                   | `any_value`                                                                        | Not deterministic. For deterministic “last by sort key”: `ARRAY_AGG(col ORDER BY sort_col DESC)[OFFSET(0)]`.              |
+| `MAX`                    | `max`                                                                              | Direct mapping                                                                                                            |
+| `MEDIAN`                 | `PERCENTILE_CONT(col, 0.5)` (analytic) or `APPROX_QUANTILES(col, 100)[OFFSET(50)]` | `PERCENTILE_CONT` is exact but analytic (use `PARTITION BY grp`); `APPROX_QUANTILES` gives a practical grouped aggregate. |
+| `MIN`                    | `min`                                                                              | Direct mapping                                                                                                            |
+| `STDDEV` / `STDDEV_SAMP` | `STDDEV_SAMP(col)`                                                                 | Sample std dev.                                                                                                           |
+| `STDDEV_POP`             | `STDDEV_POP(col)`                                                                  | Population std dev.                                                                                                       |
+| `SUM`                    | `SUM(col)`                                                                         | Direct mapping                                                                                                            |
+| `VARIANCE` / `VAR_SAMP`  | `VAR_SAMP(col)`                                                                    | Sample variance.                                                                                                          |
+| `VAR_POP`                | `VAR_POP(col)`                                                                     | Population variance.                                                                                                      |
 
 ## Conversion
 
@@ -28,15 +37,17 @@ The following tables list all the Informatica functions that Prophecy supports a
 
 ## Date
 
-| Informatica Function | Equivalent Prophecy Function         |
-| -------------------- | ------------------------------------ |
-| `ADD_TO_DATE`        | `date_add`                           |
-| `DATE_COMPARE`       | `date_diff`                          |
-| `DATE_DIFF`          | `date_diff`                          |
-| `GET_DATE_PART`      | `extract(part FROM date_expression)` |
-| `ROUND`              | `round`                              |
-| `SYSTIMESTAMP`       | `current_timestamp`                  |
-| `TRUNC`              | `date_trunc`                         |
+| Informatica Function | Equivalent Prophecy Function                                 |
+| -------------------- | ------------------------------------------------------------ |
+| `ADD_TO_DATE`        | `date_add`                                                   |
+| `DATE_COMPARE`       | `date_diff`                                                  |
+| `DATE_DIFF`          | `date_diff`                                                  |
+| `GET_DATE_PART`      | `extract(part FROM date_expression)`                         |
+| `LAST_DAY`           | No direct equivalent; use `date_trunc` with date arithmetic. |
+| `ROUND`              | `round`                                                      |
+| `SET_DATE_PART`      |                                                              |
+| `SYSTIMESTAMP`       | `current_timestamp`                                          |
+| `TRUNC`              | `date_trunc`                                                 |
 
 ## Data cleansing
 
