@@ -6,8 +6,8 @@
   "held_items_file": "held-items.json",
   "branch": "main",
   "changelog_path": "changelog.mdx>",
-  "notify_channel": "<review channel ID>",
-  "source_channel": "<source/evidence channel ID>",
+  "notify_channel": "#docs-changelog-review",
+  "source_channel": "#docs-changelog-evidence",
   "source_agent_user": "",
   "cadence": "weekly, Monday 10:00 UTC, covers prior Mon-Sun in CHANGELOG_TZ"
 }
