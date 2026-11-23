@@ -1,0 +1,5 @@
+{
+  "_comment": "Watchlist of change log items excluded as non-GA (flag off / targeted beta / beta by ruling). Re-checked each run before the commit diff, per curation-rules.md 'Flag-flip watchlist'. When a flag flips on everywhere, the item moves to resolved and is published in that week's entry. Open item fields: flag, feature_title, description, surface, category, merge_date, commit_sha, excluded_since, last_checked, last_checked_status, notes (mark 'engineering-gated' to block auto-recovery).",
+  "open": [],
+  "resolved": []
+}

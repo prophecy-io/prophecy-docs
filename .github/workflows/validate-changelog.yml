@@ -1,0 +1,47 @@
+# Checks the change log page and .changelog/ state on every PR and in the merge queue.
+# There is deliberately no path filter: a required check must report on every PR,
+# and merge_group events don't support paths. The script exits early when no
+# change log file changed.
+name: Validate change log
+
+on:
+  pull_request:
+  merge_group:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-changelog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check entries and state files
+        env:
+          BASE_SHA: ${{ github.event_name == 'merge_group' && github.event.merge_group.base_sha || github.event.pull_request.base.sha }}
+          HEAD_REF: ${{ github.head_ref }}
+        run: python3 .changelog/validate_changelog.py --base "$BASE_SHA" --head-ref "$HEAD_REF" --page-changed-file "$RUNNER_TEMP/page_changed"
+
+      - name: Decide whether to compile the page
+        id: page
+        run: echo "changed=$(cat "$RUNNER_TEMP/page_changed")" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-node@v4
+        if: steps.page.outputs.changed == 'true'
+        with:
+          node-version: 20
+
+      - name: Compile the change log page as MDX
+        if: steps.page.outputs.changed == 'true'
+        run: |
+          PAGE=$(python3 -c 'import json;print(json.load(open(".changelog/state.json"))["changelog_path"])')
+          # Install outside the repo so the docs repo's own package.json is never touched.
+          mkdir -p "$RUNNER_TEMP/mdx" && cd "$RUNNER_TEMP/mdx"
+          npm init -y > /dev/null
+          npm install --no-audit --no-fund @mdx-js/mdx@3.1.1
+          cp "$GITHUB_WORKSPACE/.changelog/compile_mdx.mjs" .
+          node compile_mdx.mjs "$GITHUB_WORKSPACE/$PAGE" "$PAGE"
