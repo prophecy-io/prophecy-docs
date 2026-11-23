@@ -5,7 +5,7 @@
   "cutoff_sha": "0802522b079f2cc668290b8d3536435354325cad",
   "held_items_file": "held-items.json",
   "branch": "main",
-  "changelog_path": "changelog.mdx>",
+  "changelog_path": "changelog.mdx",
   "notify_channel": "#docs-changelog-review",
   "source_channel": "#docs-changelog-evidence",
   "source_agent_user": "",
