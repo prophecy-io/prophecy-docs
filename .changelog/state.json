@@ -1,0 +1,13 @@
+{
+  "_comment": "State for the weekly change log job. Lives at .changelog/state.json in the docs repo; the repo copy is the single source of truth. cutoff_sha = product repo origin/main as of the end of the last covered week.",
+  "last_entry_date": "YYYY-MM-DD",
+  "backfill_window_start": "YYYY-MM-DD",
+  "cutoff_sha": "0802522b079f2cc668290b8d3536435354325cad",
+  "held_items_file": "held-items.json",
+  "branch": "main",
+  "changelog_path": "changelog.mdx",
+  "notify_channel": "#docs-changelog-review",
+  "source_channel": "#docs-changelog-evidence",
+  "source_agent_user": "",
+  "cadence": "weekly, Monday 10:00 UTC, covers prior Mon-Sun in CHANGELOG_TZ"
+}
