@@ -26,7 +26,25 @@ Choose what to run by adding one of these fields to the request:
 
 ## Parameters
 
-`parameters` works the same way for all three run types. Each key must be one of the pipeline's own parameters; otherwise, the request returns `Invalid config override`. Project-level parameters cannot be overridden here. Set them per fabric when you [deploy the project](/api-reference/projects/deploy-project).
+Parameters work the same way for all three run types.
+
+- `parameters` overrides pipeline parameters. Each key must be one of the pipeline's own parameters; otherwise, the request returns `Invalid config override`.
+- `projectParameterSet` selects which project [parameter set](/data-analysis/development/parameters/parameter-sets) the run uses.
+- `projectParameters` overrides individual project parameters. Each key must be one of the project's parameters; otherwise, the request returns `Invalid project parameter override`. These values take precedence over the selected parameter set.
+
+For example, to run with the `prod` parameter set but override one project parameter:
+
+```json
+{
+  "fabricId": 1234,
+  "projectId": "5678",
+  "pipelineName": "load_orders",
+  "projectParameterSet": "prod",
+  "projectParameters": {"region": "EU"}
+}
+```
+
+Overrides apply only to this run. To change a project's or pipeline's saved parameter values, use the [update project parameters](/api-reference/projects/update-project-parameters) or [update pipeline parameters](/api-reference/pipelines/update-pipeline-parameters) API.
 
 A parameter of type SQL expression needs its own single quotes around text. Inside a single-quoted shell command, write each quote as `'\''`:
 

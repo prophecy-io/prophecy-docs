@@ -19,6 +19,136 @@
     }
   },
   "paths": {
+    "/api/parameters/project/{projectId}": {
+      "parameters": [
+        {
+          "name": "projectId",
+          "in": "path",
+          "required": true,
+          "description": "The unique ID of the project",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "put": {
+        "tags": [
+          "Project Deployment"
+        ],
+        "summary": "Update project parameters",
+        "operationId": "upsertProjectParameters",
+        "description": "Update the default values and parameter sets of a project's existing parameters on a branch. The changes are saved to the branch but not committed.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-AUTH-TOKEN"
+          },
+          {
+            "name": "branch",
+            "in": "query",
+            "required": false,
+            "description": "Branch to update. If omitted, Prophecy updates your working branch.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "The project parameters to update, in the same shape as the project's parameter configuration. Every field is optional, so you can send only the fields you want to change.",
+                "properties": {
+                  "schema": {
+                    "type": "object",
+                    "description": "Updated default values for existing parameters, in the parameter configuration's `record` format. You can't add parameters or change a parameter's type."
+                  },
+                  "parameterSets": {
+                    "type": "array",
+                    "description": "Parameter sets to create or update. Values merge into a set with the same name; a set with a new name is added.",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "description": "Name of the parameter set."
+                        },
+                        "values": {
+                          "type": "object",
+                          "description": "Parameter names and values for this set. Each name must be an existing parameter."
+                        }
+                      }
+                    }
+                  },
+                  "currentParameterSet": {
+                    "type": "string",
+                    "description": "Name of the parameter set to make the default."
+                  }
+                }
+              },
+              "example": {
+                "parameterSets": [
+                  {
+                    "name": "qa",
+                    "values": {
+                      "LIMIT": 3
+                    }
+                  }
+                ],
+                "currentParameterSet": "qa"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Parameters updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "branch": {
+                      "type": "string",
+                      "description": "The branch that was updated."
+                    },
+                    "files": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Project files that changed."
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "msg": "Parameter sets updated",
+                  "branch": "dev",
+                  "files": [
+                    ".prophecy/ide/configuration/parameters.json",
+                    "configuration/parameters.py"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid. For example, `Parameters do not exist: <names>` or `Parameter types cannot change: <names>`. `success` is `false` and `msg` explains the error."
+          }
+        }
+      }
+    },
     "/api/deploy/project": {
       "parameters": [
         {
