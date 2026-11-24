@@ -5,7 +5,7 @@ description: How Prophecy agents interact with your data and respects access con
 
 Prophecy agents operate within your selected deployment environment and respects existing access controls.
 
-The agents are assistive rather than autonomous: they do not have autonomy to connect to external systems or perform any action without approval. Prophecy agents are considered
+The agents are assistive rather than autonomous: they don't connect to external systems on their own, and they ask for your approval before they write to your warehouse. Project changes they make can be reviewed and undone. Prophecy agents are considered
 limited risk according to the EU AI Act.
 
 This page explains how data is accessed, executed, and stored when using agents.
@@ -39,7 +39,7 @@ This metadata may include:
 - Schemas and data types
 - Transformation code within the current project
 
-The agent does not include sample data by default. Using sample data can only be enabled by an administrator.
+By default, the agent can also query data in the fabric, for example to sample rows and validate results. An administrator can turn this off for a fabric with the **Allow agent to access data** setting in the fabric's advanced settings. When it's off, the agent works from metadata only.
 
 ## Execution model
 

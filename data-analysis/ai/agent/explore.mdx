@@ -9,29 +9,7 @@ The following sections describe the ways you can interact with the Agent for dat
 
 ## Find tables in your SQL warehouse
 
-Ask the Agent to search for tables in your [primary SQL warehouse](/data-analysis/environment/fabrics/prophecy-fabrics). Based on your query, it returns:
-
-- A short list of relevant datasets and their descriptions.
-- A full list of datasets that match your criteria.
-
-<Tip>
-  You can add a dataset to the pipeline as a [Table
-  gem](/data-analysis/gems/source-target/source-target) directly from the chat.
-</Tip>
-
-### Explore datasets
-
-To learn more about a dataset, you can click on it inside the chat. This opens a dialog where you can:
-
-1. Find the location of the dataset in the warehouse.
-1. Look over the schema of the dataset.
-1. Preview a sample of the data in the dataset.
-1. Review the data profile of the sample.
-1. Open **Explore** to chat with an Agent that limits responses to the context of the dataset.
-
-![Preview dataset UI](/data-analysis/ai/agent/img/agent-explore.png)
-
-This helps you validate that your data is correct without having to manually browse through your data catalogs.
+Ask the Agent to search for tables in your [primary SQL warehouse](/data-analysis/environment/fabrics/prophecy-fabrics). Based on your query, it lists the relevant datasets and describes what they contain. To use a dataset as a source, ask the Agent to add it to your pipeline.
 
 ## Describe a dataset
 
@@ -49,44 +27,15 @@ This allows you to identify which dataset aligns better with your pipeline's req
 
 To preview data from a table, ask the Agent to return a sample. You can request a random sample from the table or specific rows, such as "the ten most recent purchases over $100". All queries are executed under your existing warehouse permissions.
 
-The Agent returns:
+The Agent shows the sample as a table in the chat. In the table, you can:
 
-- A table showing the sample data.
-- A **Preview** option for a closer look.
-- SQL execution logs for transparency.
-
-If the dataset isn't already part of your pipeline, you'll also see an option to add it as a Table gem on the canvas.
-
-![Data sample response](/data-analysis/ai/agent/img/agent-sql-logs-sample.png)
-
-### Table preview
-
-Click **Preview** to open a larger view of the data sample. In this view, you can:
-
-- Download the data as a JSON, Excel, or CSV file.
-- Show or hide columns.
-- Add the full dataset to the canvas (if not present already).
+- Click **View more** to open a larger view of the data.
+- Use the **Columns** menu to show or hide columns.
+- Click the **Download** icon to download the data as a CSV file. This option appears only if your deployment allows data downloads.
 
 ## Visualize table data
 
-You can also ask the Agent to generate charts for data visualization. The Agent returns:
-
-- An embedded chart directly in the chat.
-- A Preview button to open a detailed view.
-- SQL execution logs showing how the chart was generated.
-
-If the chart is based on a dataset that isn't yet in your pipeline, you'll see an option to add it as a Table gem.
-
-![Chart generation response](/data-analysis/ai/agent/img/agent-sql-logs-charts.png)
-
-### Chart preview
-
-To see a larger version of the chart, click **Preview**. This opens the data visualization dialog, which has two tabs.
-
-| Tab           | Available actions                                                                                                               |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| Visualization | <ul><li>View a larger version of the chart</li><li>Download the chart as an image</li><li>Copy the chart as an image</li></ul>  |
-| Data          | <ul><li>View the underlying data</li><li>Download the data as a JSON, Excel, or CSV file</li><li>Show or hide columns</li></ul> |
+You can also ask the Agent to generate charts for data visualization. The Agent adds the chart to the chat as a card titled with the chart type and name, such as `Bar chart created: Sales by country`. Click the card to expand or collapse the chart, and click the **Download Chart** icon to save the chart as an image.
 
 <Info>
   To learn more about data visualization, see
