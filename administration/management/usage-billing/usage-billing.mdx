@@ -2,52 +2,50 @@
 title: Manage billing
 description: Learn how billing works across Prophecy editions and how to manage usage and costs
 ---
-Prophecy billing is determined by edition. Self-serve billing is available for Free and Professional Editions. Express and Enterprise Editions are managed through external purchase channels.
+Prophecy billing is determined by edition. Self-serve billing is available for the free Starter plan and the Professional Edition (Pro plan). Express and Enterprise Editions are managed through external purchase channels.
 
 | Edition      | Billing           |
 | ------------ | ----------------- |
-| Free         | Stripe            |
+| Starter (free) | Stripe          |
 | Professional | Stripe            |
 | Express      | Cloud Marketplace |
 | Enterprise   | Purchase Order    |
 
-## Free and Professional Editions
+## Starter and Professional Editions
 
-Free and Professional Editions use a credit-based billing model managed through Stripe.
+The Starter plan and the Professional Edition use a credit-based billing model managed through Stripe.
 
-- **Free Edition**: 5 credits per month.
-- **Professional Edition**: includes a fixed number of base credits per month; extra usage is pay-as-you-go.
+- **Starter**: Free. Includes 5 credits per month for a single user.
+- **Pro**: Includes 50 credits per user per month. Included credits reset each month and don't roll over. Extra usage is pay-as-you-go unless you pause it.
 
-### Plan-team relationship
+### Plan-workspace relationship
 
-Each Prophecy plan is associated with a single team. [Team admins](/administration/management/teams/teams) manage billing for their team.
+Each plan is associated with a single workspace. The user who created the workspace is its billing admin and is the only user who can change the workspace's spending settings, payment method, or plan.
 
 Review the following example:
 
-1. An existing team admin (User A) invites a new user (User B) to their team.
+1. An existing user (User A) invites a new user (User B) to their workspace.
 
-1. User B signs up for Prophecy and joins the existing team as a standard user.
+1. User B signs up for Prophecy and joins User A's workspace.
 
-   Team admins can later promote them to admin if needed.
+1. User B also receives their own personal workspace on the Starter plan, where they are the billing admin.
 
-1. User B automatically receives their own personal team under the Free Edition plan, where they are the team admin.
+   They can choose to upgrade this workspace to the Pro plan.
 
-   They can choose to upgrade this team to the Professional Edition.
-
-This model ensures that users can have separate personal teams with independent plans.
+This model ensures that users can have separate personal workspaces with independent plans.
 
 The flow is illustrated below:
 
 ```mermaid
 graph TD
-%% Users and their teams
+%% Users and their workspaces
 
-UserA[User A] --> TeamA[Professional Edition Plan<br />Team A<br />2 users]
+UserA[User A] --> TeamA[Pro plan<br />Workspace A<br />2 users]
 UserA -->|invites| UserB
 UserB[User B] --> TeamA
-UserB --> TeamB[Free Edition Plan<br />Team B<br />1 user]
+UserB --> TeamB[Starter plan<br />Workspace B<br />1 user]
 
-    %% Each team has a fabric
+    %% Each workspace has a fabric
     TeamA -->|auto-provisions| FabricA[Fabric A]
     TeamB -->|auto-provisions| FabricB[Fabric B]
 
@@ -61,22 +59,23 @@ UserB --> TeamB[Free Edition Plan<br />Team B<br />1 user]
     class FabricA,FabricB other
 ```
 
-### Usage & Billing dashboard
+### Billing page
 
-The **Usage & Billing** dashboard displays plan information, usage, and credit consumption. Because each plan maps to an individual team, select a specific team to view its corresponding billing information.
+The **Billing** page shows the plan, credit usage, and spending settings for your current workspace.
 
-To access the dashboard:
+To open the Billing page, open **Settings** and select **Billing** under **Workspace**. You can also click **View more** under **Credit Usage** in your profile menu. To view another workspace's billing, switch workspaces from the **Workspaces** list in your profile menu.
 
-1. Log in to Prophecy and open the **Settings** page.
-2. Select the **Usage & Billing** tab.
-3. Use the team toggle to view usage for different teams.
+The Billing page includes:
 
-From the dashboard, team administrators can:
-
-- Monitor credit usage.
-- Set seat limits.
-- Configure alerts and budgets.
-- Update payment method.
+| Section | Description |
+| ------- | ----------- |
+| Current plan | Your plan and when it renews. |
+| Monthly Credits Usage | Credits used this month, split into included and additional credits, and when usage resets. |
+| Workspace members | The number of users in the workspace and the price per user. Pro plan only. |
+| Additional Usage | The cost of usage beyond your included credits, your usage alert and budget, or **Paused** if additional usage is paused. Shows **Outstanding Balance** when the workspace owes money. |
+| Payment method | The card on file. Pro plan only. |
+| Credit usage | A bar that shows credit usage by category (AI requests, compute, data egressed, and data storage), with markers for your alerts and budget. Expand **View detailed resource usage** for a breakdown. |
+| All plans | The available plans and the actions you can take on each. |
 
 <Info>
   For information about how credits are consumed, see
@@ -85,48 +84,48 @@ From the dashboard, team administrators can:
 
 ### Manage monthly spending
 
-To set up monthly spending alerts and limits:
+On the Pro plan, the billing admin can limit seats, get alerts, and choose what happens when included credits run out.
 
-1. Go to **Settings → Usage & Billing**.
-1. Under **Additional Usage**, click **Manage**. Alternatively, click the **Manage monthly spending** button on the page.
-   - **Set a user seat limit**: Maximum number of users allowed for the team corresponding to the plan.
-   - **Set a usage alert**: Usage amount in dollars that triggers an alert and email.
-   - **Set a usage budget**: Usage amount in dollars at which services are suspended.
+1. Open the **Billing** page.
+1. In the **Credit usage** section, click **Manage monthly spending**.
+1. Configure the settings described below.
+1. Click **Save**.
 
-1. Change the values and click **Save**.
+| Setting | Description |
+| ------- | ----------- |
+| Team seats | Turn on **Limit seats to** and enter the maximum number of users the workspace can have. The limit can't be lower than the current number of users. |
+| Included credits | Turn on **Alert me at** and enter a percentage of your included credits. You're alerted when usage reaches it. The default is 80%. |
+| Additional usage | Choose what happens when included credits run out: <ul><li>**Pause services**: Stop when included credits run out. There are no extra charges.</li><li>**Continue with pay-as-you-go** (default): Keep working and pay per credit for extra usage. Optionally, set a **Budget**, where services pause, and an **Alert at** value, which only sends an alert. Enter them in credits or dollars. Leave a field empty for no limit.</li></ul> |
+
+The budget and alert apply only to usage beyond your included credits. When the workspace reaches an alert, the billing admin receives an email and users see an alert in Prophecy. When services pause because included credits ran out or the budget was reached, Prophecy shows a banner. The billing admin can switch to pay-as-you-go or increase the budget to continue.
 
 <Tip>
-  Review the default values when you first upgrade to the Professional Edition, and update if
-  needed.
+  Review these settings when you first upgrade to the Pro plan, and update them if needed.
 </Tip>
 
 ### Update payment method
 
 To update your payment method:
 
-1. Go to **Settings → Usage & Billing**.
+1. Open the **Billing** page.
 1. Under **Payment method**, click **Manage**.
 1. Follow the instructions in Stripe to update your payment method.
 
 ### Upgrade plan
 
-To upgrade from the Free Edition to the Professional Edition:
+To upgrade from the Starter plan to the Pro plan:
 
-1. Go to **Settings → Usage & Billing**.
-1. Selected the correct team to upgrade in the team toggle.
-1. Scroll to the bottom of the page to view the different editions.
-1. In the **Pro** tile, select **Upgrade Now**.
+1. Switch to the workspace you want to upgrade.
+1. Open the **Billing** page.
+1. In **All plans**, click **Upgrade now** on the **Pro** card.
 
 You will be taken to Stripe for payment.
 
-### Downgrade plan
+### Downgrade or cancel
 
-To downgrade from Professional Edition to the Free Edition:
+To downgrade from the Pro plan to the Starter plan, the billing admin clicks **Switch to Starter** on the **Starter** card in **All plans**. To cancel instead, click **Cancel Subscription** on the **Pro** card.
 
-1. Go to **Settings → Usage & Billing**.
-1. Under **Free Edition**, select **Request Downgrade**.
-
-This will initiate steps to cancel your Professional Edition plan.
+Both actions send a request to Prophecy. After you confirm, Prophecy contacts you with the next steps.
 
 ## Express Edition
 
