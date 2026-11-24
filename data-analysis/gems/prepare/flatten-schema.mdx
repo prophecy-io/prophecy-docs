@@ -26,8 +26,8 @@ Configure the following parameters for the FlattenSchema gem.
 
 | Parameter   | Description                                                            | Required |
 | ----------- | ---------------------------------------------------------------------- | -------- |
-| Flatten     | Select the columns that include the arrays you want to flatten.        | True     |
-| Expressions | Define the output columns that you want to appear in the output table. | True     |
+| Flatten     | Select the columns that include the arrays you want to flatten. For each column, enter a **Flatten Alias**, which is required. | True     |
+| Expressions | Define the output columns that you want to appear in the output table. The **Target Column** sets each output column's name. | True     |
 
 ## Example
 
@@ -160,7 +160,7 @@ For example, to flatten your variant data:
 
    ![Adding expressions](/data-analysis/gems/prepare/img/flatten_add_exp.png)
 
-1. (Optional) To change the name of the column in the output, change the value in the `Output Column` for the row.
+1. (Optional) To change the name of the column in the output, change the value in the **Target Column** for the row.
 
 1. Click **Run**.
 

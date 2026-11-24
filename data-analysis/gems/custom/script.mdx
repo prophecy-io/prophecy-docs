@@ -31,6 +31,63 @@ This ensures your Python logic runs in an environment optimized for your data pl
   tab.
 </Info>
 
+## Use parameters in a script
+
+Your script can read the pipeline's and project's [parameters](/data-analysis/development/parameters/parameters) on every SQL warehouse provider. Prophecy defines the following helpers before your `Script` function runs:
+
+| Helper | Description |
+| ------ | ----------- |
+| `Config` | A read-only object that holds the parameters. Read a parameter as an attribute, such as `Config.region`. For a record parameter, read its fields the same way, such as `Config.db.schema`. If a name isn't a valid Python identifier, use `Config["my name"]`. |
+| `get_prophecy_config(name, default)` | Returns the value of a parameter. Use a dot to read a field of a record parameter, such as `"db.schema"`. If the parameter doesn't exist and you don't pass a `default`, the call raises an error that lists the available parameters. |
+| `prophecy_config` | A dictionary of all parameters except secrets. |
+
+For example:
+
+```python
+region = Config.region
+start = get_prophecy_config("start_date", "2024-01-01")
+out0 = in0[in0["region"] == region]
+```
+
+Parameter values arrive as the following Python types:
+
+| Parameter type | Python value |
+| -------------- | ------------ |
+| Integer, long | `int` |
+| Float, double | `float` |
+| Boolean | `bool` |
+| String | `str` |
+| Date | String in `YYYY-MM-DD` format |
+| Timestamp | String in RFC 3339 format |
+| Array | `list` |
+| Record | `dict`, or a nested object when you read it through `Config` |
+| SQL expression | The text of the expression. Prophecy doesn't evaluate it. |
+| No value | `None` |
+
+You can't change parameter values from the script. Set them on the pipeline or project instead.
+
+## Use secrets in a script
+
+To read a Prophecy [secret](/data-analysis/environment/secrets/secrets) from the fabric that runs the pipeline, call `get_prophecy_secret` with the secret's name. It returns the secret's value as a string:
+
+```python
+api_key = get_prophecy_secret("my_api_key")
+```
+
+`get_prophecy_secret` can read text secrets and uploaded file secrets whose contents are text. It can't read username and password, OAuth, or other structured secrets.
+
+A secret-type pipeline parameter can also be read through `Config` or `get_prophecy_config`, except on Databricks, as described below.
+
+### Secrets on Databricks
+
+When the script runs on Databricks, Prophecy copies the secrets the script uses into a temporary Databricks secret scope before the run starts, and deletes the scope when the run ends. Because Prophecy finds these secrets by reading the script, follow these rules on Databricks:
+
+- Pass the secret name as a literal string, such as `get_prophecy_secret("my_api_key")`. A variable or f-string doesn't work.
+- Call `get_prophecy_secret` directly to read a Prophecy secret. Reading a Prophecy secret parameter through `Config` or `get_prophecy_config` fails on Databricks.
+- The fabric's Databricks identity needs permission to create secret scopes and store secrets. See [Permission error when using secrets on Databricks](#permission-error-when-using-secrets-on-databricks).
+
+A parameter that references a Databricks secret (scope and key) can be read only when the script runs on Databricks.
+
 ## Troubleshooting
 
 ### Permission error with service principals
@@ -55,3 +112,7 @@ GRANT SELECT ON ANY FILE TO <your_service_principal_uuid>;
   Granting `SELECT ON ANY FILE` provides broad read access to the file system. Consider the security
   implications for your environment before implementing this workaround.
 </Warning>
+
+### Permission error when using secrets on Databricks
+
+If a script that calls `get_prophecy_secret` fails with `Cannot use Prophecy secrets on Databricks due to insufficient permission`, the Databricks identity that the fabric uses can't create a secret scope or store secrets in it. Ask your Databricks administrator to grant that identity permission to manage secret scopes, or remove the secret from the Script gem.
