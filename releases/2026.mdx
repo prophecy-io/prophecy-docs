@@ -3,6 +3,100 @@ title: '2026 releases'
 description: 'Features and enhancements from new releases'
 ---
 
+<Update label="Prophecy 4.2.14" description="TBD, 2026" tags={["Data Analysis"]}>
+
+## Snowflake MFA authentication
+
+Snowflake fabrics and connections can now sign in with **Username & Password + MFA**. Enter an optional one-time passcode, or leave it blank to approve a push notification, when you test the connection. Your Snowflake account must have the `ALLOW_CLIENT_MFA_CACHING` parameter enabled. See [Snowflake authentication methods](/data-analysis/environment/fabrics/create-fabrics/snowflake#authentication-methods).
+
+## Parameters and secrets in the Script gem
+
+[Script gems](/data-analysis/gems/custom/script#use-parameters-in-a-script) can now read pipeline and project parameters through `Config`, `get_prophecy_config`, and `prophecy_config` on every SQL warehouse provider. `get_prophecy_secret` now also works on Snowflake and Databricks. On Databricks, pass the secret name as a literal string.
+
+## Turn off columns in Reformat, Join, and Aggregate
+
+In SQL projects, each column row in the [Reformat](/data-analysis/gems/prepare/reformat), [Join](/data-analysis/gems/join-split/join), and [Aggregate](/data-analysis/gems/transform/aggregate) gems has a switch. Turn it off to leave the column out of the output without deleting it. Select several rows and click **Enable** or **Disable** to change them at once.
+
+## Postgres target merge modes
+
+The [Postgres Target gem](/data-analysis/gems/source-target/external-table/postgres#write-options) has a new **Write Options** tab with **Truncate & Insert**, **Merge - Upsert Row**, and **Merge - SCD 2** write modes. Merge modes require PostgreSQL 15 or later.
+
+## Parallel reads for SharePoint and OneDrive
+
+[SharePoint](/data-analysis/gems/source-target/file/sharepoint) and [OneDrive](/data-analysis/gems/source-target/file/onedrive) Source gems have a **Disable Parallel Read** switch and a **Maximum Parallel Connections** setting (default `1`, maximum `8`). **Disable Parallel Read** replaces **Disable Parallel Download** in SharePoint.
+
+## Project parameters in the Trigger Pipeline API
+
+The [Trigger Pipeline API](/api-reference/pipelines/trigger-pipeline-run#parameters) now accepts `projectParameterSet` to choose a project parameter set and `projectParameters` to override individual project parameters for a run. New endpoints let you [update project parameters](/api-reference/projects/update-project-parameters) and [update pipeline parameters](/api-reference/pipelines/update-pipeline-parameters) on a branch.
+
+## FlattenSchema labels
+
+In the [FlattenSchema gem](/data-analysis/gems/prepare/flatten-schema), the **Flatten** table's column is now **Flatten Alias**, and the **Expressions** table's column is now **Target Column**.
+
+</Update>
+
+<Update label="Prophecy 4.2.14" description="TBD, 2026" tags={["Administration"]}>
+
+## Manage users from the admin settings
+
+In **Settings > Admin > Users**, expand a user to see whether the account is active or blocked and to view the user's access tokens. Click **Sign out everywhere** to end all of the user's sessions, or **Deactivate** to block the user. See [Cluster admin settings](/administration/management/cluster-admin-settings/cluster-admin-settings).
+
+## Team management settings
+
+[Feature management](/administration/management/cluster-admin-settings/feature-management) has new settings that control how new users join teams: whether each new user gets a personal team, which team new users join instead, and who can create teams.
+
+## Account lockout notifications
+
+When an account is [locked after too many failed sign-in attempts](/administration/management/authentication/authentication#account-lockout), the sign-in page now says when the user can try again, and Prophecy emails the user once if email is set up.
+
+## Prophecy Agent without Copilot
+
+When Copilot is turned off for the whole cluster, the Prophecy Agent can still run. Copilot-only actions such as **Explain**, **Fix**, and **Label** stay off. See [Feature management](/administration/management/cluster-admin-settings/feature-management).
+
+## Rotate Snowflake fabric credentials with the API
+
+Use the new [rotate Snowflake credentials API](/api-reference/fabrics/rotate-snowflake-credentials) to replace the username and password of a Snowflake fabric that uses password authentication. Prophecy tests the new credentials before saving them.
+
+</Update>
+
+<Update label="Prophecy 4.2.13 updates" description="November 2026" tags={["Data Analysis"]}>
+
+These changes shipped in 4.2.13 patch releases (4.2.13.1 through 4.2.13.7).
+
+## Repair a scheduled run
+
+You can now [repair](/data-analysis/production/monitoring#restart-or-repair-a-scheduled-run) a failed scheduled run. A repair resumes from where the run failed and doesn't run gems that already finished.
+
+## Call stored procedures in external databases
+
+The [StoredProcedure gem](/data-analysis/gems/custom/stored-procedure#call-stored-procedures-in-an-external-database) can call procedures that already exist in SAP HANA, Microsoft SQL Server, Azure Synapse, or Postgres.
+
+## CSV multi-file write
+
+When the [CSV target](/data-analysis/gems/source-target/file/file-types/csv#write-to-multiple-files) writes multiple files, you can add a **File Suffix for multi file write** and choose whether to keep the file column in the output files.
+
+## Write pre-built XML
+
+The XML target's new **Ignore Row Tag, Root Tag and XML Declaration** option writes a column of pre-built XML to the file as-is. See [XML target properties](/data-analysis/gems/source-target/file/file-types/xml#target-properties).
+
+## SMTP proxy
+
+[SMTP connections](/data-analysis/environment/connections/smtp) can send email through a proxy.
+
+## Gem names are case-insensitive
+
+Gem names must be unique within a pipeline regardless of case, so `Customers` and `customers` count as the same name.
+
+</Update>
+
+<Update label="Prophecy 4.2.13 updates" description="November 2026" tags={["Administration"]}>
+
+## Delete branch copies across projects
+
+Cluster admins can view and delete branch copies across all projects from **Settings > Admin > Git Branches**. See [Delete branch copies across projects](/data-analysis/development/versioning/git-storage-model#delete-branch-copies-across-projects).
+
+</Update>
+
 <Update label="Prophecy 4.2.13" description="October 30, 2026" tags={["Data Analysis"]}>
 
 ## DataGPT
