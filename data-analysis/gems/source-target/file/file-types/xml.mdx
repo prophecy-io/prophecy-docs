@@ -35,6 +35,15 @@ The following properties are available for the XML Target gem.
 | ----------- | ---------------------------------------------------------------------------------------------------------------- | ------- |
 | Schema      | Review the structure of your data. Prophecy automatically detects the schema from the input gem.                 | None    |
 | Description | Add a description of the table.<br /><br />Click **Auto-description** to automatically generate the description. | None    |
+| Ignore Row Tag, Root Tag and XML Declaration | Write a column of pre-built XML to the file exactly as is. Each row's value is written on its own line. Prophecy doesn't add an XML declaration or any root, row, or column tags, and ignores **Row Tag**, **Root Tag**, **Attribute Prefix**, **Value Tag**, and **XML Declaration**. Use this option when you have built the XML in an earlier gem. | False |
+| Content Column (optional when the input has one column) | The string column that holds the pre-built XML. Other columns are ignored. Appears only when **Ignore Row Tag, Root Tag and XML Declaration** is enabled. If the input has only one column, you can leave this empty. | None |
+| Row Tag | The XML tag for each row. | `row` |
+| Root Tag | The XML tag of the root element that wraps all rows. | `root` |
+| Attribute Prefix | The prefix that marks a column as an XML attribute instead of a child element. | `@` |
+| Value Tag | The tag used for value columns that have no name. | `_VALUE` |
+| Null Value | The string to write for null values. If empty, null values are left out. | None |
+| XML Declaration | The content of the XML declaration at the start of the file. Enter only the content, without the `<?xml` and `?>` markers. | `version="1.0" encoding="UTF-8" standalone="yes"` |
+| Skip if zero input rows | Whether to skip writing the file when the input has no rows. | False |
 
 ## Schema validation
 
