@@ -20,7 +20,7 @@ The following features are available in the Feature Management tab.
 
 | Feature                                               | Description                                                                                                                      |
 | ----------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| Artificial Intelligence                               | Enable or disable Copilot in your deployment.                                                                                    |
+| Artificial Intelligence                               | Enable or disable Copilot in your deployment. When Copilot is disabled, the Prophecy Agent can still run if **AI Agents** is enabled, but Copilot-only actions such as **Explain**, **Fix**, and **Label** aren't available. |
 | AI Agents                                             | Enable or disable Agents in your deployment.                                                                                     |
 | Full Text Search                                      | Enable or disable full text search for your deployment.                                                                          |
 | Prophecy Automate                                     | Enable or disable [Prophecy Automate](/administration/platform/architecture) for your deployment.                  |
@@ -31,6 +31,9 @@ The following features are available in the Feature Management tab.
 | SCIM (System for Cross-domain Identity Management)    | Enable or disable SCIM for your deployment.                                                                                      |
 | Transpiler                                            | Enable or disable the transpiler for your deployment.                                                                            |
 | Enable Alteryx to Databricks SQL Fabric               | Enable or disable the ability to transpile Alteryx workflows into Databricks SQL projects.                                       |
+| Create personal team for each new user | When enabled (default), every new user gets a personal team and becomes its team admin, which lets them invite anyone to Prophecy. When disabled, cluster admins or team admins add new users to an existing team instead. Existing personal teams aren't affected. Part of the **Team Management** group. |
+| Default team for new users | The team that new users join as members. Lists the teams you're an admin of. Available only when **Create personal team for each new user** is disabled. |
+| Users with at least this role allowed to create teams | Who can create teams: **Team Member** lets any user create a team, and **Cluster Admin** limits team creation to cluster admins. Available only when **Create personal team for each new user** is disabled. |
 
 <Note>
   While Prophecy provides the feature flags listed above in the Admin settings UI, there are
