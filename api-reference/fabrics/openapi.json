@@ -19,6 +19,104 @@
     }
   },
   "paths": {
+    "/api/fabrics/{fabricId}/credentials": {
+      "parameters": [
+        {
+          "name": "fabricId",
+          "in": "path",
+          "description": "The unique ID of the fabric",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "put": {
+        "tags": [
+          "Fabrics"
+        ],
+        "summary": "Rotate Snowflake fabric credentials",
+        "description": "Replace the username and password (and optionally the role) of a Snowflake fabric that uses password authentication. Prophecy tests the new credentials against Snowflake before saving them. If the test fails, nothing changes. Team members' saved credentials for the old username are updated to the new credentials.\n\nOnly team admins of the fabric's team can call this endpoint. If team management by cluster admins is enabled, cluster admins can also call it.",
+        "operationId": "updateFabricCredentials",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-AUTH-TOKEN"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "username",
+                  "password"
+                ],
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "description": "The Snowflake username. Must not be empty."
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "The new Snowflake password. Must not be empty."
+                  },
+                  "role": {
+                    "type": "string",
+                    "description": "(Optional) The Snowflake role. If provided, it must not be empty."
+                  }
+                }
+              },
+              "example": {
+                "username": "PROPHECY_SVC",
+                "password": "<new password>",
+                "role": "ANALYST"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Credentials updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "Credentials updated"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request body is invalid, the fabric isn't a unified Snowflake fabric that uses password authentication, or the Snowflake connection test failed."
+          },
+          "403": {
+            "description": "You aren't allowed to update this fabric's credentials."
+          },
+          "404": {
+            "description": "The fabric doesn't exist or you can't access it."
+          },
+          "502": {
+            "description": "A Prophecy service couldn't complete the update. Every step is safe to repeat, so retry the request."
+          }
+        }
+      }
+    },
     "/api/orchestration/fabric": {
       "post": {
         "tags": ["Fabrics"],

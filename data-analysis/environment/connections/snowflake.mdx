@@ -44,7 +44,7 @@ When you write data through a Snowflake connection, Prophecy uploads Parquet fil
 ## Connection parameters
 
 <Warning>
-Starting October 2026, Snowflake enforces the deprecation of password-based sign-in for service users. Connections that authenticate with a username and password stop working once Snowflake enforces the cutover. Prophecy flags affected connections with a **Password auth** badge on the **Connections** tab. Move these connections to [key-pair, OAuth, or OIDC authentication](/data-analysis/environment/fabrics/create-fabrics/snowflake#authentication-methods).
+Starting October 2026, Snowflake enforces the deprecation of password-based sign-in for service users. Connections that authenticate with a username and password stop working once Snowflake enforces the cutover. Prophecy flags affected connections with a **Password auth** badge on the **Connections** tab. Move these connections to [key-pair, OAuth, OIDC, or Password + MFA authentication](/data-analysis/environment/fabrics/create-fabrics/snowflake#authentication-methods).
 </Warning>
 
 To create a connection with Snowflake, enter the following parameters:
@@ -57,7 +57,20 @@ To create a connection with Snowflake, enter the following parameters:
 | Schema                | Default schema for reading and writing data |
 | Warehouse             | Name of the Snowflake virtual warehouse used to execute queries for this connection |
 | Role                  | Snowflake [role](https://docs.snowflake.com/en/user-guide/security-access-control-overview) used for the connection. Use a role with only the privileges listed in [Prerequisites](#prerequisites).<br />Example: `PROPHECY_ROLE` |
-| Authentication method | Use key-pair, OAuth, or OIDC authentication. To configure key-pair authentication, see [Key-pair authentication](#key-pair-authentication). To configure OIDC, see [OIDC authentication](#oidc-authentication). To configure OAuth, see [Create a Snowflake fabric](/data-analysis/environment/fabrics/create-fabrics/snowflake#oauth). OAuth requires a Snowflake app registration that a cluster admin creates. See [OAuth app registrations](/administration/management/cluster-admin-settings/oauth-setup).<br />Password authentication is deprecated. If you still use it, enter your Snowflake username and use a [secret](/data-analysis/environment/secrets/secrets) to enter your password. |
+| Authentication method | Use key-pair, OAuth, OIDC, or Password + MFA authentication. To configure key-pair authentication, see [Key-pair authentication](#key-pair-authentication). To configure MFA, see [MFA authentication](#mfa-authentication). To configure OIDC, see [OIDC authentication](#oidc-authentication). To configure OAuth, see [Create a Snowflake fabric](/data-analysis/environment/fabrics/create-fabrics/snowflake#oauth). OAuth requires a Snowflake app registration that a cluster admin creates. See [OAuth app registrations](/administration/management/cluster-admin-settings/oauth-setup).<br />Password authentication is deprecated. If you still use it, enter your Snowflake username and use a [secret](/data-analysis/environment/secrets/secrets) to enter your password. |
+
+### MFA authentication
+
+Password + MFA authentication signs in as a Snowflake user who has multi-factor authentication enabled. Your Snowflake account must have the [`ALLOW_CLIENT_MFA_CACHING`](https://docs.snowflake.com/en/sql-reference/parameters#allow-client-mfa-caching) parameter enabled to use MFA authentication with Prophecy.
+
+To configure Password + MFA authentication:
+
+1. In the connection, under **Authentication method**, select **Password + MFA**.
+1. Enter the **Username**, and select the [secret](/data-analysis/environment/secrets/secrets) that contains the **Password**.
+1. Optionally, enter a **One-time passcode** from your authenticator app. If you leave it blank, Snowflake sends a push notification to your device.
+1. Test the connection and approve the sign-in.
+
+The passcode is used only to test the connection and is never saved. After a successful test, Prophecy reuses the second factor for about four hours. When it expires, test the connection again with a new passcode.
 
 ### Key-pair authentication
 

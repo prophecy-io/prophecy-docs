@@ -771,6 +771,7 @@
                           "api-reference/fabrics/create-a-new-fabric",
                           "api-reference/fabrics/get-fabric-details",
                           "api-reference/fabrics/update-an-existing-fabric",
+                          "api-reference/fabrics/rotate-snowflake-credentials",
                           "api-reference/fabrics/delete-a-fabric"
                         ]
                       },
@@ -1596,6 +1597,7 @@
                           "api-reference/fabrics/create-a-new-fabric",
                           "api-reference/fabrics/get-fabric-details",
                           "api-reference/fabrics/update-an-existing-fabric",
+                          "api-reference/fabrics/rotate-snowflake-credentials",
                           "api-reference/fabrics/delete-a-fabric"
                         ]
                       },
