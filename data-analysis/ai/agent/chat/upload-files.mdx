@@ -117,8 +117,6 @@ For the Agent to discover the table, you need to add it to the knowledge graph.
 
 After uploading a file, the [knowledge graph indexer](/data-analysis/ai/knowledge-graph/indexer) will automatically index the table. However, you can also manually reindex the knowledge graph, in case something goes wrong.
 
-1. Open the **Environment** tab in the left sidebar.
-1. Below your connections, locate the **Missing Tables?** callout.
-1. Click **Refresh** to trigger the knowledge graph indexer.
+To reindex manually, open the connection in your fabric's settings and click **Start** in the **Knowledge Graph Indexing Status** tile. See [Manually trigger indexing](/data-analysis/ai/knowledge-graph/indexer#manually-trigger-indexing).
 
 Once indexed, the Agent can reference the table using `@` mentions or discover it through natural language queries. The Agent will use the [Table gem](/data-analysis/gems/source-target/table) to read the file into your pipeline.
