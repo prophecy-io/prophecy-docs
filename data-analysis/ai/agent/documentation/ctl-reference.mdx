@@ -78,7 +78,7 @@ The Agent-generated documentation will have a formatted section with a summary a
 
 The Agent-generated documentation will have an interactive question form in your documentation. The Agent tries to answer the question automatically based on the pipeline or project. If the Agent can't answer, the question appears as a form field for users to fill in after the documentation is generated.
 
-This marker accepts one string parameter that contains your question or prompt. For example: `'[COPILOT_QUESTION]('Specify the number of transformation steps in the pipeline.')`
+This marker accepts one string parameter that contains your question or prompt. For example: `[COPILOT_QUESTION]('Specify the number of transformation steps in the pipeline.')`
 
 <Note>
   The Agent will be able to answer most questions about the project and pipelines. It will not be
@@ -93,7 +93,7 @@ This marker accepts one string parameter that contains your question or prompt. 
 
 The Agent-generated documentation will have an interactive question form in your documentation that users must answer manually. Unlike `COPILOT_QUESTION`, the Agent does not try to answer this question. It always appears as a form field for users to complete.
 
-This marker accepts one string parameter that contains your question or prompt. For example: `'[QUESTION]('Define the expected outcome of this pipeline')`
+This marker accepts one string parameter that contains your question or prompt. For example: `[QUESTION]('Define the expected outcome of this pipeline')`
 
 ### Pipelines
 
@@ -106,6 +106,7 @@ The Agent will use a pipeline template to generate documentation and embed that 
 To learn how to upload a new template, see [Document pipelines](/data-analysis/ai/agent/documentation/documentation).
 
 <Info>
-  The Agent can only generate one sub-document per marker. Use multiple pipeline markers to
-  incorporate multiple pipeline documentation embeddings.
+  A project template can contain only one `[PIPELINES]` marker. The Agent applies the pipeline
+  template to every pipeline in the project. If you don't specify `template=`, the Agent uses
+  `pipeline_template.md`.
 </Info>

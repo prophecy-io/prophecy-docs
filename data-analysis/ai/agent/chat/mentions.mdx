@@ -39,14 +39,16 @@ The autocomplete dropdown includes entities from your current project.
 - Tables: Reference tables in your SQL warehouse using full table names, including database and schema information (for example, `database.schema.table`). This is useful when you want to add a table to your pipeline or ask the Agent to provide sample data from a table.
 
 <Note>
-  Only tables indexed by the knowledge graph appear in the autocomplete suggestions. If a table
-  doesn't appear, ensure it's been indexed through the [knowledge graph
+  Table suggestions include tables in your project and tables indexed by the knowledge graph. If a
+  table doesn't appear, ensure it's been indexed through the [knowledge graph
   indexer](/data-analysis/ai/knowledge-graph/indexer).
 </Note>
 
 - Gems: Reference specific gems in your current pipeline by their label. Use the [gem label](/data-analysis/gems/gems#gem-instance) that identifies the instance, not the gem type. This is useful when you want to add a transformation to your pipeline or ask the Agent to provide sample data from a gem.
 
 - Documentation templates: Reference documentation templates in your project when generating documentation. Templates must exist in your project to appear in suggestions. Use with prompts like `Generate pipeline documentation using @custom_template`.
+
+- Other project entities: You can also reference pipelines, schemas, [skills](/data-analysis/ai/using-skills), analyses, documents, and files you uploaded to the chat.
 
 ## Examples
 
