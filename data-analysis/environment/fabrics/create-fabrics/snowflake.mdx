@@ -22,7 +22,7 @@ Before you create a Snowflake fabric, make sure you have:
 - A Snowflake account URL.
 - A Snowflake warehouse to execute queries.
 - A role with permissions to use the warehouse, access the database and schema, and read and write to the stage Prophecy uses for temporary files.
-- Credentials for your authentication method: for key-pair authentication, a key pair whose public key is assigned to your Snowflake user; for OAuth, an app registration configured by your cluster admin; for OIDC, service principal credentials issued by your identity provider and a Snowflake External OAuth security integration.
+- Credentials for your authentication method: for Username & Password + MFA, a Snowflake user enrolled in multi-factor authentication on an account that has `ALLOW_CLIENT_MFA_CACHING` enabled; for key-pair authentication, a key pair whose public key is assigned to your Snowflake user; for OAuth, an app registration configured by your cluster admin; for OIDC, service principal credentials issued by your identity provider and a Snowflake External OAuth security integration.
 
 ## Create a Snowflake fabric
 
@@ -100,6 +100,22 @@ After you save the fabric, you can add [secrets](/data-analysis/environment/secr
 
 Snowflake fabrics support the following authentication methods.
 
+### Username & Password + MFA
+
+Use this method to sign in as a Snowflake user who has multi-factor authentication (MFA) enabled.
+
+<Note>
+Your Snowflake account must have the [`ALLOW_CLIENT_MFA_CACHING`](https://docs.snowflake.com/en/sql-reference/parameters#allow-client-mfa-caching) parameter enabled to use MFA authentication with Prophecy. Without it, Prophecy can't reuse the second factor after you test the connection.
+</Note>
+
+1. Enter the **Username** and **Password**.
+1. Optionally, enter a **One-time passcode** from your authenticator app. If you leave it blank, Snowflake sends a push notification to your device when you test the connection.
+1. Test the connection and approve the sign-in.
+
+The passcode is used only to test the connection and is never saved. After a successful test, Prophecy reuses the second factor for later connections for about four hours. When it expires, test the fabric again with a new passcode.
+
+Because the second factor has to be renewed, use key-pair or OAuth authentication for fabrics that run scheduled pipelines.
+
 ### Key-pair
 
 Key-pair authentication uses an RSA key pair instead of a password.
@@ -143,7 +159,7 @@ For details, see [OIDC authentication](/data-analysis/environment/connections/sn
 Snowflake is deprecating password-based sign-in for service users as of October 2026. New fabrics don't offer **Username and Password**. This option appears only on existing fabrics that already use it, and those fabrics stop connecting once Snowflake enforces the cutover.
 </Warning>
 
-Prophecy shows a banner and a **Migrate** action on fabrics that still use **Username and Password** authentication. To move an affected fabric to **Key-pair** or **OAuth** authentication, click **Migrate** on the fabric.
+Prophecy shows a banner and a **Migrate** action on fabrics that still use **Username and Password** authentication. To move an affected fabric to **Key-pair**, **OAuth**, or **Username & Password + MFA** authentication, click **Migrate** on the fabric.
 
 <EditFabric />
 
