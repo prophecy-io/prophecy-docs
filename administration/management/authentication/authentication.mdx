@@ -21,6 +21,12 @@ With Prophecy Managed authentication:
 
 Use this mode if you don't require external SSO.
 
+### Account lockout
+
+After 8 failed sign-in attempts, Prophecy locks the account for 6 hours. While the account is locked, the sign-in page shows when the user can try again. If email is set up for your deployment, Prophecy sends the user an email to say the account was locked.
+
+To unlock an account sooner, the user can reset their password with **Forgot password** on the sign-in page, or a cluster admin can [reactivate the account](/administration/management/cluster-admin-settings/cluster-admin-settings) in Settings.
+
 If you set up SSO after creating users in Prophecy, sign-ins will map to existing users if the sign-in email matches the user email in Prophecy.
 
 ## Automatic SSO sign-in
