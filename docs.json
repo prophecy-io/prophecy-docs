@@ -837,6 +837,7 @@
                           "api-reference/projects/commit-changes",
                           "api-reference/projects/publish-release",
                           "api-reference/projects/list-releases",
+                          "api-reference/projects/update-project-parameters",
                           "api-reference/projects/deploy-project"
                         ]
                       },
@@ -847,6 +848,7 @@
                           "api-reference/pipelines/trigger-pipeline-run",
                           "api-reference/pipelines/get-pipeline-run-status",
                           "api-reference/pipelines/cancel-pipeline-run",
+                          "api-reference/pipelines/update-pipeline-parameters",
                           "api-reference/pipelines/run-data-tests"
                         ]
                       }
@@ -1662,6 +1664,7 @@
                           "api-reference/projects/commit-changes",
                           "api-reference/projects/publish-release",
                           "api-reference/projects/list-releases",
+                          "api-reference/projects/update-project-parameters",
                           "api-reference/projects/deploy-project"
                         ]
                       },
@@ -1672,6 +1675,7 @@
                           "api-reference/pipelines/trigger-pipeline-run",
                           "api-reference/pipelines/get-pipeline-run-status",
                           "api-reference/pipelines/cancel-pipeline-run",
+                          "api-reference/pipelines/update-pipeline-parameters",
                           "api-reference/pipelines/run-data-tests"
                         ]
                       }

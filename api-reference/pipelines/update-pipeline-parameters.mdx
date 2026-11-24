@@ -1,0 +1,7 @@
+---
+openapi: put /api/parameters/pipeline/{projectId}/{pipelineName}
+---
+
+Changes are saved to the branch but not committed. To commit them, use the [commit changes API](/api-reference/projects/commit-changes).
+
+You can only update parameters that already exist. The request fails if it names a parameter that doesn't exist (`Parameters do not exist`) or changes a parameter's type (`Parameter types cannot change`).
