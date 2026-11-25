@@ -93,7 +93,9 @@ On the **Write Options** tab, choose how Prophecy writes data to the target tabl
 | Merge - Upsert Row | Updates rows whose key matches an incoming row and inserts the rest. See [Merge - Upsert Row](#upsert-row-merge). |
 | Merge - SCD 2 | Keeps a history of changes by closing the current version of a changed row and inserting a new version. See [Merge - SCD 2](#scd-2-merge). |
 
-Merge modes require PostgreSQL 15 or later. Prophecy loads the incoming data into a temporary staging table and runs the merge in a single transaction, so if any step fails, the target table doesn't change. If the incoming data has no rows, Prophecy doesn't write anything.
+Merge modes require PostgreSQL 15 or later. Prophecy doesn't check the database version before the run, so on an earlier version the pipeline fails when it runs, with a syntax error at `MERGE`.
+
+Prophecy loads the incoming data into a temporary staging table and runs the merge in a single transaction, so if any step fails, the target table doesn't change. If the incoming data has no rows, Prophecy doesn't write anything.
 
 #### Upsert Row merge
 
@@ -101,10 +103,10 @@ The target table must already exist. Configure the following:
 
 | Parameter | Description |
 | --------- | ----------- |
-| Unique Key | One or more columns that identify a row. Required. Null values in a key column match other null values. |
-| Use Predicate | Additional conditions that a target row must meet to match an incoming row. |
+| Unique Key | One or more columns that identify a row. Required. If you leave it empty, the gem shows a validation error. Null values in a key column match other null values. |
+| Use Predicate | Additional conditions that a target row must meet to match an incoming row. A predicate narrows which rows count as a match. It doesn't filter the incoming data. An incoming row that doesn't meet the predicate has no match, so Prophecy inserts it as a new row, which can create duplicate keys in the table. To leave incoming rows out of the merge, use a condition to filter data for incremental runs instead. |
 | Use a condition to filter data for incremental runs | A condition on the incoming data. Only incoming rows that meet it are merged. |
-| How to handle target rows not present in source? | What to do with target rows that have no matching incoming row: **Do nothing** (default), **Delete rows**, or **Update columns**. You can limit the action with a **Run only when** condition. Requires PostgreSQL 17 or later. |
+| How to handle target rows not present in source? | What to do with target rows that have no matching incoming row: **Do nothing** (default), **Delete rows**, or **Update columns**. You can limit the action with a **Run only when** condition. **Delete rows** and **Update columns** require PostgreSQL 17 or later. On PostgreSQL 15 or 16, the pipeline fails when it runs, with a syntax error at `WHEN NOT MATCHED BY SOURCE`. |
 | Merge Columns | On the **Merge Columns** tab, choose **Specify columns to merge** or **Specify columns to exclude** to limit which columns are updated when a key matches. New rows always include every column. By default, all columns are updated. |
 | On Schema Change | On the **Advanced** tab, choose what happens when the incoming columns differ from the table's columns: `ignore` (default), `fail`, `append_new_columns`, or `sync_all_columns`. `sync_all_columns` also drops table columns that aren't in the incoming data, which deletes their data. |
 
@@ -120,7 +122,7 @@ Prophecy creates the table if it doesn't exist and adds three tracking columns: 
 
 | Parameter | Description |
 | --------- | ----------- |
-| Unique Key | One or more columns that identify a record. |
+| Unique Key | One or more columns that identify a record. Required. If you leave it empty, the gem shows a validation error. |
 | Invalidate deleted rows | Whether to close the current version of records whose key no longer appears in the incoming data. |
 | Determine new records by checking timestamp column | Detects changes with the **Updated at** column. A newer value means the record changed. This is the default. |
 | Determine new records by looking for differences in column values | Detects changes by comparing the columns you select. If you don't select any, Prophecy compares all columns except the key. |
