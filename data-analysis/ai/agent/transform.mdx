@@ -3,13 +3,11 @@ title: Transformation
 description: Transform data sources using the Prophecy Agent
 ---
 
-import { WistiaVideo } from '/snippets/react/wistia-video.jsx';
-
 You can use the Prophecy Agent to generate transformations based on natural language prompts. When you describe a data operation, the Transform Agent generates the corresponding gems in the pipeline and summarizes the applied changes in the chat interface.
 
-The following sections describe how to add transformations, review modifications, and restore previous versions of the pipeline.
+The following sections describe how to add transformations, review the changes, and undo them.
 
-The Transform Agent runs in the default agent mode for a project. If your team has enabled Harmonization mode, the Transform Agent must be re-enabled in team settings before transformations can be generated.
+The Transform Agent is available when **Enable Conversational Agents** is turned on for your team. See [AI settings](/administration/management/teams/settings/ai).
 
 ## What the Transform Agent can modify
 
@@ -29,15 +27,15 @@ The Transform Agent can retrieve metadata and limited data samples to validate g
 
 When executing SQL or running pipelines, the Agent operates under the permissions of the user who invoked it.
 
-When generating output tables or executing write operations, changes take effect immediately in the connected warehouse under the invoking user’s permissions. Existing warehouse access controls and governance policies are always enforced.
+Before the Agent runs a query that writes or changes data, or runs a pipeline that writes data, it asks you to allow it. Choose **Allow once**, **Always allow** (for the rest of the chat session), or **Deny**. Once allowed, the write takes effect in the connected warehouse under your permissions and can't be undone from the chat. Existing warehouse access controls and governance policies are always enforced.
 
 ## Model architecture
 
-The Transform Agent is built on a specialized deployment of Claude Code and is optimized for Anthropic Opus 4.5.
+The Transform Agent is built on a specialized deployment of Claude Code. By default, it uses Anthropic Claude Opus 5.5.
 
 Prophecy augments model reasoning with structured tool access to project artifacts, metadata, and connected warehouse systems. The model is not used in isolation; all actions are mediated through Prophecy’s execution layer and project boundaries.
 
-Enterprise customers may configure approved Anthropic endpoints in supported deployment environments. Using alternative models may affect output quality.
+Enterprise customers can configure approved Claude endpoints in supported deployment environments. See [Configure Anthropic endpoint](/administration/management/cluster-admin-settings/configure-endpoint). Using alternative models may affect output quality.
 
 ## Prerequisites
 
@@ -51,28 +49,29 @@ The Agent returns:
 
 - One or more gems on the pipeline canvas.
 - A description of the applied changes.
-- Options to restore, inspect, or preview changes.
+- **Review changes**, **Undo**, and **Rollback** actions for the changes in the response.
 - A group of SQL execution logs.
 
 ![Agent SQL logs](/data-analysis/ai/agent/img/agent-sql-logs.png)
 
-## Inspect pipeline changes
+## Review pipeline changes
 
-To understand the Agent changes:
+To step through the changes the Agent made:
 
-1. Select **Inspect** on the chat that generates a transformation.
-1. Review the configuration panel beginning with the first modified gem. Modified gems appear in yellow.
-1. Hover over the **Previous** and **Next** button to display a minimap of the pipeline. This shows you the specific gem you are viewing in the context of the pipeline.
-1. Use the **Previous** and **Next** controls to move through other modified gems in sequence.
+1. Click **Review changes** on the response that made the changes. Prophecy opens review mode.
+1. Review the first changed gem. On the canvas, gems the Agent added are outlined in green (**Added by AI**), and gems it edited are outlined in yellow (**Edited by AI**).
+1. Use the previous and next arrows in the review bar to move through the other changed gems. The bar shows your position, such as `Reviewing 1 of 3 gems modified by AI`.
 1. Examine both the input and output of each gem to confirm that the transformation produces the expected result.
+1. Click **Exit review mode** when you're done.
 
-<Frame>
-  <WistiaVideo mediaId="cqu2b9e6pi" />
-</Frame>
+## Undo changes
 
-## Restore a previous state of the pipeline
+To revert the Agent's changes:
 
-To revert changes or try another transformation from a previous state, select **Restore** from the reply you want to revert to in the chat history. The pipeline will match the earlier version. You can also manage versions from the main project [version history](/data-analysis/development/versioning/version-control).
+- Click **Undo** on the most recent response to revert the changes from that response.
+- Click **Rollback** on an earlier response to restore the project to its state before that response. Changes from later responses are reverted too.
+
+Both actions ask you to confirm. See [Undo or roll back AI changes](/data-analysis/ai/agent/chat/using-chat#undo-or-roll-back-ai-changes). You can also manage versions from the project [version history](/data-analysis/development/versioning/version-control).
 
 ## Create output tables
 
