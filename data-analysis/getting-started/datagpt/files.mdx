@@ -26,7 +26,7 @@ Your AI client may not pass large attachments to DataGPT. If that happens, DataG
 
 ### Upload restrictions
 
-Prophecy checks every file that you upload to DataBox, including chat attachments. If a file isn't allowed, the upload fails with an error that explains why. DataBox doesn't accept the following files:
+Prophecy checks every file that you upload to DataBox, including chat attachments. DataBox doesn't accept the following files:
 
 - Executables, scripts, installers, and disk images, such as `.exe`, `.jar`, `.sh`, `.ps1`, `.js`, `.msi`, and `.dmg` files.
 - Macro-enabled Office files, such as `.xlsm`, `.xlsb`, `.docm`, and `.pptm` files.
@@ -38,7 +38,7 @@ Prophecy checks every file that you upload to DataBox, including chat attachment
 
 These checks also apply to files inside ZIP archives.
 
-After a file is stored, Prophecy also scans it for malware in the background. If the scan finds a problem, Prophecy permanently deletes the file.
+Some checks, such as the file type and Office file encryption, run while you upload. If a file fails one of these checks, the upload fails with an error that explains why. Other checks, such as CSV formulas, PDF encryption, files nested inside archives, and malware, run in a background scan after the file is stored. If the background scan finds a problem, Prophecy permanently deletes the file.
 
 ## Browse DataBox
 
@@ -53,13 +53,13 @@ In the DataBox view, you can:
 
 You can also ask DataGPT to search for files, create folders, move, rename, copy, or delete files.
 
-Before DataGPT deletes anything, it asks you to confirm. Files deleted through the DataBox browser move to **Trash**, where you can restore them. Deleting a file from **Trash** is permanent.
+Before DataGPT deletes anything, it asks you to confirm. Deleted files move to **Trash**, where you can restore them. Deleting a file from **Trash** is permanent.
 
 Files on connections are read-only.
 
 ## Preview and download files
 
-Select a file in DataBox to preview it in the chat. DataGPT supports previews of PDF, Excel, CSV, image, and Markdown files. Other file types show a download card instead.
+Select a file in DataBox to preview it in the chat. DataGPT supports previews of PDF, Excel, CSV, image, Markdown, and text files, such as JSON and log files. Other file types show a download card instead.
 
 Select a table on a warehouse connection to open the data explorer, where you can browse rows and inspect column information.
 
@@ -87,7 +87,7 @@ For large tables, extraction may use a sample of the data rather than the entire
 | Select the used range (press again for the whole sheet) | Cmd+A                | Ctrl+A                |
 | Extend to the first cell / last used cell               | Cmd+Shift+Home / End | Ctrl+Shift+Home / End |
 | Select entire column(s)                                 | Ctrl+Space           | Ctrl+Space            |
-| Select entire row(s)                                    | Shift+Space          | Shift+Spac            |
+| Select entire row(s)                                    | Shift+Space          | Shift+Space           |
 
 ## Files in cloud storage
 

@@ -525,6 +525,7 @@
                           "data-analysis/gems/custom/macro",
                           "data-analysis/production/scheduling/pipeline-trigger-gem",
                           "data-analysis/gems/custom/rest-api",
+                          "data-analysis/gems/custom/run-stored-procedure",
                           "data-analysis/gems/custom/script",
                           "data-analysis/gems/custom/sql-statement",
                           "data-analysis/gems/custom/stored-procedure",
@@ -1902,6 +1903,16 @@
     },
     {
       "source": "/data-analysis/ai/agent/chat/revert",
+      "destination": "/data-analysis/ai/agent/chat/using-chat",
+      "permanent": true
+    },
+    {
+      "source": "/data-analysis/ai/agent/chat/reset",
+      "destination": "/data-analysis/ai/agent/chat/using-chat",
+      "permanent": true
+    },
+    {
+      "source": "/data-analysis/ai/agent/chat/modes",
       "destination": "/data-analysis/ai/agent/chat/using-chat",
       "permanent": true
     },

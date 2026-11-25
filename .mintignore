@@ -1,3 +1,6 @@
+changelog.mdx
+.changelog/
+
 # Exclude draft documents
 
 data-analysis/environment/secrets/databricks-secrets.mdx

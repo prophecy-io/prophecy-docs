@@ -24,7 +24,7 @@ Create a Livy fabric to connect Prophecy to any Spark cluster that is accessible
 
    - **Livy URL**: The URL of your Livy environment.
 
-   - **Use mTLS Encryption (optional)**: The Client Certificate and Client Key required for mTLS.
+   - **Use mTLS Encryption** (optional): Turn on this toggle to enter the **Client Certificate for mTLS** and **Client Key for mTLS**.
 
    - **Authentication type**: The method Prophecy uses to authenticate with Livy. See [Authentication types](#authentication-types).
 
@@ -70,14 +70,14 @@ After the connection is validated:
 
    - **Executors**: The number of cores and amount of memory for the executors, and the total number of executors.
 
-   - **(Optional) Spark Config**: The Spark configuration parameters at the job size level. These settings control cluster behavior when you use this job size. If the same config key is also defined at the fabric level, the job size value overrides it.
+   - **Spark Config** (optional): The Spark configuration parameters at the job size level. These settings control cluster behavior when you use this job size. If the same config key is also defined at the fabric level, the job size value overrides it.
 
 1. Configure the Prophecy Library settings:
    - **Spark version**: The Spark version used when you attach to a cluster with this fabric.
 
    - **Scala version**: The Scala version used when you attach to a cluster with this fabric.
 
-   - **Scala/Python resolution mode**: The location of the libraries to use for Scala or Python.
+   - **Resolution mode**: On the **Scala** and **Python** tabs, the location of the libraries to use for each language.
 
 ## Advanced settings
 
