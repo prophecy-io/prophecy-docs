@@ -205,6 +205,8 @@ GET https://graph.microsoft.com/v1.0/sites/{site-id}/permissions
 | Examine                     | Automatically determine the file format, compression type (if any), properties, and schema of the file to read.                       |
 | Format type                 | Type of file to read, such as `csv` or `json`.                                                                                        |
 | Compression                 | The compression type of the file to read. <br /><br />Supported types: `uncompressed`,`gzip`, `zstd`, `lz4`, `zlib`, `snappy`, `lzop` |
+| Disable Parallel Read | Read the file with one request at a time instead of several in parallel. Parallel reads are faster for large files and back off automatically when SharePoint throttles requests. Turn this on only if parallel requests put too much load on your SharePoint tenant. |
+| Maximum Parallel Connections | The maximum number of parallel requests used to read a file. Appears only when **Disable Parallel Read** is off. Defaults to `1`, and the maximum is `8`. |
 
 ## Target location
 
